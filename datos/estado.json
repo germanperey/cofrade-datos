@@ -1,0 +1,78 @@
+{
+ "fecha": "2026-10-26",
+ "generado": "2026-10-26T18:56:36-03:00",
+ "fuentes": {
+  "uv": {
+   "ok": true,
+   "hora": "2026-10-26T18:54:37-03:00",
+   "url": "https://api.open-meteo.com/v1/forecast?latitude=-18.48,-23.65,-29.9,-33.05,-33.45,-36.83,-38.74,-41.47,-53.16&longitude=-70.31,-70.4,-71.25,-71.61,-70.67,-73.05,-72.59,-72.94,-70.92&daily=uv_index_clear_sky_max&timezone=America%2FSantiago&forecast_days=8",
+   "intentos": 1
+  },
+  "imacec": {
+   "ok": true,
+   "hora": "2026-10-26T18:54:38-03:00",
+   "url": "https://mindicador.cl/api/imacec/2026",
+   "intentos": 1
+  },
+  "indicadores": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:19-03:00",
+   "url": "https://mindicador.cl/api",
+   "intentos": 2
+  },
+  "camara": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:25-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXAnno?prmAnno=2026",
+   "intentos": 1
+  },
+  "camara_detalle_90617": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:29-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90617",
+   "intentos": 1
+  },
+  "camara_detalle_90616": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:32-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90616",
+   "intentos": 1
+  },
+  "camara_detalle_90615": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:35-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90615",
+   "intentos": 1
+  },
+  "liga": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:35-03:00",
+   "url": "https://en.wikipedia.org/api/rest_v1/page/html/2026_Liga_de_Primera",
+   "intentos": 1
+  },
+  "liga_es_busqueda": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:36-03:00",
+   "url": "https://es.wikipedia.org/w/api.php?action=query&list=search&format=json&srlimit=5&srsearch=Primera%20Divisi%C3%B3n%20Chile%202026%20campeonato",
+   "intentos": 1
+  },
+  "liga_es_fecha": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:36-03:00",
+   "url": "https://es.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=timestamp&format=json&titles=Liga%20de%20Primera%202026",
+   "intentos": 1
+  },
+  "liga_es": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:36-03:00",
+   "url": "https://es.wikipedia.org/api/rest_v1/page/html/Liga_de_Primera_2026",
+   "intentos": 1
+  },
+  "partidos": {
+   "ok": true,
+   "hora": "2026-10-26T18:56:36-03:00",
+   "url": "https://www.thesportsdb.com/api/v1/json/123/eventspastleague.php?id=4627",
+   "intentos": 1
+  }
+ }
+}
