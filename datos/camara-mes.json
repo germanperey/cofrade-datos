@@ -2,6 +2,30 @@
  "mes": "2026-10",
  "camara_mes": [
   {
+   "id": "90621",
+   "fecha": "2026-10-26T19:21",
+   "descripcion": "Boletín N° 16777-07",
+   "tipo": "Proyecto de Ley",
+   "resultado": "Aprobado",
+   "si": 134,
+   "no": 0,
+   "abst": 1,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90621"
+  },
+  {
+   "id": "90620",
+   "fecha": "2026-10-26T19:18",
+   "descripcion": "Boletín N° 16777-07",
+   "tipo": "Proyecto de Ley",
+   "resultado": "Aprobado",
+   "si": 127,
+   "no": 1,
+   "abst": 0,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90620"
+  },
+  {
    "id": "90617",
    "fecha": "2026-10-26T17:28",
    "descripcion": "5-Cambio de Trámite",
@@ -807,7 +831,7 @@
   }
  ],
  "control": {
-  "total_mes": 67,
+  "total_mes": 69,
   "fuente": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXAnno?prmAnno=2026",
   "ultima_oficial": "2026-10-26"
  }
