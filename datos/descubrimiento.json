@@ -1,0 +1,56 @@
+{
+ "WSLegislativo": [
+  "retornarDocumentoIngresoProyectoLey",
+  "retornarLegislaturaActual",
+  "retornarLegislaturas",
+  "retornarMaterias",
+  "retornarMensajesXAnno",
+  "retornarMocionesXAnno",
+  "retornarPeriodoLegislativoActual",
+  "retornarPeriodosLegislativos",
+  "retornarProyectoLey",
+  "retornarProyectosLeyxNumeroLey",
+  "retornarTramitesConstitucionales",
+  "retornarTramitesReglamentarios",
+  "retornarVotacionDetalle",
+  "retornarVotacionesXAnno",
+  "retornarVotacionesXProyectoLey"
+ ],
+ "WSSala": [
+  "retornarSesionAsistencia",
+  "retornarSesionesXAnno",
+  "retornarSesionesXLegislatura"
+ ],
+ "WSDiputado": [
+  "retornarDiputado",
+  "retornarDiputados",
+  "retornarDiputadosPeriodoActual",
+  "retornarDiputadosXPeriodo"
+ ],
+ "WSComun": [
+  "retornarComunas",
+  "retornarDistritos",
+  "retornarMinisterios",
+  "retornarPartidosPoliticos",
+  "retornarProvincias",
+  "retornarRegiones",
+  "retornarTiposAsistencia",
+  "retornarTiposCamaraOrigen",
+  "retornarTiposEstado",
+  "retornarTiposEstadoAcuerdosResoluciones",
+  "retornarTiposEstadoSesionComision",
+  "retornarTiposEstadoSesionSala",
+  "retornarTiposIniciativaProyectoLey",
+  "retornarTiposJustificacionesInasistencia",
+  "retornarTiposLegislatura",
+  "retornarTiposOpcionVoto",
+  "retornarTiposQuorumVotacion",
+  "retornarTiposResultadoVotacion",
+  "retornarTiposSesionComision",
+  "retornarTiposSesionSala",
+  "retornarTiposSexo",
+  "retornarTiposTitularAsistencia",
+  "retornarTiposVotacion",
+  "retornarTiposVotacionProyectoLey"
+ ]
+}
