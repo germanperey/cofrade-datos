@@ -10,7 +10,8 @@ Archivos que deja en datos/:
   imacec.csv          IMACEC del año (mindicador.cl, datos del Banco Central)                    mes,var
   indicadores.json    respuesta completa de https://mindicador.cl/api
   camara-mes.json     votaciones de la Sala de la Cámara del mes (datos abiertos de la Cámara)
-  camara-nominal.json voto de cada diputado en las votaciones de los últimos 4 días
+  camara-nominal.json voto de cada diputado en TODAS las votaciones de los últimos 62 días (acumulado)
+  descubrimiento.json operaciones que publica cada servicio oficial de la Cámara
   liga-primera.json   tabla completa del Campeonato Nacional (API de Wikipedia, inglés o español) y los últimos
                       partidos jugados (TheSportsDB, API gratuita)
   estado.json         qué respondió, a qué hora y con qué error
@@ -52,7 +53,7 @@ def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None):
         if p:
             time.sleep(p)
         try:
-            r = s.get(url, headers={"User-Agent": UA, "Accept": "application/json, text/xml, text/html"}, timeout=40)
+            r = s.get(url, headers={"User-Agent": UA, "Accept": "application/json, text/xml, text/html"}, timeout=60)
             if r.status_code == 200 and r.content:
                 estado[clave] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": url, "intentos": i + 1}
                 return r.json() if como == "json" else r.text
@@ -182,30 +183,72 @@ def camara_nominal(xml_txt):
     return out
 
 
-def camara(estado, hoy):
+def camara_votaciones_todas(xml_txt):
+    """Todas las votaciones del año {id: fecha AAAA-MM-DD} (para saber cuáles son de los últimos 62 días)."""
+    raiz = ET.fromstring(xml_txt)
+    out = {}
+    for v in raiz.iter():
+        if _sin_ns(v.tag) == "votacion":
+            idv, f = _texto(_hijo(v, r"^id$")), _texto(_hijo(v, r"^fecha"))
+            if idv and f:
+                out[idv] = f[:10]
+    return out
+
+
+def camara(estado, hoy, previo=None, maximo=60):
+    """Votaciones del mes + voto de cada diputado de TODAS las votaciones de los últimos 62 días (28-10-2026, Germán: «las 4 leyes
+    del 21-10 sin votación por diputado»). Lo ya bajado en corridas anteriores se conserva y solo se piden las que faltan
+    (máximo `maximo` por corrida, de a una y con 3 segundos entre cada una)."""
     s = requests.Session()
     txt = pedir(f"{CAMARA}/retornarVotacionesXAnno?prmAnno={hoy.year}", estado, "camara", como="texto", sesion=s)
     if not txt:
         return None, None
     try:
         mes = camara_votaciones(txt, hoy.strftime("%Y-%m"))
+        todas = camara_votaciones_todas(txt)
     except ET.ParseError as ex:
         estado["camara"].update(ok=False, error=f"XML ilegible: {ex}")
         return None, None
-    desde = (hoy - dt.timedelta(days=4)).isoformat()
-    nominal = {}
-    for v in [x for x in mes if x["fecha"][:10] >= desde][:40]:
+    if hoy.month == 1:   # en enero, las de diciembre vienen en el año anterior
+        t2 = pedir(f"{CAMARA}/retornarVotacionesXAnno?prmAnno={hoy.year - 1}", estado, "camara_anterior", como="texto", sesion=s)
+        try:
+            todas.update(camara_votaciones_todas(t2) if t2 else {})
+        except ET.ParseError:
+            pass
+    desde = (hoy - dt.timedelta(days=62)).isoformat()
+    vigentes = {i for i, f in todas.items() if f >= desde}
+    nominal = {i: v for i, v in (previo or {}).items() if i in vigentes and v}
+    faltan = sorted((i for i in vigentes if i not in nominal), key=lambda i: todas[i], reverse=True)
+    for idv in faltan[:maximo]:
         time.sleep(3)   # de a una, con calma
-        t = pedir(f"{CAMARA}/retornarVotacionDetalle?prmVotacionId={v['id']}", estado, f"camara_detalle_{v['id']}",
+        t = pedir(f"{CAMARA}/retornarVotacionDetalle?prmVotacionId={idv}", estado, f"camara_detalle_{idv}",
                   como="texto", espera=(0, 30), sesion=s)
         if t:
             try:
-                nominal[v["id"]] = camara_nominal(t)
+                filas = camara_nominal(t)
+                if filas:
+                    nominal[idv] = filas
             except ET.ParseError:
                 pass
+    estado["camara"]["nominal"] = {"guardadas": len(nominal), "pendientes": max(0, len(faltan) - maximo)}
     control = {"total_mes": len(mes), "fuente": f"{CAMARA}/retornarVotacionesXAnno?prmAnno={hoy.year}",
                "ultima_oficial": mes[0]["fecha"][:10] if mes else ""}
     return {"mes": hoy.strftime("%Y-%m"), "camara_mes": mes, "control": control}, nominal
+
+
+# ---------- Qué ofrecen los servicios oficiales (para sumar asistencia y otros datos con nombres verificados) ----------
+SERVICIOS = ("WSLegislativo", "WSSala", "WSDiputado", "WSComun")
+
+
+def descubrir(estado):
+    """Lista las operaciones que publica cada servicio de datos abiertos de la Cámara (su página de ayuda): así el próximo
+    ajuste usa solo nombres verificados (asistencia, sesiones, diputados con su partido), nunca supuestos."""
+    out = {}
+    for sv in SERVICIOS:
+        t = pedir(f"https://opendata.camara.cl/camaradiputados/WServices/{sv}.asmx", estado, f"servicio_{sv}", como="texto", espera=(0,))
+        if t:
+            out[sv] = sorted(set(re.findall(r"\?op=(\w+)", t)))
+    return out
 
 
 # ---------- Campeonato Nacional (Wikipedia, API oficial; en inglés y en español) ----------
@@ -333,9 +376,14 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "uv.csv"), uv(estado))
     escribir(os.path.join(a.salida, "imacec.csv"), imacec(estado, hoy.year))
     escribir(os.path.join(a.salida, "indicadores.json"), pedir("https://mindicador.cl/api", estado, "indicadores"))
-    cam, nom = camara(estado, hoy)
+    try:   # lo bajado en corridas anteriores (queda en el repositorio)
+        previo = json.load(open(os.path.join(a.salida, "camara-nominal.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        previo = {}
+    cam, nom = camara(estado, hoy, previo if isinstance(previo, dict) else {})
     escribir(os.path.join(a.salida, "camara-mes.json"), cam)
     escribir(os.path.join(a.salida, "camara-nominal.json"), nom or None)
+    escribir(os.path.join(a.salida, "descubrimiento.json"), descubrir(estado) or None)
     tabla = liga(estado, hoy)
     if tabla:
         tabla["partidos"] = partidos_liga(estado) or []
@@ -343,7 +391,7 @@ def main(argv=None):
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
     escribir(os.path.join(a.salida, "estado.json"), resumen)
     for k, v in estado.items():
-        if not k.startswith("camara_detalle_"):
+        if not k.startswith(("camara_detalle_", "servicio_")):
             print(("OK   " if v["ok"] else "FALLA"), k, v.get("error", ""))
     return 0   # una fuente caída no detiene a las demás
 

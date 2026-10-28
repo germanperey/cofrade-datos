@@ -107,6 +107,28 @@ def partidos_terminados():
 
 
 @prueba
+def camara_acumula_el_voto_de_todo_el_periodo():
+    XML = """<Votaciones><Votacion><ID>3</ID><Fecha>2026-10-27T12:00:00</Fecha></Votacion>
+<Votacion><ID>2</ID><Fecha>2026-10-21T12:00:00</Fecha></Votacion><Votacion><ID>1</ID><Fecha>2026-07-01T12:00:00</Fecha></Votacion></Votaciones>"""
+    pedidos = []
+
+    def falso(url, estado, clave, como="json", espera=None, sesion=None):
+        pedidos.append(url)
+        estado[clave] = {"ok": True}
+        return XML if "XAnno" in url else XML_DET
+    orig, dormir = B.pedir, B.time.sleep
+    B.pedir, B.time.sleep = falso, (lambda x: None)
+    try:
+        e = {}
+        cam, nom = B.camara(e, dt.date(2026, 10, 28), previo={"3": [{"nombre": "X", "partido": "", "voto": "Sí"}], "1": [{"nombre": "Y"}]})
+        assert set(nom) == {"3", "2"} and nom["3"][0]["nombre"] == "X", nom          # la 1 tiene más de 62 días: sale
+        assert sum("Detalle" in u for u in pedidos) == 1 and "prmVotacionId=2" in pedidos[-1]   # solo se pide la que faltaba
+        assert len(cam["camara_mes"]) == 2 and e["camara"]["nominal"] == {"guardadas": 2, "pendientes": 0}
+    finally:
+        B.pedir, B.time.sleep = orig, dormir
+
+
+@prueba
 def reintenta_con_pausa_y_anota_el_error():
     llamadas = []
 
