@@ -129,6 +129,23 @@ def camara_acumula_el_voto_de_todo_el_periodo():
 
 
 @prueba
+def asistencia_sesiones_y_vuelos_de_ayer():
+    xs = """<Sesiones><Sesion><ID>5001</ID><Fecha>2026-10-27T10:00:00</Fecha><Tipo>Ordinaria</Tipo></Sesion>
+<Sesion><ID>4000</ID><Fecha>2026-06-01T10:00:00</Fecha></Sesion></Sesiones>"""
+    assert B.sesiones_xml(xs, "2026-08-27", "2026-10-28") == [{"id": "5001", "fecha": "2026-10-27", "tipo": "Ordinaria"}]
+    xa = """<Asistencias><Asistencia><Diputado><Nombre>Ana</Nombre><ApellidoPaterno>Pérez</ApellidoPaterno></Diputado><TipoAsistencia>Asiste</TipoAsistencia></Asistencia>
+<Asistencia><Diputado><Nombre>Luis</Nombre><ApellidoPaterno>Rojas</ApellidoPaterno></Diputado><TipoAsistencia>No Asiste</TipoAsistencia>
+<Justificacion>Permiso constitucional</Justificacion></Asistencia>
+<Asistencia><Diputado><Nombre>Eva</Nombre><ApellidoPaterno>Díaz</ApellidoPaterno></Diputado><TipoAsistencia>Inasistente</TipoAsistencia></Asistencia></Asistencias>"""
+    a = B.asistencia_xml(xa)
+    assert [(x["nombre"], x["estado"]) for x in a] == [("Pérez, Ana", "asiste"), ("Rojas, Luis", "no_asiste"), ("Díaz, Eva", "no_asiste")], a
+    r = B.asistencia_resumen({"sesiones": {"5001": {"fecha": "2026-10-27", "asistencia": a}}})
+    assert r["sesiones"] == 1 and {d["nombre"]: (d["asiste"], d["justificada"], d["no_justificada"]) for d in r["diputados"]} == \
+        {"Pérez, Ana": (1, 0, 0), "Rojas, Luis": (0, 1, 0), "Díaz, Eva": (0, 0, 1)}
+    assert B.vuelo_iata("LAN533 ") == "LA533" and B.vuelo_iata("SKU0123") == "H2123" and B.vuelo_iata("N123AB") == "" and B.vuelo_iata("XYZ12") == ""
+
+
+@prueba
 def reintenta_con_pausa_y_anota_el_error():
     llamadas = []
 

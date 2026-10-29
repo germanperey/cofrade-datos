@@ -12,6 +12,8 @@ Archivos que deja en datos/:
   camara-mes.json     votaciones de la Sala de la Cámara del mes (datos abiertos de la Cámara)
   camara-nominal.json voto de cada diputado en TODAS las votaciones de los últimos 62 días (acumulado)
   descubrimiento.json operaciones que publica cada servicio oficial de la Cámara
+  camara-asistencia.json  asistencia de cada diputado a las sesiones de Sala de los últimos 62 días (resumen)
+  vuelos-ayer.json    salidas y llegadas de AYER en los 5 aeropuertos (OpenSky Network, gratis)
   liga-primera.json   tabla completa del Campeonato Nacional (API de Wikipedia, inglés o español) y los últimos
                       partidos jugados (TheSportsDB, API gratuita)
   estado.json         qué respondió, a qué hora y con qué error
@@ -195,7 +197,7 @@ def camara_votaciones_todas(xml_txt):
     return out
 
 
-def camara(estado, hoy, previo=None, maximo=60):
+def camara(estado, hoy, previo=None, maximo=110):
     """Votaciones del mes + voto de cada diputado de TODAS las votaciones de los últimos 62 días (28-10-2026, Germán: «las 4 leyes
     del 21-10 sin votación por diputado»). Lo ya bajado en corridas anteriores se conserva y solo se piden las que faltan
     (máximo `maximo` por corrida, de a una y con 3 segundos entre cada una)."""
@@ -248,7 +250,138 @@ def descubrir(estado):
         t = pedir(f"https://opendata.camara.cl/camaradiputados/WServices/{sv}.asmx", estado, f"servicio_{sv}", como="texto", espera=(0,))
         if t:
             out[sv] = sorted(set(re.findall(r"\?op=(\w+)", t)))
+    params = {}
+    for sv, op in (("WSSala", "retornarSesionesXAnno"), ("WSSala", "retornarSesionAsistencia"), ("WSDiputado", "retornarDiputadosPeriodoActual")):
+        t = pedir(f"https://opendata.camara.cl/camaradiputados/WServices/{sv}.asmx?op={op}", estado, f"servicio_{op}", como="texto", espera=(0,))
+        if t:
+            params[op] = sorted(set(re.findall(r"\b(prm\w+)", t)))
+    if params:
+        out["_parametros"] = params
     return out
+
+
+# ---------- Asistencia oficial a las sesiones de Sala (WSSala: retornarSesionesXAnno + retornarSesionAsistencia) ----------
+def _nombre_diputado(el):
+    d = _hijo(el, r"^diputado$")
+    d = el if d is None else d
+    nom = _texto(_hijo(d, r"^nombre$"))
+    ap = " ".join(x for x in (_texto(_hijo(d, r"apellidopaterno")), _texto(_hijo(d, r"apellidomaterno"))) if x)
+    return f"{ap}, {nom}" if ap and nom else (ap or nom)
+
+
+def sesiones_xml(xml_txt, desde, hasta):
+    """[{id, fecha, tipo}] de las sesiones de Sala entre dos fechas (AAAA-MM-DD)."""
+    out = []
+    for v in ET.fromstring(xml_txt).iter():
+        if _sin_ns(v.tag) != "sesion":
+            continue
+        idv, f = _texto(_hijo(v, r"^id$")), _texto(_hijo(v, r"^fecha"))
+        if idv and f and desde <= f[:10] <= hasta:
+            out.append({"id": idv, "fecha": f[:10], "tipo": _texto(_hijo(v, r"^tipo"))})
+    return out
+
+
+def asistencia_xml(xml_txt):
+    """[{nombre, estado: asiste|no_asiste, justificacion}] de una sesión."""
+    out = []
+    for el in ET.fromstring(xml_txt).iter():
+        if _hijo(el, r"^diputado$") is None:
+            continue
+        nombre = _nombre_diputado(el)
+        tipo = _texto(_hijo(el, r"asistencia$", r"^tipoasistencia", r"^asistencia"))
+        just = _texto(_hijo(el, r"justificaci"))
+        if not nombre or not tipo:
+            continue
+        t = tipo.lower()
+        no = bool(re.search(r"no\s*asist|inasist|ausen|no\s*presente", t))
+        out.append({"nombre": nombre, "estado": "no_asiste" if no else "asiste", "justificacion": just})
+    return out
+
+
+def asistencia(estado, hoy, previo=None, maximo=25):
+    """Asistencia de cada diputado a las sesiones de Sala de los últimos 62 días, acumulada entre corridas (solo se piden las
+    sesiones que faltan). → {"sesiones": {id: {fecha, tipo, asistencia: [...]}}}"""
+    base = "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx"
+    txt = pedir(f"{base}/retornarSesionesXAnno?prmAnno={hoy.year}", estado, "asistencia", como="texto")
+    if not txt:
+        return None
+    desde = (hoy - dt.timedelta(days=62)).isoformat()
+    try:
+        ses = sesiones_xml(txt, desde, hoy.isoformat())
+    except ET.ParseError as ex:
+        estado["asistencia"].update(ok=False, error=f"XML ilegible: {ex}")
+        return None
+    prev = (previo or {}).get("sesiones") or {}
+    out = {i: v for i, v in prev.items() if v.get("fecha", "") >= desde and v.get("asistencia")}
+    faltan = [x for x in sorted(ses, key=lambda x: x["fecha"], reverse=True) if x["id"] not in out]
+    for x in faltan[:maximo]:
+        time.sleep(3)
+        t = pedir(f"{base}/retornarSesionAsistencia?prmSesionId={x['id']}", estado, f"asistencia_{x['id']}", como="texto", espera=(0, 30))
+        if t:
+            try:
+                filas = asistencia_xml(t)
+            except ET.ParseError:
+                filas = []
+            if filas:
+                out[x["id"]] = {"fecha": x["fecha"], "tipo": x["tipo"], "asistencia": filas}
+    estado["asistencia"]["sesiones"] = {"con_asistencia": len(out), "del_periodo": len(ses)}
+    return {"desde": desde, "hasta": hoy.isoformat(), "sesiones": out}
+
+
+def asistencia_resumen(a):
+    """Resumen chico para la Skill: por diputado, sesiones a las que asistió, faltó con y sin justificación."""
+    if not a or not a.get("sesiones"):
+        return None
+    por = {}
+    for s in a["sesiones"].values():
+        for x in s.get("asistencia") or []:
+            r = por.setdefault(x["nombre"], {"nombre": x["nombre"], "asiste": 0, "justificada": 0, "no_justificada": 0})
+            if x["estado"] == "asiste":
+                r["asiste"] += 1
+            elif x.get("justificacion"):
+                r["justificada"] += 1
+            else:
+                r["no_justificada"] += 1
+    fechas = sorted(s["fecha"] for s in a["sesiones"].values())
+    return {"sesiones": len(a["sesiones"]), "desde": fechas[0], "hasta": fechas[-1], "diputados": sorted(por.values(), key=lambda r: r["nombre"])}
+
+
+# ---------- Vuelos realizados ayer (OpenSky Network, red abierta de receptores ADS-B; gratis y sin clave) ----------
+AEROPUERTOS_ICAO = {"SCL": "SCEL", "ANF": "SCFA", "CCP": "SCIE", "PMC": "SCTE", "PUQ": "SCCI"}
+ICAO_IATA = {   # aerolíneas que operan en los 5 aeropuertos (código OACI del indicativo → código IATA del vuelo)
+    "LAN": "LA", "LXP": "LU", "LPE": "LP", "TAM": "JJ", "LNE": "XL", "SKU": "H2", "SKX": "H2", "JAT": "JA", "JES": "WJ", "JAP": "JZ",
+    "ARG": "AR", "AAL": "AA", "DAL": "DL", "UAL": "UA", "IBE": "IB", "AFR": "AF", "KLM": "KL", "CMP": "CM", "AVA": "AV", "ACA": "AC",
+    "QFA": "QF", "AMX": "AM", "BAW": "BA", "DLH": "LH", "UAE": "EK", "QTR": "QR", "AZU": "AD", "GLO": "G3", "DAP": "V5", "BOV": "OB",
+    "AEA": "UX", "ITY": "AZ", "FBZ": "FO", "ANZ": "NZ", "CPA": "CX", "THY": "TK", "LAP": "PZ", "TPU": "T0"}
+
+
+def vuelo_iata(callsign):
+    c = re.sub(r"\s+", "", str(callsign or "")).upper()
+    m = re.match(r"^([A-Z]{3})(\d{1,4}[A-Z]?)$", c)
+    if not m or m.group(1) not in ICAO_IATA:
+        return ""
+    return ICAO_IATA[m.group(1)] + m.group(2).lstrip("0")
+
+
+def vuelos_ayer(estado, hoy):
+    """Salidas y llegadas de AYER en los 5 aeropuertos (hora de despegue o aterrizaje observada, en hora de Chile)."""
+    ayer = hoy - dt.timedelta(days=1)
+    ini = int(dt.datetime.combine(ayer, dt.time(0, 0), tzinfo=TZ).timestamp())
+    fin = ini + 86400
+    out = {"fecha": ayer.isoformat(), "fuente": "OpenSky Network", "aeropuertos": {}}
+    for iata, icao in AEROPUERTOS_ICAO.items():
+        for tipo, ep, clave_t, otro in (("salidas", "departure", "firstSeen", "estArrivalAirport"), ("llegadas", "arrival", "lastSeen", "estDepartureAirport")):
+            j = pedir(f"https://opensky-network.org/api/flights/{ep}?airport={icao}&begin={ini}&end={fin}", estado, f"vuelos_{iata}_{tipo}", espera=(0, 30))
+            filas = []
+            for v in j if isinstance(j, list) else []:
+                cod = vuelo_iata(v.get("callsign"))
+                t = v.get(clave_t)
+                if not cod or not isinstance(t, (int, float)):
+                    continue
+                filas.append({"vuelo": cod, "hora": dt.datetime.fromtimestamp(t, TZ).strftime("%H:%M"), "otro_icao": v.get(otro) or ""})
+            out["aeropuertos"].setdefault(iata, {})[tipo] = sorted({f["vuelo"]: f for f in filas}.values(), key=lambda f: f["hora"])
+            time.sleep(2)
+    return out if any(x for a in out["aeropuertos"].values() for x in a.values()) else None
 
 
 # ---------- Campeonato Nacional (Wikipedia, API oficial; en inglés y en español) ----------
@@ -384,6 +517,14 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "camara-mes.json"), cam)
     escribir(os.path.join(a.salida, "camara-nominal.json"), nom or None)
     escribir(os.path.join(a.salida, "descubrimiento.json"), descubrir(estado) or None)
+    try:
+        previo_a = json.load(open(os.path.join(a.salida, "camara-asistencia-sesiones.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        previo_a = {}
+    asis = asistencia(estado, hoy, previo_a if isinstance(previo_a, dict) else {})
+    escribir(os.path.join(a.salida, "camara-asistencia-sesiones.json"), asis)
+    escribir(os.path.join(a.salida, "camara-asistencia.json"), asistencia_resumen(asis))
+    escribir(os.path.join(a.salida, "vuelos-ayer.json"), vuelos_ayer(estado, hoy))
     tabla = liga(estado, hoy)
     if tabla:
         tabla["partidos"] = partidos_liga(estado) or []
@@ -391,7 +532,7 @@ def main(argv=None):
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
     escribir(os.path.join(a.salida, "estado.json"), resumen)
     for k, v in estado.items():
-        if not k.startswith(("camara_detalle_", "servicio_")):
+        if not k.startswith(("camara_detalle_", "servicio_", "asistencia_", "vuelos_")):
             print(("OK   " if v["ok"] else "FALLA"), k, v.get("error", ""))
     return 0   # una fuente caída no detiene a las demás
 
