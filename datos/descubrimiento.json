@@ -52,5 +52,14 @@
   "retornarTiposTitularAsistencia",
   "retornarTiposVotacion",
   "retornarTiposVotacionProyectoLey"
- ]
+ ],
+ "_parametros": {
+  "retornarSesionesXAnno": [
+   "prmAnno"
+  ],
+  "retornarSesionAsistencia": [
+   "prmSesionId"
+  ],
+  "retornarDiputadosPeriodoActual": []
+ }
 }
