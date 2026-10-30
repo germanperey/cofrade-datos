@@ -1,28 +1,28 @@
 {
  "fecha": "2026-10-30",
- "generado": "2026-10-30T02:07:09-03:00",
+ "generado": "2026-10-30T08:28:17-03:00",
  "fuentes": {
   "uv": {
    "ok": true,
-   "hora": "2026-10-30T02:00:19-03:00",
+   "hora": "2026-10-30T08:27:17-03:00",
    "url": "https://api.open-meteo.com/v1/forecast?latitude=-18.48,-23.65,-29.9,-33.05,-33.45,-36.83,-38.74,-41.47,-53.16&longitude=-70.31,-70.4,-71.25,-71.61,-70.67,-73.05,-72.59,-72.94,-70.92&daily=uv_index_clear_sky_max&timezone=America%2FSantiago&forecast_days=8",
    "intentos": 1
   },
   "imacec": {
    "ok": true,
-   "hora": "2026-10-30T02:00:43-03:00",
+   "hora": "2026-10-30T08:27:19-03:00",
    "url": "https://mindicador.cl/api/imacec/2026",
    "intentos": 1
   },
   "indicadores": {
    "ok": true,
-   "hora": "2026-10-30T02:00:56-03:00",
+   "hora": "2026-10-30T08:27:19-03:00",
    "url": "https://mindicador.cl/api",
    "intentos": 1
   },
   "camara": {
    "ok": true,
-   "hora": "2026-10-30T02:01:02-03:00",
+   "hora": "2026-10-30T08:27:28-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXAnno?prmAnno=2026",
    "intentos": 1,
    "nominal": {
@@ -30,609 +30,57 @@
     "pendientes": 0
    }
   },
-  "camara_detalle_90188": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:05-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90188",
-   "intentos": 1
-  },
-  "camara_detalle_90186": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:08-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90186",
-   "intentos": 1
-  },
-  "camara_detalle_90187": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:11-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90187",
-   "intentos": 1
-  },
-  "camara_detalle_90178": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:15-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90178",
-   "intentos": 1
-  },
-  "camara_detalle_90180": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:18-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90180",
-   "intentos": 1
-  },
-  "camara_detalle_90189": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:21-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90189",
-   "intentos": 1
-  },
-  "camara_detalle_90190": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:24-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90190",
-   "intentos": 1
-  },
-  "camara_detalle_90166": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:27-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90166",
-   "intentos": 1
-  },
-  "camara_detalle_90128": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:30-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90128",
-   "intentos": 1
-  },
-  "camara_detalle_90127": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:33-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90127",
-   "intentos": 1
-  },
-  "camara_detalle_90135": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:37-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90135",
-   "intentos": 1
-  },
-  "camara_detalle_90136": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:40-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90136",
-   "intentos": 1
-  },
-  "camara_detalle_90139": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:43-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90139",
-   "intentos": 1
-  },
-  "camara_detalle_90140": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:46-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90140",
-   "intentos": 1
-  },
-  "camara_detalle_90137": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:49-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90137",
-   "intentos": 1
-  },
-  "camara_detalle_90141": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:52-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90141",
-   "intentos": 1
-  },
-  "camara_detalle_90138": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:55-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90138",
-   "intentos": 1
-  },
-  "camara_detalle_90129": {
-   "ok": true,
-   "hora": "2026-10-30T02:01:59-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90129",
-   "intentos": 1
-  },
-  "camara_detalle_90079": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:02-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90079",
-   "intentos": 1
-  },
-  "camara_detalle_90083": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:05-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90083",
-   "intentos": 1
-  },
-  "camara_detalle_90114": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:08-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90114",
-   "intentos": 1
-  },
-  "camara_detalle_90113": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:11-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90113",
-   "intentos": 1
-  },
-  "camara_detalle_90104": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:14-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90104",
-   "intentos": 1
-  },
-  "camara_detalle_90117": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:17-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90117",
-   "intentos": 1
-  },
-  "camara_detalle_90116": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:21-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90116",
-   "intentos": 1
-  },
-  "camara_detalle_90080": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:24-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90080",
-   "intentos": 1
-  },
-  "camara_detalle_90119": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:27-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90119",
-   "intentos": 1
-  },
-  "camara_detalle_90118": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:30-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90118",
-   "intentos": 1
-  },
-  "camara_detalle_90112": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:33-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90112",
-   "intentos": 1
-  },
-  "camara_detalle_90082": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:36-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90082",
-   "intentos": 1
-  },
-  "camara_detalle_90115": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:39-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90115",
-   "intentos": 1
-  },
-  "camara_detalle_90084": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:42-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90084",
-   "intentos": 1
-  },
-  "camara_detalle_90086": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:46-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90086",
-   "intentos": 1
-  },
-  "camara_detalle_90085": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:49-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90085",
-   "intentos": 1
-  },
-  "camara_detalle_90111": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:52-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90111",
-   "intentos": 1
-  },
-  "camara_detalle_90081": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:55-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90081",
-   "intentos": 1
-  },
-  "camara_detalle_90061": {
-   "ok": true,
-   "hora": "2026-10-30T02:02:58-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90061",
-   "intentos": 1
-  },
   "camara_detalle_90242": {
    "ok": true,
-   "hora": "2026-10-30T02:03:01-03:00",
+   "hora": "2026-10-30T08:27:31-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90242",
-   "intentos": 1
-  },
-  "camara_detalle_90060": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:04-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90060",
-   "intentos": 1
-  },
-  "camara_detalle_90063": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:08-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90063",
-   "intentos": 1
-  },
-  "camara_detalle_90055": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:11-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90055",
-   "intentos": 1
-  },
-  "camara_detalle_90062": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:14-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90062",
-   "intentos": 1
-  },
-  "camara_detalle_90056": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:17-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90056",
-   "intentos": 1
-  },
-  "camara_detalle_90024": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:20-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90024",
-   "intentos": 1
-  },
-  "camara_detalle_90025": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:23-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90025",
-   "intentos": 1
-  },
-  "camara_detalle_90020": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:26-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90020",
-   "intentos": 1
-  },
-  "camara_detalle_90023": {
-   "ok": true,
-   "hora": "2026-10-30T02:03:30-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90023",
-   "intentos": 1
-  },
-  "camara_detalle_90021": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:03-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90021",
-   "intentos": 2
-  },
-  "camara_detalle_90026": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:06-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90026",
-   "intentos": 1
-  },
-  "camara_detalle_90022": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90022",
-   "intentos": 1
-  },
-  "camara_detalle_90001": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:13-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90001",
-   "intentos": 1
-  },
-  "camara_detalle_90011": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:16-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90011",
-   "intentos": 1
-  },
-  "camara_detalle_90008": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:19-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90008",
-   "intentos": 1
-  },
-  "camara_detalle_90009": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:22-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90009",
-   "intentos": 1
-  },
-  "camara_detalle_90002": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:25-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90002",
-   "intentos": 1
-  },
-  "camara_detalle_90005": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:28-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90005",
-   "intentos": 1
-  },
-  "camara_detalle_90003": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:31-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90003",
-   "intentos": 1
-  },
-  "camara_detalle_90010": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:35-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90010",
-   "intentos": 1
-  },
-  "camara_detalle_89994": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:38-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89994",
-   "intentos": 1
-  },
-  "camara_detalle_89993": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:41-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89993",
-   "intentos": 1
-  },
-  "camara_detalle_90006": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:44-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90006",
-   "intentos": 1
-  },
-  "camara_detalle_90007": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:47-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90007",
-   "intentos": 1
-  },
-  "camara_detalle_90004": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:50-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90004",
-   "intentos": 1
-  },
-  "camara_detalle_89979": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:53-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89979",
-   "intentos": 1
-  },
-  "camara_detalle_89985": {
-   "ok": true,
-   "hora": "2026-10-30T02:04:56-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89985",
-   "intentos": 1
-  },
-  "camara_detalle_89951": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:00-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89951",
-   "intentos": 1
-  },
-  "camara_detalle_89952": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:03-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89952",
-   "intentos": 1
-  },
-  "camara_detalle_89954": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:06-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89954",
-   "intentos": 1
-  },
-  "camara_detalle_89955": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89955",
-   "intentos": 1
-  },
-  "camara_detalle_89953": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:12-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89953",
-   "intentos": 1
-  },
-  "camara_detalle_89946": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:15-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89946",
-   "intentos": 1
-  },
-  "camara_detalle_89950": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:18-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89950",
-   "intentos": 1
-  },
-  "camara_detalle_89947": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:22-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89947",
-   "intentos": 1
-  },
-  "camara_detalle_89949": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:25-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89949",
-   "intentos": 1
-  },
-  "camara_detalle_89927": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:28-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89927",
-   "intentos": 1
-  },
-  "camara_detalle_89924": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:31-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89924",
-   "intentos": 1
-  },
-  "camara_detalle_89934": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:34-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89934",
-   "intentos": 1
-  },
-  "camara_detalle_89925": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:37-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89925",
-   "intentos": 1
-  },
-  "camara_detalle_89926": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:40-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89926",
-   "intentos": 1
-  },
-  "camara_detalle_89932": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:44-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89932",
-   "intentos": 1
-  },
-  "camara_detalle_89939": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:47-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89939",
-   "intentos": 1
-  },
-  "camara_detalle_89936": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:50-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89936",
-   "intentos": 1
-  },
-  "camara_detalle_89919": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:53-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89919",
-   "intentos": 1
-  },
-  "camara_detalle_89929": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:56-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89929",
-   "intentos": 1
-  },
-  "camara_detalle_89937": {
-   "ok": true,
-   "hora": "2026-10-30T02:05:59-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89937",
-   "intentos": 1
-  },
-  "camara_detalle_89928": {
-   "ok": true,
-   "hora": "2026-10-30T02:06:02-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89928",
-   "intentos": 1
-  },
-  "camara_detalle_89931": {
-   "ok": true,
-   "hora": "2026-10-30T02:06:06-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89931",
-   "intentos": 1
-  },
-  "camara_detalle_89933": {
-   "ok": true,
-   "hora": "2026-10-30T02:06:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89933",
-   "intentos": 1
-  },
-  "camara_detalle_89930": {
-   "ok": true,
-   "hora": "2026-10-30T02:06:12-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89930",
-   "intentos": 1
-  },
-  "camara_detalle_89938": {
-   "ok": true,
-   "hora": "2026-10-30T02:06:15-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89938",
-   "intentos": 1
-  },
-  "camara_detalle_89920": {
-   "ok": true,
-   "hora": "2026-10-30T02:06:18-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89920",
-   "intentos": 1
-  },
-  "camara_detalle_89935": {
-   "ok": true,
-   "hora": "2026-10-30T02:06:21-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89935",
-   "intentos": 1
-  },
-  "camara_detalle_89909": {
-   "ok": true,
-   "hora": "2026-10-30T02:06:24-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=89909",
    "intentos": 1
   },
   "servicio_WSLegislativo": {
    "ok": true,
-   "hora": "2026-10-30T02:06:26-03:00",
+   "hora": "2026-10-30T08:27:32-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx",
    "intentos": 1
   },
   "servicio_WSSala": {
    "ok": true,
-   "hora": "2026-10-30T02:06:26-03:00",
+   "hora": "2026-10-30T08:27:33-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx",
    "intentos": 1
   },
   "servicio_WSDiputado": {
    "ok": true,
-   "hora": "2026-10-30T02:06:27-03:00",
+   "hora": "2026-10-30T08:27:34-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSDiputado.asmx",
    "intentos": 1
   },
   "servicio_WSComun": {
    "ok": true,
-   "hora": "2026-10-30T02:06:28-03:00",
+   "hora": "2026-10-30T08:27:35-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSComun.asmx",
    "intentos": 1
   },
   "servicio_retornarSesionesXAnno": {
    "ok": true,
-   "hora": "2026-10-30T02:06:29-03:00",
+   "hora": "2026-10-30T08:27:36-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx?op=retornarSesionesXAnno",
    "intentos": 1
   },
   "servicio_retornarSesionAsistencia": {
    "ok": true,
-   "hora": "2026-10-30T02:06:30-03:00",
+   "hora": "2026-10-30T08:27:37-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx?op=retornarSesionAsistencia",
    "intentos": 1
   },
   "servicio_retornarDiputadosPeriodoActual": {
    "ok": true,
-   "hora": "2026-10-30T02:06:31-03:00",
+   "hora": "2026-10-30T08:27:38-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSDiputado.asmx?op=retornarDiputadosPeriodoActual",
    "intentos": 1
   },
   "asistencia": {
    "ok": true,
-   "hora": "2026-10-30T02:06:32-03:00",
+   "hora": "2026-10-30T08:27:39-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx/retornarSesionesXAnno?prmAnno=2026",
    "intentos": 1,
    "sesiones": {
@@ -642,102 +90,102 @@
   },
   "opensky_cuenta": {
    "ok": true,
-   "hora": "2026-10-30T02:06:32-03:00"
+   "hora": "2026-10-30T08:27:40-03:00"
   },
   "vuelos_SCL_salidas": {
    "ok": true,
-   "hora": "2026-10-30T02:06:34-03:00",
+   "hora": "2026-10-30T08:27:42-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCEL&begin=1793242800&end=1793329200",
    "intentos": 1
   },
   "vuelos_SCL_llegadas": {
    "ok": false,
-   "hora": "2026-10-30T02:06:37-03:00",
+   "hora": "2026-10-30T08:27:46-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCEL&begin=1793242800&end=1793329200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_ANF_salidas": {
    "ok": false,
-   "hora": "2026-10-30T02:06:41-03:00",
+   "hora": "2026-10-30T08:27:49-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCFA&begin=1793242800&end=1793329200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_ANF_llegadas": {
    "ok": false,
-   "hora": "2026-10-30T02:06:44-03:00",
+   "hora": "2026-10-30T08:27:52-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCFA&begin=1793242800&end=1793329200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_CCP_salidas": {
    "ok": false,
-   "hora": "2026-10-30T02:06:49-03:00",
+   "hora": "2026-10-30T08:27:56-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCIE&begin=1793242800&end=1793329200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_CCP_llegadas": {
    "ok": false,
-   "hora": "2026-10-30T02:06:52-03:00",
+   "hora": "2026-10-30T08:27:59-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCIE&begin=1793242800&end=1793329200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_PMC_salidas": {
    "ok": true,
-   "hora": "2026-10-30T02:06:56-03:00",
+   "hora": "2026-10-30T08:28:03-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCTE&begin=1793242800&end=1793329200",
    "intentos": 1
   },
   "vuelos_PMC_llegadas": {
    "ok": true,
-   "hora": "2026-10-30T02:06:59-03:00",
+   "hora": "2026-10-30T08:28:06-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCTE&begin=1793242800&end=1793329200",
    "intentos": 1
   },
   "vuelos_PUQ_salidas": {
    "ok": false,
-   "hora": "2026-10-30T02:07:02-03:00",
+   "hora": "2026-10-30T08:28:10-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCCI&begin=1793242800&end=1793329200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_PUQ_llegadas": {
    "ok": false,
-   "hora": "2026-10-30T02:07:05-03:00",
+   "hora": "2026-10-30T08:28:13-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCCI&begin=1793242800&end=1793329200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "liga": {
    "ok": true,
-   "hora": "2026-10-30T02:07:08-03:00",
+   "hora": "2026-10-30T08:28:15-03:00",
    "url": "https://en.wikipedia.org/api/rest_v1/page/html/2026_Liga_de_Primera",
    "intentos": 1
   },
   "liga_es_busqueda": {
    "ok": true,
-   "hora": "2026-10-30T02:07:08-03:00",
+   "hora": "2026-10-30T08:28:16-03:00",
    "url": "https://es.wikipedia.org/w/api.php?action=query&list=search&format=json&srlimit=5&srsearch=Primera%20Divisi%C3%B3n%20Chile%202026%20campeonato",
    "intentos": 1
   },
   "liga_es_fecha": {
    "ok": true,
-   "hora": "2026-10-30T02:07:09-03:00",
+   "hora": "2026-10-30T08:28:16-03:00",
    "url": "https://es.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=timestamp&format=json&titles=Liga%20de%20Primera%202026",
    "intentos": 1
   },
   "liga_es": {
    "ok": true,
-   "hora": "2026-10-30T02:07:09-03:00",
+   "hora": "2026-10-30T08:28:17-03:00",
    "url": "https://es.wikipedia.org/api/rest_v1/page/html/Liga_de_Primera_2026",
    "intentos": 1
   },
   "partidos": {
    "ok": true,
-   "hora": "2026-10-30T02:07:09-03:00",
+   "hora": "2026-10-30T08:28:17-03:00",
    "url": "https://www.thesportsdb.com/api/v1/json/123/eventspastleague.php?id=4627",
    "intentos": 1
   }
