@@ -47,7 +47,7 @@ def ahora():
     return dt.datetime.now(TZ)
 
 
-def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None):
+def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None, cabeceras=None):
     """GET con hasta 3 intentos y pausas. Anota el resultado en estado[clave]. → contenido o None."""
     s = sesion or requests.Session()
     error = ""
@@ -55,7 +55,7 @@ def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None):
         if p:
             time.sleep(p)
         try:
-            r = s.get(url, headers={"User-Agent": UA, "Accept": "application/json, text/xml, text/html"}, timeout=60)
+            r = s.get(url, headers=dict({"User-Agent": UA, "Accept": "application/json, text/xml, text/html"}, **(cabeceras or {})), timeout=60)
             if r.status_code == 200 and r.content:
                 estado[clave] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": url, "intentos": i + 1}
                 return r.json() if como == "json" else r.text
@@ -363,15 +363,41 @@ def vuelo_iata(callsign):
     return ICAO_IATA[m.group(1)] + m.group(2).lstrip("0")
 
 
+OPENSKY_TOKEN = "https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token"
+
+
+def opensky_token(estado):
+    """Desde el 18-03-2026 OpenSky pide una cuenta (gratuita) con «API client» (OAuth2, client credentials). Sin cuenta rechaza a los
+    servidores de GitHub (HTTP 403, visto el 29-10-2026). Los dos datos van como secretos del repositorio: OPENSKY_CLIENT_ID y
+    OPENSKY_CLIENT_SECRET. → token o None (si no hay secretos, se intenta igual sin cuenta)."""
+    cid, sec = os.environ.get("OPENSKY_CLIENT_ID", "").strip(), os.environ.get("OPENSKY_CLIENT_SECRET", "").strip()
+    if not cid or not sec:
+        estado["opensky_cuenta"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "error": "sin secretos OPENSKY_CLIENT_ID / OPENSKY_CLIENT_SECRET (cuenta gratuita)"}
+        return None
+    try:
+        r = requests.post(OPENSKY_TOKEN, data={"grant_type": "client_credentials", "client_id": cid, "client_secret": sec},
+                          headers={"User-Agent": UA}, timeout=60)
+        tok = r.json().get("access_token") if r.status_code == 200 else None
+    except (requests.RequestException, ValueError) as ex:
+        tok, r = None, None
+        estado["opensky_cuenta"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "error": f"{type(ex).__name__}"}
+        return None
+    estado["opensky_cuenta"] = {"ok": bool(tok), "hora": ahora().isoformat(timespec="seconds")} | ({} if tok else {"error": f"HTTP {r.status_code}"})
+    return tok
+
+
 def vuelos_ayer(estado, hoy):
     """Salidas y llegadas de AYER en los 5 aeropuertos (hora de despegue o aterrizaje observada, en hora de Chile)."""
+    tok = opensky_token(estado)
+    cab = {"Authorization": f"Bearer {tok}"} if tok else None
     ayer = hoy - dt.timedelta(days=1)
     ini = int(dt.datetime.combine(ayer, dt.time(0, 0), tzinfo=TZ).timestamp())
     fin = ini + 86400
     out = {"fecha": ayer.isoformat(), "fuente": "OpenSky Network", "aeropuertos": {}}
     for iata, icao in AEROPUERTOS_ICAO.items():
         for tipo, ep, clave_t, otro in (("salidas", "departure", "firstSeen", "estArrivalAirport"), ("llegadas", "arrival", "lastSeen", "estDepartureAirport")):
-            j = pedir(f"https://opensky-network.org/api/flights/{ep}?airport={icao}&begin={ini}&end={fin}", estado, f"vuelos_{iata}_{tipo}", espera=(0, 30))
+            j = pedir(f"https://opensky-network.org/api/flights/{ep}?airport={icao}&begin={ini}&end={fin}", estado, f"vuelos_{iata}_{tipo}",
+                      espera=(0, 30), cabeceras=cab)
             filas = []
             for v in j if isinstance(j, list) else []:
                 cod = vuelo_iata(v.get("callsign"))

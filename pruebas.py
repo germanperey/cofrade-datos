@@ -146,6 +146,45 @@ def asistencia_sesiones_y_vuelos_de_ayer():
 
 
 @prueba
+def opensky_con_cuenta_gratuita():
+    e = {}
+    os_env = dict(B.os.environ)
+    try:
+        B.os.environ.pop("OPENSKY_CLIENT_ID", None); B.os.environ.pop("OPENSKY_CLIENT_SECRET", None)
+        assert B.opensky_token(e) is None and "sin secretos" in e["opensky_cuenta"]["error"]
+        B.os.environ["OPENSKY_CLIENT_ID"], B.os.environ["OPENSKY_CLIENT_SECRET"] = "cliente", "secreto"
+        vistos = []
+
+        class R:
+            status_code = 200
+
+            def json(self):
+                return {"access_token": "TOK"}
+        post = B.requests.post
+        B.requests.post = lambda url, data=None, **k: (vistos.append((url, data)), R())[1]
+        try:
+            assert B.opensky_token(e) == "TOK" and e["opensky_cuenta"]["ok"]
+            assert vistos[0][0] == B.OPENSKY_TOKEN and vistos[0][1]["grant_type"] == "client_credentials" and vistos[0][1]["client_id"] == "cliente"
+        finally:
+            B.requests.post = post
+        cab = []
+
+        class S:
+            def get(self, url, headers=None, **k):
+                cab.append(headers)
+
+                class Rr:
+                    status_code, content, text = 200, b"[]", "[]"
+
+                    def json(self):
+                        return []
+                return Rr()
+        assert B.pedir("u", {}, "x", sesion=S(), cabeceras={"Authorization": "Bearer TOK"}) == [] and cab[0]["Authorization"] == "Bearer TOK"
+    finally:
+        B.os.environ.clear(); B.os.environ.update(os_env)
+
+
+@prueba
 def reintenta_con_pausa_y_anota_el_error():
     llamadas = []
 
