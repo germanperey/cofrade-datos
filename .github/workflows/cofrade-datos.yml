@@ -1,10 +1,11 @@
 # Cofrade News · datos oficiales del día (gratis, en GitHub Actions)
-# Corre todos los días a las 10:20 UTC (07:20 de Santiago en horario de verano, 06:20 en invierno).
+# Corre tres veces cada madrugada (03:17, 05:17 y 07:17 UTC = 00:17, 02:17 y 04:17 de Santiago en verano),
+# antes de la tarea de las 06:47. También se puede correr a mano: pestaña «Actions» → «Datos oficiales del día» → «Run workflow».
 name: Datos oficiales del día
 
 on:
   schedule:
-    - cron: "20 10 * * *"
+    - cron: "17 3,5,7 * * *"   # 00:17, 02:17 y 04:17 de Santiago (verano): GitHub a veces atrasa horas sus relojes; con tres intentos al menos uno llega antes de las 06:47
   workflow_dispatch:
 
 permissions:
@@ -28,6 +29,9 @@ jobs:
       - name: Probar el programa
         run: python pruebas.py
       - name: Bajar datos oficiales
+        env:   # 30-10-2026: cuenta GRATUITA de OpenSky (opcional). Sin estos dos secretos, OpenSky rechaza a GitHub (HTTP 403) y se sigue sin él
+          OPENSKY_CLIENT_ID: ${{ secrets.OPENSKY_CLIENT_ID }}
+          OPENSKY_CLIENT_SECRET: ${{ secrets.OPENSKY_CLIENT_SECRET }}
         run: python bajar.py --salida datos
       - name: Guardar en el repositorio
         run: |
