@@ -221,6 +221,8 @@ def main_sin_red_no_se_cae():
     def falla(self, url, **k):
         raise B.requests.ConnectionError("sin red")
     B.requests.Session.get = falla
+    B._ROBOTS.clear()
+    B._SIN_ROBOTS.clear()
     try:
         d = tempfile.mkdtemp()
         assert B.main(["--salida", d]) == 0
@@ -229,6 +231,126 @@ def main_sin_red_no_se_cae():
         assert all(not v["ok"] for v in e["fuentes"].values()) and not os.path.exists(os.path.join(d, "uv.csv"))
     finally:
         B.time.sleep, B.requests.Session.get = dormir, get
+
+
+# ---------- 31-10-2026: titulares por RSS, mercados y bitcoin ----------
+RSS_GN = """<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Google News</title>
+<item><title>Cámara aprueba el reajuste - La Tercera</title><link>https://news.google.com/rss/articles/abc</link>
+<pubDate>Fri, 30 Oct 2026 22:15:00 GMT</pubDate><description>&lt;a href="x"&gt;Cámara aprueba&lt;/a&gt; el reajuste</description>
+<source url="https://www.latercera.com">La Tercera</source></item>
+<item><title>Nota vieja</title><link>https://ej.cl/vieja</link><pubDate>Mon, 12 Oct 2026 10:00:00 GMT</pubDate></item>
+<item><title>Sin enlace</title></item></channel></rss>"""
+ATOM = """<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><title>ESO</title>
+<entry><title>Un nuevo exoplaneta</title><link rel="alternate" href="https://www.eso.org/public/news/eso2620/"/>
+<updated>2026-10-30T12:00:00Z</updated><summary type="html">El VLT detectó &lt;b&gt;un planeta&lt;/b&gt;.</summary></entry></feed>"""
+
+
+@prueba
+def rss_y_atom_con_medio_real_y_fecha_de_chile():
+    n = B.leer_feed(RSS_GN, "Google News · Política")
+    assert len(n) == 2, n
+    assert n[0]["fuente"] == "La Tercera (vía Google News)" and n[0]["titulo"] == "Cámara aprueba el reajuste", n[0]
+    assert n[0]["fecha"] == "2026-10-30 19:15" and n[0]["resumen"] == "Cámara aprueba el reajuste", n[0]   # UTC-3, sin HTML
+    a = B.leer_feed(ATOM, "ESO · Comunicados (RSS)")
+    assert a == [{"fuente": "ESO · Comunicados (RSS)", "titulo": "Un nuevo exoplaneta", "fecha": "2026-10-30 09:00",
+                  "url": "https://www.eso.org/public/news/eso2620/", "resumen": "El VLT detectó un planeta."}], a
+    assert B.leer_feed("<html>no</html", "x") is None and B.leer_feed("<rss><channel></channel></rss>", "x") == []
+    j = {"articles": [{"headline": "Jarry avanza", "published": "2026-10-30T20:00:00Z", "description": "Ganó",
+                       "links": {"web": {"href": "https://espn.com/t/1"}}}, {"headline": "sin enlace"}]}
+    assert B.leer_espn(j, "ESPN · Tenis") == [{"fuente": "ESPN · Tenis", "titulo": "Jarry avanza", "fecha": "2026-10-30 17:00",
+                                              "url": "https://espn.com/t/1", "resumen": "Ganó"}]
+
+
+@prueba
+def robots_txt_se_respeta_y_sin_respuesta_no_se_lee():
+    class R:
+        def __init__(s, c, t=""):
+            s.status_code, s.text = c, t
+    resp = {"https://a.cl/robots.txt": R(200, "User-agent: *\nDisallow: /rss\n"), "https://b.cl/robots.txt": R(404),
+            "https://c.cl/robots.txt": R(403)}
+
+    def get(self, url, **k):
+        if url in resp:
+            return resp[url]
+        raise B.requests.ConnectionError("x")
+    viejo = B.requests.Session.get
+    B.requests.Session.get = get
+    B._ROBOTS.clear()
+    try:
+        e = {}
+        assert not B.robots_permite("https://a.cl/rss/portada", e) and B.robots_permite("https://a.cl/feed/", e)
+        assert B.robots_permite("https://b.cl/feed", e) and not B.robots_permite("https://c.cl/feed", e)
+        assert not B.robots_permite("https://d.cl/feed", e) and not e["robots_d.cl"]["ok"]
+        assert B._motivo_robots("https://d.cl/x") == "robots.txt no respondió" and B._motivo_robots("https://a.cl/rss") == "robots.txt no lo permite"
+    finally:
+        B.requests.Session.get = viejo
+        B._ROBOTS.clear()
+        B._SIN_ROBOTS.clear()
+
+
+@prueba
+def titulares_por_seccion_con_ventana_sin_repetir_y_robots():
+    feeds = {"politica/chile": [("GN", "https://news.google.com/rss/a", "rss"), ("GN2", "https://news.google.com/rss/b", "rss"),
+                                ("Prohibido", "https://no.cl/feed", "rss"), ("Caído", "https://caido.cl/feed", "rss")],
+             "astronomia": [("ESO", "https://www.eso.org/public/news/feed/", "rss")]}
+    viejos = B.robots_permite, B.pedir, B.ahora
+
+    def pedir(url, estado, clave, **k):
+        if "caido" in url:
+            estado[clave] = {"ok": False, "error": "HTTP 500"}
+            return None
+        estado[clave] = {"ok": True}
+        return ATOM if "eso.org" in url else RSS_GN
+    B.robots_permite = lambda url, e: "no.cl" not in url
+    B.pedir = pedir
+    B.ahora = lambda: dt.datetime(2026, 10, 31, 4, 17, tzinfo=B.TZ)
+    try:
+        e = {}
+        t = B.titulares(e, feeds, hilos=2)
+        pc = t["secciones"]["politica/chile"]
+        assert [n["titulo"] for n in pc["notas"]] == ["Cámara aprueba el reajuste"], pc   # sin la vieja ni la repetida
+        c = {x["fuente"]: x for x in pc["consultadas"]}
+        assert c["GN"]["ok"] and c["GN"]["n"] == 2 and c["Prohibido"]["error"] == "robots.txt no lo permite" and c["Caído"]["error"] == "HTTP 500"
+        assert t["secciones"]["astronomia"]["notas"][0]["url"].startswith("https://www.eso.org/")
+        assert e["titulares"]["ok"] and e["titulares"]["feeds_ok"] == 3 and e["titulares"]["feeds"] == 5
+    finally:
+        B.robots_permite, B.pedir, B.ahora = viejos
+    assert all(len(v) >= 6 for v in B.FEEDS.values()) and set(B.FEEDS) >= {"economia/chile", "deportes", "ciencia", "astronomia"}
+    assert all(u.startswith("https://") and t in ("rss", "json") for v in B.FEEDS.values() for _, u, t in v)
+
+
+@prueba
+def mercados_solo_cierres_definitivos_y_bitcoin():
+    hoy = dt.date(2026, 10, 31)
+    t0 = int(dt.datetime(2026, 10, 29, 13, 0, tzinfo=dt.timezone.utc).timestamp())
+    j = {"chart": {"result": [{"meta": {"gmtoffset": -10800}, "timestamp": [t0, t0 + 86400, t0 + 2 * 86400],
+                               "indicators": {"quote": [{"close": [9000.0, 9090.0, 9500.0]}]}}]}}
+    assert B.cierres_yahoo(j, hoy) == [("2026-10-29", 9000.0), ("2026-10-30", 9090.0)]   # el 31 (hoy, abierto) no es cierre
+    assert B.cierres_stooq("Date,Open,High,Low,Close\n2026-10-29,1,1,1,10\n2026-10-30,1,1,1,11\n2026-10-31,1,1,1,99\n", hoy) == \
+        [("2026-10-29", 10.0), ("2026-10-30", 11.0)]
+    viejos = B.robots_permite, B.pedir
+
+    def pedir(url, estado, clave, **k):
+        estado[clave] = {"ok": True}
+        if "coinbase" in url:
+            return {"data": {"amount": "71234.567"}}
+        if "stooq" in url:
+            return "Date,Open,High,Low,Close\n2026-10-29,1,1,1,100\n2026-10-30,1,1,1,102\n"
+        return j if "IPSA" in url else None
+    B.robots_permite, B.pedir = (lambda url, e: True), pedir
+    try:
+        e = {}
+        m = B.mercados(e, hoy)
+        ipsa = next(x for x in m if x["nombre"] == "IPSA")
+        assert ipsa == {"nombre": "IPSA", "valor": 9090.0, "variacion_pct": 1.0, "fecha": "2026-10-30", "fuente": "Yahoo Finance"}, ipsa
+        assert next(x for x in m if x["nombre"] == "S&P 500")["fuente"] == "Stooq" and len(m) == 7 and e["mercados"]["ok"]
+        assert B.bitcoin(e, hoy) == {"bitcoin_usd": 71234.57, "bitcoin_fecha": "2026-10-31", "bitcoin_fuente": "Coinbase"}
+        B.pedir = lambda url, estado, clave, **k: ({"bitcoin": {"usd": 70000, "last_updated_at": 1793420000}} if "coingecko" in url else None)
+        assert B.bitcoin(e, hoy)["bitcoin_fuente"] == "CoinGecko"
+        B.pedir = lambda url, estado, clave, **k: None
+        assert B.bitcoin(e, hoy) is None and B.mercados(e, hoy) == [] and not e["mercados"]["ok"]
+    finally:
+        B.robots_permite, B.pedir = viejos
 
 
 if __name__ == "__main__":

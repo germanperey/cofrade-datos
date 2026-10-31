@@ -16,6 +16,10 @@ Archivos que deja en datos/:
   vuelos-ayer.json    salidas y llegadas de AYER en los 5 aeropuertos (OpenSky Network, gratis)
   liga-primera.json   tabla completa del Campeonato Nacional (API de Wikipedia, inglés o español) y los últimos
                       partidos jugados (TheSportsDB, API gratuita)
+  titulares.json      31-10-2026: titulares de las últimas horas de cada sección, leídos de los RSS PÚBLICOS de los medios
+                      (BBC, El País, DW, France 24, La Tercera, Xataka, NASA, ESA, ESO, ScienceDaily…) y de Google News,
+                      solo donde el robots.txt del sitio lo permite
+  mercados.json       31-10-2026: último CIERRE del IPSA, S&P 500, Nasdaq, Dow Jones, Brent, cobre Comex y bitcoin (con su fecha)
   estado.json         qué respondió, a qué hora y con qué error
 """
 import argparse
@@ -27,6 +31,11 @@ import re
 import sys
 import time
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor
+from email.utils import parsedate_to_datetime
+from html import unescape
+from urllib import robotparser
+from urllib.parse import quote, urlsplit
 
 import requests
 
@@ -47,7 +56,7 @@ def ahora():
     return dt.datetime.now(TZ)
 
 
-def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None, cabeceras=None):
+def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None, cabeceras=None, limite=60):
     """GET con hasta 3 intentos y pausas. Anota el resultado en estado[clave]. → contenido o None."""
     s = sesion or requests.Session()
     error = ""
@@ -55,7 +64,7 @@ def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None, cabeceras
         if p:
             time.sleep(p)
         try:
-            r = s.get(url, headers=dict({"User-Agent": UA, "Accept": "application/json, text/xml, text/html"}, **(cabeceras or {})), timeout=60)
+            r = s.get(url, headers=dict({"User-Agent": UA, "Accept": "application/json, text/xml, text/html"}, **(cabeceras or {})), timeout=limite)
             if r.status_code == 200 and r.content:
                 estado[clave] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": url, "intentos": i + 1}
                 return r.json() if como == "json" else r.text
@@ -517,6 +526,388 @@ def liga(estado, hoy):
     return es if pj(es) > pj(en) else (en if pj(en) >= 0 else None)   # la más avanzada en partidos jugados
 
 
+# ---------- titulares: RSS públicos de los medios (31-10-2026, Germán: «aplica absolutamente todos los medios existentes») ----------
+# Desde la tarea de la mañana muchos medios rechazan la lectura (client_error). Desde GitHub se leen sus RSS PÚBLICOS: el formato que
+# los medios publican justamente para que otros programas lean sus titulares. Antes de cada sitio se lee su robots.txt y se
+# respeta: si el sitio no permite la lectura automática, NO se lee y queda anotado. Cada nota guarda su medio y su enlace.
+FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fuentes-noticias.json) + feeds públicos de los medios
+    "economia/chile": [
+        ("Google News · Economía Chile", "https://news.google.com/rss/search?q=econom%C3%ADa+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Bolsa de Santiago", "https://news.google.com/rss/search?q=IPSA+OR+%22Bolsa+de+Santiago%22+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Cobre y minería", "https://news.google.com/rss/search?q=cobre+OR+Codelco+OR+miner%C3%ADa+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Empresas Chile", "https://news.google.com/rss/search?q=empresas+Chile+(utilidades+OR+inversi%C3%B3n+OR+exportaciones)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Hacienda y presupuesto", "https://news.google.com/rss/search?q=Hacienda+OR+presupuesto+OR+%22Banco+Central%22+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Banco Central / IPC / dólar", "https://news.google.com/rss/search?q=(%22Banco+Central%22+OR+IPC+OR+d%C3%B3lar+OR+IMACEC)+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Inversiones y proyectos en Chile", "https://news.google.com/rss/search?q=inversi%C3%B3n+proyecto+Chile+%22millones+de+d%C3%B3lares%22+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("La Tercera · Pulso (RSS)", "https://www.latercera.com/arc/outboundfeeds/rss/category/pulso/?outputType=xml", "rss"),
+        ("El Mostrador · Mercados (RSS)", "https://www.elmostrador.cl/mercados/feed/", "rss"),
+        ("Cooperativa (RSS)", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml", "rss"),
+    ],
+    "economia/mundo": [
+        ("Google News · Economía mundial", "https://news.google.com/rss/search?q=econom%C3%ADa+mundial+OR+Fed+OR+mercados+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Europa economía", "https://news.google.com/rss/search?q=BCE+OR+eurozona+econom%C3%ADa+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Petróleo", "https://news.google.com/rss/search?q=petr%C3%B3leo+OR+Brent+OR+OPEP+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · China y comercio", "https://news.google.com/rss/search?q=China+econom%C3%ADa+OR+aranceles+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Reserva Federal", "https://news.google.com/rss/search?q=%22Reserva+Federal%22+OR+Wall+Street+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Economía Estados Unidos", "https://news.google.com/rss/search?q=econom%C3%ADa+%22Estados+Unidos%22+(inflaci%C3%B3n+OR+empleo+OR+PIB)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · FMI y Banco Mundial", "https://news.google.com/rss/search?q=(FMI+OR+%22Banco+Mundial%22+OR+OCDE)+econom%C3%ADa+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Economía América Latina", "https://news.google.com/rss/search?q=econom%C3%ADa+(Argentina+OR+Brasil+OR+M%C3%A9xico+OR+Per%C3%BA+OR+Colombia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Bolsas y mercados mundiales", "https://news.google.com/rss/search?q=(bolsas+OR+%22Wall+Street%22+OR+mercados)+cierre+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Comercio internacional", "https://news.google.com/rss/search?q=(comercio+internacional+OR+exportaciones+OR+aranceles)+econom%C3%ADa+mundial+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("BBC Mundo · Economía (RSS)", "https://feeds.bbci.co.uk/mundo/temas/economia/rss.xml", "rss"),
+        ("El País · Economía (RSS)", "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada", "rss"),
+        ("DW en español (RSS)", "https://rss.dw.com/xml/rss-sp-all", "rss"),
+    ],
+    "politica/chile": [
+        ("Google News · Política Chile", "https://news.google.com/rss/search?q=pol%C3%ADtica+Chile+(gobierno+OR+Congreso+OR+Senado+OR+C%C3%A1mara)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("La Tercera · Política (RSS)", "https://www.latercera.com/arc/outboundfeeds/rss/category/politica/?outputType=xml", "rss"),
+        ("El Mostrador · País (RSS)", "https://www.elmostrador.cl/noticias/pais/feed/", "rss"),
+        ("CIPER (RSS)", "https://www.ciperchile.cl/feed/", "rss"),
+        ("Ex-Ante (RSS)", "https://www.ex-ante.cl/feed/", "rss"),
+        ("Radio U. de Chile (RSS)", "https://radio.uchile.cl/feed/", "rss"),
+        ("Google News · Congreso y Gobierno", "https://news.google.com/rss/search?q=(Kast+OR+%22La+Moneda%22+OR+ministro)+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+    ],
+    "politica/mundo": [
+        ("Google News · Internacional", "https://news.google.com/rss/search?q=internacional+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Medio Oriente", "https://news.google.com/rss/search?q=Israel+OR+Gaza+OR+Ir%C3%A1n+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Europa", "https://news.google.com/rss/search?q=Uni%C3%B3n+Europea+OR+Europa+gobierno+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · América Latina", "https://news.google.com/rss/search?q=Am%C3%A9rica+Latina+gobierno+OR+elecciones+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Mundo (EE. UU.)", "https://news.google.com/rss/search?q=Estados+Unidos+Casa+Blanca+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("BBC Mundo (RSS)", "https://feeds.bbci.co.uk/mundo/rss.xml", "rss"),
+        ("France 24 en español (RSS)", "https://www.france24.com/es/rss", "rss"),
+        ("El País · Internacional (RSS)", "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada", "rss"),
+        ("Infobae (RSS)", "https://www.infobae.com/arc/outboundfeeds/rss/", "rss"),
+        ("Al Jazeera (RSS, inglés)", "https://www.aljazeera.com/xml/rss/all.xml", "rss"),
+        ("Google News · Sudán y África", "https://news.google.com/rss/search?q=Sud%C3%A1n+OR+%22El+Fasher%22+OR+Sahel+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+    ],
+    "emprendimiento": [
+        ("Google News · Emprendimiento Chile", "https://news.google.com/rss/search?q=(emprendimiento+OR+startup+OR+%22capital+de+riesgo%22)+Chile+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Innovación pymes", "https://news.google.com/rss/search?q=pymes+innovaci%C3%B3n+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Fintech Chile", "https://news.google.com/rss/search?q=fintech+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Corfo", "https://news.google.com/rss/search?q=Corfo+emprendimiento+OR+startups+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Startups Latinoamérica", "https://news.google.com/rss/search?q=startup+Latinoam%C3%A9rica+ronda+inversi%C3%B3n+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Startups Chile (semana)", "https://news.google.com/rss/search?q=startups+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Rondas de inversión Latinoamérica", "https://news.google.com/rss/search?q=(%22ronda+de+inversi%C3%B3n%22+OR+%22levant%C3%B3%22+OR+%22serie+A%22)+startup+Latinoam%C3%A9rica+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Emprendedores Chile", "https://news.google.com/rss/search?q=emprendedores+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Capital de riesgo Latinoamérica", "https://news.google.com/rss/search?q=(%22capital+de+riesgo%22+OR+%22venture+capital%22)+Latinoam%C3%A9rica+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Innovación y empresas Chile", "https://news.google.com/rss/search?q=innovaci%C3%B3n+empresas+Chile+(Corfo+OR+ANID+OR+%22Start-Up+Chile%22)+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Contxto (RSS)", "https://contxto.com/es/feed/", "rss"),
+        ("LatamList (RSS)", "https://latamlist.com/feed/", "rss"),
+        ("TechCrunch · Startups (RSS)", "https://techcrunch.com/category/startups/feed/", "rss"),
+        ("Start-Up Chile (RSS)", "https://startupchile.org/feed/", "rss"),
+    ],
+    "tecnologia": [
+        ("Google News · Tecnología", "https://news.google.com/rss/search?q=tecnolog%C3%ADa+(IA+OR+chips+OR+Apple+OR+Google+OR+Microsoft+OR+Nvidia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Inteligencia artificial", "https://news.google.com/rss/search?q=%22inteligencia+artificial%22+(OpenAI+OR+Anthropic+OR+Google+OR+Meta+OR+Nvidia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Ciberseguridad", "https://news.google.com/rss/search?q=ciberseguridad+OR+hackeo+OR+ciberataque+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Tecnología en Chile", "https://news.google.com/rss/search?q=tecnolog%C3%ADa+Chile+(startup+OR+innovaci%C3%B3n+OR+digital)+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Xataka (RSS)", "https://www.xataka.com/feedburner.xml", "rss"),
+        ("Genbeta (RSS)", "https://www.genbeta.com/feedburner.xml", "rss"),
+        ("Hipertextual (RSS)", "https://hipertextual.com/feed", "rss"),
+        ("TechCrunch (RSS)", "https://techcrunch.com/feed/", "rss"),
+        ("The Verge (RSS)", "https://www.theverge.com/rss/index.xml", "rss"),
+        ("Ars Technica (RSS)", "https://feeds.arstechnica.com/arstechnica/index", "rss"),
+    ],
+    "inmobiliario": [
+        ("Google News · Inmobiliario Chile", "https://news.google.com/rss/search?q=(inmobiliario+OR+viviendas+OR+%22cr%C3%A9dito+hipotecario%22)+Chile+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Construcción", "https://news.google.com/rss/search?q=construcci%C3%B3n+CChC+OR+inmobiliarias+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Tasas hipotecarias", "https://news.google.com/rss/search?q=%22tasa+hipotecaria%22+OR+%22cr%C3%A9ditos+hipotecarios%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Permisos y viviendas", "https://news.google.com/rss/search?q=%22permisos+de+edificaci%C3%B3n%22+OR+%22venta+de+viviendas%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Mercado inmobiliario", "https://news.google.com/rss/search?q=%22mercado+inmobiliario%22+OR+%22venta+de+viviendas%22+OR+%22subsidio+habitacional%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · IVA viviendas y DFL 2", "https://news.google.com/rss/search?q=(IVA+viviendas+OR+DFL2+OR+contribuciones)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+    ],
+    "deportes": [
+        ("Google News · Deportes Chile", "https://news.google.com/rss/search?q=deportes+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Golf", "https://news.google.com/rss/search?q=golf+(Niemann+OR+Pereira+OR+PGA)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Fútbol chileno", "https://news.google.com/rss/search?q=%22Liga+de+Primera%22+OR+%22Colo-Colo%22+OR+%22Universidad+de+Chile%22+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Equitación", "https://news.google.com/rss/search?q=equitaci%C3%B3n+OR+ecuestre+OR+%22salto+ecuestre%22+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("ESPN · Tenis ATP (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/news", "json"),
+        ("ESPN · Tenis WTA (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/news", "json"),
+        ("ESPN · Fórmula 1 (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/racing/f1/news", "json"),
+        ("ESPN · NBA (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news", "json"),
+        ("ESPN · Golf PGA (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/golf/pga/news", "json"),
+        ("ESPN · Fútbol chileno (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/news", "json"),
+        ("Google News · Tenis chileno", "https://news.google.com/rss/search?q=tenis+(Tabilo+OR+Jarry+OR+Garin+OR+Barrios)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Fórmula 1", "https://news.google.com/rss/search?q=%22F%C3%B3rmula+1%22+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · NBA", "https://news.google.com/rss/search?q=NBA+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Equitación en Chile (Sudamericano, Federación Ecuestre)", "https://news.google.com/rss/search?q=%22Federaci%C3%B3n+Ecuestre+de+Chile%22+OR+%22Sudamericano+de+Salto%22+OR+%22salto+ecuestre%22+Chile+when:14d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Fórmula 1 (Gran Premio)", "https://news.google.com/rss/search?q=%22Gran+Premio%22+(F1+OR+%22F%C3%B3rmula+1%22)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Fórmula 1 pilotos", "https://news.google.com/rss/search?q=(Colapinto+OR+Verstappen+OR+Antonelli+OR+Norris+OR+Piastri+OR+Leclerc)+F%C3%B3rmula+1+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · NBA resultados", "https://news.google.com/rss/search?q=NBA+(resultados+OR+triunfo+OR+derrota+OR+puntos)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · NBA figuras", "https://news.google.com/rss/search?q=NBA+(LeBron+OR+Curry+OR+Doncic+OR+Jokic+OR+Antetokounmpo+OR+Wembanyama)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Rally y automovilismo Chile", "https://news.google.com/rss/search?q=(rally+OR+RallyMobil+OR+WRC+OR+automovilismo)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("BBC Sport · Golf (RSS, inglés)", "https://feeds.bbci.co.uk/sport/golf/rss.xml", "rss"),
+        ("BBC Sport · Tenis (RSS, inglés)", "https://feeds.bbci.co.uk/sport/tennis/rss.xml", "rss"),
+        ("BBC Sport · Fórmula 1 (RSS, inglés)", "https://feeds.bbci.co.uk/sport/formula1/rss.xml", "rss"),
+        ("Google News · Sudamericano y Copa", "https://news.google.com/rss/search?q=(Libertadores+OR+Sudamericana+OR+%22La+Roja%22)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+    ],
+    "ciencia": [
+        ("ScienceDaily · Ciencia (RSS)", "https://www.sciencedaily.com/rss/top/science.xml", "rss"),
+        ("ScienceDaily · Salud y medicina (RSS)", "https://www.sciencedaily.com/rss/top/health.xml", "rss"),
+        ("phys.org · Biología (RSS)", "https://phys.org/rss-feed/biology-news/", "rss"),
+        ("Medical Xpress (RSS)", "https://medicalxpress.com/rss-feed/", "rss"),
+        ("NIH News (RSS)", "https://www.nih.gov/news-releases/feed.xml", "rss"),
+        ("SINC · Ciencia (RSS)", "https://www.agenciasinc.es/var/ezwebin_site/storage/rss/rss_portada.xml", "rss"),
+        ("New Scientist (RSS)", "https://www.newscientist.com/feed/home/", "rss"),
+        ("MIT Technology Review (RSS)", "https://www.technologyreview.com/feed/", "rss"),
+        ("Google News · Avances médicos", "https://news.google.com/rss/search?q=(ensayo+cl%C3%ADnico+OR+longevidad+OR+trasplante+OR+pr%C3%B3tesis+OR+neuronas)+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+    ],
+    "astronomia": [
+        ("NASA · Noticias (RSS)", "https://www.nasa.gov/news-release/feed/", "rss"),
+        ("ESA · Noticias (RSS)", "https://www.esa.int/rssfeed/Our_Activities/Space_Science", "rss"),
+        ("ESO · Comunicados (RSS)", "https://www.eso.org/public/news/feed/", "rss"),
+        ("NOIRLab (RSS)", "https://noirlab.edu/public/news/feed/", "rss"),
+        ("Space.com (RSS)", "https://www.space.com/feeds/all", "rss"),
+        ("SpaceNews (RSS)", "https://spacenews.com/feed/", "rss"),
+        ("Sky & Telescope (RSS)", "https://skyandtelescope.org/feed/", "rss"),
+        ("phys.org · Espacio (RSS)", "https://phys.org/rss-feed/space-news/", "rss"),
+        ("Google News · Astronomía Chile", "https://news.google.com/rss/search?q=(astronom%C3%ADa+OR+telescopio+OR+ALMA+OR+Rubin+OR+ESO)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+    ],
+}
+
+VENTANA_H = {"ciencia": 240, "astronomia": 240, "emprendimiento": 120, "inmobiliario": 120}   # el resto: 72 horas
+TOPE_SECCION = 90
+_ROBOTS = {}
+_SIN_ROBOTS = set()   # sitios cuyo robots.txt no respondió (no se leen: no se sabe si lo permiten)
+
+
+def robots_permite(url, estado):
+    """True si el robots.txt del sitio permite leer esa dirección a este programa. Se lee una vez por sitio.
+    Sin robots.txt (404) se puede; con 401/403 o sin respuesta, no (se prefiere no leer antes que saltarse una regla)."""
+    u = urlsplit(url)
+    sitio = f"{u.scheme}://{u.netloc}"
+    if sitio not in _ROBOTS:
+        rp = robotparser.RobotFileParser()
+        try:
+            r = requests.Session().get(sitio + "/robots.txt", headers={"User-Agent": UA}, timeout=20)
+            if r.status_code == 200:
+                rp.parse(r.text.splitlines())
+            elif r.status_code in (401, 403):
+                rp.disallow_all = True
+            else:
+                rp.allow_all = True
+        except requests.RequestException as ex:
+            rp.disallow_all = True
+            _SIN_ROBOTS.add(sitio)
+            estado["robots_" + u.netloc] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": sitio + "/robots.txt",
+                                           "error": f"{type(ex).__name__}"}
+        _ROBOTS[sitio] = rp
+    return _ROBOTS[sitio].can_fetch("CofradeNews", url)
+
+
+def _limpio(t, n=320):
+    t = re.sub(r"<[^>]+>", " ", unescape(str(t or "")))
+    t = re.sub(r"\s+([,.;:!?)])", r"\1", re.sub(r"\s+", " ", unescape(t))).strip()
+    if len(t) <= n:
+        return t
+    k = t.rfind(" ", 0, n - 1)
+    return t[:k if k > n // 2 else n - 1].rstrip(" ,;:.") + "…"
+
+
+def _fecha_feed(t):
+    """Fecha de un ítem (RFC 822 de RSS o ISO 8601 de Atom) → datetime en hora de Chile, o None."""
+    t = str(t or "").strip()
+    if not t:
+        return None
+    try:
+        f = parsedate_to_datetime(t)
+    except (TypeError, ValueError, IndexError):
+        try:
+            f = dt.datetime.fromisoformat(t.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    if f.tzinfo is None:
+        f = f.replace(tzinfo=dt.timezone.utc)
+    return f.astimezone(TZ)
+
+
+def leer_feed(texto, fuente):
+    """RSS 2.0, Atom o RDF → [{fuente, titulo, fecha "AAAA-MM-DD HH:MM", url, resumen, medio}]. En Google News el medio real va
+    en <source> y el título trae « - Medio» al final: la nota se atribuye a ese medio (vía Google News)."""
+    try:
+        raiz = ET.fromstring(texto.encode("utf-8") if isinstance(texto, str) else texto)
+    except ET.ParseError:
+        return None
+    out = []
+    for it in raiz.iter():
+        tag = _sin_ns(it.tag)
+        if tag not in ("item", "entry"):
+            continue
+        h = {}
+        for c in it:
+            ct = _sin_ns(c.tag)
+            if ct == "link":
+                h.setdefault("link", (c.get("href") if c.get("rel") in (None, "alternate") else None) or (c.text or "").strip())
+            elif ct == "source":
+                h["medio"] = (c.text or "").strip()
+            elif ct not in h:
+                h[ct] = c.text or ""
+        titulo = _limpio(h.get("title"), 220)
+        url = (h.get("link") or h.get("guid") or "").strip()
+        if not titulo or not url.startswith("http"):
+            continue
+        medio = h.get("medio") or ""
+        if medio and titulo.endswith(" - " + medio):
+            titulo = titulo[: -len(" - " + medio)].strip()
+        f = _fecha_feed(h.get("pubdate") or h.get("published") or h.get("updated") or h.get("date"))
+        out.append({"fuente": (f"{medio} (vía Google News)" if medio else fuente), "titulo": titulo,
+                    "fecha": f.strftime("%Y-%m-%d %H:%M") if f else "", "url": url,
+                    "resumen": _limpio(h.get("description") or h.get("summary") or h.get("encoded") or h.get("content"))})
+    return out
+
+
+def leer_espn(j, fuente):
+    """API pública de noticias de ESPN (site.api.espn.com/apis/site/v2/.../news) → mismas notas que un RSS."""
+    out = []
+    for a in (j or {}).get("articles") or []:
+        url = (((a.get("links") or {}).get("web") or {}).get("href") or "").strip()
+        f = _fecha_feed(a.get("published") or a.get("lastModified"))
+        if a.get("headline") and url.startswith("http"):
+            out.append({"fuente": fuente, "titulo": _limpio(a["headline"], 220), "fecha": f.strftime("%Y-%m-%d %H:%M") if f else "",
+                        "url": url, "resumen": _limpio(a.get("description"))})
+    return out
+
+
+def _motivo_robots(url):
+    u = urlsplit(url)
+    return "robots.txt no respondió" if f"{u.scheme}://{u.netloc}" in _SIN_ROBOTS else "robots.txt no lo permite"
+
+
+def _un_feed(args):
+    sec, fuente, url, tipo, estado, clave = args
+    if not robots_permite(url, estado):
+        m = _motivo_robots(url)
+        estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": m}
+        return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": m}, []
+    x = pedir(url, estado, clave, como="json" if tipo == "json" else "texto", espera=(0, 20), limite=25,
+              cabeceras={"Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml, application/json"})
+    if x is None:
+        return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": estado[clave].get("error", "")}, []
+    notas = leer_espn(x, fuente) if tipo == "json" else leer_feed(x, fuente)
+    if notas is None:
+        estado[clave] = dict(estado[clave], ok=False, error="no es un RSS válido")
+        return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": "no es un RSS válido"}, []
+    return sec, {"fuente": fuente, "url": url, "ok": True, "n": len(notas)}, notas
+
+
+def _norm(t):
+    return re.sub(r"[^a-z0-9áéíóúñü ]", "", str(t).lower())[:90]
+
+
+def titulares(estado, feeds=None, hilos=6):
+    """{"generado", "secciones": {sec: {"consultadas": [...], "notas": [...]}}} en el formato candidatos/<sección>.json de la Skill."""
+    feeds = feeds or FEEDS
+    tareas, secs = [], {}
+    for sec, lista in feeds.items():
+        secs[sec] = {"consultadas": [], "notas": []}
+        for i, (fuente, url, tipo) in enumerate(lista):
+            tareas.append((sec, fuente, url, tipo, estado, f"rss_{sec.replace('/', '_')}_{i}"))
+    with ThreadPoolExecutor(max_workers=hilos) as ex:
+        res = list(ex.map(_un_feed, tareas))
+    limite = ahora()
+    for sec, cons, notas in res:
+        secs[sec]["consultadas"].append(cons)
+        h = VENTANA_H.get(sec, 72)
+        for n in notas:
+            if n["fecha"]:
+                f = dt.datetime.strptime(n["fecha"], "%Y-%m-%d %H:%M").replace(tzinfo=TZ)
+                if not (limite - dt.timedelta(hours=h) <= f <= limite + dt.timedelta(hours=2)):
+                    continue
+            secs[sec]["notas"].append(n)
+    for sec, v in secs.items():
+        vistos, unicas = set(), []
+        for n in sorted(v["notas"], key=lambda n: n["fecha"], reverse=True):
+            k1, k2 = n["url"], _norm(n["titulo"])
+            if k1 in vistos or k2 in vistos:
+                continue
+            vistos.update((k1, k2))
+            unicas.append(n)
+        v["notas"] = unicas[:TOPE_SECCION]
+    ok = sum(1 for _, c, _ in res if c["ok"])
+    estado["titulares"] = {"ok": ok > 0, "hora": ahora().isoformat(timespec="seconds"), "url": "RSS públicos de los medios",
+                           "error": "" if ok else "ningún RSS respondió", "intentos": 1, "feeds_ok": ok, "feeds": len(res)}
+    return {"generado": ahora().isoformat(timespec="seconds"), "secciones": secs}
+
+
+# ---------- mercados y bitcoin (31-10-2026: el IPSA salía atrasado y el bitcoin faltaba) ----------
+MERCADOS = [("^IPSA", "IPSA"), ("^GSPC", "S&P 500"), ("^IXIC", "Nasdaq"), ("^DJI", "Dow Jones"),
+            ("BZ=F", "Petróleo Brent"), ("HG=F", "Cobre Comex"), ("BTC-USD", "Bitcoin")]
+STOOQ = {"^GSPC": "^spx", "^IXIC": "^ndq", "^DJI": "^dji", "BZ=F": "cb.f", "HG=F": "hg.f", "BTC-USD": "btcusd"}
+
+
+def cierres_yahoo(j, hoy):
+    """Respuesta de la API de gráficos → [(fecha, cierre)] de días ANTERIORES a hoy (el de hoy puede estar abierto: no es cierre)."""
+    r = ((j or {}).get("chart") or {}).get("result") or []
+    if not r:
+        return []
+    r = r[0]
+    off = int((r.get("meta") or {}).get("gmtoffset") or 0)
+    ts = r.get("timestamp") or []
+    cl = (((r.get("indicators") or {}).get("quote") or [{}])[0].get("close")) or []
+    out = []
+    for t, c in zip(ts, cl):
+        if c is None:
+            continue
+        f = (dt.datetime.fromtimestamp(t, dt.timezone.utc) + dt.timedelta(seconds=off)).date()
+        if f < hoy:
+            out.append((f.isoformat(), float(c)))
+    return out
+
+
+def cierres_stooq(csv_txt, hoy):
+    out = []
+    for ln in (csv_txt or "").strip().splitlines()[1:]:
+        p = ln.split(",")
+        if len(p) >= 5 and re.match(r"\d{4}-\d{2}-\d{2}$", p[0]) and p[0] < hoy.isoformat():
+            try:
+                out.append((p[0], float(p[4])))
+            except ValueError:
+                pass
+    return out
+
+
+def mercados(estado, hoy):
+    """[{nombre, valor, variacion_pct, fecha (último CIERRE), fuente}] y el bitcoin para «indicadores_hoy»."""
+    out = []
+    for sym, nom in MERCADOS:
+        clave = "mercado_" + re.sub(r"[^a-z0-9]", "", sym.lower())
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{quote(sym)}?range=10d&interval=1d"
+        c, fuente = [], "Yahoo Finance"
+        if robots_permite(url, estado):
+            c = cierres_yahoo(pedir(url, estado, clave, espera=(0, 30), limite=30), hoy)
+        else:
+            estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": _motivo_robots(url)}
+        if len(c) < 2 and sym in STOOQ:
+            u2 = f"https://stooq.com/q/d/l/?s={quote(STOOQ[sym])}&i=d"
+            if robots_permite(u2, estado):
+                c, fuente = cierres_stooq(pedir(u2, estado, clave + "_stooq", como="texto", espera=(0, 30), limite=30), hoy), "Stooq"
+        if len(c) >= 2:
+            (f0, v0), (f1, v1) = c[-2], c[-1]
+            out.append({"nombre": nom, "valor": round(v1, 2), "variacion_pct": round((v1 / v0 - 1) * 100, 2), "fecha": f1, "fuente": fuente})
+    estado["mercados"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": "Yahoo Finance / Stooq",
+                          "error": "" if out else "sin cierres", "intentos": 1, "n": len(out)}
+    return out
+
+
+def bitcoin(estado, hoy):
+    """Precio del bitcoin en dólares: Coinbase (precio spot) y, si falla, CoinGecko. → {bitcoin_usd, bitcoin_fecha, bitcoin_fuente}"""
+    j = pedir("https://api.coinbase.com/v2/prices/BTC-USD/spot", estado, "bitcoin", espera=(0, 30), limite=30)
+    try:
+        v = float(((j or {}).get("data") or {}).get("amount"))
+        return {"bitcoin_usd": round(v, 2), "bitcoin_fecha": hoy.isoformat(), "bitcoin_fuente": "Coinbase"}
+    except (TypeError, ValueError):
+        pass
+    j = pedir("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_last_updated_at=true",
+              estado, "bitcoin_coingecko", espera=(0, 30), limite=30)
+    try:
+        b = j["bitcoin"]
+        f = dt.datetime.fromtimestamp(int(b["last_updated_at"]), TZ).date()
+        return {"bitcoin_usd": round(float(b["usd"]), 2), "bitcoin_fecha": f.isoformat(), "bitcoin_fuente": "CoinGecko"}
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+
 def escribir(ruta, contenido):
     if contenido is None or contenido == "":
         return False
@@ -555,11 +946,18 @@ def main(argv=None):
     if tabla:
         tabla["partidos"] = partidos_liga(estado) or []
     escribir(os.path.join(a.salida, "liga-primera.json"), tabla)
+    escribir(os.path.join(a.salida, "titulares.json"), titulares(estado))
+    mer = mercados(estado, hoy)
+    btc = bitcoin(estado, hoy)
+    escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
     escribir(os.path.join(a.salida, "estado.json"), resumen)
     for k, v in estado.items():
-        if not k.startswith(("camara_detalle_", "servicio_", "asistencia_", "vuelos_")):
+        if not k.startswith(("camara_detalle_", "servicio_", "asistencia_", "vuelos_", "rss_", "robots_")):
             print(("OK   " if v["ok"] else "FALLA"), k, v.get("error", ""))
+    rss = [v for k, v in estado.items() if k.startswith("rss_")]
+    print(f"RSS de los medios: {sum(1 for v in rss if v['ok'])} de {len(rss)} respondieron; "
+          f"{sum(1 for v in rss if 'no lo permite' in str(v.get('error')))} no permitidos por su robots.txt")
     return 0   # una fuente caída no detiene a las demás
 
 
