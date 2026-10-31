@@ -257,6 +257,10 @@ def rss_y_atom_con_medio_real_y_fecha_de_chile():
     assert B.leer_feed("<html>no</html", "x") is None and B.leer_feed("<rss><channel></channel></rss>", "x") == []
     j = {"articles": [{"headline": "Jarry avanza", "published": "2026-10-30T20:00:00Z", "description": "Ganó",
                        "links": {"web": {"href": "https://espn.com/t/1"}}}, {"headline": "sin enlace"}]}
+    assert B.leer_espn([1, 2], "x") == [] and B.leer_espn({"articles": ["raro"]}, "x") == []
+    e = {}
+    r = B._un_feed(("deportes", "X", "https://x.cl/f", "rss", e, "rss_x"))   # sin red ni robots: no se cae
+    assert r[1]["ok"] is False and not e["rss_x"]["ok"]
     assert B.leer_espn(j, "ESPN · Tenis") == [{"fuente": "ESPN · Tenis", "titulo": "Jarry avanza", "fecha": "2026-10-30 17:00",
                                               "url": "https://espn.com/t/1", "resumen": "Ganó"}]
 

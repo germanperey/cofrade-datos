@@ -759,7 +759,9 @@ def leer_feed(texto, fuente):
 def leer_espn(j, fuente):
     """API pública de noticias de ESPN (site.api.espn.com/apis/site/v2/.../news) → mismas notas que un RSS."""
     out = []
-    for a in (j or {}).get("articles") or []:
+    for a in (j.get("articles") if isinstance(j, dict) else None) or []:
+        if not isinstance(a, dict):
+            continue
         url = (((a.get("links") or {}).get("web") or {}).get("href") or "").strip()
         f = _fecha_feed(a.get("published") or a.get("lastModified"))
         if a.get("headline") and url.startswith("http"):
@@ -774,6 +776,16 @@ def _motivo_robots(url):
 
 
 def _un_feed(args):
+    """Nunca se cae: un feed raro (formato inesperado) queda anotado como falla y se sigue con los demás."""
+    try:
+        return _un_feed_(args)
+    except Exception as ex:   # noqa: BLE001
+        sec, fuente, url, tipo, estado, clave = args
+        estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": f"{type(ex).__name__}"}
+        return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": type(ex).__name__}, []
+
+
+def _un_feed_(args):
     sec, fuente, url, tipo, estado, clave = args
     if not robots_permite(url, estado):
         m = _motivo_robots(url)
@@ -946,9 +958,20 @@ def main(argv=None):
     if tabla:
         tabla["partidos"] = partidos_liga(estado) or []
     escribir(os.path.join(a.salida, "liga-primera.json"), tabla)
-    escribir(os.path.join(a.salida, "titulares.json"), titulares(estado))
-    mer = mercados(estado, hoy)
-    btc = bitcoin(estado, hoy)
+    try:
+        escribir(os.path.join(a.salida, "titulares.json"), titulares(estado))
+    except Exception as ex:   # noqa: BLE001 — los titulares nunca impiden guardar lo demás
+        estado["titulares"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "RSS", "error": type(ex).__name__}
+    try:
+        mer = mercados(estado, hoy)
+    except Exception as ex:   # noqa: BLE001
+        mer = []
+        estado["mercados"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "mercados", "error": type(ex).__name__}
+    try:
+        btc = bitcoin(estado, hoy)
+    except Exception as ex:   # noqa: BLE001
+        btc = None
+        estado["bitcoin"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "bitcoin", "error": type(ex).__name__}
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
     escribir(os.path.join(a.salida, "estado.json"), resumen)
