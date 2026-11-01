@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Instalar librerías
@@ -32,6 +32,10 @@ jobs:
         env:   # 30-10-2026: cuenta GRATUITA de OpenSky (opcional). Sin estos dos secretos, OpenSky rechaza a GitHub (HTTP 403) y se sigue sin él
           OPENSKY_CLIENT_ID: ${{ secrets.OPENSKY_CLIENT_ID }}
           OPENSKY_CLIENT_SECRET: ${{ secrets.OPENSKY_CLIENT_SECRET }}
+          # 01-11-2026: cuentas GRATUITAS opcionales para los mercados (sin ellas se sigue con las demás fuentes)
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          BCCH_USER: ${{ secrets.BCCH_USER }}
+          BCCH_PASS: ${{ secrets.BCCH_PASS }}
         run: python bajar.py --salida datos
       - name: Guardar en el repositorio
         run: |
