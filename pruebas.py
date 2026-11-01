@@ -427,7 +427,7 @@ def mercados_con_fuentes_oficiales_y_claves_ocultas():
         return None
     prohibidos = ("yahoo.com", "stooq.com", "cnbc.com")
     B.robots_permite, B.pedir = (lambda url, e: not any(p in url for p in prohibidos)), pedir
-    os.environ.update({"FRED_API_KEY": "clave-fred", "BCCH_USER": "german", "BCCH_PASS": "s3cr3t"})
+    os.environ.update({"FRED_API_KEY": "clave-fred", "BCCH_TOKEN": "tok3n-bcch"})
     B._BCCH.clear()
     try:
         e = {}
@@ -437,10 +437,17 @@ def mercados_con_fuentes_oficiales_y_claves_ocultas():
         assert m["Cobre (Bolsa de Metales de Londres)"]["fuente"] == "Banco Central de Chile (vía mindicador.cl)"
         assert e["bcch_series"]["elegidas"]["^IPSA"][0] == "A1"
         todo = json.dumps(e, ensure_ascii=False)
-        assert "s3cr3t" not in todo and "clave-fred" not in todo and "user=german" not in todo, todo[:400]   # nada secreto en estado.json
+        assert "tok3n-bcch" not in todo and "clave-fred" not in todo, todo[:400]   # nada secreto en estado.json
+        # cuenta antigua (usuario y clave) también sirve
+        os.environ.pop("BCCH_TOKEN")
+        os.environ.update({"BCCH_USER": "german", "BCCH_PASS": "s3cr3t"})
+        B._BCCH.clear()
+        e = {}
+        assert {x["nombre"]: x for x in B.mercados(e, hoy)}["IPSA"]["fuente"] == "Banco Central de Chile"
+        assert "s3cr3t" not in json.dumps(e) and "user=german" not in json.dumps(e)
         assert e["mercados"]["ok"] and "Banco Central de Chile" in e["mercados"]["fuentes_usadas"]
         # sin cuentas: igual llega el cobre (mindicador) y no se cae nada
-        for k in ("FRED_API_KEY", "BCCH_USER", "BCCH_PASS"):
+        for k in ("FRED_API_KEY", "BCCH_USER", "BCCH_PASS", "BCCH_TOKEN"):
             os.environ.pop(k, None)
         B._BCCH.clear()
         m2 = {x["nombre"]: x for x in B.mercados({}, hoy)}

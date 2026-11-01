@@ -1151,17 +1151,23 @@ def bcch_elegir(infos):
     return out
 
 
-def _bcch_cred():
-    return os.environ.get("BCCH_USER", "").strip(), os.environ.get("BCCH_PASS", "").strip()
+def _bcch_auth():
+    """El servicio REST del Banco Central pide el «API Key Token» de «Mi Cuenta» (vale un año); usuario y clave quedan como
+    respaldo para cuentas antiguas. → texto para la dirección, o "" si no hay cuenta."""
+    t = os.environ.get("BCCH_TOKEN", "").strip()
+    if t:
+        return "token=" + quote(t)
+    u, pw = os.environ.get("BCCH_USER", "").strip(), os.environ.get("BCCH_PASS", "").strip()
+    return f"user={quote(u)}&pass={quote(pw)}" if (u and pw) else ""
 
 
 def bcch_series(estado):
     if "mapa" in _BCCH:
         return _BCCH["mapa"]
-    u, pw = _bcch_cred()
+    auth = _bcch_auth()
     mapa = {}
-    if u and pw:
-        url = f"{BCCH_URL}?user={quote(u)}&pass={quote(pw)}&function=SearchSeries&frequency=DAILY"
+    if auth:
+        url = f"{BCCH_URL}?{auth}&function=SearchSeries&frequency=DAILY"
         if robots_permite(url, estado):
             mapa = bcch_elegir((pedir(url, estado, "bcch_catalogo", espera=(0, 30), limite=60) or {}).get("SeriesInfos"))
         estado["bcch_series"] = {"ok": bool(mapa), "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central (catálogo)",
@@ -1204,13 +1210,13 @@ def _fuentes_mercado(sym, hoy, estado, clave):
     if sym in FRED:
         L.append(("FRED (Reserva Federal de St. Louis)", lambda u: cierres_fred_csv(pedir(u, estado, clave + "_fredcsv", como="texto", espera=(0, 30), limite=30), hoy),
                   f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={FRED[sym]}&cosd={desde}"))
-    usr, pw = _bcch_cred()
-    if sym in BCCH_BUSCAR and usr and pw:
+    auth = _bcch_auth()
+    if sym in BCCH_BUSCAR and auth:
         def _bc(u=None):
             sid = (bcch_series(estado).get(sym) or ("", ""))[0]
             if not sid:
                 return []
-            return cierres_bcch(pedir(f"{BCCH_URL}?user={quote(usr)}&pass={quote(pw)}&function=GetSeries&timeseries={quote(sid)}"
+            return cierres_bcch(pedir(f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={quote(sid)}"
                                       f"&firstdate={desde}&lastdate={hoy.isoformat()}", estado, clave + "_bcch", espera=(0, 30), limite=45), hoy)
         L.append(("Banco Central de Chile", _bc, f"{BCCH_URL}?function=GetSeries"))
     if sym == "HG=F":
