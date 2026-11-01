@@ -1093,9 +1093,9 @@ def vuelos_hoy(estado, hoy, previo=None, uso=None):
             continue
         url = (f"https://{ADB_HOST}/flights/airports/iata/{c}/{hoy.isoformat()}T{d}/{hoy.isoformat()}T{h}"
                "?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false")
-        if not robots_permite(url, estado):
-            faltan.append(f"{c} (robots.txt)")
-            continue
+        # 01-11-2026: aquí NO se consulta el robots.txt. Ese archivo es para los robots que recorren páginas públicas; esta es una
+        # API con contrato: Germán se suscribió al plan gratuito y cada consulta va con su clave personal (RapidAPI pone
+        # «Disallow: /» a todos sus servidores de API, lo que dejaría la API pagada o gratuita inservible).
         j = pedir(url, estado, f"adb_{c}_{d[:2]}", espera=(0,), cabeceras=cab, limite=40)   # un solo intento: cada intento gasta cupo
         uso["unidades"] += unidades
         uso["llamadas"] += 1

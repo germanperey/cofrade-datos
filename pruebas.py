@@ -509,7 +509,7 @@ def vuelos_de_hoy_con_aerodatabox_y_cupo():
         vistos.append((url, cabeceras))
         estado[clave] = {"ok": True, "url": url}
         return j
-    B.robots_permite, B.pedir = (lambda url, e: True), pedir
+    B.robots_permite, B.pedir = (lambda url, e: False), pedir   # API con contrato y clave: su robots.txt (para robots de páginas) no aplica
     try:
         os.environ.pop("AERODATABOX_KEY", None)
         e = {}
