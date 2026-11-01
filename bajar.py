@@ -1034,6 +1034,83 @@ def titulares(estado, feeds=None, hilos=8):
     return {"generado": ahora().isoformat(timespec="seconds"), "secciones": secs}
 
 
+# ---------- vuelos de HOY con AeroDataBox (01-11-2026; cuenta gratuita de RapidAPI, secreto AERODATABOX_KEY) ----------
+# Flightradar24 rechaza la lectura automática; AeroDataBox es un servicio hecho para programas. Plan gratuito: cupo mensual
+# limitado → una sola lectura al día (la primera corrida), con tope mensual que se cuida solo (datos/aerodatabox-uso.json).
+ADB_HOST = "aerodatabox.p.rapidapi.com"
+# 01-11-2026: plan Basic gratuito = 400 unidades al mes y la consulta FIDS cuesta 2 → 6 consultas al día (12 unidades; 372 en un mes
+# de 31 días). Santiago el día completo (2 ventanas de 12 h, el máximo por consulta); los 4 regionales, de 06:00 a 17:59 (el resto del día
+# lo completan las demás fuentes y el itinerario habitual).
+ADB_PLAN = [("SCL", "00:00", "11:59"), ("SCL", "12:00", "23:59"), ("PMC", "06:00", "17:59"), ("CCP", "06:00", "17:59"),
+            ("ANF", "06:00", "17:59"), ("PUQ", "06:00", "17:59")]
+
+
+def _adb_hora(t):
+    m = re.search(r"(\d{4}-\d{2}-\d{2})[ T](\d{2}:\d{2})", str(t or ""))
+    return (m.group(1), m.group(2)) if m else ("", "")
+
+
+def adb_filas(j, sentido):
+    """Respuesta de AeroDataBox (departures / arrivals) → filas {vuelo, aerolinea, iata, lugar, fecha, hora_programada,
+    hora_estimada, estado} en hora local, sin vuelos de carga."""
+    out = []
+    for x in (j or {}).get(sentido) or []:
+        if not isinstance(x, dict) or x.get("isCargo"):
+            continue
+        mv = x.get("movement") or x.get("departure" if sentido == "arrivals" else "arrival") or {}
+        ap = mv.get("airport") or {}
+        fe, hp = _adb_hora((mv.get("scheduledTime") or {}).get("local"))
+        _, he = _adb_hora((mv.get("revisedTime") or mv.get("runwayTime") or {}).get("local"))
+        num = re.sub(r"\s+", "", str(x.get("number") or ""))
+        if not (num and fe and hp):
+            continue
+        out.append({"vuelo": num, "aerolinea": str((x.get("airline") or {}).get("name") or ""),
+                    "iata": str(ap.get("iata") or "")[:3], "lugar": str(ap.get("municipalityName") or ap.get("name") or ""),
+                    "fecha": fe, "hora_programada": hp, "hora_estimada": he if he != hp else "", "estado": str(x.get("status") or "")})
+    return out
+
+
+def vuelos_hoy(estado, hoy, previo=None, uso=None):
+    """→ ({fecha, fuente, aeropuertos: {IATA: {salidas, llegadas}}} o None, uso del mes actualizado)."""
+    k = os.environ.get("AERODATABOX_KEY", "").strip()
+    mes = hoy.strftime("%Y-%m")
+    uso = uso if isinstance(uso, dict) and uso.get("mes") == mes else {"mes": mes, "unidades": 0, "llamadas": 0}
+    if not k:
+        estado["vuelos_hoy"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "AeroDataBox",
+                                "error": "sin secreto AERODATABOX_KEY (cuenta gratuita de RapidAPI)"}
+        return None, uso
+    if isinstance(previo, dict) and previo.get("fecha") == hoy.isoformat() and previo.get("aeropuertos"):
+        estado["vuelos_hoy"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": "AeroDataBox",
+                                "nota": "ya leído hoy (una lectura al día para cuidar el cupo gratuito)"}
+        return previo, uso
+    unidades = int(os.environ.get("AERODATABOX_UNIDADES", "2") or 2)   # costo de cada consulta en el plan
+    tope = int(os.environ.get("AERODATABOX_TOPE_MES", "390") or 390)   # plan Basic: 400 (tope duro), con margen
+    aer, faltan = {}, []
+    cab = {"X-RapidAPI-Key": k, "X-RapidAPI-Host": ADB_HOST}
+    for c, d, h in ADB_PLAN:
+        if uso["unidades"] + unidades > tope:
+            faltan.append(f"{c} {d}-{h} (cupo del mes)")
+            continue
+        url = (f"https://{ADB_HOST}/flights/airports/iata/{c}/{hoy.isoformat()}T{d}/{hoy.isoformat()}T{h}"
+               "?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false")
+        if not robots_permite(url, estado):
+            faltan.append(f"{c} (robots.txt)")
+            continue
+        j = pedir(url, estado, f"adb_{c}_{d[:2]}", espera=(0,), cabeceras=cab, limite=40)   # un solo intento: cada intento gasta cupo
+        uso["unidades"] += unidades
+        uso["llamadas"] += 1
+        if j is None:
+            faltan.append(f"{c} {d}-{h}: {estado.get(f'adb_{c}_{d[:2]}', {}).get('error', '')}")
+            continue
+        a = aer.setdefault(c, {"salidas": [], "llegadas": []})
+        a["salidas"] += adb_filas(j, "departures")
+        a["llegadas"] += adb_filas(j, "arrivals")
+    n = sum(len(v) for a in aer.values() for v in a.values())
+    estado["vuelos_hoy"] = {"ok": n > 0, "hora": ahora().isoformat(timespec="seconds"), "url": "AeroDataBox", "n": n,
+                            "error": "; ".join(faltan[:6]), "cupo_mes": f"{uso['unidades']} de {tope}"}
+    return ({"fecha": hoy.isoformat(), "fuente": "AeroDataBox", "aeropuertos": aer} if n else None), uso
+
+
 # ---------- mercados y bitcoin (31-10-2026: el IPSA salía atrasado y el bitcoin faltaba) ----------
 MERCADOS = [("^IPSA", "IPSA"), ("^GSPC", "S&P 500"), ("^IXIC", "Nasdaq"), ("^DJI", "Dow Jones"),
             ("BZ=F", "Petróleo Brent"), ("HG=F", "Cobre Comex"), ("BTC-USD", "Bitcoin")]
@@ -1318,6 +1395,20 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "camara-asistencia-sesiones.json"), asis)
     escribir(os.path.join(a.salida, "camara-asistencia.json"), asistencia_resumen(asis))
     escribir(os.path.join(a.salida, "vuelos-ayer.json"), vuelos_ayer(estado, hoy))
+    try:   # 01-11-2026: vuelos de HOY (AeroDataBox, opcional)
+        try:
+            pv = json.load(open(os.path.join(a.salida, "vuelos-hoy.json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            pv = None
+        try:
+            us = json.load(open(os.path.join(a.salida, "aerodatabox-uso.json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            us = None
+        vh, us = vuelos_hoy(estado, hoy, pv, us)
+        escribir(os.path.join(a.salida, "vuelos-hoy.json"), vh)
+        escribir(os.path.join(a.salida, "aerodatabox-uso.json"), us)
+    except Exception as ex:   # noqa: BLE001
+        estado["vuelos_hoy"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "AeroDataBox", "error": type(ex).__name__}
     tabla = liga(estado, hoy)
     if tabla:
         tabla["partidos"] = partidos_liga(estado) or []

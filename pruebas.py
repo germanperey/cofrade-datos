@@ -488,6 +488,55 @@ def bing_noticias_y_redes_oficiales():
 
 
 @prueba
+def vuelos_de_hoy_con_aerodatabox_y_cupo():
+    """01-11-2026: Flightradar24 rechaza la lectura automática. AeroDataBox (cuenta gratuita, secreto AERODATABOX_KEY) entrega el día
+    completo de los 5 aeropuertos: una lectura al día y con tope mensual, para no pasarse del cupo gratis. La clave va en la cabecera."""
+    hoy = dt.date(2026, 11, 1)
+    j = {"departures": [{"number": "LA 330", "status": "Departed", "airline": {"name": "LATAM"},
+                         "movement": {"airport": {"iata": "LIM", "name": "Lima"}, "scheduledTime": {"local": "2026-11-01 07:30-03:00"},
+                                      "revisedTime": {"local": "2026-11-01 07:42-03:00"}}},
+                        {"number": "LA 9999", "isCargo": True, "movement": {"airport": {"iata": "MIA"}, "scheduledTime": {"local": "2026-11-01 08:00-03:00"}}}],
+         "arrivals": [{"number": "H2 21", "status": "Expected", "airline": {"name": "SKY"},
+                       "movement": {"airport": {"iata": "PMC", "municipalityName": "Puerto Montt", "name": "El Tepual"},
+                                    "scheduledTime": {"local": "2026-11-01 13:05-03:00"}}}]}
+    assert B.adb_filas(j, "departures") == [{"vuelo": "LA330", "aerolinea": "LATAM", "iata": "LIM", "lugar": "Lima", "fecha": "2026-11-01",
+                                             "hora_programada": "07:30", "hora_estimada": "07:42", "estado": "Departed"}]
+    assert B.adb_filas(j, "arrivals")[0]["lugar"] == "Puerto Montt" and B.adb_filas({}, "arrivals") == []
+    viejos = B.robots_permite, B.pedir, dict(os.environ)
+    vistos = []
+
+    def pedir(url, estado, clave, cabeceras=None, **k):
+        vistos.append((url, cabeceras))
+        estado[clave] = {"ok": True, "url": url}
+        return j
+    B.robots_permite, B.pedir = (lambda url, e: True), pedir
+    try:
+        os.environ.pop("AERODATABOX_KEY", None)
+        e = {}
+        assert B.vuelos_hoy(e, hoy)[0] is None and "AERODATABOX_KEY" in e["vuelos_hoy"]["error"] and not vistos   # sin cuenta: nada
+        os.environ["AERODATABOX_KEY"] = "clave-adb"
+        e = {}
+        v, uso = B.vuelos_hoy(e, hoy)
+        assert len(vistos) == 6 and uso == {"mes": "2026-11", "unidades": 12, "llamadas": 6}, uso   # plan Basic: 400 unidades/mes → 6 consultas/día
+        assert 31 * uso["unidades"] <= 400   # un mes completo cabe en el plan gratuito
+        assert all(c["X-RapidAPI-Key"] == "clave-adb" and "clave-adb" not in u for u, c in vistos)    # la clave nunca en la dirección
+        assert "/iata/SCL/2026-11-01T00:00/2026-11-01T11:59" in vistos[0][0] and v["aeropuertos"]["SCL"]["salidas"][0]["vuelo"] == "LA330"
+        assert "clave-adb" not in json.dumps(e)
+        vistos.clear()   # misma fecha: no se vuelve a gastar cupo
+        assert B.vuelos_hoy({}, hoy, previo=v, uso=uso)[0] is v and not vistos
+        vistos.clear()   # cupo casi agotado: Santiago primero y el resto se anota como pendiente
+        e = {}
+        v2, uso2 = B.vuelos_hoy(e, hoy, uso={"mes": "2026-11", "unidades": 386, "llamadas": 193})
+        assert len(vistos) == 2 and set(v2["aeropuertos"]) == {"SCL"} and "cupo del mes" in e["vuelos_hoy"]["error"], (len(vistos), e)
+        vistos.clear()   # mes nuevo: el contador parte de cero
+        assert B.vuelos_hoy({}, dt.date(2026, 12, 1), uso={"mes": "2026-11", "unidades": 390})[1]["unidades"] == 12
+    finally:
+        B.robots_permite, B.pedir = viejos[0], viejos[1]
+        os.environ.clear()
+        os.environ.update(viejos[2])
+
+
+@prueba
 def robots_segun_el_estandar_rfc_9309():
     """01-11-2026: precedencia del estándar (la regla más larga manda; empate, Allow), comodines «*» y «$», grupo propio y 4xx."""
     g = "User-agent: *\nDisallow: /\nAllow: /rss/*\nAllow: /$\nDisallow: /rss/foo$\n\nUser-agent: OtroBot\nAllow: /\n"
