@@ -1,11 +1,11 @@
 # Cofrade News · datos oficiales del día (gratis, en GitHub Actions)
-# Corre tres veces cada madrugada (03:17, 05:17 y 07:17 UTC = 00:17, 02:17 y 04:17 de Santiago en verano),
-# antes de la tarea de las 06:47. También se puede correr a mano: pestaña «Actions» → «Datos oficiales del día» → «Run workflow».
+# Corre CADA HORA de madrugada (03:23 a 09:23 UTC = 00:23 a 06:23 de Santiago en verano), antes de la tarea de las 06:47.
+# 01-11-2026: el 31-10 GitHub atrasó sus horarios casi 6 horas (corrió a las 06:03 y 06:47): con 7 intentos, alguno llega a tiempo. También se puede correr a mano: pestaña «Actions» → «Datos oficiales del día» → «Run workflow».
 name: Datos oficiales del día
 
 on:
   schedule:
-    - cron: "17 3,5,7 * * *"   # 00:17, 02:17 y 04:17 de Santiago (verano): GitHub a veces atrasa horas sus relojes; con tres intentos al menos uno llega antes de las 06:47
+    - cron: "23 3-9 * * *"   # cada hora de 00:23 a 06:23 de Santiago (verano); cada corrida deja los datos más nuevos
   workflow_dispatch:
 
 permissions:
@@ -39,4 +39,5 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add datos
           git diff --cached --quiet || git commit -m "Datos oficiales $(date -u +%Y-%m-%d)"
-          git push
+          # 01-11-2026: si otra corrida (o un archivo subido a mano) llegó antes, se junta y se reintenta (antes fallaba con error)
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 10; done
