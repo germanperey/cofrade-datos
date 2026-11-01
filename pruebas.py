@@ -283,9 +283,10 @@ def robots_txt_se_respeta_y_sin_respuesta_no_se_lee():
     try:
         e = {}
         assert not B.robots_permite("https://a.cl/rss/portada", e) and B.robots_permite("https://a.cl/feed/", e)
-        assert B.robots_permite("https://b.cl/feed", e) and not B.robots_permite("https://c.cl/feed", e)
+        assert B.robots_permite("https://b.cl/feed", e) and B.robots_permite("https://c.cl/feed", e)   # 4xx: se puede (RFC 9309)
         assert not B.robots_permite("https://d.cl/feed", e) and not e["robots_d.cl"]["ok"]
         assert B._motivo_robots("https://d.cl/x") == "robots.txt no respondió" and B._motivo_robots("https://a.cl/rss") == "robots.txt no lo permite"
+        assert B.ROBOTS_VISTOS["a.cl"]["reglas"] == ["Disallow: /rss"] and B.ROBOTS_VISTOS["d.cl"]["estado"] == "ConnectionError"
     finally:
         B.requests.Session.get = viejo
         B._ROBOTS.clear()
@@ -319,6 +320,21 @@ def titulares_por_seccion_con_ventana_sin_repetir_y_robots():
         assert e["titulares"]["ok"] and e["titulares"]["feeds_ok"] == 3 and e["titulares"]["feeds"] == 5
     finally:
         B.robots_permite, B.pedir, B.ahora = viejos
+    # la misma dirección en dos secciones se lee una vez; en «inmobiliario» de un diario general solo entra lo del tema
+    pedidas = []
+    def pedir2(url, estado, clave, **k):
+        pedidas.append(url)
+        estado[clave] = {"ok": True}
+        return RSS_GN.replace("Cámara aprueba el reajuste", "Venta de viviendas sube 12%").replace("Nota vieja", "Fútbol: gana Colo-Colo")
+    B.robots_permite, B.pedir, B.ahora = (lambda url, e: True), pedir2, (lambda: dt.datetime(2026, 10, 31, 4, 17, tzinfo=B.TZ))
+    try:
+        t2 = B.titulares({}, {"economia/chile": [("Pulso", "https://lt.cl/rss", "rss")], "inmobiliario": [("Pulso (inmobiliario)", "https://lt.cl/rss", "rss")]}, hilos=2)
+    finally:
+        B.robots_permite, B.pedir, B.ahora = viejos
+    assert pedidas == ["https://lt.cl/rss"] and t2["secciones"]["inmobiliario"]["consultadas"][0]["fuente"] == "Pulso (inmobiliario)"
+    assert [n["titulo"] for n in t2["secciones"]["inmobiliario"]["notas"]] == ["Venta de viviendas sube 12%"]
+    assert all(len([1 for _, u, _ in v if "news.google" not in u and "site.api.espn" not in u]) >= 6 for v in B.FEEDS.values()), \
+        "cada sección necesita al menos 6 fuentes que no dependan de Google News ni de la API de ESPN"
     assert all(len(v) >= 6 for v in B.FEEDS.values()) and set(B.FEEDS) >= {"economia/chile", "deportes", "ciencia", "astronomia"}
     assert all(u.startswith("https://") and t in ("rss", "json") for v in B.FEEDS.values() for _, u, t in v)
 
@@ -355,6 +371,27 @@ def mercados_solo_cierres_definitivos_y_bitcoin():
         assert B.bitcoin(e, hoy) is None and B.mercados(e, hoy) == [] and not e["mercados"]["ok"]
     finally:
         B.robots_permite, B.pedir = viejos
+
+
+@prueba
+def robots_segun_el_estandar_rfc_9309():
+    """01-11-2026: precedencia del estándar (la regla más larga manda; empate, Allow), comodines «*» y «$», grupo propio y 4xx."""
+    g = "User-agent: *\nDisallow: /\nAllow: /rss/*\nAllow: /$\nDisallow: /rss/foo$\n\nUser-agent: OtroBot\nAllow: /\n"
+    r = B.Robots(g)
+    assert r.permite("https://news.google.com/rss/search?q=chile&hl=es-419") and r.permite("https://news.google.com/")
+    assert not r.permite("https://news.google.com/topics/x") and not r.permite("https://news.google.com/rss/foo")
+    assert r.permite("https://news.google.com/rss/foo2") and r.permite("https://x.cl/robots.txt")
+    p = B.Robots("User-agent: cofradenews\nDisallow: /privado\nUser-agent: *\nDisallow: /\n")
+    assert p.permite("https://a.cl/noticias") and not p.permite("https://a.cl/privado/1")   # el grupo propio manda sobre «*»
+    assert B.Robots("User-agent: *\nAllow: /a\nDisallow: /a\n").permite("https://x.cl/a")   # empate: gana Allow
+    assert not B.Robots("User-agent: *\nDisallow: /*.json$\n").permite("https://x.cl/api/datos.json")
+    assert B.Robots("User-agent: *\nDisallow:\n").permite("https://x.cl/todo") and B.Robots(todo=True).permite("https://x")
+    hoy = dt.date(2026, 10, 31)
+    j = {"FormattedQuoteResult": {"FormattedQuote": [{"last": "9,090.00", "change_pct": "+1.00%", "last_time": "2026-10-30T16:00:00.000-0300"}]}}
+    c = B.cierre_cnbc(j, hoy)
+    assert c[-1] == ("2026-10-30", 9090.0) and abs(c[0][1] - 9000.0) < 0.01
+    j["FormattedQuoteResult"]["FormattedQuote"][0]["last_time"] = "2026-10-31T10:00:00.000-0300"
+    assert B.cierre_cnbc(j, hoy) == [] and B.cierre_cnbc({}, hoy) == []   # el valor de hoy (bolsa abierta) no es cierre
 
 
 if __name__ == "__main__":

@@ -34,7 +34,6 @@ import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from email.utils import parsedate_to_datetime
 from html import unescape
-from urllib import robotparser
 from urllib.parse import quote, urlsplit
 
 import requests
@@ -532,6 +531,12 @@ def liga(estado, hoy):
 # respeta: si el sitio no permite la lectura automática, NO se lee y queda anotado. Cada nota guarda su medio y su enlace.
 FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fuentes-noticias.json) + feeds públicos de los medios
     "economia/chile": [
+        ("Diario Financiero (RSS)", "https://www.df.cl/noticias/site/list/port/rss.xml", "rss"),
+        ("Revista Capital (RSS)", "https://www.capital.cl/feed/", "rss"),
+        ("El Dínamo · Negocios (RSS)", "https://www.eldinamo.cl/feed/", "rss"),
+        ("Chócale (RSS)", "https://chocale.cl/feed/", "rss"),
+        ("El Mostrador (RSS)", "https://www.elmostrador.cl/feed/", "rss"),
+        ("Infobae · Economía (RSS)", "https://www.infobae.com/arc/outboundfeeds/rss/category/economia/", "rss"),
         ("Google News · Economía Chile", "https://news.google.com/rss/search?q=econom%C3%ADa+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Bolsa de Santiago", "https://news.google.com/rss/search?q=IPSA+OR+%22Bolsa+de+Santiago%22+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Cobre y minería", "https://news.google.com/rss/search?q=cobre+OR+Codelco+OR+miner%C3%ADa+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
@@ -544,6 +549,9 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("Cooperativa (RSS)", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml", "rss"),
     ],
     "economia/mundo": [
+        ("BBC News · Business (RSS, inglés)", "https://feeds.bbci.co.uk/news/business/rss.xml", "rss"),
+        ("France 24 · Economía (RSS)", "https://www.france24.com/es/econom%C3%ADa/rss", "rss"),
+        ("Al Jazeera · Economía (RSS, inglés)", "https://www.aljazeera.com/xml/rss/all.xml", "rss"),
         ("Google News · Economía mundial", "https://news.google.com/rss/search?q=econom%C3%ADa+mundial+OR+Fed+OR+mercados+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Europa economía", "https://news.google.com/rss/search?q=BCE+OR+eurozona+econom%C3%ADa+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Petróleo", "https://news.google.com/rss/search?q=petr%C3%B3leo+OR+Brent+OR+OPEP+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
@@ -559,6 +567,11 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("DW en español (RSS)", "https://rss.dw.com/xml/rss-sp-all", "rss"),
     ],
     "politica/chile": [
+        ("La Tercera · Nacional (RSS)", "https://www.latercera.com/arc/outboundfeeds/rss/category/nacional/?outputType=xml", "rss"),
+        ("El Desconcierto (RSS)", "https://www.eldesconcierto.cl/feed/", "rss"),
+        ("The Clinic (RSS)", "https://www.theclinic.cl/feed/", "rss"),
+        ("Interferencia (RSS)", "https://interferencia.cl/rss.xml", "rss"),
+        ("Cooperativa · País (RSS)", "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3_1__1.xml", "rss"),
         ("Google News · Política Chile", "https://news.google.com/rss/search?q=pol%C3%ADtica+Chile+(gobierno+OR+Congreso+OR+Senado+OR+C%C3%A1mara)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("La Tercera · Política (RSS)", "https://www.latercera.com/arc/outboundfeeds/rss/category/politica/?outputType=xml", "rss"),
         ("El Mostrador · País (RSS)", "https://www.elmostrador.cl/noticias/pais/feed/", "rss"),
@@ -568,6 +581,9 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("Google News · Congreso y Gobierno", "https://news.google.com/rss/search?q=(Kast+OR+%22La+Moneda%22+OR+ministro)+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
     ],
     "politica/mundo": [
+        ("BBC News · World (RSS, inglés)", "https://feeds.bbci.co.uk/news/world/rss.xml", "rss"),
+        ("DW · América Latina (RSS)", "https://rss.dw.com/xml/rss-sp-al", "rss"),
+        ("La Tercera · Mundo (RSS)", "https://www.latercera.com/arc/outboundfeeds/rss/category/mundo/?outputType=xml", "rss"),
         ("Google News · Internacional", "https://news.google.com/rss/search?q=internacional+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Medio Oriente", "https://news.google.com/rss/search?q=Israel+OR+Gaza+OR+Ir%C3%A1n+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Europa", "https://news.google.com/rss/search?q=Uni%C3%B3n+Europea+OR+Europa+gobierno+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
@@ -581,6 +597,12 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("Google News · Sudán y África", "https://news.google.com/rss/search?q=Sud%C3%A1n+OR+%22El+Fasher%22+OR+Sahel+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
     ],
     "emprendimiento": [
+        ("El Mostrador · Emprendedor (RSS)", "https://www.elmostrador.cl/categoria/emprendedor/feed/", "rss"),
+        ("Ecosistema Startup (RSS)", "https://ecosistemastartup.com/feed/", "rss"),
+        ("Emprende Pyme (RSS)", "https://www.emprendepyme.net/feed", "rss"),
+        ("Chócale · Emprendimiento (RSS)", "https://chocale.cl/categoria/emprendimiento/feed/", "rss"),
+        ("TechCrunch · Venture (RSS)", "https://techcrunch.com/category/venture/feed/", "rss"),
+        ("El Dínamo (RSS)", "https://www.eldinamo.cl/feed/", "rss"),
         ("Google News · Emprendimiento Chile", "https://news.google.com/rss/search?q=(emprendimiento+OR+startup+OR+%22capital+de+riesgo%22)+Chile+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Innovación pymes", "https://news.google.com/rss/search?q=pymes+innovaci%C3%B3n+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Fintech Chile", "https://news.google.com/rss/search?q=fintech+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
@@ -597,6 +619,8 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("Start-Up Chile (RSS)", "https://startupchile.org/feed/", "rss"),
     ],
     "tecnologia": [
+        ("FayerWayer (RSS)", "https://www.fayerwayer.com/arc/outboundfeeds/rss/?outputType=xml", "rss"),
+        ("Wired (RSS, inglés)", "https://www.wired.com/feed/rss", "rss"),
         ("Google News · Tecnología", "https://news.google.com/rss/search?q=tecnolog%C3%ADa+(IA+OR+chips+OR+Apple+OR+Google+OR+Microsoft+OR+Nvidia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Inteligencia artificial", "https://news.google.com/rss/search?q=%22inteligencia+artificial%22+(OpenAI+OR+Anthropic+OR+Google+OR+Meta+OR+Nvidia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Ciberseguridad", "https://news.google.com/rss/search?q=ciberseguridad+OR+hackeo+OR+ciberataque+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
@@ -609,6 +633,12 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("Ars Technica (RSS)", "https://feeds.arstechnica.com/arstechnica/index", "rss"),
     ],
     "inmobiliario": [
+        ("Plataforma Urbana (RSS)", "https://www.plataformaurbana.cl/feed/", "rss"),
+        ("Chócale · Vivienda (RSS)", "https://chocale.cl/categoria/vivienda/feed/", "rss"),
+        ("Revista Capital · Inmobiliario (RSS)", "https://www.capital.cl/category/inmobiliario/feed/", "rss"),
+        ("La Tercera · Pulso (RSS, inmobiliario)", "https://www.latercera.com/arc/outboundfeeds/rss/category/pulso/?outputType=xml", "rss"),
+        ("El Mostrador · Mercados (RSS)", "https://www.elmostrador.cl/categoria/mercados/feed/", "rss"),
+        ("Diario Financiero (RSS, inmobiliario)", "https://www.df.cl/noticias/site/list/port/rss.xml", "rss"),
         ("Google News · Inmobiliario Chile", "https://news.google.com/rss/search?q=(inmobiliario+OR+viviendas+OR+%22cr%C3%A9dito+hipotecario%22)+Chile+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Construcción", "https://news.google.com/rss/search?q=construcci%C3%B3n+CChC+OR+inmobiliarias+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Tasas hipotecarias", "https://news.google.com/rss/search?q=%22tasa+hipotecaria%22+OR+%22cr%C3%A9ditos+hipotecarios%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
@@ -617,6 +647,13 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("Google News · IVA viviendas y DFL 2", "https://news.google.com/rss/search?q=(IVA+viviendas+OR+DFL2+OR+contribuciones)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
     ],
     "deportes": [
+        ("ESPN · Golf (RSS)", "https://www.espn.com/espn/rss/golf/news", "rss"),
+        ("ESPN · Tenis (RSS)", "https://www.espn.com/espn/rss/tennis/news", "rss"),
+        ("ESPN · Fórmula 1 (RSS)", "https://www.espn.com/espn/rss/f1/news", "rss"),
+        ("ESPN · NBA (RSS)", "https://www.espn.com/espn/rss/nba/news", "rss"),
+        ("La Tercera · El Deportivo (RSS)", "https://www.latercera.com/arc/outboundfeeds/rss/category/el-deportivo/?outputType=xml", "rss"),
+        ("BBC Sport · Fútbol (RSS, inglés)", "https://feeds.bbci.co.uk/sport/football/rss.xml", "rss"),
+        ("Golf Digest (RSS, inglés)", "https://www.golfdigest.com/feed/rss", "rss"),
         ("Google News · Deportes Chile", "https://news.google.com/rss/search?q=deportes+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Golf", "https://news.google.com/rss/search?q=golf+(Niemann+OR+Pereira+OR+PGA)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
         ("Google News · Fútbol chileno", "https://news.google.com/rss/search?q=%22Liga+de+Primera%22+OR+%22Colo-Colo%22+OR+%22Universidad+de+Chile%22+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
@@ -667,32 +704,99 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
 
 VENTANA_H = {"ciencia": 240, "astronomia": 240, "emprendimiento": 120, "inmobiliario": 120}   # el resto: 72 horas
 TOPE_SECCION = 90
+FILTRO = {   # 01-11-2026: en secciones temáticas, de un diario general solo entran las notas del tema
+    "inmobiliario": re.compile(r"inmobiliari|vivienda|departament|hipotecari|arriendo|construcci|CChC|propiedad|subsidio habitacional|"
+                               r"DFL ?2|contribuciones|permisos de edificaci|urban", re.I),
+    "emprendimiento": re.compile(r"emprend|startup|pyme|Corfo|capital de riesgo|venture|fintech|ronda de inversi|financiamiento|"
+                                 r"unicornio|aceleradora|incubadora|innovaci", re.I)}
 _ROBOTS = {}
 _SIN_ROBOTS = set()   # sitios cuyo robots.txt no respondió (no se leen: no se sabe si lo permiten)
 
 
+AGENTE_ROBOTS = "cofradenews"
+ROBOTS_VISTOS = {}   # sitio → {"estado", "reglas"}: queda en datos/robots.json para revisar qué permite cada sitio
+
+
+class Robots:
+    """robots.txt según el estándar RFC 9309 (01-11-2026): manda la regla más larga que calce y, si empatan, «Allow»; entiende «*» y
+    «$»; un grupo con nuestro nombre manda sobre «*». El 31-10 Google News (/rss/search) y la API de ESPN prohibían la lectura
+    automática en su robots.txt: no se leen, y cada sección tiene ahora al menos 6 fuentes directas de los medios."""
+
+    def __init__(self, texto=None, todo=None):
+        self.todo, self.reglas = todo, []
+        if texto is not None:
+            self.reglas = self._grupo(texto)
+
+    @staticmethod
+    def _grupo(texto):
+        grupos, agentes, reglas, en_reglas = [], [], [], False
+        for linea in str(texto).splitlines():
+            linea = linea.split("#", 1)[0].strip()
+            if ":" not in linea:
+                continue
+            k, v = (x.strip() for x in linea.split(":", 1))
+            k = k.lower()
+            if k == "user-agent":
+                if en_reglas:
+                    grupos.append((agentes, reglas))
+                    agentes, reglas, en_reglas = [], [], False
+                agentes.append(v.lower())
+            elif k in ("allow", "disallow") and agentes:
+                en_reglas = True
+                if v or k == "allow":
+                    reglas.append((k == "allow", v))
+        if agentes:
+            grupos.append((agentes, reglas))
+        propios = [r for a, r in grupos if any(x != "*" and x and AGENTE_ROBOTS.startswith(x) for x in a)]
+        elegidos = propios or [r for a, r in grupos if "*" in a]
+        return [x for r in elegidos for x in r if x[1]]
+
+    @staticmethod
+    def _calza(patron, ruta):
+        fin = patron.endswith("$")
+        rx = "".join(".*" if c == "*" else re.escape(c) for c in (patron[:-1] if fin else patron))
+        return re.match(rx + ("$" if fin else ""), ruta) is not None
+
+    def permite(self, url):
+        if self.todo is not None:
+            return self.todo
+        u = urlsplit(url)
+        ruta = (u.path or "/") + (("?" + u.query) if u.query else "")
+        if ruta == "/robots.txt":
+            return True
+        mejor = None
+        for permitir, patron in self.reglas:
+            if self._calza(patron, ruta):
+                largo = len(patron)
+                if mejor is None or largo > mejor[0] or (largo == mejor[0] and permitir):
+                    mejor = (largo, permitir)
+        return True if mejor is None else mejor[1]
+
+
 def robots_permite(url, estado):
-    """True si el robots.txt del sitio permite leer esa dirección a este programa. Se lee una vez por sitio.
-    Sin robots.txt (404) se puede; con 401/403 o sin respuesta, no (se prefiere no leer antes que saltarse una regla)."""
+    """True si el robots.txt del sitio permite leer esa dirección (RFC 9309). Se lee una vez por sitio. 200: se aplican sus reglas;
+    4xx (no existe o no se publica): se puede leer, como dice el estándar; 5xx o sin respuesta: no se lee."""
     u = urlsplit(url)
     sitio = f"{u.scheme}://{u.netloc}"
     if sitio not in _ROBOTS:
-        rp = robotparser.RobotFileParser()
         try:
             r = requests.Session().get(sitio + "/robots.txt", headers={"User-Agent": UA}, timeout=20)
             if r.status_code == 200:
-                rp.parse(r.text.splitlines())
-            elif r.status_code in (401, 403):
-                rp.disallow_all = True
+                rb = Robots(r.text)
+            elif 400 <= r.status_code < 500:
+                rb = Robots(todo=True)
             else:
-                rp.allow_all = True
+                rb = Robots(todo=False)
+                _SIN_ROBOTS.add(sitio)
+            ROBOTS_VISTOS[u.netloc] = {"estado": r.status_code, "reglas": [("Allow: " if a else "Disallow: ") + p for a, p in rb.reglas][:60]}
         except requests.RequestException as ex:
-            rp.disallow_all = True
+            rb = Robots(todo=False)
             _SIN_ROBOTS.add(sitio)
+            ROBOTS_VISTOS[u.netloc] = {"estado": type(ex).__name__, "reglas": []}
             estado["robots_" + u.netloc] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": sitio + "/robots.txt",
                                            "error": f"{type(ex).__name__}"}
-        _ROBOTS[sitio] = rp
-    return _ROBOTS[sitio].can_fetch("CofradeNews", url)
+        _ROBOTS[sitio] = rb
+    return _ROBOTS[sitio].permite(url)
 
 
 def _limpio(t, n=320):
@@ -791,7 +895,7 @@ def _un_feed_(args):
         m = _motivo_robots(url)
         estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": m}
         return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": m}, []
-    x = pedir(url, estado, clave, como="json" if tipo == "json" else "texto", espera=(0, 20), limite=25,
+    x = pedir(url, estado, clave, como="json" if tipo == "json" else "texto", espera=(0,), limite=20,
               cabeceras={"Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml, application/json"})
     if x is None:
         return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": estado[clave].get("error", "")}, []
@@ -806,21 +910,31 @@ def _norm(t):
     return re.sub(r"[^a-z0-9áéíóúñü ]", "", str(t).lower())[:90]
 
 
-def titulares(estado, feeds=None, hilos=6):
+def titulares(estado, feeds=None, hilos=8):
     """{"generado", "secciones": {sec: {"consultadas": [...], "notas": [...]}}} en el formato candidatos/<sección>.json de la Skill."""
     feeds = feeds or FEEDS
-    tareas, secs = [], {}
+    tareas, secs, unicas_url = [], {}, {}
     for sec, lista in feeds.items():
         secs[sec] = {"consultadas": [], "notas": []}
         for i, (fuente, url, tipo) in enumerate(lista):
-            tareas.append((sec, fuente, url, tipo, estado, f"rss_{sec.replace('/', '_')}_{i}"))
+            if url not in unicas_url:   # 01-11-2026: una dirección que sirve a dos secciones se lee UNA vez
+                unicas_url[url] = len(tareas)
+                tareas.append((sec, fuente, url, tipo, estado, f"rss_{sec.replace('/', '_')}_{i}"))
     with ThreadPoolExecutor(max_workers=hilos) as ex:
-        res = list(ex.map(_un_feed, tareas))
+        leidas = list(ex.map(_un_feed, tareas))
+    res = []
+    for sec, lista in feeds.items():
+        for fuente, url, tipo in lista:
+            _, cons, notas = leidas[unicas_url[url]]
+            res.append((sec, dict(cons, fuente=fuente), [dict(n, fuente=fuente) if n["fuente"] == leidas[unicas_url[url]][1]["fuente"] else n for n in notas]))
     limite = ahora()
     for sec, cons, notas in res:
         secs[sec]["consultadas"].append(cons)
         h = VENTANA_H.get(sec, 72)
+        filtro = FILTRO.get(sec)
         for n in notas:
+            if filtro and not filtro.search(n["titulo"] + " " + n["resumen"]):
+                continue
             if n["fecha"]:
                 f = dt.datetime.strptime(n["fecha"], "%Y-%m-%d %H:%M").replace(tzinfo=TZ)
                 if not (limite - dt.timedelta(hours=h) <= f <= limite + dt.timedelta(hours=2)):
@@ -835,16 +949,32 @@ def titulares(estado, feeds=None, hilos=6):
             vistos.update((k1, k2))
             unicas.append(n)
         v["notas"] = unicas[:TOPE_SECCION]
-    ok = sum(1 for _, c, _ in res if c["ok"])
+    ok = sum(1 for _, c, _ in leidas if c["ok"])
     estado["titulares"] = {"ok": ok > 0, "hora": ahora().isoformat(timespec="seconds"), "url": "RSS públicos de los medios",
-                           "error": "" if ok else "ningún RSS respondió", "intentos": 1, "feeds_ok": ok, "feeds": len(res)}
+                           "error": "" if ok else "ningún RSS respondió", "intentos": 1, "feeds_ok": ok, "feeds": len(leidas)}
     return {"generado": ahora().isoformat(timespec="seconds"), "secciones": secs}
 
 
 # ---------- mercados y bitcoin (31-10-2026: el IPSA salía atrasado y el bitcoin faltaba) ----------
 MERCADOS = [("^IPSA", "IPSA"), ("^GSPC", "S&P 500"), ("^IXIC", "Nasdaq"), ("^DJI", "Dow Jones"),
             ("BZ=F", "Petróleo Brent"), ("HG=F", "Cobre Comex"), ("BTC-USD", "Bitcoin")]
-STOOQ = {"^GSPC": "^spx", "^IXIC": "^ndq", "^DJI": "^dji", "BZ=F": "cb.f", "HG=F": "hg.f", "BTC-USD": "btcusd"}
+STOOQ = {"^IPSA": "^ipsa", "^GSPC": "^spx", "^IXIC": "^ndq", "^DJI": "^dji", "BZ=F": "cb.f", "HG=F": "hg.f", "BTC-USD": "btcusd"}
+CNBC = {"^IPSA": ".IPSA", "^GSPC": ".SPX", "^IXIC": ".IXIC", "^DJI": ".DJI", "BZ=F": "@LCO.1", "HG=F": "@HG.1", "BTC-USD": "BTC.CM="}   # 3.ª fuente
+
+
+def cierre_cnbc(j, hoy):
+    """Servicio público de cotizaciones de CNBC → [(fecha, cierre)] con el último valor SOLO si es de un día anterior a hoy
+    (fuera de horario es el cierre); con su variación del día como cierre previo calculado."""
+    try:
+        q = j["FormattedQuoteResult"]["FormattedQuote"][0]
+        v = float(str(q.get("last") or "").replace(",", ""))
+        f = dt.datetime.fromisoformat(str(q.get("last_time"))[:19]).date()
+        pct = float(str(q.get("change_pct") or "0").replace("%", "").replace("+", "").replace(",", "") or 0)
+    except (KeyError, IndexError, TypeError, ValueError):
+        return []
+    if f >= hoy or v <= 0:
+        return []
+    return [((f - dt.timedelta(days=1)).isoformat(), v / (1 + pct / 100.0)), (f.isoformat(), v)]
 
 
 def cierres_yahoo(j, hoy):
@@ -892,7 +1022,12 @@ def mercados(estado, hoy):
         if len(c) < 2 and sym in STOOQ:
             u2 = f"https://stooq.com/q/d/l/?s={quote(STOOQ[sym])}&i=d"
             if robots_permite(u2, estado):
-                c, fuente = cierres_stooq(pedir(u2, estado, clave + "_stooq", como="texto", espera=(0, 30), limite=30), hoy), "Stooq"
+                c, fuente = cierres_stooq(pedir(u2, estado, clave + "_stooq", como="texto", espera=(0, 30), limite=45), hoy), "Stooq"
+        if len(c) < 2 and sym in CNBC:   # 01-11-2026: tercera fuente (el 31-10 fallaron las dos primeras)
+            u3 = (f"https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols={quote(CNBC[sym])}"
+                  "&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1")
+            if robots_permite(u3, estado):
+                c, fuente = cierre_cnbc(pedir(u3, estado, clave + "_cnbc", espera=(0, 30), limite=30), hoy), "CNBC"
         if len(c) >= 2:
             (f0, v0), (f1, v1) = c[-2], c[-1]
             out.append({"nombre": nom, "valor": round(v1, 2), "variacion_pct": round((v1 / v0 - 1) * 100, 2), "fecha": f1, "fuente": fuente})
@@ -973,6 +1108,7 @@ def main(argv=None):
         btc = None
         estado["bitcoin"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "bitcoin", "error": type(ex).__name__}
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
+    escribir(os.path.join(a.salida, "robots.json"), {"fecha": hoy.isoformat(), "sitios": ROBOTS_VISTOS} if ROBOTS_VISTOS else None)
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
     escribir(os.path.join(a.salida, "estado.json"), resumen)
     for k, v in estado.items():
