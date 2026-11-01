@@ -34,7 +34,7 @@ import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from email.utils import parsedate_to_datetime
 from html import unescape
-from urllib.parse import quote, urlsplit
+from urllib.parse import parse_qs, quote, urlsplit
 
 import requests
 
@@ -55,6 +55,14 @@ def ahora():
     return dt.datetime.now(TZ)
 
 
+_SECRETO = re.compile(r"(?i)\b(api_key|apikey|key|pass|password|user|token|client_secret)=([^&\s'\"]+)")
+
+
+def ocultar(t):
+    """01-11-2026: las claves de las cuentas gratuitas (FRED, Banco Central) viajan en la dirección: nunca quedan escritas."""
+    return _SECRETO.sub(lambda m: m.group(1) + "=***", str(t or ""))
+
+
 def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None, cabeceras=None, limite=60):
     """GET con hasta 3 intentos y pausas. Anota el resultado en estado[clave]. → contenido o None."""
     s = sesion or requests.Session()
@@ -65,14 +73,14 @@ def pedir(url, estado, clave, como="json", espera=PAUSAS, sesion=None, cabeceras
         try:
             r = s.get(url, headers=dict({"User-Agent": UA, "Accept": "application/json, text/xml, text/html"}, **(cabeceras or {})), timeout=limite)
             if r.status_code == 200 and r.content:
-                estado[clave] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": url, "intentos": i + 1}
+                estado[clave] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": ocultar(url), "intentos": i + 1}
                 return r.json() if como == "json" else r.text
             error = f"HTTP {r.status_code}"
             if r.status_code in (401, 403, 404, 451):
                 break   # rechazo explícito: insistir no cambia nada
         except (requests.RequestException, ValueError) as ex:
-            error = f"{type(ex).__name__}: {str(ex)[:120]}"
-    estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": error, "intentos": i + 1}
+            error = ocultar(f"{type(ex).__name__}: {str(ex)[:160]}")[:160]
+    estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": ocultar(url), "error": error, "intentos": i + 1}
     return None
 
 
@@ -702,6 +710,72 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
     ],
 }
 
+def _bing(q):
+    return "https://www.bing.com/news/search?q=" + quote(q) + "&format=rss&cc=CL&setlang=es"
+
+
+FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de conectarse»): Bing Noticias (enlace directo al medio)
+    # y más diarios con RSS propio. Cada dirección pasa por el robots.txt de su sitio: la que no lo permita queda anotada en robots.json.
+    "economia/chile": [("Bing Noticias · Economía Chile", _bing("economía Chile"), "rss"),
+                       ("Bing Noticias · IPSA y Bolsa de Santiago", _bing("IPSA Bolsa de Santiago"), "rss"),
+                       ("Ex-Ante (RSS)", "https://www.ex-ante.cl/feed/", "rss"),
+                       ("CNN Chile (RSS)", "https://www.cnnchile.com/feed/", "rss")],
+    "economia/mundo": [("Bing Noticias · Economía mundial", _bing("economía mundial mercados"), "rss")],
+    "politica/chile": [("Bing Noticias · Política Chile", _bing("política Chile Gobierno Congreso"), "rss"),
+                       ("Radio Universidad de Chile (RSS)", "https://radio.uchile.cl/feed/", "rss"),
+                       ("El Líbero (RSS)", "https://ellibero.cl/feed/", "rss"),
+                       ("Ex-Ante (RSS)", "https://www.ex-ante.cl/feed/", "rss"),
+                       ("CNN Chile (RSS)", "https://www.cnnchile.com/feed/", "rss")],
+    "politica/mundo": [("Bing Noticias · Internacional", _bing("internacional noticias mundo"), "rss")],
+    "inmobiliario": [("Bing Noticias · Mercado inmobiliario", _bing("mercado inmobiliario Chile"), "rss"),
+                     ("Bing Noticias · Vivienda y CChC", _bing("viviendas Chile CChC"), "rss"),
+                     ("Bing Noticias · Créditos hipotecarios", _bing("crédito hipotecario Chile"), "rss")],
+    "emprendimiento": [("Bing Noticias · Emprendimiento Chile", _bing("emprendimiento Chile"), "rss"),
+                       ("Bing Noticias · Startups Chile", _bing("startup Chile inversión"), "rss"),
+                       ("Bing Noticias · Pymes y Corfo", _bing("pymes Corfo Chile"), "rss"),
+                       ("Start-Up Chile (RSS)", "https://startupchile.org/feed/", "rss")],
+    "tecnologia": [("Bing Noticias · Tecnología", _bing("tecnología inteligencia artificial"), "rss")],
+    "deportes": [("Bing Noticias · Fútbol chileno", _bing("fútbol chileno Liga de Primera"), "rss"),
+                 ("Bing Noticias · Tenis chileno", _bing("tenis chileno ATP"), "rss"),
+                 ("Bing Noticias · Golf", _bing("golf PGA Tour"), "rss"),
+                 ("Bing Noticias · Equitación", _bing("equitación salto Chile"), "rss")],
+    "ciencia": [("Bing Noticias · Avances médicos", _bing("avance científico medicina estudio"), "rss")],
+    "astronomia": [("Bing Noticias · Astronomía", _bing("astronomía telescopio Chile"), "rss")],
+}
+
+
+def redes(ruta="redes.json"):
+    """Cuentas OFICIALES de redes sociales que Germán elija (archivo redes.json del repositorio), leídas por su RSS público:
+    YouTube (canal), Bluesky (perfil) y Mastodon (perfil o etiqueta). Sin cuentas, sin claves y sin saltarse nada."""
+    try:
+        R = json.load(open(ruta, encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    out = {}
+    for x in R.get("youtube") or []:
+        if isinstance(x, dict) and re.fullmatch(r"UC[A-Za-z0-9_-]{22}", str(x.get("channel_id") or "")):
+            out.setdefault(x.get("seccion") or "politica/chile", []).append(
+                (f"YouTube · {x.get('nombre') or x['channel_id']}", f"https://www.youtube.com/feeds/videos.xml?channel_id={x['channel_id']}", "rss"))
+    for x in R.get("bluesky") or []:
+        if isinstance(x, dict) and re.fullmatch(r"[A-Za-z0-9.-]+\.[A-Za-z]{2,}", str(x.get("handle") or "")):
+            out.setdefault(x.get("seccion") or "politica/chile", []).append(
+                (f"Bluesky · {x.get('nombre') or x['handle']}", f"https://bsky.app/profile/{x['handle']}/rss", "rss"))
+    for x in R.get("mastodon") or []:
+        if isinstance(x, dict) and re.match(r"^https://[^\s]+\.rss$", str(x.get("rss") or "")):
+            out.setdefault(x.get("seccion") or "politica/chile", []).append((f"Mastodon · {x.get('nombre') or x['rss']}", x["rss"], "rss"))
+    return out
+
+
+def todas_las_fuentes(ruta_redes="redes.json"):
+    """FEEDS + FEEDS_EXTRA + redes.json, sin repetir una dirección dentro de la misma sección."""
+    out = {k: list(v) for k, v in FEEDS.items()}
+    for extra in (FEEDS_EXTRA, redes(ruta_redes)):
+        for sec, L in extra.items():
+            vistas = {u for _, u, _ in out.setdefault(sec, [])}
+            out[sec] += [x for x in L if x[1] not in vistas]
+    return out
+
+
 VENTANA_H = {"ciencia": 240, "astronomia": 240, "emprendimiento": 120, "inmobiliario": 120}   # el resto: 72 horas
 TOPE_SECCION = 90
 FILTRO = {   # 01-11-2026: en secciones temáticas, de un diario general solo entran las notas del tema
@@ -842,7 +916,7 @@ def leer_feed(texto, fuente):
             ct = _sin_ns(c.tag)
             if ct == "link":
                 h.setdefault("link", (c.get("href") if c.get("rel") in (None, "alternate") else None) or (c.text or "").strip())
-            elif ct == "source":
+            elif ct.lower() == "source":
                 h["medio"] = (c.text or "").strip()
             elif ct not in h:
                 h[ct] = c.text or ""
@@ -853,8 +927,13 @@ def leer_feed(texto, fuente):
         medio = h.get("medio") or ""
         if medio and titulo.endswith(" - " + medio):
             titulo = titulo[: -len(" - " + medio)].strip()
+        directo = False
+        if "bing.com/news/apiclick" in url:   # 01-11-2026: Bing Noticias trae el enlace del medio dentro del suyo
+            real = (parse_qs(urlsplit(url).query).get("url") or [""])[0]
+            if real.startswith("http"):
+                url, directo = real, True
         f = _fecha_feed(h.get("pubdate") or h.get("published") or h.get("updated") or h.get("date"))
-        out.append({"fuente": (f"{medio} (vía Google News)" if medio else fuente), "titulo": titulo,
+        out.append({"fuente": (medio if (medio and directo) else f"{medio} (vía Google News)" if medio else fuente), "titulo": titulo,
                     "fecha": f.strftime("%Y-%m-%d %H:%M") if f else "", "url": url,
                     "resumen": _limpio(h.get("description") or h.get("summary") or h.get("encoded") or h.get("content"))})
     return out
@@ -912,7 +991,7 @@ def _norm(t):
 
 def titulares(estado, feeds=None, hilos=8):
     """{"generado", "secciones": {sec: {"consultadas": [...], "notas": [...]}}} en el formato candidatos/<sección>.json de la Skill."""
-    feeds = feeds or FEEDS
+    feeds = feeds or todas_las_fuentes()
     tareas, secs, unicas_url = [], {}, {}
     for sec, lista in feeds.items():
         secs[sec] = {"consultadas": [], "notas": []}
@@ -1008,31 +1087,168 @@ def cierres_stooq(csv_txt, hoy):
     return out
 
 
-def mercados(estado, hoy):
-    """[{nombre, valor, variacion_pct, fecha (último CIERRE), fuente}] y el bitcoin para «indicadores_hoy»."""
+# 01-11-2026 · Yahoo, Stooq y CNBC prohíben por robots.txt la lectura automática: se suman fuentes OFICIALES hechas para programas.
+FRED = {"^GSPC": "SP500", "^IXIC": "NASDAQCOM", "^DJI": "DJIA", "BZ=F": "DCOILBRENTEU"}   # Reserva Federal de St. Louis
+BCCH_URL = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx"   # Banco Central de Chile (cuenta gratuita)
+BCCH_BUSCAR = {"^IPSA": r"\bIPSA\b", "^GSPC": r"S\s*&\s*P\s*500|Standard\s*(&|and|y)\s*Poor", "^IXIC": r"nasdaq",
+               "^DJI": r"dow\s*jones", "BZ=F": r"brent", "HG=F": r"cobre"}
+BCCH_FUERA = re.compile(r"variaci|var\.|%|promedio|mensual|trimestral|anual|tasa|futuro|exporta|import|volumen|monto", re.I)
+_BCCH = {}
+
+
+def cierres_fred_api(j, hoy):
+    """API de FRED → [(fecha, valor)] de días anteriores a hoy (los días sin dato vienen con «.»)."""
     out = []
+    for o in (j or {}).get("observations") or []:
+        try:
+            f, v = str(o.get("date"))[:10], float(o.get("value"))
+        except (TypeError, ValueError):
+            continue
+        if re.match(r"\d{4}-\d{2}-\d{2}$", f) and f < hoy.isoformat():
+            out.append((f, v))
+    return sorted(out)
+
+
+def cierres_fred_csv(txt, hoy):
+    out = []
+    for ln in (txt or "").strip().splitlines()[1:]:
+        p = ln.split(",")
+        if len(p) >= 2 and re.match(r"\d{4}-\d{2}-\d{2}$", p[0]) and p[0] < hoy.isoformat():
+            try:
+                out.append((p[0], float(p[1])))
+            except ValueError:
+                pass
+    return sorted(out)
+
+
+def cierres_bcch(j, hoy):
+    """Servicio del Banco Central (SIETE) → [(fecha, valor)]; fechas «dd-mm-aaaa», solo observaciones con estado OK."""
+    out = []
+    for o in (((j or {}).get("Series") or {}).get("Obs") or []):
+        m = re.match(r"(\d{2})-(\d{2})-(\d{4})$", str(o.get("indexDateString") or ""))
+        if not m or str(o.get("statusCode", "OK")).upper() != "OK":
+            continue
+        try:
+            v = float(str(o.get("value")).replace(",", "."))
+        except (TypeError, ValueError):
+            continue
+        f = f"{m.group(3)}-{m.group(2)}-{m.group(1)}"
+        if f < hoy.isoformat() and v > 0:
+            out.append((f, v))
+    return sorted(out)
+
+
+def bcch_elegir(infos):
+    """Catálogo de series DIARIAS del Banco Central → {símbolo: (id, título)}: la primera serie cuyo título calza y no es una
+    variación, un promedio ni un monto. Lo elegido queda en estado.json para revisarlo."""
+    out = {}
+    for sym, patron in BCCH_BUSCAR.items():
+        for x in infos or []:
+            t = f"{x.get('spanishTitle') or ''} {x.get('englishTitle') or ''}"
+            if re.search(patron, t, re.I) and not BCCH_FUERA.search(t) and x.get("seriesId"):
+                out[sym] = (x["seriesId"], (x.get("spanishTitle") or x.get("englishTitle") or "")[:120])
+                break
+    return out
+
+
+def _bcch_cred():
+    return os.environ.get("BCCH_USER", "").strip(), os.environ.get("BCCH_PASS", "").strip()
+
+
+def bcch_series(estado):
+    if "mapa" in _BCCH:
+        return _BCCH["mapa"]
+    u, pw = _bcch_cred()
+    mapa = {}
+    if u and pw:
+        url = f"{BCCH_URL}?user={quote(u)}&pass={quote(pw)}&function=SearchSeries&frequency=DAILY"
+        if robots_permite(url, estado):
+            mapa = bcch_elegir((pedir(url, estado, "bcch_catalogo", espera=(0, 30), limite=60) or {}).get("SeriesInfos"))
+        estado["bcch_series"] = {"ok": bool(mapa), "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central (catálogo)",
+                                 "error": "" if mapa else "sin series que calcen", "elegidas": {k: list(v) for k, v in mapa.items()}}
+    _BCCH["mapa"] = mapa
+    return mapa
+
+
+def cierres_mindicador(j, hoy):
+    out = []
+    for o in (j or {}).get("serie") or []:
+        f = str(o.get("fecha") or "")[:10]
+        try:
+            v = float(o.get("valor"))
+        except (TypeError, ValueError):
+            continue
+        if re.match(r"\d{4}-\d{2}-\d{2}$", f) and f < hoy.isoformat():
+            out.append((f, v))
+    return sorted(out)
+
+
+def _fuentes_mercado(sym, hoy, estado, clave):
+    """La cascada de cada índice, en orden: (nombre de la fuente, función que trae los cierres). Las cuentas gratuitas solo
+    se usan si su secreto está guardado en GitHub; todas pasan por el robots.txt del sitio."""
+    L = [("Yahoo Finance", lambda u: cierres_yahoo(pedir(u, estado, clave, espera=(0, 30), limite=30), hoy),
+          f"https://query1.finance.yahoo.com/v8/finance/chart/{quote(sym)}?range=10d&interval=1d")]
+    if sym in STOOQ:
+        L.append(("Stooq", lambda u: cierres_stooq(pedir(u, estado, clave + "_stooq", como="texto", espera=(0, 30), limite=45), hoy),
+                  f"https://stooq.com/q/d/l/?s={quote(STOOQ[sym])}&i=d"))
+    if sym in CNBC:
+        L.append(("CNBC", lambda u: cierre_cnbc(pedir(u, estado, clave + "_cnbc", espera=(0, 30), limite=30), hoy),
+                  f"https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols={quote(CNBC[sym])}"
+                  "&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1"))
+    desde = (hoy - dt.timedelta(days=15)).isoformat()
+    k = os.environ.get("FRED_API_KEY", "").strip()
+    if sym in FRED and k:
+        L.append(("FRED (Reserva Federal de St. Louis)", lambda u: cierres_fred_api(pedir(u, estado, clave + "_fred", espera=(0, 30), limite=30), hoy),
+                  f"https://api.stlouisfed.org/fred/series/observations?series_id={FRED[sym]}&api_key={quote(k)}&file_type=json"
+                  f"&observation_start={desde}"))
+    if sym in FRED:
+        L.append(("FRED (Reserva Federal de St. Louis)", lambda u: cierres_fred_csv(pedir(u, estado, clave + "_fredcsv", como="texto", espera=(0, 30), limite=30), hoy),
+                  f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={FRED[sym]}&cosd={desde}"))
+    usr, pw = _bcch_cred()
+    if sym in BCCH_BUSCAR and usr and pw:
+        def _bc(u=None):
+            sid = (bcch_series(estado).get(sym) or ("", ""))[0]
+            if not sid:
+                return []
+            return cierres_bcch(pedir(f"{BCCH_URL}?user={quote(usr)}&pass={quote(pw)}&function=GetSeries&timeseries={quote(sid)}"
+                                      f"&firstdate={desde}&lastdate={hoy.isoformat()}", estado, clave + "_bcch", espera=(0, 30), limite=45), hoy)
+        L.append(("Banco Central de Chile", _bc, f"{BCCH_URL}?function=GetSeries"))
+    if sym == "HG=F":
+        L.append(("Banco Central de Chile (vía mindicador.cl)",
+                  lambda u: cierres_mindicador(pedir(u, estado, clave + "_mindicador", espera=(0, 30), limite=30), hoy),
+                  "https://mindicador.cl/api/libra_cobre"))
+    return L
+
+
+def mercados(estado, hoy):
+    """[{nombre, valor, variacion_pct, fecha (último CIERRE), fuente}]. Cada índice recorre su cascada (hasta 7 fuentes) y se
+    queda con la primera que trae dos cierres; si dos fuentes traen fechas distintas, gana la más reciente."""
+    out, usadas, intentadas = [], set(), []
     for sym, nom in MERCADOS:
         clave = "mercado_" + re.sub(r"[^a-z0-9]", "", sym.lower())
-        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{quote(sym)}?range=10d&interval=1d"
-        c, fuente = [], "Yahoo Finance"
-        if robots_permite(url, estado):
-            c = cierres_yahoo(pedir(url, estado, clave, espera=(0, 30), limite=30), hoy)
-        else:
-            estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": _motivo_robots(url)}
-        if len(c) < 2 and sym in STOOQ:
-            u2 = f"https://stooq.com/q/d/l/?s={quote(STOOQ[sym])}&i=d"
-            if robots_permite(u2, estado):
-                c, fuente = cierres_stooq(pedir(u2, estado, clave + "_stooq", como="texto", espera=(0, 30), limite=45), hoy), "Stooq"
-        if len(c) < 2 and sym in CNBC:   # 01-11-2026: tercera fuente (el 31-10 fallaron las dos primeras)
-            u3 = (f"https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols={quote(CNBC[sym])}"
-                  "&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1")
-            if robots_permite(u3, estado):
-                c, fuente = cierre_cnbc(pedir(u3, estado, clave + "_cnbc", espera=(0, 30), limite=30), hoy), "CNBC"
-        if len(c) >= 2:
+        mejor = None
+        for fuente, traer, u0 in _fuentes_mercado(sym, hoy, estado, clave):
+            intentadas.append(fuente)
+            if not robots_permite(u0, estado):
+                estado.setdefault(clave, {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": ocultar(u0), "error": _motivo_robots(u0)})
+                continue
+            try:
+                c = traer(u0)
+            except Exception as ex:   # noqa: BLE001 — una fuente rota pasa a la siguiente
+                estado[clave + "_error"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": fuente, "error": type(ex).__name__}
+                c = []
+            if len(c) >= 2 and (not mejor or c[-1][0] > mejor[1][-1][0]):
+                mejor = (fuente, c)
+                if c[-1][0] >= (hoy - dt.timedelta(days=1)).isoformat():
+                    break   # ya es el cierre de ayer: no hace falta seguir
+        if mejor:
+            fuente, c = mejor
             (f0, v0), (f1, v1) = c[-2], c[-1]
-            out.append({"nombre": nom, "valor": round(v1, 2), "variacion_pct": round((v1 / v0 - 1) * 100, 2), "fecha": f1, "fuente": fuente})
-    estado["mercados"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": "Yahoo Finance / Stooq",
-                          "error": "" if out else "sin cierres", "intentos": 1, "n": len(out)}
+            nombre = "Cobre (Bolsa de Metales de Londres)" if (sym == "HG=F" and "mindicador" in fuente) else nom
+            out.append({"nombre": nombre, "valor": round(v1, 2), "variacion_pct": round((v1 / v0 - 1) * 100, 2), "fecha": f1, "fuente": fuente})
+            usadas.add(fuente)
+    estado["mercados"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": " / ".join(dict.fromkeys(intentadas)) or "mercados",
+                          "error": "" if out else "sin cierres", "intentos": 1, "n": len(out), "fuentes_usadas": sorted(usadas)}
     return out
 
 

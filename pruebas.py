@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Pruebas de bajar.py con datos de ejemplo (sin red). python3 scripts/pruebas.py"""
 import datetime as dt
+import json
 import os
 import sys
 import tempfile
@@ -371,6 +372,110 @@ def mercados_solo_cierres_definitivos_y_bitcoin():
         assert B.bitcoin(e, hoy) is None and B.mercados(e, hoy) == [] and not e["mercados"]["ok"]
     finally:
         B.robots_permite, B.pedir = viejos
+
+
+@prueba
+def mercados_con_fuentes_oficiales_y_claves_ocultas():
+    """01-11-2026: Yahoo, Stooq y CNBC prohíben por robots.txt la lectura automática. Se suman FRED (Reserva Federal de St. Louis),
+    el Banco Central de Chile (cuenta gratuita) y mindicador.cl para el cobre; las claves nunca quedan escritas."""
+    hoy = dt.date(2026, 11, 2)
+    assert B.ocultar("https://x?user=german&pass=s3cr3t&function=GetSeries&api_key=abc") == "https://x?user=***&pass=***&function=GetSeries&api_key=***"
+    class _R:
+        status_code, content = 200, b"{}"
+
+        def json(self):
+            return {}
+
+    class _S:
+        def __init__(self, falla):
+            self.falla = falla
+
+        def get(self, url, **k):
+            if self.falla:
+                raise B.requests.ConnectionError("fallo al conectar con " + url)
+            return _R()
+    for falla in (False, True):   # el pedido real (bien o mal) nunca deja la clave escrita
+        e = {}
+        B.pedir("https://si3.bcentral.cl/x?user=german&pass=s3cr3t&f=1", e, "k", espera=(0,), sesion=_S(falla))
+        assert "s3cr3t" not in json.dumps(e) and "german" not in json.dumps(e), e
+    assert B.cierres_fred_api({"observations": [{"date": "2026-10-29", "value": "6800.1"}, {"date": "2026-10-30", "value": "."},
+                                                {"date": "2026-10-31", "value": "6850.5"}, {"date": "2026-11-02", "value": "1"}]}, hoy) == \
+        [("2026-10-29", 6800.1), ("2026-10-31", 6850.5)]
+    assert B.cierres_fred_csv("observation_date,SP500\n2026-10-30,6800\n2026-10-31,\n2026-11-02,1\n", hoy) == [("2026-10-30", 6800.0)]
+    bc = {"Series": {"Obs": [{"indexDateString": "30-10-2026", "value": "9010.5", "statusCode": "OK"},
+                             {"indexDateString": "31-10-2026", "value": "NaN", "statusCode": "ND"},
+                             {"indexDateString": "31-10-2026", "value": "9100", "statusCode": "OK"}]}}
+    assert B.cierres_bcch(bc, hoy) == [("2026-10-30", 9010.5), ("2026-10-31", 9100.0)]
+    cat = [{"seriesId": "V1", "spanishTitle": "IPSA, variación diaria (%)"}, {"seriesId": "A1", "spanishTitle": "Índice IPSA"},
+           {"seriesId": "D1", "spanishTitle": "Índice Dow Jones Industrial"}, {"seriesId": "C1", "spanishTitle": "Precio del cobre refinado BML (US$/lb)"}]
+    el = B.bcch_elegir(cat)
+    assert el["^IPSA"][0] == "A1" and el["^DJI"][0] == "D1" and el["HG=F"][0] == "C1" and "^IXIC" not in el, el
+    assert B.cierres_mindicador({"serie": [{"fecha": "2026-11-02T03:00:00.000Z", "valor": 5.0}, {"fecha": "2026-10-31T03:00:00.000Z", "valor": 4.9},
+                                           {"fecha": "2026-10-30T03:00:00.000Z", "valor": 4.8}]}, hoy) == [("2026-10-30", 4.8), ("2026-10-31", 4.9)]
+    viejos = B.robots_permite, B.pedir, dict(os.environ), dict(B._BCCH)
+
+    def pedir(url, estado, clave, **k):
+        estado[clave] = {"ok": True, "url": B.ocultar(url)}
+        if "function=SearchSeries" in url:
+            return {"SeriesInfos": cat}
+        if "function=GetSeries" in url and "A1" in url:
+            return bc
+        if "api.stlouisfed.org" in url and "SP500" in url:
+            return {"observations": [{"date": "2026-10-29", "value": "6800"}, {"date": "2026-10-30", "value": "6868"}]}
+        if "libra_cobre" in url:
+            return {"serie": [{"fecha": "2026-10-30T03:00:00.000Z", "valor": 4.8}, {"fecha": "2026-10-31T03:00:00.000Z", "valor": 4.9}]}
+        return None
+    prohibidos = ("yahoo.com", "stooq.com", "cnbc.com")
+    B.robots_permite, B.pedir = (lambda url, e: not any(p in url for p in prohibidos)), pedir
+    os.environ.update({"FRED_API_KEY": "clave-fred", "BCCH_USER": "german", "BCCH_PASS": "s3cr3t"})
+    B._BCCH.clear()
+    try:
+        e = {}
+        m = {x["nombre"]: x for x in B.mercados(e, hoy)}
+        assert m["IPSA"]["fuente"] == "Banco Central de Chile" and m["IPSA"]["fecha"] == "2026-10-31" and m["IPSA"]["valor"] == 9100.0, m
+        assert m["S&P 500"]["fuente"].startswith("FRED") and m["S&P 500"]["variacion_pct"] == 1.0
+        assert m["Cobre (Bolsa de Metales de Londres)"]["fuente"] == "Banco Central de Chile (vía mindicador.cl)"
+        assert e["bcch_series"]["elegidas"]["^IPSA"][0] == "A1"
+        todo = json.dumps(e, ensure_ascii=False)
+        assert "s3cr3t" not in todo and "clave-fred" not in todo and "user=german" not in todo, todo[:400]   # nada secreto en estado.json
+        assert e["mercados"]["ok"] and "Banco Central de Chile" in e["mercados"]["fuentes_usadas"]
+        # sin cuentas: igual llega el cobre (mindicador) y no se cae nada
+        for k in ("FRED_API_KEY", "BCCH_USER", "BCCH_PASS"):
+            os.environ.pop(k, None)
+        B._BCCH.clear()
+        m2 = {x["nombre"]: x for x in B.mercados({}, hoy)}
+        assert list(m2) == ["Cobre (Bolsa de Metales de Londres)"], m2
+    finally:
+        B.robots_permite, B.pedir = viejos[0], viejos[1]
+        os.environ.clear()
+        os.environ.update(viejos[2])
+        B._BCCH.clear()
+        B._BCCH.update(viejos[3])
+
+
+@prueba
+def bing_noticias_y_redes_oficiales():
+    """01-11-2026: Bing Noticias trae el enlace del medio dentro del suyo: se publica con el medio real y su enlace directo.
+    Las redes sociales entran solo por su RSS público (YouTube, Bluesky, Mastodon) desde redes.json."""
+    rss = ('<rss xmlns:News="https://www.bing.com/news/search?q=x&amp;format=rss"><channel><item><title>Ventas de viviendas suben 12%</title>'
+           '<link>http://www.bing.com/news/apiclick.aspx?ref=FexRss&amp;aid=&amp;tid=1&amp;url=https%3a%2f%2fwww.df.cl%2fnota-1&amp;c=1</link>'
+           '<pubDate>Sun, 01 Nov 2026 10:00:00 GMT</pubDate><News:Source>Diario Financiero</News:Source></item></channel></rss>')
+    n = B.leer_feed(rss, "Bing Noticias · X")
+    assert n[0]["url"] == "https://www.df.cl/nota-1" and n[0]["fuente"] == "Diario Financiero", n
+    F = B.todas_las_fuentes("/no/existe.json")
+    assert all(len(F[s]) >= len(B.FEEDS.get(s, [])) for s in F) and any("bing.com" in u for _, u, _ in F["inmobiliario"])
+    for sec, L in F.items():
+        us = [u for _, u, _ in L]
+        assert len(us) == len(set(us)), sec
+    import tempfile
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as fh:
+        json.dump({"youtube": [{"nombre": "Canal", "channel_id": "UC" + "a" * 22, "seccion": "politica/chile"}, {"channel_id": "malo"}],
+                   "bluesky": [{"nombre": "Perfil", "handle": "ejemplo.bsky.social", "seccion": "deportes"}],
+                   "mastodon": [{"rss": "https://mastodon.social/tags/chile.rss"}, {"rss": "javascript:alert(1)"}]}, fh)
+    R = B.redes(fh.name)
+    assert [u for _, u, _ in R["politica/chile"]] == ["https://www.youtube.com/feeds/videos.xml?channel_id=UC" + "a" * 22,
+                                                     "https://mastodon.social/tags/chile.rss"]
+    assert R["deportes"][0][1] == "https://bsky.app/profile/ejemplo.bsky.social/rss"
 
 
 @prueba
