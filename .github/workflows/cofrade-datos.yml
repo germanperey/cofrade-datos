@@ -34,6 +34,7 @@ jobs:
           OPENSKY_CLIENT_SECRET: ${{ secrets.OPENSKY_CLIENT_SECRET }}
           # 01-11-2026: cuentas GRATUITAS opcionales para los mercados (sin ellas se sigue con las demás fuentes)
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          BCCH_TOKEN: ${{ secrets.BCCH_TOKEN }}   # Banco Central: «API Key Token» de «Mi Cuenta» (vence al año: renovarlo ahí)
           BCCH_USER: ${{ secrets.BCCH_USER }}
           BCCH_PASS: ${{ secrets.BCCH_PASS }}
         run: python bajar.py --salida datos
