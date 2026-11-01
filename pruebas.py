@@ -537,6 +537,17 @@ def vuelos_de_hoy_con_aerodatabox_y_cupo():
 
 
 @prueba
+def mercados_no_se_pierden_si_una_fuente_cae():
+    hoy = dt.date(2026, 11, 1)
+    previo = {"mercados": [{"nombre": "S&P 500", "valor": 7743.98, "fecha": "2026-10-28", "fuente": "FRED"},
+                           {"nombre": "Viejo", "valor": 1, "fecha": "2026-10-01", "fuente": "X"},
+                           {"nombre": "Cobre (Bolsa de Metales de Londres)", "valor": 6.0, "fecha": "2026-10-29", "fuente": "BC"}]}
+    nuevos = [{"nombre": "Cobre (Bolsa de Metales de Londres)", "valor": 6.66, "fecha": "2026-10-30", "fuente": "BC"}]
+    r = B.con_anteriores(nuevos, previo, hoy)
+    assert [x["nombre"] for x in r] == ["Cobre (Bolsa de Metales de Londres)", "S&P 500"] and r[0]["valor"] == 6.66 and r[1]["conservado"]
+    assert B.con_anteriores([], None, hoy) == []
+
+@prueba
 def robots_segun_el_estandar_rfc_9309():
     """01-11-2026: precedencia del estándar (la regla más larga manda; empate, Allow), comodines «*» y «$», grupo propio y 4xx."""
     g = "User-agent: *\nDisallow: /\nAllow: /rss/*\nAllow: /$\nDisallow: /rss/foo$\n\nUser-agent: OtroBot\nAllow: /\n"

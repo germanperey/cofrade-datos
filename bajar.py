@@ -1342,6 +1342,17 @@ def mercados(estado, hoy):
     return out
 
 
+def con_anteriores(nuevos, previo, hoy, dias=6):
+    """01-11-2026: si una fuente se cae en esta corrida (FRED respondió HTTP 500 de madrugada), no se pierde el cierre que trajo una
+    corrida anterior: se conserva con SU fecha (el diario muestra la fecha de cada cierre), si no tiene más de «dias» días."""
+    nuevos = list(nuevos or [])
+    tengo = {x.get("nombre") for x in nuevos}
+    for x in ((previo or {}).get("mercados") or []):
+        if isinstance(x, dict) and x.get("nombre") not in tengo and str(x.get("fecha") or "") >= (hoy - dt.timedelta(days=dias)).isoformat():
+            nuevos.append(dict(x, conservado=True))
+    return nuevos
+
+
 def bitcoin(estado, hoy):
     """Precio del bitcoin en dólares: Coinbase (precio spot) y, si falla, CoinGecko. → {bitcoin_usd, bitcoin_fecha, bitcoin_fuente}"""
     j = pedir("https://api.coinbase.com/v2/prices/BTC-USD/spot", estado, "bitcoin", espera=(0, 30), limite=30)
@@ -1427,6 +1438,12 @@ def main(argv=None):
     except Exception as ex:   # noqa: BLE001
         btc = None
         estado["bitcoin"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "bitcoin", "error": type(ex).__name__}
+    try:
+        mer = con_anteriores(mer, json.load(open(os.path.join(a.salida, "mercados.json"), encoding="utf-8")), hoy)
+    except (OSError, ValueError):
+        pass
+    if mer and isinstance(estado.get("mercados"), dict):
+        estado["mercados"].update(ok=True, n=len(mer), error="")
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
     escribir(os.path.join(a.salida, "bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": _BCCH["catalogo"]} if _BCCH.get("catalogo") else None)
     escribir(os.path.join(a.salida, "robots.json"), {"fecha": hoy.isoformat(), "sitios": ROBOTS_VISTOS} if ROBOTS_VISTOS else None)
