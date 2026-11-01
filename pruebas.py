@@ -437,6 +437,7 @@ def mercados_con_fuentes_oficiales_y_claves_ocultas():
         assert m["S&P 500"]["fuente"].startswith("FRED") and m["S&P 500"]["variacion_pct"] == 1.0
         assert m["Cobre (Bolsa de Metales de Londres)"]["fuente"] == "Banco Central de Chile (vía mindicador.cl)"
         assert e["bcch_series"]["elegidas"]["^IPSA"][0] == "A1"
+        assert "Cobre Comex" not in m   # el cobre del Banco Central se llama por su bolsa real (Londres)
         todo = json.dumps(e, ensure_ascii=False)
         assert "tok3n-bcch" not in todo and "clave-fred" not in todo, todo[:400]   # nada secreto en estado.json
         # cuenta antigua (usuario y clave) también sirve

@@ -1256,7 +1256,8 @@ def mercados(estado, hoy):
         if mejor:
             fuente, c = mejor
             (f0, v0), (f1, v1) = c[-2], c[-1]
-            nombre = "Cobre (Bolsa de Metales de Londres)" if (sym == "HG=F" and "mindicador" in fuente) else nom
+            # 01-11-2026: el cobre del Banco Central (directo o vía mindicador) es el de Londres, no el de Comex
+            nombre = "Cobre (Bolsa de Metales de Londres)" if (sym == "HG=F" and "Banco Central" in fuente) else nom
             out.append({"nombre": nombre, "valor": round(v1, 2), "variacion_pct": round((v1 / v0 - 1) * 100, 2), "fecha": f1, "fuente": fuente})
             usadas.add(fuente)
     estado["mercados"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": " / ".join(dict.fromkeys(intentadas)) or "mercados",
