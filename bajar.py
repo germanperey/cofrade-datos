@@ -1090,9 +1090,12 @@ def cierres_stooq(csv_txt, hoy):
 # 01-11-2026 · Yahoo, Stooq y CNBC prohíben por robots.txt la lectura automática: se suman fuentes OFICIALES hechas para programas.
 FRED = {"^GSPC": "SP500", "^IXIC": "NASDAQCOM", "^DJI": "DJIA", "BZ=F": "DCOILBRENTEU"}   # Reserva Federal de St. Louis
 BCCH_URL = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx"   # Banco Central de Chile (cuenta gratuita)
-BCCH_BUSCAR = {"^IPSA": r"\bIPSA\b", "^GSPC": r"S\s*&\s*P\s*500|Standard\s*(&|and|y)\s*Poor", "^IXIC": r"nasdaq",
-               "^DJI": r"dow\s*jones", "BZ=F": r"brent", "HG=F": r"cobre"}
-BCCH_FUERA = re.compile(r"variaci|var\.|%|promedio|mensual|trimestral|anual|tasa|futuro|exporta|import|volumen|monto", re.I)
+BCCH_BUSCAR = {"^IPSA": r"\bIPSA\b|selectivo de acciones", "^GSPC": r"S\s*&\s*P\s*500|Standard\s*(&|and|y)\s*Poor", "^IXIC": r"nasdaq",
+               "^DJI": r"dow\s*jones", "BZ=F": r"brent",
+               "HG=F": r"precio.{0,40}cobre|cobre.{0,40}(BML|Londres|LME|refinado|US\$|d[oó]lar|libra)"}
+BCCH_FUERA = re.compile(r"variaci|var\.|%|promedio|mensual|trimestral|anual|tasa|futuro|exporta|import|volumen|monto|"
+                        r"encuesta|expectativ|factor|incidencia|operadores|proyecci", re.I)   # 01-11: «encuesta… factores: cobre» no es un precio
+BCCH_DIAG = re.compile(r"ipsa|acciones|burs[aá]til|bolsa|dow|nasdaq|s\s*&\s*p|standard|brent|petr[oó]leo|wti|cobre", re.I)
 _BCCH = {}
 
 
@@ -1169,7 +1172,10 @@ def bcch_series(estado):
     if auth:
         url = f"{BCCH_URL}?{auth}&function=SearchSeries&frequency=DAILY"
         if robots_permite(url, estado):
-            mapa = bcch_elegir((pedir(url, estado, "bcch_catalogo", espera=(0, 30), limite=60) or {}).get("SeriesInfos"))
+            infos = (pedir(url, estado, "bcch_catalogo", espera=(0, 30), limite=60) or {}).get("SeriesInfos") or []
+            mapa = bcch_elegir(infos)
+            _BCCH["catalogo"] = [{"id": x.get("seriesId"), "titulo": x.get("spanishTitle"), "ultima": x.get("lastObservation")}
+                                 for x in infos if isinstance(x, dict) and BCCH_DIAG.search(f"{x.get('spanishTitle')} {x.get('englishTitle')}")][:400]
         estado["bcch_series"] = {"ok": bool(mapa), "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central (catálogo)",
                                  "error": "" if mapa else "sin series que calcen", "elegidas": {k: list(v) for k, v in mapa.items()}}
     _BCCH["mapa"] = mapa
@@ -1330,6 +1336,7 @@ def main(argv=None):
         btc = None
         estado["bitcoin"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "bitcoin", "error": type(ex).__name__}
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
+    escribir(os.path.join(a.salida, "bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": _BCCH["catalogo"]} if _BCCH.get("catalogo") else None)
     escribir(os.path.join(a.salida, "robots.json"), {"fecha": hoy.isoformat(), "sitios": ROBOTS_VISTOS} if ROBOTS_VISTOS else None)
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
     escribir(os.path.join(a.salida, "estado.json"), resumen)

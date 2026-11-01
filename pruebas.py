@@ -407,6 +407,7 @@ def mercados_con_fuentes_oficiales_y_claves_ocultas():
                              {"indexDateString": "31-10-2026", "value": "9100", "statusCode": "OK"}]}}
     assert B.cierres_bcch(bc, hoy) == [("2026-10-30", 9010.5), ("2026-10-31", 9100.0)]
     cat = [{"seriesId": "V1", "spanishTitle": "IPSA, variación diaria (%)"}, {"seriesId": "A1", "spanishTitle": "Índice IPSA"},
+           {"seriesId": "E1", "spanishTitle": "Evolución encuesta de operadores financieros (EOF), Factores de incidencia en Tipo de Cambio: Cobre"},
            {"seriesId": "D1", "spanishTitle": "Índice Dow Jones Industrial"}, {"seriesId": "C1", "spanishTitle": "Precio del cobre refinado BML (US$/lb)"}]
     el = B.bcch_elegir(cat)
     assert el["^IPSA"][0] == "A1" and el["^DJI"][0] == "D1" and el["HG=F"][0] == "C1" and "^IXIC" not in el, el
