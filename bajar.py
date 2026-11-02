@@ -1417,6 +1417,109 @@ def bitcoin(estado, hoy):
 
 
 
+
+# ---------- 02-11-2026: sismos, calidad del aire y Fórmula 1 ----------
+# Ese día la tarea programada no pudo leer NINGUNA página (web_fetch pedía un permiso que nadie aprueba de madrugada): estas
+# tres quedaron sin dato. GitHub las lee de APIs abiertas y gratuitas, respetando el robots.txt de cada sitio.
+AIRE_CIUDADES = (("santiago", "Santiago"), ("concepcion", "Concepción"), ("temuco", "Temuco"), ("puerto-montt", "Puerto Montt"))
+
+
+def _no_permitido(url, estado, clave):
+    if robots_permite(url, estado):
+        return False
+    estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": "robots.txt no lo permite"}
+    return True
+
+
+def sismos(estado, momento=None):
+    """Catálogo del USGS (red mundial; incluye lo que informa la red chilena) de las últimas 30 horas en Chile y su mar,
+    magnitud 2,5 o más. → CSV con las columnas del catálogo del CSN (la referencia la calcula el generador)."""
+    momento = momento or ahora()
+    desde = (momento.astimezone(dt.timezone.utc) - dt.timedelta(hours=30)).strftime("%Y-%m-%dT%H:%M:%S")
+    url = ("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmagnitude=2.5"
+           f"&minlatitude=-57&maxlatitude=-17&minlongitude=-80&maxlongitude=-65&starttime={desde}")
+    if _no_permitido(url, estado, "sismos"):
+        return None
+    j = pedir(url, estado, "sismos")
+    return sismos_csv(j) if j is not None else None
+
+
+def sismos_csv(j):
+    filas = ["fecha_local,lat,lon,profundidad_km,magnitud,referencia"]
+    for f in (j or {}).get("features") or []:
+        p, c = f.get("properties") or {}, (f.get("geometry") or {}).get("coordinates") or []
+        if len(c) < 3 or not isinstance(p.get("time"), (int, float)) or not isinstance(p.get("mag"), (int, float)):
+            continue
+        t = dt.datetime.fromtimestamp(p["time"] / 1000, dt.timezone.utc).astimezone(TZ)
+        filas.append(f"{t:%Y-%m-%d %H:%M:%S},{c[1]:.3f},{c[0]:.3f},{float(c[2] or 0):.1f},{p['mag']:.1f},")
+    return "\n".join(filas) + "\n"
+
+
+def _categoria_aqi(v):
+    for tope, nombre in ((50, "Buena"), (100, "Moderada"), (150, "Dañina para grupos sensibles"), (200, "Dañina"), (300, "Muy dañina")):
+        if v <= tope:
+            return nombre
+    return "Peligrosa"
+
+
+def aire(estado):
+    """Índice de calidad del aire (escala US) y PM2,5 de ahora, del modelo europeo CAMS vía Open-Meteo (gratis, sin clave)."""
+    sel = [c for c in CIUDADES if c[0] in dict(AIRE_CIUDADES)]
+    url = ("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + ",".join(str(c[1]) for c in sel)
+           + "&longitude=" + ",".join(str(c[2]) for c in sel) + "&current=us_aqi,pm2_5&timezone=America%2FSantiago")
+    if _no_permitido(url, estado, "aire"):
+        return None
+    j = pedir(url, estado, "aire")
+    return aire_json(j, sel) if j is not None else None
+
+
+def aire_json(j, sel):
+    lista = j if isinstance(j, list) else [j]
+    out = []
+    for (slug, _, _), x in zip(sel, lista):
+        cur = (x or {}).get("current") or {}
+        aqi, pm = cur.get("us_aqi"), cur.get("pm2_5")
+        if not isinstance(aqi, (int, float)):
+            continue
+        out.append({"nombre": dict(AIRE_CIUDADES)[slug], "aqi_us": int(round(aqi)), "categoria": _categoria_aqi(aqi),
+                    "pm25": round(pm, 1) if isinstance(pm, (int, float)) else None, "hora": str(cur.get("time") or "")[11:16],
+                    "url": "https://open-meteo.com/en/docs/air-quality-api"})
+    if not out:
+        return None
+    return {"fecha": ahora().date().isoformat(), "fuente": "Open-Meteo (modelo CAMS de Copernicus, estimación)", "ciudades": out}
+
+
+def f1(estado, hoy):
+    """Campeonato de pilotos (top 10) con la fecha de la última carrera, de Jolpica (continuación abierta de la base Ergast)."""
+    base = f"https://api.jolpi.ca/ergast/f1/{hoy.year}"
+    if _no_permitido(base + "/driverstandings.json", estado, "f1"):
+        return None
+    j = pedir(base + "/driverstandings.json", estado, "f1")
+    try:
+        L = j["MRData"]["StandingsTable"]["StandingsLists"][0]
+        ronda, ds = L["round"], L["DriverStandings"]
+    except (TypeError, KeyError, IndexError):
+        if j is not None:
+            estado["f1"].update(ok=False, error="sin tabla en la respuesta")
+        return None
+    fecha = ""
+    r = pedir(f"{base}/{ronda}/races.json", estado, "f1_carrera")
+    try:
+        carrera = r["MRData"]["RaceTable"]["Races"][0]
+        fecha, gp = carrera["date"], carrera.get("raceName", "")
+    except (TypeError, KeyError, IndexError):
+        gp = ""
+    filas = []
+    for x in ds[:10]:
+        d = x.get("Driver") or {}
+        eq = ((x.get("Constructors") or [{}])[0] or {}).get("name", "")
+        filas.append([str(x.get("position", "")), f"{d.get('givenName', '')} {d.get('familyName', '')}".strip(), eq, str(x.get("points", ""))])
+    if len(filas) < 3 or not fecha:
+        return None
+    return {"nombre": "Fórmula 1", "tablas": [{"nombre": f"Campeonato de pilotos · top 10 (tras la ronda {ronda})", "columnas": ["Pos", "Piloto", "Equipo", "Puntos"],
+            "valor_col": 3, "fuente": "Jolpica F1 (base de datos abierta Ergast)", "url": base + "/driverstandings/", "fecha": fecha,
+            "gp": gp, "filas": filas}]}
+
 def escribir(ruta, contenido):
     if contenido is None or contenido == "":
         return False
@@ -1494,6 +1597,11 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
     escribir(os.path.join(a.salida, "bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": _BCCH["catalogo"]} if _BCCH.get("catalogo") else None)
     escribir(os.path.join(a.salida, "robots.json"), {"fecha": hoy.isoformat(), "sitios": ROBOTS_VISTOS} if ROBOTS_VISTOS else None)
+    for nombre, fn in (("sismos.csv", lambda: sismos(estado)), ("aire.json", lambda: aire(estado)), ("f1.json", lambda: f1(estado, hoy))):
+        try:   # 02-11-2026: ninguna de estas tres detiene a las demás
+            escribir(os.path.join(a.salida, nombre), fn())
+        except Exception as ex:   # noqa: BLE001
+            estado[nombre.split(".")[0]] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": nombre, "error": type(ex).__name__}
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
     escribir(os.path.join(a.salida, "estado.json"), resumen)
     for k, v in estado.items():

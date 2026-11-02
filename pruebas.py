@@ -592,6 +592,37 @@ def clima_open_meteo_y_medio_que_no_es_imagen():
     assert n[0]["fuente"] == "La Tercera (vía Google News)" and n[0]["titulo"] == "Planetas", n
 
 
+@prueba
+def sismos_aire_y_f1_desde_apis_abiertas():
+    """02-11-2026: la tarea no pudo leer la web; GitHub trae sismos (USGS), calidad del aire (Open-Meteo/CAMS) y la tabla de la F1."""
+    j = {"features": [{"properties": {"time": 1793600000000, "mag": 3.4}, "geometry": {"coordinates": [-70.123, -23.4567, 45.2]}},
+                      {"properties": {"time": None, "mag": 2.9}, "geometry": {"coordinates": [-70, -20, 10]}}]}
+    c = B.sismos_csv(j).splitlines()
+    assert c[0] == "fecha_local,lat,lon,profundidad_km,magnitud,referencia" and len(c) == 2, c
+    assert c[1].endswith(",-23.457,-70.123,45.2,3.4,") and c[1][:4] == "2026", c
+    assert B.sismos_csv({}).strip() == "fecha_local,lat,lon,profundidad_km,magnitud,referencia"
+    sel = [x for x in B.CIUDADES if x[0] in ("santiago", "temuco")]
+    a = B.aire_json([{"current": {"time": "2026-11-02T07:00", "us_aqi": 57.4, "pm2_5": 14.26}}, {"current": {"us_aqi": None}}], sel)
+    assert a["ciudades"] == [{"nombre": "Santiago", "aqi_us": 57, "categoria": "Moderada", "pm25": 14.3, "hora": "07:00",
+                              "url": "https://open-meteo.com/en/docs/air-quality-api"}] and "CAMS" in a["fuente"], a
+    assert B._categoria_aqi(30) == "Buena" and B._categoria_aqi(160) == "Dañina" and B._categoria_aqi(400) == "Peligrosa"
+    assert B.aire_json([{}], sel[:1]) is None
+    resp = {"driverstandings": {"MRData": {"StandingsTable": {"StandingsLists": [{"round": "20", "DriverStandings": [
+        {"position": str(i), "points": str(400 - i), "Driver": {"givenName": "P", "familyName": f"N{i}"}, "Constructors": [{"name": "Equipo"}]}
+        for i in range(1, 12)]}]}}}, "races": {"MRData": {"RaceTable": {"Races": [{"date": "2026-10-25", "raceName": "Mexico City Grand Prix"}]}}}}
+    p0, r0 = B.pedir, B.robots_permite
+    try:
+        B.pedir = lambda url, estado, clave, **k: (estado.__setitem__(clave, {"ok": True}) or resp["races" if "races" in url else "driverstandings"])
+        B.robots_permite = lambda url, estado: True
+        t = B.f1({}, dt.date(2026, 11, 2))["tablas"][0]
+        assert t["fecha"] == "2026-10-25" and len(t["filas"]) == 10 and t["filas"][0] == ["1", "P N1", "Equipo", "399"] and "ronda 20" in t["nombre"], t
+        B.robots_permite = lambda url, estado: False
+        e = {}
+        assert B.f1(e, dt.date(2026, 11, 2)) is None and e["f1"]["error"] == "robots.txt no lo permite"
+    finally:
+        B.pedir, B.robots_permite = p0, r0
+
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:
