@@ -1,34 +1,34 @@
 {
  "fecha": "2026-11-02",
- "generado": "2026-11-02T08:29:18-03:00",
+ "generado": "2026-11-02T08:54:38-03:00",
  "fuentes": {
   "uv": {
    "ok": true,
-   "hora": "2026-11-02T08:27:57-03:00",
+   "hora": "2026-11-02T08:51:14-03:00",
    "url": "https://api.open-meteo.com/v1/forecast?latitude=-18.48,-23.65,-29.9,-33.05,-33.45,-36.83,-38.74,-41.47,-53.16&longitude=-70.31,-70.4,-71.25,-71.61,-70.67,-73.05,-72.59,-72.94,-70.92&daily=uv_index_clear_sky_max&timezone=America%2FSantiago&forecast_days=8",
    "intentos": 1
   },
   "clima": {
    "ok": true,
-   "hora": "2026-11-02T08:27:58-03:00",
+   "hora": "2026-11-02T08:51:14-03:00",
    "url": "https://api.open-meteo.com/v1/forecast?latitude=-18.48,-23.65,-29.9,-33.05,-33.45,-36.83,-38.74,-41.47,-53.16&longitude=-70.31,-70.4,-71.25,-71.61,-70.67,-73.05,-72.59,-72.94,-70.92&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code&wind_speed_unit=ms&timezone=GMT&forecast_days=8",
    "intentos": 1
   },
   "imacec": {
    "ok": true,
-   "hora": "2026-11-02T08:27:58-03:00",
+   "hora": "2026-11-02T08:52:08-03:00",
    "url": "https://mindicador.cl/api/imacec/2026",
    "intentos": 1
   },
   "indicadores": {
    "ok": true,
-   "hora": "2026-11-02T08:27:59-03:00",
+   "hora": "2026-11-02T08:52:57-03:00",
    "url": "https://mindicador.cl/api",
    "intentos": 1
   },
   "camara": {
    "ok": true,
-   "hora": "2026-11-02T08:28:05-03:00",
+   "hora": "2026-11-02T08:53:06-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXAnno?prmAnno=2026",
    "intentos": 1,
    "nominal": {
@@ -38,55 +38,55 @@
   },
   "camara_detalle_90242": {
    "ok": true,
-   "hora": "2026-11-02T08:28:09-03:00",
+   "hora": "2026-11-02T08:53:09-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90242",
    "intentos": 1
   },
   "servicio_WSLegislativo": {
    "ok": true,
-   "hora": "2026-11-02T08:28:10-03:00",
+   "hora": "2026-11-02T08:53:10-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx",
    "intentos": 1
   },
   "servicio_WSSala": {
    "ok": true,
-   "hora": "2026-11-02T08:28:11-03:00",
+   "hora": "2026-11-02T08:53:12-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx",
    "intentos": 1
   },
   "servicio_WSDiputado": {
    "ok": true,
-   "hora": "2026-11-02T08:28:12-03:00",
+   "hora": "2026-11-02T08:53:13-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSDiputado.asmx",
    "intentos": 1
   },
   "servicio_WSComun": {
    "ok": true,
-   "hora": "2026-11-02T08:28:13-03:00",
+   "hora": "2026-11-02T08:53:14-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSComun.asmx",
    "intentos": 1
   },
   "servicio_retornarSesionesXAnno": {
    "ok": true,
-   "hora": "2026-11-02T08:28:15-03:00",
+   "hora": "2026-11-02T08:53:16-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx?op=retornarSesionesXAnno",
    "intentos": 1
   },
   "servicio_retornarSesionAsistencia": {
    "ok": true,
-   "hora": "2026-11-02T08:28:16-03:00",
+   "hora": "2026-11-02T08:53:17-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx?op=retornarSesionAsistencia",
    "intentos": 1
   },
   "servicio_retornarDiputadosPeriodoActual": {
    "ok": true,
-   "hora": "2026-11-02T08:28:17-03:00",
+   "hora": "2026-11-02T08:53:18-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSDiputado.asmx?op=retornarDiputadosPeriodoActual",
    "intentos": 1
   },
   "asistencia": {
    "ok": true,
-   "hora": "2026-11-02T08:28:18-03:00",
+   "hora": "2026-11-02T08:53:19-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx/retornarSesionesXAnno?prmAnno=2026",
    "intentos": 1,
    "sesiones": {
@@ -96,1178 +96,1140 @@
   },
   "asistencia_4846": {
    "ok": true,
-   "hora": "2026-11-02T08:28:22-03:00",
+   "hora": "2026-11-02T08:53:22-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx/retornarSesionAsistencia?prmSesionId=4846",
    "intentos": 1
   },
   "opensky_cuenta": {
    "ok": true,
-   "hora": "2026-11-02T08:28:22-03:00"
+   "hora": "2026-11-02T08:53:23-03:00"
   },
   "vuelos_SCL_salidas": {
    "ok": true,
-   "hora": "2026-11-02T08:28:24-03:00",
+   "hora": "2026-11-02T08:53:25-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCEL&begin=1793502000&end=1793588400",
    "intentos": 1
   },
   "vuelos_SCL_llegadas": {
    "ok": true,
-   "hora": "2026-11-02T08:28:27-03:00",
+   "hora": "2026-11-02T08:53:28-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCEL&begin=1793502000&end=1793588400",
    "intentos": 1
   },
   "vuelos_ANF_salidas": {
    "ok": false,
-   "hora": "2026-11-02T08:28:31-03:00",
+   "hora": "2026-11-02T08:53:32-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCFA&begin=1793502000&end=1793588400",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_ANF_llegadas": {
    "ok": false,
-   "hora": "2026-11-02T08:28:34-03:00",
+   "hora": "2026-11-02T08:53:35-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCFA&begin=1793502000&end=1793588400",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_CCP_salidas": {
    "ok": false,
-   "hora": "2026-11-02T08:28:38-03:00",
+   "hora": "2026-11-02T08:53:39-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCIE&begin=1793502000&end=1793588400",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_CCP_llegadas": {
    "ok": false,
-   "hora": "2026-11-02T08:28:41-03:00",
+   "hora": "2026-11-02T08:53:42-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCIE&begin=1793502000&end=1793588400",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_PMC_salidas": {
    "ok": true,
-   "hora": "2026-11-02T08:28:44-03:00",
+   "hora": "2026-11-02T08:53:46-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCTE&begin=1793502000&end=1793588400",
    "intentos": 1
   },
   "vuelos_PMC_llegadas": {
    "ok": true,
-   "hora": "2026-11-02T08:28:48-03:00",
+   "hora": "2026-11-02T08:53:49-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCTE&begin=1793502000&end=1793588400",
    "intentos": 1
   },
   "vuelos_PUQ_salidas": {
    "ok": false,
-   "hora": "2026-11-02T08:28:51-03:00",
+   "hora": "2026-11-02T08:53:52-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCCI&begin=1793502000&end=1793588400",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_PUQ_llegadas": {
    "ok": false,
-   "hora": "2026-11-02T08:28:55-03:00",
+   "hora": "2026-11-02T08:53:56-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCCI&begin=1793502000&end=1793588400",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "adb_SCL_00": {
-   "ok": true,
-   "hora": "2026-11-02T08:28:59-03:00",
-   "url": "https://aerodatabox.p.rapidapi.com/flights/airports/iata/SCL/2026-11-02T00:00/2026-11-02T11:59?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false",
-   "intentos": 1
-  },
-  "adb_SCL_12": {
-   "ok": true,
-   "hora": "2026-11-02T08:28:59-03:00",
-   "url": "https://aerodatabox.p.rapidapi.com/flights/airports/iata/SCL/2026-11-02T12:00/2026-11-02T23:59?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false",
-   "intentos": 1
-  },
-  "adb_PMC_06": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:00-03:00",
-   "url": "https://aerodatabox.p.rapidapi.com/flights/airports/iata/PMC/2026-11-02T06:00/2026-11-02T17:59?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false",
-   "intentos": 1
-  },
-  "adb_CCP_06": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:00-03:00",
-   "url": "https://aerodatabox.p.rapidapi.com/flights/airports/iata/CCP/2026-11-02T06:00/2026-11-02T17:59?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false",
-   "intentos": 1
-  },
-  "adb_ANF_06": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:01-03:00",
-   "url": "https://aerodatabox.p.rapidapi.com/flights/airports/iata/ANF/2026-11-02T06:00/2026-11-02T17:59?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false",
-   "intentos": 1
-  },
-  "adb_PUQ_06": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:01-03:00",
-   "url": "https://aerodatabox.p.rapidapi.com/flights/airports/iata/PUQ/2026-11-02T06:00/2026-11-02T17:59?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false",
-   "intentos": 1
-  },
   "vuelos_hoy": {
    "ok": true,
-   "hora": "2026-11-02T08:29:01-03:00",
+   "hora": "2026-11-02T08:53:58-03:00",
    "url": "AeroDataBox",
-   "n": 564,
-   "error": "",
-   "cupo_mes": "24 de 390"
+   "nota": "ya leído hoy (una lectura al día para cuidar el cupo gratuito)"
   },
   "liga": {
    "ok": true,
-   "hora": "2026-11-02T08:29:02-03:00",
+   "hora": "2026-11-02T08:53:58-03:00",
    "url": "https://en.wikipedia.org/api/rest_v1/page/html/2026_Liga_de_Primera",
    "intentos": 1
   },
   "liga_es_busqueda": {
    "ok": true,
-   "hora": "2026-11-02T08:29:03-03:00",
+   "hora": "2026-11-02T08:53:59-03:00",
    "url": "https://es.wikipedia.org/w/api.php?action=query&list=search&format=json&srlimit=5&srsearch=Primera%20Divisi%C3%B3n%20Chile%202026%20campeonato",
    "intentos": 1
   },
   "liga_es_fecha": {
    "ok": true,
-   "hora": "2026-11-02T08:29:03-03:00",
+   "hora": "2026-11-02T08:53:59-03:00",
    "url": "https://es.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=timestamp&format=json&titles=Liga%20de%20Primera%202026",
    "intentos": 1
   },
   "liga_es": {
    "ok": true,
-   "hora": "2026-11-02T08:29:03-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://es.wikipedia.org/api/rest_v1/page/html/Liga_de_Primera_2026",
    "intentos": 1
   },
   "partidos": {
    "ok": true,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://www.thesportsdb.com/api/v1/json/123/eventspastleague.php?id=4627",
    "intentos": 1
   },
   "rss_economia_chile_6": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://news.google.com/rss/search?q=econom%C3%ADa+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_8": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://news.google.com/rss/search?q=cobre+OR+Codelco+OR+miner%C3%ADa+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_9": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://news.google.com/rss/search?q=empresas+Chile+(utilidades+OR+inversi%C3%B3n+OR+exportaciones)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_10": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://news.google.com/rss/search?q=Hacienda+OR+presupuesto+OR+%22Banco+Central%22+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_11": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://news.google.com/rss/search?q=(%22Banco+Central%22+OR+IPC+OR+d%C3%B3lar+OR+IMACEC)+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_12": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://news.google.com/rss/search?q=inversi%C3%B3n+proyecto+Chile+%22millones+de+d%C3%B3lares%22+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_7": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://news.google.com/rss/search?q=IPSA+OR+%22Bolsa+de+Santiago%22+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_3": {
    "ok": true,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:00-03:00",
    "url": "https://chocale.cl/feed/",
    "intentos": 1
   },
   "robots_www.capital.cl": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.capital.cl/robots.txt",
    "error": "SSLError"
   },
   "rss_economia_chile_1": {
    "ok": false,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.capital.cl/feed/",
    "error": "robots.txt no respondió"
   },
   "rss_economia_chile_13": {
    "ok": true,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/pulso/?outputType=xml",
    "intentos": 1
   },
   "rss_economia_chile_16": {
    "ok": true,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.bing.com/news/search?q=econom%C3%ADa%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_economia_chile_5": {
    "ok": true,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.infobae.com/arc/outboundfeeds/rss/category/economia/",
    "intentos": 1
   },
   "rss_economia_chile_17": {
    "ok": true,
-   "hora": "2026-11-02T08:29:04-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.bing.com/news/search?q=IPSA%20Bolsa%20de%20Santiago&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_economia_mundo_0": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:01-03:00",
+   "url": "https://feeds.bbci.co.uk/news/business/rss.xml",
    "intentos": 1
   },
   "rss_economia_chile_18": {
    "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.ex-ante.cl/feed/",
    "intentos": 1
   },
   "rss_economia_chile_0": {
    "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.df.cl/noticias/site/list/port/rss.xml",
-   "intentos": 1
-  },
-  "rss_economia_mundo_0": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
-   "url": "https://feeds.bbci.co.uk/news/business/rss.xml",
    "intentos": 1
   },
   "rss_economia_mundo_3": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=econom%C3%ADa+mundial+OR+Fed+OR+mercados+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_4": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=BCE+OR+eurozona+econom%C3%ADa+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_5": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=petr%C3%B3leo+OR+Brent+OR+OPEP+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_6": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=China+econom%C3%ADa+OR+aranceles+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_7": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=%22Reserva+Federal%22+OR+Wall+Street+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_8": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=econom%C3%ADa+%22Estados+Unidos%22+(inflaci%C3%B3n+OR+empleo+OR+PIB)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_9": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=(FMI+OR+%22Banco+Mundial%22+OR+OCDE)+econom%C3%ADa+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_10": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=econom%C3%ADa+(Argentina+OR+Brasil+OR+M%C3%A9xico+OR+Per%C3%BA+OR+Colombia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_11": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=(bolsas+OR+%22Wall+Street%22+OR+mercados)+cierre+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_12": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://news.google.com/rss/search?q=(comercio+internacional+OR+exportaciones+OR+aranceles)+econom%C3%ADa+mundial+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_economia_mundo_1": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
-   "url": "https://www.france24.com/es/econom%C3%ADa/rss",
-   "intentos": 1
-  },
   "rss_economia_mundo_2": {
    "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://www.aljazeera.com/xml/rss/all.xml",
+   "intentos": 1
+  },
+  "rss_economia_mundo_1": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:01-03:00",
+   "url": "https://www.france24.com/es/econom%C3%ADa/rss",
    "intentos": 1
   },
   "rss_economia_mundo_14": {
    "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:01-03:00",
    "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada",
+   "intentos": 1
+  },
+  "rss_economia_mundo_13": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:02-03:00",
+   "url": "https://feeds.bbci.co.uk/mundo/temas/economia/rss.xml",
    "intentos": 1
   },
   "rss_economia_mundo_16": {
    "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:02-03:00",
    "url": "https://www.bing.com/news/search?q=econom%C3%ADa%20mundial%20mercados&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_economia_chile_2": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:02-03:00",
+   "url": "https://www.eldinamo.cl/feed/",
+   "error": "HTTP 404",
    "intentos": 1
   },
   "rss_economia_chile_4": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:02-03:00",
    "url": "https://www.elmostrador.cl/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
   "rss_economia_chile_14": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:02-03:00",
    "url": "https://www.elmostrador.cl/mercados/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "rss_economia_mundo_15": {
+  "rss_politica_chile_0": {
    "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
-   "url": "https://rss.dw.com/xml/rss-sp-all",
-   "intentos": 1
-  },
-  "rss_economia_mundo_13": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:05-03:00",
-   "url": "https://feeds.bbci.co.uk/mundo/temas/economia/rss.xml",
-   "intentos": 1
-  },
-  "rss_economia_chile_2": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
-   "url": "https://www.eldinamo.cl/feed/",
-   "error": "HTTP 404",
+   "hora": "2026-11-02T08:54:02-03:00",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/nacional/?outputType=xml",
    "intentos": 1
   },
   "rss_politica_chile_5": {
    "ok": false,
-   "hora": "2026-11-02T08:29:05-03:00",
+   "hora": "2026-11-02T08:54:02-03:00",
    "url": "https://news.google.com/rss/search?q=pol%C3%ADtica+Chile+(gobierno+OR+Congreso+OR+Senado+OR+C%C3%A1mara)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_politica_chile_0": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/nacional/?outputType=xml",
-   "intentos": 1
-  },
-  "rss_economia_chile_15": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
-   "intentos": 1
-  },
   "rss_politica_chile_3": {
    "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:02-03:00",
    "url": "https://interferencia.cl/rss.xml",
-   "intentos": 1
-  },
-  "rss_politica_chile_6": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/politica/?outputType=xml",
-   "intentos": 1
-  },
-  "rss_politica_chile_11": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://news.google.com/rss/search?q=(Kast+OR+%22La+Moneda%22+OR+ministro)+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_politica_chile_4": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3_1__1.xml",
-   "error": "HTTP 404",
    "intentos": 1
   },
   "rss_politica_chile_1": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:02-03:00",
    "url": "https://www.eldesconcierto.cl/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "rss_politica_mundo_0": {
+  "rss_economia_chile_15": {
    "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
+   "intentos": 1
+  },
+  "rss_politica_chile_4": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3_1__1.xml",
+   "error": "HTTP 404",
+   "intentos": 1
+  },
+  "rss_politica_chile_11": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://news.google.com/rss/search?q=(Kast+OR+%22La+Moneda%22+OR+ministro)+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
+   "error": "robots.txt no lo permite"
+  },
+  "rss_politica_chile_2": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://www.theclinic.cl/feed/",
+   "intentos": 1
+  },
+  "rss_economia_mundo_15": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://rss.dw.com/xml/rss-sp-all",
    "intentos": 1
   },
   "rss_politica_chile_12": {
    "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://www.bing.com/news/search?q=pol%C3%ADtica%20Chile%20Gobierno%20Congreso&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
-  "rss_economia_chile_19": {
+  "rss_politica_mundo_0": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+   "intentos": 1
+  },
+  "rss_politica_chile_13": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.cnnchile.com/feed/",
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://ellibero.cl/feed/",
    "intentos": 1,
    "error": "no es un RSS válido"
   },
   "rss_politica_mundo_3": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://news.google.com/rss/search?q=internacional+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_4": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://news.google.com/rss/search?q=Israel+OR+Gaza+OR+Ir%C3%A1n+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_5": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://news.google.com/rss/search?q=Uni%C3%B3n+Europea+OR+Europa+gobierno+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_6": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://news.google.com/rss/search?q=Am%C3%A9rica+Latina+gobierno+OR+elecciones+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_7": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://news.google.com/rss/search?q=Estados+Unidos+Casa+Blanca+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_politica_chile_13": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://ellibero.cl/feed/",
-   "intentos": 1,
-   "error": "no es un RSS válido"
-  },
-  "rss_politica_mundo_9": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.france24.com/es/rss",
-   "intentos": 1
-  },
-  "rss_politica_mundo_8": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://feeds.bbci.co.uk/mundo/rss.xml",
-   "intentos": 1
-  },
   "rss_politica_mundo_1": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://rss.dw.com/xml/rss-sp-al",
    "intentos": 1,
    "error": "no es un RSS válido"
   },
-  "rss_politica_mundo_13": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://news.google.com/rss/search?q=Sud%C3%A1n+OR+%22El+Fasher%22+OR+Sahel+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
-   "error": "robots.txt no lo permite"
-  },
   "rss_politica_chile_10": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://radio.uchile.cl/feed/",
    "error": "robots.txt no lo permite"
   },
-  "rss_politica_chile_2": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.theclinic.cl/feed/",
-   "intentos": 1
-  },
   "rss_politica_mundo_10": {
    "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada",
    "intentos": 1
   },
-  "rss_politica_mundo_11": {
+  "rss_politica_mundo_9": {
    "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.infobae.com/arc/outboundfeeds/rss/",
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://www.france24.com/es/rss",
+   "intentos": 1
+  },
+  "rss_politica_mundo_13": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://news.google.com/rss/search?q=Sud%C3%A1n+OR+%22El+Fasher%22+OR+Sahel+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
+   "error": "robots.txt no lo permite"
+  },
+  "rss_politica_mundo_8": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:03-03:00",
+   "url": "https://feeds.bbci.co.uk/mundo/rss.xml",
    "intentos": 1
   },
   "rss_politica_mundo_2": {
    "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/mundo/?outputType=xml",
    "intentos": 1
   },
   "rss_politica_chile_7": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:03-03:00",
    "url": "https://www.elmostrador.cl/noticias/pais/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
+  "rss_economia_chile_19": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:04-03:00",
+   "url": "https://www.cnnchile.com/feed/",
+   "intentos": 1,
+   "error": "no es un RSS válido"
+  },
+  "rss_politica_mundo_14": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:04-03:00",
+   "url": "https://www.bing.com/news/search?q=internacional%20noticias%20mundo&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_politica_chile_6": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:04-03:00",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/politica/?outputType=xml",
+   "intentos": 1
+  },
   "rss_emprendimiento_6": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=(emprendimiento+OR+startup+OR+%22capital+de+riesgo%22)+Chile+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_7": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=pymes+innovaci%C3%B3n+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_8": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=fintech+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_9": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=Corfo+emprendimiento+OR+startups+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_10": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=startup+Latinoam%C3%A9rica+ronda+inversi%C3%B3n+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_11": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=startups+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_12": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=(%22ronda+de+inversi%C3%B3n%22+OR+%22levant%C3%B3%22+OR+%22serie+A%22)+startup+Latinoam%C3%A9rica+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_13": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=emprendedores+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_14": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=(%22capital+de+riesgo%22+OR+%22venture+capital%22)+Latinoam%C3%A9rica+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_15": {
    "ok": false,
-   "hora": "2026-11-02T08:29:06-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=innovaci%C3%B3n+empresas+Chile+(Corfo+OR+ANID+OR+%22Start-Up+Chile%22)+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_politica_mundo_14": {
+  "rss_politica_mundo_11": {
    "ok": true,
-   "hora": "2026-11-02T08:29:06-03:00",
-   "url": "https://www.bing.com/news/search?q=internacional%20noticias%20mundo&format=rss&cc=CL&setlang=es",
+   "hora": "2026-11-02T08:54:04-03:00",
+   "url": "https://www.infobae.com/arc/outboundfeeds/rss/",
    "intentos": 1
   },
   "rss_emprendimiento_4": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://techcrunch.com/category/venture/feed/",
    "intentos": 1
   },
   "rss_emprendimiento_18": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://techcrunch.com/category/startups/feed/",
    "intentos": 1
   },
   "rss_emprendimiento_2": {
    "ok": false,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://www.emprendepyme.net/feed",
    "error": "robots.txt no lo permite"
   },
-  "rss_emprendimiento_1": {
+  "rss_emprendimiento_20": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
-   "url": "https://ecosistemastartup.com/feed/",
+   "hora": "2026-11-02T08:54:04-03:00",
+   "url": "https://www.bing.com/news/search?q=emprendimiento%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
-  "rss_emprendimiento_19": {
+  "rss_emprendimiento_1": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
-   "url": "https://startupchile.org/feed/",
+   "hora": "2026-11-02T08:54:04-03:00",
+   "url": "https://ecosistemastartup.com/feed/",
    "intentos": 1
   },
   "rss_emprendimiento_3": {
    "ok": false,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://chocale.cl/categoria/emprendimiento/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "rss_emprendimiento_20": {
+  "rss_emprendimiento_17": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
-   "url": "https://www.bing.com/news/search?q=emprendimiento%20Chile&format=rss&cc=CL&setlang=es",
+   "hora": "2026-11-02T08:54:04-03:00",
+   "url": "https://latamlist.com/feed/",
    "intentos": 1
   },
   "rss_emprendimiento_21": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://www.bing.com/news/search?q=startup%20Chile%20inversi%C3%B3n&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_tecnologia_2": {
    "ok": false,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=tecnolog%C3%ADa+(IA+OR+chips+OR+Apple+OR+Google+OR+Microsoft+OR+Nvidia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_tecnologia_3": {
    "ok": false,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=%22inteligencia+artificial%22+(OpenAI+OR+Anthropic+OR+Google+OR+Meta+OR+Nvidia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_tecnologia_4": {
    "ok": false,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=ciberseguridad+OR+hackeo+OR+ciberataque+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_tecnologia_5": {
    "ok": false,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://news.google.com/rss/search?q=tecnolog%C3%ADa+Chile+(startup+OR+innovaci%C3%B3n+OR+digital)+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_emprendimiento_17": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
-   "url": "https://latamlist.com/feed/",
-   "intentos": 1
-  },
   "rss_emprendimiento_22": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:04-03:00",
    "url": "https://www.bing.com/news/search?q=pymes%20Corfo%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_tecnologia_1": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://www.wired.com/feed/rss",
+   "intentos": 1
+  },
+  "rss_emprendimiento_19": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:05-03:00",
+   "url": "https://startupchile.org/feed/",
    "intentos": 1
   },
   "rss_tecnologia_9": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://techcrunch.com/feed/",
    "intentos": 1
   },
   "rss_tecnologia_10": {
    "ok": true,
-   "hora": "2026-11-02T08:29:07-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://www.theverge.com/rss/index.xml",
-   "intentos": 1
-  },
-  "rss_tecnologia_11": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://feeds.arstechnica.com/arstechnica/index",
    "intentos": 1
   },
   "rss_tecnologia_6": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://www.xataka.com/feedburner.xml",
    "intentos": 1
   },
-  "rss_tecnologia_8": {
+  "rss_tecnologia_7": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://hipertextual.com/feed",
+   "hora": "2026-11-02T08:54:05-03:00",
+   "url": "https://www.genbeta.com/feedburner.xml",
+   "intentos": 1
+  },
+  "rss_emprendimiento_16": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:05-03:00",
+   "url": "https://contxto.com/es/feed/",
    "intentos": 1
   },
   "rss_tecnologia_0": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://www.fayerwayer.com/arc/outboundfeeds/rss/?outputType=xml",
    "intentos": 1
   },
   "rss_inmobiliario_2": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://www.capital.cl/category/inmobiliario/feed/",
    "error": "robots.txt no respondió"
   },
-  "rss_tecnologia_7": {
+  "rss_tecnologia_12": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://www.genbeta.com/feedburner.xml",
+   "hora": "2026-11-02T08:54:05-03:00",
+   "url": "https://www.bing.com/news/search?q=tecnolog%C3%ADa%20inteligencia%20artificial&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_inmobiliario_6": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://news.google.com/rss/search?q=(inmobiliario+OR+viviendas+OR+%22cr%C3%A9dito+hipotecario%22)+Chile+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_7": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://news.google.com/rss/search?q=construcci%C3%B3n+CChC+OR+inmobiliarias+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_8": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://news.google.com/rss/search?q=%22tasa+hipotecaria%22+OR+%22cr%C3%A9ditos+hipotecarios%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_9": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://news.google.com/rss/search?q=%22permisos+de+edificaci%C3%B3n%22+OR+%22venta+de+viviendas%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_10": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://news.google.com/rss/search?q=%22mercado+inmobiliario%22+OR+%22venta+de+viviendas%22+OR+%22subsidio+habitacional%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_11": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://news.google.com/rss/search?q=(IVA+viviendas+OR+DFL2+OR+contribuciones)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_tecnologia_12": {
+  "rss_tecnologia_8": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://www.bing.com/news/search?q=tecnolog%C3%ADa%20inteligencia%20artificial&format=rss&cc=CL&setlang=es",
+   "hora": "2026-11-02T08:54:05-03:00",
+   "url": "https://hipertextual.com/feed",
    "intentos": 1
   },
   "rss_inmobiliario_12": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://www.bing.com/news/search?q=mercado%20inmobiliario%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
-  "rss_inmobiliario_13": {
+  "rss_tecnologia_11": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://www.bing.com/news/search?q=viviendas%20Chile%20CChC&format=rss&cc=CL&setlang=es",
+   "hora": "2026-11-02T08:54:05-03:00",
+   "url": "https://feeds.arstechnica.com/arstechnica/index",
    "intentos": 1
   },
   "rss_inmobiliario_0": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:05-03:00",
    "url": "https://www.plataformaurbana.cl/feed/",
    "error": "robots.txt no respondió"
   },
-  "rss_deportes_0": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://www.espn.com/espn/rss/golf/news",
-   "error": "HTTP 202",
+  "rss_inmobiliario_13": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:05-03:00",
+   "url": "https://www.bing.com/news/search?q=viviendas%20Chile%20CChC&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_inmobiliario_14": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://www.bing.com/news/search?q=cr%C3%A9dito%20hipotecario%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_deportes_1": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://www.espn.com/espn/rss/tennis/news",
+   "error": "HTTP 202",
+   "intentos": 1
+  },
+  "rss_deportes_0": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://www.espn.com/espn/rss/golf/news",
    "error": "HTTP 202",
    "intentos": 1
   },
   "rss_deportes_2": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://www.espn.com/espn/rss/f1/news",
    "error": "HTTP 202",
    "intentos": 1
   },
   "rss_deportes_3": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://www.espn.com/espn/rss/nba/news",
    "error": "HTTP 202",
    "intentos": 1
   },
-  "rss_inmobiliario_14": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://www.bing.com/news/search?q=cr%C3%A9dito%20hipotecario%20Chile&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_emprendimiento_16": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://contxto.com/es/feed/",
-   "intentos": 1
-  },
   "rss_deportes_7": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=deportes+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_8": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=golf+(Niemann+OR+Pereira+OR+PGA)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_9": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=%22Liga+de+Primera%22+OR+%22Colo-Colo%22+OR+%22Universidad+de+Chile%22+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_10": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=equitaci%C3%B3n+OR+ecuestre+OR+%22salto+ecuestre%22+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
+  "rss_inmobiliario_1": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://chocale.cl/categoria/vivienda/feed/",
+   "error": "HTTP 404",
+   "intentos": 1
+  },
   "rss_deportes_5": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://feeds.bbci.co.uk/sport/football/rss.xml",
    "intentos": 1
   },
   "rss_deportes_6": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://www.golfdigest.com/feed/rss",
    "error": "HTTP 403",
    "intentos": 1
   },
-  "rss_inmobiliario_1": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://chocale.cl/categoria/vivienda/feed/",
-   "error": "HTTP 404",
+  "rss_deportes_12": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/news",
    "intentos": 1
   },
   "rss_deportes_14": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
    "intentos": 1
   },
   "rss_deportes_13": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://site.api.espn.com/apis/site/v2/sports/racing/f1/news",
-   "intentos": 1
-  },
-  "rss_deportes_11": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/news",
    "intentos": 1
   },
   "rss_deportes_17": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=tenis+(Tabilo+OR+Jarry+OR+Garin+OR+Barrios)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_18": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=%22F%C3%B3rmula+1%22+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_19": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=NBA+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_20": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=%22Federaci%C3%B3n+Ecuestre+de+Chile%22+OR+%22Sudamericano+de+Salto%22+OR+%22salto+ecuestre%22+Chile+when:14d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_21": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=%22Gran+Premio%22+(F1+OR+%22F%C3%B3rmula+1%22)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_22": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=(Colapinto+OR+Verstappen+OR+Antonelli+OR+Norris+OR+Piastri+OR+Leclerc)+F%C3%B3rmula+1+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_23": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=NBA+(resultados+OR+triunfo+OR+derrota+OR+puntos)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_24": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=NBA+(LeBron+OR+Curry+OR+Doncic+OR+Jokic+OR+Antetokounmpo+OR+Wembanyama)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_25": {
    "ok": false,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=(rally+OR+RallyMobil+OR+WRC+OR+automovilismo)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_deportes_15": {
+  "rss_deportes_11": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://site.api.espn.com/apis/site/v2/sports/golf/pga/news",
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/news",
    "intentos": 1
   },
   "rss_deportes_16": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/news",
    "intentos": 1
   },
-  "rss_deportes_4": {
+  "rss_deportes_15": {
    "ok": true,
-   "hora": "2026-11-02T08:29:08-03:00",
-   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/el-deportivo/?outputType=xml",
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/golf/pga/news",
    "intentos": 1
   },
   "rss_deportes_29": {
    "ok": false,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://news.google.com/rss/search?q=(Libertadores+OR+Sudamericana+OR+%22La+Roja%22)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_deportes_12": {
+  "rss_deportes_4": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
-   "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/news",
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/el-deportivo/?outputType=xml",
    "intentos": 1
   },
   "rss_deportes_26": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://feeds.bbci.co.uk/sport/golf/rss.xml",
    "intentos": 1
   },
   "rss_deportes_27": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://feeds.bbci.co.uk/sport/tennis/rss.xml",
    "intentos": 1
   },
   "rss_deportes_28": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://feeds.bbci.co.uk/sport/formula1/rss.xml",
-   "intentos": 1
-  },
-  "rss_deportes_31": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
-   "url": "https://www.bing.com/news/search?q=tenis%20chileno%20ATP&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_deportes_33": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
-   "url": "https://www.bing.com/news/search?q=equitaci%C3%B3n%20salto%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_deportes_30": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://www.bing.com/news/search?q=f%C3%BAtbol%20chileno%20Liga%20de%20Primera&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_politica_chile_8": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://www.ciperchile.cl/feed/",
+   "intentos": 1
+  },
+  "rss_deportes_31": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://www.bing.com/news/search?q=tenis%20chileno%20ATP&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_deportes_32": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://www.bing.com/news/search?q=golf%20PGA%20Tour&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
-  "rss_ciencia_0": {
+  "rss_deportes_33": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
-   "url": "https://www.sciencedaily.com/rss/top/science.xml",
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://www.bing.com/news/search?q=equitaci%C3%B3n%20salto%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
+  },
+  "rss_emprendimiento_0": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:06-03:00",
+   "url": "https://www.elmostrador.cl/categoria/emprendedor/feed/",
+   "intentos": 1,
+   "error": "no es un RSS válido"
   },
   "rss_ciencia_1": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:06-03:00",
    "url": "https://www.sciencedaily.com/rss/top/health.xml",
    "intentos": 1
   },
   "rss_ciencia_2": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:07-03:00",
    "url": "https://phys.org/rss-feed/biology-news/",
-   "intentos": 1
-  },
-  "rss_ciencia_3": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
-   "url": "https://medicalxpress.com/rss-feed/",
    "intentos": 1
   },
   "rss_ciencia_8": {
    "ok": false,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:07-03:00",
    "url": "https://news.google.com/rss/search?q=(ensayo+cl%C3%ADnico+OR+longevidad+OR+trasplante+OR+pr%C3%B3tesis+OR+neuronas)+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_emprendimiento_0": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:09-03:00",
-   "url": "https://www.elmostrador.cl/categoria/emprendedor/feed/",
-   "intentos": 1,
-   "error": "no es un RSS válido"
-  },
-  "rss_ciencia_7": {
+  "rss_ciencia_0": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
-   "url": "https://www.technologyreview.com/feed/",
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://www.sciencedaily.com/rss/top/science.xml",
+   "intentos": 1
+  },
+  "rss_ciencia_3": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://medicalxpress.com/rss-feed/",
    "intentos": 1
   },
   "rss_ciencia_4": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
+   "hora": "2026-11-02T08:54:07-03:00",
    "url": "https://www.nih.gov/news-releases/feed.xml",
    "intentos": 1
   },
-  "rss_ciencia_9": {
+  "rss_ciencia_7": {
    "ok": true,
-   "hora": "2026-11-02T08:29:09-03:00",
-   "url": "https://www.bing.com/news/search?q=avance%20cient%C3%ADfico%20medicina%20estudio&format=rss&cc=CL&setlang=es",
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://www.technologyreview.com/feed/",
    "intentos": 1
   },
   "rss_astronomia_0": {
    "ok": true,
-   "hora": "2026-11-02T08:29:10-03:00",
+   "hora": "2026-11-02T08:54:07-03:00",
    "url": "https://www.nasa.gov/news-release/feed/",
+   "intentos": 1
+  },
+  "rss_ciencia_9": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://www.bing.com/news/search?q=avance%20cient%C3%ADfico%20medicina%20estudio&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_astronomia_4": {
    "ok": true,
-   "hora": "2026-11-02T08:29:10-03:00",
+   "hora": "2026-11-02T08:54:07-03:00",
    "url": "https://www.space.com/feeds/all",
    "intentos": 1
   },
   "rss_astronomia_3": {
    "ok": true,
-   "hora": "2026-11-02T08:29:10-03:00",
+   "hora": "2026-11-02T08:54:07-03:00",
    "url": "https://noirlab.edu/public/news/feed/",
+   "intentos": 1
+  },
+  "rss_ciencia_6": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://www.newscientist.com/feed/home/",
+   "error": "robots.txt no lo permite"
+  },
+  "rss_astronomia_8": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://news.google.com/rss/search?q=(astronom%C3%ADa+OR+telescopio+OR+ALMA+OR+Rubin+OR+ESO)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
+   "error": "robots.txt no lo permite"
+  },
+  "rss_astronomia_1": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Science",
    "intentos": 1
   },
   "rss_astronomia_6": {
    "ok": false,
-   "hora": "2026-11-02T08:29:10-03:00",
+   "hora": "2026-11-02T08:54:07-03:00",
    "url": "https://skyandtelescope.org/feed/",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_astronomia_5": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:10-03:00",
-   "url": "https://spacenews.com/feed/",
-   "intentos": 1
-  },
-  "rss_astronomia_8": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:10-03:00",
-   "url": "https://news.google.com/rss/search?q=(astronom%C3%ADa+OR+telescopio+OR+ALMA+OR+Rubin+OR+ESO)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_ciencia_6": {
-   "ok": false,
-   "hora": "2026-11-02T08:29:10-03:00",
-   "url": "https://www.newscientist.com/feed/home/",
    "error": "robots.txt no lo permite"
   },
   "rss_astronomia_7": {
    "ok": true,
-   "hora": "2026-11-02T08:29:10-03:00",
+   "hora": "2026-11-02T08:54:07-03:00",
    "url": "https://phys.org/rss-feed/space-news/",
+   "intentos": 1
+  },
+  "rss_astronomia_5": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://spacenews.com/feed/",
+   "intentos": 1
+  },
+  "rss_astronomia_9": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:07-03:00",
+   "url": "https://www.bing.com/news/search?q=astronom%C3%ADa%20telescopio%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_inmobiliario_4": {
    "ok": false,
-   "hora": "2026-11-02T08:29:10-03:00",
+   "hora": "2026-11-02T08:54:08-03:00",
    "url": "https://www.elmostrador.cl/categoria/mercados/feed/",
    "intentos": 1,
    "error": "no es un RSS válido"
   },
-  "rss_astronomia_9": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:10-03:00",
-   "url": "https://www.bing.com/news/search?q=astronom%C3%ADa%20telescopio%20Chile&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_astronomia_1": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:10-03:00",
-   "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Science",
-   "intentos": 1
-  },
   "rss_ciencia_5": {
    "ok": false,
-   "hora": "2026-11-02T08:29:11-03:00",
+   "hora": "2026-11-02T08:54:08-03:00",
    "url": "https://www.agenciasinc.es/var/ezwebin_site/storage/rss/rss_portada.xml",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "rss_politica_chile_8": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:11-03:00",
-   "url": "https://www.ciperchile.cl/feed/",
-   "intentos": 1
-  },
   "rss_astronomia_2": {
    "ok": true,
-   "hora": "2026-11-02T08:29:11-03:00",
+   "hora": "2026-11-02T08:54:09-03:00",
    "url": "https://www.eso.org/public/news/feed/",
    "intentos": 1
   },
   "titulares": {
    "ok": true,
-   "hora": "2026-11-02T08:29:11-03:00",
+   "hora": "2026-11-02T08:54:09-03:00",
    "url": "RSS públicos de los medios",
    "error": "",
    "intentos": 1,
@@ -1276,19 +1238,19 @@
   },
   "mercado_ipsa": {
    "ok": false,
-   "hora": "2026-11-02T08:29:11-03:00",
+   "hora": "2026-11-02T08:54:09-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIPSA?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "bcch_catalogo": {
    "ok": true,
-   "hora": "2026-11-02T08:29:14-03:00",
+   "hora": "2026-11-02T08:54:12-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=SearchSeries&frequency=DAILY",
    "intentos": 1
   },
   "bcch_series": {
    "ok": true,
-   "hora": "2026-11-02T08:29:14-03:00",
+   "hora": "2026-11-02T08:54:12-03:00",
    "url": "Banco Central (catálogo)",
    "error": "",
    "elegidas": {
@@ -1300,103 +1262,103 @@
   },
   "mercado_gspc": {
    "ok": false,
-   "hora": "2026-11-02T08:29:14-03:00",
+   "hora": "2026-11-02T08:54:12-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_gspc_fred": {
    "ok": true,
-   "hora": "2026-11-02T08:29:14-03:00",
+   "hora": "2026-11-02T08:54:12-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=SP500&api_key=***&file_type=json&observation_start=2026-10-18",
    "intentos": 1
   },
   "mercado_gspc_fredcsv": {
    "ok": true,
-   "hora": "2026-11-02T08:29:15-03:00",
+   "hora": "2026-11-02T08:54:13-03:00",
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500&cosd=2026-10-18",
    "intentos": 1
   },
   "mercado_ixic": {
    "ok": false,
-   "hora": "2026-11-02T08:29:15-03:00",
+   "hora": "2026-11-02T08:54:13-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_ixic_fred": {
    "ok": true,
-   "hora": "2026-11-02T08:29:15-03:00",
+   "hora": "2026-11-02T08:54:13-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=NASDAQCOM&api_key=***&file_type=json&observation_start=2026-10-18",
    "intentos": 1
   },
   "mercado_ixic_fredcsv": {
    "ok": true,
-   "hora": "2026-11-02T08:29:15-03:00",
+   "hora": "2026-11-02T08:54:13-03:00",
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM&cosd=2026-10-18",
    "intentos": 1
   },
   "mercado_dji": {
    "ok": false,
-   "hora": "2026-11-02T08:29:15-03:00",
+   "hora": "2026-11-02T08:54:13-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EDJI?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_dji_fred": {
    "ok": true,
-   "hora": "2026-11-02T08:29:15-03:00",
+   "hora": "2026-11-02T08:54:13-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=DJIA&api_key=***&file_type=json&observation_start=2026-10-18",
    "intentos": 1
   },
   "mercado_dji_fredcsv": {
    "ok": true,
-   "hora": "2026-11-02T08:29:16-03:00",
+   "hora": "2026-11-02T08:54:14-03:00",
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DJIA&cosd=2026-10-18",
    "intentos": 1
   },
   "mercado_bzf": {
    "ok": false,
-   "hora": "2026-11-02T08:29:16-03:00",
+   "hora": "2026-11-02T08:54:14-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/BZ%3DF?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_bzf_fred": {
    "ok": true,
-   "hora": "2026-11-02T08:29:16-03:00",
+   "hora": "2026-11-02T08:54:14-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=DCOILBRENTEU&api_key=***&file_type=json&observation_start=2026-10-18",
    "intentos": 1
   },
   "mercado_bzf_fredcsv": {
    "ok": true,
-   "hora": "2026-11-02T08:29:16-03:00",
+   "hora": "2026-11-02T08:54:14-03:00",
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILBRENTEU&cosd=2026-10-18",
    "intentos": 1
   },
   "mercado_hgf": {
    "ok": false,
-   "hora": "2026-11-02T08:29:16-03:00",
+   "hora": "2026-11-02T08:54:14-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/HG%3DF?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_hgf_bcch": {
    "ok": true,
-   "hora": "2026-11-02T08:29:16-03:00",
+   "hora": "2026-11-02T08:54:15-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F019.PPB.PRE.100.D&firstdate=2026-10-18&lastdate=2026-11-02",
    "intentos": 1
   },
-  "mercado_hgf_mindicador": {
-   "ok": true,
-   "hora": "2026-11-02T08:29:18-03:00",
-   "url": "https://mindicador.cl/api/libra_cobre",
-   "intentos": 1
+  "robots_mindicador.cl": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:35-03:00",
+   "url": "https://mindicador.cl/robots.txt",
+   "error": "ReadTimeout"
   },
   "mercado_btcusd": {
    "ok": false,
-   "hora": "2026-11-02T08:29:18-03:00",
+   "hora": "2026-11-02T08:54:35-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercados": {
    "ok": true,
-   "hora": "2026-11-02T08:29:18-03:00",
+   "hora": "2026-11-02T08:54:35-03:00",
    "url": "Yahoo Finance / Stooq / CNBC / Banco Central de Chile / FRED (Reserva Federal de St. Louis) / Banco Central de Chile (vía mindicador.cl)",
    "error": "",
    "intentos": 1,
@@ -1408,8 +1370,32 @@
   },
   "bitcoin": {
    "ok": true,
-   "hora": "2026-11-02T08:29:18-03:00",
+   "hora": "2026-11-02T08:54:35-03:00",
    "url": "https://api.coinbase.com/v2/prices/BTC-USD/spot",
+   "intentos": 1
+  },
+  "sismos": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:35-03:00",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmagnitude=2.5&minlatitude=-57&maxlatitude=-17&minlongitude=-80&maxlongitude=-65&starttime=2026-11-01T05:54:35",
+   "intentos": 1
+  },
+  "aire": {
+   "ok": false,
+   "hora": "2026-11-02T08:54:36-03:00",
+   "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=-33.45,-36.83,-38.74,-41.47&longitude=-70.67,-73.05,-72.59,-72.94&current=us_aqi,pm2_5&timezone=America%2FSantiago",
+   "error": "robots.txt no lo permite"
+  },
+  "f1": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:37-03:00",
+   "url": "https://api.jolpi.ca/ergast/f1/2026/driverstandings.json",
+   "intentos": 1
+  },
+  "f1_carrera": {
+   "ok": true,
+   "hora": "2026-11-02T08:54:38-03:00",
+   "url": "https://api.jolpi.ca/ergast/f1/2026/19/races.json",
    "intentos": 1
   }
  }
