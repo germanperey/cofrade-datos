@@ -568,6 +568,30 @@ def robots_segun_el_estandar_rfc_9309():
     assert B.cierre_cnbc(j, hoy) == [] and B.cierre_cnbc({}, hoy) == []   # el valor de hoy (bolsa abierta) no es cierre
 
 
+@prueba
+def clima_open_meteo_y_medio_que_no_es_imagen():
+    """01-11-2026: pronóstico por hora de Open-Meteo (tercera fuente del clima) y <source> con una imagen no es el medio."""
+    hoy = dt.date(2026, 11, 1)
+    una = {"hourly": {"time": ["2026-11-01T00:00", "2026-11-01T01:00"], "temperature_2m": [21.3, None],
+                      "relative_humidity_2m": [72, 70], "wind_speed_10m": [3.1, 2.0], "wind_direction_10m": [200, 210],
+                      "weather_code": [0, 61]}}
+    c = B.clima_json([una] * len(B.CIUDADES), hoy)
+    assert c["fecha"] == "2026-11-01" and set(c["ciudades"]) == {n for n, _, _ in B.CIUDADES}
+    f = c["ciudades"]["arica"]
+    assert len(f) == 1 and f[0] == {"time": "2026-11-01T00:00:00Z", "temp": 21.3, "hr": 72, "viento": 3.1, "dir": 200, "simbolo": "clearsky"}
+    assert B.clima_json([{}], hoy) is None and B.clima_json({}, hoy) is None
+    rss = ('<rss><channel><item><title>Planets in November</title><link>https://www.space.com/x</link>'
+           '<source>https://cdn.mos.cms.futurecdn.net/abc-320-70.jpg</source></item></channel></rss>')
+    n = B.leer_feed(rss, "Space.com (RSS)")
+    assert n and n[0]["fuente"] == "Space.com (RSS)", n
+    n = B.leer_feed(rss.replace("https://cdn.mos.cms.futurecdn.net/abc-320-70.jpg", "0?ds=true&amp;seed=1793488595"), "SpaceNews (RSS)")
+    assert n[0]["fuente"] == "SpaceNews (RSS)", n
+    gn = (rss.replace("https://cdn.mos.cms.futurecdn.net/abc-320-70.jpg", "La Tercera").replace("Planets in November", "Planetas - La Tercera")
+          .replace("https://www.space.com/x", "https://news.google.com/rss/articles/x"))
+    n = B.leer_feed(gn, "Google News · Astronomía Chile")
+    assert n[0]["fuente"] == "La Tercera (vía Google News)" and n[0]["titulo"] == "Planetas", n
+
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

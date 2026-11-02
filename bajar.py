@@ -7,6 +7,7 @@ si una fuente responde con error, se anota en datos/estado.json y la Skill usa s
 
 Archivos que deja en datos/:
   uv.csv              índice UV de 8 días por ciudad (Open-Meteo, uso no comercial, CC BY 4.0)   ciudad,fecha,uv
+  clima-openmeteo.json  01-11-2026: pronóstico por hora de 8 días de las 9 ciudades (Open-Meteo): tercera fuente del clima
   imacec.csv          IMACEC del año (mindicador.cl, datos del Banco Central)                    mes,var
   indicadores.json    respuesta completa de https://mindicador.cl/api
   camara-mes.json     votaciones de la Sala de la Cámara del mes (datos abiertos de la Cámara)
@@ -105,6 +106,47 @@ def uv_csv(j):
             if v is not None:
                 filas.append(f"{nombre},{f},{round(float(v), 1)}")
     return "\n".join(filas) + ("\n" if filas else "")
+
+
+# ---------- Pronóstico de 8 días por hora (Open-Meteo) ----------
+# 01-11-2026 (Germán: «Arica solo muestra 2 días»): tercera fuente del pronóstico, leída aquí en GitHub y no por el modelo, para que
+# ninguna ciudad salga con menos de 7 días. Mismas columnas que la lectura de MET Norway: time (UTC), temp, hr, viento (m/s), dir, simbolo.
+WMO_SIMBOLO = {0: "clearsky", 1: "fair", 2: "partlycloudy", 3: "cloudy", 45: "fog", 48: "fog", 51: "lightrain", 53: "lightrain",
+               55: "rain", 56: "sleet", 57: "sleet", 61: "lightrain", 63: "rain", 65: "heavyrain", 66: "sleet", 67: "sleet",
+               71: "snow", 73: "snow", 75: "snow", 77: "snow", 80: "rainshowers", 81: "rainshowers", 82: "heavyrainshowers",
+               85: "snow", 86: "snow", 95: "thunder", 96: "thunder", 99: "thunder"}
+
+
+def clima(estado, hoy):
+    lat = ",".join(str(c[1]) for c in CIUDADES)
+    lon = ",".join(str(c[2]) for c in CIUDADES)
+    url = (f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}"
+           "&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code"
+           "&wind_speed_unit=ms&timezone=GMT&forecast_days=8")
+    j = pedir(url, estado, "clima")
+    return clima_json(j, hoy) if j is not None else None
+
+
+def clima_json(j, hoy):
+    lista = j if isinstance(j, list) else [j]
+    ciudades = {}
+    for (nombre, _, _), x in zip(CIUDADES, lista):
+        h = (x or {}).get("hourly") or {}
+        filas = []
+        for i, t in enumerate(h.get("time") or []):
+            def v(k):
+                L = h.get(k) or []
+                return L[i] if i < len(L) else None
+            if v("temperature_2m") is None:
+                continue
+            filas.append({"time": str(t) + ":00Z" if len(str(t)) == 16 else str(t), "temp": v("temperature_2m"),
+                          "hr": v("relative_humidity_2m"), "viento": v("wind_speed_10m"), "dir": v("wind_direction_10m"),
+                          "simbolo": WMO_SIMBOLO.get(v("weather_code"), "")})
+        if filas:
+            ciudades[nombre] = filas
+    if not ciudades:
+        return None
+    return {"fecha": hoy.isoformat(), "fuente": "Open-Meteo (open-meteo.com, CC BY 4.0)", "ciudades": ciudades}
 
 
 # ---------- IMACEC e indicadores (mindicador.cl) ----------
@@ -925,6 +967,9 @@ def leer_feed(texto, fuente):
         if not titulo or not url.startswith("http"):
             continue
         medio = h.get("medio") or ""
+        agregador = "news.google.com" in url or "bing.com/news" in url or str(fuente).startswith(("Google News", "Bing"))
+        if not agregador or re.match(r"(?i)https?://|www\.", medio) or re.search(r"[/?=]", medio):
+            medio = ""   # 01-11-2026: Space.com y SpaceNews traen una imagen o un código en <source>: en un medio directo, el medio es el feed
         if medio and titulo.endswith(" - " + medio):
             titulo = titulo[: -len(" - " + medio)].strip()
         directo = False
@@ -1388,6 +1433,8 @@ def main(argv=None):
     hoy = ahora().date()
     estado = {}
     escribir(os.path.join(a.salida, "uv.csv"), uv(estado))
+    cl = clima(estado, hoy)   # compacto: ~1.700 horas de 9 ciudades
+    escribir(os.path.join(a.salida, "clima-openmeteo.json"), json.dumps(cl, ensure_ascii=False, separators=(",", ":")) if cl else None)
     escribir(os.path.join(a.salida, "imacec.csv"), imacec(estado, hoy.year))
     escribir(os.path.join(a.salida, "indicadores.json"), pedir("https://mindicador.cl/api", estado, "indicadores"))
     try:   # lo bajado en corridas anteriores (queda en el repositorio)
