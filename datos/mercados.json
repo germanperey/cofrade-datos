@@ -3,24 +3,24 @@
  "mercados": [
   {
    "nombre": "S&P 500",
-   "valor": 7743.98,
-   "variacion_pct": 0.28,
-   "fecha": "2026-10-28",
-   "fuente": "FRED (Reserva Federal de St. Louis)"
+   "valor": 7580.07,
+   "variacion_pct": -1.82,
+   "fecha": "2026-10-30",
+   "fuente": "CNBC"
   },
   {
    "nombre": "Nasdaq",
-   "valor": 26184.72,
-   "variacion_pct": -1.38,
-   "fecha": "2026-10-29",
-   "fuente": "FRED (Reserva Federal de St. Louis)"
+   "valor": 25437.0,
+   "variacion_pct": -2.86,
+   "fecha": "2026-10-30",
+   "fuente": "CNBC"
   },
   {
    "nombre": "Dow Jones",
    "valor": 51770.31,
    "variacion_pct": -1.09,
    "fecha": "2026-10-30",
-   "fuente": "FRED (Reserva Federal de St. Louis)"
+   "fuente": "CNBC"
   },
   {
    "nombre": "Petróleo Brent",
@@ -38,7 +38,7 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 77779.99,
+  "bitcoin_usd": 77728.51,
   "bitcoin_fecha": "2026-11-02",
   "bitcoin_fuente": "Coinbase"
  }
