@@ -1,11 +1,14 @@
 # Cofrade News · datos oficiales del día (gratis, en GitHub Actions)
-# Corre CADA HORA de madrugada (03:23 a 09:23 UTC = 00:23 a 06:23 de Santiago en verano), antes de la tarea de las 06:47.
+# Corre cada 30 minutos de madrugada (03:07 a 10:37 UTC = 00:07 a 07:37 de Santiago en verano), antes de la tarea de las 06:47.
 # 01-11-2026: el 31-10 GitHub atrasó sus horarios casi 6 horas (corrió a las 06:03 y 06:47): con 7 intentos, alguno llega a tiempo. También se puede correr a mano: pestaña «Actions» → «Datos oficiales del día» → «Run workflow».
 name: Datos oficiales del día
 
 on:
   schedule:
-    - cron: "23 3-9 * * *"   # cada hora de 00:23 a 06:23 de Santiago (verano); cada corrida deja los datos más nuevos
+    # 02-11-2026: el 02-11 GitHub no hizo NINGUNA de las 7 corridas programadas (y el 01-11 solo 1, con 5 horas de atraso).
+    # Ahora 15 intentos (cada 30 min, de 00:07 a 07:07 de Santiago en verano) y, además, un «despertador» externo
+    # (cron-job.org) que la llama a las 05:30 y 06:10 con «workflow_dispatch». Corridas de más no hacen daño: cada una deja lo más nuevo.
+    - cron: "7,37 3-10 * * *"
   workflow_dispatch:
 
 permissions:
