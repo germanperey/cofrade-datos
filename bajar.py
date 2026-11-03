@@ -1512,6 +1512,27 @@ def aire_waqi(estado, token=None):
         j = pedir(f"https://api.waqi.info/feed/geo:{la};{lo}/?token={token}", estado, f"aire_waqi_{slug}", espera=(0, 5))
         estado.get(f"aire_waqi_{slug}", {}).pop("url", None)   # la dirección lleva la clave: no se guarda
         x = waqi_ciudad(j, slug, la, lo)
+        if not x:   # 03-11-2026: la búsqueda «más cercana» devolvió Lima para Santiago; se busca por nombre y se exige < 25 km
+            nom = dict(AIRE_CIUDADES)[slug]
+            js = pedir(f"https://api.waqi.info/search/?keyword={quote(nom.split(' ')[0] if slug != 'punta-arenas' else nom)}&token={token}",
+                       estado, f"aire_waqi_busca_{slug}", espera=(0, 5))
+            estado.get(f"aire_waqi_busca_{slug}", {}).pop("url", None)
+            cand = []
+            for r in ((js or {}).get("data") or []) if isinstance(js, dict) and js.get("status") == "ok" else []:
+                uid = r.get("uid") if isinstance(r, dict) else None
+                st = (r.get("station") or {}) if isinstance(r, dict) else {}
+                try:
+                    km = _km(la, lo, float(st["geo"][0]), float(st["geo"][1]))
+                except (KeyError, TypeError, ValueError, IndexError):
+                    continue
+                if uid and km <= 25:
+                    cand.append((km, uid))
+            estado.setdefault(f"aire_waqi_busca_{slug}", {})["cerca"] = len(cand)
+            for _, uid in sorted(cand)[:3]:
+                x = waqi_ciudad(pedir(f"https://api.waqi.info/feed/@{uid}/?token={token}", estado, f"aire_waqi_uid_{slug}", espera=(0,)), slug, la, lo)
+                estado.get(f"aire_waqi_uid_{slug}", {}).pop("url", None)
+                if x:
+                    break
         (out.append(x) if x else malas.append(dict(AIRE_CIUDADES)[slug]))
         if not x and f"aire_waqi_{slug}" in estado:   # 03-11-2026: por qué no sirvió (sin la clave), para revisarlo en estado.json
             estado[f"aire_waqi_{slug}"]["motivo"] = waqi_motivo(j, la, lo)
