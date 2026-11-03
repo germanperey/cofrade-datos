@@ -41,6 +41,7 @@ jobs:
           BCCH_TOKEN: ${{ secrets.BCCH_TOKEN }}   # Banco Central: «API Key Token» de «Mi Cuenta» (vence al año: renovarlo ahí)
           BCCH_USER: ${{ secrets.BCCH_USER }}
           BCCH_PASS: ${{ secrets.BCCH_PASS }}
+          WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}   # 03-11-2026: calidad del aire medida (aqicn.org, clave gratuita; opcional)
         run: python bajar.py --salida datos
       - name: Guardar en el repositorio
         run: |
