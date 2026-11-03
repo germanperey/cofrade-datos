@@ -1529,8 +1529,11 @@ def aire_waqi(estado, token=None):
                     cand.append((km, uid))
             estado.setdefault(f"aire_waqi_busca_{slug}", {})["cerca"] = len(cand)
             for _, uid in sorted(cand)[:3]:
-                x = waqi_ciudad(pedir(f"https://api.waqi.info/feed/@{uid}/?token={token}", estado, f"aire_waqi_uid_{slug}", espera=(0,)), slug, la, lo)
+                ju = pedir(f"https://api.waqi.info/feed/@{uid}/?token={token}", estado, f"aire_waqi_uid_{slug}", espera=(0,))
+                x = waqi_ciudad(ju, slug, la, lo)
                 estado.get(f"aire_waqi_uid_{slug}", {}).pop("url", None)
+                if not x:
+                    estado.setdefault(f"aire_waqi_uid_{slug}", {}).setdefault("motivos", []).append(waqi_motivo(ju, la, lo))
                 if x:
                     break
         (out.append(x) if x else malas.append(dict(AIRE_CIUDADES)[slug]))
