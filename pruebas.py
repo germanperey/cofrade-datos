@@ -488,6 +488,91 @@ def bing_noticias_y_redes_oficiales():
 
 
 @prueba
+def aire_medido_de_las_9_ciudades_con_waqi():
+    """03-11-2026 (Germán marcó «Aire: sin medición publicada» en Arica, Antofagasta y La Serena): estaciones del SINCA vía aqicn.org
+    con la clave gratuita (WAQI_TOKEN). Sin clave no se pide nada; estación a más de 25 km o medición vieja: no se usa; la clave nunca queda escrita."""
+    hoy = B.ahora().date().isoformat()
+    ok = {"status": "ok", "data": {"aqi": 57, "time": {"s": hoy + " 05:00:00"},
+                                   "city": {"name": "Antofagasta, Chile", "geo": [-23.63, -70.39], "url": "https://aqicn.org/city/chile/antofagasta"}}}
+    x = B.waqi_ciudad(ok, "antofagasta", -23.65, -70.40)
+    assert x == {"nombre": "Antofagasta", "aqi_us": 57, "categoria": "Moderada", "pm25": None, "hora": "05:00", "estacion": "Antofagasta, Chile",
+                 "url": "https://aqicn.org/city/chile/antofagasta"}, x
+    lejos = {"status": "ok", "data": dict(ok["data"], city={"name": "Calama", "geo": [-22.46, -68.93]})}
+    assert B.waqi_ciudad(lejos, "antofagasta", -23.65, -70.40) is None                          # 180 km: no es Antofagasta
+    assert B.waqi_ciudad({"status": "ok", "data": dict(ok["data"], time={"s": "2026-01-01 05:00:00"})}, "antofagasta", -23.65, -70.40) is None
+    assert B.waqi_ciudad({"status": "error", "data": "Invalid key"}, "antofagasta", -23.65, -70.40) is None
+    assert len(B.AIRE_CIUDADES) == 9
+    viejos, env = B.pedir, dict(os.environ)
+    vistos = []
+
+    def pedir(url, estado, clave, **k):
+        vistos.append(url)
+        estado[clave] = {"ok": True, "url": B.ocultar(url)}
+        return ok if "-23.65" in url else {"status": "ok", "data": {"aqi": "-"}}
+    B.pedir = pedir
+    try:
+        os.environ.pop("WAQI_TOKEN", None)
+        e = {}
+        assert B.aire_waqi(e) is None and not vistos and "WAQI_TOKEN" in e["aire_waqi"]["error"]
+        os.environ["WAQI_TOKEN"] = "clave-waqi"
+        e = {}
+        a = B.aire_waqi(e)
+        assert len(vistos) == 9 and [c["nombre"] for c in a["ciudades"]] == ["Antofagasta"] and "SINCA" in a["fuente"]
+        assert "clave-waqi" not in json.dumps(e) and "Arica" in e["aire_waqi"]["error"]
+    finally:
+        B.pedir = viejos
+        os.environ.clear()
+        os.environ.update(env)
+
+
+@prueba
+def vuelos_regionales_de_tarde_desde_el_tablero_de_santiago():
+    """03-11-2026 (Germán: mejorar los vuelos). Los regionales se leen de 06:00 a 17:59 (cupo gratis); la tarde y la noche salen del
+    tablero de Santiago leído con su tramo (withLeg=true), sin gastar cupo. Solo vuelos de hoy, sin repetir los ya leídos."""
+    hoy = dt.date(2026, 11, 3)
+    j = {"departures": [{"number": "LA 271", "status": "Expected", "airline": {"name": "LATAM"},
+                         "departure": {"airport": {"iata": "SCL"}, "scheduledTime": {"local": "2026-11-03 19:10-03:00"}},
+                         "arrival": {"airport": {"iata": "PMC", "municipalityName": "Puerto Montt"}, "scheduledTime": {"local": "2026-11-03 20:55-03:00"}}},
+                        {"number": "LA 255", "airline": {"name": "LATAM"},   # llega a PMC a las 09:40: ya está en el tablero de PMC
+                         "departure": {"airport": {"iata": "SCL"}, "scheduledTime": {"local": "2026-11-03 08:00-03:00"}},
+                         "arrival": {"airport": {"iata": "PMC"}, "scheduledTime": {"local": "2026-11-03 09:40-03:00"}}},
+                        {"number": "LA 299", "airline": {"name": "LATAM"},   # llega mañana: no es de hoy
+                         "departure": {"airport": {"iata": "SCL"}, "scheduledTime": {"local": "2026-11-03 23:30-03:00"}},
+                         "arrival": {"airport": {"iata": "PMC"}, "scheduledTime": {"local": "2026-11-04 01:15-03:00"}}}],
+         "arrivals": [{"number": "H2 22", "status": "Expected", "airline": {"name": "SKY"},
+                       "departure": {"airport": {"iata": "PMC"}, "scheduledTime": {"local": "2026-11-03 21:30-03:00"}},
+                       "arrival": {"airport": {"iata": "SCL"}, "scheduledTime": {"local": "2026-11-03 23:20-03:00"}}}]}
+    # con tramo, la fila de Santiago lleva la hora de Santiago y el aeropuerto del otro extremo
+    f = B.adb_filas(j, "departures")[0]
+    assert (f["iata"], f["lugar"], f["hora_programada"]) == ("PMC", "Puerto Montt", "19:10"), f
+    assert B.adb_filas(j, "arrivals")[0]["hora_programada"] == "23:20"
+    x = B.adb_desde_santiago(j, "PMC", hoy)
+    assert [(r["vuelo"], r["hora_programada"], r["iata"]) for r in x["llegadas"]] == [("LA271", "20:55", "SCL")], x
+    assert [(r["vuelo"], r["hora_programada"]) for r in x["salidas"]] == [("H222", "21:30")], x
+    assert B.adb_desde_santiago(j, "CCP", hoy) == {"salidas": [], "llegadas": []}
+    assert B.adb_desde_santiago({"departures": [{"number": "LA 1", "movement": {"airport": {"iata": "PMC"}}}]}, "PMC", hoy) == {"salidas": [], "llegadas": []}
+    viejos = B.pedir, dict(os.environ)
+    vistos = []
+
+    def pedir(url, estado, clave, cabeceras=None, **k):
+        vistos.append(url)
+        estado[clave] = {"ok": True, "url": url}
+        return j if "/SCL/" in url else {"departures": [], "arrivals": []}
+    B.pedir = pedir
+    try:
+        os.environ["AERODATABOX_KEY"] = "clave-adb"
+        v, uso = B.vuelos_hoy({}, hoy)
+        assert uso["llamadas"] == 6 and all(("withLeg=true" in u) == ("/SCL/" in u) for u in vistos), vistos
+        p = v["aeropuertos"]["PMC"]
+        assert [r["vuelo"] for r in p["llegadas"]] == ["LA271"] and [r["vuelo"] for r in p["salidas"]] == ["H222"], p   # sin repetir (2 ventanas de SCL)
+        assert "Santiago" in p["ventana"]
+    finally:
+        B.pedir = viejos[0]
+        os.environ.clear()
+        os.environ.update(viejos[1])
+
+
+@prueba
 def vuelos_de_hoy_con_aerodatabox_y_cupo():
     """01-11-2026: Flightradar24 rechaza la lectura automática. AeroDataBox (cuenta gratuita, secreto AERODATABOX_KEY) entrega el día
     completo de los 5 aeropuertos: una lectura al día y con tope mensual, para no pasarse del cupo gratis. La clave va en la cabecera."""

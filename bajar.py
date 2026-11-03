@@ -768,7 +768,14 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
                        ("El Líbero (RSS)", "https://ellibero.cl/feed/", "rss"),
                        ("Ex-Ante (RSS)", "https://www.ex-ante.cl/feed/", "rss"),
                        ("CNN Chile (RSS)", "https://www.cnnchile.com/feed/", "rss")],
-    "politica/mundo": [("Bing Noticias · Internacional", _bing("internacional noticias mundo"), "rss")],
+    "politica/mundo": [("Bing Noticias · Internacional", _bing("internacional noticias mundo"), "rss"),
+                       # 03-11-2026 (informe de la tarea: Sudán solo con Al Jazeera): más fuentes para los conflictos de África
+                       ("Bing Noticias · Sudán", _bing("Sudán guerra El Fasher RSF"), "rss"),
+                       ("Bing Noticias · Conflictos en África", _bing("conflicto armado África Sahel Congo"), "rss"),
+                       ("Noticias ONU · África (RSS)", "https://news.un.org/feed/subscribe/es/news/region/africa/feed/rss.xml", "rss"),
+                       ("France 24 · África (RSS)", "https://www.france24.com/es/%C3%A1frica/rss", "rss"),
+                       ("Sudan Tribune (RSS, inglés)", "https://sudantribune.com/feed/", "rss"),
+                       ("Europa Press · Internacional (RSS)", "https://www.europapress.es/rss/rss.aspx?ch=00069", "rss")],
     "inmobiliario": [("Bing Noticias · Mercado inmobiliario", _bing("mercado inmobiliario Chile"), "rss"),
                      ("Bing Noticias · Vivienda y CChC", _bing("viviendas Chile CChC"), "rss"),
                      ("Bing Noticias · Créditos hipotecarios", _bing("crédito hipotecario Chile"), "rss")],
@@ -780,7 +787,11 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
     "deportes": [("Bing Noticias · Fútbol chileno", _bing("fútbol chileno Liga de Primera"), "rss"),
                  ("Bing Noticias · Tenis chileno", _bing("tenis chileno ATP"), "rss"),
                  ("Bing Noticias · Golf", _bing("golf PGA Tour"), "rss"),
-                 ("Bing Noticias · Equitación", _bing("equitación salto Chile"), "rss")],
+                 ("Bing Noticias · Equitación", _bing("equitación salto Chile"), "rss"),
+                 # 03-11-2026 (informe de la tarea: rugby con solo 2 notas)
+                 ("BBC Sport · Rugby (RSS, inglés)", "https://feeds.bbci.co.uk/sport/rugby-union/rss.xml", "rss"),
+                 ("Bing Noticias · Rugby Chile", _bing("rugby Chile Cóndores"), "rss"),
+                 ("Bing Noticias · Rugby internacional", _bing("rugby test match Pumas All Blacks Springboks"), "rss")],
     "ciencia": [("Bing Noticias · Avances médicos", _bing("avance científico medicina estudio"), "rss")],
     "astronomia": [("Bing Noticias · Astronomía", _bing("astronomía telescopio Chile"), "rss")],
 }
@@ -1095,6 +1106,16 @@ def _adb_hora(t):
     return (m.group(1), m.group(2)) if m else ("", "")
 
 
+def _adb_tramos(x, sentido):
+    """→ (aquí, allá): el movimiento en el aeropuerto consultado (su hora) y el del otro extremo (su aeropuerto).
+    Sin tramo (withLeg=false) AeroDataBox entrega «movement»: el aeropuerto del otro extremo con la hora de aquí.
+    Con tramo (withLeg=true) entrega «departure» y «arrival» completos (03-11-2026)."""
+    if isinstance(x.get("movement"), dict):
+        return x["movement"], x["movement"]
+    dep, arr = x.get("departure") or {}, x.get("arrival") or {}
+    return (dep, arr) if sentido == "departures" else (arr, dep)
+
+
 def adb_filas(j, sentido):
     """Respuesta de AeroDataBox (departures / arrivals) → filas {vuelo, aerolinea, iata, lugar, fecha, hora_programada,
     hora_estimada, estado} en hora local, sin vuelos de carga."""
@@ -1102,8 +1123,8 @@ def adb_filas(j, sentido):
     for x in (j or {}).get(sentido) or []:
         if not isinstance(x, dict) or x.get("isCargo"):
             continue
-        mv = x.get("movement") or x.get("departure" if sentido == "arrivals" else "arrival") or {}
-        ap = mv.get("airport") or {}
+        mv, otro = _adb_tramos(x, sentido)
+        ap = otro.get("airport") or {}
         fe, hp = _adb_hora((mv.get("scheduledTime") or {}).get("local"))
         _, he = _adb_hora((mv.get("revisedTime") or mv.get("runwayTime") or {}).get("local"))
         num = re.sub(r"\s+", "", str(x.get("number") or ""))
@@ -1112,6 +1133,33 @@ def adb_filas(j, sentido):
         out.append({"vuelo": num, "aerolinea": str((x.get("airline") or {}).get("name") or ""),
                     "iata": str(ap.get("iata") or "")[:3], "lugar": str(ap.get("municipalityName") or ap.get("name") or ""),
                     "fecha": fe, "hora_programada": hp, "hora_estimada": he if he != hp else "", "estado": str(x.get("status") or "")})
+    return out
+
+
+ADB_NOMBRE = {"SCL": "Santiago"}
+
+
+def adb_desde_santiago(j, regional, hoy, desde="06:00", hasta="17:59"):
+    """03-11-2026 (Germán: mejorar los vuelos). El cupo gratuito alcanza para leer los aeropuertos regionales de 06:00 a 17:59; los
+    vuelos de la tarde y la noche quedaban fuera. Casi todos van o vienen de Santiago, y Santiago se lee el día completo con su tramo
+    (withLeg=true): una salida de Santiago a Puerto Montt ES una llegada a Puerto Montt, con su hora allá. Sin costo extra de cupo.
+    → {"salidas": [...], "llegadas": [...]} del aeropuerto `regional`, solo de hoy y fuera de la ventana ya leída."""
+    out = {"salidas": [], "llegadas": []}
+    for sentido, destino in (("departures", "llegadas"), ("arrivals", "salidas")):
+        for x in (j or {}).get(sentido) or []:
+            if not isinstance(x, dict) or x.get("isCargo") or isinstance(x.get("movement"), dict):
+                continue
+            aqui, alla = _adb_tramos(x, sentido)
+            if str((alla.get("airport") or {}).get("iata") or "")[:3] != regional:
+                continue
+            fe, hp = _adb_hora((alla.get("scheduledTime") or {}).get("local"))
+            _, he = _adb_hora((alla.get("revisedTime") or alla.get("runwayTime") or {}).get("local"))
+            num = re.sub(r"\s+", "", str(x.get("number") or ""))
+            if not (num and fe == hoy.isoformat() and hp) or desde <= hp <= hasta:
+                continue
+            out[destino].append({"vuelo": num, "aerolinea": str((x.get("airline") or {}).get("name") or ""), "iata": "SCL", "lugar": "Santiago",
+                                 "fecha": fe, "hora_programada": hp, "hora_estimada": he if he != hp else "", "estado": str(x.get("status") or ""),
+                                 "via": "tablero de Santiago"})
     return out
 
 
@@ -1130,14 +1178,14 @@ def vuelos_hoy(estado, hoy, previo=None, uso=None):
         return previo, uso
     unidades = int(os.environ.get("AERODATABOX_UNIDADES", "2") or 2)   # costo de cada consulta en el plan
     tope = int(os.environ.get("AERODATABOX_TOPE_MES", "390") or 390)   # plan Basic: 400 (tope duro), con margen
-    aer, faltan = {}, []
+    aer, faltan, scl = {}, [], []
     cab = {"X-RapidAPI-Key": k, "X-RapidAPI-Host": ADB_HOST}
     for c, d, h in ADB_PLAN:
         if uso["unidades"] + unidades > tope:
             faltan.append(f"{c} {d}-{h} (cupo del mes)")
             continue
         url = (f"https://{ADB_HOST}/flights/airports/iata/{c}/{hoy.isoformat()}T{d}/{hoy.isoformat()}T{h}"
-               "?withLeg=false&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false")
+               f"?withLeg={'true' if c == 'SCL' else 'false'}&direction=Both&withCancelled=true&withCodeshared=true&withCargo=false&withPrivate=false&withLocation=false")
         # 01-11-2026: aquí NO se consulta el robots.txt. Ese archivo es para los robots que recorren páginas públicas; esta es una
         # API con contrato: Germán se suscribió al plan gratuito y cada consulta va con su clave personal (RapidAPI pone
         # «Disallow: /» a todos sus servidores de API, lo que dejaría la API pagada o gratuita inservible).
@@ -1150,7 +1198,20 @@ def vuelos_hoy(estado, hoy, previo=None, uso=None):
         a = aer.setdefault(c, {"salidas": [], "llegadas": []})
         a["salidas"] += adb_filas(j, "departures")
         a["llegadas"] += adb_filas(j, "arrivals")
-    n = sum(len(v) for a in aer.values() for v in a.values())
+        if c == "SCL":
+            scl.append(j)
+    # la tarde y la noche de los regionales, desde el tablero de Santiago (sin gastar cupo)
+    for c, d, h in ADB_PLAN:
+        if c == "SCL" or c not in aer:
+            continue
+        for j in scl:
+            extra = adb_desde_santiago(j, c, hoy, d, h)
+            for k in ("salidas", "llegadas"):
+                ya = {(f["vuelo"], f["hora_programada"]) for f in aer[c][k]}
+                aer[c][k] += [f for f in extra[k] if (f["vuelo"], f["hora_programada"]) not in ya]
+                aer[c][k].sort(key=lambda f: f["hora_programada"])
+        aer[c]["ventana"] = f"{d} a {h} (tablero propio) y el resto del día con los vuelos desde y hacia Santiago"
+    n = sum(len(v) for a in aer.values() for v in a.values() if isinstance(v, list))
     estado["vuelos_hoy"] = {"ok": n > 0, "hora": ahora().isoformat(timespec="seconds"), "url": "AeroDataBox", "n": n,
                             "error": "; ".join(faltan[:6]), "cupo_mes": f"{uso['unidades']} de {tope}"}
     return ({"fecha": hoy.isoformat(), "fuente": "AeroDataBox", "aeropuertos": aer} if n else None), uso
@@ -1421,7 +1482,59 @@ def bitcoin(estado, hoy):
 # ---------- 02-11-2026: sismos, calidad del aire y Fórmula 1 ----------
 # Ese día la tarea programada no pudo leer NINGUNA página (web_fetch pedía un permiso que nadie aprueba de madrugada): estas
 # tres quedaron sin dato. GitHub las lee de APIs abiertas y gratuitas, respetando el robots.txt de cada sitio.
-AIRE_CIUDADES = (("santiago", "Santiago"), ("concepcion", "Concepción"), ("temuco", "Temuco"), ("puerto-montt", "Puerto Montt"))
+AIRE_CIUDADES = (("santiago", "Santiago"), ("concepcion", "Concepción"), ("temuco", "Temuco"), ("puerto-montt", "Puerto Montt"),
+                 # 03-11-2026 (Germán marcó «Aire: sin medición publicada» en Arica, Antofagasta y La Serena): las 9 ciudades del pronóstico
+                 ("arica", "Arica"), ("antofagasta", "Antofagasta"), ("la-serena", "La Serena"), ("valparaiso-y-vina-del-mar", "Valparaíso"),
+                 ("punta-arenas", "Punta Arenas"))
+
+
+def _km(a, b, c, d):
+    import math
+    r = math.radians
+    x = math.sin(r(c - a) / 2) ** 2 + math.cos(r(a)) * math.cos(r(c)) * math.sin(r(d - b) / 2) ** 2
+    return 12742 * math.asin(min(1.0, math.sqrt(x)))
+
+
+def aire_waqi(estado, token=None):
+    """03-11-2026: calidad del aire MEDIDA (estaciones del SINCA del Ministerio del Medio Ambiente, publicadas por el Índice Mundial
+    de Calidad del Aire, aqicn.org) con la clave gratuita de Germán (secreto WAQI_TOKEN). Sin clave, nada. Solo una estación a
+    menos de 25 km de la ciudad. Es una API con contrato y clave personal (como AeroDataBox): su robots.txt no aplica."""
+    token = (token if token is not None else os.environ.get("WAQI_TOKEN", "")).strip()
+    if not token:
+        estado["aire_waqi"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "api.waqi.info",
+                               "error": "sin secreto WAQI_TOKEN (clave gratuita de aqicn.org)"}
+        return None
+    out, malas = [], []
+    for slug, la, lo in [c for c in CIUDADES if c[0] in dict(AIRE_CIUDADES)]:
+        j = pedir(f"https://api.waqi.info/feed/geo:{la};{lo}/?token={token}", estado, f"aire_waqi_{slug}", espera=(0, 5))
+        estado.get(f"aire_waqi_{slug}", {}).pop("url", None)   # la dirección lleva la clave: no se guarda
+        x = waqi_ciudad(j, slug, la, lo)
+        (out.append(x) if x else malas.append(dict(AIRE_CIUDADES)[slug]))
+    estado["aire_waqi"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": "api.waqi.info",
+                           "n": len(out), "error": ("sin estación cercana o sin dato: " + ", ".join(malas)) if malas else ""}
+    if not out:
+        return None
+    return {"fecha": ahora().date().isoformat(), "fuente": "SINCA (Ministerio del Medio Ambiente) vía Índice Mundial de Calidad del Aire (aqicn.org)",
+            "ciudades": out}
+
+
+def waqi_ciudad(j, slug, la, lo):
+    d = (j or {}).get("data") if isinstance(j, dict) and j.get("status") == "ok" else None
+    if not isinstance(d, dict) or not isinstance(d.get("aqi"), (int, float)):
+        return None
+    geo = ((d.get("city") or {}).get("geo") or [None, None])
+    try:
+        if _km(la, lo, float(geo[0]), float(geo[1])) > 25:
+            return None
+    except (TypeError, ValueError, IndexError):
+        return None
+    hora = str((d.get("time") or {}).get("s") or "")
+    if hora[:10] and hora[:10] < (ahora().date() - dt.timedelta(days=1)).isoformat():   # medición vieja: no sirve como «hoy»
+        return None
+    aqi = int(round(d["aqi"]))
+    return {"nombre": dict(AIRE_CIUDADES)[slug], "aqi_us": aqi, "categoria": _categoria_aqi(aqi), "pm25": None,
+            "hora": hora[11:16], "estacion": str((d.get("city") or {}).get("name") or ""),
+            "url": str((d.get("city") or {}).get("url") or "https://aqicn.org/")}
 
 
 def _no_permitido(url, estado, clave):
@@ -1597,7 +1710,7 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
     escribir(os.path.join(a.salida, "bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": _BCCH["catalogo"]} if _BCCH.get("catalogo") else None)
     escribir(os.path.join(a.salida, "robots.json"), {"fecha": hoy.isoformat(), "sitios": ROBOTS_VISTOS} if ROBOTS_VISTOS else None)
-    for nombre, fn in (("sismos.csv", lambda: sismos(estado)), ("aire.json", lambda: aire(estado)), ("f1.json", lambda: f1(estado, hoy))):
+    for nombre, fn in (("sismos.csv", lambda: sismos(estado)), ("aire.json", lambda: aire_waqi(estado) or aire(estado)), ("f1.json", lambda: f1(estado, hoy))):
         try:   # 02-11-2026: ninguna de estas tres detiene a las demás
             escribir(os.path.join(a.salida, nombre), fn())
         except Exception as ex:   # noqa: BLE001
