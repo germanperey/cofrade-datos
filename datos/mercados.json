@@ -1,26 +1,26 @@
 {
- "fecha": "2026-11-02",
+ "fecha": "2026-11-03",
  "mercados": [
   {
    "nombre": "S&P 500",
    "valor": 7580.07,
    "variacion_pct": -1.82,
    "fecha": "2026-10-30",
-   "fuente": "CNBC"
+   "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
    "nombre": "Nasdaq",
-   "valor": 25437.0,
-   "variacion_pct": -2.86,
-   "fecha": "2026-10-30",
-   "fuente": "CNBC"
+   "valor": 25164.36,
+   "variacion_pct": -1.07,
+   "fecha": "2026-11-02",
+   "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
    "nombre": "Dow Jones",
-   "valor": 51770.31,
-   "variacion_pct": -1.09,
-   "fecha": "2026-10-30",
-   "fuente": "CNBC"
+   "valor": 51983.98,
+   "variacion_pct": 0.41,
+   "fecha": "2026-11-02",
+   "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
    "nombre": "Petróleo Brent",
@@ -31,15 +31,15 @@
   },
   {
    "nombre": "Cobre (Bolsa de Metales de Londres)",
-   "valor": 6.66,
-   "variacion_pct": 0.08,
-   "fecha": "2026-10-30",
+   "valor": 6.61,
+   "variacion_pct": -0.7,
+   "fecha": "2026-11-02",
    "fuente": "Banco Central de Chile"
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 77634.02,
-  "bitcoin_fecha": "2026-11-02",
+  "bitcoin_usd": 76594.82,
+  "bitcoin_fecha": "2026-11-03",
   "bitcoin_fuente": "Coinbase"
  }
 }

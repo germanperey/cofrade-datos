@@ -1,9 +1,58 @@
 {
  "mes": "2026-11",
- "camara_mes": [],
+ "camara_mes": [
+  {
+   "id": "90795",
+   "fecha": "2026-11-02T19:16",
+   "descripcion": "Boletín N° 18525-06",
+   "tipo": "Proyecto de Ley",
+   "resultado": "Aprobado",
+   "si": 126,
+   "no": 4,
+   "abst": 4,
+   "quorum": "Quórum Calificado",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90795"
+  },
+  {
+   "id": "90794",
+   "fecha": "2026-11-02T19:15",
+   "descripcion": "Boletín N° 18525-06",
+   "tipo": "Proyecto de Ley",
+   "resultado": "Aprobado",
+   "si": 121,
+   "no": 7,
+   "abst": 6,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90794"
+  },
+  {
+   "id": "90791",
+   "fecha": "2026-11-02T17:17",
+   "descripcion": "1-Otros",
+   "tipo": "Otros",
+   "resultado": "Aprobado",
+   "si": 73,
+   "no": 52,
+   "abst": 2,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90791"
+  },
+  {
+   "id": "90790",
+   "fecha": "2026-11-02T17:10",
+   "descripcion": "5-Cambio de Trámite",
+   "tipo": "Otros",
+   "resultado": "Aprobado",
+   "si": 60,
+   "no": 49,
+   "abst": 2,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90790"
+  }
+ ],
  "control": {
-  "total_mes": 0,
+  "total_mes": 4,
   "fuente": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXAnno?prmAnno=2026",
-  "ultima_oficial": ""
+  "ultima_oficial": "2026-11-02"
  }
 }
