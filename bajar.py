@@ -1500,6 +1500,9 @@ def aire_waqi(estado, token=None):
     de Calidad del Aire, aqicn.org) con la clave gratuita de Germán (secreto WAQI_TOKEN). Sin clave, nada. Solo una estación a
     menos de 25 km de la ciudad. Es una API con contrato y clave personal (como AeroDataBox): su robots.txt no aplica."""
     token = (token if token is not None else os.environ.get("WAQI_TOKEN", "")).strip()
+    if "token=" in token:   # 03-11-2026: si se pegó la dirección completa, se usa solo lo que va después de «token=»
+        token = token.split("token=", 1)[1]
+    token = re.split(r"[&\s/]", token)[0]
     if not token:
         estado["aire_waqi"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "api.waqi.info",
                                "error": "sin secreto WAQI_TOKEN (clave gratuita de aqicn.org)"}
@@ -1510,12 +1513,29 @@ def aire_waqi(estado, token=None):
         estado.get(f"aire_waqi_{slug}", {}).pop("url", None)   # la dirección lleva la clave: no se guarda
         x = waqi_ciudad(j, slug, la, lo)
         (out.append(x) if x else malas.append(dict(AIRE_CIUDADES)[slug]))
+        if not x and f"aire_waqi_{slug}" in estado:   # 03-11-2026: por qué no sirvió (sin la clave), para revisarlo en estado.json
+            estado[f"aire_waqi_{slug}"]["motivo"] = waqi_motivo(j, la, lo)
     estado["aire_waqi"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": "api.waqi.info",
                            "n": len(out), "error": ("sin estación cercana o sin dato: " + ", ".join(malas)) if malas else ""}
     if not out:
         return None
     return {"fecha": ahora().date().isoformat(), "fuente": "SINCA (Ministerio del Medio Ambiente) vía Índice Mundial de Calidad del Aire (aqicn.org)",
             "ciudades": out}
+
+
+def waqi_motivo(j, la, lo):
+    """Explicación corta de por qué una respuesta de aqicn.org no se usó (la clave nunca aparece)."""
+    if not isinstance(j, dict):
+        return "sin respuesta"
+    if j.get("status") != "ok":
+        return ocultar(f"estado {j.get('status')}: {str(j.get('data') or j.get('message') or '')[:80]}")
+    d = j.get("data") if isinstance(j.get("data"), dict) else {}
+    geo = (d.get("city") or {}).get("geo")
+    try:
+        km = round(_km(la, lo, float(geo[0]), float(geo[1])))
+    except (TypeError, ValueError, IndexError):
+        km = None
+    return f"aqi={d.get('aqi')!r} · estación «{(d.get('city') or {}).get('name')}» a {km} km · medición {(d.get('time') or {}).get('s')}"
 
 
 def waqi_ciudad(j, slug, la, lo):

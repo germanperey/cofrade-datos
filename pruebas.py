@@ -519,6 +519,12 @@ def aire_medido_de_las_9_ciudades_con_waqi():
         a = B.aire_waqi(e)
         assert len(vistos) == 9 and [c["nombre"] for c in a["ciudades"]] == ["Antofagasta"] and "SINCA" in a["fuente"]
         assert "clave-waqi" not in json.dumps(e) and "Arica" in e["aire_waqi"]["error"]
+        assert "aqi='-'" in e["aire_waqi_arica"]["motivo"], e["aire_waqi_arica"]
+        vistos.clear()   # pegada con la dirección completa: se usa solo la clave
+        os.environ["WAQI_TOKEN"] = "https://api.waqi.info/feed/here/?token=clave-waqi"
+        B.aire_waqi({})
+        assert all(u.endswith("?token=clave-waqi") for u in vistos), vistos[0]
+        assert B.waqi_motivo({"status": "error", "data": "Invalid key"}, 0, 0) == "estado error: Invalid key"
     finally:
         B.pedir = viejos
         os.environ.clear()
