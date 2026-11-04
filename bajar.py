@@ -1106,6 +1106,9 @@ def _adb_hora(t):
     return (m.group(1), m.group(2)) if m else ("", "")
 
 
+ADB_LUGAR = {"MHC": "Mocopulli (Dalcahue, Chiloé)"}   # 03-11-2026 (Germán): AeroDataBox la rotula «Makmakhon-Kemp»
+
+
 def _adb_tramos(x, sentido):
     """→ (aquí, allá): el movimiento en el aeropuerto consultado (su hora) y el del otro extremo (su aeropuerto).
     Sin tramo (withLeg=false) AeroDataBox entrega «movement»: el aeropuerto del otro extremo con la hora de aquí.
@@ -1131,7 +1134,7 @@ def adb_filas(j, sentido):
         if not (num and fe and hp):
             continue
         out.append({"vuelo": num, "aerolinea": str((x.get("airline") or {}).get("name") or ""),
-                    "iata": str(ap.get("iata") or "")[:3], "lugar": str(ap.get("municipalityName") or ap.get("name") or ""),
+                    "iata": str(ap.get("iata") or "")[:3], "lugar": ADB_LUGAR.get(str(ap.get("iata") or "")[:3], str(ap.get("municipalityName") or ap.get("name") or "")),
                     "fecha": fe, "hora_programada": hp, "hora_estimada": he if he != hp else "", "estado": str(x.get("status") or "")})
     return out
 
@@ -1375,6 +1378,46 @@ TASAS_BUSCAR = {
     "tpm": re.compile(r"pol[ií]tica monetaria|\bTPM\b", re.I),
 }
 TASAS_DIAG = re.compile(r"vivienda|hipotec|consumo|pol[ií]tica monetaria|\bTPM\b|BCU|BTU|tasa", re.I)
+
+
+TASAS_SERIES = {   # elegidas del catálogo oficial el 03-11-2026 (datos/tasas-bcch-catalogo.json)
+    "hipotecaria": ("F022.VIV.TIP.MA03.UF.Z.M", "Tasa de interés promedio créditos de vivienda, más de 3 años (UF)"),
+    "consumo": ("F022.CON.TIP.Z.NO.Z.M", "Tasa de interés promedio créditos de consumo, total (en pesos)"),
+}
+EEE_TPM = {0: "F089.TPM.TAS.11.M", 5: "F089.TPM.TAS.26.M", 11: "F089.TPM.TAS.14.M", 23: "F089.TPM.TAS.15.M"}   # Encuesta de Expectativas
+
+
+def _mas_meses(ym, n):
+    y, m = int(ym[:4]), int(ym[5:7]) + n
+    y, m = y + (m - 1) // 12, (m - 1) % 12 + 1
+    return f"{y:04d}-{m:02d}"
+
+
+def tasas_bcch(estado, hoy):
+    """Promedios MENSUALES oficiales (hipotecaria UF y consumo, últimos 24 meses) y la TPM esperada de la Encuesta de Expectativas
+    Económicas (en el mes y a 5, 11 y 23 meses), con la cuenta gratuita del Banco Central. → dict o None."""
+    auth = _bcch_auth()
+    if not auth:
+        return None
+    desde = f"{hoy.year - 2}-01-01"
+    out = {"fecha": hoy.isoformat(), "fuente": "Banco Central de Chile (Base de Datos Estadísticos)", "series": {}}
+    for k, (sid, nombre) in TASAS_SERIES.items():
+        url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={sid}&firstdate={desde}&lastdate={hoy.isoformat()}"
+        obs = cierres_bcch(pedir(url, estado, f"tasas_{k}", espera=(0, 30), limite=60), hoy + dt.timedelta(days=1))
+        if obs:
+            out["series"][k] = {"id": sid, "nombre": nombre, "datos": [[f[:7], round(v, 2)] for f, v in obs]}
+    eee = {}
+    for h, sid in EEE_TPM.items():
+        url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={sid}&firstdate={hoy.year - 1}-01-01&lastdate={hoy.isoformat()}"
+        obs = cierres_bcch(pedir(url, estado, f"tasas_eee_{h}", espera=(0, 30), limite=60), hoy + dt.timedelta(days=1))
+        if obs:
+            eee[h] = obs[-1]
+    if eee:
+        mes = max(f for f, _ in eee.values())[:7]
+        out["tpm_esperada"] = {"encuesta": mes, "trayectoria": [[_mas_meses(mes, h), round(v, 2)] for h, (f, v) in sorted(eee.items()) if f[:7] == mes],
+                               "fuente": "Encuesta de Expectativas Económicas (Banco Central de Chile)",
+                               "url": "https://www.bcentral.cl/web/banco-central/areas/encuestas-economicas/encuesta-expectativas-economicas"}
+    return out if (out["series"] or eee) else None
 
 
 def tasas_catalogo(estado):
@@ -1777,10 +1820,12 @@ def main(argv=None):
     if mer and isinstance(estado.get("mercados"), dict):
         estado["mercados"].update(ok=True, n=len(mer), error="")
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
-    try:   # 03-11-2026: catálogo de tasas mensuales (para elegir las series oficiales de la hipotecaria, consumo, BCU-10 y TPM)
-        cat = tasas_catalogo(estado)
-        if cat:
-            escribir(os.path.join(a.salida, "tasas-bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": cat[:1500]})
+    try:   # 03-11-2026: tasas mensuales oficiales + TPM esperada (Encuesta de Expectativas); el catálogo, solo los lunes (diagnóstico)
+        escribir(os.path.join(a.salida, "tasas-bcch.json"), tasas_bcch(estado, hoy))
+        if hoy.weekday() == 0:
+            cat = tasas_catalogo(estado)
+            if cat:
+                escribir(os.path.join(a.salida, "tasas-bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": cat[:1500]})
     except Exception as ex:   # noqa: BLE001
         estado["bcch_catalogo_mensual"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central",
                                            "error": f"{type(ex).__name__}: {str(ex)[:120]}"}

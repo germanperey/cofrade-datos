@@ -488,6 +488,39 @@ def bing_noticias_y_redes_oficiales():
 
 
 @prueba
+def tasas_mensuales_oficiales_y_tpm_esperada():
+    """03-11-2026 (Germán: «Créditos hipotecarios: septiembre 2026 · ¿noviembre?»): la hipotecaria y el consumo son promedios
+    MENSUALES del Banco Central; se leen solos cada día con la cuenta gratuita, junto con la TPM esperada de la Encuesta de Expectativas."""
+    hoy = dt.date(2026, 11, 3)
+
+    def serie(*pares):
+        return {"Series": {"Obs": [{"indexDateString": f, "value": v, "statusCode": "OK"} for f, v in pares]}}
+    resp = {"F022.VIV.TIP.MA03.UF.Z.M": serie(("01-08-2026", "4.04"), ("01-09-2026", "4.07")),
+            "F022.CON.TIP.Z.NO.Z.M": serie(("01-09-2026", "25.86")),
+            "F089.TPM.TAS.11.M": serie(("01-10-2026", "4.5")), "F089.TPM.TAS.26.M": serie(("01-10-2026", "4.25")),
+            "F089.TPM.TAS.14.M": serie(("01-10-2026", "4")), "F089.TPM.TAS.15.M": serie(("01-09-2026", "4"))}
+    viejos, env = B.pedir, dict(os.environ)
+
+    def pedir(url, estado, clave, **k):
+        estado[clave] = {"ok": True, "url": B.ocultar(url)}
+        return next((v for sid, v in resp.items() if sid in url), None)
+    B.pedir = pedir
+    try:
+        os.environ.pop("BCCH_TOKEN", None); os.environ.pop("BCCH_USER", None); os.environ.pop("BCCH_PASS", None)
+        assert B.tasas_bcch({}, hoy) is None   # sin cuenta del Banco Central: nada
+        os.environ["BCCH_TOKEN"] = "clave-bcch"
+        e = {}
+        t = B.tasas_bcch(e, hoy)
+        assert t["series"]["hipotecaria"]["datos"] == [["2026-08", 4.04], ["2026-09", 4.07]] and t["series"]["consumo"]["datos"][-1] == ["2026-09", 25.86]
+        assert t["tpm_esperada"]["encuesta"] == "2026-10" and t["tpm_esperada"]["trayectoria"] == [["2026-10", 4.5], ["2027-03", 4.25], ["2027-09", 4.0]]
+        assert "clave-bcch" not in json.dumps(e)   # la encuesta a 23 meses era de septiembre: no se mezcla con la de octubre
+    finally:
+        B.pedir = viejos
+        os.environ.clear()
+        os.environ.update(env)
+
+
+@prueba
 def aire_medido_de_las_9_ciudades_con_waqi():
     """03-11-2026 (Germán marcó «Aire: sin medición publicada» en Arica, Antofagasta y La Serena): estaciones del SINCA vía aqicn.org
     con la clave gratuita (WAQI_TOKEN). Sin clave no se pide nada; estación a más de 25 km o medición vieja: no se usa; la clave nunca queda escrita."""
