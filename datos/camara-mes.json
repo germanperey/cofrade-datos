@@ -2,6 +2,102 @@
  "mes": "2026-11",
  "camara_mes": [
   {
+   "id": "90815",
+   "fecha": "2026-11-03T13:06",
+   "descripcion": "Boletín N° 16335-14",
+   "tipo": "Proyecto de Ley",
+   "resultado": "Aprobado",
+   "si": 77,
+   "no": 51,
+   "abst": 14,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90815"
+  },
+  {
+   "id": "90813",
+   "fecha": "2026-11-03T13:05",
+   "descripcion": "Proyecto de Resolución N° 89",
+   "tipo": "Proyecto de Resolución",
+   "resultado": "Aprobado",
+   "si": 78,
+   "no": 46,
+   "abst": 9,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90813"
+  },
+  {
+   "id": "90812",
+   "fecha": "2026-11-03T13:03",
+   "descripcion": "Proyecto de Resolución N° 88",
+   "tipo": "Proyecto de Resolución",
+   "resultado": "Aprobado",
+   "si": 75,
+   "no": 21,
+   "abst": 29,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90812"
+  },
+  {
+   "id": "90811",
+   "fecha": "2026-11-03T13:01",
+   "descripcion": "Proyecto de Resolución N° 87",
+   "tipo": "Proyecto de Resolución",
+   "resultado": "Rechazado",
+   "si": 55,
+   "no": 52,
+   "abst": 24,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90811"
+  },
+  {
+   "id": "90810",
+   "fecha": "2026-11-03T13:00",
+   "descripcion": "Proyecto de Resolución N° 86",
+   "tipo": "Proyecto de Resolución",
+   "resultado": "Aprobado",
+   "si": 132,
+   "no": 1,
+   "abst": 1,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90810"
+  },
+  {
+   "id": "90809",
+   "fecha": "2026-11-03T12:59",
+   "descripcion": "Proyecto de Resolución N° 85",
+   "tipo": "Proyecto de Resolución",
+   "resultado": "Aprobado",
+   "si": 100,
+   "no": 1,
+   "abst": 28,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90809"
+  },
+  {
+   "id": "90808",
+   "fecha": "2026-11-03T12:58",
+   "descripcion": "Proyecto de Resolución N° 84",
+   "tipo": "Proyecto de Resolución",
+   "resultado": "Aprobado",
+   "si": 126,
+   "no": 4,
+   "abst": 0,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90808"
+  },
+  {
+   "id": "90807",
+   "fecha": "2026-11-03T10:04",
+   "descripcion": "5-Cambio de Trámite",
+   "tipo": "Otros",
+   "resultado": "Rechazado",
+   "si": 34,
+   "no": 44,
+   "abst": 0,
+   "quorum": "Quórum Simple",
+   "url": "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90807"
+  },
+  {
    "id": "90795",
    "fecha": "2026-11-02T19:16",
    "descripcion": "Boletín N° 18525-06",
@@ -51,8 +147,8 @@
   }
  ],
  "control": {
-  "total_mes": 4,
+  "total_mes": 12,
   "fuente": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXAnno?prmAnno=2026",
-  "ultima_oficial": "2026-11-02"
+  "ultima_oficial": "2026-11-03"
  }
 }
