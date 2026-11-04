@@ -1365,6 +1365,31 @@ def bcch_series(estado):
     return mapa
 
 
+# ---------- tasas mensuales del Banco Central (03-11-2026; Germán: «Créditos hipotecarios: septiembre 2026 · ¿noviembre?») ----------
+# La hipotecaria, el consumo, el BCU-10 y la TPM son promedios MENSUALES que el Banco Central publica ~6 semanas después. Con la
+# cuenta gratuita (BCCH_TOKEN) se leen solas cada día: el mes nuevo aparece el mismo día que se publica, sin depender de la tarea.
+TASAS_BUSCAR = {
+    "hipotecaria": re.compile(r"vivienda.*(UF|reajustable)|(UF|reajustable).*vivienda|hipotecari", re.I),
+    "consumo": re.compile(r"consumo", re.I),
+    "bcu10": re.compile(r"(BCU|BTU).{0,40}10|10.{0,10}a[nñ]os.*(UF|BCU|BTU)", re.I),
+    "tpm": re.compile(r"pol[ií]tica monetaria|\bTPM\b", re.I),
+}
+TASAS_DIAG = re.compile(r"vivienda|hipotec|consumo|pol[ií]tica monetaria|\bTPM\b|BCU|BTU|tasa", re.I)
+
+
+def tasas_catalogo(estado):
+    """Catálogo MENSUAL del Banco Central → las series candidatas de cada tasa (diagnóstico en datos/tasas-bcch-catalogo.json)."""
+    auth = _bcch_auth()
+    if not auth:
+        return []
+    url = f"{BCCH_URL}?{auth}&function=SearchSeries&frequency=MONTHLY"
+    if not robots_permite(url, estado):
+        return []
+    infos = (pedir(url, estado, "bcch_catalogo_mensual", espera=(0, 30), limite=90) or {}).get("SeriesInfos") or []
+    return [{"id": x.get("seriesId"), "titulo": x.get("spanishTitle"), "ultima": x.get("lastObservation")}
+            for x in infos if isinstance(x, dict) and TASAS_DIAG.search(f"{x.get('spanishTitle')}")]
+
+
 def cierres_mindicador(j, hoy):
     out = []
     for o in (j or {}).get("serie") or []:
@@ -1752,6 +1777,13 @@ def main(argv=None):
     if mer and isinstance(estado.get("mercados"), dict):
         estado["mercados"].update(ok=True, n=len(mer), error="")
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
+    try:   # 03-11-2026: catálogo de tasas mensuales (para elegir las series oficiales de la hipotecaria, consumo, BCU-10 y TPM)
+        cat = tasas_catalogo(estado)
+        if cat:
+            escribir(os.path.join(a.salida, "tasas-bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": cat[:1500]})
+    except Exception as ex:   # noqa: BLE001
+        estado["bcch_catalogo_mensual"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central",
+                                           "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     escribir(os.path.join(a.salida, "bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": _BCCH["catalogo"]} if _BCCH.get("catalogo") else None)
     escribir(os.path.join(a.salida, "robots.json"), {"fecha": hoy.isoformat(), "sitios": ROBOTS_VISTOS} if ROBOTS_VISTOS else None)
     for nombre, fn in (("sismos.csv", lambda: sismos(estado)), ("aire.json", lambda: aire_waqi(estado) or aire(estado)), ("f1.json", lambda: f1(estado, hoy))):
