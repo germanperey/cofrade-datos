@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-05T06:12:00-03:00",
+ "generado": "2026-11-05T06:31:53-03:00",
  "secciones": {
   "economia/chile": {
    "consultadas": [
@@ -206,6 +206,13 @@
      "fecha": "2026-11-04 22:45",
      "url": "http://www.df.cl/mercados/bolsa-monedas/triunfo-democrata-en-eeuu-sacude-los-mercados-petroleo-se-hunde-wall",
      "resumen": "La derrota de Trump desplomó cerca de 9% el precio del crudo, ante las expectativas de una menor escalada de la guerra con Irán."
+    },
+    {
+     "fuente": "PortalFruticola.com",
+     "titulo": "Riego, la brecha entre Chile y Perú",
+     "fecha": "2026-11-04 22:00",
+     "url": "https://www.portalfruticola.com/noticias/2026/11/05/riego-chile-peru/",
+     "resumen": "Juan Manuel Mira, Presidente de Chilealimentos analiza el crecimiento de la industria agroexportadora de Perú y lo que debe hacer Chile al respecto para no perder competitividad."
     },
     {
      "fuente": "Cooperativa (RSS)",
@@ -759,13 +766,6 @@
      "fecha": "2026-11-04 15:59",
      "url": "http://www.df.cl/regiones/o-higgins/empresas/evacuacion-en-planta-malloa-de-garces-fruit-por-filtracion-de-amoniaco",
      "resumen": "Un incidente durante un procedimiento de purga en el sector de packing de Garcés Fruit movilizó a equipos especializados de Bomberos, aunque la rápida contención evitó personas lesionadas y permitió reanudar las faenas productivas."
-    },
-    {
-     "fuente": "Infobae · Economía (RSS)",
-     "titulo": "Busca un empleo en blanco, pero el precio del transporte limita hasta dónde puede llegar para conseguirlo",
-     "fecha": "2026-11-04 15:53",
-     "url": "https://www.infobae.com/economia/2026/11/04/busca-un-empleo-en-blanco-pero-el-precio-del-transporte-limita-hasta-donde-puede-llegar-para-conseguirlo/",
-     "resumen": "El aumento del boleto condiciona la búsqueda laboral de jóvenes del conurbano: algunos no pueden afrontar los viajes a las entrevistas y otros destinan hasta el 45% de sus ingresos a trasladarse al trabajo"
     }
    ]
   },
@@ -1523,7 +1523,7 @@
      "fuente": "La Tercera · Nacional (RSS)",
      "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/nacional/?outputType=xml",
      "ok": true,
-     "n": 65
+     "n": 64
     },
     {
      "fuente": "El Desconcierto (RSS)",
@@ -1601,7 +1601,7 @@
      "fuente": "Bing Noticias · Política Chile",
      "url": "https://www.bing.com/news/search?q=pol%C3%ADtica%20Chile%20Gobierno%20Congreso&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 9
     },
     {
      "fuente": "El Líbero (RSS)",
@@ -2316,8 +2316,9 @@
     {
      "fuente": "France 24 en español (RSS)",
      "url": "https://www.france24.com/es/rss",
-     "ok": true,
-     "n": 24
+     "ok": false,
+     "n": 0,
+     "error": "HTTP 403"
     },
     {
      "fuente": "El País · Internacional (RSS)",
@@ -2393,9 +2394,177 @@
     {
      "fuente": "Infobae (RSS)",
      "titulo": "Última hora de la XXX Cumbre Iberoamericana en Madrid, en directo: Pedro Sánchez recibe a Javier Milei y se saludan con un frío y rápido apretón de manos",
-     "fecha": "2026-11-05 06:06",
+     "fecha": "2026-11-05 06:25",
      "url": "https://www.infobae.com/espana/2026/11/05/ultima-hora-de-la-xxx-cumbre-iberoamericana-en-madrid-pedro-sanchez-recibe-a-javier-milei-con-un-frio-y-rapido-saludo/",
      "resumen": "El acto se celebra en la Galería de las Colecciones Reales. El rey Felipe VI se encarga de presidir el plenario, junto a Sánchez y Andrés Allamand, secretario general de la Comunidad"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Nacen en Cataluña cinco cachorros de lobo: la especie se extinguió en la comunidad autónoma hace un siglo y está comenzando a recuperarse",
+     "fecha": "2026-11-05 06:24",
+     "url": "https://www.infobae.com/espana/2026/11/05/nacen-en-cataluna-cinco-cachorros-de-lobo-la-especie-se-extinguio-en-la-comunidad-autonoma-hace-un-siglo-y-esta-comenzando-a-recuperarse/",
+     "resumen": "En el año 2000, el mamífero regresó a la región de forma natural y hubo que esperar 25 años para la llegada de las primeras crías"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Accidente de Urda y elecciones generales 29-N, en directo: última hora de la actualidad en España tras la dimisión de Óscar Puente",
+     "fecha": "2026-11-05 06:23",
+     "url": "https://www.infobae.com/espana/2026/11/05/accidente-de-urda-y-elecciones-generales-29-n-en-directo-ultima-hora-de-la-actualidad-en-espana-tras-la-dimision-de-oscar-puente/",
+     "resumen": "Con el exministro ya dimitido y Carlos Cuerpo como nuevo titular de Transportes, Podemos y Frente Amplio reclaman la renacionalización del sistema ferroviario, mientras PP y Vox señalan a Pedro Sánchez como responsable último de la tragedia de Urda. Todas las encuestas, anteriores al accidente de Urda, ya apuntaban a…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La alta velocidad Madrid-Barcelona registra retrasos de 20 minutos por un bache en la vía",
+     "fecha": "2026-11-05 06:18",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/05/la-alta-velocidad-madrid-barcelona-registra-retrasos-de-20-minutos-por-un-bache-en-la-via/",
+     "resumen": "Madrid, 5 nov (EFE).- La línea de alta velocidad Madrid-Barcelona registra este jueves retrasos de unos 20 minutos de media tras detectarse un \"pequeño\" bache en la infraestructura ferroviaria entre Medinaceli (Soria) y Ariza (Zaragoza), que ha obligado a reducir la velocidad en los trenes. Adif fue alertada de esta…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cuéllar (Segovia) amanece a 8,6º bajo cero este jueves, la mínima nacional",
+     "fecha": "2026-11-05 06:18",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/05/cuellar-segovia-amanece-a-86-bajo-cero-este-jueves-la-minima-nacional/",
+     "resumen": "Valladolid, 5 nov (EFE).- La localidad segoviana de Cuéllar ha registrado 8,6 grados bajo cero a las 7.40 horas de este jueves, la mínima nacional, seguida de los -7,6 de la pequeña localidad de Robleda-Cervantes, en la comarca zamorana de Sanabria, según los datos de la web de la Agencia Estatal de Meteorología…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "MIRA Festival celebra sus 15 años con un cartel que huye del nicho generacional",
+     "fecha": "2026-11-05 06:18",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/05/mira-festival-celebra-sus-15-anos-con-un-cartel-que-huye-del-nicho-generacional/",
+     "resumen": "Sergio Andreu Barcelona, 5 nov (EFE).- El festival de música contemporánea y arte digital MIRA celebra los días 6 y 7 de noviembre su 15ª edición consolidado en el competido calendario barcelonés como una cita que huye del \"nicho generacional\", con propuestas tan anticonvencionales como las de la experimental…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "CCOO denuncia las \"precarias\" condiciones del juzgado que lleva la investigación de Urda",
+     "fecha": "2026-11-05 06:17",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/05/ccoo-denuncia-las-precarias-condiciones-del-juzgado-que-lleva-la-investigacion-de-urda/",
+     "resumen": "Toledo, 5 nov (EFE).- El sindicato CCOO ha denunciado que el Tribunal de Instancia de Orgaz (Toledo), que ha asumido la investigación del accidente ferroviario de Urda, está en \"precarias\" condiciones y es el partido judicial del país con peor tasa de resolución de asuntos y con mayor tasa de pendencia, según la…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "'Sacamantecas', retrato cinematográfico del asesino que asustó a generaciones de niños",
+     "fecha": "2026-11-05 06:17",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/05/sacamantecas-retrato-cinematografico-del-asesino-que-asusto-a-generaciones-de-ninos/",
+     "resumen": "Madrid, 5 nov (EFE).- El sacamantecas es un personaje terrorífico que ha asustado a varias generaciones de niños en España, pero además fue el nombre de un asesino real cuya historia llega al cine este viernes en una película de suspense protagonizada por Antonio de la Torre y Patricia López Arnáiz y dirigida por…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Xian Faro, delegado joven en la COP: \"La juventud sigue relegada a un segundo plano\"",
+     "fecha": "2026-11-05 06:17",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/xian-faro-delegado-joven-en-la-cop-la-juventud-sigue-relegada-a-un-segundo-plano/",
+     "resumen": "Paula Fernández Santiago de Compostela (España), 5 nov (EFE).- Pese a ser quien va a sufrir más las consecuencias climáticas, la juventud sigue relegada a un segundo plano en las negociaciones, denuncia en una entrevista con EFE Xian Faro, uno de los cuatro delegados jóvenes de España en la COP31, que insta a dar voz…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Ofensiva legal en Europa contra la cárnica JBS por la deforestación de la Amazonía",
+     "fecha": "2026-11-05 06:17",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/ofensiva-legal-en-europa-contra-la-carnica-jbs-por-la-deforestacion-de-la-amazonia/",
+     "resumen": "Redacción Medioambiente, 5 nov (EFE).- La red de abogados, investigadores y activistas ambientales Coalición Jurídica Transnacional (TLC, por sus siglas en inglés) ha iniciado una batalla legal en cuatro jurisdicciones europeas contra la mayor cárnica del mundo, la empresa de origen brasileño JBS, y doce de sus…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Accidente de Learjet 60 en Palm Beach: hallan una pieza clave a kilómetros del impacto que puede cambiar el rumbo de la investigación",
+     "fecha": "2026-11-05 06:16",
+     "url": "https://www.infobae.com/estados-unidos/2026/11/04/accidente-de-learjet-60-en-palm-beach-hallan-una-pieza-muy-importante-a-kilometros-del-impacto-que-puede-cambiar-el-rumbo-de-la-investigacion/",
+     "resumen": "La NTSB confirmó que fragmentos del elevador izquierdo del jet aparecieron a más de seis kilómetros del cráter en Greenacres. Los nueve ocupantes murieron y la causa del siniestro podría demorar más de un año en determinarse"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La taquillera Spider-Man y los videojuegos mejoran las previsiones de crecimiento de Sony",
+     "fecha": "2026-11-05 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/la-taquillera-spider-man-y-los-videojuegos-mejoran-las-previsiones-de-crecimiento-de-sony/",
+     "resumen": "Tokio, 5 nov (EFE).- La taquillera 'Spider-Man: Brand New day' ('Spider-Man: Un nuevo día') y una mayor rentabilidad en los videojuegos han mejorado las previsiones de crecimiento de Sony para el año fiscal en curso, afirmó este jueves la multinacional japonesa de tecnología y entretenimiento. Sony mejoró sus…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La UE podría ahorrar 250.000 millones en combustibles fósiles, según WWF",
+     "fecha": "2026-11-05 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/la-ue-podria-ahorrar-250000-millones-en-combustibles-fosiles-segun-wwf/",
+     "resumen": "Bruselas, 5 nov (EFE).- La Unión Europea podría ahorrar más de 250.000 millones de euros al año en importaciones de combustibles fósiles mediante el despliegue de energías renovables, la electrificación y la eficiencia energética, según un análisis difundido este jueves por la organización ecologista WWF. El estudio…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La UCO lanza una operación por una nueva pieza secreta del 'caso Koldo' en la Audiencia Nacional",
+     "fecha": "2026-11-05 06:16",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/05/la-uco-lanza-una-operacion-por-una-nueva-pieza-secreta-del-caso-koldo-en-la-audiencia-nacional/",
+     "resumen": "Agentes de la Unidad Central Operativa (UCO) de la Guardia Civil llevan a cabo una operación desde primera hora de la mañana de este jueves relacionada con la apertura de una pieza separada secreta del 'caso Koldo' en la Audiencia Nacional, según han confirmado a Europa Press fuentes del caso. Por el momento no ha…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El romance universitario de la exitosa saga francesa 'Campus Drivers' llega a la pantalla",
+     "fecha": "2026-11-05 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/el-romance-universitario-de-la-exitosa-saga-francesa-campus-drivers-llega-a-la-pantalla/",
+     "resumen": "París, 5 nov (EFE).- La exitosa saga literaria juvenil 'Campus Drivers', de la francesa C. S. Quill, llega a la pantalla este viernes de la mano de Prime Video, conservando la mezcla de romance y ambiente universitario de estilo estadounidense que llevó a vender más de un millón de copias de los libros en todo el…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "ArcelorMittal baja un 70,8% su beneficio a septiembre, hasta 800 millones de euros, por la guerra en Ucrania",
+     "fecha": "2026-11-05 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/arcelormittal-baja-un-708-su-beneficio-a-septiembre-hasta-800-millones-de-euros-por-la-guerra-en-ucrania/",
+     "resumen": "El grupo siderúrgico ArcelorMittal contabilizó un beneficio neto atribuido de 867 millones de dólares (alrededor de 800 millones de euros) durante los nueve primeros meses de 2026, lo que representa una caída del 70,8% respecto a las ganancias de 2.975 millones de dólares (unos 2.744 millones de euros) registradas en…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La OMS pide 31 millones de dólares urgentes para evitar el colapso hospitalario en Yemen",
+     "fecha": "2026-11-05 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/la-oms-pide-31-millones-de-dolares-urgentes-para-evitar-el-colapso-hospitalario-en-yemen/",
+     "resumen": "El Cairo, 5 nov (EFE).- La Organización Mundial de la Salud (OMS) solicitó de urgencia 31 millones de dólares para financiar un plan de respuesta de emergencia de hasta seis meses en el Yemen, donde el recrudecimiento de los combates ha dejado ya casi 1.700 muertos y amenaza con provocar el colapso absoluto de la red…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Commerzbank logra un beneficio récord de 2.669 millones hasta septiembre",
+     "fecha": "2026-11-05 06:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/commerzbank-logra-un-beneficio-record-de-2669-millones-hasta-septiembre/",
+     "resumen": "Commerzbank, el segundo mayor banco de Alemania, se anotó un beneficio neto atribuido récord de 2.669 millones de euros en los nueve primeros meses de 2026, un 41,4% más que un año antes, según ha informado la entidad, que ha expresado su convicción de crear valor junto con el italiano UniCredit. La cifra de negocio…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Karmele Marchante confirma su fichaje por ‘GH VIP 9′ y se convierte en la concursante más veterana de la historia del reality",
+     "fecha": "2026-11-05 06:15",
+     "url": "https://www.infobae.com/espana/2026/11/05/karmele-marchante-confirma-su-fichaje-por-gh-vip-9-y-se-convierte-en-la-concursante-mas-veterana-de-la-historia-del-reality/",
+     "resumen": "La periodista, de 80 años, ha adelantado el anuncio de Telecinco durante una conversación con El Sótano, donde también ha hablado de la posibilidad de coincidir con Belén Esteban"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Sánchez llama ante Milei al diálogo iberoamericano aunque existan pensamientos diferentes",
+     "fecha": "2026-11-05 06:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/sanchez-llama-ante-milei-al-dialogo-iberoamericano-aunque-existan-pensamientos-diferentes/",
+     "resumen": "Madrid, 5 nov (EFE).- El jefe del Gobierno español, Pedro Sánchez, llamó este jueves ante el presidente argentino, Javier Milei, y el resto de líderes presentes en la XXX Cumbre Iberoamericana, a que esta comunidad mantenga el diálogo y la cooperación porque su mayor riesgo ha dicho que no es pensar diferente \"sino…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "EEUU sanciona a dos personas y una entidad por supuesto apoyo a Irán para obtener sistemas de defensa portátiles",
+     "fecha": "2026-11-05 06:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/eeuu-sanciona-a-dos-personas-y-una-entidad-por-supuesto-apoyo-a-iran-para-obtener-sistemas-de-defensa-portatiles/",
+     "resumen": "El Gobierno de Estados Unidos ha impuesto sanciones contra dos personas y una entidad de Bielorrusia, Rusia y Nigeria por su supuesto papel en \"esfuerzos\" por parte de Irán para hacerse con sistemas de defensa antiaérea portátiles --conocidos como MANPADS en inglés-- que permiten lanzar misiles de corto alcance. El…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El Real Madrid firma su mejor inicio de Liga de Campeones con el nuevo formato",
+     "fecha": "2026-11-05 06:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/05/el-real-madrid-firma-su-mejor-inicio-de-liga-de-campeones-con-el-nuevo-formato/",
+     "resumen": "Madrid, 5 nov (EFE).- Desde que la Liga de Campeones dejara atrás su tradicional fase de grupos y la sustituyera por la fase liga, de todos contra todos, el Real Madrid no había conseguido ganar los primeros cuatro encuentros de la competición; hasta esta temporada, la 2026/2027, en la que los de Jose Mourinho se han…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La separación de José Eduardo Derbez y Paola Dalay suma nuevas sospechas: ¿su hermana descubrió una infidelidad?",
+     "fecha": "2026-11-05 06:11",
+     "url": "https://www.infobae.com/mexico/2026/11/05/la-separacion-de-jose-eduardo-derbez-y-paola-dalay-suma-nuevas-sospechas-su-hermana-descubrio-una-infidelidad/",
+     "resumen": "Una nueva teoría difundida en redes sociales señala que la hermana del actor habría descubierto un supuesto romance entre la influencer y el futbolista César Romo"
+    },
+    {
+     "fuente": "El País · Internacional (RSS)",
+     "titulo": "Francia afronta un jueves de protestas y manifestaciones masivas en todo el país",
+     "fecha": "2026-11-05 06:10",
+     "url": "https://elpais.com/internacional/2026-11-05/francia-afronta-un-jueves-de-protestas-y-manifestaciones-masivas-en-todo-el-pais.html",
+     "resumen": "El Ministerio del Interior espera casi un millón de personas en la calle y despliega 70.000 agentes para evitar nuevos disturbios en unas protestas lideradas ahora por los sindicatos"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cinco ejercicios clave para cuidar los tendones y prevenir la inflamación, según una experta",
+     "fecha": "2026-11-05 06:10",
+     "url": "https://www.infobae.com/espana/2026/11/05/cinco-ejercicios-clave-para-cuidar-los-tendones-y-prevenir-la-inflamacion-segun-una-experta/",
+     "resumen": "La tendinitis es una afección que se caracteriza por la irritación e inflamación de un tendón"
     },
     {
      "fuente": "Infobae (RSS)",
@@ -2525,31 +2694,10 @@
     },
     {
      "fuente": "Infobae (RSS)",
-     "titulo": "Cómo un clásico de Los Simpson de los 90 inspiró un reciente fenómeno del cine de terror",
-     "fecha": "2026-11-05 06:00",
-     "url": "https://www.infobae.com/entretenimiento/2026/11/05/como-un-clasico-de-los-simpson-de-los-90-inspiro-un-reciente-fenomeno-del-cine-de-terror/",
-     "resumen": "Curry Barker aprovechó la premisa sobrenatural vista durante un especial animado para estructurar Obsession, una producción independiente que recaudó cifras extraordinarias en salas internacionales"
-    },
-    {
-     "fuente": "Infobae (RSS)",
      "titulo": "6 estiramientos recomendados por expertos para evitar el dolor de espalda y piernas durante un viaje",
      "fecha": "2026-11-05 06:00",
      "url": "https://www.infobae.com/tendencias/2026/11/05/6-estiramientos-recomendados-por-expertos-para-evitar-el-dolor-de-espalda-y-piernas-durante-un-viaje/",
      "resumen": "Estas posturas permiten recuperar flexibilidad en flexores pélvicos y pantorrillas mientras se espera abordar o al realizar paradas intermedias sobre rutas vehiculares."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Tres adolescentes de la India crearon una heladera que funciona con sal y agua, y conserva vacunas hasta 12 horas",
-     "fecha": "2026-11-05 06:00",
-     "url": "https://www.infobae.com/salud/ciencia/2026/11/05/tres-adolescentes-de-la-india-crearon-una-heladera-que-funciona-con-sal-y-agua-y-conserva-vacunas-hasta-12-horas/",
-     "resumen": "El dispositivo, desarrollado en Indore, logra mantener insumos médicos sensibles entre 2 y 6 °C mediante una reacción química sin fuentes externas de energía en hospitales locales"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Sin fibra suficiente, el intestino lo resiente: estreñimiento, más hambre y microbioma debilitado",
-     "fecha": "2026-11-05 06:00",
-     "url": "https://www.infobae.com/salud/2026/11/05/sin-fibra-suficiente-el-intestino-lo-resiente-estrenimiento-mas-hambre-y-microbioma-debilitado/",
-     "resumen": "La presencia de este componente en las comidas ayuda a retener agua en las heces y participa en las señales que indican plenitud"
     },
     {
      "fuente": "Infobae (RSS)",
@@ -2581,10 +2729,31 @@
     },
     {
      "fuente": "Infobae (RSS)",
+     "titulo": "Cómo un clásico de Los Simpson de los 90 inspiró un reciente fenómeno del cine de terror",
+     "fecha": "2026-11-05 06:00",
+     "url": "https://www.infobae.com/entretenimiento/2026/11/05/como-un-clasico-de-los-simpson-de-los-90-inspiro-un-reciente-fenomeno-del-cine-de-terror/",
+     "resumen": "Curry Barker aprovechó la premisa sobrenatural vista durante un especial animado para estructurar Obsession, una producción independiente que recaudó cifras extraordinarias en salas internacionales"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Tres adolescentes de la India crearon una heladera que funciona con sal y agua, y conserva vacunas hasta 12 horas",
+     "fecha": "2026-11-05 06:00",
+     "url": "https://www.infobae.com/salud/ciencia/2026/11/05/tres-adolescentes-de-la-india-crearon-una-heladera-que-funciona-con-sal-y-agua-y-conserva-vacunas-hasta-12-horas/",
+     "resumen": "El dispositivo, desarrollado en Indore, logra mantener insumos médicos sensibles entre 2 y 6 °C mediante una reacción química sin fuentes externas de energía en hospitales locales"
+    },
+    {
+     "fuente": "Infobae (RSS)",
      "titulo": "Qué diferencias descubrió la ciencia entre una risa espontánea y una voluntaria",
      "fecha": "2026-11-05 06:00",
      "url": "https://www.infobae.com/tendencias/2026/11/05/que-diferencias-descubrio-la-ciencia-entre-una-risa-espontanea-y-una-voluntaria/",
      "resumen": "Un estudio con resonancia magnética analizó la mecánica del tracto vocal y explicó por qué reír por compromiso social utiliza mecanismos distintos a la emoción genuina"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Sin fibra suficiente, el intestino lo resiente: estreñimiento, más hambre y microbioma debilitado",
+     "fecha": "2026-11-05 06:00",
+     "url": "https://www.infobae.com/salud/2026/11/05/sin-fibra-suficiente-el-intestino-lo-resiente-estrenimiento-mas-hambre-y-microbioma-debilitado/",
+     "resumen": "La presencia de este componente en las comidas ayuda a retener agua en las heces y participa en las señales que indican plenitud"
     },
     {
      "fuente": "Infobae (RSS)",
@@ -2644,6 +2813,13 @@
     },
     {
      "fuente": "Infobae (RSS)",
+     "titulo": "Diseñan un parche de monitoreo que reduce su adherencia para evitar molestias al retirarse de la piel",
+     "fecha": "2026-11-05 06:00",
+     "url": "https://www.infobae.com/tecno/2026/11/05/disenan-un-parche-de-monitoreo-que-reduce-su-adherencia-para-evitar-molestias-al-retirarse-de-la-piel/",
+     "resumen": "Científicos presentan una cinta sanitaria basada en microestructuras piramidales térmicas, cuya fuerza disminuye de forma radical. La innovación busca proteger la epidermis delicada en salas pediátricas y terapias intensivas"
+    },
+    {
+     "fuente": "Infobae (RSS)",
      "titulo": "Árboles frutales de interior: 9 opciones para cultivar en el hogar",
      "fecha": "2026-11-05 06:00",
      "url": "https://www.infobae.com/tendencias/2026/11/05/arboles-frutales-de-interior-9-opciones-para-cultivar-en-el-hogar/",
@@ -2655,13 +2831,6 @@
      "fecha": "2026-11-05 06:00",
      "url": "https://www.infobae.com/entretenimiento/2026/11/05/la-reinvencion-es-lo-mas-dificil-afirmo-chris-rock-al-presentar-su-nueva-pelicula-misty-green/",
      "resumen": "El comediante y director neoyorquino detalló cómo volcó vivencias propias en el relato dramático protagonizado por Rosalind Eleazar. La producción suma además a Anna Kendrick y Daniel Kaluuya en roles vinculados con memorias dolorosas"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Diseñan un parche de monitoreo que reduce su adherencia para evitar molestias al retirarse de la piel",
-     "fecha": "2026-11-05 06:00",
-     "url": "https://www.infobae.com/tecno/2026/11/05/disenan-un-parche-de-monitoreo-que-reduce-su-adherencia-para-evitar-molestias-al-retirarse-de-la-piel/",
-     "resumen": "Científicos presentan una cinta sanitaria basada en microestructuras piramidales térmicas, cuya fuerza disminuye de forma radical. La innovación busca proteger la epidermis delicada en salas pediátricas y terapias intensivas"
     },
     {
      "fuente": "Infobae (RSS)",
@@ -2739,13 +2908,6 @@
      "fecha": "2026-11-05 05:46",
      "url": "https://www.infobae.com/espana/2026/11/04/vivir-con-miedo-en-casa-la-violencia-intrafamiliar-contra-menores-aumenta-un-75-con-el-padre-como-agresor-en-casi-la-mitad-de-los-casos/",
      "resumen": "Según un estudio de la Fundación ANAR sobre casos atendidos entre 2020 y 2025, el 64% de los menores sufría violencia a diario"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Accidente de Urda y elecciones generales 29-N, en directo: última hora de la actualidad en España tras la dimisión de Óscar Puente",
-     "fecha": "2026-11-05 05:46",
-     "url": "https://www.infobae.com/espana/2026/11/05/accidente-de-urda-y-elecciones-generales-29-n-en-directo-ultima-hora-de-la-actualidad-en-espana-tras-la-dimision-de-oscar-puente/",
-     "resumen": "Con el exministro ya dimitido y Carlos Cuerpo como nuevo titular de Transportes, Podemos y Frente Amplio reclaman la renacionalización del sistema ferroviario, mientras PP y Vox señalan a Pedro Sánchez como responsable último de la tragedia de Urda. Todas las encuestas, anteriores al accidente de Urda, ya apuntaban a…"
     },
     {
      "fuente": "Infobae (RSS)",
@@ -2858,167 +3020,6 @@
      "fecha": "2026-11-05 05:32",
      "url": "https://www.infobae.com/espana/agencias/2026/11/05/frio-saludo-entre-sanchez-y-milei-en-su-primer-encuentro-cara-a-cara/",
      "resumen": "Madrid, 5 nov (EFE).- Pedro Sánchez y Javier Milei han protagonizado este jueves un frío saludo con motivo de la Cumbre Iberoamericana, en su primer cara a cara y tras la polémica por los insultos del presidente argentino al jefe del Gobierno español. Sánchez ha ido saludando junto al rey y al secretario general…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Las niponas Atarashii Gakko!, antes de su primera gira latinoamericana: \"Parece un sueño\"",
-     "fecha": "2026-11-05 05:32",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/las-niponas-atarashii-gakko-antes-de-su-primera-gira-latinoamericana-parece-un-sueno/",
-     "resumen": "Paula Gracia y Yoko Kaneko Tokio, 5 nov (EFE).- Después de vivir una \"energía desbordante\" en su anterior paso por México, la banda femenina japonesa Atarashii Gakko! se prepara para su primer tour por Latinoamérica en diciembre, en el que actuarán ante el público mexicano de nuevo y, por primera vez, en Chile y…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Se incrementa la tensión entre el Ministerio de Agricultura y Fedegán",
-     "fecha": "2026-11-05 05:32",
-     "url": "https://www.infobae.com/colombia/2026/11/05/se-incrementa-la-tension-entre-el-ministerio-de-agricultura-y-fedegan/",
-     "resumen": "El Ministerio de Agricultura anunció una auditoría integral, independiente y con enfoque forense al Fondo Nacional del Ganado"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Neerlandesa KLM anuncia una reestructuración que afectará unos 5.000 puestos de trabajo",
-     "fecha": "2026-11-05 05:31",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/neerlandesa-klm-anuncia-una-reestructuracion-que-afectara-unos-5000-puestos-de-trabajo/",
-     "resumen": "La Haya, 5 nov (EFE).- La aerolínea neerlandesa KLM anunció este jueves una reestructuración que afectará a unos 5.000 puestos de trabajo y reducirá su plantilla cerca de un 15%, como parte de un plan para recortar costes y mejorar su situación financiera, pese al aumento de sus beneficios en los últimos meses. “La…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Taiwán critica la \"persecución política\" en Hong Kong tras condena a activista Joshua Wong",
-     "fecha": "2026-11-05 05:31",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/taiwan-critica-la-persecucion-politica-en-hong-kong-tras-condena-a-activista-joshua-wong/",
-     "resumen": "Taipéi, 5 nov (EFE).- El Gobierno de Taiwán expresó este jueves su \"enérgica condena\" por la sentencia a diez años de prisión contra el activista hongkonés Joshua Wong, al tiempo que criticó la \"persecución política interminable\" a la que se ven sometidos los partidarios de la democracia en la excolonia británica. En…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La mayor teleoperadora de Japón sufre fallos en su servicio tras reportar una intrusión",
-     "fecha": "2026-11-05 05:31",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/la-mayor-teleoperadora-de-japon-sufre-fallos-en-su-servicio-tras-reportar-una-intrusion/",
-     "resumen": "Tokio, 5 nov (EFE).- La mayor teleoperadora de Japón, NTT Docomo, reportó este jueves caídas en su red de telefonía móvil, tras verse obligada a suspender su tienda en línea y su portal para clientes al reportar una intrusión ilegal en sus servidores, en medio de la preocupación del Gobierno por los numerosos…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Las acciones de Toyota se disparan casi un 17 % tras buenos resultados y previsiones",
-     "fecha": "2026-11-05 05:31",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/las-acciones-de-toyota-se-disparan-casi-un-17-tras-buenos-resultados-y-previsiones/",
-     "resumen": "Tokio, 5 nov (EFE).- Las acciones del fabricante japonés de vehículos Toyota se dispararon un 16,68 % este jueves en la Bolsa de Tokio, tras registrar unos sólidos resultados semestrales y elevar sus previsiones anuales de beneficios. Los títulos del mayor fabricante mundial de automóviles por volumen ganaron 505…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Sorteo 5 de la Triplex de la Once: los números que dieron fortuna a los nuevos ganadores",
-     "fecha": "2026-11-05 05:31",
-     "url": "https://www.infobae.com/espana/2026/11/05/sorteo-5-de-la-triplex-de-la-once-los-numeros-que-dieron-fortuna-a-los-nuevos-ganadores/",
-     "resumen": "Juegos Once informó la combinación ganadora del Sorteo 5 de las 21:15 horas. Tenemos los números ganadores aquí mismo"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Si estás buscando un cambio en tu jardín, las plantas grises son una gran opción recomendada por un paisajista",
-     "fecha": "2026-11-05 05:30",
-     "url": "https://www.infobae.com/espana/2026/11/05/si-estas-buscando-un-cambio-en-tu-jardin-las-plantas-grises-son-una-gran-opcion-recomendada-por-un-paisajista/",
-     "resumen": "Un experto en plantas del hogar recomienda las plantas grises para conseguir un jardín plateado"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Frío saludo entre Pedro Sánchez y Milei en su primer encuentro cara a cara",
-     "fecha": "2026-11-05 05:30",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/frio-saludo-entre-pedro-sanchez-y-milei-en-su-primer-encuentro-cara-a-cara/",
-     "resumen": "Madrid, 5 nov (EFE).- El español Pedro Sánchez y el argentino Javier Milei protagonizaron este jueves un frío saludo con motivo de la Cumbre Iberoamericana celebrada en Madrid, en su primer encuentro cara a cara y tras la polémica por los insultos del presidente de Argentina al jefe del Gobierno de España. Sánchez…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El ultraortodoxo UTJ suspende su respaldo a Netanyahu y declina recomendar candidato a primer ministro",
-     "fecha": "2026-11-05 05:30",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/el-ultraortodoxo-utj-suspende-su-respaldo-a-netanyahu-y-declina-recomendar-candidato-a-primer-ministro/",
-     "resumen": "El partido ultraortodoxo Judaísmo Unido de la Torá (UTJ, por sus siglas en inglés) ha declinado este jueves recomendar a candidato alguno al puesto de primer ministro, rompiendo filas con Benjamin Netanyahu tras el inicio de las consultas políticas con el presidente, Isaac Herzog, de cara a la entrega de mandato para…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Nuevos cortocircuitos en el Gobierno detrás del dictamen de discapacidad en la previa de la llegada del Papa",
-     "fecha": "2026-11-05 05:30",
-     "url": "https://www.infobae.com/politica/2026/11/05/nuevos-cortocircuitos-en-el-gobierno-detras-del-dictamen-de-discapacidad-en-la-previa-de-la-llegada-del-papa/",
-     "resumen": "Desde la Casa Rosada le pidieron a Patricia Bullrich cambios en el texto que ella consideró \"descabellados\". El episodio se suma a las diferencias con Luis Caputo y a las sospechas en Balcarce 50 sobre el rol de la jefa del bloque libertario"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Delhi vuelve a intentar lluvia artificial contra la contaminación tras fracasar en 2025",
-     "fecha": "2026-11-05 05:30",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/delhi-vuelve-a-intentar-lluvia-artificial-contra-la-contaminacion-tras-fracasar-en-2025/",
-     "resumen": "Nueva Delhi, 5 nov (EFE).- Las autoridades de Nueva Delhi realizaron dos nuevas pruebas para provocar lluvia artificial y combatir la contaminación atmosférica, pese a que los experimentos del año pasado no consiguieron precipitaciones en una de las capitales más contaminadas del mundo, informaron este jueves medios…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El Gobierno subirá el salario mínimo hasta los 1.286 euros mensuales en 2027, un 5,3% más",
-     "fecha": "2026-11-05 05:26",
-     "url": "https://www.infobae.com/espana/2026/11/05/el-gobierno-subira-el-salario-minimo-hasta-los-1286-euros-mensuales-en-2027-un-53-mas/",
-     "resumen": "La nueva cuantía supone 65 euros más al mes que los 1.221 euros vigentes, tras publicarse el borrador del real decreto en audiencia pública sin acuerdo con sindicatos ni patronal"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El último servicio de Óscar Puente a Sánchez no fue la dimisión, sino el momento: la bala de Carlos Cuerpo y la nueva estrategia de campaña",
-     "fecha": "2026-11-05 05:25",
-     "url": "https://www.infobae.com/espana/2026/11/05/el-ultimo-servicio-de-oscar-puente-a-pedro-sanchez-no-fue-la-dimision-sino-el-momento-la-bala-de-carlos-cuerpo-y-la-nueva-estrategia-de-campana/",
-     "resumen": "El ministro desobedeció al presidente, que le pidió que continuara. La gestión da el relevo a la proclama tras un suceso tan traumático como el de Urda"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Temas del día de EFE España del 5 de noviembre de 2026",
-     "fecha": "2026-11-05 05:17",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/05/temas-del-dia-de-efe-espana-del-5-de-noviembre-de-2026/",
-     "resumen": "ELECCIONES GENERALES Madrid - Acaba el plazo de presentación de recursos a la proclamación de candidaturas electorales mientras los partidos políticos ajustan sus campañas al contexto político, marcado todavía por la tragedia ferroviaria de Urda (Toledo) y la influencia de la dimisión de Óscar Puente como ministro de…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La Bolsa española abre con ganancias del 0,86 % y supera los 19.500 puntos",
-     "fecha": "2026-11-05 05:17",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/05/la-bolsa-espanola-abre-con-ganancias-del-086-y-supera-los-19500-puntos/",
-     "resumen": "Madrid, 5 nov (EFE).- La Bolsa española ha abierto este jueves con ganancias del 0,86 %, por encima de los 19.500 puntos, en sintonía con la tendencia de Wall Street en la víspera, cuando su principal indicador, el Dow Jones de Industriales, subió más del 3 %, tras la victoria de los demócratas en las elecciones de…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Los hospitalizados en Castilla-La Mancha por el accidente de Urda bajan a 20, con 4 en UCI",
-     "fecha": "2026-11-05 05:17",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/05/los-hospitalizados-en-castilla-la-mancha-por-el-accidente-de-urda-bajan-a-20-con-4-en-uci/",
-     "resumen": "Toledo, 5 nov (EFE).- El número de pacientes ingresados en hospitales del Servicio de Salud de Castilla-La Mancha (Sescam) este jueves ha descendido a veinte, ya que en las últimas 24 horas se han dado dos altas a pacientes que han sido trasladados a Madrid, y del total, cuatro personas están en la UCI estabilizados…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Jueves, 5 de noviembre de 2026 (08.00 GMT)",
-     "fecha": "2026-11-05 05:17",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/jueves-5-de-noviembre-de-2026-0800-gmt/",
-     "resumen": "Bangkok/Madrid,5 nov (EFE).- París.- Francia afronta este jueves una nueva jornada de huelgas y movilizaciones convocada por los principales sindicatos del país, a la que se suman colectivos de chalecos amarillos y organizaciones estudiantiles. (Vídeo)(Foto)(Audio) Jerusalén.- El presidente israelí, Isaac Herzog, se…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Llegan los líderes iberoamericanos a la Cumbre de Madrid para participar en el plenario",
-     "fecha": "2026-11-05 05:16",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/llegan-los-lideres-iberoamericanos-a-la-cumbre-de-madrid-para-participar-en-el-plenario/",
-     "resumen": "Madrid, 5 nov (EFE).- Los líderes de los veintidós países de la comunidad iberoamericana llegaron este jueves a la Galería de las Colecciones Reales de Madrid, donde se celebrará la sesión plenaria de la XXX Cumbre Iberoamericana de jefes de Estado y de Gobierno. El secretario general iberoamericano, Andrés Allamand…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Vuelve The Legend of Zelda: Ocarina of Time reinventa el ‘mejor juego de la historia’",
-     "fecha": "2026-11-05 05:16",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/vuelve-the-legend-of-zelda-ocarina-of-time-reinventa-el-mejor-juego-de-la-historia/",
-     "resumen": "Eugenio Ponz Pelufo Madrid, 5 nov (EFE).- Corría el año 1998 cuando Nintendo lanzó al mercado ‘Ocarina of Time’, la quinta entrega de su aclamada saga ‘The Legend of Zelda’. Con el tiempo, el título se coronó como el mejor valorado de la historia por crítica especializada y público. Ahora, la aventura regresa…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El 26 % de quinceañeros en la OCDE juega más de tres horas a videojuegos, en Chile el 36 %",
-     "fecha": "2026-11-05 05:16",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/el-26-de-quinceaneros-en-la-ocde-juega-mas-de-tres-horas-a-videojuegos-en-chile-el-36/",
-     "resumen": "Berlín, 5 nov (EFE).- El 26 % de los jóvenes de 15 años en los países miembros de la Organización para la Cooperación y el Desarrollo Económico (OCDE) jugaba más de tres horas a videojuegos en un día normal entre semana en 2025, siendo Chile el país con el porcentaje más alto con un 36 %, según un nuevo informe del…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Ucrania cifra en cerca de 1,6 millones las bajas sufridas por Rusia desde el inicio de la invasión en 2022",
-     "fecha": "2026-11-05 05:16",
-     "url": "https://www.infobae.com/america/agencias/2026/11/05/ucrania-cifra-en-cerca-de-16-millones-las-bajas-sufridas-por-rusia-desde-el-inicio-de-la-invasion-en-2022/",
-     "resumen": "Las Fuerzas Armadas de Ucrania han elevado este jueves a cerca de 1,6 millones las bajas sufridas en combate por el Ejército de Rusia, entre muertos y heridos, en el marco de la guerra desatada en febrero de 2022 por la orden de invasión firmada por el presidente ruso, Vladimir Putin. El Estado Mayor del Ejército…"
-    },
-    {
-     "fuente": "La Tercera · Mundo (RSS)",
-     "titulo": "Corea del Norte confirma lanzamiento de nuevo sistema de misiles de defensa aérea y un simulacro de ataque estratégico",
-     "fecha": "2026-11-05 05:15",
-     "url": "https://www.latercera.com/mundo/noticia/corea-del-norte-confirma-lanzamiento-de-nuevo-sistema-de-misiles-de-defensa-aerea-y-un-simulacro-de-ataque-estrategico/",
-     "resumen": "Las autoridades norcoreanas han enmarcado ambas actividades en los programas de modernización militar del país."
     }
    ]
   },
@@ -3034,9 +3035,8 @@
     {
      "fuente": "Ecosistema Startup (RSS)",
      "url": "https://ecosistemastartup.com/feed/",
-     "ok": false,
-     "n": 0,
-     "error": "HTTP 403"
+     "ok": true,
+     "n": 10
     },
     {
      "fuente": "Emprende Pyme (RSS)",
@@ -3169,7 +3169,7 @@
      "fuente": "Bing Noticias · Startups Chile",
      "url": "https://www.bing.com/news/search?q=startup%20Chile%20inversi%C3%B3n&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 10
     },
     {
      "fuente": "Bing Noticias · Pymes y Corfo",
@@ -3179,6 +3179,34 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "Ecosistema Startup (RSS)",
+     "titulo": "Fundalogy invierte 7,6M€ en 31 startups de impacto social",
+     "fecha": "2026-11-05 06:03",
+     "url": "https://ecosistemastartup.com/fundalogy-invierte-76me-en-31-startups-de-impacto-social/",
+     "resumen": "Fundalogy, la sociedad de inversión de Fundación Unicaja, ha respaldado ya 31 proyectos con 7,6 millones de euros invertidos desde su constitución el 14 de diciembre de 2018. Para un founder que levanta una ronda presemilla en Andalucía o Ciudad Real, esa cifra importa por una razón concreta: es capital que entra en…"
+    },
+    {
+     "fuente": "Ecosistema Startup (RSS)",
+     "titulo": "Factories of the Future Awards 2027: convocatoria abierta",
+     "fecha": "2026-11-05 04:33",
+     "url": "https://ecosistemastartup.com/factories-of-the-future-awards-2027-convocatoria-abierta/",
+     "resumen": "¿Qué son los Factories of the Future Awards 2027? Advanced Factories y AMT – Advanced Machine Tools ya tienen abierta la convocatoria de los Factories of the Future Awards 2027, los galardones con los que el sector industrial reconoce la innovación en automatización, robotización y sostenibilidad. Los premios se…"
+    },
+    {
+     "fuente": "Ecosistema Startup (RSS)",
+     "titulo": "Cat Wu ficha por OpenAI y Meta compra Conductor",
+     "fecha": "2026-11-05 03:33",
+     "url": "https://ecosistemastartup.com/cat-wu-ficha-por-openai-y-meta-compra-conductor/",
+     "resumen": "Una jornada de fichajes y adquisiciones en el corazón del código con IA El mismo día en que Meta cerraba la compra de Conductor, la startup que coordina equipos de agentes de código, Cat Wu, la responsable de producto de Claude Code, anunciaba que se va a OpenAI. En menos de 24 horas, el mercado... Leer más"
+    },
+    {
+     "fuente": "Ecosistema Startup (RSS)",
+     "titulo": "Norrsken/100 2026: 5 startups españolas en la lista",
+     "fecha": "2026-11-05 03:07",
+     "url": "https://ecosistemastartup.com/norrsken-100-2026-5-startups-espanolas-en-la-lista/",
+     "resumen": "Cinco startups españolas se han colado en la Norrsken/100 2026, la lista anual que la Fundación Norrsken elabora para identificar a las 100 compañías en fase inicial con más potencial para resolver grandes desafíos globales. La edición de este año batió su récord de participación: más de 1.400 candidaturas…"
+    },
     {
      "fuente": "TechCrunch · Startups (RSS)",
      "titulo": "Nothing CEO says company’s mysterious AI-first device is dropping next month",
@@ -3348,7 +3376,7 @@
      "fuente": "FayerWayer (RSS)",
      "url": "https://www.fayerwayer.com/arc/outboundfeeds/rss/?outputType=xml",
      "ok": true,
-     "n": 11
+     "n": 10
     },
     {
      "fuente": "Wired (RSS, inglés)",
@@ -4193,13 +4221,6 @@
      "resumen": "SII acelera ley de reconstrucción + El guiño de Ana Botín a Chile + Fuerte caída del dólar"
     },
     {
-     "fuente": "Portal Innova",
-     "titulo": "Mesa de Nudos Críticos de CChC Antofagasta reactiva agenda de trabajo con Minvu y Serviu para reducir el déficit habitacional en la región",
-     "fecha": "2026-11-04 08:30",
-     "url": "https://portalinnova.cl/mesa-de-nudos-criticos-de-cchc-antofagasta-reactiva-agenda-de-trabajo-con-minvu-y-serviu-para-reducir-el-deficit-habitacional-en-la-region-2/",
-     "resumen": "Fortalecimiento de la alianza público – privada y búsqueda de acuerdos concretos, surgen como medidas urgentes..."
-    },
-    {
      "fuente": "ecosistemastartup",
      "titulo": "Somos Inmobiliarios: la PropTech que conecta asesores con IA",
      "fecha": "2026-11-04 05:39",
@@ -4226,13 +4247,6 @@
      "fecha": "2026-11-03 11:50",
      "url": "https://www.latercera.com/pulso/noticia/cchc-espera-que-sector-se-recupere-durante-2027-pero-lamenta-aplazamiento-de-la-ordenanza-de-construccion/",
      "resumen": "Aunque el presidente del gremio, Raimundo Rencoret, valoró el efecto que medidas impulsadas por el Ejecutivo ya están teniendo sobre inversiones en el sector, pero aseguró que si la Oguc ya estuviera en funcionamiento \" habría muchos proyectos que hoy día estarían completándose\"."
-    },
-    {
-     "fuente": "HORA DE NOTICIAS",
-     "titulo": "Seremi de Vivienda, Serviu y CChC firman convenio para impulsar proyectos habitacionales en O'Higgins",
-     "fecha": "2026-11-03 05:36",
-     "url": "https://horadenoticias.cl/vivienda/seremi-de-vivienda-serviu-y-cchc-firman-convenio-para-impulsar-proyectos-habitacionales-en-ohiggins",
-     "resumen": "HORA DE NOTICIAS - La suscripción se realizó en el marco de una jornada enfocada en los desafíos de la planificación territorial."
     },
     {
      "fuente": "CNN Chile",
@@ -4262,26 +4276,30 @@
     {
      "fuente": "ESPN · Golf (RSS)",
      "url": "https://www.espn.com/espn/rss/golf/news",
-     "ok": true,
-     "n": 21
+     "ok": false,
+     "n": 0,
+     "error": "HTTP 202"
     },
     {
      "fuente": "ESPN · Tenis (RSS)",
      "url": "https://www.espn.com/espn/rss/tennis/news",
-     "ok": true,
-     "n": 24
+     "ok": false,
+     "n": 0,
+     "error": "HTTP 202"
     },
     {
      "fuente": "ESPN · Fórmula 1 (RSS)",
      "url": "https://www.espn.com/espn/rss/f1/news",
-     "ok": true,
-     "n": 37
+     "ok": false,
+     "n": 0,
+     "error": "HTTP 202"
     },
     {
      "fuente": "ESPN · NBA (RSS)",
      "url": "https://www.espn.com/espn/rss/nba/news",
-     "ok": true,
-     "n": 16
+     "ok": false,
+     "n": 0,
+     "error": "HTTP 202"
     },
     {
      "fuente": "La Tercera · El Deportivo (RSS)",
@@ -4458,7 +4476,7 @@
      "fuente": "Bing Noticias · Fútbol chileno",
      "url": "https://www.bing.com/news/search?q=f%C3%BAtbol%20chileno%20Liga%20de%20Primera&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 12
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · Tenis chileno",
@@ -4498,6 +4516,13 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "BBC Sport · Rugby (RSS, inglés)",
+     "titulo": "Wales opt for centre power pair against Japan",
+     "fecha": "2026-11-05 06:02",
+     "url": "https://www.bbc.co.uk/sport/rugby-union/articles/c9146d7g0reyo?at_medium=RSS&at_campaign=rss",
+     "resumen": "Wales head coach Steve Tandy has selected Max Llewellyn alongside Eddie James in midfield to face Japan in the Nations Championship on Saturday."
+    },
     {
      "fuente": "ESPN · NBA (noticias con fecha)",
      "titulo": "Luka Doncic again puts up 40 as torrid stretch continues in Lakers' win",
@@ -4618,76 +4643,6 @@
      "resumen": "The five individuals at the Premier League set to play a key role in the fate of Manchester City."
     },
     {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "Wemby delivers career performance with 52 points, 24 rebounds, 8 blocks",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50385705/wembanyama-52-points-24-rebounds-8-blocks-spurs-mavs",
-     "resumen": "Victor Wembanyama had career highs of 52 points and 24 rebounds along with eight blocks to power the Spurs past the Mavericks on Wednesday night."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "Finals bound? LeBron pumps brakes despite 76ers' blistering start",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50385564/lebron-says-too-early-talking-finals-8-1-start",
-     "resumen": "LeBron James is cautioning against any proclamations the 76ers are NBA Finals-bound despite a blistering 8-1 start."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "Warriors withholding payments to Porzingis on $20M salary, sources say",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50379460/warriors-not-making-payments-porzingis-sources-say",
-     "resumen": "The Golden State Warriors are not delivering semimonthly payments to veteran center Kristaps Porzingis on his $20 million salary, league sources told ESPN, ruling that the currently absent center is not rendering his services."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "Hornets' Knueppel exits 6 minutes into season debut with leg soreness",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50384048/hornets-knueppel-exits-season-debut-left-leg-injury",
-     "resumen": "Charlotte Hornets guard Kon Knueppel exited his season debut after appearing to aggravate the left hamstring injury that had sidelined him to start the year."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "Raptors' Leonard completes knee treatment, begins 'return to play process'",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50373620/kawhi-leonard-finishes-knee-treatment-begins-return-process",
-     "resumen": "Kawhi Leonard has completed a treatment to address left knee swelling and is beginning the \"return to play process\" in Toronto, the Raptors announced."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "Lacob lauds landing Landeborg: Warriors 'got this one right'",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50380187/joe-lacob-thinks-warriors-nailed-drafting-yaxel-lendeborg",
-     "resumen": "Warriors owner Joe Lacob is already convinced the team nailed its drafting of Yaxel Lendeborg, saying \"we got this one right.\""
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "Dumonts now controlling owners of Mavs with nearly 70% share",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50371176/dumonts-take-controlling-owners-mavericks",
-     "resumen": "Sivan and Patrick Dumont purchased Miriam Adelson's shares of the Mavericks last month, making the Dumont family the controlling owners of the franchise."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "NBA defends Rwanda partnership in letter to concerned senators",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50370258/nba-defends-rwanda-partnership-letter-concerned-senators",
-     "resumen": "NBA deputy commissioner Mark Tatum cited the removal of a military-backed team from the Basketball Africa League as evidence the NBA has adapted to changing U.S. policies toward the East African nation."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "🏀 Contract Year All-Stars: Grizzlies' Jerome and 11 others playing for a payday",
-     "fecha": "2026-11-05 03:03",
-     "url": "https://www.espn.com/nba/story/_/id/50359904/ty-jerome-vanvleet-mitchell-contract-predictions",
-     "resumen": "Bobby Marks selects a roster full of players with contract decisions that could shape the trade deadline and summer of 2027."
-    },
-    {
-     "fuente": "ESPN · Fórmula 1 (RSS)",
-     "titulo": "1980 F1 world champion Alan Jones dies aged 80",
-     "fecha": "2026-11-05 00:49",
-     "url": "https://www.espn.com/f1/story/_/id/50384560/1980-f1-world-champion-alan-jones-dies-aged-80",
-     "resumen": "Alan Jones, the 1980 Formula One world champion, has died, aged 80."
-    },
-    {
      "fuente": "La Tercera · El Deportivo (RSS)",
      "titulo": "Corte de Apelaciones anula juicio que absolvió a exentrenador de las “Marcianitas” por abuso sexual contra menor",
      "fecha": "2026-11-04 23:51",
@@ -4707,13 +4662,6 @@
      "fecha": "2026-11-04 21:30",
      "url": "https://www.latercera.com/el-deportivo/noticia/con-suplentes-coquimbo-unido-celebra-en-la-calera-y-pone-un-pie-en-semifinales-de-la-copa-chile/",
      "resumen": "En la cancha sintética del estadio Nicolás Chahuán, tanto cementeros como piratas alinearon oncenas alternativas en la ida de cuartos de final. El equipo de Hernán Caputto venció por 2-0."
-    },
-    {
-     "fuente": "ESPN · Golf (RSS)",
-     "titulo": "Sources: BC Partners pulls out of financing deal in major blow to LIV Golf 2.0",
-     "fecha": "2026-11-04 20:22",
-     "url": "https://www.espn.com/golf/story/_/id/50382095/bc-partners-pulls-liv-golf-financing-deal",
-     "resumen": "With not enough top golfers committed to return in 2027, BC Partners is pulling out of its deal to invest $300 million in LIV 2.0, sources told ESPN."
     },
     {
      "fuente": "La Tercera · El Deportivo (RSS)",
@@ -4749,13 +4697,6 @@
      "fecha": "2026-11-04 19:31",
      "url": "https://www.bbc.co.uk/sport/football/videos/c699zjkd7yrvo?at_medium=RSS&at_campaign=rss",
      "resumen": "Borussia Dortmund gain a home victory over Real Betis to end the Spanish side's winning run in the Champions League."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "Updated NBA Power Rankings: Summing up the starts for all 30 teams",
-     "fecha": "2026-11-04 19:20",
-     "url": "https://www.espn.com/nba/story/_/id/50371604/nba-power-rankings-30-teams-rank-week-two-describe-season",
-     "resumen": "Here's where every team ranks after two weeks of action, plus the four words used to describe how each team has started the season."
     },
     {
      "fuente": "BBC Sport · Fútbol (RSS, inglés)",
@@ -4828,13 +4769,6 @@
      "resumen": "England full-back Djed Spence staring as Inter Milan bounc back from their derby defeat with a comfortable Champions League victory over Feyenoord."
     },
     {
-     "fuente": "BBC Sport · Rugby (RSS, inglés)",
-     "titulo": "Nations Pod: Where are the home nations at?",
-     "fecha": "2026-11-04 18:42",
-     "url": "https://www.bbc.co.uk/sounds/play/p0plbzfn?at_medium=RSS&at_campaign=rss",
-     "resumen": "Chris, GRO and Tom bring you their guide to the Nations Championship this November."
-    },
-    {
      "fuente": "BBC Sport · Fútbol (RSS, inglés)",
      "titulo": "Emery in line for new Villa deal - Thursday's gossip",
      "fecha": "2026-11-04 18:41",
@@ -4842,8 +4776,8 @@
      "resumen": "Manager Unai Emery is in line for a new contract with Aston Villa, Trey Nyoni to stay with Liverpool and Leeds target Harvey Elliott, plus more."
     },
     {
-     "fuente": "ESPN · Tenis (RSS)",
-     "titulo": "Zverev's reign as No. 1 starts with Paris loss; Djokovic exits as well",
+     "fuente": "ESPN · Tenis ATP (noticias con fecha)",
+     "titulo": "Alexander Zverev loses first match as No. 1; Novak Djokovic also out in Paris",
      "fecha": "2026-11-04 17:11",
      "url": "https://www.espn.com/tennis/story/_/id/50379005/alexander-zverev-tenure-no-1-begins-paris-loss",
      "resumen": "Alexander Zverev's tenure as the No. 1 player in men's tennis started with a 7-6 (5), 6-2 defeat to Lorenzo Musetti, while Novak Djokovic saw his dwindling hopes of making the ATP Finals with a loss to qualifier Rinky Hijikata."
@@ -4982,20 +4916,6 @@
      "resumen": "After their memorable comeback victory against Roma, can Manchester United avoid a repeat of the past and follow that up with a successive victory?"
     },
     {
-     "fuente": "AS Chile",
-     "titulo": "Coquimbo quiere volver a amargar a Colo Colo y saca ventaja para el ‘doblete’ del fútbol chileno",
-     "fecha": "2026-11-04 13:02",
-     "url": "https://chile.as.com/futbol/coquimbo-quiere-volver-a-amargar-a-colo-colo-y-saca-ventaja-para-el-doblete-del-futbol-chileno-f202611-n/",
-     "resumen": "El elenco ‘pirata’ derrotó por 2-0 a Unión La Calera en el duelo de cuartos de final ida de Copa Chile 2026. El próximo 14 de noviembre jugarán la final de..."
-    },
-    {
-     "fuente": "ESPN · NBA (RSS)",
-     "titulo": "NBA buzz: Latest news, updates and intel for the 2026-27 season",
-     "fecha": "2026-11-04 12:53",
-     "url": "https://www.espn.com/nba/story/_/id/50028196/2026-27-nba-buzz-latest-live-updates-news-intel-trades-deals",
-     "resumen": "The NBA is back. The buzz never left. Bookmark this page for the latest news, rumblings and analysis from ESPN's insiders."
-    },
-    {
      "fuente": "BBC Sport · Fórmula 1 (RSS, inglés)",
      "titulo": "Ocon dropped - is it the end of his F1 career?",
      "fecha": "2026-11-04 12:00",
@@ -5003,18 +4923,11 @@
      "resumen": "Esteban Ocon's career as a Formula 1 race driver is over - at least for the foreseeable future - after falling out with Haas. Andrew Benson looks at what the future holds for the Frenchman."
     },
     {
-     "fuente": "ESPN · Fórmula 1 (RSS)",
-     "titulo": "Leclerc skips media duty for birth of first baby",
+     "fuente": "ESPN · Fórmula 1 (noticias con fecha)",
+     "titulo": "Charles Leclerc to miss Brazilian Grand Prix media duty due to birth of baby",
      "fecha": "2026-11-04 11:52",
      "url": "https://www.espn.com/f1/story/_/id/50378860/charles-leclerc-brazilian-grand-prix-media-due-baby-birth",
      "resumen": "Ferrari's Charles Leclerc will miss media duties ahead of the Brazilian Grand Prix following the birth of his first child."
-    },
-    {
-     "fuente": "ESPN · Golf (RSS)",
-     "titulo": "McIlroy on DP World taking ex-members back: 'There has to be a bit of a reset'",
-     "fecha": "2026-11-04 11:42",
-     "url": "https://www.espn.com/golf/story/_/id/50378249/rory-mcilroy-backs-dp-world-tour-allowing-ex-liv-golfers-back",
-     "resumen": "Rory McIlroy supports the DP World Tour's decision to allow former members, who leave LIV Golf 2.0, to return in 2027."
     },
     {
      "fuente": "ESPN · Golf PGA (noticias con fecha)",
@@ -5059,13 +4972,6 @@
      "resumen": "El mexicano jugará por primera vez en el máximo circuito durante el World Wide Technology Championship, acompañado por su familia..."
     },
     {
-     "fuente": "ESPN · Tenis (RSS)",
-     "titulo": "Tennis great Rafa Nadal accepts Madrid offer to join board",
-     "fecha": "2026-11-04 11:16",
-     "url": "https://www.espn.com/soccer/story/_/id/50378635/rafa-nadal-accepts-real-madrid-offer-join-board-directors",
-     "resumen": "Tennis legend Rafa Nadal confirmed on Wednesday he has accepted an offer to become a member of Real Madrid's board of directors."
-    },
-    {
      "fuente": "BBC Sport · Rugby (RSS, inglés)",
      "titulo": "Gibson-Park on Ireland bench as Casey, Jansen and Timoney start",
      "fecha": "2026-11-04 11:14",
@@ -5085,13 +4991,6 @@
      "fecha": "2026-11-04 10:45",
      "url": "https://www.latercera.com/el-deportivo/noticia/directiva-del-betis-anticipa-la-renovacion-de-manuel-pellegrini-se-tratara-con-la-maxima-delicadeza/",
      "resumen": "El director deportivo del cuadro andaluz, Manu Fajardo, aborda el futuro del entrenador chileno."
-    },
-    {
-     "fuente": "ESPN · Tenis (RSS)",
-     "titulo": "Burrage receives death threats after first WTA match in 16 months",
-     "fecha": "2026-11-04 10:37",
-     "url": "https://www.espn.com/tennis/story/_/id/50377710/jodie-burrage-receives-death-threats-wta-return",
-     "resumen": "British tennis player Jodie Burrage has received death threats and a torrent of abuse on social media after she was defeated in her first main-draw singles match on the WTA Tour in 16 months."
     },
     {
      "fuente": "La Tercera · El Deportivo (RSS)",
@@ -5115,18 +5014,137 @@
      "resumen": "Tennis great Rafael Nadal is set to join the board of Spanish football giants Real Madrid."
     },
     {
-     "fuente": "ESPN · Golf (RSS)",
-     "titulo": "McIlroy sees no risk playing in Abu Dhabi amid Middle East conflicts",
-     "fecha": "2026-11-04 10:04",
-     "url": "https://www.espn.com/golf/story/_/id/50377509/rory-mcilroy-sees-no-risk-playing-abu-dhabi",
-     "resumen": "Rory McIlroy has downplayed safety concerns about competing at the Abu Dhabi Championship this week amid the ongoing conflicts in the Middle East."
-    },
-    {
      "fuente": "La Tercera · El Deportivo (RSS)",
      "titulo": "El Real Madrid suma a Rafael Nadal como integrante de su Junta Directiva",
      "fecha": "2026-11-04 09:40",
      "url": "https://www.latercera.com/el-deportivo/noticia/el-real-madrid-suma-a-rafael-nadal-como-integrante-de-su-junta-directiva/",
      "resumen": "Este miércoles el club merengue informó que propondrá a sus socios que ratifiquen la integración del extenista en la próxima asamblea programada para el 21 de noviembre."
+    },
+    {
+     "fuente": "La Tercera · El Deportivo (RSS)",
+     "titulo": "Presidente de Rangers: “Hasta Juventus fue descendida, pero en Chile parece cuestionable exigir que se cumpla el reglamento”",
+     "fecha": "2026-11-04 09:05",
+     "url": "https://www.latercera.com/el-deportivo/noticia/presidente-de-rangers-juventus-fue-descendida-pero-en-chile-parece-cuestionable-exigir-que-se-cumpla-el-reglamento/",
+     "resumen": "Felipe Muñoz aborda la campaña del club piducano, que ocupa el último lugar de la Primera B. Defiende la presentación de denuncias contra conjuntos como San Marcos de Arica, que fue desafiliado por irregularidades financieras. \"Rechazo que se diga que sancionar a un club desprestigia la competencia\", advierte."
+    },
+    {
+     "fuente": "BBC Sport · Rugby (RSS, inglés)",
+     "titulo": "Conan on desire to keep playing and Farrell's influence",
+     "fecha": "2026-11-04 08:56",
+     "url": "https://www.bbc.co.uk/sport/rugby-union/articles/cwm23gggjp3po?at_medium=RSS&at_campaign=rss",
+     "resumen": "Jack Conan tells the Ireland Rugby Social podcast of Andy Farrell's influence in implementing a cultural shift in camp, his shoulder injury and desire to keep playing while he feels physically and mentally able."
+    },
+    {
+     "fuente": "BBC Sport · Golf (RSS, inglés)",
+     "titulo": "LIV aimed to 'destroy the European Tour' - McIlroy",
+     "fecha": "2026-11-04 08:52",
+     "url": "https://www.bbc.co.uk/sport/golf/articles/ck78p0epe0y8o?at_medium=RSS&at_campaign=rss",
+     "resumen": "Six-time major winner Rory McIlroy says those connected to LIV Golf were expressing an ambition to \"destroy the European Tour\" at the 2026 Masters, only months before the league filed for bankruptcy protection."
+    },
+    {
+     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
+     "titulo": "Real Madrid reach verbal agreement to sign Gabriel",
+     "fecha": "2026-11-04 08:49",
+     "url": "https://www.bbc.co.uk/sport/football/articles/cq146dnrn541o?at_medium=RSS&at_campaign=rss",
+     "resumen": "Real Madrid are confident of winning the race to sign Manchester United forward JJ Gabriel after reaching a verbal agreement with the teenager."
+    },
+    {
+     "fuente": "BBC Sport · Golf (RSS, inglés)",
+     "titulo": "American Korda wins LPGA Tour player of the year",
+     "fecha": "2026-11-04 08:37",
+     "url": "https://www.bbc.co.uk/sport/golf/articles/cm5yn75wg5vqo?at_medium=RSS&at_campaign=rss",
+     "resumen": "World number one Nelly Korda claims her second points-based LPGA player-of-the-year award."
+    },
+    {
+     "fuente": "RedGol on MSN",
+     "titulo": "Programación fecha 27 liga de primera 2026: Agenda de partidos, horarios y dónde ver el fútbol chileno",
+     "fecha": "2026-11-04 08:32",
+     "url": "https://www.msn.com/es-cl/deportes/futbol/programaci%C3%B3n-fecha-27-liga-de-primera-2026-agenda-de-partidos-horarios-y-d%C3%B3nde-ver-el-f%C3%BAtbol-chileno/ar-AA2gLrA5",
+     "resumen": "Revisa el detalle con la programación completa de la 27° fecha del Campeonato Nacional. La fecha 27 de la Liga de Primera 2026 comienza este viernes, tras un fin de semana sin campeonato U. Católica v..."
+    },
+    {
+     "fuente": "BBC Sport · Rugby (RSS, inglés)",
+     "titulo": "The Ireland Rugby Social Podcast",
+     "fecha": "2026-11-04 08:32",
+     "url": "https://www.bbc.co.uk/sounds/play/p0pl7zf9?at_medium=RSS&at_campaign=rss",
+     "resumen": "We're back with series two and first up, Leinster, Ireland and Lions star, Jack Conan."
+    },
+    {
+     "fuente": "ESPN · Tenis WTA (noticias con fecha)",
+     "titulo": "Alex Eala brushes aside late replacement Emerson Jones to reach Hong Kong Open round of 16",
+     "fecha": "2026-11-04 08:29",
+     "url": "https://www.espn.com/tennis/story/_/id/50368453/alex-eala-emerson-jones-hong-kong-open-last-16",
+     "resumen": "Despite a late change in opponent, Alex Eala was still able to comfortably breeze through her opening match at the Hong Kong Open."
+    },
+    {
+     "fuente": "BBC Sport · Rugby (RSS, inglés)",
+     "titulo": "Cardiff sign Welsh lock Green from Harlequins",
+     "fecha": "2026-11-04 08:00",
+     "url": "https://www.bbc.co.uk/sport/rugby-union/articles/cwn8dmr88v0go?at_medium=RSS&at_campaign=rss",
+     "resumen": "Cardiff bolster their second row with the signing of former Wales Under-20s forward."
+    },
+    {
+     "fuente": "BBC Sport · Rugby (RSS, inglés)",
+     "titulo": "Exeter need to use cup for league momentum - Baxter",
+     "fecha": "2026-11-04 07:57",
+     "url": "https://www.bbc.co.uk/sport/rugby-union/articles/c6073lz0988zo?at_medium=RSS&at_campaign=rss",
+     "resumen": "Exeter boss Rob Baxter says his side must use the Prem Rugby Cup break asa means to kickstart their league campaign."
+    },
+    {
+     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
+     "titulo": "Wilson returns as Wales call up uncapped Duncan",
+     "fecha": "2026-11-04 07:30",
+     "url": "https://www.bbc.co.uk/sport/football/articles/cwly4ee53mgyo?at_medium=RSS&at_campaign=rss",
+     "resumen": "Harry Wilson is back in Wales' squad for their Nations League matches against Norway and Portugal, while goalkeeper Joe Duncan earns his first call."
+    },
+    {
+     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
+     "titulo": "Palace lose appeal against Mateta red card",
+     "fecha": "2026-11-04 07:23",
+     "url": "https://www.bbc.co.uk/sport/football/articles/cqp9gelp4em2o?at_medium=RSS&at_campaign=rss",
+     "resumen": "Crystal Palace lose their appeal against Jean-Philippe Mateta's red card in the defeat by Tottenham on Saturday."
+    },
+    {
+     "fuente": "La Tercera · El Deportivo (RSS)",
+     "titulo": "“Está destrozado; hasta puede dejar el fútbol”: exentrenador de Owono revela el complejo momento del portero",
+     "fecha": "2026-11-04 07:13",
+     "url": "https://www.latercera.com/el-deportivo/noticia/esta-destrozado-hasta-puede-dejar-el-futbol-exentrenador-de-owono-revela-el-complejo-momento-del-portero/",
+     "resumen": "El preparador de arqueros Rubén Arce coincidió en varias campañas con el golero que está en la mira del mundo tras el fallecimiento de Jesús de Miguel."
+    },
+    {
+     "fuente": "La Tercera · El Deportivo (RSS)",
+     "titulo": "Brian Fernández revela el distanciamiento que tuvo con Leandro por sus problemas de adicción: “Mucho no me hablaba”",
+     "fecha": "2026-11-04 07:13",
+     "url": "https://www.latercera.com/el-deportivo/noticia/brian-fernandez-revela-el-distanciamiento-que-tuvo-con-leandro-por-sus-problemas-de-adiccion-mucho-no-me-hablaba/",
+     "resumen": "El exdelantero de Unión La Calera reconoce que estuvo distanciado de sus hermanos debido a sus problemas con las drogas."
+    },
+    {
+     "fuente": "La Tercera · El Deportivo (RSS)",
+     "titulo": "Técnico del Crystal Palace de Darío Osorio reconoce la crisis del equipo: “No me corresponde a mí definir mi futuro”",
+     "fecha": "2026-11-04 07:13",
+     "url": "https://www.latercera.com/el-deportivo/noticia/tecnico-del-crystal-palace-de-dario-osorio-reconoce-la-crisis-del-equipo-no-me-corresponde-a-mi-definir-mi-futuro/",
+     "resumen": "El equipo perdió 2-0 con Tottenham Hotspur, por la novena fecha, derrota que lo dejó en zona de descenso. En medio de los problemas, el técnico Pierre Sage advirtió que “no me gusta esta situación, pero pueden confiar en mí, nunca me rendiré”."
+    },
+    {
+     "fuente": "La Tercera · El Deportivo (RSS)",
+     "titulo": "Un clásico y rivales que quieren la permanencia: los cuatro duelos que le restan a la U y la UC en la lucha por el Chile 2",
+     "fecha": "2026-11-04 07:13",
+     "url": "https://www.latercera.com/el-deportivo/noticia/un-clasico-y-rivales-que-quieren-la-permanencia-los-cuatro-duelos-que-le-restan-a-la-u-y-la-uc-en-la-lucha-por-el-chile-2/",
+     "resumen": "Universidad de Chile y Universidad Católica pelean por el último cupo a la fase de grupos de la Copa Libertadores 2027. Aquí los partidos que les quedan para cerrar la Liga de Primera."
+    },
+    {
+     "fuente": "La Tercera · El Deportivo (RSS)",
+     "titulo": "El drama del futbolista que fue confundido con el arquero involucrado en la muerte de Jesús de Miguel",
+     "fecha": "2026-11-04 07:13",
+     "url": "https://www.latercera.com/el-deportivo/noticia/el-drama-del-futbolista-que-fue-confundido-con-el-arquero-involucrado-en-la-muerte-de-jesus-de-miguel/",
+     "resumen": "Michel Owono denuncia haber recibido amenazas y comentarios racistas en redes sociales luego de que usuarios pensaran que era el guardameta del Andorra."
+    },
+    {
+     "fuente": "La Tercera · El Deportivo (RSS)",
+     "titulo": "La U abre la competencia en el arco: el plan de Universidad de Chile para Gabriel Castellón en 2027",
+     "fecha": "2026-11-04 07:13",
+     "url": "https://www.latercera.com/el-deportivo/noticia/la-u-abre-la-competencia-en-el-arco-el-plan-de-universidad-de-chile-para-gabriel-castellon-en-2027/",
+     "resumen": "El cuadro estudiantil pretende incorporar un guardameta que compita con el titular durante la próxima temporada. Los azules ya exploraron alternativas en el mercado de invierno, pero no concretaron ninguna operación. El vencimiento del contrato de Cristopher Toselli vuelve a instalar el tema."
     }
    ]
   },
@@ -5847,8 +5865,9 @@
     {
      "fuente": "ESO · Comunicados (RSS)",
      "url": "https://www.eso.org/public/news/feed/",
-     "ok": true,
-     "n": 10
+     "ok": false,
+     "n": 0,
+     "error": "ReadTimeout: HTTPSConnectionPool(host='www.eso.org', port=443): Read timed out. (read timeout=20)"
     },
     {
      "fuente": "NOIRLab (RSS)",
@@ -5873,7 +5892,7 @@
      "url": "https://skyandtelescope.org/feed/",
      "ok": false,
      "n": 0,
-     "error": "HTTP 403"
+     "error": "robots.txt no lo permite"
     },
     {
      "fuente": "phys.org · Espacio (RSS)",
@@ -6254,13 +6273,6 @@
      "resumen": "Astronomers using the James Webb Space Telescope (JWST) have confirmed a massive, dust-rich galaxy called Leviathan in the early universe. Seen when the universe was roughly 1.5 billion years old, the galaxy has its stars spread out rather than in a concentrated fashion. A paper, describing its strange stellar…"
     },
     {
-     "fuente": "BioBioChile on MSN",
-     "titulo": "Este miércoles un telescopio caerá sin control a la Tierra y NASA advierte que podría ser sobre Chile",
-     "fecha": "2026-11-03 08:06",
-     "url": "https://www.msn.com/es-cl/noticias/otras/este-mi%C3%A9rcoles-un-telescopio-caer%C3%A1-sin-control-a-la-tierra-y-nasa-advierte-que-podr%C3%ADa-ser-sobre-chile/ar-AA2gLzwo",
-     "resumen": "La NASA ya había advertido previamente que el telescopio espacial Swift reingresará sin control a la atmósfera terrestre este miércoles 4 de noviembre, casi 22 años después de su lanzamiento. Ahora, l..."
-    },
-    {
      "fuente": "Space.com (RSS)",
      "titulo": "Why does Betelgeuse keep fading? The mystery of Orion's giant star",
      "fecha": "2026-11-03 08:00",
@@ -6525,6 +6537,13 @@
      "fecha": "2026-10-30 17:29",
      "url": "https://www.space.com/space-exploration/launches-spacecraft/india-launches-nvs-03-navigation-satellite-gslv-rocket",
      "resumen": "India launched the NVS-03 navigation satellite to orbit today (Oct. 30) atop a GSLV rocket. It was the fourth orbital launch from Indian soil so far this year."
+    },
+    {
+     "fuente": "phys.org · Espacio (RSS)",
+     "titulo": "Tiny photonic chip links telescopes together to view the universe in 'astonishing' detail",
+     "fecha": "2026-10-30 17:20",
+     "url": "https://phys.org/news/2026-10-tiny-photonic-chip-links-telescopes.html",
+     "resumen": "A tiny glass chip developed by researchers at Heriot-Watt University has linked two telescopes together to enable them to act as a single powerful instrument, marking an important step toward a new generation of astronomical technology."
     }
    ]
   }
