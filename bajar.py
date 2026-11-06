@@ -934,8 +934,10 @@ def autores_boletines(estado, cam, previo, maximo=40):
         m = re.search(r"Bolet[ií]n\s*N?[°º.]*\s*(\d{3,6})-\d{1,2}", str(v.get("descripcion") or "") + " " + str(v.get("materia") or ""))
         if m and m.group(1) not in out and m.group(1) not in bols:
             bols.append(m.group(1))
-    hechos, fallas = 0, 0
+    hechos, fallas, seguidas, t0 = 0, 0, 0, time.monotonic()
     for n in bols[:maximo]:
+        if seguidas >= 3 or time.monotonic() - t0 > 300:   # el Senado no responde: no se gasta la corrida (tope de 5 min)
+            break
         url = SENADO_TRAM.format(n=n)
         if not robots_permite(url, estado):
             estado["autores_boletines"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": "robots.txt no lo permite"}
@@ -944,9 +946,9 @@ def autores_boletines(estado, cam, previo, maximo=40):
         f = leer_tramitacion(pedir(url, tmp, "x", como="text", espera=(0, 5), limite=30))
         if f:
             out[n] = dict(f, fecha=ahora().date().isoformat(), url=url)
-            hechos += 1
+            hechos, seguidas = hechos + 1, 0
         else:
-            fallas += 1
+            fallas, seguidas = fallas + 1, seguidas + 1
         time.sleep(2)
     estado["autores_boletines"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": SENADO_TRAM.format(n="N"),
                                    "nuevos": hechos, "sin_ficha": fallas, "total": len(out), "pendientes": max(0, len(bols) - maximo)}
