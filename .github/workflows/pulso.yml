@@ -1,0 +1,44 @@
+# Cofrade News · Pulso del día (06-11-2026). Cada 2 horas, de 07:17 a 23:17 de Santiago en verano (UTC-3), deja datos/pulso.json:
+# indicadores, IPSA, bolsas, bitcoin, sismos, aire y titulares de las últimas horas. La portada de www.cofrad.es lo muestra.
+# Gratis. También se puede correr a mano: pestaña «Actions» → «Pulso del día» → «Run workflow».
+name: Pulso del día
+
+on:
+  schedule:
+    - cron: "17 10,12,14,16,18,20,22 * * *"
+    - cron: "17 0,2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cofrade-datos
+  cancel-in-progress: false
+
+jobs:
+  pulso:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar librerías
+        run: pip install --quiet requests==2.32.3 pandas==2.2.3 lxml==5.3.0
+      - name: Armar el pulso
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          BCCH_TOKEN: ${{ secrets.BCCH_TOKEN }}
+          BCCH_USER: ${{ secrets.BCCH_USER }}
+          BCCH_PASS: ${{ secrets.BCCH_PASS }}
+          WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}
+        run: python pulso.py --salida datos
+      - name: Guardar en el repositorio
+        run: |
+          git config user.name "cofrade-datos"
+          git config user.email "actions@users.noreply.github.com"
+          git add datos/pulso.json
+          git diff --cached --quiet || git commit -m "Pulso $(date -u +%Y-%m-%dT%H:%M)"
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 10; done

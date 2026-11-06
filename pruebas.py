@@ -625,6 +625,40 @@ def autores_de_cada_boletin_desde_el_senado():
 
 
 @prueba
+def pulso_del_dia():
+    """06-11-2026: franja «En vivo» de www.cofrad.es cada 2 horas: solo titulares en español, de las últimas horas, sin repetir y
+    con máximo 2 por medio; sismos con referencia legible; sin red no se cae."""
+    import pulso as P
+    ahora = B.ahora().strftime("%Y-%m-%d %H:%M")
+    viejo = (B.ahora() - dt.timedelta(hours=30)).strftime("%Y-%m-%d %H:%M")
+    notas = [{"fuente": "La Tercera (RSS)", "titulo": f"Nota {i}", "fecha": ahora, "url": f"https://latercera.com/{i}"} for i in range(4)]
+    notas += [{"fuente": "BBC (RSS, inglés)", "titulo": "English", "fecha": ahora, "url": "https://bbc.co.uk/x"},
+              {"fuente": "Emol (RSS)", "titulo": "Nota 0", "fecha": ahora, "url": "https://emol.com/0"},
+              {"fuente": "Emol (RSS)", "titulo": "Vieja", "fecha": viejo, "url": "https://emol.com/v"}]
+    tit = B.titulares
+    B.titulares = lambda estado: {"secciones": {"politica/chile": {"notas": notas}}}
+    try:
+        t = P.titulares({})
+    finally:
+        B.titulares = tit
+    n = t[0]["notas"]
+    assert t[0]["seccion"] == "Chile" and [x["titulo"] for x in n] == ["Nota 0", "Nota 1"], n   # 2 por medio; repetida y vieja fuera
+    assert all("English" != x["titulo"] for x in n)
+    assert P.referencia(-20.364, -70.623) == "52 km al O de Iquique" and P.referencia(-33.45, -70.67) == "cerca de Santiago"
+    dormir, get = B.time.sleep, B.requests.Session.get
+    B.time.sleep = lambda x: None
+
+    def falla(self, url, **k):
+        raise B.requests.ConnectionError("sin red")
+    B.requests.Session.get = falla
+    try:
+        p = P.armar({})
+        assert p["generado"] and p["indicadores"] == [] and not p.get("ipsa") and p["proxima"]
+    finally:
+        B.time.sleep, B.requests.Session.get = dormir, get
+
+
+@prueba
 def espejo_respeta_el_429():
     """06-11-2026: IQAir respondió 429 a 9 lecturas seguidas y la corrida se alargó más de 20 minutos (tope: 30). Al primer 429
     de un sitio lento, no se le pide nada más en esa corrida."""
