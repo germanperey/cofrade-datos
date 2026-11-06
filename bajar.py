@@ -1850,9 +1850,7 @@ ESPEJO = [   # (archivo, dirección, qué es) · las direcciones fijas que Germ�
     ("espn-nba-noticias", "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news", "NBA: noticias (ESPN)"),
     ("espn-tenis-noticias", "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/news", "Tenis: noticias (ESPN)"),
     ("espn-golf-noticias", "https://site.api.espn.com/apis/site/v2/sports/golf/pga/news", "Golf: noticias (ESPN, PGA Tour)"),
-    ("espn-golf-noticias-2", "https://now.core.api.espn.com/v1/sports/news?sport=golf&limit=25", "Golf: noticias (ESPN)"),
-    ("espn-rugby-noticias", "https://now.core.api.espn.com/v1/sports/news?sport=rugby&limit=25", "Rugby: noticias (ESPN)"),
-    ("espn-rugby-noticias-2", "https://site.api.espn.com/apis/site/v2/sports/rugby/164205/news", "Rugby: noticias (ESPN, Mundial)"),
+    ("espn-rugby-noticias", "https://site.api.espn.com/apis/site/v2/sports/rugby/164205/news", "Rugby: noticias (ESPN, Mundial)"),
     ("espn-wta-noticias", "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/news", "Tenis femenino: noticias (ESPN)"),
 ] + [(f"iqair-{s}", u, f"Calidad del aire: {n}") for s, n, u in (
     ("arica", "Arica", "https://www.iqair.com/chile/arica-y-parinacota/arica"),
