@@ -151,7 +151,7 @@ section{padding:28px 0;border-top:1px solid var(--linea)}h3{font:600 26px/1.2 va
 .aviso{color:var(--gris);font-size:14px}
 form.clave{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}form.clave input{flex:1 1 220px;min-height:48px;border-radius:12px;border:1.5px solid var(--linea);padding:0 14px;font-size:17px;background:var(--card);color:var(--tinta)}
 form.clave button{min-height:48px;border-radius:999px;border:0;background:var(--oro);color:#1A1406;font-weight:600;padding:0 22px;cursor:pointer}
-@media (max-width:820px){.portada,.socios{grid-template-columns:1fr;gap:22px}.portada{padding-top:26px}nav{margin-left:0;width:100%}.edicion ul{columns:1}}
+@media (max-width:820px){.portada,.socios{grid-template-columns:1fr;gap:22px}.portada{padding-top:26px}nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}nav a{white-space:nowrap}.edicion ul{columns:1}}
 `;
 
 const SCRIPT = `
@@ -219,14 +219,14 @@ async function portada(env, ctx) {
   const ultima = lista[0];
   const hoy = fechaChile();
   const estado = !ultima ? "La primera edición web aparece mañana a las 07:30."
-    : ultima === hoy ? "Edición de hoy, publicada a las 07:30." : `Última edición: ${fechaLarga(ultima)}. La de hoy se publica a las 07:30.`;
+    : ultima === hoy ? "La edición de hoy ya está publicada." : "La edición de hoy se publica a las 07:30. Mientras, lee la última.";
   const hora = p && p.generado ? String(p.generado).slice(11, 16) : "";
   const cuerpo = `
 <div class="portada"><div><span class="kicker">El diario de la mañana · gratuito</span>
 <h1>Chile y el mundo, ordenados en minutos y con datos verificados.</h1>
 <p class="lede">Cada mañana a las 07:30: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.</p>
 <div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn linea" href="#en-vivo">Ver lo último</a></div></div>
-<aside class="tarjeta edicion" aria-label="Edición"><span class="kicker">${ultima ? esc(fechaLarga(ultima)) : "Muy pronto"}</span><h2>${esc(estado)}</h2>
+<aside class="tarjeta edicion" aria-label="Edición"><span class="kicker">${ultima ? (ultima === hoy ? "Hoy · " : "Última edición · ") + esc(fechaLarga(ultima)) : "Muy pronto"}</span><h2>${esc(estado)}</h2>
 <ul>${SECCIONES.map((s) => `<li>${esc(s)}</li>`).join("")}</ul></aside></div>
 <section id="en-vivo" aria-labelledby="t-vivo"><h3 id="t-vivo"><span class="vivo">En vivo</span></h3>
 <p class="sub">${hora ? `Actualizado a las ${esc(hora)}${p.proxima ? ` · próxima actualización ${esc(p.proxima)}` : ""}.` : "Se actualiza cada 2 horas, de 07:00 a 23:00."} Banco Central, Bolsa de Santiago, USGS, aire medido y los medios del país.</p>
