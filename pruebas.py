@@ -596,6 +596,57 @@ URLS_RECOLECTAR = {
 
 
 @prueba
+def autores_de_cada_boletin_desde_el_senado():
+    """06-11-2026: 83 fichas automáticas del 05-11 decían «Presentado por: —». El servicio público del Senado trae autores y título
+    de todo boletín (de ambas cámaras)."""
+    xml = ("<proyectos><proyecto><descripcion><boletin>18282-07</boletin><titulo>Modifica el Código Penal en materia de robo</titulo>"
+           "<iniciativa>Moción</iniciativa></descripcion><autores><autor><PARLAMENTARIO>Pérez Olea, Joanna</PARLAMENTARIO></autor>"
+           "<autor><PARLAMENTARIO>Longton Herrera, Andrés</PARLAMENTARIO></autor></autores></proyecto></proyectos>")
+    f = B.leer_tramitacion(xml)
+    assert f["autores"] == ["Pérez Olea, Joanna", "Longton Herrera, Andrés"] and f["titulo"].startswith("Modifica el Código Penal"), f
+    assert B.leer_tramitacion("<x><iniciativa>Mensaje</iniciativa><titulo>Presupuesto</titulo></x>")["autores"] == ["Mensaje presidencial"]
+    assert B.leer_tramitacion("") is None and B.leer_tramitacion("<html>error</html>") is None
+    viejos = B.pedir, B.robots_permite, B.time.sleep
+    pedidas = []
+    B.pedir = lambda url, est, cl, **k: pedidas.append(url) or xml
+    B.robots_permite = lambda url, est: True
+    B.time.sleep = lambda s: None
+    try:
+        cam = {"camara_mes": [{"descripcion": "Boletín N° 18282-07 Proyecto de ley"}, {"descripcion": "Boletín N°18282-07 otra"},
+                              {"descripcion": "Boletín N° 17000-05"}, {"descripcion": "sin boletín"}]}
+        e = {}
+        out = B.autores_boletines(e, cam, {"17000": {"autores": ["Ya leído"]}})
+        assert pedidas == ["https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18282"], pedidas   # el ya leído no se repite
+        assert out["17000"]["autores"] == ["Ya leído"] and out["18282"]["autores"][0] == "Pérez Olea, Joanna" and e["autores_boletines"]["nuevos"] == 1
+    finally:
+        B.pedir, B.robots_permite, B.time.sleep = viejos
+
+
+@prueba
+def espejo_respeta_el_429():
+    """06-11-2026: IQAir respondió 429 a 9 lecturas seguidas y la corrida se alargó más de 20 minutos (tope: 30). Al primer 429
+    de un sitio lento, no se le pide nada más en esa corrida."""
+    import tempfile
+    viejos = B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO
+    pedidas = []
+
+    def pedir(url, est, cl, **k):
+        pedidas.append(url)
+        est[cl] = {"ok": False, "error": "HTTP 429"}
+        return None
+    B.pedir, B.robots_permite, B.LENTOS_PAUSA = pedir, (lambda u, e: True), 0
+    B.ESPEJO = [("iqair-a", "https://www.iqair.com/chile/a", "a"), ("iqair-b", "https://www.iqair.com/chile/b", "b"),
+                ("iqair-c", "https://www.iqair.com/chile/c", "c")]
+    try:
+        with tempfile.TemporaryDirectory() as d:
+            pag = B.espejo({}, d, [])
+        assert pedidas == ["https://www.iqair.com/chile/a"], pedidas
+        assert len(pag["fallidas"]) == 3 and "429" in pag["fallidas"][2]["error"]
+    finally:
+        B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO = viejos
+
+
+@prueba
 def espejo_de_lecturas_para_la_tarea():
     """05-11-2026 (Germán: «LOOP… e itera con varias páginas alternativas»): en la tarea web_fetch rechaza las direcciones fijas
     (PROVENANCE_REQUIRED). GitHub las lee (respetando robots.txt) y las deja: fixtures/ con el nombre exacto que usa

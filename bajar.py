@@ -27,6 +27,7 @@ import argparse
 import datetime as dt
 import io
 import json
+import html
 import os
 import re
 import sys
@@ -898,6 +899,58 @@ class Robots:
                 if mejor is None or largo > mejor[0] or (largo == mejor[0] and permitir):
                     mejor = (largo, permitir)
         return True if mejor is None else mejor[1]
+
+
+SENADO_TRAM = "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin={n}"
+
+
+def _xml_textos(txt, etiqueta):
+    return [html.unescape(re.sub(r"<[^>]+>", " ", m)).strip() for m in re.findall(rf"<{etiqueta}\b[^>]*>(.*?)</{etiqueta}>", txt or "", re.S | re.I)]
+
+
+def leer_tramitacion(txt):
+    """XML del servicio público del Senado (tramitacion.php?boletin=N) → {titulo, iniciativa, autores[]} o None.
+    Vale para proyectos de ambas cámaras: el Senado publica la ficha de todo boletín."""
+    if not txt or "<" not in txt:
+        return None
+    tit = next((t for t in _xml_textos(txt, "titulo") if t), "")
+    ini = next((t for t in _xml_textos(txt, "iniciativa") if t), "")
+    aut = [re.sub(r"\s+", " ", a) for a in _xml_textos(txt, "PARLAMENTARIO") if a.strip()]
+    if not aut:
+        aut = [re.sub(r"\s+", " ", a) for a in _xml_textos(txt, "autor") if a.strip() and len(a) < 120]
+    if not aut and re.match(r"mensaje", ini, re.I):
+        aut = ["Mensaje presidencial"]
+    if not (tit or aut):
+        return None
+    return {"titulo": re.sub(r"\s+", " ", tit)[:400], "iniciativa": ini, "autores": aut[:40]}
+
+
+def autores_boletines(estado, cam, previo, maximo=40):
+    """Boletines votados este mes en la Cámara → autores y título oficiales (Senado, servicio público). Lo ya leído se conserva
+    (no cambia); solo se piden los nuevos, de a uno con 2 s entre cada uno, máximo `maximo` por corrida."""
+    out = {k: v for k, v in (previo or {}).items() if isinstance(v, dict) and v.get("autores")}
+    bols = []
+    for v in (cam or {}).get("camara_mes") or []:
+        m = re.search(r"Bolet[ií]n\s*N?[°º.]*\s*(\d{3,6})-\d{1,2}", str(v.get("descripcion") or "") + " " + str(v.get("materia") or ""))
+        if m and m.group(1) not in out and m.group(1) not in bols:
+            bols.append(m.group(1))
+    hechos, fallas = 0, 0
+    for n in bols[:maximo]:
+        url = SENADO_TRAM.format(n=n)
+        if not robots_permite(url, estado):
+            estado["autores_boletines"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": "robots.txt no lo permite"}
+            return out or None
+        tmp = {}
+        f = leer_tramitacion(pedir(url, tmp, "x", como="text", espera=(0, 5), limite=30))
+        if f:
+            out[n] = dict(f, fecha=ahora().date().isoformat(), url=url)
+            hechos += 1
+        else:
+            fallas += 1
+        time.sleep(2)
+    estado["autores_boletines"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": SENADO_TRAM.format(n="N"),
+                                   "nuevos": hechos, "sin_ficha": fallas, "total": len(out), "pendientes": max(0, len(bols) - maximo)}
+    return out or None
 
 
 def robots_permite(url, estado):
@@ -1892,18 +1945,24 @@ def espejo(estado, salida, pedidos=()):
         if re.match(r"^https?://", u) and u not in vistos and len(u) < 400:
             vistos.add(u)
             lista.append(("pedido-" + hashlib.sha256(u.encode()).hexdigest()[:12], u, str((p or {}).get("que") if isinstance(p, dict) else "") or "pedida por la tarea"))
-    ok, mal, tmp, ok_lento = [], [], {}, [False]
+    ok, mal, tmp, ok_lento, frenados = [], [], {}, [False], set()
     for nombre, url, que in lista:
         if not robots_permite(url, estado):
             mal.append({"url": url, "que": que, "error": "robots.txt no lo permite"})
             continue
-        lento = any(d in url for d in LENTOS)
+        lento = next((d for d in LENTOS if d in url), "")
+        if lento and lento in frenados:   # el sitio ya pidió bajar el ritmo (429): no se insiste hoy con ese sitio
+            mal.append({"url": url, "que": que, "error": f"{lento} pidió esperar (HTTP 429): se deja para la próxima corrida"})
+            continue
         if lento and ok_lento[0]:
             time.sleep(LENTOS_PAUSA)   # 06-11-2026: IQAir respondió 429 (demasiadas seguidas): una cada 15 s, como un lector humano
         ok_lento[0] = ok_lento[0] or lento
-        txt = pedir(url, tmp, "x", como="text", espera=(0, 30) if lento else (0, 8), limite=40)
+        txt = pedir(url, tmp, "x", como="text", espera=(0, 20) if lento else (0, 8), limite=30 if lento else 40)
         if not txt:
-            mal.append({"url": url, "que": que, "error": tmp.get("x", {}).get("error") or "sin respuesta"})
+            err = tmp.get("x", {}).get("error") or "sin respuesta"
+            if lento and "429" in err:
+                frenados.add(lento)
+            mal.append({"url": url, "que": que, "error": err})
             continue
         es_json = txt.lstrip()[:1] in "{["
         cuerpo = txt[:400_000] if es_json else html_a_texto(txt)
@@ -1937,6 +1996,14 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "camara-mes.json"), cam)
     escribir(os.path.join(a.salida, "camara-nominal.json"), nom or None)
     escribir(os.path.join(a.salida, "descubrimiento.json"), descubrir(estado) or None)
+    try:   # 06-11-2026: autores y título de cada boletín votado (fichas automáticas decían «Presentado por: —»)
+        try:
+            prev_b = json.load(open(os.path.join(a.salida, "autores-boletines.json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            prev_b = {}
+        escribir(os.path.join(a.salida, "autores-boletines.json"), autores_boletines(estado, cam, prev_b if isinstance(prev_b, dict) else {}))
+    except Exception as ex:   # noqa: BLE001
+        estado["autores_boletines"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "senado", "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     try:
         previo_a = json.load(open(os.path.join(a.salida, "camara-asistencia-sesiones.json"), encoding="utf-8"))
     except (OSError, ValueError):
