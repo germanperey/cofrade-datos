@@ -1796,8 +1796,11 @@ ESPEJO = [   # (archivo, dirección, qué es) · las direcciones fijas que Germ�
     ("fmi-pib-chile", "https://www.imf.org/external/datamapper/api/v1/NGDP_RPCH/CHL", "FMI: crecimiento del PIB de Chile"),
     ("espn-nba-noticias", "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news", "NBA: noticias (ESPN)"),
     ("espn-tenis-noticias", "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/news", "Tenis: noticias (ESPN)"),
-    ("espn-golf-noticias", "https://site.api.espn.com/apis/site/v2/sports/golf/news", "Golf: noticias (ESPN)"),
-    ("espn-rugby-noticias", "https://site.api.espn.com/apis/site/v2/sports/rugby/news", "Rugby: noticias (ESPN)"),
+    ("espn-golf-noticias", "https://site.api.espn.com/apis/site/v2/sports/golf/pga/news", "Golf: noticias (ESPN, PGA Tour)"),
+    ("espn-golf-noticias-2", "https://now.core.api.espn.com/v1/sports/news?sport=golf&limit=25", "Golf: noticias (ESPN)"),
+    ("espn-rugby-noticias", "https://now.core.api.espn.com/v1/sports/news?sport=rugby&limit=25", "Rugby: noticias (ESPN)"),
+    ("espn-rugby-noticias-2", "https://site.api.espn.com/apis/site/v2/sports/rugby/164205/news", "Rugby: noticias (ESPN, Mundial)"),
+    ("espn-wta-noticias", "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/news", "Tenis femenino: noticias (ESPN)"),
 ] + [(f"iqair-{s}", u, f"Calidad del aire: {n}") for s, n, u in (
     ("arica", "Arica", "https://www.iqair.com/chile/arica-y-parinacota/arica"),
     ("antofagasta", "Antofagasta", "https://www.iqair.com/chile/antofagasta/antofagasta"),
@@ -1811,6 +1814,8 @@ ESPEJO = [   # (archivo, dirección, qué es) · las direcciones fijas que Germ�
 ] + [(f"flight-status-{c}-{t}", f"https://flight-status.com/airport/{c}-{t}/", f"Vuelos {c.upper()} ({'salidas' if t == 'departures' else 'llegadas'})")
      for c in ("scl", "anf", "ccp", "pmc", "puq") for t in ("departures", "arrivals")]
 PEDIDOS_MAX = 40
+LENTOS = ("iqair.com",)
+LENTOS_PAUSA = 15
 
 
 class _SinEspejo(Exception):
@@ -1887,12 +1892,16 @@ def espejo(estado, salida, pedidos=()):
         if re.match(r"^https?://", u) and u not in vistos and len(u) < 400:
             vistos.add(u)
             lista.append(("pedido-" + hashlib.sha256(u.encode()).hexdigest()[:12], u, str((p or {}).get("que") if isinstance(p, dict) else "") or "pedida por la tarea"))
-    ok, mal, tmp = [], [], {}
+    ok, mal, tmp, ok_lento = [], [], {}, [False]
     for nombre, url, que in lista:
         if not robots_permite(url, estado):
             mal.append({"url": url, "que": que, "error": "robots.txt no lo permite"})
             continue
-        txt = pedir(url, tmp, "x", como="text", espera=(0, 8), limite=40)
+        lento = any(d in url for d in LENTOS)
+        if lento and ok_lento[0]:
+            time.sleep(LENTOS_PAUSA)   # 06-11-2026: IQAir respondió 429 (demasiadas seguidas): una cada 15 s, como un lector humano
+        ok_lento[0] = ok_lento[0] or lento
+        txt = pedir(url, tmp, "x", como="text", espera=(0, 30) if lento else (0, 8), limite=40)
         if not txt:
             mal.append({"url": url, "que": que, "error": tmp.get("x", {}).get("error") or "sin respuesta"})
             continue
