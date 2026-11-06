@@ -1826,6 +1826,8 @@ def urls_recolectar(f):
     """Las direcciones exactas que pide `recolectar.py` para la fecha f (deben calzar letra por letra: el nombre del archivo es su hash)."""
     u = [f"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat={la:.2f}&lon={lo:.2f}" for la, lo in MET]
     u += [f"https://mindicador.cl/api/{x}/{f.year}" for x in ("dolar", "euro", "uf", "utm")] + ["https://mindicador.cl/api"]
+    ini = (f.replace(day=1) - dt.timedelta(days=1)).replace(day=1)   # 06-11-2026: yuan (serie_cny), primer día del mes anterior
+    u.append(f"https://api.frankfurter.dev/v1/{ini - dt.timedelta(days=7)}..{f}?base=USD&symbols=CNY")
     u.append(f"https://api.wikimedia.org/feed/v1/wikipedia/es/onthisday/all/{f:%m}/{f:%d}")
     u += [f"https://query1.finance.yahoo.com/v8/finance/chart/{s}?range=5d&interval=1d"
           for s in ("%5EIPSA", "%5EGSPC", "%5EIXIC", "%5EDJI", "BZ%3DF", "HG%3DF", "BTC-USD")]
