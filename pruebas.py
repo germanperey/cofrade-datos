@@ -631,10 +631,12 @@ def pulso_del_dia():
     import pulso as P
     ahora = B.ahora().strftime("%Y-%m-%d %H:%M")
     viejo = (B.ahora() - dt.timedelta(hours=30)).strftime("%Y-%m-%d %H:%M")
-    notas = [{"fuente": "La Tercera (RSS)", "titulo": f"Nota {i}", "fecha": ahora, "url": f"https://latercera.com/{i}"} for i in range(4)]
-    notas += [{"fuente": "BBC (RSS, inglés)", "titulo": "English", "fecha": ahora, "url": "https://bbc.co.uk/x"},
-              {"fuente": "Emol (RSS)", "titulo": "Nota 0", "fecha": ahora, "url": "https://emol.com/0"},
-              {"fuente": "Emol (RSS)", "titulo": "Vieja", "fecha": viejo, "url": "https://emol.com/v"}]
+    notas = [{"fuente": "La Tercera (RSS)", "titulo": f"La nota {i} del día", "fecha": ahora, "url": f"https://latercera.com/{i}"} for i in range(4)]
+    notas += [{"fuente": "BBC (RSS, inglés)", "titulo": "La nota en inglés", "fecha": ahora, "url": "https://bbc.co.uk/x"},
+              {"fuente": "ESPN (RSS)", "titulo": "Lampard looks for progress as belief grows", "fecha": ahora, "url": "https://espn.com/x"},
+              {"fuente": "Europa Press (RSS)", "titulo": "IrÃ¡n afirma que dos petroleros se incendiaron", "fecha": ahora, "url": "https://europapress.es/x"},
+              {"fuente": "Emol (RSS)", "titulo": "La nota 0 del día", "fecha": ahora, "url": "https://emol.com/0"},
+              {"fuente": "Emol (RSS)", "titulo": "La nota vieja del día", "fecha": viejo, "url": "https://emol.com/v"}]
     tit = B.titulares
     B.titulares = lambda estado: {"secciones": {"politica/chile": {"notas": notas}}}
     try:
@@ -642,8 +644,9 @@ def pulso_del_dia():
     finally:
         B.titulares = tit
     n = t[0]["notas"]
-    assert t[0]["seccion"] == "Chile" and [x["titulo"] for x in n] == ["Nota 0", "Nota 1"], n   # 2 por medio; repetida y vieja fuera
-    assert all("English" != x["titulo"] for x in n)
+    assert t[0]["seccion"] == "Chile" and [x["titulo"] for x in n][:2] == ["La nota 0 del día", "La nota 1 del día"], n   # 2 por medio
+    assert "Irán afirma que dos petroleros se incendiaron" in [x["titulo"] for x in n]   # codificación doble reparada
+    assert not any("inglés" in x["titulo"] or "Lampard" in x["titulo"] or "vieja" in x["titulo"] for x in n)   # inglés y viejas fuera
     assert P.referencia(-20.364, -70.623) == "52 km al O de Iquique" and P.referencia(-33.45, -70.67) == "cerca de Santiago"
     dormir, get = B.time.sleep, B.requests.Session.get
     B.time.sleep = lambda x: None

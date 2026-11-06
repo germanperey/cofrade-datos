@@ -168,7 +168,7 @@ function marco({ titulo, descripcion, cuerpo, canonica }) {
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><style>${CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha">${esc(fechaLarga(fechaChile()))}</span>
-<nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><a href="/#en-vivo">En vivo</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a><button class="tema" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro">◐</button></nav></div></header>
+<nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><a href="/#en-vivo">En vivo</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a><button class="tema" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></nav></div></header>
 <main class="hoja">${cuerpo}</main>
 <footer class="hoja pie">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
 © ${fechaChile().slice(0, 4)} Cofrade News. Todos los derechos reservados.</footer><script>${SCRIPT}</script></body></html>`;
@@ -184,7 +184,8 @@ function bloqueCifras(p) {
     c.push(`<div class="cifra"><small>${esc(x.nombre)}</small><b>${esc(x.prefijo || "")}${num(x.valor, x.decimales ?? 2)}</b></div>`);
   }
   if (p.ipsa) c.push(`<div class="cifra"><small>IPSA (puntos)</small><b>${num(p.ipsa.valor, 2)}</b>${pct(p.ipsa.variacion_pct)}</div>`);
-  for (const m of (p.mercados || []).slice(0, 6)) {
+  const hayCobre = (p.indicadores || []).some((x) => x.clave === "libra_cobre");
+  for (const m of (p.mercados || []).filter((m) => !(hayCobre && /^cobre/i.test(m.nombre || ""))).slice(0, 6)) {
     c.push(`<div class="cifra"><small>${esc(m.nombre)} · cierre ${esc((m.fecha || "").split("-").reverse().slice(0, 2).join("-"))}</small><b>${num(m.valor, 2)}</b>${pct(m.variacion_pct)}</div>`);
   }
   if (p.bitcoin && p.bitcoin.bitcoin_usd) c.push(`<div class="cifra"><small>Bitcoin</small><b>US$${num(p.bitcoin.bitcoin_usd, 0)}</b></div>`);

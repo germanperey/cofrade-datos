@@ -106,8 +106,32 @@ def sismos(estado, horas=24, maximo=5):
             "url": "https://earthquake.usgs.gov/earthquakes/map/"}
 
 
+ES = set("de la el en los las del que por con para una un se su al y es más tras sobre sus ante entre como pero sin desde hasta este esta "
+         "año años chile gobierno nuevo nueva".split())
+EN = set("the of and to in for on with as by is are after how new from at its an be has have will why what who this that".split())
+
+
+def arreglar(t):
+    """«IrÃ¡n» → «Irán»: algunos RSS (Europa Press) llegan con la codificación doble."""
+    t = str(t or "")
+    if re.search(r"Ã[\x80-\xBF¡-ÿ]|Â[\xA0-\xBF]", t):
+        try:
+            return t.encode("latin-1").decode("utf-8")
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            pass
+    return t
+
+
+def es_espanol(titulo):
+    """06-11-2026: todo título que ve el lector va en español (regla de Germán). Las notas en inglés se dejan fuera del pulso."""
+    w = re.findall(r"[a-záéíóúñü]+", str(titulo or "").lower())
+    es, en = sum(x in ES for x in w), sum(x in EN for x in w)
+    return es > en or (en == 0 and bool(re.search(r"[áéíóúñ¿¡]", str(titulo or "").lower())))
+
+
 def _en_espanol(n):
-    return "inglés" not in str(n.get("fuente") or "").lower() and "english" not in str(n.get("fuente") or "").lower()
+    f = str(n.get("fuente") or "").lower()
+    return "inglés" not in f and "english" not in f and es_espanol(arreglar(n.get("titulo")))
 
 
 def titulares(estado, horas=HORAS_TITULARES):
@@ -121,13 +145,13 @@ def titulares(estado, horas=HORAS_TITULARES):
         notas.sort(key=lambda n: n.get("fecha") or "", reverse=True)
         vistos, elegidas, medios = set(), [], {}
         for n in notas:
-            k = re.sub(r"\W+", " ", n["titulo"].lower())[:70]
+            k = re.sub(r"\W+", " ", arreglar(n["titulo"]).lower())[:70]
             medio = re.sub(r"\s*\(.*?\)\s*$", "", str(n.get("fuente") or "")).strip()
             if k in vistos or medios.get(medio, 0) >= 2:   # sin repetir y sin que un medio llene la sección
                 continue
             vistos.add(k)
             medios[medio] = medios.get(medio, 0) + 1
-            elegidas.append({"titulo": n["titulo"][:220], "medio": medio, "url": n["url"], "hora": str(n.get("fecha") or "")[11:16]})
+            elegidas.append({"titulo": arreglar(n["titulo"])[:220], "medio": arreglar(medio), "url": n["url"], "hora": str(n.get("fecha") or "")[11:16]})
             if len(elegidas) >= POR_SECCION:
                 break
         if elegidas:
