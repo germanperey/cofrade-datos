@@ -1,5 +1,5 @@
 # Cofrade News · datos oficiales del día (gratis, en GitHub Actions)
-# Corre cada 30 minutos de madrugada (03:07 a 10:37 UTC = 00:07 a 07:37 de Santiago en verano), antes de la tarea de las 06:47.
+# Corre cada 30 minutos de madrugada (03:07 a 10:37 UTC = 00:07 a 07:37 de Santiago en verano), antes de la tarea de las 07:30 (06-11-2026).
 # 01-11-2026: el 31-10 GitHub atrasó sus horarios casi 6 horas (corrió a las 06:03 y 06:47): con 7 intentos, alguno llega a tiempo. También se puede correr a mano: pestaña «Actions» → «Datos oficiales del día» → «Run workflow».
 name: Datos oficiales del día
 
@@ -21,7 +21,7 @@ concurrency:
 jobs:
   bajar:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40   # 06-11-2026: el espejo de lecturas suma unos minutos
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
