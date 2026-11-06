@@ -934,7 +934,7 @@ def autores_boletines(estado, cam, previo, maximo=40):
         m = re.search(r"Bolet[ií]n\s*N?[°º.]*\s*(\d{3,6})-\d{1,2}", str(v.get("descripcion") or "") + " " + str(v.get("materia") or ""))
         if m and m.group(1) not in out and m.group(1) not in bols:
             bols.append(m.group(1))
-    hechos, fallas, seguidas, t0 = 0, 0, 0, time.monotonic()
+    hechos, fallas, seguidas, t0, muestras = 0, 0, 0, time.monotonic(), []
     for n in bols[:maximo]:
         if seguidas >= 3 or time.monotonic() - t0 > 300:   # el Senado no responde: no se gasta la corrida (tope de 5 min)
             break
@@ -943,7 +943,10 @@ def autores_boletines(estado, cam, previo, maximo=40):
             estado["autores_boletines"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": "robots.txt no lo permite"}
             return out or None
         tmp = {}
-        f = leer_tramitacion(pedir(url, tmp, "x", como="text", espera=(0, 5), limite=30))
+        txt = pedir(url, tmp, "x", como="text", espera=(0, 5), limite=30)
+        f = leer_tramitacion(txt)
+        if not f and len(muestras) < 2:   # para diagnosticar un cambio de formato del servicio del Senado
+            muestras.append({"url": url, "error": (tmp.get("x") or {}).get("error", ""), "inicio": re.sub(r"\s+", " ", str(txt or ""))[:300]})
         if f:
             out[n] = dict(f, fecha=ahora().date().isoformat(), url=url)
             hechos, seguidas = hechos + 1, 0
@@ -951,7 +954,8 @@ def autores_boletines(estado, cam, previo, maximo=40):
             fallas, seguidas = fallas + 1, seguidas + 1
         time.sleep(2)
     estado["autores_boletines"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": SENADO_TRAM.format(n="N"),
-                                   "nuevos": hechos, "sin_ficha": fallas, "total": len(out), "pendientes": max(0, len(bols) - maximo)}
+                                   "nuevos": hechos, "sin_ficha": fallas, "total": len(out), "pendientes": max(0, len(bols) - maximo),
+                                   "muestras": muestras}
     return out or None
 
 
