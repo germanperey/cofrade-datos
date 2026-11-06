@@ -487,6 +487,169 @@ def bing_noticias_y_redes_oficiales():
     assert R["deportes"][0][1] == "https://bsky.app/profile/ejemplo.bsky.social/rss"
 
 
+URLS_RECOLECTAR = {
+"2026-11-06": [
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-18.48&lon=-70.31",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-23.65&lon=-70.40",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-29.90&lon=-71.25",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-33.05&lon=-71.61",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-33.45&lon=-70.67",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-36.83&lon=-73.05",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-38.74&lon=-72.59",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-41.47&lon=-72.94",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-53.16&lon=-70.92",
+"https://mindicador.cl/api/dolar/2026",
+"https://mindicador.cl/api/euro/2026",
+"https://mindicador.cl/api/uf/2026",
+"https://mindicador.cl/api/utm/2026",
+"https://mindicador.cl/api",
+"https://api.wikimedia.org/feed/v1/wikipedia/es/onthisday/all/11/06",
+"https://query1.finance.yahoo.com/v8/finance/chart/%5EIPSA?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/%5EDJI?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/BZ%3DF?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/HG%3DF?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?range=5d&interval=1d",
+"https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/golf/eur/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/golf/liv/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
+"https://site.api.espn.com/apis/site/v2/sports/tennis/wta/rankings",
+"https://site.api.espn.com/apis/v2/sports/racing/f1/standings",
+"https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
+"https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.copa_chi/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261104-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261030-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.copa_chi/scoreboard?dates=20261030-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20261030-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20261030-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard?dates=20261030-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261030-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261030-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261030-20261106",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261030-20261106"
+],
+"2026-11-09": [
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-18.48&lon=-70.31",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-23.65&lon=-70.40",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-29.90&lon=-71.25",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-33.05&lon=-71.61",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-33.45&lon=-70.67",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-36.83&lon=-73.05",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-38.74&lon=-72.59",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-41.47&lon=-72.94",
+"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-53.16&lon=-70.92",
+"https://mindicador.cl/api/dolar/2026",
+"https://mindicador.cl/api/euro/2026",
+"https://mindicador.cl/api/uf/2026",
+"https://mindicador.cl/api/utm/2026",
+"https://mindicador.cl/api",
+"https://api.wikimedia.org/feed/v1/wikipedia/es/onthisday/all/11/09",
+"https://query1.finance.yahoo.com/v8/finance/chart/%5EIPSA?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/%5EDJI?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/BZ%3DF?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/HG%3DF?range=5d&interval=1d",
+"https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?range=5d&interval=1d",
+"https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/golf/eur/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/golf/liv/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
+"https://site.api.espn.com/apis/site/v2/sports/tennis/wta/rankings",
+"https://site.api.espn.com/apis/v2/sports/racing/f1/standings",
+"https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
+"https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.copa_chi/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261106-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261102-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.copa_chi/scoreboard?dates=20261102-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20261102-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20261102-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard?dates=20261102-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261102-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261102-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261102-20261109",
+"https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261102-20261109"
+]
+}
+
+
+@prueba
+def espejo_de_lecturas_para_la_tarea():
+    """05-11-2026 (Germán: «LOOP… e itera con varias páginas alternativas»): en la tarea web_fetch rechaza las direcciones fijas
+    (PROVENANCE_REQUIRED). GitHub las lee (respetando robots.txt) y las deja: fixtures/ con el nombre exacto que usa
+    `recolectar.py --fixtures` y paginas/ con el texto de cada página fija o pedida por la tarea el día anterior."""
+    import gzip
+    import tempfile
+    for f, L in URLS_RECOLECTAR.items():   # letra por letra: recolectar.py busca el archivo por el hash de la dirección
+        assert B.urls_recolectar(dt.date.fromisoformat(f)) == L, f
+    assert B.nombre_fixture("https://mindicador.cl/api") == __import__("hashlib").sha256(b"https://mindicador.cl/api").hexdigest()[:16] + ".json"
+    t = B.html_a_texto('<html><head><title>x</title></head><body><script>var a=1</script><table><tr><td>LA 271</td><td>Puerto Montt</td>'
+                       '<td>19:10</td></tr></table><p>Aviso <a href="https://x.cl/a.pdf">Marejadas N° 33</a></p></body></html>')
+    assert "LA 271 | Puerto Montt | 19:10 |" in t and "Marejadas N° 33 [https://x.cl/a.pdf]" in t and "var a" not in t, t
+    vistos = []
+    viejos = B.pedir, B.robots_permite
+
+    def pedir(url, estado, clave, **k):
+        vistos.append(url)
+        estado[clave] = {"ok": True}
+        if "meteoarmada" in url:
+            return "<html><body>" + "<p>Aviso especial de marejadas N° 33 vigente desde el 05-11-2026</p>" * 10 + "</body></html>"
+        if "nba/news" in url or "mindicador" in url or "espn" in url:
+            return json.dumps({"articles": [{"headline": "Lakers ganan"}] * 20})
+        return None
+    B.pedir = pedir
+    B.robots_permite = lambda url, estado: "iqair" not in url
+    try:
+        with tempfile.TemporaryDirectory() as d:
+            e = {}
+            idx = B.fixtures(e, dt.date(2026, 11, 6), d)
+            assert idx["listas"] and all(os.path.exists(os.path.join(d, "fixtures", x["archivo"] + ".gz")) for x in idx["listas"])
+            assert any(x["url"].startswith("https://api.met.no") for x in idx["fallidas"])   # sin respuesta JSON: queda anotada
+            e = {}
+            pag = B.espejo(e, d, [{"url": "https://tramitacion.senado.cl/wspublico/votaciones.php?boletin=18259", "que": "Senado"}, "no es url"])
+            arch = {x["url"]: x["archivo"] for x in pag["listas"]}
+            assert arch["https://meteoarmada.directemar.cl/"] == "armada-avisos.txt"
+            txt = gzip.open(os.path.join(d, "paginas", "armada-avisos.txt.gz"), "rt", encoding="utf-8").read()
+            assert "Aviso especial de marejadas N° 33" in txt
+            assert arch["https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news"].endswith(".json")
+            mal = {x["url"]: x["error"] for x in pag["fallidas"]}
+            assert mal["https://www.iqair.com/chile/santiago-metropolitan/santiago"] == "robots.txt no lo permite"
+            assert "https://tramitacion.senado.cl/wspublico/votaciones.php?boletin=18259" in vistos   # lo que la tarea pidió ayer
+            assert e["espejo"]["n"] == len(pag["listas"]) and pag["fecha"]
+            json.dump(pag, open(os.path.join(d, "paginas.json"), "w"))
+            hoy = dt.date.fromisoformat(pag["fecha"])
+            os.environ.pop("GITHUB_EVENT_NAME", None)
+            assert not B.toca_espejo(d, hoy, hora=12) and B.toca_espejo(d, hoy, hora=6)   # ya hecho hoy: solo se refresca de 05 a 08
+            assert B.toca_espejo(d, hoy + dt.timedelta(days=1), hora=12)                 # primera corrida del día siguiente
+            B._gz(os.path.join(d, "a.gz"), "igual")
+            B._gz(os.path.join(d, "b.gz"), "igual")
+            assert open(os.path.join(d, "a.gz"), "rb").read() == open(os.path.join(d, "b.gz"), "rb").read()   # git no repite copias
+    finally:
+        B.pedir, B.robots_permite = viejos
+
+
 @prueba
 def tasas_mensuales_oficiales_y_tpm_esperada():
     """03-11-2026 (Germán: «Créditos hipotecarios: septiembre 2026 · ¿noviembre?»): la hipotecaria y el consumo son promedios

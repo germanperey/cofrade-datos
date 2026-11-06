@@ -1753,6 +1753,161 @@ def escribir(ruta, contenido):
     return True
 
 
+# ---------- ESPEJO DE LECTURAS (05-11-2026; Germán: «agrega un LOOP… e itera con varias páginas alternativas») ----------
+# En la tarea programada, web_fetch rechaza casi todas las direcciones fijas (PROVENANCE_REQUIRED) y el código de la tarea no tiene
+# red. GitHub sí la tiene: lee aquí, respetando el robots.txt de cada sitio, lo mismo que la tarea necesita y lo deja en datos/:
+#   · fixtures/: las respuestas JSON que `recolectar.py --fixtures` ya sabe interpretar (ESPN golf/tenis/F1/NBA/fútbol, MET Norway,
+#     Wikipedia «un día como hoy», mindicador, Yahoo Finanzas del IPSA…): mismo nombre que usa recolectar (sha256 de la dirección).
+#   · paginas/: el TEXTO de las páginas fijas (Armada, IQAir, Flight-Status, Banco Central, Senado…) y de las que la tarea anotó como
+#     fallidas el día anterior (pedidos/ultimo.json): la tarea las lee con Read en vez de web_fetch.
+import gzip
+import hashlib
+
+ESPN_S = "https://site.api.espn.com/apis/site/v2/sports"
+LIGAS = ("chi.1", "chi.copa_chi", "conmebol.libertadores", "conmebol.sudamericana", "fifa.worldq.conmebol", "uefa.champions", "eng.1", "esp.1", "ita.1")
+MET = ((-18.48, -70.31), (-23.65, -70.40), (-29.90, -71.25), (-33.05, -71.61), (-33.45, -70.67), (-36.83, -73.05), (-38.74, -72.59), (-41.47, -72.94),
+       (-53.16, -70.92))
+
+
+def urls_recolectar(f):
+    """Las direcciones exactas que pide `recolectar.py` para la fecha f (deben calzar letra por letra: el nombre del archivo es su hash)."""
+    u = [f"https://api.met.no/weatherapi/locationforecast/2.0/complete?lat={la:.2f}&lon={lo:.2f}" for la, lo in MET]
+    u += [f"https://mindicador.cl/api/{x}/{f.year}" for x in ("dolar", "euro", "uf", "utm")] + ["https://mindicador.cl/api"]
+    u.append(f"https://api.wikimedia.org/feed/v1/wikipedia/es/onthisday/all/{f:%m}/{f:%d}")
+    u += [f"https://query1.finance.yahoo.com/v8/finance/chart/{s}?range=5d&interval=1d"
+          for s in ("%5EIPSA", "%5EGSPC", "%5EIXIC", "%5EDJI", "BZ%3DF", "HG%3DF", "BTC-USD")]
+    u += [f"{ESPN_S}/golf/{t}/scoreboard" for t in ("pga", "eur", "liv", "lpga")]
+    u += [f"{ESPN_S}/tennis/{t}/rankings" for t in ("atp", "wta")]
+    u += ["https://site.api.espn.com/apis/v2/sports/racing/f1/standings", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings"]
+    u += [f"{ESPN_S}/tennis/{t}/scoreboard" for t in ("atp", "wta")]
+    for d in (f - dt.timedelta(days=3 if f.weekday() == 0 else 2), f - dt.timedelta(days=7)):
+        u += [f"{ESPN_S}/soccer/{l}/scoreboard?dates={d:%Y%m%d}-{f:%Y%m%d}" for l in LIGAS]
+    return list(dict.fromkeys(u))
+
+
+def nombre_fixture(url):
+    return hashlib.sha256(url.encode()).hexdigest()[:16] + ".json"
+
+
+ESPEJO = [   # (archivo, dirección, qué es) · las direcciones fijas que Germán autorizó y que web_fetch rechaza en la tarea
+    ("armada-avisos", "https://meteoarmada.directemar.cl/", "Avisos de marejadas y temporales de la Armada"),
+    ("bcentral-inicio", "https://www.bcentral.cl/inicio", "Banco Central: portada (TPM, indicadores, publicaciones)"),
+    ("larrainvial-mercados", "https://mercados.larrainvial.com/", "IPSA y mercados (LarrainVial)"),
+    ("fmi-pib-chile", "https://www.imf.org/external/datamapper/api/v1/NGDP_RPCH/CHL", "FMI: crecimiento del PIB de Chile"),
+    ("espn-nba-noticias", "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news", "NBA: noticias (ESPN)"),
+    ("espn-tenis-noticias", "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/news", "Tenis: noticias (ESPN)"),
+    ("espn-golf-noticias", "https://site.api.espn.com/apis/site/v2/sports/golf/news", "Golf: noticias (ESPN)"),
+    ("espn-rugby-noticias", "https://site.api.espn.com/apis/site/v2/sports/rugby/news", "Rugby: noticias (ESPN)"),
+] + [(f"iqair-{s}", u, f"Calidad del aire: {n}") for s, n, u in (
+    ("arica", "Arica", "https://www.iqair.com/chile/arica-y-parinacota/arica"),
+    ("antofagasta", "Antofagasta", "https://www.iqair.com/chile/antofagasta/antofagasta"),
+    ("la-serena", "La Serena", "https://www.iqair.com/chile/coquimbo/la-serena"),
+    ("valparaiso", "Valparaíso y Viña del Mar", "https://www.iqair.com/chile/valparaiso/vina-del-mar"),
+    ("santiago", "Santiago", "https://www.iqair.com/chile/santiago-metropolitan/santiago"),
+    ("concepcion", "Concepción", "https://www.iqair.com/chile/biobio/concepcion"),
+    ("temuco", "Temuco", "https://www.iqair.com/chile/araucania/temuco"),
+    ("puerto-montt", "Puerto Montt", "https://www.iqair.com/chile/los-lagos/puerto-montt"),
+    ("punta-arenas", "Punta Arenas", "https://www.iqair.com/chile/magallanes/punta-arenas"))
+] + [(f"flight-status-{c}-{t}", f"https://flight-status.com/airport/{c}-{t}/", f"Vuelos {c.upper()} ({'salidas' if t == 'departures' else 'llegadas'})")
+     for c in ("scl", "anf", "ccp", "pmc", "puq") for t in ("departures", "arrivals")]
+PEDIDOS_MAX = 40
+
+
+class _SinEspejo(Exception):
+    pass
+
+
+def toca_espejo(salida, hoy, hora=None):
+    """El espejo corre en la primera corrida del día y de nuevo entre las 05:00 y las 08:00 de Santiago (lo más fresco para la
+    tarea de las 07:30). Así no se repiten ~120 lecturas en cada una de las 16 corridas, ni se carga a los sitios. A mano, siempre."""
+    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
+        return True
+    try:
+        if json.load(open(os.path.join(salida, "paginas.json"), encoding="utf-8")).get("fecha") != hoy.isoformat():
+            return True
+    except (OSError, ValueError, AttributeError):
+        return True
+    h = ahora().hour if hora is None else hora
+    return 5 <= h < 8
+
+
+def html_a_texto(h, limite=180_000):
+    """Texto legible de una página: sin scripts ni estilos, filas de tabla con « | », enlaces como «texto [dirección]»."""
+    h = re.sub(r"(?is)<(script|style|noscript|svg|head)\b.*?</\1>", " ", h or "")
+    h = re.sub(r'(?is)<a\b[^>]*href="(https?://[^"]+)"[^>]*>(.*?)</a>', lambda m: f"{m.group(2)} [{m.group(1)}]" if re.sub(r"<[^>]+>", "", m.group(2)).strip() else " ", h)
+    h = re.sub(r"(?i)</t[dh]>", " | ", h)
+    h = re.sub(r"(?i)<(br|/p|/tr|/li|/h[1-6]|/div|/section|/article)\b[^>]*>", "\n", h)
+    t = unescape(re.sub(r"<[^>]+>", " ", h))
+    t = re.sub(r"[ \t\r\f\v]+", " ", t)
+    t = re.sub(r"\n\s*\n+", "\n", t)
+    return t.strip()[:limite]
+
+
+def _gz(ruta, texto):
+    os.makedirs(os.path.dirname(ruta), exist_ok=True)
+    # mtime=0 y sin nombre: el mismo texto da los mismos bytes, así git no guarda copias repetidas (el repo no engorda)
+    with open(ruta, "wb") as fh, gzip.GzipFile(filename="", mode="wb", fileobj=fh, compresslevel=9, mtime=0) as g:
+        g.write(texto.encode("utf-8"))
+
+
+def fixtures(estado, f, salida):
+    """Baja las respuestas que usa recolectar.py y las deja comprimidas en <salida>/fixtures/. → índice."""
+    carpeta = os.path.join(salida, "fixtures")
+    if os.path.isdir(carpeta):
+        for n in os.listdir(carpeta):
+            os.remove(os.path.join(carpeta, n))
+    ok, mal, tmp = [], [], {}
+    for url in urls_recolectar(f):
+        if not robots_permite(url, estado):
+            mal.append({"url": url, "error": "robots.txt no lo permite"})
+            continue
+        txt = pedir(url, tmp, "x", como="text", espera=(0, 8), limite=40)
+        try:
+            json.loads(txt or "")
+        except ValueError:
+            mal.append({"url": url, "error": tmp.get("x", {}).get("error") or "respuesta que no es JSON"})
+            continue
+        _gz(os.path.join(carpeta, nombre_fixture(url) + ".gz"), txt)
+        ok.append({"url": url, "archivo": nombre_fixture(url)})
+    estado["fixtures"] = {"ok": bool(ok), "hora": ahora().isoformat(timespec="seconds"), "url": "recolectar.py --fixtures",
+                          "n": len(ok), "error": f"{len(mal)} sin respuesta" if mal else ""}
+    return {"fecha": f.isoformat(), "listas": ok, "fallidas": mal}
+
+
+def espejo(estado, salida, pedidos=()):
+    """Texto de las páginas fijas y de las pedidas por la tarea (máximo 40), comprimido en <salida>/paginas/. → índice."""
+    carpeta = os.path.join(salida, "paginas")
+    if os.path.isdir(carpeta):
+        for n in os.listdir(carpeta):
+            os.remove(os.path.join(carpeta, n))
+    lista = list(ESPEJO)
+    vistos = {u for _, u, _ in lista}
+    for p in list(pedidos)[:PEDIDOS_MAX]:
+        u = str((p or {}).get("url") if isinstance(p, dict) else p or "").strip()
+        if re.match(r"^https?://", u) and u not in vistos and len(u) < 400:
+            vistos.add(u)
+            lista.append(("pedido-" + hashlib.sha256(u.encode()).hexdigest()[:12], u, str((p or {}).get("que") if isinstance(p, dict) else "") or "pedida por la tarea"))
+    ok, mal, tmp = [], [], {}
+    for nombre, url, que in lista:
+        if not robots_permite(url, estado):
+            mal.append({"url": url, "que": que, "error": "robots.txt no lo permite"})
+            continue
+        txt = pedir(url, tmp, "x", como="text", espera=(0, 8), limite=40)
+        if not txt:
+            mal.append({"url": url, "que": que, "error": tmp.get("x", {}).get("error") or "sin respuesta"})
+            continue
+        es_json = txt.lstrip()[:1] in "{["
+        cuerpo = txt[:400_000] if es_json else html_a_texto(txt)
+        if len(cuerpo) < 200:
+            mal.append({"url": url, "que": que, "error": "página casi vacía (se arma con JavaScript)"})
+            continue
+        _gz(os.path.join(carpeta, nombre + (".json" if es_json else ".txt") + ".gz"), cuerpo)
+        ok.append({"url": url, "que": que, "archivo": nombre + (".json" if es_json else ".txt"), "hora": ahora().isoformat(timespec="minutes")})
+    estado["espejo"] = {"ok": bool(ok), "hora": ahora().isoformat(timespec="seconds"), "url": "páginas leídas por GitHub",
+                        "n": len(ok), "error": f"{len(mal)} sin texto" if mal else ""}
+    return {"fecha": ahora().date().isoformat(), "listas": ok, "fallidas": mal}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--salida", default="datos")
@@ -1830,6 +1985,21 @@ def main(argv=None):
         estado["bcch_catalogo_mensual"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central",
                                            "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     escribir(os.path.join(a.salida, "bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": _BCCH["catalogo"]} if _BCCH.get("catalogo") else None)
+    try:   # 05-11-2026: lo que la tarea no puede leer, lo lee GitHub (fixtures de recolectar.py y texto de páginas)
+        if not toca_espejo(a.salida, hoy):
+            raise _SinEspejo
+        escribir(os.path.join(a.salida, "fixtures.json"), fixtures(estado, hoy, a.salida))
+        try:
+            ped = json.load(open(os.path.join(os.path.dirname(os.path.abspath(a.salida)), "pedidos", "ultimo.json"), encoding="utf-8"))
+            ped = ped.get("pedidos") if isinstance(ped, dict) else ped
+        except (OSError, ValueError):
+            ped = []
+        escribir(os.path.join(a.salida, "paginas.json"), espejo(estado, a.salida, ped if isinstance(ped, list) else []))
+    except _SinEspejo:
+        estado["espejo"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": "espejo",
+                            "nota": "ya hecho hoy; se refresca entre las 05:00 y las 08:00 de Santiago"}
+    except Exception as ex:   # noqa: BLE001
+        estado["espejo"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "espejo", "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     escribir(os.path.join(a.salida, "robots.json"), {"fecha": hoy.isoformat(), "sitios": ROBOTS_VISTOS} if ROBOTS_VISTOS else None)
     for nombre, fn in (("sismos.csv", lambda: sismos(estado)), ("aire.json", lambda: aire_waqi(estado) or aire(estado)), ("f1.json", lambda: f1(estado, hoy))):
         try:   # 02-11-2026: ninguna de estas tres detiene a las demás
