@@ -800,6 +800,10 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
                  ("Bing Noticias · Equitación internacional", _bing("salto ecuestre FEI Longines Global Champions"), "rss"),
                  ("Bing Noticias · Hípica y polo Chile", _bing("Federación Ecuestre de Chile concurso salto Club Hípico"), "rss"),
                  ("Google News · Equitación", "https://news.google.com/rss/search?q=(equitaci%C3%B3n+OR+%22salto+ecuestre%22+OR+FEI+OR+%22Global+Champions%22)+when:30d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+                 # 08-11-2026: Google Noticias y Bing Noticias prohíben las búsquedas automáticas en su robots.txt (se saltan solas):
+                 # fuentes directas que sí lo permiten
+                 ("FEI · Federación Ecuestre Internacional (RSS, inglés)", "https://inside.fei.org/rss.xml", "rss"),
+                 ("Ecuestre.es · Revista Ecuestre (RSS)", "https://www.ecuestre.es/feed/", "rss"),
                  ("Bing Noticias · NBA", _bing("NBA resultados partido"), "rss"),
                  ("Google News · NBA", "https://news.google.com/rss/search?q=NBA+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
                  # 03-11-2026 (informe de la tarea: rugby con solo 2 notas)
