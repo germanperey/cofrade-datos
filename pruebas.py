@@ -734,8 +734,10 @@ def espejo_respeta_el_429():
     """06-11-2026: IQAir respondió 429 a 9 lecturas seguidas y la corrida se alargó más de 20 minutos (tope: 30). Al primer 429
     de un sitio lento, no se le pide nada más en esa corrida."""
     import tempfile
-    viejos = B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval
+    viejos = B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval, B.paginas_oleaje, B.time.sleep
     B.efemeride_naval = lambda *a, **k: None
+    B.time.sleep = lambda x: None
+    B.paginas_oleaje = lambda: [(f"oleaje-p{i}", f"https://tablademareas.com/cl/x/p{i}/prevision/oleaje", "oleaje") for i in range(3)]
     pedidas = []
 
     def pedir(url, est, cl, **k):
@@ -748,10 +750,10 @@ def espejo_respeta_el_429():
     try:
         with tempfile.TemporaryDirectory() as d:
             pag = B.espejo({}, d, [])
-        assert pedidas == ["https://www.iqair.com/chile/a"], pedidas
-        assert len(pag["fallidas"]) == 3 and "429" in pag["fallidas"][2]["error"]
+        assert pedidas == ["https://www.iqair.com/chile/a", "https://tablademareas.com/cl/x/p0/prevision/oleaje"], pedidas   # un 429 por sitio
+        assert len(pag["fallidas"]) == 6 and "429" in pag["fallidas"][2]["error"] and "tablademareas" in pag["fallidas"][5]["error"]
     finally:
-        B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval = viejos
+        B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval, B.paginas_oleaje, B.time.sleep = viejos
 
 
 @prueba
@@ -780,6 +782,8 @@ def espejo_de_lecturas_para_la_tarea():
         return None
     B.pedir = pedir
     B.robots_permite = lambda url, estado: "iqair" not in url
+    dormir = B.time.sleep
+    B.time.sleep = lambda x: None
     try:
         with tempfile.TemporaryDirectory() as d:
             e = {}
@@ -796,6 +800,8 @@ def espejo_de_lecturas_para_la_tarea():
             mal = {x["url"]: x["error"] for x in pag["fallidas"]}
             assert mal["https://www.iqair.com/chile/santiago-metropolitan/santiago"] == "robots.txt no lo permite"
             assert "https://tramitacion.senado.cl/wspublico/votaciones.php?boletin=18259" in vistos   # lo que la tarea pidió ayer
+            assert "https://tablademareas.com/cl/valparaiso/bahia-cumberland/prevision/oleaje" in vistos   # 08-11-2026: oleaje de los 30 puertos
+            assert len([u for u in vistos if "/prevision/oleaje" in u]) == 30
             assert e["espejo"]["n"] == len(pag["listas"]) and pag["fecha"]
             json.dump(pag, open(os.path.join(d, "paginas.json"), "w"))
             hoy = dt.date.fromisoformat(pag["fecha"])
@@ -807,6 +813,7 @@ def espejo_de_lecturas_para_la_tarea():
             assert open(os.path.join(d, "a.gz"), "rb").read() == open(os.path.join(d, "b.gz"), "rb").read()   # git no repite copias
     finally:
         B.pedir, B.robots_permite = viejos
+        B.time.sleep = dormir
 
 
 @prueba

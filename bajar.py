@@ -1122,7 +1122,7 @@ def indicadores_conflictos(estado):
            "israel-gaza": _gaza(estado),
            "iran-regional": _fred_ultimo(estado, "DCOILBRENTEU", "Petróleo Brent (riesgo en Ormuz)", "US$ por barril",
                                          "https://fred.stlouisfed.org/series/DCOILBRENTEU"),
-           "sudan": _unhcr(estado, "SDN")}
+           "sudan": _unhcr(estado, "SUD")}   # 08-11-2026: ACNUR usa su propio código para Sudán (SUD, no SDN)
     out = {k: v for k, v in out.items() if v}
     estado["conflictos_indicadores"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": "ACNUR · FRED · Tech for Palestine",
                                         "n": sum(len(v) for v in out.values())}
@@ -2142,6 +2142,19 @@ ESPEJO = [   # (archivo, dirección, qué es) · las direcciones fijas que Germ�
 PEDIDOS_MAX = 40
 LENTOS = ("iqair.com",)
 LENTOS_PAUSA = 15
+PAUSA_SITIO = {"tablademareas.com": 2}   # 08-11-2026: 30 páginas de oleaje seguidas: una cada 2 s
+
+
+def paginas_oleaje():
+    """08-11-2026 (controles del 07 y 08-11: sin oleaje de Arica, Valparaíso, San Antonio y Juan Fernández con aviso de marejadas;
+    Open-Meteo marino y NOAA ERDDAP prohíben la lectura automática en su robots.txt): el pronóstico de oleaje de tablademareas de los
+    30 puertos (si su robots.txt lo permite) → [(archivo, dirección, qué es)]."""
+    try:
+        P = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "puertos-oleaje.json"), encoding="utf-8")).get("puertos") or {}
+    except (OSError, ValueError):
+        return []
+    return [(f"oleaje-{k}", v["oleaje"], f"Pronóstico de oleaje de {v.get('nombre') or k} (tablademareas)") for k, v in P.items()
+            if isinstance(v, dict) and str(v.get("oleaje") or "").startswith("https://")]
 
 
 class _SinEspejo(Exception):
@@ -2211,7 +2224,7 @@ def espejo(estado, salida, pedidos=()):
     if os.path.isdir(carpeta):
         for n in os.listdir(carpeta):
             os.remove(os.path.join(carpeta, n))
-    lista = list(ESPEJO)
+    lista = list(ESPEJO) + paginas_oleaje()
     vistos = {u for _, u, _ in lista}
     for p in list(pedidos)[:PEDIDOS_MAX]:
         u = str((p or {}).get("url") if isinstance(p, dict) else p or "").strip()
@@ -2230,11 +2243,17 @@ def espejo(estado, salida, pedidos=()):
         if lento and ok_lento[0]:
             time.sleep(LENTOS_PAUSA)   # 06-11-2026: IQAir respondió 429 (demasiadas seguidas): una cada 15 s, como un lector humano
         ok_lento[0] = ok_lento[0] or lento
+        pausado = next((k for k in PAUSA_SITIO if k in url), "")
+        if pausado and pausado in frenados:   # 08-11-2026: el mismo freno al 429 para los sitios con muchas páginas (tablademareas)
+            mal.append({"url": url, "que": que, "error": f"{pausado} pidió esperar (HTTP 429): se deja para la próxima corrida"})
+            continue
+        if pausado:
+            time.sleep(PAUSA_SITIO[pausado])
         txt = pedir(url, tmp, "x", como="text", espera=(0, 20) if lento else (0, 8), limite=30 if lento else 40)
         if not txt:
             err = tmp.get("x", {}).get("error") or "sin respuesta"
-            if lento and "429" in err:
-                frenados.add(lento)
+            if (lento or pausado) and "429" in err:
+                frenados.add(lento or pausado)
             mal.append({"url": url, "que": que, "error": err})
             continue
         es_json = txt.lstrip()[:1] in "{["
