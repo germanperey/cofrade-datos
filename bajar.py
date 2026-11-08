@@ -776,7 +776,14 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
                        ("Noticias ONU · África (RSS)", "https://news.un.org/feed/subscribe/es/news/region/africa/feed/rss.xml", "rss"),
                        ("France 24 · África (RSS)", "https://www.france24.com/es/%C3%A1frica/rss", "rss"),
                        ("Sudan Tribune (RSS, inglés)", "https://sudantribune.com/feed/", "rss"),
-                       ("Europa Press · Internacional (RSS)", "https://www.europapress.es/rss/rss.aspx?ch=00069", "rss")],
+                       ("Europa Press · Internacional (RSS)", "https://www.europapress.es/rss/rss.aspx?ch=00069", "rss"),
+                       # 08-11-2026: Gaza, Ucrania e Irán también con varias fuentes cada día
+                       ("Google News · Gaza", "https://news.google.com/rss/search?q=Gaza+(Israel+OR+Ham%C3%A1s)+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+                       ("Google News · Ucrania", "https://news.google.com/rss/search?q=Ucrania+Rusia+guerra+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+                       ("Google News · Irán", "https://news.google.com/rss/search?q=Ir%C3%A1n+(Israel+OR+Ormuz+OR+Hezbol%C3%A1+OR+hut%C3%ADes)+when:1d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+                       ("Google News · Sudán", "https://news.google.com/rss/search?q=Sud%C3%A1n+guerra+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+                       ("Noticias ONU · Oriente Medio (RSS)", "https://news.un.org/feed/subscribe/es/news/region/middle-east/feed/rss.xml", "rss"),
+                       ("Noticias ONU · Europa (RSS)", "https://news.un.org/feed/subscribe/es/news/region/europe/feed/rss.xml", "rss")],
     "inmobiliario": [("Bing Noticias · Mercado inmobiliario", _bing("mercado inmobiliario Chile"), "rss"),
                      ("Bing Noticias · Vivienda y CChC", _bing("viviendas Chile CChC"), "rss"),
                      ("Bing Noticias · Créditos hipotecarios", _bing("crédito hipotecario Chile"), "rss")],
@@ -789,6 +796,12 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
                  ("Bing Noticias · Tenis chileno", _bing("tenis chileno ATP"), "rss"),
                  ("Bing Noticias · Golf", _bing("golf PGA Tour"), "rss"),
                  ("Bing Noticias · Equitación", _bing("equitación salto Chile"), "rss"),
+                 # 08-11-2026 (equitación con 2 de 3 notas; NBA con 1): más búsquedas de noticias
+                 ("Bing Noticias · Equitación internacional", _bing("salto ecuestre FEI Longines Global Champions"), "rss"),
+                 ("Bing Noticias · Hípica y polo Chile", _bing("Federación Ecuestre de Chile concurso salto Club Hípico"), "rss"),
+                 ("Google News · Equitación", "https://news.google.com/rss/search?q=(equitaci%C3%B3n+OR+%22salto+ecuestre%22+OR+FEI+OR+%22Global+Champions%22)+when:30d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+                 ("Bing Noticias · NBA", _bing("NBA resultados partido"), "rss"),
+                 ("Google News · NBA", "https://news.google.com/rss/search?q=NBA+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
                  # 03-11-2026 (informe de la tarea: rugby con solo 2 notas)
                  ("BBC Sport · Rugby (RSS, inglés)", "https://feeds.bbci.co.uk/sport/rugby-union/rss.xml", "rss"),
                  ("Bing Noticias · Rugby Chile", _bing("rugby Chile Cóndores"), "rss"),
@@ -901,6 +914,181 @@ class Robots:
         return True if mejor is None else mejor[1]
 
 
+# ---------- 08-11-2026 · oleaje de toda la costa (Open-Meteo Marine, gratis, sin clave) ----------
+PUERTOS_OLEAJE = (("arica", -18.4694, -70.3247), ("iquique", -20.2161, -70.16), ("tocopilla", -22.0872, -70.1997),
+                  ("mejillones", -23.0975, -70.4478), ("antofagasta", -23.6436, -70.4075), ("taltal", -25.4014, -70.4828),
+                  ("chanaral", -26.3397, -70.6231), ("caldera", -27.0722, -70.8603), ("huasco", -28.4631, -71.2194),
+                  ("coquimbo", -29.9342, -71.3428), ("los-vilos", -31.9089, -71.5108), ("quintero", -32.7806, -71.5358),
+                  ("valparaiso", -33.0347, -71.6231), ("san-antonio", -33.5881, -71.6244), ("pichilemu", -34.3861, -72.0231),
+                  ("constitucion", -35.3183, -72.4286), ("talcahuano", -36.7361, -73.1625), ("coronel", -37.0383, -73.1481),
+                  ("lebu", -37.6031, -73.6575), ("corral", -39.8881, -73.4317), ("puerto-montt", -41.4808, -72.9525),
+                  ("ancud", -41.8494, -73.8231), ("castro", -42.4828, -73.7581), ("quellon", -43.1219, -73.6194),
+                  ("puerto-chacabuco", -45.4694, -72.8197), ("puerto-natales", -51.7328, -72.5147), ("punta-arenas", -53.1625, -70.8525),
+                  ("puerto-williams", -54.9325, -67.6067), ("rapa-nui", -27.1492, -109.4344), ("juan-fernandez", -33.6306, -78.8064))
+MARINO = "https://marine-api.open-meteo.com/v1/marine"
+
+
+def oleaje_costa(estado, dias=7):
+    """Ola máxima, período y dirección por día en los 30 puertos (los mismos de assets/puertos-costa.json de la Skill), en UNA lectura.
+    → {"fuente", "url", "generado", "puertos": {slug: [{fecha, ola_max_m, periodo_s, direccion_grados}]}} o None."""
+    url = (MARINO + "?latitude=" + ",".join(str(p[1]) for p in PUERTOS_OLEAJE) + "&longitude=" + ",".join(str(p[2]) for p in PUERTOS_OLEAJE)
+           + f"&daily=wave_height_max,wave_period_max,wave_direction_dominant&timezone=America%2FSantiago&forecast_days={dias}")
+    if not robots_permite(url, estado):
+        return None
+    j = pedir(url, estado, "oleaje", espera=(0, 20), limite=60)
+    lista = j if isinstance(j, list) else ([j] if isinstance(j, dict) else [])
+    out = {}
+    for (slug, _, _), x in zip(PUERTOS_OLEAJE, lista):
+        dd = (x or {}).get("daily") or {}
+        fechas, h = dd.get("time") or [], dd.get("wave_height_max") or []
+        per, dire = dd.get("wave_period_max") or [], dd.get("wave_direction_dominant") or []
+        filas = []
+        for i, f in enumerate(fechas):
+            if i < len(h) and isinstance(h[i], (int, float)):
+                filas.append({"fecha": f, "ola_max_m": round(h[i], 1),
+                              "periodo_s": round(per[i], 1) if i < len(per) and isinstance(per[i], (int, float)) else None,
+                              "direccion_grados": round(dire[i]) if i < len(dire) and isinstance(dire[i], (int, float)) else None})
+        if filas:
+            out[slug] = filas
+    if not out:
+        estado["oleaje"] = dict(estado.get("oleaje") or {}, ok=False, error=(estado.get("oleaje") or {}).get("error") or "sin datos")
+        return None
+    return {"fuente": "Open-Meteo, modelo marino (ola máxima del día)", "url": "https://open-meteo.com/en/docs/marine-weather-api",
+            "generado": ahora().isoformat(timespec="minutes"), "puertos": out}
+
+
+# ---------- 08-11-2026 · efeméride naval del día (Armada de Chile) ----------
+MESES_ES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre")
+
+
+def efemeride_naval(estado, hoy, salida):
+    """Lee el índice del mes de las efemérides navales de la Armada, busca la(s) del día y guarda su texto en paginas/armada-efemeride-*.txt.
+    → {"fecha", "listas": [{url, titulo, archivo}]} o None."""
+    mes = MESES_ES[hoy.month - 1]
+    base = f"https://www.armada.cl/tradicion-e-historia/efemerides-navales/{mes}"
+    if not robots_permite(base, estado):
+        return None
+    h = pedir(base, estado, "efemeride_naval", como="text", espera=(0, 10), limite=40)
+    if not h:
+        return None
+    patron = re.compile(rf'href="([^"]*/efemerides-navales/{mes}/{hoy.day}-de-{mes}[^"]*)"[^>]*>(.*?)</a>', re.I | re.S)
+    out, vistos = [], set()
+    os.makedirs(os.path.join(salida, "paginas"), exist_ok=True)
+    for m in patron.finditer(h):
+        u = m.group(1) if m.group(1).startswith("http") else "https://www.armada.cl" + m.group(1)
+        if u in vistos or len(out) >= 3:
+            continue
+        vistos.add(u)
+        t = pedir(u, estado, "efemeride_naval_det", como="text", espera=(0, 10), limite=40)
+        texto = html_a_texto(t or "")
+        if len(texto) < 200:
+            continue
+        nombre = f"armada-efemeride-{len(out) + 1}.txt"
+        _gz(os.path.join(salida, "paginas", nombre + ".gz"), texto)
+        out.append({"url": u, "titulo": re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", m.group(2)))).strip()[:160], "archivo": nombre})
+    return {"fecha": hoy.isoformat(), "listas": out} if out else None
+
+
+# ---------- 08-11-2026 · indicadores oficiales de los conflictos (mínimo 2 por conflicto, con fuente y fecha) ----------
+def _unhcr(estado, iso3):
+    url = f"https://api.unhcr.org/population/v1/population/?limit=20&yearFrom=2023&yearTo={ahora().year}&coo={iso3}&coa_all=true"
+    if not robots_permite(url, estado):
+        return []
+    j = pedir(url, estado, f"unhcr_{iso3}", espera=(0, 20), limite=40) or {}
+    items = [x for x in (j.get("items") or []) if isinstance(x, dict) and str(x.get("year") or "").isdigit()]
+    if not items:
+        return []
+    x = max(items, key=lambda i: int(i["year"]))
+    y = int(x["year"])
+    fecha = f"{y}-12-31" if y < ahora().year else f"{y}-06-30"
+    out = []
+    num = lambda v: int(v) if str(v or "").strip().lstrip("-").isdigit() else None   # noqa: E731
+    if num(x.get("refugees")):
+        out.append({"nombre": "Refugiados fuera del país (ACNUR)", "valor": num(x.get("refugees")), "unidad": "personas",
+                    "fuente": "ACNUR (Agencia de la ONU para los Refugiados)", "url": "https://www.unhcr.org/refugee-statistics/", "fecha": fecha})
+    if num(x.get("idps")):
+        out.append({"nombre": "Desplazados internos (ACNUR)", "valor": num(x.get("idps")), "unidad": "personas",
+                    "fuente": "ACNUR (Agencia de la ONU para los Refugiados)", "url": "https://www.unhcr.org/refugee-statistics/", "fecha": fecha})
+    return out
+
+
+def _fred_ultimo(estado, serie, nombre, unidad, url_pub):
+    k = os.environ.get("FRED_API_KEY", "").strip()
+    desde = (ahora().date() - dt.timedelta(days=120)).isoformat()
+    if k:
+        j = pedir(f"https://api.stlouisfed.org/fred/series/observations?series_id={serie}&api_key={quote(k)}&file_type=json"
+                  f"&observation_start={desde}", estado, f"fred_{serie}", espera=(0, 20), limite=30) or {}
+        obs = [o for o in (j.get("observations") or []) if re.match(r"^-?\d", str(o.get("value") or ""))]
+    else:
+        obs = []
+    if not obs:
+        return []
+    o = obs[-1]
+    return [{"nombre": nombre, "valor": round(float(o["value"]), 2), "unidad": unidad,
+             "fuente": "FRED (Reserva Federal de St. Louis)", "url": url_pub, "fecha": str(o["date"])[:10]}]
+
+
+def _gaza(estado):
+    for v in ("v3", "v2"):
+        url = f"https://data.techforpalestine.org/api/{v}/summary.json"
+        if not robots_permite(url, estado):
+            return []
+        j = pedir(url, estado, f"gaza_{v}", espera=(0, 15), limite=30)
+        g = (j or {}).get("gaza") if isinstance(j, dict) else None
+        if isinstance(g, dict):
+            f = str(g.get("last_update") or (j or {}).get("last_update") or "")[:10]
+            out = []
+            for k, nom in (("killed", "Muertos en Gaza (Ministerio de Salud de Gaza)"), ("injured", "Heridos en Gaza (Ministerio de Salud de Gaza)")):
+                x = g.get(k)
+                val = x.get("total") if isinstance(x, dict) else x
+                if isinstance(val, (int, float)) and re.match(r"^\d{4}-\d{2}-\d{2}$", f):
+                    out.append({"nombre": nom, "valor": int(val), "unidad": "personas", "fuente": "Ministerio de Salud de Gaza (compilado por Tech for Palestine)",
+                                "url": "https://data.techforpalestine.org/docs/summary/", "fecha": f})
+            if out:
+                return out
+    return []
+
+
+def indicadores_conflictos(estado):
+    """→ {clave de assets/conflictos-base.json: [indicadores]} con datos oficiales y su fecha. Lo que no responde, simplemente no está."""
+    out = {"rusia-ucrania": _unhcr(estado, "UKR") + _fred_ultimo(estado, "PWHEAMTUSDM", "Precio mundial del trigo (efecto de la guerra)",
+                                                                   "US$ por tonelada", "https://fred.stlouisfed.org/series/PWHEAMTUSDM"),
+           "israel-gaza": _gaza(estado),
+           "iran-regional": _fred_ultimo(estado, "DCOILBRENTEU", "Petróleo Brent (riesgo en Ormuz)", "US$ por barril",
+                                         "https://fred.stlouisfed.org/series/DCOILBRENTEU"),
+           "sudan": _unhcr(estado, "SDN")}
+    out = {k: v for k, v in out.items() if v}
+    estado["conflictos_indicadores"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": "ACNUR · FRED · Tech for Palestine",
+                                        "n": sum(len(v) for v in out.values())}
+    return out or None
+
+
+# ---------- 08-11-2026 · autores desde la Cámara (opendata) cuando el Senado no responde ----------
+CAMARA_PROYECTO = CAMARA + "/retornarProyectoLey?prmNumeroBoletin={b}"
+
+
+def leer_proyecto_camara(txt):
+    """XML de WSLegislativo.retornarProyectoLey → {titulo, iniciativa, autores} o None (formato tolerante)."""
+    if not txt or "<" not in txt:
+        return None
+    tit = next((t for t in _xml_textos(txt, "Nombre") + _xml_textos(txt, "Titulo") if len(t) > 20), "")
+    ini = next((t for t in _xml_textos(txt, "TipoIniciativa") + _xml_textos(txt, "Iniciativa") if t), "")
+    bloque = re.search(r"<Autores\b[^>]*>(.*?)</Autores>", txt, re.S | re.I)
+    aut = []
+    if bloque:
+        for b in re.findall(r"<(?:Autor|ParlamentarioAutor|Diputado|Senador|Parlamentario)\b[^>]*>(.*?)</(?:Autor|ParlamentarioAutor|Diputado|Senador|Parlamentario)>",
+                            bloque.group(1), re.S | re.I):
+            partes = [(_xml_textos(b, k) or [""])[0] for k in ("Nombre", "ApellidoPaterno", "ApellidoMaterno")]
+            n = re.sub(r"\s+", " ", " ".join(p for p in partes if p)).strip()
+            if n and n not in aut:
+                aut.append(n)
+    if not aut and re.search(r"mensaje", ini, re.I):
+        aut = ["Mensaje presidencial"]
+    if not (tit or aut):
+        return None
+    return {"titulo": re.sub(r"\s+", " ", tit)[:400], "iniciativa": ini, "autores": aut[:40]}
+
+
 SENADO_TRAM = "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin={n}"
 
 
@@ -929,12 +1117,13 @@ def autores_boletines(estado, cam, previo, maximo=40):
     """Boletines votados este mes en la Cámara → autores y título oficiales (Senado, servicio público). Lo ya leído se conserva
     (no cambia); solo se piden los nuevos, de a uno con 2 s entre cada uno, máximo `maximo` por corrida."""
     out = {k: v for k, v in (previo or {}).items() if isinstance(v, dict) and v.get("autores")}
-    bols = []
+    bols, completos = [], {}
     for v in (cam or {}).get("camara_mes") or []:
-        m = re.search(r"Bolet[ií]n\s*N?[°º.]*\s*(\d{3,6})-\d{1,2}", str(v.get("descripcion") or "") + " " + str(v.get("materia") or ""))
+        m = re.search(r"Bolet[ií]n\s*N?[°º.]*\s*(\d{3,6})-(\d{1,2})", str(v.get("descripcion") or "") + " " + str(v.get("materia") or ""))
         if m and m.group(1) not in out and m.group(1) not in bols:
             bols.append(m.group(1))
-    hechos, fallas, seguidas, t0, muestras = 0, 0, 0, time.monotonic(), []
+            completos[m.group(1)] = f"{m.group(1)}-{m.group(2)}"
+    hechos, fallas, seguidas, t0, muestras, senado_caido = 0, 0, 0, time.monotonic(), [], False
     for n in bols[:maximo]:
         if seguidas >= 3 or time.monotonic() - t0 > 300:   # el Senado no responde: no se gasta la corrida (tope de 5 min)
             break
@@ -943,8 +1132,20 @@ def autores_boletines(estado, cam, previo, maximo=40):
             estado["autores_boletines"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": "robots.txt no lo permite"}
             return out or None
         tmp = {}
-        txt = pedir(url, tmp, "x", como="text", espera=(0, 5), limite=30)
-        f = leer_tramitacion(txt)
+        f, txt = None, ""
+        bol_completo = completos.get(n, n)
+        tc = pedir(CAMARA_PROYECTO.format(b=bol_completo), tmp, "c", como="text", espera=(0, 5), limite=30)
+        f = leer_proyecto_camara(tc)
+        if f and f.get("autores"):
+            url = CAMARA_PROYECTO.format(b=bol_completo)
+        elif not senado_caido:
+            txt = pedir(url, tmp, "x", como="text", espera=(0, 5), limite=30)
+            f = leer_tramitacion(txt) or f
+            if not txt and "imeout" in str((tmp.get("x") or {}).get("error")):
+                senado_caido = True   # el Senado no responde: no se le insiste en esta corrida
+        if not f and tc and len(muestras) < 2:
+            muestras.append({"url": CAMARA_PROYECTO.format(b=bol_completo), "error": (tmp.get("c") or {}).get("error", ""),
+                             "inicio": re.sub(r"\s+", " ", str(tc))[:300]})
         if not f and len(muestras) < 2:   # para diagnosticar un cambio de formato del servicio del Senado
             muestras.append({"url": url, "error": (tmp.get("x") or {}).get("error", ""), "inicio": re.sub(r"\s+", " ", str(txt or ""))[:300]})
         if f:
@@ -1979,6 +2180,13 @@ def espejo(estado, salida, pedidos=()):
         ok.append({"url": url, "que": que, "archivo": nombre + (".json" if es_json else ".txt"), "hora": ahora().isoformat(timespec="minutes")})
     estado["espejo"] = {"ok": bool(ok), "hora": ahora().isoformat(timespec="seconds"), "url": "páginas leídas por GitHub",
                         "n": len(ok), "error": f"{len(mal)} sin texto" if mal else ""}
+    try:   # 08-11-2026: la efeméride naval del día (la tarea no pudo leerla el 07 y el 08-11)
+        ef = efemeride_naval(estado, ahora().date(), salida)
+        for x in (ef or {}).get("listas") or []:
+            ok.append({"url": x["url"], "que": "Efeméride naval del día (Armada de Chile): " + x["titulo"], "archivo": x["archivo"],
+                       "hora": ahora().isoformat(timespec="minutes")})
+    except Exception as ex:   # noqa: BLE001
+        mal.append({"url": "armada.cl/efemerides-navales", "que": "efeméride naval", "error": f"{type(ex).__name__}"})
     return {"fecha": ahora().date().isoformat(), "listas": ok, "fallidas": mal}
 
 
@@ -2002,6 +2210,11 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "camara-mes.json"), cam)
     escribir(os.path.join(a.salida, "camara-nominal.json"), nom or None)
     escribir(os.path.join(a.salida, "descubrimiento.json"), descubrir(estado) or None)
+    for nombre, fn in (("oleaje.json", lambda: oleaje_costa(estado)), ("conflictos-oficiales.json", lambda: indicadores_conflictos(estado))):
+        try:   # 08-11-2026: oleaje de toda la costa e indicadores oficiales de los conflictos
+            escribir(os.path.join(a.salida, nombre), fn())
+        except Exception as ex:   # noqa: BLE001
+            estado[nombre] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": nombre, "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     try:   # 06-11-2026: autores y título de cada boletín votado (fichas automáticas decían «Presentado por: —»)
         try:
             prev_b = json.load(open(os.path.join(a.salida, "autores-boletines.json"), encoding="utf-8"))

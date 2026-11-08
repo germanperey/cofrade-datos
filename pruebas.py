@@ -618,10 +618,57 @@ def autores_de_cada_boletin_desde_el_senado():
                               {"descripcion": "Boletín N° 17000-05"}, {"descripcion": "sin boletín"}]}
         e = {}
         out = B.autores_boletines(e, cam, {"17000": {"autores": ["Ya leído"]}})
-        assert pedidas == ["https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18282"], pedidas   # el ya leído no se repite
+        assert pedidas == ["https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarProyectoLey?prmNumeroBoletin=18282-07",
+                           "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18282"], pedidas   # Cámara primero; el ya leído no se repite
         assert out["17000"]["autores"] == ["Ya leído"] and out["18282"]["autores"][0] == "Pérez Olea, Joanna" and e["autores_boletines"]["nuevos"] == 1
     finally:
         B.pedir, B.robots_permite, B.time.sleep = viejos
+
+
+@prueba
+def oleaje_conflictos_efemeride_y_autores_camara():
+    """08-11-2026 (informes del 04 al 08-11): sin oleaje para 4 puertos con aviso, efeméride naval sin leer, conflictos con 1 indicador,
+    autores sin servicio del Senado. Datos de PRUEBA."""
+    import tempfile
+    viejos = B.pedir, B.robots_permite, B.time.sleep
+    B.robots_permite = lambda u, e: True
+    B.time.sleep = lambda x: None
+    try:
+        dia = {"daily": {"time": ["2026-11-08", "2026-11-09"], "wave_height_max": [2.4, 3.1], "wave_period_max": [11.2, 12.0],
+                         "wave_direction_dominant": [225, 230]}}
+        B.pedir = lambda url, est, cl, **k: [dia] * len(B.PUERTOS_OLEAJE) if "marine" in url else None
+        ol = B.oleaje_costa({})
+        assert len(ol["puertos"]) == 30 and ol["puertos"]["juan-fernandez"][1] == {"fecha": "2026-11-09", "ola_max_m": 3.1, "periodo_s": 12.0, "direccion_grados": 230}
+        xml = ("<ProyectoLey><Nombre>Modifica la ley de tránsito para sancionar la conducción temeraria</Nombre><TipoIniciativa>Moción</TipoIniciativa>"
+               "<Autores><ParlamentarioAutor><Diputado><Nombre>Joanna</Nombre><ApellidoPaterno>Pérez</ApellidoPaterno><ApellidoMaterno>Olea</ApellidoMaterno>"
+               "</Diputado></ParlamentarioAutor></Autores></ProyectoLey>")
+        f = B.leer_proyecto_camara(xml)
+        assert f["autores"] == ["Joanna Pérez Olea"] and f["titulo"].startswith("Modifica la ley"), f
+        assert B.leer_proyecto_camara("<x><TipoIniciativa>Mensaje</TipoIniciativa><Nombre>Ley de presupuestos del sector público 2027</Nombre></x>")["autores"] == ["Mensaje presidencial"]
+
+        def pedir(url, est, cl, **k):
+            if "unhcr" in url:
+                return {"items": [{"year": 2024, "refugees": 6000000, "idps": 3700000}, {"year": 2025, "refugees": "5900000", "idps": "-"}]}
+            if "stlouisfed" in url:
+                return {"observations": [{"date": "2026-09-01", "value": "231.5"}, {"date": "2026-10-01", "value": "."}]}
+            if "techforpalestine" in url:
+                return {"gaza": {"killed": {"total": 68000}, "injured": {"total": 170000}, "last_update": "2026-11-07"}}
+            return None
+        B.pedir = pedir
+        os.environ["FRED_API_KEY"] = "x"
+        ind = B.indicadores_conflictos({})
+        assert [i["valor"] for i in ind["rusia-ucrania"]] == [5900000, 231.5] and ind["rusia-ucrania"][0]["fecha"] == "2025-12-31"
+        assert len(ind["israel-gaza"]) == 2 and ind["israel-gaza"][0]["fecha"] == "2026-11-07" and ind["iran-regional"][0]["valor"] == 231.5
+        assert all(i["fuente"] and i["url"].startswith("https://") for v in ind.values() for i in v)
+        idx = '<a href="/tradicion-e-historia/efemerides-navales/noviembre/8-de-noviembre-de-1879">8 de noviembre de 1879: <b>Combate</b></a>'
+        pagina = "<html><body>" + "<p>Texto de la efeméride naval con detalle suficiente para publicar.</p>" * 6 + "</body></html>"
+        B.pedir = lambda url, est, cl, **k: idx if url.endswith("/noviembre") else (pagina if "8-de-noviembre" in url else None)
+        with tempfile.TemporaryDirectory() as d:
+            ef = B.efemeride_naval({}, dt.date(2026, 11, 8), d)
+            assert ef["listas"][0]["titulo"] == "8 de noviembre de 1879: Combate" and os.path.exists(os.path.join(d, "paginas", "armada-efemeride-1.txt.gz"))
+    finally:
+        B.pedir, B.robots_permite, B.time.sleep = viejos
+        os.environ.pop("FRED_API_KEY", None)
 
 
 @prueba
@@ -666,7 +713,8 @@ def espejo_respeta_el_429():
     """06-11-2026: IQAir respondió 429 a 9 lecturas seguidas y la corrida se alargó más de 20 minutos (tope: 30). Al primer 429
     de un sitio lento, no se le pide nada más en esa corrida."""
     import tempfile
-    viejos = B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO
+    viejos = B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval
+    B.efemeride_naval = lambda *a, **k: None
     pedidas = []
 
     def pedir(url, est, cl, **k):
@@ -682,7 +730,7 @@ def espejo_respeta_el_429():
         assert pedidas == ["https://www.iqair.com/chile/a"], pedidas
         assert len(pag["fallidas"]) == 3 and "429" in pag["fallidas"][2]["error"]
     finally:
-        B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO = viejos
+        B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval = viejos
 
 
 @prueba
