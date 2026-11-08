@@ -634,11 +634,19 @@ def oleaje_conflictos_efemeride_y_autores_camara():
     B.robots_permite = lambda u, e: True
     B.time.sleep = lambda x: None
     try:
-        dia = {"daily": {"time": ["2026-11-08", "2026-11-09"], "wave_height_max": [2.4, 3.1], "wave_period_max": [11.2, 12.0],
-                         "wave_direction_dominant": [225, 230]}}
-        B.pedir = lambda url, est, cl, **k: [dia] * len(B.PUERTOS_OLEAJE) if "marine" in url else None
+        # NOAA WaveWatch III por ERDDAP (Open-Meteo marino no se lee: su robots.txt lo prohíbe). La celda más cercana a la costa
+        # puede ser tierra (null): se usa la de mar más al este.
+        tabla = {"table": {"columnNames": ["time", "depth", "latitude", "longitude", "Thgt", "Tper", "Tdir"], "rows": [
+            ["2026-11-08T15:00:00Z", 0.0, -33.5, 280.5, 2.4, 11.2, 225], ["2026-11-08T15:00:00Z", 0.0, -33.5, 281.0, None, None, None],
+            ["2026-11-09T15:00:00Z", 0.0, -33.5, 280.0, 2.0, 10.0, 200], ["2026-11-09T15:00:00Z", 0.0, -33.5, 280.5, 3.1, 12.0, 230],
+            ["2026-11-09T21:00:00Z", 0.0, -33.5, 280.5, 2.7, 11.0, 228]]}}
+        B.pedir = lambda url, est, cl, **k: tabla if "erddap" in url else None
         ol = B.oleaje_costa({})
-        assert len(ol["puertos"]) == 30 and ol["puertos"]["juan-fernandez"][1] == {"fecha": "2026-11-09", "ola_max_m": 3.1, "periodo_s": 12.0, "direccion_grados": 230}
+        assert len(ol["puertos"]) == 30 and ol["puertos"]["juan-fernandez"][1] == {"fecha": "2026-11-09", "ola_max_m": 3.1, "periodo_s": 12.0, "direccion_grados": 230}, ol["puertos"]["juan-fernandez"]
+        assert "NOAA" in ol["fuente"]
+        B.pedir = lambda url, est, cl, **k: None
+        est = {}
+        assert B.oleaje_costa(est) is None and est["oleaje"]["ok"] is False   # sin servidor: no se insiste con los 30 puertos
         xml = ("<ProyectoLey><Nombre>Modifica la ley de tránsito para sancionar la conducción temeraria</Nombre><TipoIniciativa>Moción</TipoIniciativa>"
                "<Autores><ParlamentarioAutor><Diputado><Nombre>Joanna</Nombre><ApellidoPaterno>Pérez</ApellidoPaterno><ApellidoMaterno>Olea</ApellidoMaterno>"
                "</Diputado></ParlamentarioAutor></Autores></ProyectoLey>")
@@ -656,6 +664,10 @@ def oleaje_conflictos_efemeride_y_autores_camara():
             return None
         B.pedir = pedir
         os.environ["FRED_API_KEY"] = "x"
+        b2 = B.pedir   # ACNUR por país de asilo: se suma el año (antes salía UNA fila: «4.959 refugiados» de Ucrania)
+        B.pedir = lambda url, est, cl, **k: {"items": [{"year": 2025, "refugees": 4959}, {"year": 2025, "refugees": 1000000}, {"year": 2024, "refugees": 7}]} if "unhcr" in url else b2(url, est, cl, **k)
+        assert B._unhcr({}, "UKR")[0]["valor"] == 1004959
+        B.pedir = b2
         ind = B.indicadores_conflictos({})
         assert [i["valor"] for i in ind["rusia-ucrania"]] == [5900000, 231.5] and ind["rusia-ucrania"][0]["fecha"] == "2025-12-31"
         assert len(ind["israel-gaza"]) == 2 and ind["israel-gaza"][0]["fecha"] == "2026-11-07" and ind["iran-regional"][0]["valor"] == 231.5
@@ -665,7 +677,16 @@ def oleaje_conflictos_efemeride_y_autores_camara():
         B.pedir = lambda url, est, cl, **k: idx if url.endswith("/noviembre") else (pagina if "8-de-noviembre" in url else None)
         with tempfile.TemporaryDirectory() as d:
             ef = B.efemeride_naval({}, dt.date(2026, 11, 8), d)
-            assert ef["listas"][0]["titulo"] == "8 de noviembre de 1879: Combate" and os.path.exists(os.path.join(d, "paginas", "armada-efemeride-1.txt.gz"))
+            assert ef["listas"][0]["url"].endswith("/noviembre/8-de-noviembre-de-1979"), ef   # índice de direcciones conocidas
+            assert ef["listas"][0]["titulo"] == "8 de noviembre de 1979" and os.path.exists(os.path.join(d, "paginas", "armada-efemeride-1.txt.gz"))
+            idx_v = B.json.load   # día sin dirección conocida: se lee el índice del mes
+            B.json.load = lambda f, **k: {"urls": {}}
+            try:
+                B.pedir = lambda url, est, cl, **k: idx if url.endswith("/noviembre") else (pagina if "8-de-noviembre-de-1879" in url else None)
+                ef2 = B.efemeride_naval({}, dt.date(2026, 11, 8), d)
+            finally:
+                B.json.load = idx_v
+            assert ef2["listas"][0]["titulo"] == "8 de noviembre de 1879: Combate", ef2
     finally:
         B.pedir, B.robots_permite, B.time.sleep = viejos
         os.environ.pop("FRED_API_KEY", None)

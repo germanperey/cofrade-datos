@@ -925,35 +925,81 @@ PUERTOS_OLEAJE = (("arica", -18.4694, -70.3247), ("iquique", -20.2161, -70.16), 
                   ("ancud", -41.8494, -73.8231), ("castro", -42.4828, -73.7581), ("quellon", -43.1219, -73.6194),
                   ("puerto-chacabuco", -45.4694, -72.8197), ("puerto-natales", -51.7328, -72.5147), ("punta-arenas", -53.1625, -70.8525),
                   ("puerto-williams", -54.9325, -67.6067), ("rapa-nui", -27.1492, -109.4344), ("juan-fernandez", -33.6306, -78.8064))
-MARINO = "https://marine-api.open-meteo.com/v1/marine"
+# 08-11-2026: marine-api.open-meteo.com publica «Disallow: /» en su robots.txt: no se usa (ver oleaje_costa).
 
 
-def oleaje_costa(estado, dias=7):
-    """Ola máxima, período y dirección por día en los 30 puertos (los mismos de assets/puertos-costa.json de la Skill), en UNA lectura.
+ERDDAP_OLAS = "https://upwell.pfeg.noaa.gov/erddap/griddap/NWW3_Global_Best.json"
+
+
+def _olas_punto(estado, slug, lat, lon, t1, t2):
+    """WaveWatch III (NOAA) en la celda de mar más cercana al puerto, hacia el oeste (la grilla es de 0,5°: la celda del puerto
+    puede caer en tierra). → [(hora_utc, ola_m, periodo_s, direccion)]"""
+    la = round(lat * 2) / 2
+    lo = (lon % 360)
+    lo1, lo2 = (round(lo * 2) / 2) - 1.0, round(lo * 2) / 2
+    rango = f"[({t1}):3:({t2})][(0.0)][({la})][({lo1}):({lo2})]"
+    url = ERDDAP_OLAS + "?" + ",".join(v + rango for v in ("Thgt", "Tper", "Tdir"))
+    j = pedir(url, estado, f"oleaje_{slug}", espera=(0, 15), limite=60) or {}
+    tabla = j.get("table") or {}
+    cols, filas = tabla.get("columnNames") or [], tabla.get("rows") or []
+    if not cols or not filas:
+        return []
+    ix = {c: k for k, c in enumerate(cols)}
+    mejor = {}   # hora → (longitud, ola, per, dir): la celda de mar más al este (más cerca de la costa)
+    for r in filas:
+        h, lon_r = r[ix["time"]], r[ix["longitude"]]
+        ola = r[ix["Thgt"]]
+        if not isinstance(ola, (int, float)) or ola != ola:   # NaN: tierra
+            continue
+        if h not in mejor or lon_r > mejor[h][0]:
+            mejor[h] = (lon_r, ola, r[ix["Tper"]], r[ix["Tdir"]])
+    return [(h, v[1], v[2], v[3]) for h, v in sorted(mejor.items())]
+
+
+def oleaje_costa(estado, dias=6):
+    """Ola máxima del día, su período y dirección en los 30 puertos (los mismos de assets/puertos-costa.json de la Skill).
+    08-11-2026: Open-Meteo marino tiene «Disallow: /» en su robots.txt (no se lee); se usa el modelo WaveWatch III de NOAA
+    (dominio público de EE.UU.) por su servidor ERDDAP, que sí lo permite.
     → {"fuente", "url", "generado", "puertos": {slug: [{fecha, ola_max_m, periodo_s, direccion_grados}]}} o None."""
-    url = (MARINO + "?latitude=" + ",".join(str(p[1]) for p in PUERTOS_OLEAJE) + "&longitude=" + ",".join(str(p[2]) for p in PUERTOS_OLEAJE)
-           + f"&daily=wave_height_max,wave_period_max,wave_direction_dominant&timezone=America%2FSantiago&forecast_days={dias}")
-    if not robots_permite(url, estado):
+    if not robots_permite(ERDDAP_OLAS, estado):
+        estado["oleaje"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": ERDDAP_OLAS, "error": "robots.txt no lo permite"}
         return None
-    j = pedir(url, estado, "oleaje", espera=(0, 20), limite=60)
-    lista = j if isinstance(j, list) else ([j] if isinstance(j, dict) else [])
-    out = {}
-    for (slug, _, _), x in zip(PUERTOS_OLEAJE, lista):
-        dd = (x or {}).get("daily") or {}
-        fechas, h = dd.get("time") or [], dd.get("wave_height_max") or []
-        per, dire = dd.get("wave_period_max") or [], dd.get("wave_direction_dominant") or []
-        filas = []
-        for i, f in enumerate(fechas):
-            if i < len(h) and isinstance(h[i], (int, float)):
-                filas.append({"fecha": f, "ola_max_m": round(h[i], 1),
-                              "periodo_s": round(per[i], 1) if i < len(per) and isinstance(per[i], (int, float)) else None,
-                              "direccion_grados": round(dire[i]) if i < len(dire) and isinstance(dire[i], (int, float)) else None})
+    from zoneinfo import ZoneInfo
+    cl = ZoneInfo("America/Santiago")
+    t0 = dt.datetime.now(dt.timezone.utc).replace(minute=0, second=0, microsecond=0) - dt.timedelta(hours=3)
+    t1, t2 = t0.strftime("%Y-%m-%dT%H:00:00Z"), (t0 + dt.timedelta(days=dias)).strftime("%Y-%m-%dT%H:00:00Z")
+    out, fallas = {}, 0
+    for slug, lat, lon in PUERTOS_OLEAJE:
+        if fallas >= 4:   # el servidor no responde: no insistir con los 30 puertos
+            break
+        try:
+            serie = _olas_punto(estado, slug, lat, lon, t1, t2)
+        except Exception:   # noqa: BLE001
+            serie = []
+        if not serie:
+            fallas += 1
+            continue
+        dia = {}
+        for h, ola, per, dire in serie:
+            try:
+                f = dt.datetime.fromisoformat(str(h).replace("Z", "+00:00")).astimezone(cl).date().isoformat()
+            except ValueError:
+                continue
+            if f not in dia or ola > dia[f][0]:
+                dia[f] = (ola, per, dire)
+        filas = [{"fecha": f, "ola_max_m": round(v[0], 1),
+                  "periodo_s": round(v[1], 1) if isinstance(v[1], (int, float)) and v[1] == v[1] else None,
+                  "direccion_grados": round(v[2]) if isinstance(v[2], (int, float)) and v[2] == v[2] else None}
+                 for f, v in sorted(dia.items())]
         if filas:
             out[slug] = filas
+        time.sleep(0.4)   # cortesía con el servidor público
+    estado["oleaje"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": ERDDAP_OLAS, "n": len(out),
+                        "error": "" if out else "sin datos"}
     if not out:
-        estado["oleaje"] = dict(estado.get("oleaje") or {}, ok=False, error=(estado.get("oleaje") or {}).get("error") or "sin datos")
         return None
-    return {"fuente": "Open-Meteo, modelo marino (ola máxima del día)", "url": "https://open-meteo.com/en/docs/marine-weather-api",
+    return {"fuente": "NOAA, modelo WaveWatch III (ola significativa máxima del día)",
+            "url": "https://upwell.pfeg.noaa.gov/erddap/griddap/NWW3_Global_Best.html",
             "generado": ahora().isoformat(timespec="minutes"), "puertos": out}
 
 
@@ -968,41 +1014,57 @@ def efemeride_naval(estado, hoy, salida):
     base = f"https://www.armada.cl/tradicion-e-historia/efemerides-navales/{mes}"
     if not robots_permite(base, estado):
         return None
-    h = pedir(base, estado, "efemeride_naval", como="text", espera=(0, 10), limite=40)
-    if not h:
-        return None
-    patron = re.compile(rf'href="([^"]*/efemerides-navales/{mes}/{hoy.day}-de-{mes}[^"]*)"[^>]*>(.*?)</a>', re.I | re.S)
+    # 08-11-2026: el índice del mes da 404; primero las direcciones conocidas del día (scripts/armada-efemerides.json, copiado de la
+    # Skill) y, si no hay, el índice del mes (por si la Armada lo repone).
+    try:
+        idx = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "armada-efemerides.json"), encoding="utf-8")).get("urls") or {}
+    except (OSError, ValueError):
+        idx = {}
+    candidatos = [(u, "") for u in (idx.get(f"{hoy.month:02d}-{hoy.day:02d}") or [])]
+    if not candidatos:
+        h = pedir(base, estado, "efemeride_naval_indice", como="text", espera=(0, 10), limite=40) or ""
+        patron = re.compile(rf'href="([^"]*/efemerides-navales/{mes}/{hoy.day}-de-{mes}[^"]*)"[^>]*>(.*?)</a>', re.I | re.S)
+        candidatos = [(m.group(1) if m.group(1).startswith("http") else "https://www.armada.cl" + m.group(1), m.group(2)) for m in patron.finditer(h)]
     out, vistos = [], set()
     os.makedirs(os.path.join(salida, "paginas"), exist_ok=True)
-    for m in patron.finditer(h):
-        u = m.group(1) if m.group(1).startswith("http") else "https://www.armada.cl" + m.group(1)
+    for u, tit in candidatos:
         if u in vistos or len(out) >= 3:
             continue
         vistos.add(u)
-        t = pedir(u, estado, "efemeride_naval_det", como="text", espera=(0, 10), limite=40)
+        t = pedir(u, estado, "efemeride_naval", como="text", espera=(0, 10), limite=40)
         texto = html_a_texto(t or "")
         if len(texto) < 200:
             continue
         nombre = f"armada-efemeride-{len(out) + 1}.txt"
         _gz(os.path.join(salida, "paginas", nombre + ".gz"), texto)
-        out.append({"url": u, "titulo": re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", m.group(2)))).strip()[:160], "archivo": nombre})
+        if not tit:
+            m_t = re.search(r"<title>(.*?)</title>", t or "", re.I | re.S)
+            tit = m_t.group(1) if m_t else u.rsplit("/", 1)[-1].replace("-", " ")
+        out.append({"url": u, "titulo": re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", tit))).strip()[:160], "archivo": nombre})
     return {"fecha": hoy.isoformat(), "listas": out} if out else None
 
 
 # ---------- 08-11-2026 · indicadores oficiales de los conflictos (mínimo 2 por conflicto, con fuente y fecha) ----------
 def _unhcr(estado, iso3):
-    url = f"https://api.unhcr.org/population/v1/population/?limit=20&yearFrom=2023&yearTo={ahora().year}&coo={iso3}&coa_all=true"
+    # 08-11-2026: sin coa_all (que lista UN país de asilo por fila: salía «4.959 refugiados» de Ucrania). Sin él, ACNUR entrega el
+    # total del país de origen por año; igual se suman las filas de cada año por si vinieran separadas.
+    url = f"https://api.unhcr.org/population/v1/population/?limit=100&yearFrom=2022&yearTo={ahora().year}&coo={iso3}"
     if not robots_permite(url, estado):
         return []
     j = pedir(url, estado, f"unhcr_{iso3}", espera=(0, 20), limite=40) or {}
-    items = [x for x in (j.get("items") or []) if isinstance(x, dict) and str(x.get("year") or "").isdigit()]
-    if not items:
+    num = lambda v: int(str(v).replace(",", "").strip()) if str(v or "").replace(",", "").strip().isdigit() else None   # noqa: E731
+    por_ano = {}
+    for it in (j.get("items") or []):
+        if isinstance(it, dict) and str(it.get("year") or "").isdigit():
+            acc = por_ano.setdefault(int(it["year"]), {"refugees": 0, "idps": 0})
+            for k in acc:
+                acc[k] += num(it.get(k)) or 0
+    if not por_ano:
         return []
-    x = max(items, key=lambda i: int(i["year"]))
-    y = int(x["year"])
+    y = max(por_ano)
+    x = por_ano[y]
     fecha = f"{y}-12-31" if y < ahora().year else f"{y}-06-30"
     out = []
-    num = lambda v: int(v) if str(v or "").strip().lstrip("-").isdigit() else None   # noqa: E731
     if num(x.get("refugees")):
         out.append({"nombre": "Refugiados fuera del país (ACNUR)", "valor": num(x.get("refugees")), "unidad": "personas",
                     "fuente": "ACNUR (Agencia de la ONU para los Refugiados)", "url": "https://www.unhcr.org/refugee-statistics/", "fecha": fecha})
