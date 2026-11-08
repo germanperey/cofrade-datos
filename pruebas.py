@@ -647,6 +647,21 @@ def oleaje_conflictos_efemeride_y_autores_camara():
         B.pedir = lambda url, est, cl, **k: None
         est = {}
         assert B.oleaje_costa(est) is None and est["oleaje"]["ok"] is False   # sin servidor: no se insiste con los 30 puertos
+        # el modelo marino está prohibido por robots.txt: el oleaje sale de las páginas de tablademareas del espejo (texto real del 08-11)
+        txt = (" PREDICCIÓN DEL OLEAJE VALPARAÍSO \n 07 NOV \n Sábado Previsión del oleaje \n OLEAJE MÁXIMO | 1,7 m \n"
+               " 08 NOV \n Domingo Previsión del oleaje en Valparaíso \n OLEAJE MÁXIMO | 2,1 m \n | \n OLEAJE MÍNIMO | 1,9 m \n | \n 0 h\n SW\n 2,1 m \n"
+               " 1 h\n SW\n 2,1 m \n 2 h\n WNW\n 2,0 m \n + INFO \n 09 NOV \n Lunes Previsión \n OLEAJE MÁXIMO | 2,0 m \n 0 h\n W\n 1,9 m \n")
+        assert B.oleaje_de_texto(txt, dt.date(2026, 11, 8)) == [{"fecha": "2026-11-08", "ola_max_m": 2.1, "direccion": "SW", "direccion_grados": 225},
+                                                               {"fecha": "2026-11-09", "ola_max_m": 2.0, "direccion": "W", "direccion_grados": 270}]
+        assert B.oleaje_de_texto(" 02 ENE \n Viernes \n OLEAJE MÁXIMO | 1,5 m \n", dt.date(2026, 12, 30))[0]["fecha"] == "2027-01-02"   # cambio de año
+        import gzip
+        with tempfile.TemporaryDirectory() as dd:
+            os.makedirs(os.path.join(dd, "paginas"))
+            with gzip.open(os.path.join(dd, "paginas", "oleaje-valparaiso.txt.gz"), "wt", encoding="utf-8") as fz:
+                fz.write(txt)
+            est = {}
+            o = B.oleaje_desde_espejo(est, dd, dt.date(2026, 11, 8))
+            assert list(o["puertos"]) == ["valparaiso"] and est["oleaje"]["ok"] and "tablademareas" in o["fuente"]
         xml = ("<ProyectoLey><Nombre>Modifica la ley de tránsito para sancionar la conducción temeraria</Nombre><TipoIniciativa>Moción</TipoIniciativa>"
                "<Autores><ParlamentarioAutor><Diputado><Nombre>Joanna</Nombre><ApellidoPaterno>Pérez</ApellidoPaterno><ApellidoMaterno>Olea</ApellidoMaterno>"
                "</Diputado></ParlamentarioAutor></Autores></ProyectoLey>")

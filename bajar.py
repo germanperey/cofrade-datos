@@ -2145,6 +2145,61 @@ LENTOS_PAUSA = 15
 PAUSA_SITIO = {"tablademareas.com": 2}   # 08-11-2026: 30 páginas de oleaje seguidas: una cada 2 s
 
 
+MESES_CORTOS = {"ENE": 1, "FEB": 2, "MAR": 3, "ABR": 4, "MAY": 5, "JUN": 6, "JUL": 7, "AGO": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DIC": 12}
+RUMBOS = {"N": 0, "NNE": 22, "NE": 45, "ENE": 68, "E": 90, "ESE": 112, "SE": 135, "SSE": 158, "S": 180, "SSW": 202, "SW": 225, "WSW": 248,
+          "W": 270, "WNW": 292, "NW": 315, "NNW": 338}
+
+
+def oleaje_de_texto(texto, hoy):
+    """Del texto de la página de oleaje de tablademareas (bloques «08 NOV · Domingo … OLEAJE MÁXIMO | 2,1 m … 0 h SW 2,1 m …»)
+    → [{fecha, ola_max_m, direccion, direccion_grados}] desde hoy, o []."""
+    out = []
+    partes = re.split(r"\n\s*(\d{1,2}) (ENE|FEB|MAR|ABR|MAY|JUN|JUL|AGO|SEP|OCT|NOV|DIC)\s*\n", "\n" + str(texto or ""))
+    for i in range(1, len(partes) - 2, 3):
+        dia, mes, cuerpo = int(partes[i]), MESES_CORTOS[partes[i + 1]], partes[i + 2]
+        m = re.search(r"OLEAJE M[ÁA]XIMO\s*\|\s*(\d+(?:[.,]\d+)?)\s*m", cuerpo)
+        if not m:
+            continue
+        anio = hoy.year + (1 if mes < hoy.month - 6 else 0) - (1 if mes > hoy.month + 6 else 0)
+        try:
+            f = dt.date(anio, mes, dia)
+        except ValueError:
+            continue
+        if f < hoy:
+            continue
+        rumbos = re.findall(r"\n\s*\d{1,2} h\s*\n\s*([NSEW]{1,3})\s*\n", cuerpo)
+        dom = max(set(rumbos), key=rumbos.count) if rumbos else None
+        fila = {"fecha": f.isoformat(), "ola_max_m": round(float(m.group(1).replace(",", ".")), 1)}
+        if dom in RUMBOS:
+            fila.update(direccion=dom, direccion_grados=RUMBOS[dom])
+        if 0 < fila["ola_max_m"] < 20 and all(x["fecha"] != fila["fecha"] for x in out):
+            out.append(fila)
+    return out
+
+
+def oleaje_desde_espejo(estado, salida, hoy):
+    """08-11-2026: con las páginas de oleaje del espejo arma oleaje.json (los 30 puertos), si el modelo marino no se pudo leer."""
+    carpeta = os.path.join(salida, "paginas")
+    out = {}
+    for n in sorted(os.listdir(carpeta)) if os.path.isdir(carpeta) else []:
+        mm = re.match(r"^oleaje-([a-z0-9-]+)\.txt\.gz$", n)
+        if not mm:
+            continue
+        try:
+            import gzip
+            filas = oleaje_de_texto(gzip.open(os.path.join(carpeta, n), "rt", encoding="utf-8").read(), hoy)
+        except (OSError, ValueError):
+            filas = []
+        if filas:
+            out[mm.group(1)] = filas
+    if not out:
+        return None
+    estado["oleaje"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": "https://tablademareas.com (páginas de oleaje)",
+                        "n": len(out), "nota": "modelo marino no permitido por robots.txt: se usan las páginas de tablademareas"}
+    return {"fuente": "tablademareas.com (pronóstico de oleaje, leído por GitHub)", "url": "https://tablademareas.com/cl",
+            "generado": ahora().isoformat(timespec="minutes"), "puertos": out}
+
+
 def paginas_oleaje():
     """08-11-2026 (controles del 07 y 08-11: sin oleaje de Arica, Valparaíso, San Antonio y Juan Fernández con aviso de marejadas;
     Open-Meteo marino y NOAA ERDDAP prohíben la lectura automática en su robots.txt): el pronóstico de oleaje de tablademareas de los
@@ -2375,6 +2430,8 @@ def main(argv=None):
         except (OSError, ValueError):
             ped = []
         escribir(os.path.join(a.salida, "paginas.json"), espejo(estado, a.salida, ped if isinstance(ped, list) else []))
+        if not (estado.get("oleaje") or {}).get("ok"):   # 08-11-2026: oleaje de los 30 puertos desde las páginas recién leídas
+            escribir(os.path.join(a.salida, "oleaje.json"), oleaje_desde_espejo(estado, a.salida, hoy))
     except _SinEspejo:
         estado["espejo"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": "espejo",
                             "nota": "ya hecho hoy; se refresca entre las 05:00 y las 08:00 de Santiago"}
