@@ -5,10 +5,12 @@
 // © 2026 Cofrade News. Software propietario: todos los derechos reservados (Ley 17.336, Chile).
 
 const RAW = "https://raw.githubusercontent.com/germanperey/cofrade-datos/main/";
+const RAW_ED = "https://raw.githubusercontent.com/germanperey/cofrade-datos/ediciones/";   // edición COMPLETA (gráficos interactivos), 14 días
+const rutaEdicion = (f, completa) => (completa ? RAW_ED : RAW + "ediciones/") + `Cofrade-News-${f}.html`;
 const DOMINIO = "www.cofrad.es";
 const FORMULARIO = "__FORMULARIO__";
-const LOGO_CLARO = "__LOGO_CLARO__";
-const LOGO_OSCURO = "__LOGO_OSCURO__";
+const LOGO_CLARO = "/logo-claro.webp";
+const LOGO_OSCURO = "/logo-oscuro.webp";
 const DIAS_ARCHIVO = 21;
 const TZ = "America/Santiago";
 
@@ -50,12 +52,12 @@ function html(cuerpo, status = 200, extra = {}) {
 }
 
 // ---------- lectura del repositorio con caché del borde (rápido y sin abusar de GitHub) ----------
-async function desdeGitHub(ruta, segundos, ctx) {
+async function desdeGitHub(ruta, segundos, ctx, completa = null) {
   const cache = caches.default;
   const clave = new Request("https://cache.cofrad.es/" + ruta);
   let r = await cache.match(clave);
   if (r) return r;
-  const o = await fetch(RAW + ruta, { cf: { cacheTtl: segundos, cacheEverything: true } });
+  const o = await fetch(completa || RAW + ruta, { cf: { cacheTtl: segundos, cacheEverything: true } });
   if (!o.ok) return null;
   r = new Response(o.body, { headers: { "Cache-Control": `public, max-age=${segundos}` } });
   ctx.waitUntil(cache.put(clave, r.clone()));
@@ -70,10 +72,13 @@ async function indice(ctx) {
   const hoy = new Date();
   const fechas = Array.from({ length: DIAS_ARCHIVO }, (_, i) => fechaChile(new Date(hoy.getTime() - i * 86400000)));
   const ok = await Promise.all(fechas.map(async (f) => {
-    try {
-      const r = await fetch(RAW + `ediciones/Cofrade-News-${f}.html`, { method: "HEAD" });
-      return r.ok ? f : null;
-    } catch { return null; }
+    for (const completa of [true, false]) {   // primero la completa; si no está, la liviana
+      try {
+        const r = await fetch(rutaEdicion(f, completa), { method: "HEAD" });
+        if (r.ok) return f;
+      } catch { /* sigue */ }
+    }
+    return null;
   }));
   const lista = ok.filter(Boolean);
   ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(lista), { headers: { "Cache-Control": "public, max-age=900" } })));
@@ -269,7 +274,7 @@ export default {
       }
       const m = p.match(/^\/edicion\/(\d{4}-\d{2}-\d{2})$/);
       if (m) {
-        const r = await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, 600, ctx);
+        const r = (await desdeGitHub(`completa/${m[1]}`, 600, ctx, rutaEdicion(m[1], true))) || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, 600, ctx));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
         return new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=600", ...SEGURIDAD } });
       }
@@ -290,6 +295,11 @@ export default {
           return new Response(null, { status: 303, headers: { Location: "/socios", "Set-Cookie": `cn_socio=${vence}.${await firma("socio|" + vence, env.SOCIOS_CLAVE)}; Max-Age=${30 * 86400}; Path=/; Secure; HttpOnly; SameSite=Lax` } });
         }
         return paginaSocios(await esSocio(req, env));
+      }
+      const lg = p.match(/^\/logo-(claro|oscuro)\.webp$/);
+      if (lg) {
+        const r = await desdeGitHub(`sitio/logo-${lg[1]}.webp`, 86400, ctx);
+        return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return new Response(FAVICON, { headers: { "Content-Type": "image/svg+xml", "Cache-Control": "public, max-age=604800" } });
       if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
