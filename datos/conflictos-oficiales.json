@@ -1,0 +1,48 @@
+{
+ "rusia-ucrania": [
+  {
+   "nombre": "Refugiados fuera del país (ACNUR)",
+   "valor": 4959,
+   "unidad": "personas",
+   "fuente": "ACNUR (Agencia de la ONU para los Refugiados)",
+   "url": "https://www.unhcr.org/refugee-statistics/",
+   "fecha": "2023-12-31"
+  },
+  {
+   "nombre": "Precio mundial del trigo (efecto de la guerra)",
+   "valor": 246.85,
+   "unidad": "US$ por tonelada",
+   "fuente": "FRED (Reserva Federal de St. Louis)",
+   "url": "https://fred.stlouisfed.org/series/PWHEAMTUSDM",
+   "fecha": "2026-09-01"
+  }
+ ],
+ "israel-gaza": [
+  {
+   "nombre": "Muertos en Gaza (Ministerio de Salud de Gaza)",
+   "valor": 74640,
+   "unidad": "personas",
+   "fuente": "Ministerio de Salud de Gaza (compilado por Tech for Palestine)",
+   "url": "https://data.techforpalestine.org/docs/summary/",
+   "fecha": "2026-11-07"
+  },
+  {
+   "nombre": "Heridos en Gaza (Ministerio de Salud de Gaza)",
+   "valor": 175947,
+   "unidad": "personas",
+   "fuente": "Ministerio de Salud de Gaza (compilado por Tech for Palestine)",
+   "url": "https://data.techforpalestine.org/docs/summary/",
+   "fecha": "2026-11-07"
+  }
+ ],
+ "iran-regional": [
+  {
+   "nombre": "Petróleo Brent (riesgo en Ormuz)",
+   "valor": 107.03,
+   "unidad": "US$ por barril",
+   "fuente": "FRED (Reserva Federal de St. Louis)",
+   "url": "https://fred.stlouisfed.org/series/DCOILBRENTEU",
+   "fecha": "2026-11-03"
+  }
+ ]
+}
