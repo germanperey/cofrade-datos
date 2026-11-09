@@ -1,75 +1,23 @@
 {
- "generado": "2026-11-09T03:49-03:00",
- "proxima": "07:17",
- "indicadores": [
-  {
-   "clave": "dolar",
-   "nombre": "Dólar",
-   "valor": 979.88,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-09",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "euro",
-   "nombre": "Euro",
-   "valor": 1092.4,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-09",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "uf",
-   "nombre": "UF",
-   "valor": 41295.46,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-09",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "utm",
-   "nombre": "UTM",
-   "valor": 72440,
-   "prefijo": "$",
-   "decimales": 0,
-   "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "libra_cobre",
-   "nombre": "Cobre (libra)",
-   "valor": 6.32,
-   "prefijo": "US$",
-   "decimales": 2,
-   "fecha": "2026-11-09",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  }
- ],
+ "generado": "2026-11-09T17:50-03:00",
+ "proxima": "18:17",
+ "indicadores": [],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10536.54,
+  "valor": 10589.65,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-09T03:49-03:00",
-  "variacion_pct": 0.68
+  "hora": "2026-11-09T17:51-03:00",
+  "variacion_pct": 0.5
  },
  "sismos": {
-  "n": 2,
+  "n": 1,
   "mayores": [
    {
-    "hora": "2026-11-08T08:58-03:00",
-    "magnitud": 4.7,
-    "profundidad_km": 68.8,
-    "referencia": "60 km al N de Iquique"
-   },
-   {
-    "hora": "2026-11-08T04:02-03:00",
-    "magnitud": 4.3,
-    "profundidad_km": 223.7,
-    "referencia": "184 km al SE de San Pedro de Atacama"
+    "hora": "2026-11-09T05:22-03:00",
+    "magnitud": 4.2,
+    "profundidad_km": 10.0,
+    "referencia": "264 km al E de Copiapó"
    }
   ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
@@ -80,34 +28,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "Senapred declara alerta roja en Monte Patria por riesgo de desborde del río Grande",
-     "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/senapred-declara-alerta-roja-en-monte-patria-por-riesgo-de-desborde-del-rio-grande/",
-     "hora": "23:57"
+     "titulo": "La “gyoza sureña”: tradicional empanada de Chiloé se vuelve viral por su particular forma de preparación",
+     "medio": "The Clinic",
+     "url": "https://www.theclinic.cl/2026/11/09/la-gyoza-surena-tradicional-empanada-de-chiloe-se-vuelve-viral-por-su-particular-forma-de-preparacion/",
+     "hora": "17:50"
     },
     {
-     "titulo": "Padre e hija desaparecen tras caer por cascada de 25 metros en Cunco",
-     "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/padre-e-hija-de-6-anos-desaparecen-tras-caer-por-cascada-de-25-metros-en-cunco/",
-     "hora": "23:25"
+     "titulo": "Fueron a mojarse los pies durante un paseo familiar y los arrastró la corriente: El fatal accidente de un padre y su hija que enluta a Cunco",
+     "medio": "The Clinic",
+     "url": "https://www.theclinic.cl/2026/11/09/fueron-a-mojarse-los-pies-durante-un-paseo-familiar-y-los-arrastro-la-corriente-el-fatal-accidente-de-un-padre-y-su-hija-que-enluta-a-cunco/",
+     "hora": "17:44"
     },
     {
-     "titulo": "Gajardo (PC) admite que oposición “no busca” acusar a Rabat, pero que Kast la empuja a una confrontación “innecesaria”",
+     "titulo": "“No vamos a seguir haciendo show”: Ossandón suspende brevemente debate presupuestario por incidentes tras discurso de Veloso",
      "medio": "La Tercera · Política",
-     "url": "https://www.latercera.com/politica/noticia/gajardo-pc-admite-que-oposicion-no-busca-acusar-a-rabat-pero-que-kast-la-empuja-a-una-confrontacion-innecesaria/",
-     "hora": "21:00"
+     "url": "https://www.latercera.com/politica/noticia/no-vamos-a-seguir-haciendo-show-ossandon-suspende-brevemente-debate-presupuestario-por-incidentes-tras-discurso-de-veloso/",
+     "hora": "17:41"
     },
     {
-     "titulo": "Una política de envejecimiento que no solo mire el cuerpo",
-     "medio": "CIPER",
-     "url": "https://www.ciperchile.cl/2026/11/08/una-politica-de-envejecimiento-que-no-solo-mire-el-cuerpo/?utm_source=rss&utm_medium=rss&utm_campaign=una-politica-de-envejecimiento-que-no-solo-mire-el-cuerpo",
-     "hora": "20:34"
+     "titulo": "Mesa de Trabajo entrega informe a la comisión de Salud del Senado con recomendaciones para modernizar el sistema sanitario",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/mesa-de-trabajo-entrega-informe-a-la-comision-de-salud-del-senado-con-recomendaciones-para-modernizar-el-sistema-sanitario/",
+     "hora": "17:40"
     },
     {
-     "titulo": "Cadem: Rebaja de penas, caída de crecimiento y alza de desempleo explican alta desaprobación de Kast (Lea aquí la encuesta)",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/politica/cadem-desaprobacion-kast-rebaja-de-penas/",
-     "hora": "20:34"
+     "titulo": "Revista Time incluye entre sus 100 líderes climáticos más influyentes al exministro de Transporte Juan Carlos Muñoz",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/revista-time-incluye-entre-sus-100-lideres-climaticos-mas-influyentes-al-exministro-de-transporte-juan-carlos-munoz/",
+     "hora": "17:18"
     }
    ]
   },
@@ -115,34 +63,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Por qué la suba del riesgo país no movió al dólar: claves de la pelea principal del Gobierno con el mercado",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/09/por-que-la-suba-del-riesgo-pais-no-movio-al-dolar-claves-de-la-pelea-principal-del-gobierno-con-el-mercado/",
-     "hora": "03:13"
-    },
-    {
-     "titulo": "Los dólares del RIGI: cuánto tardarán en concretarse los USD 76.000 millones de las inversiones aprobadas",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/09/los-dolares-del-rigi-cuanto-tardaran-en-concretarse-los-usd-76000-millones-de-las-inversiones-aprobadas/",
-     "hora": "03:13"
-    },
-    {
-     "titulo": "Chiloé selló acuerdo para avanzar en el Centro de Tratamiento Integral de Residuos",
-     "medio": "Cooperativa",
-     "url": "https://www.cooperativa.cl/noticias/pais/region-de-los-lagos/chiloe-sello-acuerdo-para-avanzar-en-el-centro-de-tratamiento-integral/2026-11-09/004129.html",
-     "hora": "00:41"
-    },
-    {
-     "titulo": "Antofagasta despliega la búsqueda de Simón Chirinos, adulto mayor desparecido hace seis días",
-     "medio": "Cooperativa",
-     "url": "https://www.cooperativa.cl/noticias/pais/region-de-antofagasta/antofagasta-despliega-la-busqueda-de-simon-chirinos-adulto-mayor/2026-11-09/000941.html",
-     "hora": "00:09"
-    },
-    {
-     "titulo": "Claudio Alvarado, biministro del Interior y Segegob: “Que nadie se confunda con que ante un problema, la solución mágica es un cambio de gabinete”",
+     "titulo": "Viña Selentia, del Valle de Colchagua, lanza exclusivo proyecto inmobiliario que incluye parras productivas dentro de los propios lotes",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/aniversario/claudio-alvarado-biministro-del-interior-y-segegob-que-nadie-se-confunda",
-     "hora": "22:49"
+     "url": "http://www.df.cl/regiones/o-higgins/empresas/vina-selentia-lanza-exclusivo-proyecto-de-wine-lots-que-en-tres-meses",
+     "hora": "17:50"
+    },
+    {
+     "titulo": "Corredoras de bolsa crean su propio gremio",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/corredoras-de-bolsa-crean-su-propio-gremio/",
+     "hora": "17:29"
+    },
+    {
+     "titulo": "El precio del petróleo cayó otro 6% y alcanzó su precio más bajo en dos meses",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/09/el-precio-del-petroleo-cae-otro-5-y-alcanza-su-precio-mas-bajo-en-dos-meses/",
+     "hora": "17:28"
+    },
+    {
+     "titulo": "Influyentes del Presupuesto 2027, los rostros del ‘tira y afloja’ con el gobierno",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/economia-y-politica/congreso/influyentes-del-presupuesto-2027-los-rostros-del-tira-y-afloja-con-el",
+     "hora": "17:19"
+    },
+    {
+     "titulo": "El riesgo país cae debajo de los 900 puntos, en una sesión positiva para los mercados internacionales",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/09/cae-el-riesgo-pais-argentino-en-una-sesion-positiva-para-los-mercados-internacionales/",
+     "hora": "17:06"
     }
    ]
   },
@@ -150,28 +98,28 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "La misa de León XIV en Luján estará dedicada a la caridad y reunirá las historias de quienes construyen comunidad",
+     "titulo": "El Gobierno decreta los servicios mínimos de tren y avión para la huelga general del 11N",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/politica/2026/11/09/la-misa-de-leon-xiv-en-lujan-estara-dedicada-a-la-caridad-y-reunira-las-historias-de-quienes-construyen-comunidad/",
-     "hora": "03:47"
+     "url": "https://www.infobae.com/espana/agencias/2026/11/09/el-gobierno-decreta-los-servicios-minimos-de-tren-y-avion-para-la-huelga-general-del-11n/",
+     "hora": "17:47"
     },
     {
-     "titulo": "El Gobierno recibió de buena forma el discurso del Papa y no considera que haya sido una crítica a la actual gestión",
+     "titulo": "Page pide que el funeral de Urda sea \"un encuentro\" para que no se repita algo \"evitable\"",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/politica/2026/11/09/el-gobierno-recibio-de-buena-forma-el-discurso-del-papa-y-no-considera-que-haya-sido-una-critica-a-la-actual-gestion/",
-     "hora": "03:47"
+     "url": "https://www.infobae.com/espana/agencias/2026/11/09/page-pide-que-el-funeral-de-urda-sea-un-encuentro-para-que-no-se-repita-algo-evitable/",
+     "hora": "17:47"
     },
     {
-     "titulo": "La incógnita de Eisenkot en política exterior: pragmático, pero contrario a un Estado palestino",
-     "medio": "El País · Internacional",
-     "url": "https://elpais.com/internacional/2026-11-09/la-incognita-de-eisenkot-en-politica-exterior-mas-pragmatico-que-religioso-pero-contrario-al-estado-palestino.html",
-     "hora": "01:30"
+     "titulo": "Ascenso y caída: Russell Brand y su condena a más de 10 años de prisión por violación y agresión sexual",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/ee-uu-y-canad%C3%A1/20261109-russell-brand-es-condenado-a-10-a%C3%B1os-y-6-meses-de-prisi%C3%B3n-por-violaci%C3%B3n-y-agresi%C3%B3n-sexual",
+     "hora": "17:23"
     },
     {
-     "titulo": "La moral decae, pero Kiev se niega a bajar la persiana",
-     "medio": "El País · Internacional",
-     "url": "https://elpais.com/internacional/2026-11-09/la-moral-decae-pero-kiev-se-niega-a-bajar-la-persiana.html",
-     "hora": "01:30"
+     "titulo": "Infidelidad y presunto espionaje, el escándalo en el que está involucrado el CEO de Nvidia",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/video/20261109-infidelidad-y-presunto-espionaje-el-esc%C3%A1ndalo-en-el-que-est%C3%A1-involucrado-el-ceo-de-nvidia-1",
+     "hora": "17:11"
     }
    ]
   },
@@ -179,34 +127,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "Incendio en complejo residencial en norte de China deja al mens 14 muertos",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/incendio-en-complejo-residencial-en-norte-de-china-deja-al-mens-14-muertos/a-79895370?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "02:57"
-    },
-    {
-     "titulo": "Taiwán detiene a opositor de un partido minoritario por recibir financiación e instrucciones del Partido Comunista de China para las elecciones",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/taiwán-detiene-a-opositor-de-un-partido-minoritario-por-recibir-financiación-e-instrucciones-del-partido-comunista-de-china-para-las-elecciones/a-79895348?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "02:08"
-    },
-    {
-     "titulo": "Los sindicatos se preparan para un seguimiento “desigual” de la huelga por territorios, sectores y edades",
-     "medio": "El País · Economía",
-     "url": "https://elpais.com/economia/2026-11-09/los-sindicatos-preven-un-seguimiento-desigual-por-territorios-sectores-y-edades-en-la-huelga-general.html",
-     "hora": "01:45"
-    },
-    {
-     "titulo": "Más de la mitad de la oferta de alquiler de vivienda es de habitaciones y de temporada",
-     "medio": "El País · Economía",
-     "url": "https://elpais.com/economia/vivienda/2026-11-09/mas-de-la-mitad-de-la-oferta-de-alquiler-de-vivienda-es-de-habitaciones-y-de-temporada.html",
-     "hora": "01:45"
-    },
-    {
-     "titulo": "Las imágenes satelitales que muestran importantes obras de construcción cerca de las bases de misiles de Irán",
+     "titulo": "Quién es la supuesta espía china que tuvo una relación con el director de Nvidia, el gigante tecnológico de la IA (y otras claves del caso)",
      "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/ck20ww726y14o?at_medium=RSS&at_campaign=rss",
-     "hora": "01:11"
+     "url": "https://www.bbc.com/mundo/articles/cked3dy4ynjxo?at_medium=RSS&at_campaign=rss",
+     "hora": "15:25"
+    },
+    {
+     "titulo": "Mis padres decidieron morir juntos y yo tuve que afrontar su pérdida solo",
+     "medio": "BBC Mundo · Economía",
+     "url": "https://www.bbc.com/mundo/articles/c5j9k91lyp99o?at_medium=RSS&at_campaign=rss",
+     "hora": "14:36"
+    },
+    {
+     "titulo": "La IA en el aula: los alumnos \"ya no pueden pensar por sí mismos\"",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/la-ia-en-el-aula-los-alumnos-ya-no-pueden-pensar-por-sí-mismos/a-79903037?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "14:24"
+    },
+    {
+     "titulo": "Russell Brand es condenado a más de 10 años de cárcel por violación y agresiones sexuales",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/russell-brand-es-condenado-a-más-de-10-años-de-cárcel-por-violación-y-agresiones-sexuales/a-79903582?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "13:30"
+    },
+    {
+     "titulo": "El Gobierno inicia el trámite para reconocer el origen profesional de las enfermedades de las ‘kellys’",
+     "medio": "El País · Economía",
+     "url": "https://elpais.com/economia/2026-11-09/el-gobierno-reconocera-el-origen-profesional-de-las-enfermedades-de-las-kellys.html",
+     "hora": "12:54"
     }
    ]
   },
@@ -214,34 +162,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "Mercadona ha encontrado un filón para crecer más allá de su marca blanca y la comida preparada: el turismo",
+     "titulo": "Los ciberataques a frigoríficos de supermercados europeos dieron la vuelta al mundo. Francia acaba de señalar a un responsable",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/magnet/mercadona-ha-encontrado-filon-para-crecer-alla-su-marca-blanca-comida-preparada-turismo-1",
-     "hora": "03:01"
+     "url": "https://www.xataka.com/seguridad/ciberataques-a-frigorificos-supermercados-europeos-dieron-vuelta-al-mundo-francia-acaba-senalar-a-responsable",
+     "hora": "17:37"
     },
     {
-     "titulo": "El Tribunal Supremo determina que llegar tarde al trabajo y el tiempo de desayuno forman parte de la jornada laboral",
-     "medio": "Genbeta",
-     "url": "https://www.genbeta.com/laboral/tribunal-supremo-determina-que-llegar-tarde-al-trabajo-tiempo-desayuno-forman-parte-jornada-laboral",
-     "hora": "03:01"
-    },
-    {
-     "titulo": "\"Debo una disculpa a mi familia\": Jensen Huang confiesa su infidelidad mientras Nvidia investiga un posible espionaje chino",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/empresas-y-economia/debo-disculpa-a-mi-familia-jensen-huang-confiesa-su-infidelidad-nvidia-investiga-posible-espionaje-chino",
-     "hora": "19:46"
-    },
-    {
-     "titulo": "Europa observa Marruecos desde el espacio y presencia impotente la expansión de una gigantesca mancha roja",
-     "medio": "Genbeta",
-     "url": "https://www.genbeta.com/actualidad/europa-observa-marruecos-espacio-presencia-impotente-expansion-gigantesca-mancha-roja",
-     "hora": "18:01"
-    },
-    {
-     "titulo": "El iPod no ha muerto: esta aplicación convierte tu móvil, PC y Mac en el mítico reproductor de Apple",
+     "titulo": "Meta lanza Muse Ember: una IA ultrabarata para programar y automatizar tareas con agentes",
      "medio": "Hipertextual",
-     "url": "https://hipertextual.com/guias/ipod-apple-app-reproductor-musica-classipod/",
-     "hora": "16:00"
+     "url": "https://hipertextual.com/inteligencia-artificial/muse-ember-ia-programar-meta/",
+     "hora": "17:18"
+    },
+    {
+     "titulo": "Lidl está agotando la freidora de aire Moulinex original que llega a tiendas hoy, pero aquí la hemos encontrado incluso más barata",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/seleccion/lidl-esta-agotando-freidora-aire-moulinex-original-que-llega-a-tiendas-hoy-aqui-hemos-encontrado-incluso-barata",
+     "hora": "16:45"
+    },
+    {
+     "titulo": "Windows Update: Las computadoras obsoletas dejarán de recibir actualizaciones en junio de 2027",
+     "medio": "Genbeta",
+     "url": "https://www.genbeta.com/windows/windows-update-computadoras-obsoletas-dejaran-recibir-actualizaciones-junio-2027",
+     "hora": "16:01"
+    },
+    {
+     "titulo": "Adiós a James Gunn: DC despide al arquitecto de su nuevo universo y lo reemplaza con un veterano de Marvel",
+     "medio": "Hipertextual",
+     "url": "https://hipertextual.com/cine-television/james-gunn-deja-dc-studios-quien-lo-reemplaza/",
+     "hora": "15:33"
     }
    ]
   },
@@ -249,16 +197,33 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "Chile encendió el pebetero de los Juegos Preparatorios rumbo a los Juegos Mundiales de Olimpiadas Especiales",
+     "titulo": "Con fuegos artificiales, Leo Rey y más: la fiesta que alista Colo Colo en el Monumental para celebrar la estrella 35",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/chile-encendio-el-pebetero-de-los-juegos-preparatorios-rumbo-a-los-juegos-mundiales-de-olimpiadas-especiales/",
-     "hora": "22:38"
+     "url": "https://www.latercera.com/el-deportivo/noticia/con-fuegos-artificiales-leo-rey-y-mas-la-fiesta-que-alista-colo-colo-en-el-monumental-para-celebrar-la-estrella-35/",
+     "hora": "15:20"
     },
     {
-     "titulo": "Cinco equipos complicados: triunfos de U. de Concepción y La Calera remecen la pelea por no descender",
+     "titulo": "Dónde y a qué hora ver la celebración del título de Colo Colo en el estadio Monumental",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/cinco-equipos-complicados-triunfos-de-u-de-concepcion-y-la-calera-remecen-la-pelea-por-no-descender/",
-     "hora": "22:30"
+     "url": "https://www.latercera.com/el-deportivo/noticia/donde-y-a-que-hora-ver-la-celebracion-del-titulo-de-colo-colo-en-el-estadio-monumental/",
+     "hora": "14:47"
+    },
+    {
+     "titulo": "U. de Chile al debe: Colo Colo y U. Católica dominaron la última década del fútbol chileno",
+     "medio": "Prensa Fútbol",
+     "url": "https://www.prensafutbol.cl/u-al-debe-colo-colo-u-catolica-dominan-decada/",
+     "hora": "07:55"
+    }
+   ]
+  },
+  {
+   "seccion": "Ciencia",
+   "notas": [
+    {
+     "titulo": "Los últimos avances en biotecnología: expertos analizan su impacto en la salud y el desarrollo productivo",
+     "medio": "Infobae",
+     "url": "https://www.infobae.com/salud/ciencia/2026/11/09/los-ultimos-avances-en-biotecnologia-expertos-analizan-su-impacto-en-la-salud-y-el-desarrollo-productivo/",
+     "hora": "06:49"
     }
    ]
   },
@@ -266,21 +231,51 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "Durcal, teleasistencia española, levanta 3M€ para Italia",
+     "titulo": "Nominal, la startup de IA para hardware, levanta US$240M",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/durcal-teleasistencia-espanola-levanta-3me-para-italia/",
-     "hora": "03:06"
-    },
-    {
-     "titulo": "Hydros Power: cápsulas de hidrógeno y ronda de 250.000€",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/hydros-power-capsulas-de-hidrogeno-y-ronda-de-250-000e/",
-     "hora": "03:03"
+     "url": "https://ecosistemastartup.com/nominal-la-startup-de-ia-para-hardware-levanta-us240m/",
+     "hora": "16:39"
     }
    ]
   }
  ],
- "aire": null,
+ "aire": {
+  "ciudades": [
+   {
+    "ciudad": "Valparaíso",
+    "aqi": 21,
+    "estado": "Buena",
+    "estacion": "Concón Mma, Chile",
+    "hora": "15:00",
+    "url": "https://aqicn.org/city/chile/concon-mma"
+   },
+   {
+    "ciudad": "Santiago",
+    "aqi": 34,
+    "estado": "Buena",
+    "estacion": "Pudahuel, Chile",
+    "hora": "15:00",
+    "url": "https://aqicn.org/city/chile/pudahuel"
+   },
+   {
+    "ciudad": "Concepción",
+    "aqi": 42,
+    "estado": "Buena",
+    "estacion": "Inpesca, Chile",
+    "hora": "15:00",
+    "url": "https://aqicn.org/city/chile/inpesca"
+   },
+   {
+    "ciudad": "Puerto Montt",
+    "aqi": 17,
+    "estado": "Buena",
+    "estacion": "Alerce, Chile",
+    "hora": "16:00",
+    "url": "https://aqicn.org/city/chile/alerce"
+   }
+  ],
+  "fuente": "SINCA (Ministerio del Medio Ambiente) vía Índice Mundial de Calidad del Aire (aqicn.org)"
+ },
  "mercados": [
   {
    "nombre": "S&P 500",
@@ -319,9 +314,9 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 74103.16,
+  "bitcoin_usd": 74782.67,
   "bitcoin_fecha": "2026-11-09",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 133
+ "fuentes_ok": 124
 }
