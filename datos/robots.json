@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-09",
+ "fecha": "2026-11-10",
  "sitios": {
   "upwell.pfeg.noaa.gov": {
    "estado": 200,
@@ -42,6 +42,10 @@
    "estado": 404,
    "reglas": []
   },
+  "tramitacion.senado.cl": {
+   "estado": 200,
+   "reglas": []
+  },
   "news.google.com": {
    "estado": 200,
    "reglas": [
@@ -68,6 +72,14 @@
   "www.capital.cl": {
    "estado": "SSLError",
    "reglas": []
+  },
+  "www.latercera.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /",
+    "Disallow: /pf/api/v3/*",
+    "Disallow: /search/?q=*"
+   ]
   },
   "www.bing.com": {
    "estado": 200,
@@ -134,25 +146,31 @@
     "Disallow: /shop/productpage"
    ]
   },
+  "www.df.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /custom/",
+    "Disallow: /qr-inter"
+   ]
+  },
   "www.infobae.com": {
    "estado": 200,
    "reglas": [
     "Disallow: /buscador"
    ]
   },
-  "www.latercera.com": {
+  "www.elmostrador.cl": {
    "estado": 200,
    "reglas": [
-    "Allow: /",
-    "Disallow: /pf/api/v3/*",
-    "Disallow: /search/?q=*"
-   ]
-  },
-  "www.df.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /custom/",
-    "Disallow: /qr-inter"
+    "Disallow: /newsletter/",
+    "Disallow: /test/",
+    "Disallow: /draft/",
+    "Disallow: /categoria/introduccion-la-pauta/",
+    "Disallow: /autor/azorrilla/",
+    "Disallow: /autor/mjordan/",
+    "Disallow: /categoria/newsletter/",
+    "Disallow: /_files/internal/",
+    "Disallow: /*?new_size_elmo=*"
    ]
   },
   "www.ex-ante.cl": {
@@ -186,18 +204,10 @@
     "Disallow: /2/hi/uk_news/england/beds/bucks/herts/3663494.stm"
    ]
   },
-  "www.elmostrador.cl": {
+  "www.eldinamo.cl": {
    "estado": 200,
    "reglas": [
-    "Disallow: /newsletter/",
-    "Disallow: /test/",
-    "Disallow: /draft/",
-    "Disallow: /categoria/introduccion-la-pauta/",
-    "Disallow: /autor/azorrilla/",
-    "Disallow: /autor/mjordan/",
-    "Disallow: /categoria/newsletter/",
-    "Disallow: /_files/internal/",
-    "Disallow: /*?new_size_elmo=*"
+    "Disallow: /draft/"
    ]
   },
   "www.aljazeera.com": {
@@ -221,18 +231,8 @@
     "Disallow: /*&playlist="
    ]
   },
-  "www.eldinamo.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /draft/"
-   ]
-  },
   "www.france24.com": {
    "estado": 200,
-   "reglas": []
-  },
-  "feeds.elpais.com": {
-   "estado": 403,
    "reglas": []
   },
   "www.cooperativa.cl": {
@@ -260,8 +260,8 @@
     "Disallow: /noticias/site/tax/port/fid_audio/nuevataxport*"
    ]
   },
-  "rss.dw.com": {
-   "estado": 200,
+  "feeds.elpais.com": {
+   "estado": 403,
    "reglas": []
   },
   "www.cnnchile.com": {
@@ -269,6 +269,10 @@
    "reglas": [
     "Disallow: /draft/"
    ]
+  },
+  "www.theclinic.cl": {
+   "estado": 200,
+   "reglas": []
   },
   "www.eldesconcierto.cl": {
    "estado": 200,
@@ -282,12 +286,12 @@
     "Disallow: /*?fbclid="
    ]
   },
-  "www.theclinic.cl": {
-   "estado": 200,
-   "reglas": []
-  },
   "interferencia.cl": {
    "estado": 403,
+   "reglas": []
+  },
+  "rss.dw.com": {
+   "estado": 200,
    "reglas": []
   },
   "ellibero.cl": {
@@ -311,6 +315,17 @@
     "Disallow: /trackback/",
     "Allow: /"
    ]
+  },
+  "ecosistemastartup.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
+  "sudantribune.com": {
+   "estado": 403,
+   "reglas": []
   },
   "news.un.org": {
    "estado": 200,
@@ -377,17 +392,6 @@
     "Disallow: */interviews*"
    ]
   },
-  "ecosistemastartup.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
-  },
-  "sudantribune.com": {
-   "estado": 403,
-   "reglas": []
-  },
   "www.europapress.es": {
    "estado": 200,
    "reglas": [
@@ -402,32 +406,6 @@
     "Disallow: /ws/AltaBoletin.ashx",
     "Disallow: /buscador/"
    ]
-  },
-  "techcrunch.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Disallow: /wp-json/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /search/",
-    "Disallow: /?s=",
-    "Disallow: /*?customize_changeset_uuid=*"
-   ]
-  },
-  "contxto.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-content/uploads/wpo/wpo-plugins-tables-list.json",
-    "Disallow: /?s=",
-    "Disallow: /page/*/?s=",
-    "Disallow: /search/",
-    "Disallow: /wp-json/",
-    "Disallow: /?rest_route="
-   ]
-  },
-  "startupchile.org": {
-   "estado": 404,
-   "reglas": []
   },
   "www.emprendepyme.net": {
    "estado": 200,
@@ -456,6 +434,17 @@
     "Allow: /*/page/2$"
    ]
   },
+  "techcrunch.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Disallow: /wp-json/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /search/",
+    "Disallow: /?s=",
+    "Disallow: /*?customize_changeset_uuid=*"
+   ]
+  },
   "latamlist.com": {
    "estado": 200,
    "reglas": [
@@ -463,66 +452,20 @@
     "Disallow: /wp-admin/"
    ]
   },
-  "www.ciperchile.cl": {
+  "contxto.com": {
    "estado": 200,
+   "reglas": [
+    "Disallow: /wp-content/uploads/wpo/wpo-plugins-tables-list.json",
+    "Disallow: /?s=",
+    "Disallow: /page/*/?s=",
+    "Disallow: /search/",
+    "Disallow: /wp-json/",
+    "Disallow: /?rest_route="
+   ]
+  },
+  "startupchile.org": {
+   "estado": 404,
    "reglas": []
-  },
-  "www.wired.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /*?",
-    "Allow: /*?page",
-    "Allow: /*.xml?",
-    "Allow: /*.js",
-    "Allow: /*.css",
-    "Allow: /*.ico",
-    "Allow: /verso/static",
-    "Allow: /*.svg",
-    "Allow: /*.png",
-    "Allow: /*.jpg",
-    "Allow: /*.jpeg",
-    "Allow: /*rss?",
-    "Allow: /*?id=",
-    "Disallow: /auth/",
-    "Disallow: /account/",
-    "Disallow: /user/",
-    "Disallow: /user-context",
-    "Disallow: /preview/",
-    "Disallow: /search",
-    "Disallow: /product/",
-    "Disallow: /cdn-cgi/",
-    "Disallow: /services.min.js",
-    "Disallow: /com.condenast/yv8",
-    "Disallow: /reject-all",
-    "Disallow: */c_limit/",
-    "Disallow: /uk",
-    "Allow: /v2/offers/wira",
-    "Allow: /*?*utm_medium=social",
-    "Allow: /*?*utm_medium=syndication",
-    "Allow: /*?ref=",
-    "Allow: /story/madison-square-garden-jim-dolan-surveillance-machine/?src",
-    "Disallow: */testing-products-",
-    "Disallow: /uk/"
-   ]
-  },
-  "www.fayerwayer.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /300x250_1/",
-    "Disallow: /300x250_2/",
-    "Disallow: /300x250_3/",
-    "Disallow: /300x250_4/",
-    "Disallow: /layer/",
-    "Disallow: /Skyscrapper/",
-    "Disallow: /bottom/",
-    "Disallow: /footer/",
-    "Disallow: /skin/",
-    "Disallow: /top/",
-    "Disallow: /customer-preview/",
-    "Disallow: /buscador/",
-    "Disallow: /search/"
-   ]
   },
   "www.xataka.com": {
    "estado": 200,
@@ -581,6 +524,32 @@
     "Disallow: /frontend_dev.php/"
    ]
   },
+  "www.fayerwayer.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /",
+    "Disallow: /300x250_1/",
+    "Disallow: /300x250_2/",
+    "Disallow: /300x250_3/",
+    "Disallow: /300x250_4/",
+    "Disallow: /layer/",
+    "Disallow: /Skyscrapper/",
+    "Disallow: /bottom/",
+    "Disallow: /footer/",
+    "Disallow: /skin/",
+    "Disallow: /top/",
+    "Disallow: /customer-preview/",
+    "Disallow: /buscador/",
+    "Disallow: /search/"
+   ]
+  },
+  "hipertextual.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /tag/",
+    "Disallow: /page/"
+   ]
+  },
   "www.genbeta.com": {
    "estado": 200,
    "reglas": [
@@ -619,13 +588,6 @@
     "Disallow: /frontend_dev.php/"
    ]
   },
-  "hipertextual.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /tag/",
-    "Disallow: /page/"
-   ]
-  },
   "www.theverge.com": {
    "estado": 200,
    "reglas": [
@@ -648,9 +610,51 @@
     "Disallow: /share?*"
    ]
   },
+  "www.ciperchile.cl": {
+   "estado": 200,
+   "reglas": []
+  },
   "feeds.arstechnica.com": {
    "estado": 404,
    "reglas": []
+  },
+  "www.wired.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /*?",
+    "Allow: /*?page",
+    "Allow: /*.xml?",
+    "Allow: /*.js",
+    "Allow: /*.css",
+    "Allow: /*.ico",
+    "Allow: /verso/static",
+    "Allow: /*.svg",
+    "Allow: /*.png",
+    "Allow: /*.jpg",
+    "Allow: /*.jpeg",
+    "Allow: /*rss?",
+    "Allow: /*?id=",
+    "Disallow: /auth/",
+    "Disallow: /account/",
+    "Disallow: /user/",
+    "Disallow: /user-context",
+    "Disallow: /preview/",
+    "Disallow: /search",
+    "Disallow: /product/",
+    "Disallow: /cdn-cgi/",
+    "Disallow: /services.min.js",
+    "Disallow: /com.condenast/yv8",
+    "Disallow: /reject-all",
+    "Disallow: */c_limit/",
+    "Disallow: /uk",
+    "Allow: /v2/offers/wira",
+    "Allow: /*?*utm_medium=social",
+    "Allow: /*?*utm_medium=syndication",
+    "Allow: /*?ref=",
+    "Allow: /story/madison-square-garden-jim-dolan-surveillance-machine/?src",
+    "Disallow: */testing-products-",
+    "Disallow: /uk/"
+   ]
   },
   "www.plataformaurbana.cl": {
    "estado": 502,
@@ -721,11 +725,11 @@
     "Disallow: /nba/tradeMachine/?tradeId=*"
    ]
   },
-  "site.api.espn.com": {
+  "www.golfdigest.com": {
    "estado": 403,
    "reglas": []
   },
-  "www.golfdigest.com": {
+  "site.api.espn.com": {
    "estado": 403,
    "reglas": []
   },
@@ -733,82 +737,6 @@
    "estado": 200,
    "reglas": [
     "Disallow: /test/"
-   ]
-  },
-  "inside.fei.org": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /misc/*.css$",
-    "Allow: /misc/*.css?",
-    "Allow: /misc/*.js$",
-    "Allow: /misc/*.js?",
-    "Allow: /misc/*.gif",
-    "Allow: /misc/*.jpg",
-    "Allow: /misc/*.jpeg",
-    "Allow: /misc/*.png",
-    "Allow: /modules/*.css$",
-    "Allow: /modules/*.css?",
-    "Allow: /modules/*.js$",
-    "Allow: /modules/*.js?",
-    "Allow: /modules/*.gif",
-    "Allow: /modules/*.jpg",
-    "Allow: /modules/*.jpeg",
-    "Allow: /modules/*.png",
-    "Allow: /profiles/*.css$",
-    "Allow: /profiles/*.css?",
-    "Allow: /profiles/*.js$",
-    "Allow: /profiles/*.js?",
-    "Allow: /profiles/*.gif",
-    "Allow: /profiles/*.jpg",
-    "Allow: /profiles/*.jpeg",
-    "Allow: /profiles/*.png",
-    "Allow: /themes/*.css$",
-    "Allow: /themes/*.css?",
-    "Allow: /themes/*.js$",
-    "Allow: /themes/*.js?",
-    "Allow: /themes/*.gif",
-    "Allow: /themes/*.jpg",
-    "Allow: /themes/*.jpeg",
-    "Allow: /themes/*.png",
-    "Disallow: /includes/",
-    "Disallow: /misc/",
-    "Disallow: /modules/",
-    "Disallow: /profiles/",
-    "Disallow: /scripts/",
-    "Disallow: /themes/",
-    "Disallow: /CHANGELOG.txt",
-    "Disallow: /cron.php",
-    "Disallow: /INSTALL.mysql.txt",
-    "Disallow: /INSTALL.pgsql.txt",
-    "Disallow: /INSTALL.sqlite.txt",
-    "Disallow: /install.php",
-    "Disallow: /INSTALL.txt",
-    "Disallow: /LICENSE.txt",
-    "Disallow: /MAINTAINERS.txt",
-    "Disallow: /update.php",
-    "Disallow: /UPGRADE.txt",
-    "Disallow: /xmlrpc.php",
-    "Disallow: /admin/",
-    "Disallow: /comment/reply/",
-    "Disallow: /filter/tips/",
-    "Disallow: /node/add/",
-    "Disallow: /search/",
-    "Disallow: /user/register/",
-    "Disallow: /user/password/",
-    "Disallow: /user/login/",
-    "Disallow: /user/logout/",
-    "Disallow: /?q=admin/"
-   ]
-  },
-  "medicalxpress.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /search/",
-    "Disallow: /rss-feed/search/",
-    "Disallow: /rss-feed/breaking/search/",
-    "Disallow: /rss-feed/tags/",
-    "Disallow: /*/sort/"
    ]
   },
   "phys.org": {
@@ -879,6 +807,96 @@
     "Disallow: /index.php/*/media/oembed"
    ]
   },
+  "medicalxpress.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /",
+    "Disallow: /search/",
+    "Disallow: /rss-feed/search/",
+    "Disallow: /rss-feed/breaking/search/",
+    "Disallow: /rss-feed/tags/",
+    "Disallow: /*/sort/"
+   ]
+  },
+  "inside.fei.org": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /misc/*.css$",
+    "Allow: /misc/*.css?",
+    "Allow: /misc/*.js$",
+    "Allow: /misc/*.js?",
+    "Allow: /misc/*.gif",
+    "Allow: /misc/*.jpg",
+    "Allow: /misc/*.jpeg",
+    "Allow: /misc/*.png",
+    "Allow: /modules/*.css$",
+    "Allow: /modules/*.css?",
+    "Allow: /modules/*.js$",
+    "Allow: /modules/*.js?",
+    "Allow: /modules/*.gif",
+    "Allow: /modules/*.jpg",
+    "Allow: /modules/*.jpeg",
+    "Allow: /modules/*.png",
+    "Allow: /profiles/*.css$",
+    "Allow: /profiles/*.css?",
+    "Allow: /profiles/*.js$",
+    "Allow: /profiles/*.js?",
+    "Allow: /profiles/*.gif",
+    "Allow: /profiles/*.jpg",
+    "Allow: /profiles/*.jpeg",
+    "Allow: /profiles/*.png",
+    "Allow: /themes/*.css$",
+    "Allow: /themes/*.css?",
+    "Allow: /themes/*.js$",
+    "Allow: /themes/*.js?",
+    "Allow: /themes/*.gif",
+    "Allow: /themes/*.jpg",
+    "Allow: /themes/*.jpeg",
+    "Allow: /themes/*.png",
+    "Disallow: /includes/",
+    "Disallow: /misc/",
+    "Disallow: /modules/",
+    "Disallow: /profiles/",
+    "Disallow: /scripts/",
+    "Disallow: /themes/",
+    "Disallow: /CHANGELOG.txt",
+    "Disallow: /cron.php",
+    "Disallow: /INSTALL.mysql.txt",
+    "Disallow: /INSTALL.pgsql.txt",
+    "Disallow: /INSTALL.sqlite.txt",
+    "Disallow: /install.php",
+    "Disallow: /INSTALL.txt",
+    "Disallow: /LICENSE.txt",
+    "Disallow: /MAINTAINERS.txt",
+    "Disallow: /update.php",
+    "Disallow: /UPGRADE.txt",
+    "Disallow: /xmlrpc.php",
+    "Disallow: /admin/",
+    "Disallow: /comment/reply/",
+    "Disallow: /filter/tips/",
+    "Disallow: /node/add/",
+    "Disallow: /search/",
+    "Disallow: /user/register/",
+    "Disallow: /user/password/",
+    "Disallow: /user/login/",
+    "Disallow: /user/logout/",
+    "Disallow: /?q=admin/"
+   ]
+  },
+  "www.technologyreview.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /*.pdf$"
+   ]
+  },
+  "www.nasa.gov": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
+   ]
+  },
   "www.ecuestre.es": {
    "estado": 200,
    "reglas": [
@@ -906,18 +924,56 @@
     "Disallow: /*?pagina=*"
    ]
   },
-  "www.technologyreview.com": {
+  "www.agenciasinc.es": {
    "estado": 200,
    "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /*.pdf$"
+    "Allow: /",
+    "Allow: /assets/",
+    "Allow: /var/ezwebin_site/storage/",
+    "Disallow: /En-exclusiva/",
+    "Disallow: /admin/",
+    "Disallow: /sincadmin/",
+    "Disallow: /share/",
+    "Disallow: /audios/",
+    "Disallow: /UserFiles/",
+    "Disallow: /layout/",
+    "Disallow: /promo/",
+    "Disallow: /print/",
+    "Disallow: /instituciones/",
+    "Disallow: /institutions/",
+    "Disallow: /utils/",
+    "Disallow: /en/",
+    "Disallow: /eng/",
+    "Disallow: /content/keyword/",
+    "Disallow: /content/download/"
    ]
   },
-  "www.nasa.gov": {
+  "www.space.com": {
    "estado": 200,
    "reglas": [
-    "Allow: /"
+    "Disallow: */deals/compare",
+    "Disallow: */html/",
+    "Disallow: */p/*/embed/captioned",
+    "Disallow: */outlink*",
+    "Disallow: *.freyr.*",
+    "Disallow: */comments/*",
+    "Disallow: */.events-handler*",
+    "Disallow: *CoreWebVitalsThresholdEvent*",
+    "Disallow: */partials/*",
+    "Disallow: */future.adtech.freyr.v1.PageViewEvent",
+    "Disallow: *searchTerm=*",
+    "Disallow: *sortBy=*",
+    "Disallow: *productBrand=*",
+    "Disallow: *%7B*%7D*",
+    "Disallow: *seenMatchId=*",
+    "Disallow: *q=*",
+    "Disallow: /infinite-scroll-article/*",
+    "Disallow: /infinite-scroll-review/*",
+    "Disallow: /infinite-scroll-recipe/*",
+    "Disallow: /search.php",
+    "Disallow: /social.php",
+    "Disallow: /newsletter-signup",
+    "Disallow: /_proxy*"
    ]
   },
   "noirlab.edu": {
@@ -969,30 +1025,6 @@
     "Disallow: /index.php/*/media/oembed"
    ]
   },
-  "www.agenciasinc.es": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Allow: /assets/",
-    "Allow: /var/ezwebin_site/storage/",
-    "Disallow: /En-exclusiva/",
-    "Disallow: /admin/",
-    "Disallow: /sincadmin/",
-    "Disallow: /share/",
-    "Disallow: /audios/",
-    "Disallow: /UserFiles/",
-    "Disallow: /layout/",
-    "Disallow: /promo/",
-    "Disallow: /print/",
-    "Disallow: /instituciones/",
-    "Disallow: /institutions/",
-    "Disallow: /utils/",
-    "Disallow: /en/",
-    "Disallow: /eng/",
-    "Disallow: /content/keyword/",
-    "Disallow: /content/download/"
-   ]
-  },
   "spacenews.com": {
    "estado": 200,
    "reglas": []
@@ -1030,38 +1062,6 @@
     "Disallow: /wp-content/observing-tools/almanac/welcome.htm"
    ]
   },
-  "www.esa.int": {
-   "estado": 200,
-   "reglas": []
-  },
-  "www.space.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: */deals/compare",
-    "Disallow: */html/",
-    "Disallow: */p/*/embed/captioned",
-    "Disallow: */outlink*",
-    "Disallow: *.freyr.*",
-    "Disallow: */comments/*",
-    "Disallow: */.events-handler*",
-    "Disallow: *CoreWebVitalsThresholdEvent*",
-    "Disallow: */partials/*",
-    "Disallow: */future.adtech.freyr.v1.PageViewEvent",
-    "Disallow: *searchTerm=*",
-    "Disallow: *sortBy=*",
-    "Disallow: *productBrand=*",
-    "Disallow: *%7B*%7D*",
-    "Disallow: *seenMatchId=*",
-    "Disallow: *q=*",
-    "Disallow: /infinite-scroll-article/*",
-    "Disallow: /infinite-scroll-review/*",
-    "Disallow: /infinite-scroll-recipe/*",
-    "Disallow: /search.php",
-    "Disallow: /social.php",
-    "Disallow: /newsletter-signup",
-    "Disallow: /_proxy*"
-   ]
-  },
   "www.newscientist.com": {
    "estado": 200,
    "reglas": [
@@ -1097,6 +1097,10 @@
     "Disallow: /nsj/remindme/",
     "Disallow: /nsj/searchjobs/"
    ]
+  },
+  "www.esa.int": {
+   "estado": 200,
+   "reglas": []
   },
   "www.eso.org": {
    "estado": 200,
@@ -1200,8 +1204,129 @@
     "Disallow: /seriesBeta"
    ]
   },
+  "api.met.no": {
+   "estado": 200,
+   "reglas": []
+  },
   "mindicador.cl": {
    "estado": 404,
+   "reglas": []
+  },
+  "api.frankfurter.dev": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
+   ]
+  },
+  "api.wikimedia.org": {
+   "estado": 200,
+   "reglas": []
+  },
+  "meteoarmada.directemar.cl": {
+   "estado": 200,
+   "reglas": []
+  },
+  "www.bcentral.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /*nuevo-buscador*",
+    "Disallow: /*new-search*",
+    "Disallow: /*reunion-de-politica-monetaria-rpm*",
+    "Disallow: /*buscador*",
+    "Disallow: /*search*"
+   ]
+  },
+  "mercados.larrainvial.com": {
+   "estado": 404,
+   "reglas": []
+  },
+  "www.imf.org": {
+   "estado": 404,
+   "reglas": []
+  },
+  "www.iqair.com": {
+   "estado": 429,
+   "reglas": []
+  },
+  "flight-status.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
+   ]
+  },
+  "tablademareas.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /info",
+    "Disallow: /actions",
+    "Disallow: /*?q=",
+    "Disallow: /check-server"
+   ]
+  },
+  "www.bbc.co.uk": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /asset/",
+    "Disallow: /backstage/bbc-login-help/",
+    "Disallow: /backstage/bbc-login-help$",
+    "Disallow: /bitesize/search$",
+    "Disallow: /bitesize/search/",
+    "Disallow: /bitesize/search?",
+    "Disallow: /cbbc/search$",
+    "Disallow: /cbbc/search/",
+    "Disallow: /cbbc/search?",
+    "Disallow: /cbeebies/search$",
+    "Disallow: /cbeebies/search/",
+    "Disallow: /cbeebies/search?",
+    "Disallow: /chwilio/",
+    "Disallow: /chwilio$",
+    "Disallow: /chwilio?",
+    "Disallow: /iplayer/bigscreen/",
+    "Disallow: /iplayer/cbbc/episodes/",
+    "Disallow: /iplayer/cbbc/search",
+    "Disallow: /iplayer/cbeebies/episodes/",
+    "Disallow: /iplayer/cbeebies/search",
+    "Disallow: /iplayer/search",
+    "Disallow: /indepthtoolkit/smallprox$",
+    "Disallow: /indepthtoolkit/smallprox/",
+    "Disallow: /moderation/reports/",
+    "Disallow: /modules/musicnav/language/",
+    "Disallow: /news/0",
+    "Disallow: /radio/aod/",
+    "Disallow: /radio/aod$",
+    "Disallow: /radio/imda",
+    "Disallow: /radio/player/",
+    "Disallow: /radio/player$",
+    "Disallow: /search/",
+    "Disallow: /search$",
+    "Disallow: /search?",
+    "Disallow: /sport/alpha/",
+    "Disallow: /sounds/player/",
+    "Disallow: /sounds/player$",
+    "Disallow: /ugc$",
+    "Disallow: /ugc/",
+    "Disallow: /ugcsupport$",
+    "Disallow: /ugcsupport/",
+    "Disallow: /userinfo/",
+    "Disallow: /userinfo",
+    "Disallow: /food/favourites",
+    "Disallow: /food/menus/*/shopping-list",
+    "Disallow: /food/recipes/*/shopping-list",
+    "Disallow: /food/search*?*",
+    "Disallow: /sounds/search$",
+    "Disallow: /sounds/search/",
+    "Disallow: /sounds/search?",
+    "Disallow: /ws/includes",
+    "Disallow: /rd/search$",
+    "Disallow: /rd/search/",
+    "Disallow: /rd/search?",
+    "Disallow: /things/search$",
+    "Disallow: /things/search/",
+    "Disallow: /things/search?"
+   ]
+  },
+  "www.armada.cl": {
+   "estado": 200,
    "reglas": []
   }
  }
