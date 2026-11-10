@@ -65,10 +65,6 @@
    "estado": 200,
    "reglas": []
   },
-  "www.capital.cl": {
-   "estado": "SSLError",
-   "reglas": []
-  },
   "www.infobae.com": {
    "estado": 200,
    "reglas": [
@@ -81,6 +77,17 @@
     "Allow: /",
     "Disallow: /pf/api/v3/*",
     "Disallow: /search/?q=*"
+   ]
+  },
+  "www.capital.cl": {
+   "estado": "SSLError",
+   "reglas": []
+  },
+  "www.df.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /custom/",
+    "Disallow: /qr-inter"
    ]
   },
   "www.bing.com": {
@@ -148,37 +155,10 @@
     "Disallow: /shop/productpage"
    ]
   },
-  "www.df.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /custom/",
-    "Disallow: /qr-inter"
-   ]
-  },
   "www.ex-ante.cl": {
    "estado": 200,
    "reglas": [
     "Allow: /"
-   ]
-  },
-  "www.elmostrador.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /newsletter/",
-    "Disallow: /test/",
-    "Disallow: /draft/",
-    "Disallow: /categoria/introduccion-la-pauta/",
-    "Disallow: /autor/azorrilla/",
-    "Disallow: /autor/mjordan/",
-    "Disallow: /categoria/newsletter/",
-    "Disallow: /_files/internal/",
-    "Disallow: /*?new_size_elmo=*"
-   ]
-  },
-  "www.eldinamo.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /draft/"
    ]
   },
   "feeds.bbci.co.uk": {
@@ -206,8 +186,53 @@
     "Disallow: /2/hi/uk_news/england/beds/bucks/herts/3663494.stm"
    ]
   },
+  "www.elmostrador.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /newsletter/",
+    "Disallow: /test/",
+    "Disallow: /draft/",
+    "Disallow: /categoria/introduccion-la-pauta/",
+    "Disallow: /autor/azorrilla/",
+    "Disallow: /autor/mjordan/",
+    "Disallow: /categoria/newsletter/",
+    "Disallow: /_files/internal/",
+    "Disallow: /*?new_size_elmo=*"
+   ]
+  },
   "www.france24.com": {
    "estado": 200,
+   "reglas": []
+  },
+  "www.aljazeera.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /api",
+    "Disallow: /asset-manifest.json",
+    "Allow: /search/$",
+    "Disallow: /search/",
+    "Disallow: /home/search?q=",
+    "Disallow: /*/liveblog/*?*update=*",
+    "Disallow: /*?gb=",
+    "Disallow: /*&gb=",
+    "Disallow: /*?traffic_source=",
+    "Disallow: /*&traffic_source=",
+    "Disallow: /*?fbclid=",
+    "Disallow: /*&fbclid=",
+    "Disallow: /*?q=",
+    "Disallow: /*&q=",
+    "Disallow: /*?playlist=",
+    "Disallow: /*&playlist="
+   ]
+  },
+  "www.eldinamo.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /draft/"
+   ]
+  },
+  "feeds.elpais.com": {
+   "estado": 403,
    "reglas": []
   },
   "www.cooperativa.cl": {
@@ -235,43 +260,22 @@
     "Disallow: /noticias/site/tax/port/fid_audio/nuevataxport*"
    ]
   },
-  "www.aljazeera.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /api",
-    "Disallow: /asset-manifest.json",
-    "Allow: /search/$",
-    "Disallow: /search/",
-    "Disallow: /home/search?q=",
-    "Disallow: /*/liveblog/*?*update=*",
-    "Disallow: /*?gb=",
-    "Disallow: /*&gb=",
-    "Disallow: /*?traffic_source=",
-    "Disallow: /*&traffic_source=",
-    "Disallow: /*?fbclid=",
-    "Disallow: /*&fbclid=",
-    "Disallow: /*?q=",
-    "Disallow: /*&q=",
-    "Disallow: /*?playlist=",
-    "Disallow: /*&playlist="
-   ]
-  },
-  "feeds.elpais.com": {
-   "estado": 403,
-   "reglas": []
-  },
   "www.cnnchile.com": {
    "estado": 200,
    "reglas": [
     "Disallow: /draft/"
    ]
   },
-  "interferencia.cl": {
-   "estado": 403,
+  "rss.dw.com": {
+   "estado": 200,
    "reglas": []
   },
   "www.theclinic.cl": {
    "estado": 200,
+   "reglas": []
+  },
+  "interferencia.cl": {
+   "estado": 403,
    "reglas": []
   },
   "www.eldesconcierto.cl": {
@@ -286,19 +290,6 @@
     "Disallow: /*?fbclid="
    ]
   },
-  "rss.dw.com": {
-   "estado": 200,
-   "reglas": []
-  },
-  "ellibero.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Disallow: /link-in-bio/",
-    "Disallow: /redirect/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
-  },
   "radio.uchile.cl": {
    "estado": 200,
    "reglas": [
@@ -310,6 +301,15 @@
     "Disallow: /comments/feed/",
     "Disallow: /trackback/",
     "Allow: /"
+   ]
+  },
+  "ellibero.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Disallow: /link-in-bio/",
+    "Disallow: /redirect/",
+    "Allow: /wp-admin/admin-ajax.php"
    ]
   },
   "www.ciperchile.cl": {
@@ -407,6 +407,17 @@
     "Allow: /wp-admin/admin-ajax.php"
    ]
   },
+  "techcrunch.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Disallow: /wp-json/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /search/",
+    "Disallow: /?s=",
+    "Disallow: /*?customize_changeset_uuid=*"
+   ]
+  },
   "www.emprendepyme.net": {
    "estado": 200,
    "reglas": [
@@ -432,17 +443,6 @@
     "Disallow: /*/page/9",
     "Allow: /*/page/1$",
     "Allow: /*/page/2$"
-   ]
-  },
-  "techcrunch.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Disallow: /wp-json/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /search/",
-    "Disallow: /?s=",
-    "Disallow: /*?customize_changeset_uuid=*"
    ]
   },
   "contxto.com": {
@@ -581,26 +581,11 @@
     "Disallow: /frontend_dev.php/"
    ]
   },
-  "www.theverge.com": {
+  "hipertextual.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Allow: /sp/",
-    "Disallow: /admin",
-    "Disallow: /newfanshot",
-    "Disallow: /users/*/replies",
-    "Disallow: /users/*/comments",
-    "Disallow: /login",
-    "Disallow: /account",
-    "Disallow: /auth/*",
-    "Disallow: /chorus_auth",
-    "Disallow: /sso",
-    "Disallow: /search",
-    "Disallow: /the-highlight$",
-    "Disallow: /share$",
-    "Disallow: /share/*",
-    "Disallow: /share?*"
+    "Disallow: /tag/",
+    "Disallow: /page/"
    ]
   },
   "www.genbeta.com": {
@@ -641,11 +626,26 @@
     "Disallow: /frontend_dev.php/"
    ]
   },
-  "hipertextual.com": {
+  "www.theverge.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /tag/",
-    "Disallow: /page/"
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Allow: /sp/",
+    "Disallow: /admin",
+    "Disallow: /newfanshot",
+    "Disallow: /users/*/replies",
+    "Disallow: /users/*/comments",
+    "Disallow: /login",
+    "Disallow: /account",
+    "Disallow: /auth/*",
+    "Disallow: /chorus_auth",
+    "Disallow: /sso",
+    "Disallow: /search",
+    "Disallow: /the-highlight$",
+    "Disallow: /share$",
+    "Disallow: /share/*",
+    "Disallow: /share?*"
    ]
   },
   "feeds.arstechnica.com": {
