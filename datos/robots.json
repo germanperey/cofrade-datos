@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-10",
+ "fecha": "2026-11-11",
  "sitios": {
   "upwell.pfeg.noaa.gov": {
    "estado": 200,
@@ -65,29 +65,14 @@
    "estado": 200,
    "reglas": []
   },
-  "www.infobae.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /buscador"
-   ]
-  },
-  "www.latercera.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /pf/api/v3/*",
-    "Disallow: /search/?q=*"
-   ]
-  },
   "www.capital.cl": {
    "estado": "SSLError",
    "reglas": []
   },
-  "www.df.cl": {
+  "www.infobae.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /custom/",
-    "Disallow: /qr-inter"
+    "Disallow: /buscador"
    ]
   },
   "www.bing.com": {
@@ -155,10 +140,19 @@
     "Disallow: /shop/productpage"
    ]
   },
-  "www.ex-ante.cl": {
+  "www.latercera.com": {
    "estado": 200,
    "reglas": [
-    "Allow: /"
+    "Allow: /",
+    "Disallow: /pf/api/v3/*",
+    "Disallow: /search/?q=*"
+   ]
+  },
+  "www.df.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /custom/",
+    "Disallow: /qr-inter"
    ]
   },
   "feeds.bbci.co.uk": {
@@ -186,6 +180,16 @@
     "Disallow: /2/hi/uk_news/england/beds/bucks/herts/3663494.stm"
    ]
   },
+  "www.ex-ante.cl": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
+   ]
+  },
+  "www.france24.com": {
+   "estado": 200,
+   "reglas": []
+  },
   "www.elmostrador.cl": {
    "estado": 200,
    "reglas": [
@@ -199,10 +203,6 @@
     "Disallow: /_files/internal/",
     "Disallow: /*?new_size_elmo=*"
    ]
-  },
-  "www.france24.com": {
-   "estado": 200,
-   "reglas": []
   },
   "www.aljazeera.com": {
    "estado": 200,
@@ -225,15 +225,15 @@
     "Disallow: /*&playlist="
    ]
   },
+  "feeds.elpais.com": {
+   "estado": 403,
+   "reglas": []
+  },
   "www.eldinamo.cl": {
    "estado": 200,
    "reglas": [
     "Disallow: /draft/"
    ]
-  },
-  "feeds.elpais.com": {
-   "estado": 403,
-   "reglas": []
   },
   "www.cooperativa.cl": {
    "estado": 200,
@@ -266,18 +266,6 @@
     "Disallow: /draft/"
    ]
   },
-  "rss.dw.com": {
-   "estado": 200,
-   "reglas": []
-  },
-  "www.theclinic.cl": {
-   "estado": 200,
-   "reglas": []
-  },
-  "interferencia.cl": {
-   "estado": 403,
-   "reglas": []
-  },
   "www.eldesconcierto.cl": {
    "estado": 200,
    "reglas": [
@@ -288,6 +276,27 @@
     "Disallow: /*?buscar=",
     "Disallow: /*?utm_",
     "Disallow: /*?fbclid="
+   ]
+  },
+  "rss.dw.com": {
+   "estado": 200,
+   "reglas": []
+  },
+  "interferencia.cl": {
+   "estado": 403,
+   "reglas": []
+  },
+  "www.theclinic.cl": {
+   "estado": 200,
+   "reglas": []
+  },
+  "ellibero.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Disallow: /link-in-bio/",
+    "Disallow: /redirect/",
+    "Allow: /wp-admin/admin-ajax.php"
    ]
   },
   "radio.uchile.cl": {
@@ -302,19 +311,6 @@
     "Disallow: /trackback/",
     "Allow: /"
    ]
-  },
-  "ellibero.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Disallow: /link-in-bio/",
-    "Disallow: /redirect/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
-  },
-  "www.ciperchile.cl": {
-   "estado": 200,
-   "reglas": []
   },
   "news.un.org": {
    "estado": 200,
@@ -381,10 +377,6 @@
     "Disallow: */interviews*"
    ]
   },
-  "sudantribune.com": {
-   "estado": 403,
-   "reglas": []
-  },
   "www.europapress.es": {
    "estado": 200,
    "reglas": [
@@ -400,12 +392,13 @@
     "Disallow: /buscador/"
    ]
   },
-  "ecosistemastartup.com": {
+  "www.ciperchile.cl": {
    "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
+   "reglas": []
+  },
+  "sudantribune.com": {
+   "estado": 403,
+   "reglas": []
   },
   "techcrunch.com": {
    "estado": 200,
@@ -416,6 +409,31 @@
     "Disallow: /search/",
     "Disallow: /?s=",
     "Disallow: /*?customize_changeset_uuid=*"
+   ]
+  },
+  "ecosistemastartup.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
+  "contxto.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-content/uploads/wpo/wpo-plugins-tables-list.json",
+    "Disallow: /?s=",
+    "Disallow: /page/*/?s=",
+    "Disallow: /search/",
+    "Disallow: /wp-json/",
+    "Disallow: /?rest_route="
+   ]
+  },
+  "latamlist.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-login.php",
+    "Disallow: /wp-admin/"
    ]
   },
   "www.emprendepyme.net": {
@@ -443,24 +461,6 @@
     "Disallow: /*/page/9",
     "Allow: /*/page/1$",
     "Allow: /*/page/2$"
-   ]
-  },
-  "contxto.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-content/uploads/wpo/wpo-plugins-tables-list.json",
-    "Disallow: /?s=",
-    "Disallow: /page/*/?s=",
-    "Disallow: /search/",
-    "Disallow: /wp-json/",
-    "Disallow: /?rest_route="
-   ]
-  },
-  "latamlist.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-login.php",
-    "Disallow: /wp-admin/"
    ]
   },
   "startupchile.org": {
@@ -505,23 +505,26 @@
     "Disallow: /uk/"
    ]
   },
-  "www.fayerwayer.com": {
+  "www.theverge.com": {
    "estado": 200,
    "reglas": [
-    "Allow: /",
-    "Disallow: /300x250_1/",
-    "Disallow: /300x250_2/",
-    "Disallow: /300x250_3/",
-    "Disallow: /300x250_4/",
-    "Disallow: /layer/",
-    "Disallow: /Skyscrapper/",
-    "Disallow: /bottom/",
-    "Disallow: /footer/",
-    "Disallow: /skin/",
-    "Disallow: /top/",
-    "Disallow: /customer-preview/",
-    "Disallow: /buscador/",
-    "Disallow: /search/"
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Allow: /sp/",
+    "Disallow: /admin",
+    "Disallow: /newfanshot",
+    "Disallow: /users/*/replies",
+    "Disallow: /users/*/comments",
+    "Disallow: /login",
+    "Disallow: /account",
+    "Disallow: /auth/*",
+    "Disallow: /chorus_auth",
+    "Disallow: /sso",
+    "Disallow: /search",
+    "Disallow: /the-highlight$",
+    "Disallow: /share$",
+    "Disallow: /share/*",
+    "Disallow: /share?*"
    ]
   },
   "www.xataka.com": {
@@ -581,13 +584,6 @@
     "Disallow: /frontend_dev.php/"
    ]
   },
-  "hipertextual.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /tag/",
-    "Disallow: /page/"
-   ]
-  },
   "www.genbeta.com": {
    "estado": 200,
    "reglas": [
@@ -626,31 +622,35 @@
     "Disallow: /frontend_dev.php/"
    ]
   },
-  "www.theverge.com": {
+  "hipertextual.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Allow: /sp/",
-    "Disallow: /admin",
-    "Disallow: /newfanshot",
-    "Disallow: /users/*/replies",
-    "Disallow: /users/*/comments",
-    "Disallow: /login",
-    "Disallow: /account",
-    "Disallow: /auth/*",
-    "Disallow: /chorus_auth",
-    "Disallow: /sso",
-    "Disallow: /search",
-    "Disallow: /the-highlight$",
-    "Disallow: /share$",
-    "Disallow: /share/*",
-    "Disallow: /share?*"
+    "Disallow: /tag/",
+    "Disallow: /page/"
    ]
   },
   "feeds.arstechnica.com": {
    "estado": 404,
    "reglas": []
+  },
+  "www.fayerwayer.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /",
+    "Disallow: /300x250_1/",
+    "Disallow: /300x250_2/",
+    "Disallow: /300x250_3/",
+    "Disallow: /300x250_4/",
+    "Disallow: /layer/",
+    "Disallow: /Skyscrapper/",
+    "Disallow: /bottom/",
+    "Disallow: /footer/",
+    "Disallow: /skin/",
+    "Disallow: /top/",
+    "Disallow: /customer-preview/",
+    "Disallow: /buscador/",
+    "Disallow: /search/"
+   ]
   },
   "www.plataformaurbana.cl": {
    "estado": 502,
@@ -721,11 +721,11 @@
     "Disallow: /nba/tradeMachine/?tradeId=*"
    ]
   },
-  "site.api.espn.com": {
+  "www.golfdigest.com": {
    "estado": 403,
    "reglas": []
   },
-  "www.golfdigest.com": {
+  "site.api.espn.com": {
    "estado": 403,
    "reglas": []
   },
@@ -814,71 +814,6 @@
     "Disallow: /*/sort/"
    ]
   },
-  "inside.fei.org": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /misc/*.css$",
-    "Allow: /misc/*.css?",
-    "Allow: /misc/*.js$",
-    "Allow: /misc/*.js?",
-    "Allow: /misc/*.gif",
-    "Allow: /misc/*.jpg",
-    "Allow: /misc/*.jpeg",
-    "Allow: /misc/*.png",
-    "Allow: /modules/*.css$",
-    "Allow: /modules/*.css?",
-    "Allow: /modules/*.js$",
-    "Allow: /modules/*.js?",
-    "Allow: /modules/*.gif",
-    "Allow: /modules/*.jpg",
-    "Allow: /modules/*.jpeg",
-    "Allow: /modules/*.png",
-    "Allow: /profiles/*.css$",
-    "Allow: /profiles/*.css?",
-    "Allow: /profiles/*.js$",
-    "Allow: /profiles/*.js?",
-    "Allow: /profiles/*.gif",
-    "Allow: /profiles/*.jpg",
-    "Allow: /profiles/*.jpeg",
-    "Allow: /profiles/*.png",
-    "Allow: /themes/*.css$",
-    "Allow: /themes/*.css?",
-    "Allow: /themes/*.js$",
-    "Allow: /themes/*.js?",
-    "Allow: /themes/*.gif",
-    "Allow: /themes/*.jpg",
-    "Allow: /themes/*.jpeg",
-    "Allow: /themes/*.png",
-    "Disallow: /includes/",
-    "Disallow: /misc/",
-    "Disallow: /modules/",
-    "Disallow: /profiles/",
-    "Disallow: /scripts/",
-    "Disallow: /themes/",
-    "Disallow: /CHANGELOG.txt",
-    "Disallow: /cron.php",
-    "Disallow: /INSTALL.mysql.txt",
-    "Disallow: /INSTALL.pgsql.txt",
-    "Disallow: /INSTALL.sqlite.txt",
-    "Disallow: /install.php",
-    "Disallow: /INSTALL.txt",
-    "Disallow: /LICENSE.txt",
-    "Disallow: /MAINTAINERS.txt",
-    "Disallow: /update.php",
-    "Disallow: /UPGRADE.txt",
-    "Disallow: /xmlrpc.php",
-    "Disallow: /admin/",
-    "Disallow: /comment/reply/",
-    "Disallow: /filter/tips/",
-    "Disallow: /node/add/",
-    "Disallow: /search/",
-    "Disallow: /user/register/",
-    "Disallow: /user/password/",
-    "Disallow: /user/login/",
-    "Disallow: /user/logout/",
-    "Disallow: /?q=admin/"
-   ]
-  },
   "www.technologyreview.com": {
    "estado": 200,
    "reglas": [
@@ -891,33 +826,6 @@
    "estado": 200,
    "reglas": [
     "Allow: /"
-   ]
-  },
-  "www.ecuestre.es": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /admin/",
-    "Disallow: /app/deporte/ponis?pagina=*",
-    "Allow: /app/deporte/ponis?pagina=2$",
-    "Allow: /app/deporte/ponis?pagina=3$",
-    "Allow: /app/deporte/ponis?pagina=4$",
-    "Allow: /app/deporte/ponis?pagina=5$",
-    "Allow: /app/deporte/ponis?pagina=6$",
-    "Allow: /app/deporte/ponis?pagina=7$",
-    "Allow: /app/deporte/ponis?pagina=8$",
-    "Allow: /app/deporte/ponis?pagina=9$",
-    "Allow: /app/deporte/ponis?pagina=10$",
-    "Disallow: /app/caballo/salud?pagina=*",
-    "Allow: /app/caballo/salud?pagina=2$",
-    "Allow: /app/caballo/salud?pagina=3$",
-    "Allow: /app/caballo/salud?pagina=4$",
-    "Allow: /app/caballo/salud?pagina=5$",
-    "Allow: /app/caballo/salud?pagina=6$",
-    "Allow: /app/caballo/salud?pagina=7$",
-    "Allow: /app/caballo/salud?pagina=8$",
-    "Allow: /app/caballo/salud?pagina=9$",
-    "Allow: /app/caballo/salud?pagina=10$",
-    "Disallow: /*?pagina=*"
    ]
   },
   "www.newscientist.com": {
@@ -1005,30 +913,6 @@
     "Disallow: /index.php/*/media/oembed"
    ]
   },
-  "www.agenciasinc.es": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Allow: /assets/",
-    "Allow: /var/ezwebin_site/storage/",
-    "Disallow: /En-exclusiva/",
-    "Disallow: /admin/",
-    "Disallow: /sincadmin/",
-    "Disallow: /share/",
-    "Disallow: /audios/",
-    "Disallow: /UserFiles/",
-    "Disallow: /layout/",
-    "Disallow: /promo/",
-    "Disallow: /print/",
-    "Disallow: /instituciones/",
-    "Disallow: /institutions/",
-    "Disallow: /utils/",
-    "Disallow: /en/",
-    "Disallow: /eng/",
-    "Disallow: /content/keyword/",
-    "Disallow: /content/download/"
-   ]
-  },
   "www.space.com": {
    "estado": 200,
    "reglas": [
@@ -1057,11 +941,58 @@
     "Disallow: /_proxy*"
    ]
   },
-  "spacenews.com": {
+  "www.ecuestre.es": {
    "estado": 200,
-   "reglas": []
+   "reglas": [
+    "Disallow: /admin/",
+    "Disallow: /app/deporte/ponis?pagina=*",
+    "Allow: /app/deporte/ponis?pagina=2$",
+    "Allow: /app/deporte/ponis?pagina=3$",
+    "Allow: /app/deporte/ponis?pagina=4$",
+    "Allow: /app/deporte/ponis?pagina=5$",
+    "Allow: /app/deporte/ponis?pagina=6$",
+    "Allow: /app/deporte/ponis?pagina=7$",
+    "Allow: /app/deporte/ponis?pagina=8$",
+    "Allow: /app/deporte/ponis?pagina=9$",
+    "Allow: /app/deporte/ponis?pagina=10$",
+    "Disallow: /app/caballo/salud?pagina=*",
+    "Allow: /app/caballo/salud?pagina=2$",
+    "Allow: /app/caballo/salud?pagina=3$",
+    "Allow: /app/caballo/salud?pagina=4$",
+    "Allow: /app/caballo/salud?pagina=5$",
+    "Allow: /app/caballo/salud?pagina=6$",
+    "Allow: /app/caballo/salud?pagina=7$",
+    "Allow: /app/caballo/salud?pagina=8$",
+    "Allow: /app/caballo/salud?pagina=9$",
+    "Allow: /app/caballo/salud?pagina=10$",
+    "Disallow: /*?pagina=*"
+   ]
   },
-  "www.esa.int": {
+  "www.agenciasinc.es": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /",
+    "Allow: /assets/",
+    "Allow: /var/ezwebin_site/storage/",
+    "Disallow: /En-exclusiva/",
+    "Disallow: /admin/",
+    "Disallow: /sincadmin/",
+    "Disallow: /share/",
+    "Disallow: /audios/",
+    "Disallow: /UserFiles/",
+    "Disallow: /layout/",
+    "Disallow: /promo/",
+    "Disallow: /print/",
+    "Disallow: /instituciones/",
+    "Disallow: /institutions/",
+    "Disallow: /utils/",
+    "Disallow: /en/",
+    "Disallow: /eng/",
+    "Disallow: /content/keyword/",
+    "Disallow: /content/download/"
+   ]
+  },
+  "spacenews.com": {
    "estado": 200,
    "reglas": []
   },
@@ -1097,6 +1028,10 @@
     "Disallow: /wp-content/observing-tools/jupiter_moons/jupiter.html",
     "Disallow: /wp-content/observing-tools/almanac/welcome.htm"
    ]
+  },
+  "www.esa.int": {
+   "estado": 200,
+   "reglas": []
   },
   "www.eso.org": {
    "estado": 200,
@@ -1161,6 +1096,71 @@
     "Disallow: /it/manuals",
     "Disallow: /it/scisoft/star",
     "Disallow: /observing/dfo/status"
+   ]
+  },
+  "inside.fei.org": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /misc/*.css$",
+    "Allow: /misc/*.css?",
+    "Allow: /misc/*.js$",
+    "Allow: /misc/*.js?",
+    "Allow: /misc/*.gif",
+    "Allow: /misc/*.jpg",
+    "Allow: /misc/*.jpeg",
+    "Allow: /misc/*.png",
+    "Allow: /modules/*.css$",
+    "Allow: /modules/*.css?",
+    "Allow: /modules/*.js$",
+    "Allow: /modules/*.js?",
+    "Allow: /modules/*.gif",
+    "Allow: /modules/*.jpg",
+    "Allow: /modules/*.jpeg",
+    "Allow: /modules/*.png",
+    "Allow: /profiles/*.css$",
+    "Allow: /profiles/*.css?",
+    "Allow: /profiles/*.js$",
+    "Allow: /profiles/*.js?",
+    "Allow: /profiles/*.gif",
+    "Allow: /profiles/*.jpg",
+    "Allow: /profiles/*.jpeg",
+    "Allow: /profiles/*.png",
+    "Allow: /themes/*.css$",
+    "Allow: /themes/*.css?",
+    "Allow: /themes/*.js$",
+    "Allow: /themes/*.js?",
+    "Allow: /themes/*.gif",
+    "Allow: /themes/*.jpg",
+    "Allow: /themes/*.jpeg",
+    "Allow: /themes/*.png",
+    "Disallow: /includes/",
+    "Disallow: /misc/",
+    "Disallow: /modules/",
+    "Disallow: /profiles/",
+    "Disallow: /scripts/",
+    "Disallow: /themes/",
+    "Disallow: /CHANGELOG.txt",
+    "Disallow: /cron.php",
+    "Disallow: /INSTALL.mysql.txt",
+    "Disallow: /INSTALL.pgsql.txt",
+    "Disallow: /INSTALL.sqlite.txt",
+    "Disallow: /install.php",
+    "Disallow: /INSTALL.txt",
+    "Disallow: /LICENSE.txt",
+    "Disallow: /MAINTAINERS.txt",
+    "Disallow: /update.php",
+    "Disallow: /UPGRADE.txt",
+    "Disallow: /xmlrpc.php",
+    "Disallow: /admin/",
+    "Disallow: /comment/reply/",
+    "Disallow: /filter/tips/",
+    "Disallow: /node/add/",
+    "Disallow: /search/",
+    "Disallow: /user/register/",
+    "Disallow: /user/password/",
+    "Disallow: /user/login/",
+    "Disallow: /user/logout/",
+    "Disallow: /?q=admin/"
    ]
   },
   "query1.finance.yahoo.com": {
@@ -1259,66 +1259,18 @@
     "Disallow: /check-server"
    ]
   },
-  "www.bbc.co.uk": {
+  "tramitacion.senado.cl": {
+   "estado": 200,
+   "reglas": []
+  },
+  "cpichile.org": {
    "estado": 200,
    "reglas": [
-    "Disallow: /asset/",
-    "Disallow: /backstage/bbc-login-help/",
-    "Disallow: /backstage/bbc-login-help$",
-    "Disallow: /bitesize/search$",
-    "Disallow: /bitesize/search/",
-    "Disallow: /bitesize/search?",
-    "Disallow: /cbbc/search$",
-    "Disallow: /cbbc/search/",
-    "Disallow: /cbbc/search?",
-    "Disallow: /cbeebies/search$",
-    "Disallow: /cbeebies/search/",
-    "Disallow: /cbeebies/search?",
-    "Disallow: /chwilio/",
-    "Disallow: /chwilio$",
-    "Disallow: /chwilio?",
-    "Disallow: /iplayer/bigscreen/",
-    "Disallow: /iplayer/cbbc/episodes/",
-    "Disallow: /iplayer/cbbc/search",
-    "Disallow: /iplayer/cbeebies/episodes/",
-    "Disallow: /iplayer/cbeebies/search",
-    "Disallow: /iplayer/search",
-    "Disallow: /indepthtoolkit/smallprox$",
-    "Disallow: /indepthtoolkit/smallprox/",
-    "Disallow: /moderation/reports/",
-    "Disallow: /modules/musicnav/language/",
-    "Disallow: /news/0",
-    "Disallow: /radio/aod/",
-    "Disallow: /radio/aod$",
-    "Disallow: /radio/imda",
-    "Disallow: /radio/player/",
-    "Disallow: /radio/player$",
-    "Disallow: /search/",
-    "Disallow: /search$",
-    "Disallow: /search?",
-    "Disallow: /sport/alpha/",
-    "Disallow: /sounds/player/",
-    "Disallow: /sounds/player$",
-    "Disallow: /ugc$",
-    "Disallow: /ugc/",
-    "Disallow: /ugcsupport$",
-    "Disallow: /ugcsupport/",
-    "Disallow: /userinfo/",
-    "Disallow: /userinfo",
-    "Disallow: /food/favourites",
-    "Disallow: /food/menus/*/shopping-list",
-    "Disallow: /food/recipes/*/shopping-list",
-    "Disallow: /food/search*?*",
-    "Disallow: /sounds/search$",
-    "Disallow: /sounds/search/",
-    "Disallow: /sounds/search?",
-    "Disallow: /ws/includes",
-    "Disallow: /rd/search$",
-    "Disallow: /rd/search/",
-    "Disallow: /rd/search?",
-    "Disallow: /things/search$",
-    "Disallow: /things/search/",
-    "Disallow: /things/search?"
+    "Disallow: /wp-admin/",
+    "Disallow: /wp-login.php",
+    "Disallow: /xmlrpc.php",
+    "Disallow: /?s=",
+    "Disallow: /*?replytocom="
    ]
   },
   "www.armada.cl": {
