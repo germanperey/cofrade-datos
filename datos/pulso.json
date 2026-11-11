@@ -1,64 +1,31 @@
 {
- "generado": "2026-11-11T03:41-03:00",
- "proxima": "07:17",
- "indicadores": [
-  {
-   "clave": "dolar",
-   "nombre": "Dólar",
-   "valor": 977.05,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-11",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "euro",
-   "nombre": "Euro",
-   "valor": 1089.61,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-11",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "uf",
-   "nombre": "UF",
-   "valor": 41309.19,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-11",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "utm",
-   "nombre": "UTM",
-   "valor": 72440,
-   "prefijo": "$",
-   "decimales": 0,
-   "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "libra_cobre",
-   "nombre": "Cobre (libra)",
-   "valor": 6.38,
-   "prefijo": "US$",
-   "decimales": 2,
-   "fecha": "2026-11-11",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  }
- ],
+ "generado": "2026-11-11T14:56-03:00",
+ "proxima": "16:17",
+ "indicadores": [],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10597.22,
+  "valor": 10614.25,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-11T03:41-03:00",
-  "variacion_pct": 0.07
+  "hora": "2026-11-11T14:57-03:00",
+  "variacion_pct": 0.16
  },
  "sismos": {
-  "n": 0,
-  "mayores": [],
+  "n": 2,
+  "mayores": [
+   {
+    "hora": "2026-11-11T08:36-03:00",
+    "magnitud": 5.1,
+    "profundidad_km": 91.3,
+    "referencia": "26 km al O de Calama"
+   },
+   {
+    "hora": "2026-11-11T03:57-03:00",
+    "magnitud": 4.2,
+    "profundidad_km": 26.3,
+    "referencia": "65 km al O de Valparaíso"
+   }
+  ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
   "url": "https://earthquake.usgs.gov/earthquakes/map/"
  },
@@ -67,34 +34,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "Gobierno prevé entregar este miércoles decretos de Rabat y reafirma apoyo “indiscutible” al ministro ante eventual acusación constitucional",
-     "medio": "La Tercera · Política",
-     "url": "https://www.latercera.com/politica/noticia/gobierno-preve-entregar-este-miercoles-decretos-de-rabat-y-reafirma-apoyo-indiscutible-al-ministro-ante-eventual-acusacion-constitucional/",
-     "hora": "01:56"
-    },
-    {
-     "titulo": "Con discusión inmediata: gobierno ingresa por la Cámara proyecto para limitar alzas de combustibles a $20 por litro",
-     "medio": "La Tercera · Política",
-     "url": "https://www.latercera.com/politica/noticia/con-discusion-inmediata-gobierno-ingresa-por-la-camara-proyecto-para-limitar-alzas-de-combustibles-a-20-por-litro/",
-     "hora": "23:38"
-    },
-    {
-     "titulo": "Caso Convenios: Fiscalía presenta acusación contra 11 personas y pide 20 años de cárcel para exjefe de la Gobernación del Biobío",
+     "titulo": "La sombra de los data centers: la IA amenaza con desatar una nueva escasez de microchips en la industria automotriz",
      "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/10/caso-convenios-fiscalia-presenta-acusacion-contra-11-personas-y-pide-20-anos-de-carcel-para-exjefe-de-la-gobernacion-del-biobio/",
-     "hora": "23:02"
+     "url": "https://www.theclinic.cl/2026/11/11/escasez-microchips-automotriz-inteligencia-artificial-2026/",
+     "hora": "14:44"
     },
     {
-     "titulo": "Registran pulso eruptivo en Nevados de Chillán: explosiones con columnas de gases y piroclastos de hasta 2.400 metros",
+     "titulo": "Los detalles del polémico proyecto de rebaja de penas con que Kast busca salir de la crisis (lea el texto)",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/nacional/reduccion-de-penas-los-detalles-del-proyecto-parlamentario/",
+     "hora": "14:35"
+    },
+    {
+     "titulo": "Los factores detrás de la recesión técnica que reconoció Quiroz y sus proyecciones para 2028",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/negocios/quiroz-reconoce-recesion-economica-chile/",
+     "hora": "14:32"
+    },
+    {
+     "titulo": "Más que en el robo del siglo de Baby Bandito: $8.520 millones fueron sustraídos en atraco a bóveda del BCI en Concepción",
      "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/registran-pulso-eruptivo-en-nevados-de-chillan-explosiones-con-columnas-de-gases-y-piroclastos-de-hasta-2400-metros/",
-     "hora": "22:19"
+     "url": "https://www.latercera.com/nacional/noticia/mas-que-en-el-robo-del-siglo-de-baby-bandito-8520-millones-fueron-sustraidos-en-atraco-a-boveda-del-bci-en-concepcion/",
+     "hora": "14:11"
     },
     {
-     "titulo": "Cuáles son los gremios de camioneros y movimientos que encabezan la paralización y bloqueos en rutas por el alza de los combustibles",
-     "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/10/cuales-son-los-gremios-de-camioneros-y-movimientos-que-encabezan-la-paralizacion-y-bloqueos-en-rutas-por-el-alza-de-los-combustibles/",
-     "hora": "21:02"
+     "titulo": "Vicepresidente de SNA y paro de camioneros: “Creo que responsabilizo al gobierno central, se estaba advirtiendo”",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/vicepresidente-de-sna-y-paro-de-camioneros-creo-que-responsabilizo-al-gobierno-central-se-estaba-advirtiendo/",
+     "hora": "13:42"
     }
    ]
   },
@@ -102,34 +69,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "UDI: El Presidente decidió enfrentar la acusación constitucional con Rabat para ganarla",
-     "medio": "Cooperativa",
-     "url": "https://www.cooperativa.cl/noticias/pais/presidente-kast/udi-el-presidente-decidio-enfrentar-la-acusacion-constitucional-con/2026-11-11/003605.html",
-     "hora": "00:36"
-    },
-    {
-     "titulo": "Tras dos feriados, el mercado argentino tendrá que ponerse al día con limitaciones por el día festivo en EEUU",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/11/tras-dos-feriados-el-mercado-argentino-tendra-que-ponerse-al-dia-con-limitaciones-por-el-dia-festivo-en-eeuu/",
-     "hora": "00:31"
-    },
-    {
-     "titulo": "Los números detrás del escándalo de infidelidad y espionaje en Nvidia: cuánto pueden perder la empresa y los accionistas",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/11/los-numeros-detras-del-escandalo-de-infidelidad-y-espionaje-en-nvidia-cuanto-pueden-perder-la-empresa-y-los-accionistas/",
-     "hora": "00:31"
-    },
-    {
-     "titulo": "Colombiano y venezolana fueron atacados a tiros en Viña del Mar",
-     "medio": "Cooperativa",
-     "url": "https://www.cooperativa.cl/noticias/pais/policial/colombiano-y-venezolana-fueron-atacados-a-tiros-en-vina-del-mar/2026-11-10/232645.html",
-     "hora": "23:26"
-    },
-    {
-     "titulo": "AFP chilenas reducen pérdidas por swaps de tasas tras repunte de bonos de EEUU",
+     "titulo": "Echeverría Izquierdo hace su primer remate holandés de bonos desde 2018 y amplía la escasa oferta desde el sector de la construcción",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/pensiones/afp-chilenas-reducen-perdidas-por-swaps-de-tasas-tras-repunte-de-bonos-de",
-     "hora": "21:47"
+     "url": "http://www.df.cl/mercados/renta-fija/constructora-echeverria-izquierdo-vuelve-a-salir-al-mercado-de-capitales",
+     "hora": "14:49"
+    },
+    {
+     "titulo": "Por paro de camioneros: Gobierno retira del Congreso proyecto para frenar alza de combustibles",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/por-paro-de-camioneros-gobierno-retira-del-congreso-proyecto-para-frenar-alza-de-combustibles/",
+     "hora": "14:45"
+    },
+    {
+     "titulo": "El conflicto de Arauco Argentina con la Aduana local que la dejó sin poder importar ni exportar por más de un mes y que ahora puede reabrirse",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/empresas/industria/el-conflicto-de-arauco-argentina-con-la-aduana-local-que-la-dejo-sin-poder",
+     "hora": "14:44"
+    },
+    {
+     "titulo": "Casa de Moneda lanza colección de medallas de Papelucho",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/casa-de-moneda-lanza-coleccion-de-medallas-de-papelucho/",
+     "hora": "14:35"
+    },
+    {
+     "titulo": "Los detalles del polémico proyecto de rebaja de penas con que Kast busca salir de la crisis (lea el texto)",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/nacional/reduccion-de-penas-los-detalles-del-proyecto-parlamentario/",
+     "hora": "14:35"
     }
    ]
   },
@@ -137,22 +104,16 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Organizaciones alertan que cambios al impuesto al tabaco podrían aumentar fumadores en Colombia",
+     "titulo": "Vicepresidente pidió al Congreso de la República respaldar la Ley de rescate fiscal: “No se admite jugar a la politiquería”",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/2026/11/11/organizaciones-alertan-que-cambios-al-impuesto-al-tabaco-podrian-aumentar-fumadores-en-colombia/",
-     "hora": "03:34"
+     "url": "https://www.infobae.com/colombia/2026/11/11/vicepresidente-pidio-al-congreso-de-la-republica-respaldar-la-ley-de-rescate-fiscal-no-se-admite-jugar-a-la-politiqueria/",
+     "hora": "14:55"
     },
     {
-     "titulo": "Primer ministro de Haití agradeció apoyo de El Salvador tras ataque a un cuartel de la banda 400 Mawozo",
+     "titulo": "Juan Manuel Santos criticó a Abelardo de la Espriella por caminar entre cadáveres y Alejandro Ordóñez le respondió: “No se preocupó por entregarle el país a las Farc”",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/el-salvador/2026/11/11/primer-ministro-de-haiti-agradecio-el-apoyo-de-el-salvador-tras-el-ataque-a-un-cuartel-de-la-banda-400-mawozo/",
-     "hora": "03:32"
-    },
-    {
-     "titulo": "3 claves de la primera huelga general en España en 14 años (y la paradoja de que el gobierno la defienda y la oposición la critique)",
-     "medio": "BBC Mundo",
-     "url": "https://www.bbc.com/mundo/articles/cmlyly7jwq24o?at_medium=RSS&at_campaign=rss",
-     "hora": "01:58"
+     "url": "https://www.infobae.com/colombia/2026/11/11/juan-manuel-santos-critico-a-abelardo-de-la-espriella-por-caminar-entre-cadaveres-y-alejandro-ordonez-le-respondio-no-se-preocupo-por-entregarle-el-pais-a-las-farc/",
+     "hora": "14:55"
     }
    ]
   },
@@ -160,34 +121,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "RD Congo supera barrera de los 11.000 casos de ébola, incluidos 5.387 muertos",
+     "titulo": "Estudio asegura que un cuarto de los alemanes quiere una dictadura de derecha",
      "medio": "DW en español",
-     "url": "https://www.dw.com/es/rd-congo-supera-barrera-de-los-11-000-casos-de-ébola-incluidos-5-387-muertos/a-79914424?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "03:27"
+     "url": "https://www.dw.com/es/estudio-asegura-que-un-cuarto-de-los-alemanes-quiere-una-dictadura-de-derecha/a-79922826?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "14:31"
     },
     {
-     "titulo": "3 claves de la primera huelga general en España en 14 años (y la paradoja de que el gobierno la defienda y la oposición la critique)",
+     "titulo": "Berlín reúne a disidentes para hallar respuestas ante las autocracias",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/berlín-reúne-a-disidentes-para-hallar-respuestas-ante-las-autocracias/a-79916089?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "14:31"
+    },
+    {
+     "titulo": "En imágenes: decenas de detenidos en la primera huelga general en España en 14 años",
      "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/cmlyly7jwq24o?at_medium=RSS&at_campaign=rss",
-     "hora": "01:58"
+     "url": "https://www.bbc.com/mundo/articles/ckx28e5lj300o?at_medium=RSS&at_campaign=rss",
+     "hora": "13:59"
     },
     {
-     "titulo": "Hacienda obliga a tributar las prejubilaciones voluntarias si no se enmarcan en un despido colectivo",
-     "medio": "El País · Economía",
-     "url": "https://elpais.com/economia/2026-11-11/hacienda-obliga-a-tributar-las-prejubilaciones-voluntarias-si-no-se-enmarcan-en-un-despido-colectivo.html",
-     "hora": "01:45"
-    },
-    {
-     "titulo": "Las aerolíneas europeas vislumbran algo de luz en medio de la tormenta",
-     "medio": "El País · Economía",
-     "url": "https://cincodias.elpais.com/opinion/2026-11-11/las-aerolineas-europeas-vislumbran-algo-de-luz-en-medio-de-la-tormenta.html",
-     "hora": "01:40"
-    },
-    {
-     "titulo": "El diésel acorrala también a Latinoamérica: transportistas chilenos ponen presión al presidente Kast",
+     "titulo": "España afronta una huelga general por la crisis de vivienda y la pérdida de poder adquisitivo",
      "medio": "France 24 · Economía",
-     "url": "https://www.france24.com/es/programas/econom%C3%ADa/20261111-economia-chile-camiones-paro-diesel",
-     "hora": "00:11"
+     "url": "https://www.france24.com/es/programas/econom%C3%ADa/20261111-espa%C3%B1a-afronta-una-huelga-general-por-la-crisis-de-vivienda-y-la-p%C3%A9rdida-de-poder-adquisitivo",
+     "hora": "13:07"
+    },
+    {
+     "titulo": "\"El capitalismo ya trataba mal a las personas; lo que ha cambiado ahora es que esa lógica se ha adoptado (…) en discursos sobre liderazgo\"",
+     "medio": "BBC Mundo · Economía",
+     "url": "https://www.bbc.com/mundo/articles/ck868llen5lgo?at_medium=RSS&at_campaign=rss",
+     "hora": "11:54"
     }
    ]
   },
@@ -195,34 +156,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "Hoy en Action (por 16,77 euros): la bomba de aire inalámbrica 3 en 1 de Grundig para llevar siempre en el coche",
+     "titulo": "Móviles, electrodomésticos e incluso LEGOs: así son las mejores ofertas del 11-11 de Miravia",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/seleccion/hoy-action-16-77-euros-bomba-aire-inalambrica-3-1-grundig-para-llevar-siempre-coche",
-     "hora": "03:31"
+     "url": "https://www.xataka.com/seleccion/moviles-electrodomesticos-e-incluso-legos-asi-mejores-ofertas-11-11-miravia",
+     "hora": "14:45"
     },
     {
-     "titulo": "Mano dura en Nueva York: OpenAI y Anthropic deberán reportar fallas críticas de IA en 72 horas o enfrentar multas millonarias",
-     "medio": "FayerWayer",
-     "url": "https://www.fayerwayer.com/internet/2026/11/11/mano-dura-en-nueva-york-openai-y-anthropic-deberan-reportar-fallas-criticas-de-ia-en-72-horas-o-enfrentar-multas-millonarias/",
-     "hora": "23:59"
+     "titulo": "La salida a bolsa de Anthropic se estaba desinflando. Ahora tiene más demanda institucional que SpaceX",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/empresas-y-economia/salida-a-bolsa-anthropic-se-estaba-desinflando-ahora-tiene-demanda-institucional-que-spacex",
+     "hora": "14:31"
     },
     {
-     "titulo": "Adidas Basketball prepara las AE3 inspiradas en Doctor Doom y Ant-Man para ‘Avengers: Doomsday’",
-     "medio": "FayerWayer",
-     "url": "https://www.fayerwayer.com/sneakers/2026/11/11/adidas-basketball-prepara-las-ae3-inspiradas-en-doctor-doom-y-ant-man-para-avengers-doomsday/",
-     "hora": "23:47"
-    },
-    {
-     "titulo": "Starlink Mini 2 es oficial: batería intercambiable, Wi‑Fi 6 y conexión satelital en segundos",
+     "titulo": "Guionista de ‘Linternas’ lleva tranquilidad a los fans: «No se ha cancelado nada»",
      "medio": "Hipertextual",
-     "url": "https://hipertextual.com/tecnologia/starlink-mini-2-bateria-integrada-wifi-6/",
-     "hora": "21:02"
+     "url": "https://hipertextual.com/cine-television/guionista-de-linternas-lleva-tranquilidad-a-los-fans-no-se-ha-cancelado-nada/",
+     "hora": "14:22"
     },
     {
-     "titulo": "Samsung quiere que tu Galaxy Watch mida la grasa que se acumula en la barriga",
+     "titulo": "Confirmado por la Ley de Propiedad Horizontal: no se permite prohibir el uso del ascensor a los vecinos que no paguen la comunidad",
+     "medio": "Genbeta",
+     "url": "https://www.genbeta.com/actualidad/confirmado-ley-propiedad-horizontal-no-se-permite-prohibir-uso-ascensor-a-vecinos-que-no-paguen-comunidad",
+     "hora": "13:01"
+    },
+    {
+     "titulo": "Disney+ confirma la fecha de estreno de ‘Avengers Endgame: Encore’, con nuevo final y conexión con ‘Doomsday’",
      "medio": "Hipertextual",
-     "url": "https://hipertextual.com/mobile/samsung-galaxy-watch-medir-grasa-abdominal-patente/",
-     "hora": "18:35"
+     "url": "https://hipertextual.com/cine-television/avengers-endgame-encore-llega-a-disney-esta-misma-semana/",
+     "hora": "12:37"
     }
    ]
   },
@@ -230,16 +191,34 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "Pesar en el deporte chileno: muere Martín Santana, atleta de 20 años que representó al país hace unas semanas",
+     "titulo": "“Para mí, es un partido de Eliminatoria; hay que tomarlo como tal”: Williams Alarcón valora los amistosos ante Colombia",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/pesar-en-el-deporte-chileno-muere-martin-santana-atleta-de-20-anos-que-represento-al-pais-hace-unas-semanas/",
-     "hora": "21:22"
+     "url": "https://www.latercera.com/el-deportivo/noticia/para-mi-es-un-partido-de-eliminatoria-hay-que-tomarlo-como-tal-williams-alarcon-valora-los-amistosos-ante-colombia/",
+     "hora": "13:31"
     },
     {
-     "titulo": "Juegos Mundiales de Olimpiadas Especiales Santiago 2027 presentan su programa de 23 deportes y sus sedes de competencia",
+     "titulo": "El regreso de Natalia Duco a la primera línea: el cargo clave que ocupará en los Juegos de Olimpiadas Especiales",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/juegos-mundiales-de-olimpiadas-especiales-santiago-2027-presentan-su-programa-de-23-deportes-y-sus-sedes-de-competencia/",
-     "hora": "17:18"
+     "url": "https://www.latercera.com/el-deportivo/noticia/el-regreso-de-natalia-duco-a-la-primera-linea-el-cargo-clave-que-ocupara-en-los-juegos-de-olimpiadas-especiales/",
+     "hora": "13:30"
+    },
+    {
+     "titulo": "Tabilo resiste casi tres horas y avanza a cuartos del ATP de Estocolmo",
+     "medio": "RedGol",
+     "url": "https://redgol.cl/tenis/alejandro-tabilo-supera-duelo-de-casi-tres-horas-y-avanza-a-cuartos-de-final-del-atp-de-estocolmo",
+     "hora": "05:48"
+    },
+    {
+     "titulo": "La nueva universidad que irrumpe en el fútbol chileno junto a un ídolo de la UC: “Es un proyecto ambicioso”",
+     "medio": "AS Chile",
+     "url": "https://chile.as.com/futbol/la-nueva-universidad-que-irrumpe-en-el-futbol-chileno-junto-a-un-idolo-de-la-uc-es-un-proyecto-ambicioso-f202611-n/",
+     "hora": "05:21"
+    },
+    {
+     "titulo": "Aníbal Mosa calma las pasiones y pide disculpas a los hinchas de U de Chile: “Es parte del fútbol”",
+     "medio": "RedGol on MSN",
+     "url": "https://www.msn.com/es-cl/deportes/futbol/an%C3%ADbal-mosa-calma-las-pasiones-y-pide-disculpas-a-los-hinchas-de-u-de-chile-es-parte-del-f%C3%BAtbol/ar-AA2hdHd9",
+     "hora": "04:51"
     }
    ]
   }
@@ -283,9 +262,9 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 73689.7,
+  "bitcoin_usd": 74466.82,
   "bitcoin_fecha": "2026-11-11",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 129
+ "fuentes_ok": 128
 }
