@@ -1,17 +1,63 @@
 {
- "generado": "2026-11-11T14:56-03:00",
- "proxima": "16:17",
- "indicadores": [],
+ "generado": "2026-11-11T21:50-03:00",
+ "proxima": "22:17",
+ "indicadores": [
+  {
+   "clave": "dolar",
+   "nombre": "Dólar",
+   "valor": 977.05,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-11",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "euro",
+   "nombre": "Euro",
+   "valor": 1089.61,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-11",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "uf",
+   "nombre": "UF",
+   "valor": 41309.19,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-11",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "utm",
+   "nombre": "UTM",
+   "valor": 72440,
+   "prefijo": "$",
+   "decimales": 0,
+   "fecha": "2026-11-01",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "libra_cobre",
+   "nombre": "Cobre (libra)",
+   "valor": 6.38,
+   "prefijo": "US$",
+   "decimales": 2,
+   "fecha": "2026-11-11",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  }
+ ],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10614.25,
+  "valor": 10552.02,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-11T14:57-03:00",
-  "variacion_pct": 0.16
+  "hora": "2026-11-11T21:50-03:00",
+  "variacion_pct": -0.43
  },
  "sismos": {
-  "n": 2,
+  "n": 5,
   "mayores": [
    {
     "hora": "2026-11-11T08:36-03:00",
@@ -20,10 +66,28 @@
     "referencia": "26 km al O de Calama"
    },
    {
+    "hora": "2026-11-11T16:21-03:00",
+    "magnitud": 5.0,
+    "profundidad_km": 34.9,
+    "referencia": "103 km al O de Puerto Montt"
+   },
+   {
+    "hora": "2026-11-11T17:45-03:00",
+    "magnitud": 4.5,
+    "profundidad_km": 113.0,
+    "referencia": "104 km al NE de Iquique"
+   },
+   {
     "hora": "2026-11-11T03:57-03:00",
     "magnitud": 4.2,
     "profundidad_km": 26.3,
     "referencia": "65 km al O de Valparaíso"
+   },
+   {
+    "hora": "2026-11-11T15:41-03:00",
+    "magnitud": 3.9,
+    "profundidad_km": 113.2,
+    "referencia": "142 km al S de Copiapó"
    }
   ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
@@ -34,34 +98,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "La sombra de los data centers: la IA amenaza con desatar una nueva escasez de microchips en la industria automotriz",
+     "titulo": "Paro de camioneros: Gobierno anuncia que reingresará proyecto y congelará tarifas del combustible hasta febrero para contener conflicto",
+     "medio": "La Tercera · Política",
+     "url": "https://www.latercera.com/politica/noticia/paro-de-camioneros-gobierno-anuncia-que-reingresara-proyecto-y-congelara-tarifas-del-combustible-hasta-febrero-para-contener-conflicto/",
+     "hora": "21:41"
+    },
+    {
+     "titulo": "El trasfondo de la nueva controversia entre Chile y Argentina por el buque Danstar que viajará a las Malvinas",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/internacional/chile-y-argentina-danstar-malvinas/",
+     "hora": "21:40"
+    },
+    {
+     "titulo": "Gobierno anuncia congelamiento de las tarifas del combustible hasta febrero de 2027: paro de camioneros sigue hasta el jueves",
      "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/11/escasez-microchips-automotriz-inteligencia-artificial-2026/",
-     "hora": "14:44"
+     "url": "https://www.theclinic.cl/2026/11/11/gobierno-anuncia-congelamiento-de-las-tarifas-del-combustible-hasta-febrero-de-2027-paro-de-camioneros-sigue-hasta-el-jueves/",
+     "hora": "21:20"
     },
     {
-     "titulo": "Los detalles del polémico proyecto de rebaja de penas con que Kast busca salir de la crisis (lea el texto)",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/nacional/reduccion-de-penas-los-detalles-del-proyecto-parlamentario/",
-     "hora": "14:35"
-    },
-    {
-     "titulo": "Los factores detrás de la recesión técnica que reconoció Quiroz y sus proyecciones para 2028",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/negocios/quiroz-reconoce-recesion-economica-chile/",
-     "hora": "14:32"
-    },
-    {
-     "titulo": "Más que en el robo del siglo de Baby Bandito: $8.520 millones fueron sustraídos en atraco a bóveda del BCI en Concepción",
+     "titulo": "COP31: gobierno pondrá foco en integrar plan de acción y promover su candidatura al Tratado de Alta Mar",
      "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/mas-que-en-el-robo-del-siglo-de-baby-bandito-8520-millones-fueron-sustraidos-en-atraco-a-boveda-del-bci-en-concepcion/",
-     "hora": "14:11"
+     "url": "https://www.latercera.com/nacional/noticia/cop31-gobierno-pondra-foco-en-integrar-plan-de-accion-y-promover-su-candidatura-al-tratado-de-alta-mar/",
+     "hora": "21:09"
     },
     {
-     "titulo": "Vicepresidente de SNA y paro de camioneros: “Creo que responsabilizo al gobierno central, se estaba advirtiendo”",
+     "titulo": "La voltereta del supremo Jorge Zepeda en su criterio para conceder las rebajas de condena",
      "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/vicepresidente-de-sna-y-paro-de-camioneros-creo-que-responsabilizo-al-gobierno-central-se-estaba-advirtiendo/",
-     "hora": "13:42"
+     "url": "https://www.latercera.com/nacional/noticia/la-voltereta-del-supremo-jorge-zepeda-en-su-criterio-para-conceder-las-rebajas-de-condena/",
+     "hora": "21:07"
     }
    ]
   },
@@ -69,34 +133,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Echeverría Izquierdo hace su primer remate holandés de bonos desde 2018 y amplía la escasa oferta desde el sector de la construcción",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/renta-fija/constructora-echeverria-izquierdo-vuelve-a-salir-al-mercado-de-capitales",
-     "hora": "14:49"
-    },
-    {
-     "titulo": "Por paro de camioneros: Gobierno retira del Congreso proyecto para frenar alza de combustibles",
-     "medio": "Chócale",
-     "url": "https://chocale.cl/2026/11/por-paro-de-camioneros-gobierno-retira-del-congreso-proyecto-para-frenar-alza-de-combustibles/",
-     "hora": "14:45"
-    },
-    {
-     "titulo": "El conflicto de Arauco Argentina con la Aduana local que la dejó sin poder importar ni exportar por más de un mes y que ahora puede reabrirse",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/empresas/industria/el-conflicto-de-arauco-argentina-con-la-aduana-local-que-la-dejo-sin-poder",
-     "hora": "14:44"
-    },
-    {
-     "titulo": "Casa de Moneda lanza colección de medallas de Papelucho",
-     "medio": "Chócale",
-     "url": "https://chocale.cl/2026/11/casa-de-moneda-lanza-coleccion-de-medallas-de-papelucho/",
-     "hora": "14:35"
-    },
-    {
-     "titulo": "Los detalles del polémico proyecto de rebaja de penas con que Kast busca salir de la crisis (lea el texto)",
+     "titulo": "El trasfondo de la nueva controversia entre Chile y Argentina por el buque Danstar que viajará a las Malvinas",
      "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/nacional/reduccion-de-penas-los-detalles-del-proyecto-parlamentario/",
-     "hora": "14:35"
+     "url": "https://www.ex-ante.cl/internacional/chile-y-argentina-danstar-malvinas/",
+     "hora": "21:40"
+    },
+    {
+     "titulo": "Sigue el paro de camioneros: gobierno y transportistas no logran acuerdo, pese a medida que congelará tarifas por 90 días",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/economia-y-politica/pais/sigue-el-paro-de-camioneros-gobierno-y-transportistas-no-logran-acuerdo",
+     "hora": "21:34"
+    },
+    {
+     "titulo": "Las AFP habrían materializado pérdidas de hasta US$ 3.700 millones en swaps de tasas en octubre",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/senal-df/las-afp-habrian-materializado-perdidas-de-hasta-us-3-700-millones-en-swaps",
+     "hora": "21:15"
+    },
+    {
+     "titulo": "Las 10 propuestas del CEP para la agenda de modernización del Estado: desde reducir número de ministerios, a un solo sistema de empleo público",
+     "medio": "La Tercera · Pulso",
+     "url": "https://www.latercera.com/pulso/noticia/las-10-propuestas-del-cep-para-la-agenda-de-modernizacion-del-estado-desde-reducir-numero-de-ministerios-a-un-solo-sistema-de-empleo-publico/",
+     "hora": "21:08"
+    },
+    {
+     "titulo": "Fondo E: las AFP redujeron la duración de su cartera de inversiones en octubre a su menor nivel en dos años",
+     "medio": "La Tercera · Pulso",
+     "url": "https://www.latercera.com/pulso/noticia/fondo-e-las-afp-redujeron-la-duracion-de-su-cartera-de-inversiones-en-octubre-a-su-menor-nivel-en-dos-anos/",
+     "hora": "21:07"
     }
    ]
   },
@@ -104,16 +168,34 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Vicepresidente pidió al Congreso de la República respaldar la Ley de rescate fiscal: “No se admite jugar a la politiquería”",
+     "titulo": "La OEA señala los desafíos democráticos de la región en reunión de autoridades electorales",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/2026/11/11/vicepresidente-pidio-al-congreso-de-la-republica-respaldar-la-ley-de-rescate-fiscal-no-se-admite-jugar-a-la-politiqueria/",
-     "hora": "14:55"
+     "url": "https://www.infobae.com/america/agencias/2026/11/12/la-oea-senala-los-desafios-democraticos-de-la-region-en-reunion-de-autoridades-electorales/",
+     "hora": "21:46"
     },
     {
-     "titulo": "Juan Manuel Santos criticó a Abelardo de la Espriella por caminar entre cadáveres y Alejandro Ordóñez le respondió: “No se preocupó por entregarle el país a las Farc”",
+     "titulo": "Scott Colom gana en Mississippi y se convierte en su primer senador afroamericano en 146 años",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/2026/11/11/juan-manuel-santos-critico-a-abelardo-de-la-espriella-por-caminar-entre-cadaveres-y-alejandro-ordonez-le-respondio-no-se-preocupo-por-entregarle-el-pais-a-las-farc/",
-     "hora": "14:55"
+     "url": "https://www.infobae.com/estados-unidos/2026/11/12/scott-colom-gana-en-mississippi-y-se-convierte-en-su-primer-senador-afroamericano-en-146-anos/",
+     "hora": "21:46"
+    },
+    {
+     "titulo": "Perú y Chiclayo: la emoción del \"reencuentro\" con el papa León XIV",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/am%C3%A9rica-latina/20261112-per%C3%BA-y-chiclayo-la-emoci%C3%B3n-del-reencuentro-con-el-papa-le%C3%B3n-xiv",
+     "hora": "21:40"
+    },
+    {
+     "titulo": "Directo a... Asunción y los hasta 15 años de cárcel a los que se podría enfrentar expresidente Peña",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/video/20261112-directo-a-asunci%C3%B3n-y-los-hasta-15-a%C3%B1os-de-c%C3%A1rcel-a-los-que-se-podr%C3%ADa-enfrentar-expresidente-pe%C3%B1a",
+     "hora": "21:37"
+    },
+    {
+     "titulo": "España vive primera huelga general en 14 años a 18 días de las elecciones generales",
+     "medio": "La Tercera · Mundo",
+     "url": "https://www.latercera.com/mundo/noticia/espana-vive-primera-huelga-general-en-14-anos-a-18-dias-de-las-elecciones-generales/",
+     "hora": "21:06"
     }
    ]
   },
@@ -121,34 +203,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "Estudio asegura que un cuarto de los alemanes quiere una dictadura de derecha",
+     "titulo": "Demócratas conquistan Misisipi y amplían mayoría en el Senado de Estados Unidos",
      "medio": "DW en español",
-     "url": "https://www.dw.com/es/estudio-asegura-que-un-cuarto-de-los-alemanes-quiere-una-dictadura-de-derecha/a-79922826?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "14:31"
+     "url": "https://www.dw.com/es/demócratas-conquistan-misisipi-y-amplían-mayoría-en-el-senado-de-estados-unidos/a-79925009?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "21:39"
     },
     {
-     "titulo": "Berlín reúne a disidentes para hallar respuestas ante las autocracias",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/berlín-reúne-a-disidentes-para-hallar-respuestas-ante-las-autocracias/a-79916089?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "14:31"
-    },
-    {
-     "titulo": "En imágenes: decenas de detenidos en la primera huelga general en España en 14 años",
+     "titulo": "En imágenes: graves disturbios en Barcelona y decenas de detenidos en la primera huelga general en España en 14 años",
      "medio": "BBC Mundo · Economía",
      "url": "https://www.bbc.com/mundo/articles/ckx28e5lj300o?at_medium=RSS&at_campaign=rss",
-     "hora": "13:59"
+     "hora": "20:30"
     },
     {
-     "titulo": "España afronta una huelga general por la crisis de vivienda y la pérdida de poder adquisitivo",
-     "medio": "France 24 · Economía",
-     "url": "https://www.france24.com/es/programas/econom%C3%ADa/20261111-espa%C3%B1a-afronta-una-huelga-general-por-la-crisis-de-vivienda-y-la-p%C3%A9rdida-de-poder-adquisitivo",
-     "hora": "13:07"
+     "titulo": "OTAN asegura que Estados Unidos, Europa y Ucrania están \"completamente alineados y unidos\"",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/otan-asegura-que-estados-unidos-europa-y-ucrania-están-completamente-alineados-y-unidos/a-79924342?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "18:18"
     },
     {
-     "titulo": "\"El capitalismo ya trataba mal a las personas; lo que ha cambiado ahora es que esa lógica se ha adoptado (…) en discursos sobre liderazgo\"",
+     "titulo": "La huelga general culmina con un seguimiento desigual y grandes protestas en la calle",
+     "medio": "El País · Economía",
+     "url": "https://elpais.com/economia/2026-11-11/la-huelga-general-culmina-con-un-seguimiento-desigual-y-grandes-protestas-en-la-calle.html",
+     "hora": "18:00"
+    },
+    {
+     "titulo": "Por qué hunden frente a la costa de Florida al mítico SS United States, el que fuera el transatlántico más rápido del mundo",
      "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/ck868llen5lgo?at_medium=RSS&at_campaign=rss",
-     "hora": "11:54"
+     "url": "https://www.bbc.com/mundo/articles/c5lykgdkdlxlo?at_medium=RSS&at_campaign=rss",
+     "hora": "17:46"
     }
    ]
   },
@@ -156,34 +238,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "Móviles, electrodomésticos e incluso LEGOs: así son las mejores ofertas del 11-11 de Miravia",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/seleccion/moviles-electrodomesticos-e-incluso-legos-asi-mejores-ofertas-11-11-miravia",
-     "hora": "14:45"
-    },
-    {
-     "titulo": "La salida a bolsa de Anthropic se estaba desinflando. Ahora tiene más demanda institucional que SpaceX",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/empresas-y-economia/salida-a-bolsa-anthropic-se-estaba-desinflando-ahora-tiene-demanda-institucional-que-spacex",
-     "hora": "14:31"
-    },
-    {
-     "titulo": "Guionista de ‘Linternas’ lleva tranquilidad a los fans: «No se ha cancelado nada»",
+     "titulo": "NVIDIA podría destituir a Jensen Huang como CEO tras el escándalo con la espía china",
      "medio": "Hipertextual",
-     "url": "https://hipertextual.com/cine-television/guionista-de-linternas-lleva-tranquilidad-a-los-fans-no-se-ha-cancelado-nada/",
-     "hora": "14:22"
+     "url": "https://hipertextual.com/economia-empresas/jensen-huang-destitucion-nvidia-escandalo/",
+     "hora": "21:31"
     },
     {
-     "titulo": "Confirmado por la Ley de Propiedad Horizontal: no se permite prohibir el uso del ascensor a los vecinos que no paguen la comunidad",
+     "titulo": "Sam Altman (OpenAI) quiere que Samsung le ayude a crear el sucesor del smartphone",
+     "medio": "Hipertextual",
+     "url": "https://hipertextual.com/inteligencia-artificial/sam-altman-openai-quiere-que-samsung-le-ayude-a-crear-el-sucesor-del-smartphone/",
+     "hora": "18:49"
+    },
+    {
+     "titulo": "El Black Friday se adelanta con la TCL C6K Pro: una tele Mini LED de gama alta con Google TV, de 55 a 85 pulgadas (y hasta 98 con la C6K)",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/seleccion/black-friday-se-adelanta-tcl-c6k-pro-tele-mini-led-gama-alta-google-tv-55-a-85-pulgadas-98-c6k",
+     "hora": "16:15"
+    },
+    {
+     "titulo": "Isaac Casado, malagueño que estudia en Suecia: “España está bien para ir de vacaciones, pero para estudiar prefiero Europa”",
      "medio": "Genbeta",
-     "url": "https://www.genbeta.com/actualidad/confirmado-ley-propiedad-horizontal-no-se-permite-prohibir-uso-ascensor-a-vecinos-que-no-paguen-comunidad",
-     "hora": "13:01"
+     "url": "https://www.genbeta.com/actualidad/isaac-casado-malagueno-que-estudia-suecia-espana-esta-bien-para-ir-vacaciones-para-estudiar-prefiero-europa",
+     "hora": "16:01"
     },
     {
-     "titulo": "Disney+ confirma la fecha de estreno de ‘Avengers Endgame: Encore’, con nuevo final y conexión con ‘Doomsday’",
-     "medio": "Hipertextual",
-     "url": "https://hipertextual.com/cine-television/avengers-endgame-encore-llega-a-disney-esta-misma-semana/",
-     "hora": "12:37"
+     "titulo": "Jeff Bezos tiene una teoría sobre por qué la gente odia a los ricos: \"El éxito no es sinónimo de maldad\"",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/empresas-y-economia/jeff-bezos-tiene-teoria-que-gente-odia-a-ricos-exito-no-sinonimo-maldad",
+     "hora": "15:31"
     }
    ]
   },
@@ -191,34 +273,57 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "“Para mí, es un partido de Eliminatoria; hay que tomarlo como tal”: Williams Alarcón valora los amistosos ante Colombia",
+     "titulo": "Liquidador de Azul Azul aborda la doble función de Cristian Aubert en la U: “Nos incomoda”",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/para-mi-es-un-partido-de-eliminatoria-hay-que-tomarlo-como-tal-williams-alarcon-valora-los-amistosos-ante-colombia/",
-     "hora": "13:31"
+     "url": "https://www.latercera.com/el-deportivo/noticia/liquidador-de-azul-azul-aborda-la-doble-funcion-de-cristian-aubert-en-la-u-nos-incomoda/",
+     "hora": "21:31"
     },
     {
-     "titulo": "El regreso de Natalia Duco a la primera línea: el cargo clave que ocupará en los Juegos de Olimpiadas Especiales",
+     "titulo": "Apuestan en grande: Pep Guardiola aparece como el principal candidato a asumir la banca de la selección de Estados Unidos",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/el-regreso-de-natalia-duco-a-la-primera-linea-el-cargo-clave-que-ocupara-en-los-juegos-de-olimpiadas-especiales/",
-     "hora": "13:30"
+     "url": "https://www.latercera.com/el-deportivo/noticia/apuestan-en-grande-pep-guardiola-aparece-como-el-principal-candidato-a-asumir-la-banca-de-la-seleccion-de-estados-unidos/",
+     "hora": "18:45"
     },
     {
-     "titulo": "Tabilo resiste casi tres horas y avanza a cuartos del ATP de Estocolmo",
-     "medio": "RedGol",
-     "url": "https://redgol.cl/tenis/alejandro-tabilo-supera-duelo-de-casi-tres-horas-y-avanza-a-cuartos-de-final-del-atp-de-estocolmo",
-     "hora": "05:48"
+     "titulo": "Alejandro Tabilo vs Alex Michelsen: ¿Cuándo juegan por cuartos del ATP de Estocolmo?",
+     "medio": "TNT Sports",
+     "url": "https://tntsports.cl/polideportivo/Alejandro-Tabilo-vs-Alex-Michelsen-Cuando-juegan-por-cuartos-de-final-del-ATP-250-de-Estocolmo-20261111-0020.html",
+     "hora": "13:21"
     },
     {
-     "titulo": "La nueva universidad que irrumpe en el fútbol chileno junto a un ídolo de la UC: “Es un proyecto ambicioso”",
-     "medio": "AS Chile",
-     "url": "https://chile.as.com/futbol/la-nueva-universidad-que-irrumpe-en-el-futbol-chileno-junto-a-un-idolo-de-la-uc-es-un-proyecto-ambicioso-f202611-n/",
-     "hora": "05:21"
+     "titulo": "Las palizas son cosa común en la NBA esta temporada",
+     "medio": "Los Angeles Times on MSN",
+     "url": "https://www.msn.com/es-us/deportes/baloncesto/las-palizas-son-cosa-com%C3%BAn-en-la-nba-esta-temporada/ar-AA2hfrHx",
+     "hora": "13:09"
     },
     {
-     "titulo": "Aníbal Mosa calma las pasiones y pide disculpas a los hinchas de U de Chile: “Es parte del fútbol”",
-     "medio": "RedGol on MSN",
-     "url": "https://www.msn.com/es-cl/deportes/futbol/an%C3%ADbal-mosa-calma-las-pasiones-y-pide-disculpas-a-los-hinchas-de-u-de-chile-es-parte-del-f%C3%BAtbol/ar-AA2hdHd9",
-     "hora": "04:51"
+     "titulo": "Cuándo y dónde ver a Alejandro Tabilo vs. Álex Michelsen en los cuartos del ATP 250 de Estocolmo",
+     "medio": "Prensa Fútbol",
+     "url": "https://www.prensafutbol.cl/alejandro-tabilo-quiere-dar-el-golpe-en-suecia/",
+     "hora": "12:20"
+    }
+   ]
+  },
+  {
+   "seccion": "Emprendimiento",
+   "notas": [
+    {
+     "titulo": "OpenAI compra Odessia y ficha a su fundador para viajes",
+     "medio": "Ecosistema Startup",
+     "url": "https://ecosistemastartup.com/openai-compra-odessia-y-ficha-a-su-fundador-para-viajes/",
+     "hora": "21:21"
+    },
+    {
+     "titulo": "Beeflow, NAT4BIO y Antarka: biotech argentina al mundo",
+     "medio": "Ecosistema Startup",
+     "url": "https://ecosistemastartup.com/beeflow-nat4bio-y-antarka-biotech-argentina-al-mundo/",
+     "hora": "21:06"
+    },
+    {
+     "titulo": "Finaliza segunda versión de Red Pyme Aysén con certificación de proveedores locales",
+     "medio": "diarioemprende",
+     "url": "https://www.diarioemprende.cl/noticia/actualidad/2026/11/finaliza-segunda-version-de-red-pyme-aysen-con-certificacion-de-proveedores-locales",
+     "hora": "10:04"
     }
    ]
   }
@@ -262,9 +367,9 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 74466.82,
+  "bitcoin_usd": 73995.94,
   "bitcoin_fecha": "2026-11-11",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 128
+ "fuentes_ok": 129
 }
