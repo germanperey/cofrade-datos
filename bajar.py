@@ -1824,12 +1824,59 @@ def bcch_series(estado):
         if robots_permite(url, estado):
             infos = (pedir(url, estado, "bcch_catalogo", espera=(0, 30), limite=60) or {}).get("SeriesInfos") or []
             mapa = bcch_elegir(infos)
+            _BCCH["infos"] = infos
             _BCCH["catalogo"] = [{"id": x.get("seriesId"), "titulo": x.get("spanishTitle"), "ultima": x.get("lastObservation")}
                                  for x in infos if isinstance(x, dict) and BCCH_DIAG.search(f"{x.get('spanishTitle')} {x.get('englishTitle')}")][:400]
         estado["bcch_series"] = {"ok": bool(mapa), "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central (catálogo)",
                                  "error": "" if mapa else "sin series que calcen", "elegidas": {k: list(v) for k, v in mapa.items()}}
     _BCCH["mapa"] = mapa
     return mapa
+
+
+# ---------- historia diaria del Banco Central para los gráficos de www.cofrad.es (13-11-2026) ----------
+# Germán: «agrega gráficos a la portada» y Dashboard Financiero de socios. Fuente: Base de Datos Estadísticos del Banco Central
+# (sus términos permiten «consultar, reproducir, difundir, publicar o adaptar» la BDE citando la fuente). Cada serie trae su id
+# conocido y, si ese id no responde, se busca en el catálogo diario por su título.
+HISTORIA_BCCH = [
+    ("dolar", "Dólar observado", "$", 2, "F073.TCO.PRE.Z.D", r"d[oó]lar observado"),
+    ("uf", "Unidad de Fomento", "$", 2, "F073.UFF.PRE.Z.D", r"unidad de fomento"),
+    ("euro", "Euro", "$", 2, "F072.CLP.EUR.N.O.D", r"\beuro\b"),
+    ("cobre", "Cobre (US$/libra)", "US$", 2, "F019.PPB.PRE.100.D", r"precio del cobre refinado"),
+    ("tpm", "Tasa de Política Monetaria", "", 2, "F022.TPM.TIN.D001.NO.Z.D", r"tasa de pol[ií]tica monetaria"),
+]
+
+
+def historia_bcch(estado, hoy, dias=400):
+    """→ {"fecha", "fuente", "series": {clave: {"nombre", "prefijo", "decimales", "id", "datos": [[fecha, valor], ...]}}}"""
+    auth = _bcch_auth()
+    if not auth:
+        estado["historia_bcch"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central", "error": "sin BCCH_TOKEN"}
+        return None
+    desde = (hoy - dt.timedelta(days=dias)).isoformat()
+    infos = None
+    out = {}
+    for clave, nombre, pre, dec, sid, patron in HISTORIA_BCCH:
+        datos = []
+        for intento in (sid, None):
+            if intento is None:
+                if infos is None:
+                    bcch_series(estado)
+                    infos = _BCCH.get("infos") or []
+                cand = [x for x in infos if re.search(patron, f"{x.get('spanishTitle') or ''}", re.I) and not BCCH_FUERA.search(x.get("spanishTitle") or "")
+                        and x.get("seriesId") and x.get("seriesId") != sid]
+                if not cand:
+                    break
+                intento = cand[0]["seriesId"]
+            url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={quote(intento)}&firstdate={desde}&lastdate={hoy.isoformat()}"
+            datos = cierres_bcch(pedir(url, estado, f"historia_{clave}", espera=(0, 30), limite=45), hoy + dt.timedelta(days=1))
+            if datos:
+                sid = intento
+                break
+        if datos:
+            out[clave] = {"nombre": nombre, "prefijo": pre, "decimales": dec, "id": sid, "datos": [[f, round(v, 4)] for f, v in datos]}
+    estado["historia_bcch"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central (historia diaria)",
+                               "error": "" if out else "ninguna serie respondió", "series": {k: len(v["datos"]) for k, v in out.items()}}
+    return {"fecha": hoy.isoformat(), "fuente": "Banco Central de Chile (Base de Datos Estadísticos)", "series": out} if out else None
 
 
 # ---------- tasas mensuales del Banco Central (03-11-2026; Germán: «Créditos hipotecarios: septiembre 2026 · ¿noviembre?») ----------
@@ -2556,6 +2603,7 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "mercados.json"), {"fecha": hoy.isoformat(), "mercados": mer, "bitcoin": btc} if (mer or btc) else None)
     try:   # 03-11-2026: tasas mensuales oficiales + TPM esperada (Encuesta de Expectativas); el catálogo, solo los lunes (diagnóstico)
         escribir(os.path.join(a.salida, "tasas-bcch.json"), tasas_bcch(estado, hoy))
+        escribir(os.path.join(a.salida, "historia.json"), historia_bcch(estado, hoy))
         if hoy.weekday() == 0:
             cat = tasas_catalogo(estado)
             if cat:
