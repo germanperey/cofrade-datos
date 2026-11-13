@@ -1,18 +1,77 @@
 {
- "generado": "2026-11-12T22:11-03:00",
+ "generado": "2026-11-13T03:55-03:00",
  "proxima": "07:17",
- "indicadores": [],
+ "indicadores": [
+  {
+   "clave": "dolar",
+   "nombre": "Dólar",
+   "valor": 984.49,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-12",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "euro",
+   "nombre": "Euro",
+   "valor": 1091.82,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-12",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "uf",
+   "nombre": "UF",
+   "valor": 41322.93,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-13",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "utm",
+   "nombre": "UTM",
+   "valor": 72440,
+   "prefijo": "$",
+   "decimales": 0,
+   "fecha": "2026-11-01",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "libra_cobre",
+   "nombre": "Cobre (libra)",
+   "valor": 6.3,
+   "prefijo": "US$",
+   "decimales": 2,
+   "fecha": "2026-11-13",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  }
+ ],
  "ipsa": {
   "nombre": "IPSA",
   "valor": 10625.19,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-12T22:13-03:00",
+  "hora": "2026-11-13T03:56-03:00",
   "variacion_pct": 0.69
  },
  "sismos": {
-  "n": 0,
-  "mayores": [],
+  "n": 2,
+  "mayores": [
+   {
+    "hora": "2026-11-12T22:44-03:00",
+    "magnitud": 4.3,
+    "profundidad_km": 207.3,
+    "referencia": "173 km al SE de San Pedro de Atacama"
+   },
+   {
+    "hora": "2026-11-13T00:11-03:00",
+    "magnitud": 4.2,
+    "profundidad_km": 176.7,
+    "referencia": "173 km al SE de San Pedro de Atacama"
+   }
+  ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
   "url": "https://earthquake.usgs.gov/earthquakes/map/"
  },
@@ -21,34 +80,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "La inesperada arremetida de China contra Chile por la sede del Tratado de Alta Mar, a días de la visita de Kast",
+     "titulo": "Presupuesto 2027: Cámara rechaza partidas de ministerios de la Mujer y de las Culturas",
      "medio": "La Tercera · Política",
-     "url": "https://www.latercera.com/politica/noticia/la-inesperada-arremetida-de-china-contra-chile-por-la-sede-del-tratado-de-alta-mar-a-dias-de-la-visita-de-kast/",
-     "hora": "21:19"
+     "url": "https://www.latercera.com/politica/noticia/presupuesto-2027-camara-rechaza-partidas-de-ministerios-de-la-mujer-y-de-las-culturas/",
+     "hora": "03:27"
     },
     {
-     "titulo": "Gobierno cede ante los gremios y duplica su oferta para bajar la paralización de los camioneros",
+     "titulo": "Reacciones divididas ante acuerdo de gobierno y camioneros: desde “solución que beneficiará a las familias” a “llega tarde y es insuficiente”",
      "medio": "La Tercera · Política",
-     "url": "https://www.latercera.com/politica/noticia/gobierno-cede-ante-los-gremios-y-duplica-su-oferta-para-bajar-la-paralizacion-de-los-camioneros/",
-     "hora": "21:16"
+     "url": "https://www.latercera.com/politica/noticia/reacciones-divididas-ante-acuerdo-de-gobierno-y-camioneros-desde-solucion-que-beneficiara-a-las-familias-a-llega-tarde-y-es-insuficiente/",
+     "hora": "00:57"
     },
     {
-     "titulo": "Florencia Yáñez, presidenta de la FEUC: “Siempre vamos a buscar movilizar para incidir en la discusión del Congreso”",
+     "titulo": "Humorista Luis Slimming es agredido durante show en Arica: policías que presenciaban el espectáculo detuvieron al atacante",
      "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/florencia-yanez-presidenta-de-la-feuc-siempre-vamos-a-buscar-movilizar-para-incidir-en-la-discusion-del-congreso/",
-     "hora": "21:00"
+     "url": "https://www.latercera.com/nacional/noticia/humorista-luis-slimming-es-agredido-durante-show-en-arica-policias-que-presenciaban-el-espectaculo-detuvieron-al-atacante/",
+     "hora": "22:47"
     },
     {
-     "titulo": "Noche de Museos 2026: 960 inscripciones entre museos y actividades para una jornada que recorrerá todo Chile",
-     "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/noche-de-museos-2026-960-inscripciones-entre-museos-y-actividades-para-una-jornada-que-recorrera-todo-chile/",
-     "hora": "20:55"
-    },
-    {
-     "titulo": "Oposición ingresa acusación constitucional contra ministro Fernando Rabat",
+     "titulo": "Luis Slimming es agredido a golpes en medio de una rutina en Arica: Show fue suspendido",
      "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/12/oposicion-ingresa-acusacion-constitucional-contra-ministro-fernando-rabat/",
-     "hora": "20:32"
+     "url": "https://www.theclinic.cl/2026/11/12/luis-slimming-es-agredido-a-golpes-en-medio-de-una-rutina-en-arica-show-fue-suspendido/",
+     "hora": "22:30"
+    },
+    {
+     "titulo": "Transportistas independientes se desmarcan del acuerdo con el gobierno y se mantienen movilizados",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/transportistas-independientes-se-desmarcan-del-acuerdo-con-el-gobierno-y-se-mantienen-movilizados/",
+     "hora": "22:16"
     }
    ]
   },
@@ -56,34 +115,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Dirigente camionero: \"En Temuco no se levanta el paro\"",
+     "titulo": "El Gobierno consolida al dólar como ancla para volver al proceso de desinflación y remonetizar la economía",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/13/el-gobierno-consolida-al-dolar-como-ancla-para-volver-al-proceso-de-desinflacion-y-remonetizar-la-economia/",
+     "hora": "02:31"
+    },
+    {
+     "titulo": "La inflación sigue al alza: cómo evolucionaron los gastos fijos que más pesan en el presupuesto familiar a lo largo de 2026",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/13/la-inflacion-sigue-al-alza-como-evolucionaron-los-gastos-fijos-que-mas-pesan-en-el-presupuesto-familiar-a-lo-largo-de-2026/",
+     "hora": "02:31"
+    },
+    {
+     "titulo": "Paro camionero: Fedefruta valoró acuerdo y destacó normalización de despachos en plena temporada de exportación",
      "medio": "Cooperativa",
-     "url": "https://www.cooperativa.cl/noticias/pais/manifestaciones/dirigente-camionero-en-temuco-no-se-levanta-el-paro/2026-11-12/220053.html",
-     "hora": "22:00"
+     "url": "https://www.cooperativa.cl/noticias/pais/manifestaciones/paro-camionero-fedefruta-valoro-acuerdo-y-destaco-normalizacion-de/2026-11-13/005109.html",
+     "hora": "00:51"
     },
     {
-     "titulo": "Cuatro meses después de su ratificación, Julio Friedmann renuncia a la gerencia general de ENAP",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/senal-df/factor-economico/julio-friedmann-deja-la-gerencia-general-de-enap",
-     "hora": "21:36"
-    },
-    {
-     "titulo": "Acuerdo total: propuesta del gobierno es aprobada por todas las asociaciones de camioneros y se levanta el paro",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/economia-y-politica/pais/grandes-gremios-del-transporte-de-carga-cndc-y-cntc-llegan-a-acuerdo-con-el",
-     "hora": "21:28"
-    },
-    {
-     "titulo": "Paro de camioneros ya retrasa despachos del comercio",
+     "titulo": "Gobierno rebaja $140 el diésel y congela alzas hasta marzo",
      "medio": "Chócale",
-     "url": "https://chocale.cl/2026/11/paro-de-camioneros-ya-retrasa-despachos-del-comercio/",
-     "hora": "21:26"
+     "url": "https://chocale.cl/2026/11/gobierno-rebaja-140-el-diesel-y-congela-alzas-hasta-marzo/",
+     "hora": "23:55"
     },
     {
-     "titulo": "Gobierno extiende hasta el 31 de marzo congelamiento de precios de los combustibles y costo fiscal es del orden de US$900 millones",
-     "medio": "La Tercera · Pulso",
-     "url": "https://www.latercera.com/pulso/noticia/gobierno-extiende-hasta-el-31-de-marzo-congelamiento-de-precios-de-los-combustibles-y-costo-fiscal-sube-a-us1000-millones/",
-     "hora": "21:05"
+     "titulo": "Acusación constitucional a Rabat: Desafiante, la UDI anticipa triunfo holgado del oficialismo",
+     "medio": "Cooperativa",
+     "url": "https://www.cooperativa.cl/noticias/pais/politica/camara-baja/acusacion-constitucional-a-rabat-desafiante-la-udi-anticipa-triunfo/2026-11-12/223151.html",
+     "hora": "22:31"
     }
    ]
   },
@@ -91,34 +150,22 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Google puso en su buscador un nuevo modelo de IA que responde con más imágenes y tablas comparativas",
+     "titulo": "Así es el patrimonio de Pedro Sánchez, con dos viviendas en Madrid, alquileres y su sueldo como presidente del Gobierno",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/tecno/2026/11/13/google-puso-en-su-buscador-un-nuevo-modelo-de-ia-que-responde-con-mas-imagenes-y-tablas-comparativas/",
-     "hora": "22:09"
+     "url": "https://www.infobae.com/espana/2026/11/13/asi-es-el-patrimonio-de-pedro-sanchez-con-dos-viviendas-en-madrid-alquileres-y-su-sueldo-como-presidente-del-gobierno/",
+     "hora": "03:49"
     },
     {
-     "titulo": "Cae “El Negro Abad” junto con ocho presuntos sicarios: estarían vinculados con la Alianza de Sindicatos de Oaxaca",
+     "titulo": "Microsoft reconoció que aún no logra resolver los problemas que provocaron la caída global de Outlook, Teams y Copilot",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/mexico/2026/11/13/cae-el-negro-abad-junto-con-ocho-presuntos-sicarios-estarian-vinculados-con-la-alianza-de-sindicatos-de-oaxaca/",
-     "hora": "22:09"
+     "url": "https://www.infobae.com/tecno/2026/11/13/microsoft-reconocio-que-aun-no-logra-resolver-los-problemas-que-provocaron-la-caida-global-de-outlook-teams-y-copilot/",
+     "hora": "03:49"
     },
     {
-     "titulo": "¿Cuál es el impacto de la renuncia de Huang a Nvidia en los mercados mundiales?",
-     "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/video/20261113-cu%C3%A1l-es-el-impacto-de-la-renuncia-de-huang-a-nvidia-en-los-mercados-mundiales",
-     "hora": "21:48"
-    },
-    {
-     "titulo": "“¡Ya no dio más!”: Chile y un precio histórico del combustible que parece extenderse en Latinoamérica",
-     "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/am%C3%A9rica-latina/20261113-ya-no-dio-m%C3%A1s-chile-y-un-precio-hist%C3%B3rico-del-combustible-que-parece-extenderse-en-latinoam%C3%A9rica",
-     "hora": "21:47"
-    },
-    {
-     "titulo": "Una falla en Microsoft deja fuera de servicio el correo electrónico de Outlook y otras plataformas durante horas",
+     "titulo": "Latin Grammy 2026: estos son los ganadores de los premios más importantes de la música en español",
      "medio": "BBC Mundo",
-     "url": "https://www.bbc.com/mundo/articles/cm20v6ed340wo?at_medium=RSS&at_campaign=rss",
-     "hora": "21:21"
+     "url": "https://www.bbc.com/mundo/articles/cv8e0lplek1ro?at_medium=RSS&at_campaign=rss",
+     "hora": "02:28"
     }
    ]
   },
@@ -126,40 +173,52 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "Una falla en Microsoft deja fuera de servicio el correo electrónico de Outlook y otras plataformas durante horas",
-     "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/cm20v6ed340wo?at_medium=RSS&at_campaign=rss",
-     "hora": "21:21"
-    },
-    {
-     "titulo": "Zelenski celebra participación de la Unión Europea en las negociaciones por la paz en Ucrania",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/zelenski-celebra-participación-de-la-unión-europea-en-las-negociaciones-por-la-paz-en-ucrania/a-79935870?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "21:14"
-    },
-    {
-     "titulo": "La nueva película que muestra cómo Sylvester Stallone pasó de vivir en la calle a convertirse en estrella de Hollywood gracias a su guion de \"Rocky\"",
-     "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/cvkg5je34zy5o?at_medium=RSS&at_campaign=rss",
-     "hora": "19:43"
-    },
-    {
-     "titulo": "La empresa automotriz Mercedes-Benz analiza el cierre de fábricas en Alemania",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/la-empresa-automotriz-mercedes-benz-analiza-el-cierre-de-fábricas-en-alemania/a-79935742?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "19:15"
-    },
-    {
-     "titulo": "El Gobierno deja atado con la Generalitat un órgano bilateral para futuras decisiones sobre los aeropuertos catalanes",
+     "titulo": "Una maleta, clases de inglés y una vida fuera de casa: así es aprender un idioma en Malta",
      "medio": "El País · Economía",
-     "url": "https://cincodias.elpais.com/economia/2026-11-12/el-gobierno-deja-atado-con-la-generalitat-un-organo-bilateral-para-futuras-decisiones-sobre-los-aeropuertos-catalanes.html",
-     "hora": "16:38"
+     "url": "https://elpais.com/economia/formacion/2026-11-13/una-maleta-clases-de-ingles-y-una-vida-fuera-de-casa-asi-es-aprender-un-idioma-en-malta.html",
+     "hora": "03:30"
+    },
+    {
+     "titulo": "Latin Grammy 2026: estos son los ganadores de los premios más importantes de la música en español",
+     "medio": "BBC Mundo · Economía",
+     "url": "https://www.bbc.com/mundo/articles/cv8e0lplek1ro?at_medium=RSS&at_campaign=rss",
+     "hora": "02:28"
+    },
+    {
+     "titulo": "Irán reivindica ataque a radar de alerta temprana de EE.UU. en Baréin",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/irán-reivindica-ataque-a-radar-de-alerta-temprana-de-ee-uu-en-baréin/a-79936474?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "01:51"
+    },
+    {
+     "titulo": "Los que no hicieron huelga el 11-N pero llenaron las calles: “No podía perder un día de sueldo”",
+     "medio": "El País · Economía",
+     "url": "https://elpais.com/economia/2026-11-13/los-que-no-hicieron-huelga-el-11-n-pero-llenaron-las-calles-no-podia-perder-un-dia-de-sueldo.html",
+     "hora": "01:45"
+    },
+    {
+     "titulo": "Investigación BBC: las brutales bandas de tráfico de drogas en Francia que reclutan a adolescentes para asesinar",
+     "medio": "BBC Mundo · Economía",
+     "url": "https://www.bbc.com/mundo/articles/ckly4yzeg598o?at_medium=RSS&at_campaign=rss",
+     "hora": "01:06"
     }
    ]
   },
   {
    "seccion": "Tecnología",
    "notas": [
+    {
+     "titulo": "Lidl vende (por menos de 12 euros) esta batería externa de gran capacidad y carga rápida",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/seleccion/lidl-vende-12-euros-esta-bateria-externa-gran-capacidad-carga-rapida",
+     "hora": "03:31"
+    },
+    {
+     "titulo": "Strauss Zelnick, CEO de Take-Two, sobre el retraso de GTA VI: \"Son decisiones muy difíciles de tomar\"",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/videojuegos/strauss-zelnick-ceo-take-two-retraso-gta-vi-decisiones-muy-dificiles-tomar",
+     "hora": "03:01"
+    },
     {
      "titulo": "Jensen Huang, ex CEO de Nvidia en llamas: No eran dos amantes, dicen que eran tres",
      "medio": "FayerWayer",
@@ -173,22 +232,10 @@
      "hora": "19:40"
     },
     {
-     "titulo": "Google lanza Gemini 4 Hydrogen y lo integra con su buscador para dar respuestas más completas e inteligentes",
-     "medio": "Hipertextual",
-     "url": "https://hipertextual.com/inteligencia-artificial/google-lanza-gemini-4-hydrogen-y-lo-integra-con-su-buscador-web/",
-     "hora": "17:50"
-    },
-    {
-     "titulo": "Una catedral finlandesa suena cada día con el eco de estallidos de radio de hace miles de millones de años",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/espacio/catedral-finlandesa-suena-cada-dia-eco-estallidos-radio-hace-miles-millones-anos",
-     "hora": "17:01"
-    },
-    {
-     "titulo": "La carrera hacia 'GTA VI' se libra antes en consolas que en PC. En la era de la IA eso es un problema",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/videojuegos/carrera-gta-vi-se-libra-antes-consolas-que-pc-era-ia-eso-problema",
-     "hora": "16:31"
+     "titulo": "Prudencia.ai, reconocida como Mejor Startup de Inteligencia Artificial Jurídica de España en 2026",
+     "medio": "La Vanguardia",
+     "url": "https://www.lavanguardia.com/empresas-de-vanguardia/historias-de-exito/20261113/11680909/prudencia-ai-reconocida-mejor-startup-inteligencia-artificial-juridica-espana-2026.html",
+     "hora": "19:01"
     }
    ]
   },
@@ -202,16 +249,16 @@
      "hora": "20:40"
     },
     {
+     "titulo": "Pronóstico Cleveland Cavaliers vs Dallas Mavericks 14-11-2026 NBA",
+     "medio": "Hispanosnba",
+     "url": "https://www.hispanosnba.com/uncategorized/pronostico-cleveland-cavaliers-vs-dallas-mavericks-14-11-26-nba/",
+     "hora": "19:55"
+    },
+    {
      "titulo": "Pellegrini, tras zafar de un nuevo Alcorconazo: “A 17 años ni me acuerdo dónde estaba... estoy metido en el futuro y no en el pasado”",
      "medio": "La Tercera · El Deportivo",
      "url": "https://www.latercera.com/el-deportivo/noticia/pellegrini-tras-zafar-de-un-nuevo-alcorconazo-a-17-anos-ni-me-acuerdo-donde-estaba-estoy-metido-en-el-futuro-y-no-en-el-pasado/",
      "hora": "19:15"
-    },
-    {
-     "titulo": "Horario, television y dónde ver ATP Estocolmo 2026: Tabilo – Tirante",
-     "medio": "Canal Tenis",
-     "url": "https://canaltenis.com/donde-ver-tabilo-tirante-atp-estocolmo-2026/",
-     "hora": "10:31"
     }
    ]
   },
@@ -219,16 +266,16 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "Corfo invertirá hasta 35% en fondos: ley de startups",
+     "titulo": "NEWTEX, la firma de Cáceres que automatiza pymes con IA",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/corfo-invertira-hasta-35-en-fondos-ley-de-startups/",
-     "hora": "21:21"
+     "url": "https://ecosistemastartup.com/newtex-la-firma-de-caceres-que-automatiza-pymes-con-ia/",
+     "hora": "03:51"
     },
     {
-     "titulo": "Fundación Chile llega a EtMday 2026 con oportunidades de inversión, aceleración y conexiones para startups, empresas deep tech y pymes",
-     "medio": "Portal Innova",
-     "url": "https://portalinnova.cl/fundacion-chile-llega-a-etmday-2026-con-oportunidades-de-inversion-aceleracion-y-conexiones-para-startups-empresas-deep-tech-y-pymes/",
-     "hora": "10:25"
+     "titulo": "Juan Roig respalda a Ploot, IA de ventas, con 400.000 euros",
+     "medio": "Ecosistema Startup",
+     "url": "https://ecosistemastartup.com/juan-roig-respalda-a-ploot-ia-de-ventas-con-400-000-euros/",
+     "hora": "03:24"
     }
    ]
   }
@@ -244,37 +291,37 @@
   },
   {
    "nombre": "Nasdaq",
-   "valor": 25466.19,
-   "variacion_pct": 1.6,
-   "fecha": "2026-11-11",
+   "valor": 25366.09,
+   "variacion_pct": -0.39,
+   "fecha": "2026-11-12",
    "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
    "nombre": "Dow Jones",
-   "valor": 52486.49,
-   "variacion_pct": 0.49,
-   "fecha": "2026-11-11",
+   "valor": 52297.09,
+   "variacion_pct": -0.36,
+   "fecha": "2026-11-12",
    "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
    "nombre": "Petróleo Brent",
-   "valor": 107.03,
-   "variacion_pct": -0.34,
-   "fecha": "2026-11-03",
+   "valor": 92.14,
+   "variacion_pct": 2.2,
+   "fecha": "2026-11-11",
    "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
    "nombre": "Cobre (Bolsa de Metales de Londres)",
-   "valor": 6.38,
-   "variacion_pct": 0.78,
-   "fecha": "2026-11-11",
+   "valor": 6.25,
+   "variacion_pct": -2.01,
+   "fecha": "2026-11-12",
    "fuente": "Banco Central de Chile"
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 70727.93,
-  "bitcoin_fecha": "2026-11-12",
+  "bitcoin_usd": 68992.11,
+  "bitcoin_fecha": "2026-11-13",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 128
+ "fuentes_ok": 130
 }
