@@ -625,6 +625,29 @@ async function turnstileOk(token, req, env) {
     return j.success === true && /(^|\.)cofrad\.es$/.test(String(j.hostname || ""));
   } catch { return false; }
 }
+// Freno de ráfagas por conexión (binding LIMITE: 30 por minuto y por clave). Si el binding no está, no frena.
+async function bajoLimite(env, clave) {
+  if (!env.LIMITE || typeof env.LIMITE.limit !== "function") return true;
+  try { return (await env.LIMITE.limit({ key: clave })).success; } catch { return true; }
+}
+// Lee el cuerpo con un tope de bytes aunque el cliente no declare Content-Length. Devuelve null si se pasa.
+async function leerCuerpo(req, max) {
+  if (Number(req.headers.get("Content-Length") || 0) > max) return null;
+  if (!req.body) return "";
+  const lector = req.body.getReader(), partes = [];
+  let n = 0;
+  for (;;) {
+    const { done, value } = await lector.read();
+    if (done) break;
+    n += value.byteLength;
+    if (n > max) { try { await lector.cancel(); } catch { /* nada */ } return null; }
+    partes.push(value);
+  }
+  const todo = new Uint8Array(n);
+  let o = 0;
+  for (const x of partes) { todo.set(x, o); o += x.byteLength; }
+  return new TextDecoder().decode(todo);
+}
 function jsonR(o, s = 200) {
   return new Response(JSON.stringify(o), { status: s, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...SEGURIDAD } });
 }
@@ -633,9 +656,11 @@ const ORIGEN_OK = (req) => { const o = req.headers.get("Origin") || ""; return !
 async function recibirBuzon(req, env, ctx) {
   if (!ORIGEN_OK(req)) return jsonR({ ok: false, error: "Origen no permitido." }, 403);
   if (!env.DB) return jsonR({ ok: false, error: "El Buzón se habilita en unos minutos." }, 503);
-  if (Number(req.headers.get("Content-Length") || 0) > 20000) return jsonR({ ok: false, error: "El mensaje es demasiado largo." }, 413);
-  const f = await req.formData().catch(() => null);
-  if (!f) return jsonR({ ok: false, error: "Formulario vacío." }, 400);
+  const hoy = fechaChile(), ip = await huellaVisitante(req, env, hoy, false);
+  if (!(await bajoLimite(env, "b:" + ip))) return jsonR({ ok: false, error: "Demasiados intentos seguidos. Espera un minuto y vuelve a enviar." }, 429);
+  const cuerpo = await leerCuerpo(req, 20000);
+  if (cuerpo === null) return jsonR({ ok: false, error: "El mensaje es demasiado largo." }, 413);
+  const f = new URLSearchParams(cuerpo);
   const v = (k, n) => String(f.get(k) || "").trim().replace(/\s+/g, " ").slice(0, n);
   if (v("pagina_web", 100)) return jsonR({ ok: true, mensaje: "¡Gracias!" });   // trampa para robots: se finge éxito y no se guarda nada
   if (!(await turnstileOk(String(f.get("cf-turnstile-response") || ""), req, env))) return jsonR({ ok: false, error: "No pudimos confirmar que eres una persona. Vuelve a marcar el recuadro de seguridad." }, 400);
@@ -654,7 +679,6 @@ async function recibirBuzon(req, env, ctx) {
   const texto = String(f.get("texto") || "").replace(/\r\n?/g, "\n").trim().slice(0, 2000);
   if ((texto.match(/https?:\/\/|www\./gi) || []).length > 2) return jsonR({ ok: false, error: "Tu mensaje tiene demasiados enlaces." }, 400);
   if (!gusta.length && !agregar.length && !texto && nps === null) return jsonR({ ok: false, error: "Marca al menos una opción o escribe tu mensaje." }, 400);
-  const hoy = fechaChile(), ip = await huellaVisitante(req, env, hoy, false);
   const [porIp, porEmail] = await Promise.all([
     env.DB.prepare("SELECT COUNT(*) AS n FROM buzon WHERE ip = ?").bind(ip).first(),
     env.DB.prepare("SELECT COUNT(*) AS n FROM buzon WHERE email = ? AND fecha >= ?").bind(email, new Date(Date.now() - 86400000).toISOString()).first(),
@@ -699,8 +723,8 @@ async function verificarBuzon(req, u, env) {
   const pagina = (cuerpo, s = 200) => html(marco({ titulo: "Buzón · Cofrade News", descripcion: "", cuerpo }), s, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
   const vencido = pagina(`<section style="border:0"><span class="kicker">Buzón</span><h1>Este enlace ya se usó o venció.</h1><p class="lede">Si quieres, vuelve a escribirnos desde el Buzón.</p><div class="acciones"><a class="btn oro" href="/#buzon">Abrir el Buzón</a></div></section>`, 410);
   if (req.method === "POST") {
-    const f = await req.formData().catch(() => null);
-    const t = String((f && f.get("t")) || "");
+    const cuerpo = await leerCuerpo(req, 2000);
+    const t = String((cuerpo && new URLSearchParams(cuerpo).get("t")) || "");
     if (!env.DB || !/^[a-f0-9]{40}$/.test(t)) return vencido;
     const r = await env.DB.prepare("UPDATE buzon SET verificado = 1 WHERE token = ? AND verificado = 0 AND fecha >= ?").bind(t, new Date(Date.now() - 7 * 86400000).toISOString()).run();
     if (!(r && r.meta && r.meta.changes)) return vencido;
@@ -727,23 +751,25 @@ async function contarVisita(req, env, ruta) {
   try {
     if (req.method !== "GET") return;
     if (/prefetch|prerender/i.test((req.headers.get("Sec-Purpose") || "") + (req.headers.get("Purpose") || ""))) return;   // precargas: se cuentan al abrirse
+    if (!(await bajoLimite(env, "v:" + (await huellaVisitante(req, env, fechaChile(), false))))) return;
     await registrarVisita(req, env, ruta);
   } catch { /* la medición nunca rompe la página */ }
 }
-async function recibirLectura(req, env) {
+async function recibirLectura(req, env, ctx) {
   const nada = new Response(null, { status: 204 });
   try {
     if (!env.DB || !ORIGEN_OK(req)) return nada;
-    const t = await req.text();
-    if (t.length > 4000) return nada;
+    if (!(await bajoLimite(env, "m:" + (await huellaVisitante(req, env, fechaChile(), false))))) return nada;
+    const t = await leerCuerpo(req, 4000);
+    if (!t) return nada;
     const j = JSON.parse(t);
-    const ruta = String(j.r || "").slice(0, 40);
-    if (!/^\/edicion\/\d{4}-\d{2}-\d{2}$/.test(ruta)) return nada;
+    const ruta = String(j.r || "").replace(/\/+$/, "").slice(0, 40), me = ruta.match(/^\/edicion\/(\d{4}-\d{2}-\d{2})$/);
+    if (!me || !(await indice(ctx)).includes(me[1])) return nada;   // solo ediciones publicadas
     if (j.v === 1) await registrarVisita(req, env, ruta);   // página precargada que el lector sí abrió
     const fecha = fechaChile(), ops = [], vistas = new Set(Array.isArray(j.n) ? j.n.map(String) : []);
     for (const [sec, seg] of Object.entries(j.s || {}).slice(0, 40)) {
-      const id = String(sec).replace(/[^a-z0-9_-]/gi, "").slice(0, 30), s = Math.max(0, Math.min(1800, Math.round(Number(seg) || 0)));
-      if (!id || s < 1) continue;
+      const id = String(sec), s = Math.max(0, Math.min(1800, Math.round(Number(seg) || 0)));
+      if (!Object.prototype.hasOwnProperty.call(NOMBRE_SECCION, id) || s < 1) continue;   // solo secciones reales de la edición
       ops.push(env.DB.prepare("INSERT INTO lectura (fecha, ruta, seccion, segundos, vistas) VALUES (?, ?, ?, ?, ?) ON CONFLICT(fecha, ruta, seccion) DO UPDATE SET segundos = segundos + excluded.segundos, vistas = vistas + excluded.vistas")
         .bind(fecha, ruta, id, s, vistas.has(sec) ? 1 : 0));
     }
@@ -752,7 +778,7 @@ async function recibirLectura(req, env) {
   return nada;
 }
 // En la edición: mide cuántos segundos pasa cada sección en la franja central de la pantalla (sirve para secciones largas).
-const MEDIR = `<script>(function(){try{var r=location.pathname;function b(o){try{navigator.sendBeacon('/m',JSON.stringify(o))}catch(e){}}
+const MEDIR = `<script>(function(){try{var r=location.pathname;if(r.length>1&&r.charAt(r.length-1)==='/')r=r.slice(0,-1);function b(o){try{navigator.sendBeacon('/m',JSON.stringify(o))}catch(e){}}
 if(document.prerendering)document.addEventListener('prerenderingchange',function(){b({r:r,v:1})},{once:true});
 if(!('IntersectionObserver' in window)||!navigator.sendBeacon)return;var dentro={},t={},v={},acum={},vistos={};
 function activo(){return !document.hidden&&!document.prerendering}function abre(id,n){if(activo()&&!v[id])v[id]=n}
@@ -782,16 +808,14 @@ async function entrarPanel(req, env) {
   if (!env.PANEL_CLAVE) return paginaPanelLogin("", 200, env);
   const hoy = fechaChile(), ip = await huellaVisitante(req, env, hoy, false);
   if (env.DB) {
-    const r = await env.DB.prepare("SELECT n FROM intentos WHERE ip = ? AND fecha = ?").bind(ip, hoy).first().catch(() => null);
-    if (r && r.n >= 8) return paginaPanelLogin("Demasiados intentos fallidos hoy desde esta conexión. Prueba mañana.", 429, env);
+    const r = await env.DB.prepare("INSERT INTO intentos (ip, fecha, n) VALUES (?, ?, 1) ON CONFLICT(ip, fecha) DO UPDATE SET n = n + 1 RETURNING n").bind(ip, hoy).first().catch(() => null);
+    if (r && r.n > 8) return paginaPanelLogin("Demasiados intentos hoy desde esta conexión. Prueba mañana.", 429, env);
   }
-  const f = await req.formData().catch(() => null);
-  const clave = String((f && f.get("clave")) || "").slice(0, 200);
+  const cuerpo = await leerCuerpo(req, 2000);
+  const clave = String((cuerpo && new URLSearchParams(cuerpo).get("clave")) || "").slice(0, 200);
   await new Promise((r) => setTimeout(r, 500));   // frena los intentos a ciegas
-  if (!iguales(await firma("c|" + clave, env.PANEL_CLAVE), await firma("c|" + env.PANEL_CLAVE, env.PANEL_CLAVE))) {
-    if (env.DB) await env.DB.prepare("INSERT INTO intentos (ip, fecha, n) VALUES (?, ?, 1) ON CONFLICT(ip, fecha) DO UPDATE SET n = n + 1").bind(ip, hoy).run().catch(() => {});
-    return paginaPanelLogin("Clave incorrecta.", 401, env);
-  }
+  if (!iguales(await firma("c|" + clave, env.PANEL_CLAVE), await firma("c|" + env.PANEL_CLAVE, env.PANEL_CLAVE))) return paginaPanelLogin("Clave incorrecta.", 401, env);
+  if (env.DB) await env.DB.prepare("DELETE FROM intentos WHERE ip = ? AND fecha = ?").bind(ip, hoy).run().catch(() => {});
   const vence = Date.now() + 7 * 86400000;
   return new Response(null, { status: 303, headers: { Location: "/panel", "Cache-Control": "no-store",
     "Set-Cookie": `cn_adm=${vence}.${await firma("adm|" + vence, env.PANEL_CLAVE)}; Max-Age=${7 * 86400}; Path=/panel; Secure; HttpOnly; SameSite=Strict` } });
@@ -1159,10 +1183,10 @@ export default {
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
       // 13-11-2026 · Buzón de sugerencias, medición de lectura y Panel de Control
-      if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx);
+      if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos guardar tu sugerencia en este momento. Intenta de nuevo en unos minutos." }, 503));
       if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
       if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
-      if (p === "/m" && req.method === "POST") return await recibirLectura(req, env);
+      if (p === "/m" && req.method === "POST") return await recibirLectura(req, env, ctx);
       if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
       if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);

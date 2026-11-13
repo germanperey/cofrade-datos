@@ -785,10 +785,10 @@ export default {
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
       // 13-11-2026 · Buzón de sugerencias, medición de lectura y Panel de Control
-      if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx);
+      if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos guardar tu sugerencia en este momento. Intenta de nuevo en unos minutos." }, 503));
       if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
       if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
-      if (p === "/m" && req.method === "POST") return await recibirLectura(req, env);
+      if (p === "/m" && req.method === "POST") return await recibirLectura(req, env, ctx);
       if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
       if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);
