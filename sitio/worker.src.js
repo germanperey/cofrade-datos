@@ -102,7 +102,7 @@ function textos(h) {
   const out = new Set();
   for (const m of h.replace(/<(script|style)[\s\S]*?<\/\1>/g, "").matchAll(/>([^<]+)</g)) {
     const t = m[1].replace(/&(amp|lt|gt|quot|#39);/g, (x) => ENT[x]).trim();
-    if (t && /[A-Za-zÁÉÍÓÚÑáéíóúñ]{2}/.test(t) && !t.startsWith("·") && t.length <= 400 && EN_FIJO[t] === undefined) out.add(t);
+    if (t && /[A-Za-zÁÉÍÓÚÑáéíóúñ]{2}/.test(t) && !t.startsWith("·") && !/^(Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo), \d+ de \S+ de \d{4}$/.test(t) && t.length <= 400 && EN_FIJO[t] === undefined) out.add(t);
   }
   return [...out];
 }
@@ -144,8 +144,14 @@ async function traduccionesPortada(env, ctx) {
   if (c) return c.json();
   const lista = textos(cuerpo);
   const res = {};
-  for (let i = 0; i < lista.length; i += 6) {   // de a 6 a la vez, sin saturar
-    const parte = lista.slice(i, i + 6);
+  const paraIA = [];
+  for (const t of lista) {
+    const f = enFijo(t);
+    if (f !== null) res[t] = f;
+    else if (/[a-záéíóúñ]{2}/.test(t)) paraIA.push(t);   // cifras como «US$6,30» o siglas no se mandan a traducir
+  }
+  for (let i = 0; i < paraIA.length; i += 6) {   // de a 6 a la vez, sin saturar
+    const parte = paraIA.slice(i, i + 6);
     const tr = await Promise.all(parte.map((t) => traducirUno(t, env, ctx)));
     parte.forEach((t, k) => { if (tr[k]) res[t] = tr[k]; });
   }
@@ -340,6 +346,14 @@ const EN_FIJO = {
   "USGS ↗": "USGS ↗", "fuente ↗": "source ↗", "Ver en español": "Ver en español", "Read in English": "Read in English",
 };
 
+// 13-11-2026 (Germán: «que no puedan descargar los archivos HTML, solo el PDF del boletín»): en la edición se desactivan
+// «Guardar como» (Ctrl/Cmd+S), «Ver código» (Ctrl/Cmd+U) y el menú del botón derecho. El botón «Descargar PDF» sigue igual.
+// Es un freno para el lector común, no un candado: quien sepa usar las herramientas del navegador igual puede copiar la página.
+const PROTEGER = `<script>(function(){function no(e){e.preventDefault();e.stopPropagation();return false}
+document.addEventListener('keydown',function(e){var k=(e.key||'').toLowerCase();if((e.ctrlKey||e.metaKey)&&(k==='s'||k==='u'))return no(e)},true);
+document.addEventListener('contextmenu',function(e){var t=e.target;if(t&&t.closest&&t.closest('input,textarea,[contenteditable]'))return;return no(e)},true);
+document.addEventListener('dragstart',function(e){if(e.target&&e.target.tagName==='IMG')no(e)},true);})();<\/script>`;
+
 const DIALOGO = `<dialog class="dlg-pub" id="dlgPub" aria-labelledby="dlgPubT"><form class="pub-form" method="dialog" novalidate>
 <button type="button" class="pub-cerrar" aria-label="Cerrar">✕</button><h3 id="dlgPubT">Déjenos sus datos y lo contactamos</h3><p class="sub" id="dlgPubSub" style="margin:0"></p>
 <input type="hidden" name="interes" value=""><label>Nombre y apellido *<input name="nombre" required maxlength="80" autocomplete="name"></label>
@@ -357,7 +371,7 @@ function bloqueMarcas() {
   if (!ms.length) return "";
   const uno = (m, oculto) => {
     const est = `style="--mf:${/^#[0-9A-Fa-f]{6}$/.test(m.fondo || "") ? m.fondo : "#FFFFFF"};--mc:${/^#[0-9A-Fa-f]{6}$/.test(m.color || "") ? m.color : "#0B1F3A"}"`;
-    const dentro = `<img src="/marcas/${esc(m.logo)}" alt="${oculto ? "" : esc(m.nombre)}" loading="lazy" decoding="async">${m.texto ? `<span data-no-tr>${esc(m.texto)}</span>` : ""}`;
+    const dentro = `<img src="/marcas/${esc(m.logo)}" alt="${oculto ? "" : esc(m.nombre)}" decoding="async">${m.texto ? `<span data-no-tr>${esc(m.texto)}</span>` : ""}`;
     const ext = oculto ? ' aria-hidden="true" tabindex="-1"' : "";
     return m.url
       ? `<a class="marca-a" ${est} href="${esc(urlSegura(m.url))}" target="_blank" rel="noopener"${ext}>${dentro}</a>`
@@ -484,10 +498,11 @@ export default {
       if (m) {
         const r = (await desdeGitHub(`completa/${m[1]}`, 600, ctx, rutaEdicion(m[1], true))) || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, 600, ctx));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
-        const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=600", ...SEGURIDAD } });
+        const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive", "Cache-Control": "public, max-age=600", ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
+          .on("body", { element(e) { e.append(PROTEGER, { html: true }); } })
           .on("head", { element(e) { e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">', { html: true }); } })
           .transform(resp);
       }
