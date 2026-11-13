@@ -61,6 +61,16 @@
     "Allow: /about/"
    ]
   },
+  "www.infobae.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /buscador"
+   ]
+  },
+  "chocale.cl": {
+   "estado": 200,
+   "reglas": []
+  },
   "www.latercera.com": {
    "estado": 200,
    "reglas": [
@@ -68,20 +78,6 @@
     "Disallow: /pf/api/v3/*",
     "Disallow: /search/?q=*"
    ]
-  },
-  "chocale.cl": {
-   "estado": 200,
-   "reglas": []
-  },
-  "www.infobae.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /buscador"
-   ]
-  },
-  "www.capital.cl": {
-   "estado": "SSLError",
-   "reglas": []
   },
   "www.bing.com": {
    "estado": 200,
@@ -148,6 +144,10 @@
     "Disallow: /shop/productpage"
    ]
   },
+  "www.capital.cl": {
+   "estado": "SSLError",
+   "reglas": []
+  },
   "www.df.cl": {
    "estado": 200,
    "reglas": [
@@ -160,6 +160,10 @@
    "reglas": [
     "Allow: /"
    ]
+  },
+  "www.france24.com": {
+   "estado": 200,
+   "reglas": []
   },
   "feeds.bbci.co.uk": {
    "estado": 200,
@@ -207,14 +211,6 @@
     "Disallow: /*&playlist="
    ]
   },
-  "www.france24.com": {
-   "estado": 200,
-   "reglas": []
-  },
-  "feeds.elpais.com": {
-   "estado": 403,
-   "reglas": []
-  },
   "www.elmostrador.cl": {
    "estado": 200,
    "reglas": [
@@ -227,6 +223,16 @@
     "Disallow: /categoria/newsletter/",
     "Disallow: /_files/internal/",
     "Disallow: /*?new_size_elmo=*"
+   ]
+  },
+  "feeds.elpais.com": {
+   "estado": 403,
+   "reglas": []
+  },
+  "www.eldinamo.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /draft/"
    ]
   },
   "www.cooperativa.cl": {
@@ -254,7 +260,11 @@
     "Disallow: /noticias/site/tax/port/fid_audio/nuevataxport*"
    ]
   },
-  "www.eldinamo.cl": {
+  "rss.dw.com": {
+   "estado": 200,
+   "reglas": []
+  },
+  "www.cnnchile.com": {
    "estado": 200,
    "reglas": [
     "Disallow: /draft/"
@@ -264,8 +274,8 @@
    "estado": 200,
    "reglas": []
   },
-  "rss.dw.com": {
-   "estado": 200,
+  "interferencia.cl": {
+   "estado": 403,
    "reglas": []
   },
   "www.eldesconcierto.cl": {
@@ -278,25 +288,6 @@
     "Disallow: /*?buscar=",
     "Disallow: /*?utm_",
     "Disallow: /*?fbclid="
-   ]
-  },
-  "www.cnnchile.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /draft/"
-   ]
-  },
-  "interferencia.cl": {
-   "estado": 403,
-   "reglas": []
-  },
-  "ellibero.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Disallow: /link-in-bio/",
-    "Disallow: /redirect/",
-    "Allow: /wp-admin/admin-ajax.php"
    ]
   },
   "radio.uchile.cl": {
@@ -312,9 +303,14 @@
     "Allow: /"
    ]
   },
-  "sudantribune.com": {
-   "estado": 403,
-   "reglas": []
+  "ellibero.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Disallow: /link-in-bio/",
+    "Disallow: /redirect/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
   },
   "news.un.org": {
    "estado": 200,
@@ -381,35 +377,6 @@
     "Disallow: */interviews*"
    ]
   },
-  "ecosistemastartup.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
-  },
-  "techcrunch.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Disallow: /wp-json/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /search/",
-    "Disallow: /?s=",
-    "Disallow: /*?customize_changeset_uuid=*"
-   ]
-  },
-  "contxto.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-content/uploads/wpo/wpo-plugins-tables-list.json",
-    "Disallow: /?s=",
-    "Disallow: /page/*/?s=",
-    "Disallow: /search/",
-    "Disallow: /wp-json/",
-    "Disallow: /?rest_route="
-   ]
-  },
   "www.europapress.es": {
    "estado": 200,
    "reglas": [
@@ -425,11 +392,30 @@
     "Disallow: /buscador/"
    ]
   },
-  "latamlist.com": {
+  "ecosistemastartup.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /wp-login.php",
-    "Disallow: /wp-admin/"
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
+  "www.ciperchile.cl": {
+   "estado": 200,
+   "reglas": []
+  },
+  "sudantribune.com": {
+   "estado": 403,
+   "reglas": []
+  },
+  "techcrunch.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Disallow: /wp-json/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /search/",
+    "Disallow: /?s=",
+    "Disallow: /*?customize_changeset_uuid=*"
    ]
   },
   "www.emprendepyme.net": {
@@ -459,9 +445,27 @@
     "Allow: /*/page/2$"
    ]
   },
+  "contxto.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-content/uploads/wpo/wpo-plugins-tables-list.json",
+    "Disallow: /?s=",
+    "Disallow: /page/*/?s=",
+    "Disallow: /search/",
+    "Disallow: /wp-json/",
+    "Disallow: /?rest_route="
+   ]
+  },
   "startupchile.org": {
    "estado": 404,
    "reglas": []
+  },
+  "latamlist.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-login.php",
+    "Disallow: /wp-admin/"
+   ]
   },
   "www.wired.com": {
    "estado": 200,
@@ -518,6 +522,51 @@
     "Disallow: /customer-preview/",
     "Disallow: /buscador/",
     "Disallow: /search/"
+   ]
+  },
+  "hipertextual.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /tag/",
+    "Disallow: /page/"
+   ]
+  },
+  "www.genbeta.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-content/",
+    "Disallow: /wp-admin/",
+    "Disallow: /wp-includes/",
+    "Disallow: /wpi/",
+    "Disallow: /trackback/",
+    "Disallow: /*/*/*/feed.xml",
+    "Allow: /retro/*",
+    "Disallow: /retro",
+    "Disallow: /login.php/",
+    "Disallow: /frontend.php/",
+    "Disallow: /api/1.0/migration",
+    "Disallow: /server",
+    "Disallow: /queue",
+    "Disallow: /mobile.php/",
+    "Disallow: /app.php/",
+    "Disallow: /main.php/",
+    "Disallow: /redirect",
+    "Disallow: /approve",
+    "Disallow: /duplicate",
+    "Disallow: /1018282",
+    "Disallow: /api/",
+    "Disallow: /c/",
+    "Disallow: /preview-main/*",
+    "Disallow: /morepostcomments",
+    "Disallow: /offtopic",
+    "Disallow: /p/",
+    "Disallow: /pda",
+    "Disallow: /tracker",
+    "Disallow: /.well-known/amphtml/apikey.pub",
+    "Disallow: /expertos/respuestas/*",
+    "Disallow: /busqueda?",
+    "Disallow: /search?q=",
+    "Disallow: /frontend_dev.php/"
    ]
   },
   "www.xataka.com": {
@@ -577,43 +626,9 @@
     "Disallow: /frontend_dev.php/"
    ]
   },
-  "www.genbeta.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-content/",
-    "Disallow: /wp-admin/",
-    "Disallow: /wp-includes/",
-    "Disallow: /wpi/",
-    "Disallow: /trackback/",
-    "Disallow: /*/*/*/feed.xml",
-    "Allow: /retro/*",
-    "Disallow: /retro",
-    "Disallow: /login.php/",
-    "Disallow: /frontend.php/",
-    "Disallow: /api/1.0/migration",
-    "Disallow: /server",
-    "Disallow: /queue",
-    "Disallow: /mobile.php/",
-    "Disallow: /app.php/",
-    "Disallow: /main.php/",
-    "Disallow: /redirect",
-    "Disallow: /approve",
-    "Disallow: /duplicate",
-    "Disallow: /1018282",
-    "Disallow: /api/",
-    "Disallow: /c/",
-    "Disallow: /preview-main/*",
-    "Disallow: /morepostcomments",
-    "Disallow: /offtopic",
-    "Disallow: /p/",
-    "Disallow: /pda",
-    "Disallow: /tracker",
-    "Disallow: /.well-known/amphtml/apikey.pub",
-    "Disallow: /expertos/respuestas/*",
-    "Disallow: /busqueda?",
-    "Disallow: /search?q=",
-    "Disallow: /frontend_dev.php/"
-   ]
+  "feeds.arstechnica.com": {
+   "estado": 404,
+   "reglas": []
   },
   "www.theverge.com": {
    "estado": 200,
@@ -636,17 +651,6 @@
     "Disallow: /share/*",
     "Disallow: /share?*"
    ]
-  },
-  "hipertextual.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /tag/",
-    "Disallow: /page/"
-   ]
-  },
-  "feeds.arstechnica.com": {
-   "estado": 404,
-   "reglas": []
   },
   "www.espn.com": {
    "estado": 200,
@@ -713,20 +717,16 @@
     "Disallow: /nba/tradeMachine/?tradeId=*"
    ]
   },
-  "site.api.espn.com": {
-   "estado": 403,
+  "www.plataformaurbana.cl": {
+   "estado": 502,
    "reglas": []
   },
   "www.golfdigest.com": {
    "estado": 403,
    "reglas": []
   },
-  "www.plataformaurbana.cl": {
-   "estado": 502,
-   "reglas": []
-  },
-  "www.ciperchile.cl": {
-   "estado": 200,
+  "site.api.espn.com": {
+   "estado": 403,
    "reglas": []
   },
   "www.sciencedaily.com": {
@@ -735,69 +735,15 @@
     "Disallow: /test/"
    ]
   },
-  "inside.fei.org": {
+  "phys.org": {
    "estado": 200,
    "reglas": [
-    "Allow: /misc/*.css$",
-    "Allow: /misc/*.css?",
-    "Allow: /misc/*.js$",
-    "Allow: /misc/*.js?",
-    "Allow: /misc/*.gif",
-    "Allow: /misc/*.jpg",
-    "Allow: /misc/*.jpeg",
-    "Allow: /misc/*.png",
-    "Allow: /modules/*.css$",
-    "Allow: /modules/*.css?",
-    "Allow: /modules/*.js$",
-    "Allow: /modules/*.js?",
-    "Allow: /modules/*.gif",
-    "Allow: /modules/*.jpg",
-    "Allow: /modules/*.jpeg",
-    "Allow: /modules/*.png",
-    "Allow: /profiles/*.css$",
-    "Allow: /profiles/*.css?",
-    "Allow: /profiles/*.js$",
-    "Allow: /profiles/*.js?",
-    "Allow: /profiles/*.gif",
-    "Allow: /profiles/*.jpg",
-    "Allow: /profiles/*.jpeg",
-    "Allow: /profiles/*.png",
-    "Allow: /themes/*.css$",
-    "Allow: /themes/*.css?",
-    "Allow: /themes/*.js$",
-    "Allow: /themes/*.js?",
-    "Allow: /themes/*.gif",
-    "Allow: /themes/*.jpg",
-    "Allow: /themes/*.jpeg",
-    "Allow: /themes/*.png",
-    "Disallow: /includes/",
-    "Disallow: /misc/",
-    "Disallow: /modules/",
-    "Disallow: /profiles/",
-    "Disallow: /scripts/",
-    "Disallow: /themes/",
-    "Disallow: /CHANGELOG.txt",
-    "Disallow: /cron.php",
-    "Disallow: /INSTALL.mysql.txt",
-    "Disallow: /INSTALL.pgsql.txt",
-    "Disallow: /INSTALL.sqlite.txt",
-    "Disallow: /install.php",
-    "Disallow: /INSTALL.txt",
-    "Disallow: /LICENSE.txt",
-    "Disallow: /MAINTAINERS.txt",
-    "Disallow: /update.php",
-    "Disallow: /UPGRADE.txt",
-    "Disallow: /xmlrpc.php",
-    "Disallow: /admin/",
-    "Disallow: /comment/reply/",
-    "Disallow: /filter/tips/",
-    "Disallow: /node/add/",
+    "Allow: /",
     "Disallow: /search/",
-    "Disallow: /user/register/",
-    "Disallow: /user/password/",
-    "Disallow: /user/login/",
-    "Disallow: /user/logout/",
-    "Disallow: /?q=admin/"
+    "Disallow: /rss-feed/search/",
+    "Disallow: /rss-feed/breaking/search/",
+    "Disallow: /rss-feed/tags/",
+    "Disallow: /*/sort/"
    ]
   },
   "medicalxpress.com": {
@@ -868,15 +814,69 @@
     "Disallow: /index.php/*/media/oembed"
    ]
   },
-  "phys.org": {
+  "inside.fei.org": {
    "estado": 200,
    "reglas": [
-    "Allow: /",
+    "Allow: /misc/*.css$",
+    "Allow: /misc/*.css?",
+    "Allow: /misc/*.js$",
+    "Allow: /misc/*.js?",
+    "Allow: /misc/*.gif",
+    "Allow: /misc/*.jpg",
+    "Allow: /misc/*.jpeg",
+    "Allow: /misc/*.png",
+    "Allow: /modules/*.css$",
+    "Allow: /modules/*.css?",
+    "Allow: /modules/*.js$",
+    "Allow: /modules/*.js?",
+    "Allow: /modules/*.gif",
+    "Allow: /modules/*.jpg",
+    "Allow: /modules/*.jpeg",
+    "Allow: /modules/*.png",
+    "Allow: /profiles/*.css$",
+    "Allow: /profiles/*.css?",
+    "Allow: /profiles/*.js$",
+    "Allow: /profiles/*.js?",
+    "Allow: /profiles/*.gif",
+    "Allow: /profiles/*.jpg",
+    "Allow: /profiles/*.jpeg",
+    "Allow: /profiles/*.png",
+    "Allow: /themes/*.css$",
+    "Allow: /themes/*.css?",
+    "Allow: /themes/*.js$",
+    "Allow: /themes/*.js?",
+    "Allow: /themes/*.gif",
+    "Allow: /themes/*.jpg",
+    "Allow: /themes/*.jpeg",
+    "Allow: /themes/*.png",
+    "Disallow: /includes/",
+    "Disallow: /misc/",
+    "Disallow: /modules/",
+    "Disallow: /profiles/",
+    "Disallow: /scripts/",
+    "Disallow: /themes/",
+    "Disallow: /CHANGELOG.txt",
+    "Disallow: /cron.php",
+    "Disallow: /INSTALL.mysql.txt",
+    "Disallow: /INSTALL.pgsql.txt",
+    "Disallow: /INSTALL.sqlite.txt",
+    "Disallow: /install.php",
+    "Disallow: /INSTALL.txt",
+    "Disallow: /LICENSE.txt",
+    "Disallow: /MAINTAINERS.txt",
+    "Disallow: /update.php",
+    "Disallow: /UPGRADE.txt",
+    "Disallow: /xmlrpc.php",
+    "Disallow: /admin/",
+    "Disallow: /comment/reply/",
+    "Disallow: /filter/tips/",
+    "Disallow: /node/add/",
     "Disallow: /search/",
-    "Disallow: /rss-feed/search/",
-    "Disallow: /rss-feed/breaking/search/",
-    "Disallow: /rss-feed/tags/",
-    "Disallow: /*/sort/"
+    "Disallow: /user/register/",
+    "Disallow: /user/password/",
+    "Disallow: /user/login/",
+    "Disallow: /user/logout/",
+    "Disallow: /?q=admin/"
    ]
   },
   "www.technologyreview.com": {
@@ -885,6 +885,12 @@
     "Disallow: /wp-admin/",
     "Allow: /wp-admin/admin-ajax.php",
     "Disallow: /*.pdf$"
+   ]
+  },
+  "www.nasa.gov": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
    ]
   },
   "www.ecuestre.es": {
@@ -914,10 +920,60 @@
     "Disallow: /*?pagina=*"
    ]
   },
-  "www.nasa.gov": {
+  "www.agenciasinc.es": {
    "estado": 200,
    "reglas": [
-    "Allow: /"
+    "Allow: /",
+    "Allow: /assets/",
+    "Allow: /var/ezwebin_site/storage/",
+    "Disallow: /En-exclusiva/",
+    "Disallow: /admin/",
+    "Disallow: /sincadmin/",
+    "Disallow: /share/",
+    "Disallow: /audios/",
+    "Disallow: /UserFiles/",
+    "Disallow: /layout/",
+    "Disallow: /promo/",
+    "Disallow: /print/",
+    "Disallow: /instituciones/",
+    "Disallow: /institutions/",
+    "Disallow: /utils/",
+    "Disallow: /en/",
+    "Disallow: /eng/",
+    "Disallow: /content/keyword/",
+    "Disallow: /content/download/"
+   ]
+  },
+  "www.esa.int": {
+   "estado": 200,
+   "reglas": []
+  },
+  "www.space.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: */deals/compare",
+    "Disallow: */html/",
+    "Disallow: */p/*/embed/captioned",
+    "Disallow: */outlink*",
+    "Disallow: *.freyr.*",
+    "Disallow: */comments/*",
+    "Disallow: */.events-handler*",
+    "Disallow: *CoreWebVitalsThresholdEvent*",
+    "Disallow: */partials/*",
+    "Disallow: */future.adtech.freyr.v1.PageViewEvent",
+    "Disallow: *searchTerm=*",
+    "Disallow: *sortBy=*",
+    "Disallow: *productBrand=*",
+    "Disallow: *%7B*%7D*",
+    "Disallow: *seenMatchId=*",
+    "Disallow: *q=*",
+    "Disallow: /infinite-scroll-article/*",
+    "Disallow: /infinite-scroll-review/*",
+    "Disallow: /infinite-scroll-recipe/*",
+    "Disallow: /search.php",
+    "Disallow: /social.php",
+    "Disallow: /newsletter-signup",
+    "Disallow: /_proxy*"
    ]
   },
   "www.newscientist.com": {
@@ -954,62 +1010,6 @@
     "Disallow: /nsj/profile/",
     "Disallow: /nsj/remindme/",
     "Disallow: /nsj/searchjobs/"
-   ]
-  },
-  "www.esa.int": {
-   "estado": 200,
-   "reglas": []
-  },
-  "www.space.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: */deals/compare",
-    "Disallow: */html/",
-    "Disallow: */p/*/embed/captioned",
-    "Disallow: */outlink*",
-    "Disallow: *.freyr.*",
-    "Disallow: */comments/*",
-    "Disallow: */.events-handler*",
-    "Disallow: *CoreWebVitalsThresholdEvent*",
-    "Disallow: */partials/*",
-    "Disallow: */future.adtech.freyr.v1.PageViewEvent",
-    "Disallow: *searchTerm=*",
-    "Disallow: *sortBy=*",
-    "Disallow: *productBrand=*",
-    "Disallow: *%7B*%7D*",
-    "Disallow: *seenMatchId=*",
-    "Disallow: *q=*",
-    "Disallow: /infinite-scroll-article/*",
-    "Disallow: /infinite-scroll-review/*",
-    "Disallow: /infinite-scroll-recipe/*",
-    "Disallow: /search.php",
-    "Disallow: /social.php",
-    "Disallow: /newsletter-signup",
-    "Disallow: /_proxy*"
-   ]
-  },
-  "www.agenciasinc.es": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Allow: /assets/",
-    "Allow: /var/ezwebin_site/storage/",
-    "Disallow: /En-exclusiva/",
-    "Disallow: /admin/",
-    "Disallow: /sincadmin/",
-    "Disallow: /share/",
-    "Disallow: /audios/",
-    "Disallow: /UserFiles/",
-    "Disallow: /layout/",
-    "Disallow: /promo/",
-    "Disallow: /print/",
-    "Disallow: /instituciones/",
-    "Disallow: /institutions/",
-    "Disallow: /utils/",
-    "Disallow: /en/",
-    "Disallow: /eng/",
-    "Disallow: /content/keyword/",
-    "Disallow: /content/download/"
    ]
   },
   "spacenews.com": {
@@ -1170,8 +1170,10 @@
    ]
   },
   "stooq.com": {
-   "estado": "ConnectTimeout",
-   "reglas": []
+   "estado": 200,
+   "reglas": [
+    "Disallow: /"
+   ]
   },
   "quote.cnbc.com": {
    "estado": 200,
