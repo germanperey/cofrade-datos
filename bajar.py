@@ -796,7 +796,7 @@ def _bing(q):
     return "https://www.bing.com/news/search?q=" + quote(q) + "&format=rss&cc=CL&setlang=es"
 
 
-INMO = "rss|inmobiliari|vivienda|arriendo|hipotecari|construcci|edificaci|subsidio habitacional|departamento|minvu|cchc|plusvalía|oficinas"
+INMO = "rss|inmobiliari|vivienda|arriendo|hipotecari|construcción de viviendas|permisos de edificación|subsidio habitacional|departamentos en|venta de departamentos|minvu|cchc|plusvalía|bienes raíces|vacancia"
 FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de conectarse»): Bing Noticias (enlace directo al medio)
     # y más diarios con RSS propio. Cada dirección pasa por el robots.txt de su sitio: la que no lo permita queda anotada en robots.json.
     "economia/chile": [("Bing Noticias · Economía Chile", _bing("economía Chile"), "rss"),
@@ -905,9 +905,18 @@ def todas_las_fuentes(ruta_redes="redes.json"):
 
 VENTANA_H = {"ciencia": 240, "astronomia": 240, "emprendimiento": 120, "inmobiliario": 120}   # el resto: 72 horas
 TOPE_SECCION = 90
+# 13-11-2026 (Germán: equitación 2/3): en «deportes» el fútbol llenaba el tope y la equitación (que publica menos) quedaba fuera.
+# Cada disciplina con reserva tiene su propia ventana y un mínimo de cupos dentro del tope.
+RESERVA = {"deportes": [(re.compile(r"equitaci|ecuestre|salto ecuestre|show ?jumping|jumper|horse|\bFEI\b|Global Champions|"
+                                    r"Copa de Naciones|Nations Cup|Club H[íi]pico|polo\b", re.I), 10, 240),
+                        (re.compile(r"\bNFL\b|\bNHL\b", re.I), 6, 72)]}
 FILTRO = {   # 01-11-2026: en secciones temáticas, de un diario general solo entran las notas del tema
-    "inmobiliario": re.compile(r"inmobiliari|vivienda|departament|hipotecari|arriendo|construcci|CChC|propiedad|subsidio habitacional|"
-                               r"DFL ?2|contribuciones|permisos de edificaci|urban", re.I),
+    # 13-11-2026: «departament», «construcci», «propiedad» y «urban» dejaban pasar el Departamento de Estado, antenas y autos robados
+    "inmobiliario": re.compile(r"inmobiliari|vivienda|departamentos? (?:en |de |nuevos|usados|se )|venta de departamentos|arriendo|"
+                               r"hipotecari|CChC|C[áa]mara Chilena de la Construcci|sector construcci|construcci[óo]n de viviendas|"
+                               r"subsidio habitacional|subsidio DS|\bDS ?(?:1|19|49)\b|DFL ?2|contribuciones|permisos de edificaci|"
+                               r"Minvu|plusval|oficinas (?:premium|clase)|vacancia|suelo urbano|plan regulador|bienes ra[íi]ces|"
+                               r"corredora? de propiedades|precio de (?:las )?propiedades|ordenanza general de urbanismo|loteo|condominio", re.I),
     "emprendimiento": re.compile(r"emprend|startup|pyme|Corfo|capital de riesgo|venture|fintech|ronda de inversi|financiamiento|"
                                  r"unicornio|aceleradora|incubadora|innovaci", re.I)}
 _ROBOTS = {}
@@ -1516,11 +1525,12 @@ def titulares(estado, feeds=None, hilos=8):
     limite = ahora()
     for sec, cons, notas in res:
         secs[sec]["consultadas"].append(cons)
-        h = VENTANA_H.get(sec, 72)
+        h0 = VENTANA_H.get(sec, 72)
         filtro = FILTRO.get(sec)
         for n in notas:
             if filtro and not filtro.search(n["titulo"] + " " + n["resumen"]):
                 continue
+            h = max([h0] + [hr for rx, _, hr in RESERVA.get(sec, []) if rx.search(n["titulo"] + " " + n["resumen"] + " " + n["fuente"])])
             if n["fecha"]:
                 f = dt.datetime.strptime(n["fecha"], "%Y-%m-%d %H:%M").replace(tzinfo=TZ)
                 if not (limite - dt.timedelta(hours=h) <= f <= limite + dt.timedelta(hours=2)):
@@ -1534,7 +1544,11 @@ def titulares(estado, feeds=None, hilos=8):
                 continue
             vistos.update((k1, k2))
             unicas.append(n)
-        v["notas"] = unicas[:TOPE_SECCION]
+        elegidas = []
+        for rx, cupo, _ in RESERVA.get(sec, []):
+            elegidas += [n for n in unicas if n not in elegidas and rx.search(n["titulo"] + " " + n["resumen"] + " " + n["fuente"])][:cupo]
+        elegidas += [n for n in unicas if n not in elegidas][:max(0, TOPE_SECCION - len(elegidas))]
+        v["notas"] = sorted(elegidas, key=lambda n: n["fecha"], reverse=True)
     ok = sum(1 for _, c, _ in leidas if c["ok"])
     estado["titulares"] = {"ok": ok > 0, "hora": ahora().isoformat(timespec="seconds"), "url": "RSS públicos de los medios",
                            "error": "" if ok else "ningún RSS respondió", "intentos": 1, "feeds_ok": ok, "feeds": len(leidas)}
