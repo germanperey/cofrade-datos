@@ -1,17 +1,9 @@
 {
- "fecha": "2026-11-12",
+ "fecha": "2026-11-13",
  "pedidos": [
   {
-   "url": "https://api.flightradar24.com/common/v1/airport.json?code=puq&plugin[]=schedule&plugin-setting[schedule][mode]=departures&plugin-setting[schedule][timestamp]=1794452400&page=1&limit=40",
-   "que": "vuelos PUQ"
-  },
-  {
-   "url": "https://tramitacion.senado.cl/wspublico/votaciones.php?boletin=18282",
-   "que": "Senado 18282"
-  },
-  {
-   "url": "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=16335",
-   "que": "autores 16335"
+   "url": "https://api.flightradar24.com/common/v1/airport.json?code=scl&plugin[]=schedule&plugin-setting[schedule][mode]=departures&plugin-setting[schedule][timestamp]=1794538800&page=1&limit=40",
+   "que": "vuelos SCL salidas"
   }
  ]
 }
