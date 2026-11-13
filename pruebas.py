@@ -530,7 +530,7 @@ URLS_RECOLECTAR = {
 "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
 "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/rankings",
 "https://site.api.espn.com/apis/v2/sports/racing/f1/standings",
-"https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
+"https://site.api.espn.com/apis/v2/sports/basketball/nba/standings", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings", "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings",
 "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard",
 "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard",
 "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261104-20261106",
@@ -583,7 +583,7 @@ URLS_RECOLECTAR = {
 "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/rankings",
 "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/rankings",
 "https://site.api.espn.com/apis/v2/sports/racing/f1/standings",
-"https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
+"https://site.api.espn.com/apis/v2/sports/basketball/nba/standings", "https://site.api.espn.com/apis/v2/sports/football/nfl/standings", "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings",
 "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard",
 "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard",
 "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261106-20261109",
@@ -1102,6 +1102,42 @@ def sismos_aire_y_f1_desde_apis_abiertas():
     finally:
         B.pedir, B.robots_permite = p0, r0
 
+
+
+@prueba
+def senado_votos_y_feeds_filtrados():
+    """13-11-2026: (1) votaciones de Sala del Senado con el voto de cada senador: API del sitio del Senado y, si rechaza a la nube, la
+    copia pública de esos datos (con su fecha); (2) un feed general de un medio se filtra por las palabras de la sección."""
+    viejos = B.pedir, B.robots_permite
+    copia = [{"id": 11435, "fecha": "2026-11-04", "tema": "En votación general el proyecto…", "quorum": "Q.C.", "boletin": "17535-25",
+              "si": [1, 2, 3], "no": [4], "abstencion": [], "pareo": []},
+             {"id": 900, "fecha": "2026-08-01", "tema": "antigua", "boletin": "1-1", "si": [1], "no": [], "abstencion": [], "pareo": []}]
+    sen = [{"id": 1, "nombre": "Ana Uno"}, {"id": 2, "nombre": "Beto Dos"}, {"id": 3, "nombre": "Ceci Tres"}, {"id": 4, "nombre": "Dani Cuatro"}]
+    try:
+        B.robots_permite = lambda u, e: True
+        B.pedir = lambda u, e, c, **k: None if "web-back" in u else (copia if "votaciones" in u else sen)
+        e = {}
+        r = B.senado_votaciones(e, dt.date(2026, 11, 13))
+        assert e["senado_votos"]["ok"] and "copia pública" in r["fuente"] and r["actualizado"] == "2026-11-04"
+        v = r["votaciones"]
+        assert len(v) == 1 and v[0]["resultado"] == "Aprobado" and (v[0]["si"], v[0]["no"]) == (3, 1)
+        assert {"nombre": "Dani Cuatro", "voto": "No"} in v[0]["nominal"]
+        api = {"data": {"data": [{"ID_VOTACION": 5, "FECHA_VOTACION": "2026-11-12 11:00", "TEMA": "Se rechaza", "BOLETIN": "2-2",
+                                  "VOTACIONES": {"SI": [{"PARLID": 1}], "NO": [{"PARLID": 2}, {"PARLID": 3}]}}]}}
+        B.pedir = lambda u, e, c, **k: api if "/votes" in u else ({"data": {"data": [{"PARLID": 1, "NOMBRE": "Ana", "APELLIDO_PATERNO": "Uno"}]}}
+                                                                  if "parliamentarians" in u else None)
+        r = B.senado_votaciones({}, dt.date(2026, 11, 13))
+        assert "web-back" in r["fuente"] and r["votaciones"][0]["resultado"] == "Rechazado" and r["votaciones"][0]["nominal"] == [{"nombre": "Ana Uno", "voto": "Sí"}]
+        B.pedir = lambda u, e, c, **k: None
+        e = {}
+        assert B.senado_votaciones(e, dt.date(2026, 11, 13)) is None and e["senado_votos"]["ok"] is False
+        rss = ('<rss><channel><item><title>Venta de viviendas cae 10%</title><link>https://x.cl/1</link><pubDate>Fri, 13 Nov 2026 10:00:00 -0300</pubDate></item>'
+               '<item><title>Colo-Colo gana el clásico</title><link>https://x.cl/2</link><pubDate>Fri, 13 Nov 2026 10:00:00 -0300</pubDate></item></channel></rss>')
+        B.pedir = lambda u, e, c, **k: rss
+        _, info, notas = B._un_feed(("inmobiliario", "La Tercera", "https://www.latercera.com/x", B.INMO, {}, "k"))
+        assert info["ok"] and [n["titulo"] for n in notas] == ["Venta de viviendas cae 10%"], notas
+    finally:
+        B.pedir, B.robots_permite = viejos
 
 if __name__ == "__main__":
     malas = 0

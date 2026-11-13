@@ -749,6 +749,9 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("ESPN · Tenis WTA (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/news", "json"),
         ("ESPN · Fórmula 1 (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/racing/f1/news", "json"),
         ("ESPN · NBA (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news", "json"),
+        # 13-11-2026: tercera disciplina de «Otros deportes» con tabla (NFL y NHL en temporada)
+        ("ESPN · NFL (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/football/nfl/news", "json"),
+        ("ESPN · NHL (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news", "json"),
         ("ESPN · Golf PGA (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/golf/pga/news", "json"),
         ("ESPN · Fútbol chileno (noticias con fecha)", "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/news", "json"),
         ("Google News · Tenis chileno", "https://news.google.com/rss/search?q=tenis+(Tabilo+OR+Jarry+OR+Garin+OR+Barrios)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
@@ -793,6 +796,7 @@ def _bing(q):
     return "https://www.bing.com/news/search?q=" + quote(q) + "&format=rss&cc=CL&setlang=es"
 
 
+INMO = "rss|inmobiliari|vivienda|arriendo|hipotecari|construcci|edificaci|subsidio habitacional|departamento|minvu|cchc|plusvalía|oficinas"
 FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de conectarse»): Bing Noticias (enlace directo al medio)
     # y más diarios con RSS propio. Cada dirección pasa por el robots.txt de su sitio: la que no lo permita queda anotada en robots.json.
     "economia/chile": [("Bing Noticias · Economía Chile", _bing("economía Chile"), "rss"),
@@ -820,7 +824,16 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
                        ("Google News · Sudán", "https://news.google.com/rss/search?q=Sud%C3%A1n+guerra+when:2d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
                        ("Noticias ONU · Oriente Medio (RSS)", "https://news.un.org/feed/subscribe/es/news/region/middle-east/feed/rss.xml", "rss"),
                        ("Noticias ONU · Europa (RSS)", "https://news.un.org/feed/subscribe/es/news/region/europe/feed/rss.xml", "rss")],
-    "inmobiliario": [("Bing Noticias · Mercado inmobiliario", _bing("mercado inmobiliario Chile"), "rss"),
+    "inmobiliario": [  # 13-11-2026 (control: «Inmobiliario quedó con 2 notas»; Google Noticias prohíbe la lectura automática)
+                     ("La Tercera (RSS general, filtrado: vivienda e inmobiliario)", "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml", INMO),
+                     ("BioBioChile (RSS general, filtrado: vivienda e inmobiliario)", "https://www.biobiochile.cl/static/feed-rss", INMO),
+                     ("Ex-Ante (RSS, filtrado: vivienda e inmobiliario)", "https://www.ex-ante.cl/feed/", INMO),
+                     ("Bing Noticias · Arriendos", _bing("arriendo departamentos Chile"), "rss"),
+                     ("Bing Noticias · Permisos de edificación", _bing("permisos de edificación INE Chile"), "rss"),
+                     ("Bing Noticias · Cámara Chilena de la Construcción", _bing("Cámara Chilena de la Construcción viviendas"), "rss"),
+                     ("Bing Noticias · Subsidio habitacional", _bing("subsidio habitacional Minvu"), "rss"),
+                     ("Bing Noticias · Oficinas y vacancia", _bing("oficinas vacancia Santiago arriendo comercial"), "rss"),
+                     ("Bing Noticias · Mercado inmobiliario", _bing("mercado inmobiliario Chile"), "rss"),
                      ("Bing Noticias · Vivienda y CChC", _bing("viviendas Chile CChC"), "rss"),
                      ("Bing Noticias · Créditos hipotecarios", _bing("crédito hipotecario Chile"), "rss")],
     "emprendimiento": [("Bing Noticias · Emprendimiento Chile", _bing("emprendimiento Chile"), "rss"),
@@ -832,6 +845,13 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
                  ("Bing Noticias · Tenis chileno", _bing("tenis chileno ATP"), "rss"),
                  ("Bing Noticias · Golf", _bing("golf PGA Tour"), "rss"),
                  ("Bing Noticias · Equitación", _bing("equitación salto Chile"), "rss"),
+                 # 13-11-2026 (control: «equitación con 2 notas»): más fuentes directas de salto ecuestre
+                 ("Jumper News (RSS, salto ecuestre latinoamericano)", "https://jumpernews.com/category/news/feed/", "rss"),
+                 ("World of Showjumping (RSS)", "https://www.worldofshowjumping.com/documents.rdf?idz=32&cid=9664", "rss"),
+                 ("Horse Network · Salto (RSS)", "https://horsenetwork.com/topic/english/hunterjumper/feed/", "rss"),
+                 ("The Plaid Horse (RSS)", "https://www.theplaidhorse.com/feed/", "rss"),
+                 ("Bing Noticias · Global Champions Tour", _bing("Longines Global Champions Tour salto"), "rss"),
+                 ("Bing Noticias · Copa de Naciones ecuestre", _bing("Copa de Naciones salto ecuestre FEI"), "rss"),
                  # 08-11-2026 (equitación con 2 de 3 notas; NBA con 1): más búsquedas de noticias
                  ("Bing Noticias · Equitación internacional", _bing("salto ecuestre FEI Longines Global Champions"), "rss"),
                  ("Bing Noticias · Hípica y polo Chile", _bing("Federación Ecuestre de Chile concurso salto Club Hípico"), "rss"),
@@ -1215,6 +1235,71 @@ def leer_tramitacion(txt):
     return {"titulo": re.sub(r"\s+", " ", tit)[:400], "iniciativa": ini, "autores": aut[:40]}
 
 
+# ---------- 13-11-2026 · votaciones de Sala del Senado (el servicio tramitacion.senado.cl no responde fuera de Chile) ----------
+SENADO_API = "https://web-back.senado.cl/api"
+SENADO_COPIA = "https://raw.githubusercontent.com/tres-ases/open-data-scraping/master/senado/data/normalized"
+
+
+def _senado_resultado(tema, si, no):
+    t = (tema or "").lower()
+    if re.search(r"\baprobad|\bse aprob", t):
+        return "Aprobado"
+    if re.search(r"\brechazad|\bse rechaz", t):
+        return "Rechazado"
+    return "Aprobado" if si > no else "Rechazado" if no > si else ""
+
+
+def senado_votaciones(estado, hoy, dias=62):
+    """Votaciones de Sala del Senado de los últimos `dias`, con el voto de cada senador. Primero la API oficial del sitio nuevo
+    del Senado (web-back.senado.cl); si no responde (suele rechazar a los servidores en la nube), la copia pública de esos mismos
+    datos oficiales que mantiene el proyecto abierto tres-ases/open-data-scraping (se actualiza cada pocos días; se dice su fecha).
+    → {"fuente", "url", "actualizado", "votaciones": [{id, fecha, descripcion, boletin, quorum, resultado, si, no, abst, nominal}]} o None."""
+    desde = (hoy - dt.timedelta(days=dias)).isoformat()
+    votos, nombres, fuente, url_f = None, {}, "", ""
+    u = f"{SENADO_API}/votes?id_legislatura=507&limit=100&offset=0"
+    if robots_permite(u, estado):
+        j = pedir(u, estado, "senado_api_votos", espera=(0, 10), limite=40)
+        L = ((j or {}).get("data") or {}).get("data") if isinstance(j, dict) else None
+        if isinstance(L, list) and L:
+            pj = pedir(f"{SENADO_API}/parliamentarians?id_legislatura=507&limit=1000", estado, "senado_api_senadores", espera=(0, 10), limite=40) or {}
+            for x in ((pj.get("data") or {}).get("data") or []) if isinstance(pj, dict) else []:
+                if isinstance(x, dict) and x.get("PARLID"):
+                    nombres[x["PARLID"]] = " ".join(str(x.get(k) or "").strip() for k in ("NOMBRE", "APELLIDO_PATERNO", "APELLIDO_MATERNO")).strip()
+            votos = [{"id": x.get("ID_VOTACION"), "fecha": str(x.get("FECHA_VOTACION") or "")[:10], "tema": x.get("TEMA"), "quorum": x.get("QUORUM"),
+                      "boletin": x.get("BOLETIN"), **{k.lower(): [v.get("PARLID") for v in ((x.get("VOTACIONES") or {}).get(k) or []) if isinstance(v, dict)]
+                                                    for k in ("SI", "NO", "ABSTENCION", "PAREO")}} for x in L if isinstance(x, dict)]
+            fuente, url_f = "Senado de Chile (web-back.senado.cl, datos oficiales)", "https://www.senado.cl/actividad-legislativa/sala"
+    if votos is None:
+        uc = f"{SENADO_COPIA}/votaciones.json"
+        if robots_permite(uc, estado):
+            L = pedir(uc, estado, "senado_copia_votos", espera=(0, 10), limite=60)
+            S = pedir(f"{SENADO_COPIA}/senadores.json", estado, "senado_copia_senadores", espera=(0, 10), limite=40) or []
+            if isinstance(L, list):
+                nombres = {x.get("id"): x.get("nombre") for x in S if isinstance(x, dict)} if isinstance(S, list) else {}
+                votos = [{"id": x.get("id"), "fecha": str(x.get("fecha") or "")[:10], "tema": x.get("tema"), "quorum": x.get("quorum"),
+                          "boletin": x.get("boletin"), "si": x.get("si") or [], "no": x.get("no") or [], "abstencion": x.get("abstencion") or [],
+                          "pareo": x.get("pareo") or []} for x in L if isinstance(x, dict)]
+                fuente = "Senado de Chile (datos oficiales; copia pública de tres-ases/open-data-scraping)"
+                url_f = "https://github.com/tres-ases/open-data-scraping"
+    if not votos:
+        estado["senado_votos"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": u, "error": "ni la API del Senado ni la copia respondieron"}
+        return None
+    out = []
+    for x in votos:
+        if not x["fecha"] or x["fecha"] < desde:
+            continue
+        si, no, ab = len(x.get("si") or []), len(x.get("no") or []), len(x.get("abstencion") or [])
+        nominal = [{"nombre": nombres.get(pid) or "", "voto": voto} for k, voto in (("si", "Sí"), ("no", "No"), ("abstencion", "Abstención"),
+                                                                                    ("pareo", "Pareo")) for pid in (x.get(k) or [])]
+        out.append({"id": f"S{x['id']}", "fecha": x["fecha"], "descripcion": re.sub(r"\s+", " ", str(x.get("tema") or "")).strip(" -")[:400],
+                    "boletin": str(x.get("boletin") or ""), "quorum": str(x.get("quorum") or ""), "resultado": _senado_resultado(x.get("tema"), si, no),
+                    "si": si, "no": no, "abst": ab, "nominal": [n for n in nominal if n["nombre"]]})
+    out.sort(key=lambda v: v["fecha"], reverse=True)
+    ult = max((v["fecha"] for v in votos if v.get("fecha")), default="")
+    estado["senado_votos"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": url_f, "n": len(out), "ultima": ult, "fuente": fuente}
+    return {"fuente": fuente, "url": url_f, "actualizado": ult, "votaciones": out}
+
+
 def autores_boletines(estado, cam, previo, maximo=40):
     """Boletines votados este mes en la Cámara → autores y título oficiales (Senado, servicio público). Lo ya leído se conserva
     (no cambia); solo se piden los nuevos, de a uno con 2 s entre cada uno, máximo `maximo` por corrida."""
@@ -1392,11 +1477,15 @@ def _un_feed_(args):
         m = _motivo_robots(url)
         estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": m}
         return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": m}, []
-    x = pedir(url, estado, clave, como="json" if tipo == "json" else "texto", espera=(0,), limite=20,
+    x = pedir(url, estado, clave, como="json" if tipo.split("|")[0] == "json" else "texto", espera=(0,), limite=20,
               cabeceras={"Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml, application/json"})
     if x is None:
         return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": estado[clave].get("error", "")}, []
-    notas = leer_espn(x, fuente) if tipo == "json" else leer_feed(x, fuente)
+    notas = leer_espn(x, fuente) if tipo.split("|")[0] == "json" else leer_feed(x, fuente)
+    if notas is not None and "|" in tipo:   # 13-11-2026: feed general de un medio grande, filtrado por palabras de la sección
+        claves = [k for k in tipo.split("|")[1:] if k]
+        notas = [n for n in notas if any(k in (str(n.get("titulo") or "") + " " + str(n.get("resumen") or n.get("texto") or "")).lower()
+                                         for k in claves)]
     if notas is None:
         estado[clave] = dict(estado[clave], ok=False, error="no es un RSS válido")
         return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": "no es un RSS válido"}, []
@@ -2142,7 +2231,9 @@ def urls_recolectar(f):
           for s in ("%5EIPSA", "%5EGSPC", "%5EIXIC", "%5EDJI", "BZ%3DF", "HG%3DF", "BTC-USD")]
     u += [f"{ESPN_S}/golf/{t}/scoreboard" for t in ("pga", "eur", "liv", "lpga")]
     u += [f"{ESPN_S}/tennis/{t}/rankings" for t in ("atp", "wta")]
-    u += ["https://site.api.espn.com/apis/v2/sports/racing/f1/standings", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings"]
+    u += ["https://site.api.espn.com/apis/v2/sports/racing/f1/standings", "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings",
+          # 13-11-2026: tercera disciplina con tabla (NFL de septiembre a enero, NHL de octubre a abril)
+          "https://site.api.espn.com/apis/v2/sports/football/nfl/standings", "https://site.api.espn.com/apis/v2/sports/hockey/nhl/standings"]
     u += [f"{ESPN_S}/tennis/{t}/scoreboard" for t in ("atp", "wta")]
     for d in (f - dt.timedelta(days=3 if f.weekday() == 0 else 2), f - dt.timedelta(days=7)):
         u += [f"{ESPN_S}/soccer/{l}/scoreboard?dates={d:%Y%m%d}-{f:%Y%m%d}" for l in LIGAS]
@@ -2397,6 +2488,10 @@ def main(argv=None):
         except (OSError, ValueError):
             prev_b = {}
         escribir(os.path.join(a.salida, "autores-boletines.json"), autores_boletines(estado, cam, prev_b if isinstance(prev_b, dict) else {}))
+        try:   # 13-11-2026: votaciones de Sala del Senado con el voto de cada senador
+            escribir(os.path.join(a.salida, "senado-votaciones.json"), senado_votaciones(estado, hoy))
+        except Exception as ex:   # noqa: BLE001
+            estado["senado_votos"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     except Exception as ex:   # noqa: BLE001
         estado["autores_boletines"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "senado", "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     try:
