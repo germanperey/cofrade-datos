@@ -848,7 +848,6 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
                  # 13-11-2026 (control: «equitación con 2 notas»): más fuentes directas de salto ecuestre
                  ("Jumper News (RSS, salto ecuestre latinoamericano)", "https://jumpernews.com/category/news/feed/", "rss"),
                  ("World of Showjumping (RSS)", "https://www.worldofshowjumping.com/documents.rdf?idz=32&cid=9664", "rss"),
-                 ("Horse Network · Salto (RSS)", "https://horsenetwork.com/topic/english/hunterjumper/feed/", "rss"),
                  ("The Plaid Horse (RSS)", "https://www.theplaidhorse.com/feed/", "rss"),
                  ("Bing Noticias · Global Champions Tour", _bing("Longines Global Champions Tour salto"), "rss"),
                  ("Bing Noticias · Copa de Naciones ecuestre", _bing("Copa de Naciones salto ecuestre FEI"), "rss"),
@@ -912,7 +911,7 @@ RESERVA = {"deportes": [(re.compile(r"equitaci|ecuestre|salto ecuestre|show ?jum
                         (re.compile(r"\bNFL\b|\bNHL\b", re.I), 6, 72)]}
 FILTRO = {   # 01-11-2026: en secciones temáticas, de un diario general solo entran las notas del tema
     # 13-11-2026: «departament», «construcci», «propiedad» y «urban» dejaban pasar el Departamento de Estado, antenas y autos robados
-    "inmobiliario": re.compile(r"inmobiliari|vivienda|departamentos? (?:en |de |nuevos|usados|se )|venta de departamentos|arriendo|"
+    "inmobiliario": re.compile(r"inmobiliari|vivienda|(?<!el )(?<!del )departamentos? (?:en venta|en arriendo|nuevos|usados|se (?:vende|arrienda|renta))|venta de departamentos|arriendo|"
                                r"hipotecari|CChC|C[áa]mara Chilena de la Construcci|sector construcci|construcci[óo]n de viviendas|"
                                r"subsidio habitacional|subsidio DS|\bDS ?(?:1|19|49)\b|DFL ?2|contribuciones|permisos de edificaci|"
                                r"Minvu|plusval|oficinas (?:premium|clase)|vacancia|suelo urbano|plan regulador|bienes ra[íi]ces|"
