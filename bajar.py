@@ -244,6 +244,34 @@ def camara_nominal(xml_txt):
     return out
 
 
+# ---------- 13-11-2026: control del padrón (la Cámara empezó a devolver nombres de un período anterior) ----------
+def _norm_nombre(t):
+    import unicodedata
+    t = unicodedata.normalize("NFD", (t or "").lower())
+    return " ".join("".join(c for c in t if unicodedata.category(c) != "Mn").replace("-", " ").split())
+
+
+def _padron_apellidos():
+    """Apellidos normalizados de los 155 diputados del período vigente (datos/padron-camara.json)."""
+    for ruta in (os.path.join(os.path.dirname(os.path.abspath(__file__)), "datos", "padron-camara.json"),
+                 os.path.join("datos", "padron-camara.json")):
+        try:
+            return {_norm_nombre(d["apellidos"]) for d in json.load(open(ruta, encoding="utf-8"))["camara"]}
+        except (OSError, ValueError, KeyError, TypeError):
+            continue
+    return set()
+
+
+def lista_vigente(filas, padron=None, minimo=0.6):
+    """True si al menos `minimo` de los nombres («Apellido Apellido, Nombre») son diputados del período vigente.
+    Sin padrón no se bloquea nada (no hay con qué comparar)."""
+    padron = _padron_apellidos() if padron is None else padron
+    if not padron or not filas:
+        return True
+    ok = sum(1 for x in filas if _norm_nombre((x.get("nombre") or "").split(",")[0]) in padron)
+    return ok >= minimo * len(filas)
+
+
 def camara_votaciones_todas(xml_txt):
     """Todas las votaciones del año {id: fecha AAAA-MM-DD} (para saber cuáles son de los últimos 62 días)."""
     raiz = ET.fromstring(xml_txt)
@@ -278,7 +306,9 @@ def camara(estado, hoy, previo=None, maximo=110):
             pass
     desde = (hoy - dt.timedelta(days=62)).isoformat()
     vigentes = {i for i, f in todas.items() if f >= desde}
-    nominal = {i: v for i, v in (previo or {}).items() if i in vigentes and v}
+    padron = _padron_apellidos()
+    nominal = {i: v for i, v in (previo or {}).items() if i in vigentes and v and lista_vigente(v, padron)}
+    descartadas = []
     faltan = sorted((i for i in vigentes if i not in nominal), key=lambda i: todas[i], reverse=True)
     for idv in faltan[:maximo]:
         time.sleep(3)   # de a una, con calma
@@ -287,11 +317,15 @@ def camara(estado, hoy, previo=None, maximo=110):
         if t:
             try:
                 filas = camara_nominal(t)
-                if filas:
+                if filas and lista_vigente(filas, padron):
                     nominal[idv] = filas
+                elif filas:   # nombres de otro período: no se guarda y se vuelve a pedir en la próxima corrida
+                    descartadas.append(idv)
             except ET.ParseError:
                 pass
-    estado["camara"]["nominal"] = {"guardadas": len(nominal), "pendientes": max(0, len(faltan) - maximo)}
+    estado["camara"]["nominal"] = {"guardadas": len(nominal), "pendientes": max(0, len(faltan) - maximo),
+                                   "descartadas_otro_periodo": len(descartadas),
+                                   "ejemplo_descartada": descartadas[0] if descartadas else ""}
     control = {"total_mes": len(mes), "fuente": f"{CAMARA}/retornarVotacionesXAnno?prmAnno={hoy.year}",
                "ultima_oficial": mes[0]["fecha"][:10] if mes else ""}
     return {"mes": hoy.strftime("%Y-%m"), "camara_mes": mes, "control": control}, nominal
@@ -371,7 +405,9 @@ def asistencia(estado, hoy, previo=None, maximo=25):
         estado["asistencia"].update(ok=False, error=f"XML ilegible: {ex}")
         return None
     prev = (previo or {}).get("sesiones") or {}
-    out = {i: v for i, v in prev.items() if v.get("fecha", "") >= desde and v.get("asistencia")}
+    padron = _padron_apellidos()
+    out = {i: v for i, v in prev.items() if v.get("fecha", "") >= desde and v.get("asistencia")
+           and lista_vigente(v["asistencia"], padron)}
     faltan = [x for x in sorted(ses, key=lambda x: x["fecha"], reverse=True) if x["id"] not in out]
     for x in faltan[:maximo]:
         time.sleep(3)
@@ -381,7 +417,7 @@ def asistencia(estado, hoy, previo=None, maximo=25):
                 filas = asistencia_xml(t)
             except ET.ParseError:
                 filas = []
-            if filas:
+            if filas and lista_vigente(filas, padron):
                 out[x["id"]] = {"fecha": x["fecha"], "tipo": x["tipo"], "asistencia": filas}
     estado["asistencia"]["sesiones"] = {"con_asistencia": len(out), "del_periodo": len(ses)}
     return {"desde": desde, "hasta": hoy.isoformat(), "sesiones": out}

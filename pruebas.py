@@ -117,16 +117,27 @@ def camara_acumula_el_voto_de_todo_el_periodo():
         pedidos.append(url)
         estado[clave] = {"ok": True}
         return XML if "XAnno" in url else XML_DET
-    orig, dormir = B.pedir, B.time.sleep
-    B.pedir, B.time.sleep = falso, (lambda x: None)
+    orig, dormir, pad = B.pedir, B.time.sleep, B._padron_apellidos
+    B.pedir, B.time.sleep, B._padron_apellidos = falso, (lambda x: None), (lambda: set())
     try:
         e = {}
         cam, nom = B.camara(e, dt.date(2026, 10, 28), previo={"3": [{"nombre": "X", "partido": "", "voto": "Sí"}], "1": [{"nombre": "Y"}]})
         assert set(nom) == {"3", "2"} and nom["3"][0]["nombre"] == "X", nom          # la 1 tiene más de 62 días: sale
         assert sum("Detalle" in u for u in pedidos) == 1 and "prmVotacionId=2" in pedidos[-1]   # solo se pide la que faltaba
-        assert len(cam["camara_mes"]) == 2 and e["camara"]["nominal"] == {"guardadas": 2, "pendientes": 0}
+        assert len(cam["camara_mes"]) == 2 and e["camara"]["nominal"]["guardadas"] == 2 and e["camara"]["nominal"]["pendientes"] == 0
     finally:
-        B.pedir, B.time.sleep = orig, dormir
+        B.pedir, B.time.sleep, B._padron_apellidos = orig, dormir, pad
+
+
+@prueba
+def nominal_de_otro_periodo_no_se_guarda():
+    """13-11-2026: la Cámara devolvió nombres de un período anterior (Auth, Boric…) en las votaciones desde la 91133."""
+    pad = {B._norm_nombre("Alinco Bustos"), B._norm_nombre("Mulet Martínez"), B._norm_nombre("García García")}
+    vig = [{"nombre": "ALINCO BUSTOS, RENÉ"}, {"nombre": "Mulet Martínez, Jaime"}, {"nombre": "García García, René Manuel"}]
+    vieja = [{"nombre": "AUTH STEWART, PEPE"}, {"nombre": "BORIC FONT, GABRIEL"}, {"nombre": "Mulet Martínez, Jaime"}]
+    assert B.lista_vigente(vig, pad) and not B.lista_vigente(vieja, pad)
+    assert B.lista_vigente(vieja, set())          # sin padrón no se bloquea
+    assert len(B._padron_apellidos()) == 155      # datos/padron-camara.json (2026-2030)
 
 
 @prueba
