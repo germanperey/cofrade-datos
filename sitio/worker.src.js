@@ -14,6 +14,7 @@ const LOGO_OSCURO = "/logo-oscuro.webp";
 const DIAS_ARCHIVO = 60;   // 13-11-2026: se buscan 60 días hacia atrás…
 const MAX_ARCHIVO = 12;    // …y se muestran las 12 ediciones publicadas más recientes (Germán)
 const MARCAS = __MARCAS__;
+const LENTO = __LENTO__;   // 13-11-2026: capa que dibuja cada gráfico de la edición recién cuando el lector llega a él
 const TZ = "America/Santiago";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -44,12 +45,18 @@ const SEGURIDAD = {
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
 };
-const CSP_PORTADA = "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://script.google.com";
+// 13-11-2026: el captcha del Buzón (Cloudflare Turnstile) necesita su script y su recuadro desde challenges.cloudflare.com.
+const csp = ({ script = "", frame = "" } = {}) => "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; "
+  + `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com${script}; connect-src 'self'; frame-src https://challenges.cloudflare.com${frame}; `
+  + "frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://script.google.com";
+const CSP_PORTADA = csp();
 
-function html(cuerpo, status = 200, extra = {}) {
+// 13-11-2026: /mercados muestra widgets de TradingView (gratis con su marca visible); solo esa página los permite.
+const CSP_MERCADOS = csp({ script: " https://s3.tradingview.com", frame: " https://www.tradingview-widget.com https://s.tradingview.com https://*.tradingview.com" });
+function html(cuerpo, status = 200, extra = {}, csp = CSP_PORTADA) {
   return new Response(cuerpo, {
     status,
-    headers: { "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": CSP_PORTADA, "X-Frame-Options": "DENY", ...SEGURIDAD, ...extra },
+    headers: { "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": csp, "X-Frame-Options": "DENY", ...SEGURIDAD, ...extra },
   });
 }
 
@@ -216,8 +223,9 @@ a{color:inherit}.hoja{max-width:1120px;margin:0 auto;padding:0 16px}
 .marca b{font:600 clamp(26px,5vw,38px)/1 var(--serif);letter-spacing:.2px}.fecha{color:var(--gris);font-size:14px}
 .l-oscuro{display:none}:root[data-theme=dark] .l-claro{display:none}:root[data-theme=dark] .l-oscuro{display:inline}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .l-claro{display:none}:root:not([data-theme=light]) .l-oscuro{display:inline}}
-nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}nav a,.tema{font-size:14px;text-decoration:none;padding:8px 10px;border-radius:8px;min-height:44px;display:inline-flex;align-items:center;background:none;border:0;color:inherit;cursor:pointer}
-nav a:hover,.tema:hover{background:var(--card)}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
+nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}nav a,.tema,.nav-b{font:14px var(--sans);text-decoration:none;padding:8px 10px;border-radius:8px;min-height:44px;display:inline-flex;align-items:center;gap:6px;background:none;border:0;color:inherit;cursor:pointer}
+nav a:hover,.tema:hover,.nav-b:hover{background:var(--card)}.herr{display:flex;gap:4px;align-items:center}
+.nav-b{font-weight:600;color:var(--oro-t)}.nav-b svg{flex:none}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
 .portada{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;padding:44px 0 28px;align-items:center}
 .kicker{font:600 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--oro-t)}
 h1{font:600 clamp(32px,5.4vw,56px)/1.06 var(--serif);margin:12px 0 16px;text-wrap:balance}
@@ -267,7 +275,88 @@ button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}
 .marca-a{display:flex;align-items:center;gap:10px;height:72px;min-width:190px;justify-content:center;padding:0 22px;border-radius:14px;border:1px solid var(--linea);background:var(--mf);color:var(--mc);text-decoration:none;cursor:pointer;font:700 17px var(--sans)}
 .marca-a img{max-height:40px;max-width:170px;width:auto;height:auto;display:block}.marca-a:hover{border-color:var(--oro)}
 @media (prefers-reduced-motion:reduce){.pista{animation:none;flex-wrap:wrap;justify-content:center;width:auto}.pista [aria-hidden=true]{display:none}}
+/* 13-11-2026 · portada de lujo: noche azul, oro y marfil; tipografía Cormorant Garamond; escudo de la Cofradía como marca de agua */
+:root{--noche:#06121F;--noche2:#0B1F3A;--marfil:#F6F1E6;--oro-l:#E6C77A;--display:'Cormorant Garamond','Iowan Old Style','Palatino Linotype',Georgia,serif}
+.lujo{position:relative;overflow:hidden;background:radial-gradient(1200px 520px at 78% 30%,#12305a 0%,var(--noche2) 46%,var(--noche) 100%);color:var(--marfil);border-bottom:1px solid rgba(230,199,122,.28)}
+.lujo::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0,rgba(230,199,122,.35) 50%,transparent 100%) top/100% 1px no-repeat,
+ repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 120px);pointer-events:none}
+.agua{position:absolute;right:-90px;top:50%;width:min(660px,62vw);transform:translateY(-50%);opacity:.075;pointer-events:none;user-select:none}
+.lujo-in{position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center;padding:64px 16px 58px}
+.lujo .kicker{color:var(--oro-l)}.lujo h1{font:600 clamp(38px,6vw,68px)/1.02 var(--display);letter-spacing:-.4px;color:#FFFDF8;margin:14px 0 18px}
+.lujo h1 em{font-style:italic;color:var(--oro-l)}.lujo .lede{color:#D8D2C4;font-size:19px}
+.btn.claro{border:1px solid rgba(230,199,122,.55);color:var(--marfil)}.btn.claro:hover{background:rgba(230,199,122,.08)}
+.sellos{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;padding:0;margin:26px 0 0;font-size:13.5px;color:#BFB7A6;letter-spacing:.03em}
+.sellos li::before{content:"◆";color:var(--oro-l);font-size:9px;margin-right:8px;vertical-align:2px}
+.pizarra{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(230,199,122,.32);border-radius:20px;padding:22px 22px 16px;
+ box-shadow:0 30px 80px -30px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+.piz-cab{display:flex;justify-content:space-between;align-items:center;font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--oro-l);margin-bottom:10px}
+.piz-cab span{color:#9FB0C6;letter-spacing:.06em;text-transform:none;font-weight:500}
+.piz-fila{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:center;padding:12px 0;border-top:1px solid rgba(230,199,122,.14)}
+.piz-fila small{display:block;color:#AFB9C8;font-size:12.5px;letter-spacing:.02em}.piz-fila b{font:600 27px/1.15 var(--display);color:#FFFDF8;font-variant-numeric:tabular-nums}
+.piz-fila .var{font-size:12.5px;margin-left:6px}.piz-fila svg{width:150px;height:46px;display:block}
+.lujo .sube{color:#7DDBA6}.lujo .baja{color:#F4A39C}
+.piz-pie{font-size:11.5px;color:#8E9AAB;margin-top:8px}
+.secc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.sec-card{position:relative;background:var(--card);border:1px solid var(--linea);border-radius:16px;padding:18px 18px 16px;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;
+ transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s}
+.sec-card:hover{transform:translateY(-2px);border-color:var(--oro);box-shadow:0 14px 34px -22px rgba(11,31,58,.45)}
+.sec-card svg{width:44px;height:44px;color:var(--oro-t)}.sec-card b{display:block;font:600 19px/1.2 var(--display);margin-bottom:3px}.sec-card p{margin:0;font-size:13.5px;color:var(--gris);line-height:1.45}
+.titulo-lujo{font:600 clamp(28px,3.6vw,40px)/1.1 var(--display);margin:0 0 6px;letter-spacing:-.2px}
+.galeria{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;align-items:start}
+.cab .fecha{display:none}
+.galeria figure{margin:0;background:#FBF8F1;border:1px solid var(--linea);border-radius:16px;padding:12px;box-shadow:0 18px 40px -30px rgba(11,31,58,.5);position:relative}
+.galeria figure::after{content:"";position:absolute;inset:6px;border:1px solid rgba(184,137,43,.28);border-radius:12px;pointer-events:none}
+.galeria img{width:100%;height:auto;display:block;border-radius:8px}.galeria figcaption{font-size:13px;color:#5B6472;padding:10px 4px 2px}
+.galeria figcaption b{display:block;font:600 17px/1.2 var(--display);color:#0B1F3A}
+.g-a{grid-column:span 7}.g-b{grid-column:span 5}.g-c{grid-column:span 4}.g-d{grid-column:span 4}.g-e{grid-column:span 4}.g-f{grid-column:span 12}
+.puente{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--noche2),var(--noche));color:var(--marfil);border-radius:24px;padding:44px 36px;margin:34px 0;border:1px solid rgba(230,199,122,.3)}
+.puente .agua{right:-140px;width:520px;opacity:.06}.puente .kicker{color:var(--oro-l)}.puente h2{font:600 clamp(30px,4vw,46px)/1.05 var(--display);color:#FFFDF8;margin:10px 0 10px}
+.puente p.lede{color:#D8D2C4;max-width:44em}
+.pilares{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:22px 0}
+.pilar{border:1px solid rgba(230,199,122,.22);border-radius:14px;padding:14px 16px;background:rgba(255,255,255,.03)}
+.pilar b{display:block;font:600 18px/1.2 var(--display);color:var(--oro-l);margin-bottom:4px}.pilar span{font-size:13.5px;color:#C9C2B3;line-height:1.45}
+.precio-lujo{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;margin:8px 0 18px}
+.precio-lujo .monto{font:600 46px/1 var(--display);color:#FFFDF8}.precio-lujo .monto small{font-size:17px;color:#BFB7A6;font-family:var(--sans)}
+.precio-lujo .extra{font-size:14px;color:#D8D2C4}.legal{font-size:12px;color:#8E9AAB;margin:14px 0 0;max-width:60em}
+.pie-agua{display:block;width:64px;height:64px;margin:0 0 10px;opacity:.85}
+@media (max-width:980px){.lujo-in{grid-template-columns:1fr;gap:30px;padding:44px 16px}.agua{width:520px;right:-180px;top:30%}.g-a,.g-b,.g-c,.g-d,.g-e{grid-column:span 12}}
 @media (max-width:820px){.portada,.socios{grid-template-columns:1fr;gap:22px}.portada{padding-top:26px}nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}nav a{white-space:nowrap}.edicion ul{columns:1}}
+/* 13-11-2026 · cabecera fija (Germán: «el header debe mantenerse fijo, para que siempre esté visible») */
+html{scroll-padding-top:calc(var(--alto-cab,112px) + 12px)}
+.cab{position:sticky;top:0;z-index:60;background:rgba(251,248,241,.95);-webkit-backdrop-filter:saturate(1.3) blur(10px);backdrop-filter:saturate(1.3) blur(10px)}
+:root[data-theme=dark] .cab{background:rgba(14,21,34,.95)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .cab{background:rgba(14,21,34,.95)}}
+.cab.pegado{box-shadow:0 14px 30px -22px rgba(6,18,31,.6)}
+@media (max-width:1000px){.cab .hoja{padding-top:8px;padding-bottom:4px;gap:2px 10px}.marca img{width:42px;height:42px}.marca b{font-size:27px}
+ .herr{order:1;margin-left:auto}nav{order:2;margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ nav::-webkit-scrollbar{display:none}nav.mas{-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent)}
+ nav a,.nav-b{white-space:nowrap;padding:8px 9px}}
+@media print{.cab{position:static;box-shadow:none}}
+/* 13-11-2026 · Buzón de sugerencias en tres pasos */
+.dlg-buzon{max-width:680px}.dlg-buzon [hidden]{display:none!important}.buzon-fin{padding:0 34px}.dlg-buzon .pub-form{max-height:min(90vh,900px);overflow:auto;gap:12px}
+.pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:2px 40px 0 0}.pasos i{height:4px;border-radius:4px;background:var(--linea)}.pasos i.si{background:var(--oro)}
+.pub-form fieldset{border:1px solid var(--linea);border-radius:14px;padding:12px 14px 14px;margin:0 0 10px}.pub-form legend{font-weight:700;font-size:15px;padding:0 6px}
+.ayuda{display:block;font-weight:400;color:var(--gris);font-size:12.5px;margin:0 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.pub-form .chip{position:relative;display:inline-flex;flex-direction:row;font-weight:500;gap:0}
+.chip input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:8px 15px;border:1.5px solid var(--linea);border-radius:999px;font-size:14.5px;cursor:pointer;user-select:none;background:var(--papel)}
+.chip span:hover{border-color:var(--oro)}.chip input:checked+span{background:var(--oro);border-color:var(--oro);color:#1A1406;font-weight:600}
+.chip input:checked+span::before{content:"✓";margin-right:7px;font-weight:800}.chip input:focus-visible+span,.nps input:focus-visible+span{outline:3px solid var(--oro);outline-offset:2px}
+.nps{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}.pub-form .nps label{display:block;position:relative;font-weight:600}
+.nps input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.nps span{display:flex;align-items:center;justify-content:center;min-height:44px;border:1.5px solid var(--linea);border-radius:10px;cursor:pointer;background:var(--papel);font-variant-numeric:tabular-nums}
+.nps span:hover{border-color:var(--oro)}.nps input:checked+span{background:var(--tinta);color:var(--papel);border-color:var(--tinta)}
+.nps-ej{display:flex;justify-content:space-between;font-size:12px;color:var(--gris);margin-top:6px}
+.dos-campos{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ts{min-height:70px}
+.buzon-nav{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}.buzon-nav .pub-enviar{padding:0 26px}.buzon-nav .btn{min-height:48px}
+.buzon-ok{text-align:center;padding:10px 0}.sello-ok{width:64px;height:64px;margin:4px auto 6px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--oro);color:#1A1406;font:800 30px/1 var(--sans)}
+.buzon-ok h3{margin:0 0 6px}.buzon-msg{color:var(--tinta2);margin:0 auto 16px;max-width:34em}
+@media (max-width:540px){.dos-campos{grid-template-columns:1fr}.nps{grid-template-columns:repeat(6,1fr)}.chip span{font-size:14px;padding:8px 13px}}
+/* 13-11-2026 · Panel de Control */
+.barras{display:flex;flex-direction:column;gap:8px}.barra{display:grid;grid-template-columns:minmax(120px,38%) 1fr auto;gap:10px;align-items:center;font-size:14px}
+.bb{height:12px;background:var(--linea);border-radius:6px;overflow:hidden}.bb i{display:block;height:100%;border-radius:6px}.barra b{font-variant-numeric:tabular-nums}
+.calor{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}.cel{border-radius:12px;padding:12px 14px;background:rgba(184,137,43,var(--a));color:var(--tinta);border:1px solid rgba(184,137,43,.35)}
+.enlace{background:none;border:0;padding:0;font:inherit;color:var(--oro-t);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.cel b{display:block;font-size:15px}.cel span{font-size:12.5px}.tabla-buzon .m{color:var(--gris);font-size:13px}
 `;
 
 const SCRIPT = `
@@ -343,8 +432,45 @@ const EN_FIJO = {
   "Llamada": "Phone call", "Mensaje *": "Message *", "Sitio web": "Website", "Enviar": "Send", "Cerrar": "Close",
   "Acepto que usen estos datos solo para responder mi consulta (Ley 19.628).": "I agree that this data is used only to answer my inquiry (Chilean Law 19.628).",
   "IPSA (puntos)": "IPSA (points)", "Dólar": "US dollar", "Euro": "Euro", "UF": "UF", "UTM": "UTM", "Cobre (libra)": "Copper (pound)", "Bitcoin": "Bitcoin", "Petróleo Brent": "Brent crude", "Cobre": "Copper", "Oro": "Gold", "Plata": "Silver",
+  "Mercados": "Markets", "Mercados en vivo": "Live markets", "El diario de la mañana · Gratuito": "The morning paper · Free",
+  "Dashboard Financiero": "Financial Dashboard", "Cada dato con su fuente": "Every figure with its source", "Hecho en Chile": "Made in Chile",
+  "Edición de hoy publicada": "Today's edition is out", "Pizarra del día": "Today's board", "últimos 12 meses": "last 12 months",
+  "Dólar observado": "US dollar (official rate)", "Cobre, US$ por libra": "Copper, US$ per pound", "Unidad de Fomento": "Unidad de Fomento (UF)",
+  "Tasa de Política Monetaria": "Monetary policy rate", "Fuente: Banco Central de Chile, Base de Datos Estadísticos.": "Source: Central Bank of Chile, Statistical Database.",
+  "Doce secciones, cada mañana, con la fuente de cada dato.": "Twelve sections every morning, with the source of every figure.",
+  "Así se ve por dentro": "A look inside", "Algunos de los gráficos de la edición, tal como los recibes cada mañana.": "Some of the edition's charts, just as you get them every morning.",
+  "Indicadores y monedas": "Indicators and currencies", "Industrias de Chile": "Chile's industries", "Avances por gobierno": "Progress by government", "Mar y navegación": "Sea and navigation",
+  "Para socios · Muy pronto": "For members · Coming soon", "Puente de Mando · Dashboard Financiero": "The Bridge · Financial Dashboard",
+  "ETF y cripto": "ETFs and crypto", "Dinero en movimiento": "Money on the move", "Radar político": "Political radar", "Calendario": "Calendar", "Herramientas": "Tools",
+  "Quiero ser socio fundador": "I want to be a founding member", "Ver mercados en vivo": "See live markets", "Ingresar": "Sign in",
+  "Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta, y no considera tu situación personal.":
+    "General and educational information. It is not investment advice or a recommendation to buy or sell, and it does not consider your personal situation.",
+  "Resumen del mundo": "World overview", "Dónde se movió el dinero hoy": "Where the money moved today", "Cripto": "Crypto", "Agenda económica": "Economic calendar",
   "USGS ↗": "USGS ↗", "fuente ↗": "source ↗", "Ver en español": "Ver en español", "Read in English": "Read in English",
 };
+// 13-11-2026 · textos del Buzón de sugerencias y del pie (las secciones ya están arriba)
+Object.assign(EN_FIJO, {
+  "Buzón": "Suggestions", "Buzón de sugerencias": "Suggestion box", "Ayúdanos a hacer el mejor diario de Chile": "Help us make the best daily briefing in Chile",
+  "Paso 1 de 3": "Step 1 of 3", "¿Qué es lo que más te gusta?": "What do you like most?", "Marca todas las que quieras.": "Tick as many as you like.",
+  "¿Qué te gustaría que agreguemos?": "What would you like us to add?", "¿Con qué frecuencia lees Cofrade News?": "How often do you read Cofrade News?",
+  "Del 0 al 10, ¿qué tan probable es que recomiendes Cofrade News a un amigo?": "From 0 to 10, how likely are you to recommend Cofrade News to a friend?",
+  "Nada probable": "Not likely", "Muy probable": "Very likely", "Escribe lo que quieras": "Write anything you like",
+  "Una idea, una crítica, una felicitación…": "An idea, a criticism, a compliment…", "Nombre *": "First name *", "Apellido *": "Last name *",
+  "Te enviaremos un correo para confirmar que eres tú. Nunca publicamos tu email.": "We will email you to confirm it is you. We never publish your email.",
+  "Acepto que Cofrade News use estos datos solo para mejorar el diario y responder mi sugerencia. No se publican ni se venden (Ley 19.628).":
+    "I agree that Cofrade News may use this data only to improve the briefing and reply to my suggestion. It is never published or sold (Chilean Law 19,628).",
+  "¡Gracias por escribirnos!": "Thank you for writing to us!", "Cerrar": "Close", "Atrás": "Back", "Siguiente": "Next", "Enviar al Buzón": "Send",
+  "Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar?": "We measure visits without cookies or personal data. Have an idea to improve?",
+  "Escríbenos al Buzón": "Write to our suggestion box",
+  "Los gráficos": "The charts", "Las fuentes verificadas": "The verified sources", "La versión en inglés": "The English version", "Descargar en PDF": "PDF download",
+  "El diseño": "The design", "Alertas por WhatsApp": "WhatsApp alerts", "Versión en audio (podcast)": "Audio version (podcast)",
+  "Envío por correo cada mañana": "Morning email delivery", "App para el celular": "Mobile app", "Más noticias de regiones": "More regional news",
+  "Análisis de inversiones": "Investment analysis", "Más deportes": "More sports", "Agenda de eventos de la Cofradía": "Cofradía events calendar",
+  "Clasificados entre socios": "Members' classifieds", "Encuestas a los lectores": "Reader polls", "Más noticias internacionales": "More international news",
+  "Tecnología e inteligencia artificial": "Technology and AI", "Salud y bienestar": "Health and wellbeing", "Cultura y panoramas": "Culture and things to do",
+  "Historia naval": "Naval history", "Todos los días": "Every day", "Varias veces por semana": "Several times a week", "Una vez por semana": "Once a week",
+  "Es mi primera vez": "It's my first time",
+});
 
 // 13-11-2026 (Germán: «que no puedan descargar los archivos HTML, solo el PDF del boletín»): en la edición se desactivan
 // «Guardar como» (Ctrl/Cmd+S), «Ver código» (Ctrl/Cmd+U) y el menú del botón derecho. El botón «Descargar PDF» sigue igual.
@@ -365,6 +491,16 @@ const DIALOGO = `<dialog class="dlg-pub" id="dlgPub" aria-labelledby="dlgPubT"><
 <label class="pub-ok"><input type="checkbox" name="acepto" value="si" required> Acepto que usen estos datos solo para responder mi consulta (Ley 19.628).</label>
 <button type="submit" class="pub-enviar">Enviar</button><p class="pub-estado" role="status" aria-live="polite"></p></form></dialog>`;
 
+// 13-11-2026 · la cabecera queda fija: sombra al bajar, altura medida para que los enlaces internos no queden tapados,
+// y en el celular un degradé avisa que el menú tiene más opciones hacia la derecha.
+const CABECERA_JS = `
+(function(){var c=document.querySelector('.cab');if(!c)return;var n=c.querySelector('nav'),r=document.documentElement;
+function alto(){r.style.setProperty('--alto-cab',c.offsetHeight+'px')}alto();if(window.ResizeObserver)new ResizeObserver(alto).observe(c);else addEventListener('resize',alto);
+var p=false;function sombra(){var s=scrollY>4;if(s!==p){p=s;c.classList.toggle('pegado',s)}}sombra();addEventListener('scroll',sombra,{passive:true});
+function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scrollWidth-4)}mas();if(n)n.addEventListener('scroll',mas,{passive:true});addEventListener('resize',mas)})();`;
+
+/*__BUZON_PANEL__*/
+
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
   const ms = (MARCAS && MARCAS.marcas) || [];
@@ -382,23 +518,95 @@ function bloqueMarcas() {
   return `<div class="hoja marcas" aria-label="Marcas que nos auspician"><h4>Marcas que nos auspician</h4><div class="cinta"><div class="pista">${lista.map((m, i) => uno(m, i >= ms.length)).join("")}${lista.map((m) => uno(m, true)).join("")}</div></div></div>`;
 }
 
-function marco({ titulo, descripcion, cuerpo, canonica }) {
+function marco({ titulo, descripcion, cuerpo, canonica, hero = "" }) {
   return `<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(titulo)}</title><meta name="description" content="${esc(descripcion)}"><link rel="canonical" href="https://${DOMINIO}${canonica || "/"}">
 <meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descripcion)}"><meta property="og:type" content="website">
 <meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL"><meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><style>${CSS}</style></head><body>
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&display=swap"><style>${CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha" data-iso="${fechaChile()}">${esc(fechaLarga(fechaChile()))}</span>
-<nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><a href="/#en-vivo">En vivo</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a><button class="tema idioma" id="idioma" type="button" lang="en" aria-pressed="false" aria-label="Read in English" title="English">EN</button><button class="tema" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></nav></div></header>
-<main class="hoja">${cuerpo}</main>
-${bloqueMarcas()}${DIALOGO}
-<footer class="hoja pie">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
-© ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}</script></body></html>`;
+<nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><button type="button" class="nav-b buzon-abrir" aria-haspopup="dialog"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></svg>Buzón</button><a href="/mercados">Mercados</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a></nav>
+<div class="herr"><button class="tema idioma" id="idioma" type="button" lang="en" aria-pressed="false" aria-label="Read in English" title="English">EN</button><button class="tema" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></div></div></header>
+${hero}<main class="hoja">${cuerpo}</main>
+${bloqueMarcas()}${DIALOGO}${BUZON}
+<footer class="hoja pie"><img class="pie-agua" src="/marca-agua.webp" alt="" aria-hidden="true">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
+Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar? <button type="button" class="enlace buzon-abrir">Escríbenos al Buzón</button>.<br>
+© ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}${BUZON_JS}${CABECERA_JS}</script>
+<script type="speculationrules">{"prerender":[{"where":{"or":[{"href_matches":"/edicion"},{"href_matches":"/edicion/*"}]},"eagerness":"moderate"}]}</script></body></html>`;
 }
 
 const SECCIONES = ["Crecimiento de Chile", "Economía y mercados", "Política y Congreso", "Conflictos en el mundo", "Perspectivas 2050",
   "Ciencia y Astronomía", "Deportes", "Clima, mar y sismos", "Vuelos comerciales", "Entretenimiento", "Fondos y subsidios", "Efemérides"];
+
+// 13-11-2026 · dibujos de cada sección (trazo dorado, 44 px)
+const ICONO = {
+  crecimiento: '<path d="M6 34 16 24l7 6 15-17"/><path d="M31 13h7v7"/><path d="M6 40h34"/>',
+  economia: '<path d="M10 10v26M22 6v32M34 14v20"/><rect x="7" y="16" width="6" height="12" rx="1"/><rect x="19" y="12" width="6" height="16" rx="1"/><rect x="31" y="18" width="6" height="9" rx="1"/>',
+  congreso: '<path d="M6 34a17 17 0 0 1 34 0"/><path d="M12 34a11 11 0 0 1 22 0"/><path d="M4 38h38"/><circle cx="23" cy="13" r="2"/>',
+  conflictos: '<circle cx="23" cy="23" r="16"/><path d="M7 23h32M23 7c-6 5-6 27 0 32M23 7c6 5 6 27 0 32"/><path d="M31 15l3-3"/>',
+  perspectivas: '<path d="M6 38V22h8v16M18 38V12h10v26M32 38V26h8v12"/><path d="M4 38h38M23 12V6l9 4"/>',
+  ciencia: '<ellipse cx="23" cy="23" rx="17" ry="7" transform="rotate(-25 23 23)"/><circle cx="23" cy="23" r="5"/><circle cx="37" cy="15" r="2"/>',
+  deportes: '<circle cx="23" cy="23" r="15"/><path d="M23 8v30M8 23h30M12 12c6 4 6 18 0 22M34 12c-6 4-6 18 0 22"/>',
+  clima: '<path d="M4 18c5-5 9-5 14 0s9 5 14 0 9-5 10-2"/><path d="M4 27c5-5 9-5 14 0s9 5 14 0 9-5 10-2"/><path d="M4 36c5-5 9-5 14 0s9 5 14 0 9-5 10-2"/>',
+  vuelos: '<path d="M6 34c10-16 22-22 34-24"/><path d="M33 7l7 3-3 7"/><circle cx="8" cy="34" r="2"/>',
+  entretenimiento: '<rect x="6" y="11" width="34" height="24" rx="3"/><path d="M6 17h34M6 29h34M13 11v24M33 11v24"/>',
+  fondos: '<ellipse cx="23" cy="12" rx="12" ry="4"/><path d="M11 12v8c0 2 5 4 12 4s12-2 12-4v-8M11 20v8c0 2 5 4 12 4s12-2 12-4v-8M11 28v6c0 2 5 4 12 4s12-2 12-4v-6"/>',
+  efemerides: '<circle cx="23" cy="9" r="3"/><path d="M23 12v26M15 18h16M9 28c0 6 6 10 14 10s14-4 14-10"/><path d="M9 28l-3 3M37 28l3 3"/>',
+};
+const icono = (n) => `<svg viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONO[n] || ""}</svg>`;
+const SECCIONES_LUJO = [
+  ["crecimiento", "Crecimiento de Chile", "El Imacec del mes, la proyección del año y cuánto avanza cada gobierno a igual período."],
+  ["economia", "Economía y mercados", "Dólar, UF, IPSA, Wall Street, cobre y petróleo, con su fuente y su hora."],
+  ["congreso", "Política y Congreso", "Cada votación de la Sala con el voto de cada diputado y senador, y cómo votan las bancadas."],
+  ["conflictos", "Conflictos en el mundo", "Mapas, cifras oficiales de refugiados y su efecto en los precios que pagas."],
+  ["perspectivas", "Perspectivas 2050", "Los megaproyectos que cambiarán Chile: inversión, etapa y año de término."],
+  ["ciencia", "Ciencia y Astronomía", "Descubrimientos de la semana y el cielo de esta noche, explicados en simple."],
+  ["deportes", "Deportes", "Tablas con proyección, fútbol, tenis, golf, Fórmula 1, NBA y equitación."],
+  ["clima", "Clima, mar y sismos", "El tiempo de 9 ciudades, oleaje y mareas de los puertos, y los sismos del día."],
+  ["vuelos", "Vuelos comerciales", "Salidas y llegadas confirmadas en los cinco aeropuertos principales."],
+  ["entretenimiento", "Entretenimiento", "Panoramas, estrenos y lo que no te puedes perder esta semana."],
+  ["fondos", "Fondos y subsidios", "Fondos concursables abiertos, con su plazo y el enlace para postular."],
+  ["efemerides", "Efemérides", "La historia naval y de Chile que se recuerda hoy."],
+];
+
+// Gráfico lineal mínimo (SVG) para la pizarra de la portada: área dorada y línea, sin bibliotecas.
+function spark(datos, w = 150, h = 46) {
+  const v = (datos || []).map((d) => Number(d[1])).filter((x) => isFinite(x));
+  if (v.length < 2) return "";
+  const min = Math.min(...v), max = Math.max(...v), r = max - min || 1;
+  const pts = v.map((y, i) => [((i / (v.length - 1)) * (w - 2) + 1).toFixed(1), (h - 3 - ((y - min) / r) * (h - 8)).toFixed(1)]);
+  const linea = pts.map((p, i) => (i ? "L" : "M") + p[0] + " " + p[1]).join("");
+  const id = "g" + Math.random().toString(36).slice(2, 8);
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6C77A" stop-opacity=".38"/><stop offset="1" stop-color="#E6C77A" stop-opacity="0"/></linearGradient></defs>`
+    + `<path d="${linea}L${w - 1} ${h}L1 ${h}Z" fill="url(#${id})"/><path d="${linea}" fill="none" stroke="#E6C77A" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
+}
+
+async function historia(ctx) {
+  try {
+    const r = await desdeGitHub("datos/historia.json", 3600, ctx);
+    return r ? await r.json() : null;
+  } catch { return null; }
+}
+
+function pizarra(h, p) {
+  const S = (h && h.series) || {};
+  const fila = (clave, titulo, pre, dec, dias = 365) => {
+    const s = S[clave];
+    if (!s || !s.datos || s.datos.length < 2) return "";
+    const datos = s.datos.slice(-Math.min(s.datos.length, Math.round(dias * 0.7)));   // ~250 días hábiles
+    const ult = datos[datos.length - 1], ant = s.datos[Math.max(0, s.datos.length - 22)];
+    const varp = ant && ant[1] ? ((ult[1] / ant[1]) - 1) * 100 : null;
+    return `<div class="piz-fila"><div><small>${esc(titulo)} · ${esc(ult[0].split("-").reverse().join("-"))}</small><b>${esc(pre)}${num(ult[1], dec)}</b>`
+      + `${varp !== null ? `<span class="var ${varp > 0 ? "sube" : varp < 0 ? "baja" : ""}">${varp > 0 ? "+" : varp < 0 ? "−" : ""}${num(Math.abs(varp), 1)} % en un mes</span>` : ""}</div>${spark(datos)}</div>`;
+  };
+  const filas = fila("dolar", "Dólar observado", "$", 2) + fila("cobre", "Cobre, US$ por libra", "US$", 2) + fila("uf", "Unidad de Fomento", "$", 2);
+  if (!filas) return "";
+  const tpm = S.tpm && S.tpm.datos && S.tpm.datos.length ? S.tpm.datos[S.tpm.datos.length - 1][1] : null;
+  return `<aside class="pizarra" aria-label="Pizarra del Banco Central"><div class="piz-cab">Pizarra del día <span>últimos 12 meses</span></div>${filas}`
+    + `${tpm !== null ? `<div class="piz-fila"><div><small>Tasa de Política Monetaria</small><b>${num(tpm, 2)} %</b></div><svg viewBox="0 0 150 46" aria-hidden="true"></svg></div>` : ""}`
+    + `<div class="piz-pie">Fuente: Banco Central de Chile, Base de Datos Estadísticos.</div></aside>`;
+}
 
 function bloqueCifras(p) {
   if (!p) return "";
@@ -444,29 +652,93 @@ async function cuerpoPortada(ctx) {
   const estado = !ultima ? "La primera edición web aparece mañana a las 07:30."
     : ultima === hoy ? "La edición de hoy ya está publicada." : "La edición de hoy se publica a las 07:30. Mientras, lee la última.";
   const hora = p && p.generado ? String(p.generado).slice(11, 16) : "";
-  const cuerpo = `
-<div class="portada"><div><span class="kicker">El diario de la mañana · gratuito</span>
-<h1>Chile y el mundo, ordenados en minutos y con datos verificados.</h1>
+  const h = await historia(ctx);
+  const piz = pizarra(h, p);
+  const hero = `<section class="lujo" aria-label="Portada"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
+<div class="hoja lujo-in"><div class="lujo-txt"><span class="kicker">El diario de la mañana · Gratuito</span>
+<h1>Chile y el mundo, ordenados en minutos y con <em>datos verificados.</em></h1>
 <p class="lede">Cada mañana a las 07:30: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.</p>
-<div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn linea" href="#en-vivo">Ver lo último</a></div></div>
-<aside class="tarjeta edicion" aria-label="Edición"><span class="kicker">${ultima ? `<span>${ultima === hoy ? "Hoy ·" : "Última edición ·"}</span> <span data-iso="${ultima}">${esc(fechaLarga(ultima))}</span>` : "Muy pronto"}</span><h2>${esc(estado)}</h2>
-<ul>${SECCIONES.map((s) => `<li>${esc(s)}</li>`).join("")}</ul></aside></div>
+<div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn claro" href="#puente">Dashboard Financiero</a><a class="btn claro" href="/mercados">Mercados en vivo</a></div>
+<ul class="sellos"><li>${ultima ? (ultima === hoy ? "Edición de hoy publicada" : "Última edición: " + esc(fechaLarga(ultima))) : "Primera edición muy pronto"}</li><li>Cada dato con su fuente</li><li>Hecho en Chile</li></ul></div>
+${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${hoy}">${esc(fechaLarga(hoy))}</span></div><p style="margin:6px 0 0;color:#D8D2C4">${esc(estado)}</p></aside>`}</div></section>`;
+  const cuerpo = `
+<section aria-labelledby="t-secc" style="border:0;padding-top:40px"><span class="kicker">${ultima ? (ultima === hoy ? "Hoy · " : "Última edición · ") : ""}<span data-iso="${ultima || hoy}">${esc(fechaLarga(ultima || hoy))}</span></span>
+<h2 class="titulo-lujo" id="t-secc">${esc(estado)}</h2><p class="sub">Doce secciones, cada mañana, con la fuente de cada dato.</p>
+<div class="secc">${SECCIONES_LUJO.map(([ic, t, d]) => `<a class="sec-card" href="/edicion" style="text-decoration:none">${icono(ic)}<div><b>${esc(t)}</b><p>${esc(d)}</p></div></a>`).join("")}</div></section>
 <section id="en-vivo" aria-labelledby="t-vivo"><h3 id="t-vivo"><span class="vivo">En vivo</span></h3>
 <p class="sub">${hora ? `Actualizado a las ${esc(hora)}${p.proxima ? ` · próxima actualización ${esc(p.proxima)}` : ""}.` : "Se actualiza cada 2 horas, de 07:00 a 23:00."} Banco Central, Bolsa de Santiago, USGS, aire medido y los medios del país.</p>
 ${bloqueCifras(p)}${bloqueTierra(p)}${bloqueTitulares(p)}</section>
+<section aria-labelledby="t-gal"><h2 class="titulo-lujo" id="t-gal">Así se ve por dentro</h2><p class="sub">Algunos de los gráficos de la edición, tal como los recibes cada mañana.</p>
+<div class="galeria">
+<figure class="g-a"><img src="/capturas/indicadores.webp" alt="Gráfico del dólar en los últimos dos meses" loading="lazy" width="1000" height="426"><figcaption><b>Indicadores y monedas</b>El dólar día a día, con la UF, el euro y el yuan.</figcaption></figure>
+<figure class="g-b"><img src="/capturas/mercados.webp" alt="Variación diaria de los mercados" loading="lazy" width="962" height="886"><figcaption><b>Mercados</b>Wall Street, cobre, petróleo, IPSA y bolsas de Europa.</figcaption></figure>
+<figure class="g-c"><img src="/capturas/industrias.webp" alt="Mapa de Chile por industria" loading="lazy" width="700" height="1242"><figcaption><b>Industrias de Chile</b>Qué produce cada región.</figcaption></figure>
+<figure class="g-d"><img src="/capturas/perspectivas-2050.webp" alt="Inversión en megaproyectos por sector" loading="lazy" width="1000" height="721"><figcaption><b>Perspectivas 2050</b>Inversión en megaproyectos por sector.</figcaption></figure>
+<figure class="g-e"><img src="/capturas/gobiernos.webp" alt="Indicadores económicos por gobierno" loading="lazy" width="1000" height="319"><figcaption><b>Avances por gobierno</b>Crecimiento, inflación, desempleo y deuda.</figcaption></figure>
+<figure class="g-f"><img src="/capturas/estrecho.webp" alt="Mapa del Estrecho de Magallanes" loading="lazy" width="1000" height="367"><figcaption><b>Mar y navegación</b>Oleaje, mareas y el paso por el Estrecho de Magallanes.</figcaption></figure>
+</div></section>
+<section id="puente" style="border:0;padding:0"><div class="puente"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
+<span class="kicker">Para socios · Muy pronto</span><h2>Puente de Mando · Dashboard Financiero</h2>
+<p class="lede">Para quienes toman decisiones: bolsa chilena y extranjera, ETF, cripto y blockchain, el dinero que entra y sale de Chile, y el radar político y regulatorio que mueve los mercados. Todo en un solo lugar, explicado en simple.</p>
+<div class="pilares">
+<div class="pilar"><b>Mercados</b><span>IPSA, Wall Street, Europa y Asia, bonos, cobre, oro y petróleo.</span></div>
+<div class="pilar"><b>ETF y cripto</b><span>Los fondos que más se transan, Bitcoin, Ethereum y el ánimo del mercado cripto.</span></div>
+<div class="pilar"><b>Dinero en movimiento</b><span>Qué compran y venden las AFP, los fondos mutuos y los inversionistas extranjeros.</span></div>
+<div class="pilar"><b>Radar político</b><span>Las leyes y normas que se votan y a qué sectores afectan.</span></div>
+<div class="pilar"><b>Calendario</b><span>Reuniones del Banco Central, de la Reserva Federal y los datos que vienen.</span></div>
+<div class="pilar"><b>Herramientas</b><span>Conversor UF, dólar y euro, calculadora de IPC, interés compuesto y crédito hipotecario.</span></div>
+</div>
+<div class="precio-lujo"><span class="monto">$5.000 <small>al mes</small></span><span class="extra">7 días gratis · Plan anual $55.000 (un mes de regalo) · Socios de la Cofradía con precio preferente</span></div>
+<div class="acciones"><button type="button" class="btn oro pub-abrir" data-interes="Dashboard Financiero · socio fundador" aria-haspopup="dialog">Quiero ser socio fundador</button><a class="btn claro" href="/mercados">Ver mercados en vivo</a></div>
+<p class="legal">Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta, y no considera tu situación personal.</p></div></section>
 <section id="archivo" aria-labelledby="t-arch"><h3 id="t-arch">Archivo</h3><p class="sub">Las 12 ediciones publicadas más recientes.</p>
 ${lista.length ? `<div class="archivo">${lista.map((f) => `<a href="/edicion/${f}" data-iso="${f}">${esc(fechaLarga(f))}</a>`).join("")}</div>` : `<p class="aviso">El archivo empieza con la próxima edición.</p>`}</section>
 <section id="socios" aria-labelledby="t-soc"><div class="socios"><div><h3 id="t-soc">Área de socios</h3>
-<p class="sub">Informes financieros, análisis de mercado y contenidos exclusivos para socios.</p><a class="btn linea" href="/socios">Ingresar con mi clave</a></div>
+<p class="sub">Informes financieros, análisis de mercado y contenidos exclusivos para socios.</p><a class="btn linea" href="/socios">Ingresar</a></div>
 <div class="tarjeta" id="publicite"><span class="kicker">Publicite aquí</span><p style="margin:8px 0 6px">Su marca cada mañana frente a lectores que deciden.</p>
 <div class="precio">UF 1 <small style="font-size:15px;color:var(--gris)">al mes</small></div><div class="acciones" style="margin-top:14px"><button type="button" class="btn oro pub-abrir" data-interes="Cofrade News" aria-haspopup="dialog">Quiero publicitar</button></div></div></div></section>`;
-  return { cuerpo, p };
+  return { cuerpo, p, hero };
 }
 
 async function portada(env, ctx) {
-  const { cuerpo } = await cuerpoPortada(ctx);
-  return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo }), 200,
+  const { cuerpo, hero } = await cuerpoPortada(ctx);
+  return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero }), 200,
     { "Cache-Control": "public, max-age=120" });
+}
+
+// 13-11-2026 · /mercados: widgets oficiales de TradingView (gratis para sitios web, con su atribución visible). Datos con el desfase
+// que exigen las bolsas. Solo esta página los carga (su propia política de seguridad).
+function tv(tipo, cfg, alto) {
+  return `<div class="tradingview-widget-container" style="height:${alto}px"><div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>`
+    + `<div class="tradingview-widget-copyright"><a href="https://es.tradingview.com/" rel="noopener nofollow" target="_blank">Gráficos de TradingView</a></div>`
+    + `<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-${tipo}.js" async>${JSON.stringify({ locale: "es", colorTheme: "light", isTransparent: true, ...cfg })}<\/script></div>`;
+}
+function paginaMercados() {
+  const cinta = tv("ticker-tape", { symbols: [
+    { proName: "FX_IDC:USDCLP", title: "Dólar / peso" }, { proName: "FOREXCOM:SPXUSD", title: "S&P 500" }, { proName: "FOREXCOM:NSXUSD", title: "Nasdaq 100" },
+    { proName: "FOREXCOM:DJI", title: "Dow Jones" }, { proName: "COMEX:HG1!", title: "Cobre" }, { proName: "TVC:GOLD", title: "Oro" }, { proName: "TVC:UKOIL", title: "Petróleo Brent" },
+    { proName: "BITSTAMP:BTCUSD", title: "Bitcoin" }, { proName: "BITSTAMP:ETHUSD", title: "Ethereum" }, { proName: "FX:EURUSD", title: "Euro / dólar" } ],
+    showSymbolLogo: true, displayMode: "adaptive" }, 78);
+  const resumen = tv("market-overview", { dateRange: "12M", showChart: true, width: "100%", height: "100%", tabs: [
+    { title: "Índices", symbols: [{ s: "FOREXCOM:SPXUSD", d: "S&P 500" }, { s: "FOREXCOM:NSXUSD", d: "Nasdaq 100" }, { s: "FOREXCOM:DJI", d: "Dow Jones" }, { s: "INDEX:NKY", d: "Nikkei 225" }, { s: "INDEX:DEU40", d: "DAX" }, { s: "FOREXCOM:UKXGBP", d: "FTSE 100" }] },
+    { title: "Materias primas", symbols: [{ s: "COMEX:HG1!", d: "Cobre" }, { s: "TVC:GOLD", d: "Oro" }, { s: "TVC:SILVER", d: "Plata" }, { s: "TVC:UKOIL", d: "Petróleo Brent" }, { s: "TVC:USOIL", d: "Petróleo WTI" }] },
+    { title: "Monedas", symbols: [{ s: "FX_IDC:USDCLP", d: "Dólar / peso chileno" }, { s: "FX:EURUSD", d: "Euro / dólar" }, { s: "FX_IDC:USDBRL", d: "Dólar / real" }, { s: "FX_IDC:USDCNY", d: "Dólar / yuan" }] },
+    { title: "ETF", symbols: [{ s: "AMEX:SPY", d: "SPY · S&P 500" }, { s: "NASDAQ:QQQ", d: "QQQ · Nasdaq 100" }, { s: "ECH", d: "ECH · Acciones de Chile" }, { s: "AMEX:EWZ", d: "EWZ · Brasil" }, { s: "AMEX:GLD", d: "GLD · Oro" }, { s: "NASDAQ:IBIT", d: "IBIT · Bitcoin" }] },
+    { title: "Cripto", symbols: [{ s: "BITSTAMP:BTCUSD", d: "Bitcoin" }, { s: "BITSTAMP:ETHUSD", d: "Ethereum" }, { s: "COINBASE:SOLUSD", d: "Solana" }] } ] }, 560);
+  const calor = tv("stock-heatmap", { dataSource: "SPX500", grouping: "sector", blockSize: "market_cap_basic", blockColor: "change", hasTopBar: false, isZoomEnabled: true, hasSymbolTooltip: true, width: "100%", height: "100%" }, 520);
+  const cripto = tv("crypto-coins-heatmap", { dataSource: "Crypto", blockSize: "market_cap_calc", blockColor: "change", hasTopBar: false, isZoomEnabled: true, hasSymbolTooltip: true, width: "100%", height: "100%" }, 460);
+  const agenda = tv("events", { importanceFilter: "0,1", countryFilter: "cl,us,eu,cn,br", width: "100%", height: "100%" }, 560);
+  const cuerpo = `<section style="border:0;padding-top:34px"><span class="kicker">Gratis · Datos con el desfase que exigen las bolsas</span>
+<h1 class="titulo-lujo" style="font-size:clamp(34px,5vw,54px)">Mercados en vivo</h1>
+<p class="lede">Índices, monedas, materias primas, ETF y cripto del mundo en una sola página. Los gráficos son de TradingView; la lectura de lo que significa para Chile llega cada mañana en la edición.</p></section>
+${cinta}
+<section aria-labelledby="t-res"><h2 class="titulo-lujo" id="t-res">Resumen del mundo</h2><p class="sub">Toca una pestaña y luego un instrumento para ver su gráfico de 12 meses.</p>${resumen}</section>
+<section aria-labelledby="t-cal"><h2 class="titulo-lujo" id="t-cal">Dónde se movió el dinero hoy</h2><p class="sub">Las 500 mayores empresas de EE. UU. por sector: el tamaño es su valor bursátil y el color, cuánto subió o bajó.</p>${calor}</section>
+<section aria-labelledby="t-cri"><h2 class="titulo-lujo" id="t-cri">Cripto</h2><p class="sub">Las principales criptomonedas por valor de mercado y su variación del día.</p>${cripto}</section>
+<section aria-labelledby="t-age"><h2 class="titulo-lujo" id="t-age">Agenda económica</h2><p class="sub">Los datos y decisiones que vienen en Chile, EE. UU., Europa, China y Brasil.</p>${agenda}</section>
+<p class="legal" style="color:var(--gris)">Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta. Los precios pueden tener un desfase de 15 minutos o más.</p>`;
+  return html(marco({ titulo: "Mercados en vivo · Cofrade News", descripcion: "Índices, monedas, materias primas, ETF y cripto del mundo en una sola página, gratis.", cuerpo, canonica: "/mercados" }), 200,
+    { "Cache-Control": "public, max-age=300" }, CSP_MERCADOS);
 }
 
 function paginaSocios(dentro, error = "") {
@@ -489,22 +761,42 @@ export default {
     if (u.hostname === "cofrad.es") return Response.redirect(`https://${DOMINIO}${u.pathname}${u.search}`, 301);
     const p = u.pathname.replace(/\/+$/, "") || "/";
     try {
-      if (p === "/" && req.method === "GET") return await portada(env, ctx);
+      if (p === "/" && req.method === "GET") { ctx.waitUntil(contarVisita(req, env, "/")); return await portada(env, ctx); }
       if (p === "/edicion") {
         const l = await indice(ctx);
         return l.length ? Response.redirect(`https://${u.host}/edicion/${l[0]}`, 302) : Response.redirect(`https://${u.host}/`, 302);
       }
       const m = p.match(/^\/edicion\/(\d{4}-\d{2}-\d{2})$/);
       if (m) {
-        const r = (await desdeGitHub(`completa/${m[1]}`, 600, ctx, rutaEdicion(m[1], true))) || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, 600, ctx));
+        // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde y
+        // 1 hora en el navegador; la de hoy, 10 minutos. Los gráficos se dibujan recién cuando el lector llega a ellos (LENTO).
+        const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
+        const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true))) || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
-        const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive", "Cache-Control": "public, max-age=600", ...SEGURIDAD } });
+        ctx.waitUntil(contarVisita(req, env, p));
+        const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
+          "Cache-Control": pasada ? "public, max-age=3600, stale-while-revalidate=86400" : "public, max-age=600", ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.append(PROTEGER, { html: true }); } })
-          .on("head", { element(e) { e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">', { html: true }); } })
+          .on("body", { element(e) { e.append(PROTEGER + MEDIR, { html: true }); } })
+          .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">', { html: true }); } })
           .transform(resp);
+      }
+      if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
+      // 13-11-2026 · Buzón de sugerencias, medición de lectura y Panel de Control
+      if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx);
+      if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
+      if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
+      if (p === "/m" && req.method === "POST") return await recibirLectura(req, env);
+      if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
+      if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
+      if (p === "/panel/buzon.csv") return await panelCsv(req, env);
+      if (p === "/panel") return await panel(req, env);
+      const cap = p.match(/^\/capturas\/([a-z0-9-]+\.webp)$/);
+      if (cap || p === "/marca-agua.webp") {
+        const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp", 86400, ctx);
+        return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/contacto" && req.method === "POST") return await contacto(req, ctx);
       if (p === "/en.json") {
@@ -546,10 +838,10 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return Response.redirect(`https://${u.host}/favicon-64.png`, 301);   // 13-11-2026: ícono = escudo de la Cofradía
-      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
+      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
       if (p === "/sitemap.xml") {
         const l = await indice(ctx);
-        const x = [`https://${DOMINIO}/`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
+        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
         return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${x}</urlset>`, { headers: { "Content-Type": "application/xml" } });
       }
       return html(marco({ titulo: "Página no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esta página no existe.</h1><p class="lede">Vuelve a la <a href="/">portada</a>.</p></section>` }), 404);

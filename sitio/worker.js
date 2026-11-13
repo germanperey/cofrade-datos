@@ -14,6 +14,7 @@ const LOGO_OSCURO = "/logo-oscuro.webp";
 const DIAS_ARCHIVO = 60;   // 13-11-2026: se buscan 60 días hacia atrás…
 const MAX_ARCHIVO = 12;    // …y se muestran las 12 ediciones publicadas más recientes (Germán)
 const MARCAS = {"marcas": [{"nombre": "Caddie Golf", "logo": "caddie-icono.webp", "texto": "Caddie Golf", "fondo": "#0A1410", "color": "#E9F5EC", "url": "https://www.caddiegolf.cl/?utm_source=cofrad.es&utm_medium=carrusel"}, {"nombre": "Inbestu", "logo": "inbestu.webp", "fondo": "#FFFFFF", "contacto": true}, {"nombre": "Megabots", "logo": "megabots-blanco.webp", "fondo": "#121418", "contacto": true}]};
+const LENTO = "<script>(function(){if(window.__cnLento)return;window.__cnLento=1;\nvar E,realInit,realGet,porDom=new Map(),io=null,imprimiendo=false,\nCOLA={setOption:1,on:1,off:1,dispatchAction:1,showLoading:1,hideLoading:1,clear:1};\nfunction vivo(st){if(st.m||st.real)return st.real;st.real=realInit.apply(E,st.a);for(var i=0;i<st.q.length;i++){try{st.real[st.q[i][0]].apply(st.real,st.q[i][1])}catch(e){}}st.q.length=0;var z=null;for(var j=0;j<st.zq.length;j++){try{z=z||st.real.getZr();z[st.zq[j][0]].apply(z,st.zq[j][1])}catch(e){}}st.zq.length=0;if(io)io.unobserve(st.el);return st.real}\nfunction todos(){porDom.forEach(function(st){vivo(st)})}\nfunction lazyInit(dom){if(!dom||imprimiendo||!window.IntersectionObserver||!window.Proxy)return realInit.apply(E,arguments);\nvar prev=porDom.get(dom);if(prev&&!prev.m&&!(prev.real&&prev.real.isDisposed&&prev.real.isDisposed()))return prev.p;\nif(!io)io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){var st=porDom.get(x.target);if(st)vivo(st)}})},{rootMargin:'900px 0px'});\nvar st={el:dom,a:[].slice.call(arguments),q:[],zq:[],over:{},real:null,m:false};\nst.p=new Proxy(st,{set:function(t,k,v){t.over[k]=v;return true},get:function(t,k){\n if(Object.prototype.hasOwnProperty.call(t.over,k))return t.over[k];\n if(k==='dispose')return function(){if(t.real){try{t.real.dispose()}catch(e){}}t.m=true;t.q.length=0;if(io)io.unobserve(t.el);if(porDom.get(t.el)===t)porDom.delete(t.el)};\n if(COLA[k])return function(){if(t.real)return t.real[k].apply(t.real,arguments);if(!t.m)t.q.push([k,[].slice.call(arguments)])};\n if(t.real){var v=t.real[k];return typeof v==='function'?v.bind(t.real):v}\n if(k==='getDom')return function(){return t.el};\n if(k==='getZr')return function(){return new Proxy({},{get:function(_,kk){if(t.real){var z=t.real.getZr();var v=z[kk];return typeof v==='function'?v.bind(z):v}if(kk==='on'||kk==='off')return function(){if(!t.m)t.zq.push([kk,[].slice.call(arguments)])};if(kk==='then'||typeof kk==='symbol')return undefined;var r=vivo(t);if(!r)return undefined;var z2=r.getZr();var v2=z2[kk];return typeof v2==='function'?v2.bind(z2):v2}})};\n if(k==='isDisposed')return function(){return t.m};\n if(k==='resize')return function(){};\n if(k==='getOption')return function(){for(var i=t.q.length-1;i>=0;i--)if(t.q[i][0]==='setOption')return t.q[i][1][0];return null};\n if(k==='then'||typeof k==='symbol')return undefined;\n if(COLA[k])return function(){if(t.real)return t.real[k].apply(t.real,arguments);if(!t.m)t.q.push([k,[].slice.call(arguments)])};\n var r=vivo(t);if(!r)return undefined;var v2=r[k];return typeof v2==='function'?v2.bind(r):v2}});\nporDom.set(dom,st);io.observe(dom);return st.p}\nfunction lazyGet(dom){var st=porDom.get(dom);if(st&&!st.m)return st.p;return realGet?realGet.apply(E,arguments):undefined}\nfunction parchar(o){if(!o||o.__cnLento||typeof o.init!=='function')return;realInit=o.init;realGet=o.getInstanceByDom;\n try{o.init=lazyInit;o.getInstanceByDom=lazyGet}catch(e){}if(o.init!==lazyInit){try{Object.defineProperty(o,'init',{value:lazyInit,writable:true,configurable:true});Object.defineProperty(o,'getInstanceByDom',{value:lazyGet,writable:true,configurable:true})}catch(e){}}\n try{o.__cnLento=1}catch(e){}}\ntry{Object.defineProperty(window,'echarts',{configurable:true,enumerable:true,get:function(){parchar(E);return E},set:function(v){E=v}})}catch(e){}\naddEventListener('beforeprint',function(){imprimiendo=true;todos()});addEventListener('afterprint',function(){imprimiendo=false});\nvar pr=window.print;window.print=function(){imprimiendo=true;todos();try{return pr.apply(window,arguments)}finally{setTimeout(function(){imprimiendo=false},1500)}};\nwindow.__cnTodos=todos;})();</script>";   // 13-11-2026: capa que dibuja cada gráfico de la edición recién cuando el lector llega a él
 const TZ = "America/Santiago";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -44,12 +45,18 @@ const SEGURIDAD = {
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
 };
-const CSP_PORTADA = "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://script.google.com";
+// 13-11-2026: el captcha del Buzón (Cloudflare Turnstile) necesita su script y su recuadro desde challenges.cloudflare.com.
+const csp = ({ script = "", frame = "" } = {}) => "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; "
+  + `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com${script}; connect-src 'self'; frame-src https://challenges.cloudflare.com${frame}; `
+  + "frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://script.google.com";
+const CSP_PORTADA = csp();
 
-function html(cuerpo, status = 200, extra = {}) {
+// 13-11-2026: /mercados muestra widgets de TradingView (gratis con su marca visible); solo esa página los permite.
+const CSP_MERCADOS = csp({ script: " https://s3.tradingview.com", frame: " https://www.tradingview-widget.com https://s.tradingview.com https://*.tradingview.com" });
+function html(cuerpo, status = 200, extra = {}, csp = CSP_PORTADA) {
   return new Response(cuerpo, {
     status,
-    headers: { "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": CSP_PORTADA, "X-Frame-Options": "DENY", ...SEGURIDAD, ...extra },
+    headers: { "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": csp, "X-Frame-Options": "DENY", ...SEGURIDAD, ...extra },
   });
 }
 
@@ -216,8 +223,9 @@ a{color:inherit}.hoja{max-width:1120px;margin:0 auto;padding:0 16px}
 .marca b{font:600 clamp(26px,5vw,38px)/1 var(--serif);letter-spacing:.2px}.fecha{color:var(--gris);font-size:14px}
 .l-oscuro{display:none}:root[data-theme=dark] .l-claro{display:none}:root[data-theme=dark] .l-oscuro{display:inline}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .l-claro{display:none}:root:not([data-theme=light]) .l-oscuro{display:inline}}
-nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}nav a,.tema{font-size:14px;text-decoration:none;padding:8px 10px;border-radius:8px;min-height:44px;display:inline-flex;align-items:center;background:none;border:0;color:inherit;cursor:pointer}
-nav a:hover,.tema:hover{background:var(--card)}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
+nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}nav a,.tema,.nav-b{font:14px var(--sans);text-decoration:none;padding:8px 10px;border-radius:8px;min-height:44px;display:inline-flex;align-items:center;gap:6px;background:none;border:0;color:inherit;cursor:pointer}
+nav a:hover,.tema:hover,.nav-b:hover{background:var(--card)}.herr{display:flex;gap:4px;align-items:center}
+.nav-b{font-weight:600;color:var(--oro-t)}.nav-b svg{flex:none}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
 .portada{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;padding:44px 0 28px;align-items:center}
 .kicker{font:600 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--oro-t)}
 h1{font:600 clamp(32px,5.4vw,56px)/1.06 var(--serif);margin:12px 0 16px;text-wrap:balance}
@@ -267,7 +275,88 @@ button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}
 .marca-a{display:flex;align-items:center;gap:10px;height:72px;min-width:190px;justify-content:center;padding:0 22px;border-radius:14px;border:1px solid var(--linea);background:var(--mf);color:var(--mc);text-decoration:none;cursor:pointer;font:700 17px var(--sans)}
 .marca-a img{max-height:40px;max-width:170px;width:auto;height:auto;display:block}.marca-a:hover{border-color:var(--oro)}
 @media (prefers-reduced-motion:reduce){.pista{animation:none;flex-wrap:wrap;justify-content:center;width:auto}.pista [aria-hidden=true]{display:none}}
+/* 13-11-2026 · portada de lujo: noche azul, oro y marfil; tipografía Cormorant Garamond; escudo de la Cofradía como marca de agua */
+:root{--noche:#06121F;--noche2:#0B1F3A;--marfil:#F6F1E6;--oro-l:#E6C77A;--display:'Cormorant Garamond','Iowan Old Style','Palatino Linotype',Georgia,serif}
+.lujo{position:relative;overflow:hidden;background:radial-gradient(1200px 520px at 78% 30%,#12305a 0%,var(--noche2) 46%,var(--noche) 100%);color:var(--marfil);border-bottom:1px solid rgba(230,199,122,.28)}
+.lujo::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0,rgba(230,199,122,.35) 50%,transparent 100%) top/100% 1px no-repeat,
+ repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 120px);pointer-events:none}
+.agua{position:absolute;right:-90px;top:50%;width:min(660px,62vw);transform:translateY(-50%);opacity:.075;pointer-events:none;user-select:none}
+.lujo-in{position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center;padding:64px 16px 58px}
+.lujo .kicker{color:var(--oro-l)}.lujo h1{font:600 clamp(38px,6vw,68px)/1.02 var(--display);letter-spacing:-.4px;color:#FFFDF8;margin:14px 0 18px}
+.lujo h1 em{font-style:italic;color:var(--oro-l)}.lujo .lede{color:#D8D2C4;font-size:19px}
+.btn.claro{border:1px solid rgba(230,199,122,.55);color:var(--marfil)}.btn.claro:hover{background:rgba(230,199,122,.08)}
+.sellos{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;padding:0;margin:26px 0 0;font-size:13.5px;color:#BFB7A6;letter-spacing:.03em}
+.sellos li::before{content:"◆";color:var(--oro-l);font-size:9px;margin-right:8px;vertical-align:2px}
+.pizarra{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(230,199,122,.32);border-radius:20px;padding:22px 22px 16px;
+ box-shadow:0 30px 80px -30px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+.piz-cab{display:flex;justify-content:space-between;align-items:center;font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--oro-l);margin-bottom:10px}
+.piz-cab span{color:#9FB0C6;letter-spacing:.06em;text-transform:none;font-weight:500}
+.piz-fila{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:center;padding:12px 0;border-top:1px solid rgba(230,199,122,.14)}
+.piz-fila small{display:block;color:#AFB9C8;font-size:12.5px;letter-spacing:.02em}.piz-fila b{font:600 27px/1.15 var(--display);color:#FFFDF8;font-variant-numeric:tabular-nums}
+.piz-fila .var{font-size:12.5px;margin-left:6px}.piz-fila svg{width:150px;height:46px;display:block}
+.lujo .sube{color:#7DDBA6}.lujo .baja{color:#F4A39C}
+.piz-pie{font-size:11.5px;color:#8E9AAB;margin-top:8px}
+.secc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.sec-card{position:relative;background:var(--card);border:1px solid var(--linea);border-radius:16px;padding:18px 18px 16px;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;
+ transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s}
+.sec-card:hover{transform:translateY(-2px);border-color:var(--oro);box-shadow:0 14px 34px -22px rgba(11,31,58,.45)}
+.sec-card svg{width:44px;height:44px;color:var(--oro-t)}.sec-card b{display:block;font:600 19px/1.2 var(--display);margin-bottom:3px}.sec-card p{margin:0;font-size:13.5px;color:var(--gris);line-height:1.45}
+.titulo-lujo{font:600 clamp(28px,3.6vw,40px)/1.1 var(--display);margin:0 0 6px;letter-spacing:-.2px}
+.galeria{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;align-items:start}
+.cab .fecha{display:none}
+.galeria figure{margin:0;background:#FBF8F1;border:1px solid var(--linea);border-radius:16px;padding:12px;box-shadow:0 18px 40px -30px rgba(11,31,58,.5);position:relative}
+.galeria figure::after{content:"";position:absolute;inset:6px;border:1px solid rgba(184,137,43,.28);border-radius:12px;pointer-events:none}
+.galeria img{width:100%;height:auto;display:block;border-radius:8px}.galeria figcaption{font-size:13px;color:#5B6472;padding:10px 4px 2px}
+.galeria figcaption b{display:block;font:600 17px/1.2 var(--display);color:#0B1F3A}
+.g-a{grid-column:span 7}.g-b{grid-column:span 5}.g-c{grid-column:span 4}.g-d{grid-column:span 4}.g-e{grid-column:span 4}.g-f{grid-column:span 12}
+.puente{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--noche2),var(--noche));color:var(--marfil);border-radius:24px;padding:44px 36px;margin:34px 0;border:1px solid rgba(230,199,122,.3)}
+.puente .agua{right:-140px;width:520px;opacity:.06}.puente .kicker{color:var(--oro-l)}.puente h2{font:600 clamp(30px,4vw,46px)/1.05 var(--display);color:#FFFDF8;margin:10px 0 10px}
+.puente p.lede{color:#D8D2C4;max-width:44em}
+.pilares{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:22px 0}
+.pilar{border:1px solid rgba(230,199,122,.22);border-radius:14px;padding:14px 16px;background:rgba(255,255,255,.03)}
+.pilar b{display:block;font:600 18px/1.2 var(--display);color:var(--oro-l);margin-bottom:4px}.pilar span{font-size:13.5px;color:#C9C2B3;line-height:1.45}
+.precio-lujo{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;margin:8px 0 18px}
+.precio-lujo .monto{font:600 46px/1 var(--display);color:#FFFDF8}.precio-lujo .monto small{font-size:17px;color:#BFB7A6;font-family:var(--sans)}
+.precio-lujo .extra{font-size:14px;color:#D8D2C4}.legal{font-size:12px;color:#8E9AAB;margin:14px 0 0;max-width:60em}
+.pie-agua{display:block;width:64px;height:64px;margin:0 0 10px;opacity:.85}
+@media (max-width:980px){.lujo-in{grid-template-columns:1fr;gap:30px;padding:44px 16px}.agua{width:520px;right:-180px;top:30%}.g-a,.g-b,.g-c,.g-d,.g-e{grid-column:span 12}}
 @media (max-width:820px){.portada,.socios{grid-template-columns:1fr;gap:22px}.portada{padding-top:26px}nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}nav a{white-space:nowrap}.edicion ul{columns:1}}
+/* 13-11-2026 · cabecera fija (Germán: «el header debe mantenerse fijo, para que siempre esté visible») */
+html{scroll-padding-top:calc(var(--alto-cab,112px) + 12px)}
+.cab{position:sticky;top:0;z-index:60;background:rgba(251,248,241,.95);-webkit-backdrop-filter:saturate(1.3) blur(10px);backdrop-filter:saturate(1.3) blur(10px)}
+:root[data-theme=dark] .cab{background:rgba(14,21,34,.95)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .cab{background:rgba(14,21,34,.95)}}
+.cab.pegado{box-shadow:0 14px 30px -22px rgba(6,18,31,.6)}
+@media (max-width:1000px){.cab .hoja{padding-top:8px;padding-bottom:4px;gap:2px 10px}.marca img{width:42px;height:42px}.marca b{font-size:27px}
+ .herr{order:1;margin-left:auto}nav{order:2;margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ nav::-webkit-scrollbar{display:none}nav.mas{-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent)}
+ nav a,.nav-b{white-space:nowrap;padding:8px 9px}}
+@media print{.cab{position:static;box-shadow:none}}
+/* 13-11-2026 · Buzón de sugerencias en tres pasos */
+.dlg-buzon{max-width:680px}.dlg-buzon [hidden]{display:none!important}.buzon-fin{padding:0 34px}.dlg-buzon .pub-form{max-height:min(90vh,900px);overflow:auto;gap:12px}
+.pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:2px 40px 0 0}.pasos i{height:4px;border-radius:4px;background:var(--linea)}.pasos i.si{background:var(--oro)}
+.pub-form fieldset{border:1px solid var(--linea);border-radius:14px;padding:12px 14px 14px;margin:0 0 10px}.pub-form legend{font-weight:700;font-size:15px;padding:0 6px}
+.ayuda{display:block;font-weight:400;color:var(--gris);font-size:12.5px;margin:0 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.pub-form .chip{position:relative;display:inline-flex;flex-direction:row;font-weight:500;gap:0}
+.chip input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.chip span{display:inline-flex;align-items:center;min-height:44px;padding:8px 15px;border:1.5px solid var(--linea);border-radius:999px;font-size:14.5px;cursor:pointer;user-select:none;background:var(--papel)}
+.chip span:hover{border-color:var(--oro)}.chip input:checked+span{background:var(--oro);border-color:var(--oro);color:#1A1406;font-weight:600}
+.chip input:checked+span::before{content:"✓";margin-right:7px;font-weight:800}.chip input:focus-visible+span,.nps input:focus-visible+span{outline:3px solid var(--oro);outline-offset:2px}
+.nps{display:grid;grid-template-columns:repeat(11,1fr);gap:5px}.pub-form .nps label{display:block;position:relative;font-weight:600}
+.nps input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.nps span{display:flex;align-items:center;justify-content:center;min-height:44px;border:1.5px solid var(--linea);border-radius:10px;cursor:pointer;background:var(--papel);font-variant-numeric:tabular-nums}
+.nps span:hover{border-color:var(--oro)}.nps input:checked+span{background:var(--tinta);color:var(--papel);border-color:var(--tinta)}
+.nps-ej{display:flex;justify-content:space-between;font-size:12px;color:var(--gris);margin-top:6px}
+.dos-campos{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ts{min-height:70px}
+.buzon-nav{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}.buzon-nav .pub-enviar{padding:0 26px}.buzon-nav .btn{min-height:48px}
+.buzon-ok{text-align:center;padding:10px 0}.sello-ok{width:64px;height:64px;margin:4px auto 6px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--oro);color:#1A1406;font:800 30px/1 var(--sans)}
+.buzon-ok h3{margin:0 0 6px}.buzon-msg{color:var(--tinta2);margin:0 auto 16px;max-width:34em}
+@media (max-width:540px){.dos-campos{grid-template-columns:1fr}.nps{grid-template-columns:repeat(6,1fr)}.chip span{font-size:14px;padding:8px 13px}}
+/* 13-11-2026 · Panel de Control */
+.barras{display:flex;flex-direction:column;gap:8px}.barra{display:grid;grid-template-columns:minmax(120px,38%) 1fr auto;gap:10px;align-items:center;font-size:14px}
+.bb{height:12px;background:var(--linea);border-radius:6px;overflow:hidden}.bb i{display:block;height:100%;border-radius:6px}.barra b{font-variant-numeric:tabular-nums}
+.calor{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}.cel{border-radius:12px;padding:12px 14px;background:rgba(184,137,43,var(--a));color:var(--tinta);border:1px solid rgba(184,137,43,.35)}
+.enlace{background:none;border:0;padding:0;font:inherit;color:var(--oro-t);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.cel b{display:block;font-size:15px}.cel span{font-size:12.5px}.tabla-buzon .m{color:var(--gris);font-size:13px}
 `;
 
 const SCRIPT = `
@@ -343,8 +432,45 @@ const EN_FIJO = {
   "Llamada": "Phone call", "Mensaje *": "Message *", "Sitio web": "Website", "Enviar": "Send", "Cerrar": "Close",
   "Acepto que usen estos datos solo para responder mi consulta (Ley 19.628).": "I agree that this data is used only to answer my inquiry (Chilean Law 19.628).",
   "IPSA (puntos)": "IPSA (points)", "Dólar": "US dollar", "Euro": "Euro", "UF": "UF", "UTM": "UTM", "Cobre (libra)": "Copper (pound)", "Bitcoin": "Bitcoin", "Petróleo Brent": "Brent crude", "Cobre": "Copper", "Oro": "Gold", "Plata": "Silver",
+  "Mercados": "Markets", "Mercados en vivo": "Live markets", "El diario de la mañana · Gratuito": "The morning paper · Free",
+  "Dashboard Financiero": "Financial Dashboard", "Cada dato con su fuente": "Every figure with its source", "Hecho en Chile": "Made in Chile",
+  "Edición de hoy publicada": "Today's edition is out", "Pizarra del día": "Today's board", "últimos 12 meses": "last 12 months",
+  "Dólar observado": "US dollar (official rate)", "Cobre, US$ por libra": "Copper, US$ per pound", "Unidad de Fomento": "Unidad de Fomento (UF)",
+  "Tasa de Política Monetaria": "Monetary policy rate", "Fuente: Banco Central de Chile, Base de Datos Estadísticos.": "Source: Central Bank of Chile, Statistical Database.",
+  "Doce secciones, cada mañana, con la fuente de cada dato.": "Twelve sections every morning, with the source of every figure.",
+  "Así se ve por dentro": "A look inside", "Algunos de los gráficos de la edición, tal como los recibes cada mañana.": "Some of the edition's charts, just as you get them every morning.",
+  "Indicadores y monedas": "Indicators and currencies", "Industrias de Chile": "Chile's industries", "Avances por gobierno": "Progress by government", "Mar y navegación": "Sea and navigation",
+  "Para socios · Muy pronto": "For members · Coming soon", "Puente de Mando · Dashboard Financiero": "The Bridge · Financial Dashboard",
+  "ETF y cripto": "ETFs and crypto", "Dinero en movimiento": "Money on the move", "Radar político": "Political radar", "Calendario": "Calendar", "Herramientas": "Tools",
+  "Quiero ser socio fundador": "I want to be a founding member", "Ver mercados en vivo": "See live markets", "Ingresar": "Sign in",
+  "Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta, y no considera tu situación personal.":
+    "General and educational information. It is not investment advice or a recommendation to buy or sell, and it does not consider your personal situation.",
+  "Resumen del mundo": "World overview", "Dónde se movió el dinero hoy": "Where the money moved today", "Cripto": "Crypto", "Agenda económica": "Economic calendar",
   "USGS ↗": "USGS ↗", "fuente ↗": "source ↗", "Ver en español": "Ver en español", "Read in English": "Read in English",
 };
+// 13-11-2026 · textos del Buzón de sugerencias y del pie (las secciones ya están arriba)
+Object.assign(EN_FIJO, {
+  "Buzón": "Suggestions", "Buzón de sugerencias": "Suggestion box", "Ayúdanos a hacer el mejor diario de Chile": "Help us make the best daily briefing in Chile",
+  "Paso 1 de 3": "Step 1 of 3", "¿Qué es lo que más te gusta?": "What do you like most?", "Marca todas las que quieras.": "Tick as many as you like.",
+  "¿Qué te gustaría que agreguemos?": "What would you like us to add?", "¿Con qué frecuencia lees Cofrade News?": "How often do you read Cofrade News?",
+  "Del 0 al 10, ¿qué tan probable es que recomiendes Cofrade News a un amigo?": "From 0 to 10, how likely are you to recommend Cofrade News to a friend?",
+  "Nada probable": "Not likely", "Muy probable": "Very likely", "Escribe lo que quieras": "Write anything you like",
+  "Una idea, una crítica, una felicitación…": "An idea, a criticism, a compliment…", "Nombre *": "First name *", "Apellido *": "Last name *",
+  "Te enviaremos un correo para confirmar que eres tú. Nunca publicamos tu email.": "We will email you to confirm it is you. We never publish your email.",
+  "Acepto que Cofrade News use estos datos solo para mejorar el diario y responder mi sugerencia. No se publican ni se venden (Ley 19.628).":
+    "I agree that Cofrade News may use this data only to improve the briefing and reply to my suggestion. It is never published or sold (Chilean Law 19,628).",
+  "¡Gracias por escribirnos!": "Thank you for writing to us!", "Cerrar": "Close", "Atrás": "Back", "Siguiente": "Next", "Enviar al Buzón": "Send",
+  "Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar?": "We measure visits without cookies or personal data. Have an idea to improve?",
+  "Escríbenos al Buzón": "Write to our suggestion box",
+  "Los gráficos": "The charts", "Las fuentes verificadas": "The verified sources", "La versión en inglés": "The English version", "Descargar en PDF": "PDF download",
+  "El diseño": "The design", "Alertas por WhatsApp": "WhatsApp alerts", "Versión en audio (podcast)": "Audio version (podcast)",
+  "Envío por correo cada mañana": "Morning email delivery", "App para el celular": "Mobile app", "Más noticias de regiones": "More regional news",
+  "Análisis de inversiones": "Investment analysis", "Más deportes": "More sports", "Agenda de eventos de la Cofradía": "Cofradía events calendar",
+  "Clasificados entre socios": "Members' classifieds", "Encuestas a los lectores": "Reader polls", "Más noticias internacionales": "More international news",
+  "Tecnología e inteligencia artificial": "Technology and AI", "Salud y bienestar": "Health and wellbeing", "Cultura y panoramas": "Culture and things to do",
+  "Historia naval": "Naval history", "Todos los días": "Every day", "Varias veces por semana": "Several times a week", "Una vez por semana": "Once a week",
+  "Es mi primera vez": "It's my first time",
+});
 
 // 13-11-2026 (Germán: «que no puedan descargar los archivos HTML, solo el PDF del boletín»): en la edición se desactivan
 // «Guardar como» (Ctrl/Cmd+S), «Ver código» (Ctrl/Cmd+U) y el menú del botón derecho. El botón «Descargar PDF» sigue igual.
@@ -365,6 +491,390 @@ const DIALOGO = `<dialog class="dlg-pub" id="dlgPub" aria-labelledby="dlgPubT"><
 <label class="pub-ok"><input type="checkbox" name="acepto" value="si" required> Acepto que usen estos datos solo para responder mi consulta (Ley 19.628).</label>
 <button type="submit" class="pub-enviar">Enviar</button><p class="pub-estado" role="status" aria-live="polite"></p></form></dialog>`;
 
+// 13-11-2026 · la cabecera queda fija: sombra al bajar, altura medida para que los enlaces internos no queden tapados,
+// y en el celular un degradé avisa que el menú tiene más opciones hacia la derecha.
+const CABECERA_JS = `
+(function(){var c=document.querySelector('.cab');if(!c)return;var n=c.querySelector('nav'),r=document.documentElement;
+function alto(){r.style.setProperty('--alto-cab',c.offsetHeight+'px')}alto();if(window.ResizeObserver)new ResizeObserver(alto).observe(c);else addEventListener('resize',alto);
+var p=false;function sombra(){var s=scrollY>4;if(s!==p){p=s;c.classList.toggle('pegado',s)}}sombra();addEventListener('scroll',sombra,{passive:true});
+function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scrollWidth-4)}mas();if(n)n.addEventListener('scroll',mas,{passive:true});addEventListener('resize',mas)})();`;
+
+// =====================================================================================================================
+// 13-11-2026 · BUZÓN de sugerencias, MEDICIÓN propia y PANEL DE CONTROL de www.cofrad.es
+// Germán: «cambia "En vivo" por "Buzón": ventana emergente con selección múltiple, área libre, nombre, apellido y email,
+// captcha y verificación del email, para evitar spam, bots y haters; y que se puedan modelar los datos y sacar métricas».
+// Datos en Cloudflare D1 (binding DB, base cofrade-socios). Captcha: Cloudflare Turnstile (secreto TURNSTILE_SECRET).
+// Correo de verificación: binding EMAIL de Cloudflare Email Service (se activa cuando cofrad.es quede habilitado para enviar).
+// Panel: /panel, con la clave PANEL_CLAVE (secreto que crea Germán en Cloudflare). Sin esa clave, el panel no abre.
+// =====================================================================================================================
+const TURNSTILE_SITEKEY = "0x4AAAAAAGAKCkb75CKKeT2q";   // clave pública del widget (va en el HTML; la secreta vive solo en Cloudflare)
+const GUSTA = ["Crecimiento de Chile", "Economía y mercados", "Política y Congreso", "Conflictos en el mundo", "Perspectivas 2050", "Ciencia y Astronomía",
+  "Deportes", "Clima, mar y sismos", "Vuelos comerciales", "Entretenimiento", "Fondos y subsidios", "Efemérides", "Los gráficos", "Las fuentes verificadas",
+  "La versión en inglés", "Descargar en PDF", "Mercados en vivo", "El diseño"];
+const AGREGAR = ["Alertas por WhatsApp", "Versión en audio (podcast)", "Envío por correo cada mañana", "App para el celular", "Más noticias de regiones",
+  "Análisis de inversiones", "Más deportes", "Agenda de eventos de la Cofradía", "Clasificados entre socios", "Encuestas a los lectores",
+  "Más noticias internacionales", "Tecnología e inteligencia artificial", "Salud y bienestar", "Cultura y panoramas", "Historia naval"];
+const FRECUENCIA = ["Todos los días", "Varias veces por semana", "Una vez por semana", "Es mi primera vez"];
+const DESECHABLES = /(^|\.)(mailinator|guerrillamail|10minutemail|tempmail|temp-mail|yopmail|trashmail|getnada|sharklasers|dispostable|maildrop|throwawaymail|fakeinbox|mohmal|emailondeck|mintemail|spamgourmet|mailnesia|tempail|burnermail|moakt|minuteinbox|tempr|discard|mail\.tm)\./i;
+const LISTA_DESECHABLES = "https://raw.githubusercontent.com/disposable-email-domains/disposable-email-domains/main/disposable_email_blocklist.conf";   // lista pública CC0
+const GROSERO = /\b(conchetumadre|ctm|culiao|culiado|maric[oó]n|hijo de puta|hdp|puta madre|imb[eé]cil|idiota|est[uú]pido|pendejo|retrasado|mierda)\b/i;
+const NOMBRE_OK = /^\p{L}[\p{L}' .-]{1,39}$/u;
+const NOMBRE_FALSO = /^(asdf\w*|qwer\w*|zxcv\w*|test|tester|prueba|nombre|apellido|admin|usuario|anonimo|anónimo|xx+|nn)$/i;
+
+const chips = (nombre, lista, tipo = "checkbox") => lista.map((x) => `<label class="chip"><input type="${tipo}" name="${nombre}" value="${esc(x)}"><span>${esc(x)}</span></label>`).join("");
+const BUZON = `<dialog class="dlg-pub dlg-buzon" id="dlgBuzon" aria-labelledby="dlgBuzonT"><form class="pub-form" novalidate>
+<button type="button" class="pub-cerrar" aria-label="Cerrar">✕</button>
+<span class="kicker">Buzón de sugerencias</span><h3 id="dlgBuzonT">Ayúdanos a hacer el mejor diario de Chile</h3>
+<div class="pasos" aria-hidden="true"><i></i><i></i><i></i></div><p class="sub paso-n" style="margin:0" aria-live="polite">Paso 1 de 3</p>
+<div class="paso" data-paso="1"><fieldset><legend>¿Qué es lo que más te gusta?</legend><p class="ayuda">Marca todas las que quieras.</p><div class="chips">${chips("gusta", GUSTA)}</div></fieldset></div>
+<div class="paso" data-paso="2" hidden><fieldset><legend>¿Qué te gustaría que agreguemos?</legend><p class="ayuda">Marca todas las que quieras.</p><div class="chips">${chips("agregar", AGREGAR)}</div></fieldset>
+<fieldset><legend>¿Con qué frecuencia lees Cofrade News?</legend><div class="chips">${chips("frecuencia", FRECUENCIA, "radio")}</div></fieldset>
+<fieldset><legend>Del 0 al 10, ¿qué tan probable es que recomiendes Cofrade News a un amigo?</legend><div class="nps">${Array.from({ length: 11 }, (_, i) => `<label><input type="radio" name="nps" value="${i}"><span>${i}</span></label>`).join("")}</div>
+<div class="nps-ej"><span>Nada probable</span><span>Muy probable</span></div></fieldset></div>
+<div class="paso" data-paso="3" hidden><label>Escribe lo que quieras<textarea name="texto" maxlength="2000" rows="4" placeholder="Una idea, una crítica, una felicitación…"></textarea></label>
+<div class="dos-campos"><label>Nombre *<input name="nombre" required maxlength="40" autocomplete="given-name"></label><label>Apellido *<input name="apellido" required maxlength="40" autocomplete="family-name"></label></div>
+<label>Email *<input name="email" type="email" required maxlength="120" autocomplete="email" inputmode="email"><span class="ayuda">Te enviaremos un correo para confirmar que eres tú. Nunca publicamos tu email.</span></label>
+<label class="pub-hp" aria-hidden="true">Página web<input name="pagina_web" tabindex="-1" autocomplete="off"></label>
+<label class="pub-ok"><input type="checkbox" name="acepto" value="si" required> Acepto que Cofrade News use estos datos solo para mejorar el diario y responder mi sugerencia. No se publican ni se venden (Ley 19.628).</label>
+<div id="tsBuzon" class="ts"></div></div>
+<div class="buzon-ok" hidden><p class="sello-ok" aria-hidden="true">✓</p><h3>¡Gracias por escribirnos!</h3><p class="buzon-msg"></p><button type="button" class="pub-enviar buzon-fin">Cerrar</button></div>
+<div class="buzon-nav"><button type="button" class="btn linea buzon-atras" hidden>Atrás</button><button type="button" class="pub-enviar buzon-sig">Siguiente</button><button type="submit" class="pub-enviar buzon-enviar" hidden>Enviar al Buzón</button></div>
+<p class="pub-estado" role="status" aria-live="polite"></p></form></dialog>`;
+
+const BUZON_JS = `
+(function(){var d=document.getElementById('dlgBuzon');if(!d)return;var f=d.querySelector('form'),st=d.querySelector('.pub-estado'),tk='',wid=null,pedido=false,paso=1,
+pasos=d.querySelectorAll('.paso'),barra=d.querySelectorAll('.pasos i'),pn=d.querySelector('.paso-n'),atras=d.querySelector('.buzon-atras'),sig=d.querySelector('.buzon-sig'),env=d.querySelector('.buzon-enviar'),
+ok=d.querySelector('.buzon-ok'),nav=d.querySelector('.buzon-nav');
+function en(){return document.documentElement.lang==='en'}
+function script(){if(pedido)return;pedido=true;window.__tsListo=function(){if(paso===3)dibujar()};var s=document.createElement('script');
+s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__tsListo&render=explicit';s.async=true;s.onerror=function(){st.textContent=en()?'The security check could not load. Check your connection or ad blocker.':'No cargó la verificación de seguridad. Revisa tu conexión o el bloqueador de anuncios.'};document.head.appendChild(s)}
+function dibujar(){if(!window.turnstile)return;if(wid!==null){return}try{wid=turnstile.render('#tsBuzon',{sitekey:'${TURNSTILE_SITEKEY}',language:en()?'en':'es',theme:'auto',
+callback:function(t){tk=t;if(st.textContent.indexOf('verificaci')>=0||st.textContent.indexOf('security')>=0)st.textContent=''},'expired-callback':function(){tk=''},'error-callback':function(){tk=''}})}catch(e){}}
+function ir(n){paso=n;pasos.forEach(function(p){p.hidden=Number(p.getAttribute('data-paso'))!==n});barra.forEach(function(b,i){b.className=i<n?'si':''});
+pn.textContent=(en()?'Step ':'Paso ')+n+(en()?' of 3':' de 3');atras.hidden=n===1;sig.hidden=n===3;env.hidden=n!==3;st.textContent='';
+if(n===3){script();dibujar();setTimeout(function(){try{f.texto.focus()}catch(e){}},60)}try{f.scrollTop=0}catch(e){}}
+function abrir(){st.textContent='';ok.hidden=true;nav.hidden=false;pn.hidden=false;d.querySelector('.pasos').hidden=false;ir(1);if(d.showModal)d.showModal();else d.setAttribute('open','');script()}
+function cerrar(){if(d.close)d.close();else d.removeAttribute('open')}
+document.querySelectorAll('.buzon-abrir').forEach(function(b){b.addEventListener('click',function(ev){ev.preventDefault();abrir()})});
+if(location.hash==='#buzon')setTimeout(abrir,300);
+d.querySelector('.pub-cerrar').addEventListener('click',cerrar);d.querySelector('.buzon-fin').addEventListener('click',cerrar);d.addEventListener('click',function(ev){if(ev.target===d)cerrar()});
+sig.addEventListener('click',function(){ir(Math.min(3,paso+1))});atras.addEventListener('click',function(){ir(Math.max(1,paso-1))});
+f.addEventListener('keydown',function(ev){if(ev.key==='Enter'&&paso<3&&ev.target.tagName!=='TEXTAREA'){ev.preventDefault();ir(paso+1)}});
+f.addEventListener('submit',function(ev){ev.preventDefault();if(paso!==3){ir(paso+1);return}if(f.pagina_web.value)return;
+var nom=f.nombre.value.trim(),ape=f.apellido.value.trim(),em=f.email.value.trim();
+if(nom.length<2||ape.length<2||!/^[^@\\s]+@[^@\\s]+\\.[^@\\s]{2,}$/.test(em)){st.textContent=en()?'Please enter your first name, last name and a valid email.':'Escribe tu nombre, tu apellido y un email válido.';return}
+if(!f.acepto.checked){st.textContent=en()?'Please accept the use of your data.':'Debes aceptar el uso de tus datos para enviar.';return}
+if(!tk){st.textContent=en()?'Please complete the security check (the Cloudflare box).':'Completa la verificación de seguridad (el recuadro de Cloudflare).';script();dibujar();return}
+var fd=new FormData(f);fd.append('cf-turnstile-response',tk);env.disabled=true;st.textContent=en()?'Sending…':'Enviando…';
+fetch('/buzon',{method:'POST',body:new URLSearchParams(fd)}).then(function(r){return r.json().catch(function(){return{ok:false}})}).then(function(j){tk='';try{turnstile.reset(wid)}catch(e){}
+if(j&&j.ok){f.reset();st.textContent='';pasos.forEach(function(p){p.hidden=true});nav.hidden=true;pn.hidden=true;d.querySelector('.pasos').hidden=true;
+d.querySelector('.buzon-msg').textContent=j.mensaje||'';ok.hidden=false}else{st.textContent=(j&&j.error)||(en()?'It could not be sent. Please try again.':'No se pudo enviar. Intenta de nuevo.')}})
+.catch(function(){st.textContent=en()?'It could not be sent (no internet?).':'No se pudo enviar (¿sin internet?).'}).finally(function(){env.disabled=false})})})();`;
+
+async function sha256hex(t) {
+  const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
+  return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+const sal = (env) => env.TURNSTILE_SECRET || env.SOCIOS_CLAVE || "cofrade-news";
+// Huella anónima: IP + navegador + fecha + sal secreta, recortada. Cambia cada día y no permite saber quién es la persona.
+async function huellaVisitante(req, env, fecha, conUA = true) {
+  return (await sha256hex([fecha, req.headers.get("CF-Connecting-IP") || "", conUA ? req.headers.get("User-Agent") || "" : "", sal(env)].join("|"))).slice(0, 20);
+}
+async function dns(nombre, tipo) {
+  const r = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(nombre)}&type=${tipo}`, { headers: { Accept: "application/dns-json" } });
+  return r.json();
+}
+// ¿El dominio recibe correo? NXDOMAIN o «MX nulo» = no. Sin MX pero con dirección IP = sí (regla del correo). Si el DNS falla, no se castiga al lector.
+async function recibeCorreo(dominio) {
+  try {
+    const mx = await dns(dominio, "MX");
+    if (mx.Status === 3) return false;
+    const r = (mx.Answer || []).filter((a) => a.type === 15).map((a) => String(a.data || "").trim());
+    if (r.length) return !r.every((x) => /^0\s+\.?$/.test(x));
+    const a = await dns(dominio, "A");
+    return (a.Answer || []).some((x) => x.type === 1);
+  } catch { return true; }
+}
+let _desechables = null;
+async function esDesechable(dominio, ctx) {
+  if (DESECHABLES.test(dominio + ".")) return true;
+  try {
+    if (!_desechables) {
+      const cache = caches.default, clave = new Request("https://cache.cofrad.es/desechables");
+      let r = await cache.match(clave);
+      if (!r) {
+        const o = await fetch(LISTA_DESECHABLES, { cf: { cacheTtl: 86400, cacheEverything: true } });
+        if (!o.ok) return false;
+        r = new Response(await o.text(), { headers: { "Cache-Control": "public, max-age=86400" } });
+        ctx.waitUntil(cache.put(clave, r.clone()));
+      }
+      _desechables = new Set((await r.text()).split("\n").map((x) => x.trim().toLowerCase()).filter((x) => x && !x.startsWith("#")));
+    }
+    const partes = dominio.toLowerCase().split(".");
+    for (let i = 0; i < partes.length - 1; i++) if (_desechables.has(partes.slice(i).join("."))) return true;
+  } catch { /* si la lista no carga, queda la lista corta de arriba */ }
+  return false;
+}
+async function turnstileOk(token, req, env) {
+  if (!env.TURNSTILE_SECRET || !token || token.length > 2048) return false;
+  const fd = new FormData();
+  fd.append("secret", env.TURNSTILE_SECRET); fd.append("response", token); fd.append("remoteip", req.headers.get("CF-Connecting-IP") || "");
+  try {
+    const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: fd });
+    const j = await r.json();
+    return j.success === true && /(^|\.)cofrad\.es$/.test(String(j.hostname || ""));
+  } catch { return false; }
+}
+function jsonR(o, s = 200) {
+  return new Response(JSON.stringify(o), { status: s, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...SEGURIDAD } });
+}
+const ORIGEN_OK = (req) => { const o = req.headers.get("Origin") || ""; return !o || /^https:\/\/(www\.)?cofrad\.es$/.test(o); };
+
+async function recibirBuzon(req, env, ctx) {
+  if (!ORIGEN_OK(req)) return jsonR({ ok: false, error: "Origen no permitido." }, 403);
+  if (!env.DB) return jsonR({ ok: false, error: "El Buzón se habilita en unos minutos." }, 503);
+  if (Number(req.headers.get("Content-Length") || 0) > 20000) return jsonR({ ok: false, error: "El mensaje es demasiado largo." }, 413);
+  const f = await req.formData().catch(() => null);
+  if (!f) return jsonR({ ok: false, error: "Formulario vacío." }, 400);
+  const v = (k, n) => String(f.get(k) || "").trim().replace(/\s+/g, " ").slice(0, n);
+  if (v("pagina_web", 100)) return jsonR({ ok: true, mensaje: "¡Gracias!" });   // trampa para robots: se finge éxito y no se guarda nada
+  if (!(await turnstileOk(String(f.get("cf-turnstile-response") || ""), req, env))) return jsonR({ ok: false, error: "No pudimos confirmar que eres una persona. Vuelve a marcar el recuadro de seguridad." }, 400);
+  const nombre = v("nombre", 40), apellido = v("apellido", 40), email = v("email", 120).toLowerCase();
+  if (!NOMBRE_OK.test(nombre) || !NOMBRE_OK.test(apellido) || NOMBRE_FALSO.test(nombre) || NOMBRE_FALSO.test(apellido) || /(.)\1{3,}/i.test(nombre + " " + apellido))
+    return jsonR({ ok: false, error: "Escribe tu nombre y tu apellido reales (solo letras)." }, 400);
+  const m = email.match(/^[a-z0-9.!#$%&'*+/=?^_`{|}~-]{1,64}@([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+)$/);
+  if (!m || !/\.[a-z]{2,}$/.test(m[1])) return jsonR({ ok: false, error: "Ese email no parece válido. Revisa que esté bien escrito." }, 400);
+  if (await esDesechable(m[1], ctx)) return jsonR({ ok: false, error: "No aceptamos correos temporales o desechables. Usa tu email de siempre." }, 400);
+  if (!(await recibeCorreo(m[1]))) return jsonR({ ok: false, error: "Ese dominio de correo no recibe emails. Revisa que esté bien escrito." }, 400);
+  if (v("acepto", 4) !== "si") return jsonR({ ok: false, error: "Debes aceptar el uso de tus datos." }, 400);
+  const gusta = [...new Set(f.getAll("gusta").map(String))].filter((x) => GUSTA.includes(x));
+  const agregar = [...new Set(f.getAll("agregar").map(String))].filter((x) => AGREGAR.includes(x));
+  const frecuencia = FRECUENCIA.includes(v("frecuencia", 40)) ? v("frecuencia", 40) : "";
+  const npsT = v("nps", 2), nps = /^(10|[0-9])$/.test(npsT) ? Number(npsT) : null;
+  const texto = String(f.get("texto") || "").replace(/\r\n?/g, "\n").trim().slice(0, 2000);
+  if ((texto.match(/https?:\/\/|www\./gi) || []).length > 2) return jsonR({ ok: false, error: "Tu mensaje tiene demasiados enlaces." }, 400);
+  if (!gusta.length && !agregar.length && !texto && nps === null) return jsonR({ ok: false, error: "Marca al menos una opción o escribe tu mensaje." }, 400);
+  const hoy = fechaChile(), ip = await huellaVisitante(req, env, hoy, false);
+  const [porIp, porEmail] = await Promise.all([
+    env.DB.prepare("SELECT COUNT(*) AS n FROM buzon WHERE ip = ?").bind(ip).first(),
+    env.DB.prepare("SELECT COUNT(*) AS n FROM buzon WHERE email = ? AND fecha >= ?").bind(email, new Date(Date.now() - 86400000).toISOString()).first(),
+  ]);
+  if ((porIp && porIp.n >= 5) || (porEmail && porEmail.n >= 3)) return jsonR({ ok: false, error: "Ya recibimos varias sugerencias tuyas hoy. ¡Gracias! Vuelve a escribirnos mañana." }, 429);
+  const token = (await sha256hex(crypto.randomUUID() + email + Date.now())).slice(0, 40);
+  const estado = GROSERO.test(`${texto} ${nombre} ${apellido}`) ? "revisar" : "nuevo";
+  await env.DB.prepare("INSERT INTO buzon (fecha, nombre, apellido, email, gusta, agregar, frecuencia, nps, texto, verificado, token, ip, pais, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?)")
+    .bind(new Date().toISOString(), nombre, apellido, email, JSON.stringify(gusta), JSON.stringify(agregar), frecuencia, nps, texto, token, ip,
+      String((req.cf && req.cf.country) || "").slice(0, 2), estado).run();
+  let mensaje = "Tu sugerencia quedó en el Buzón. La leeremos con atención.";
+  if (hayCorreo(env)) {
+    const enlace = `https://${DOMINIO}/buzon/verificar?t=${token}`;
+    try {
+      const enviado = await enviarCorreo(env, { to: email, subject: "Confirma tu sugerencia en Cofrade News",
+        text: `Hola ${nombre}:\n\nGracias por escribirnos. Para confirmar que eres tú, abre este enlace y toca «Confirmar»:\n${enlace}\n\nEl enlace vence en 7 días. Si no fuiste tú, ignora este correo.\n\nCofrade News · www.cofrad.es`,
+        html: `<div style="font:16px/1.55 Georgia,serif;color:#0B1F3A;max-width:520px"><p>Hola ${esc(nombre)}:</p><p>Gracias por escribirnos. Para confirmar que eres tú, toca el botón:</p><p><a href="${enlace}" style="display:inline-block;background:#B8892B;color:#1A1406;padding:12px 22px;border-radius:999px;text-decoration:none;font:600 15px Arial,sans-serif">Confirmar mi sugerencia</a></p><p style="color:#5B6472;font:13px Arial,sans-serif">El enlace vence en 7 días. Si no fuiste tú, ignora este correo.<br>Cofrade News · www.cofrad.es</p></div>` });
+      if (enviado) mensaje = "Te enviamos un correo para confirmar que eres tú: ábrelo y toca «Confirmar mi sugerencia». Si no lo ves, revisa la carpeta de spam.";
+    } catch { /* si el correo falla, la sugerencia queda guardada como no confirmada */ }
+  }
+  return jsonR({ ok: true, mensaje });
+}
+// Correo de confirmación: usa Cloudflare Email Service si está activo (binding EMAIL, requiere plan pagado de Workers);
+// si no, Resend (gratis hasta 100 correos al día) con el secreto RESEND_API_KEY. Sin ninguno, la sugerencia queda «sin confirmar».
+const hayCorreo = (env) => !!((env.EMAIL && typeof env.EMAIL.send === "function") || env.RESEND_API_KEY);
+async function enviarCorreo(env, { to, subject, text, html: cuerpo }) {
+  const de = env.CORREO_REMITENTE || "buzon@cofrad.es";
+  if (env.EMAIL && typeof env.EMAIL.send === "function") {
+    await env.EMAIL.send({ from: { email: de, name: "Cofrade News" }, to, subject, text, html: cuerpo });
+    return true;
+  }
+  if (env.RESEND_API_KEY) {
+    const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from: `Cofrade News <${de}>`, to: [to], subject, text, html: cuerpo }) });
+    return r.ok;
+  }
+  return false;
+}
+// Confirmación en dos pasos (abrir el enlace muestra un botón; el botón confirma): así los antivirus del correo, que abren
+// los enlaces solos, no confirman por la persona.
+async function verificarBuzon(req, u, env) {
+  const pagina = (cuerpo, s = 200) => html(marco({ titulo: "Buzón · Cofrade News", descripcion: "", cuerpo }), s, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
+  const vencido = pagina(`<section style="border:0"><span class="kicker">Buzón</span><h1>Este enlace ya se usó o venció.</h1><p class="lede">Si quieres, vuelve a escribirnos desde el Buzón.</p><div class="acciones"><a class="btn oro" href="/#buzon">Abrir el Buzón</a></div></section>`, 410);
+  if (req.method === "POST") {
+    const f = await req.formData().catch(() => null);
+    const t = String((f && f.get("t")) || "");
+    if (!env.DB || !/^[a-f0-9]{40}$/.test(t)) return vencido;
+    const r = await env.DB.prepare("UPDATE buzon SET verificado = 1 WHERE token = ? AND verificado = 0 AND fecha >= ?").bind(t, new Date(Date.now() - 7 * 86400000).toISOString()).run();
+    if (!(r && r.meta && r.meta.changes)) return vencido;
+    return pagina(`<section style="border:0"><span class="kicker">Buzón</span><h1>¡Listo! Tu sugerencia quedó confirmada.</h1><p class="lede">Gracias por ayudarnos a mejorar Cofrade News.</p><div class="acciones"><a class="btn oro" href="/">Volver a la portada</a></div></section>`);
+  }
+  const t = String(u.searchParams.get("t") || "");
+  if (!env.DB || !/^[a-f0-9]{40}$/.test(t)) return vencido;
+  const fila = await env.DB.prepare("SELECT verificado, fecha FROM buzon WHERE token = ?").bind(t).first();
+  if (!fila || fila.verificado || fila.fecha < new Date(Date.now() - 7 * 86400000).toISOString()) return vencido;
+  return pagina(`<section style="border:0;max-width:640px"><span class="kicker">Buzón</span><h1>Confirma que eres tú</h1><p class="lede">Toca el botón para confirmar tu sugerencia.</p>
+<form method="post" action="/buzon/verificar"><input type="hidden" name="t" value="${t}"><button type="submit" class="btn oro" style="margin-top:18px">Confirmar mi sugerencia</button></form></section>`);
+}
+
+// ---------- medición propia: lectores únicos por día (sin cookies) y tiempo de lectura por sección ----------
+const BOT_UA = /bot|crawl|spider|slurp|preview|facebookexternalhit|whatsapp|telegram|monitor|headless|lighthouse|python|curl|wget|httpclient|java\/|go-http|axios|node-fetch|scrapy|okhttp/i;
+async function registrarVisita(req, env, ruta) {
+  const ua = req.headers.get("User-Agent") || "";
+  if (!env.DB || !ua || BOT_UA.test(ua)) return;
+  const fecha = fechaChile();
+  await env.DB.prepare("INSERT OR IGNORE INTO visitas (fecha, ruta, visitante, pais) VALUES (?, ?, ?, ?)")
+    .bind(fecha, ruta, await huellaVisitante(req, env, fecha), String((req.cf && req.cf.country) || "").slice(0, 2)).run();
+}
+async function contarVisita(req, env, ruta) {
+  try {
+    if (req.method !== "GET") return;
+    if (/prefetch|prerender/i.test((req.headers.get("Sec-Purpose") || "") + (req.headers.get("Purpose") || ""))) return;   // precargas: se cuentan al abrirse
+    await registrarVisita(req, env, ruta);
+  } catch { /* la medición nunca rompe la página */ }
+}
+async function recibirLectura(req, env) {
+  const nada = new Response(null, { status: 204 });
+  try {
+    if (!env.DB || !ORIGEN_OK(req)) return nada;
+    const t = await req.text();
+    if (t.length > 4000) return nada;
+    const j = JSON.parse(t);
+    const ruta = String(j.r || "").slice(0, 40);
+    if (!/^\/edicion\/\d{4}-\d{2}-\d{2}$/.test(ruta)) return nada;
+    if (j.v === 1) await registrarVisita(req, env, ruta);   // página precargada que el lector sí abrió
+    const fecha = fechaChile(), ops = [], vistas = new Set(Array.isArray(j.n) ? j.n.map(String) : []);
+    for (const [sec, seg] of Object.entries(j.s || {}).slice(0, 40)) {
+      const id = String(sec).replace(/[^a-z0-9_-]/gi, "").slice(0, 30), s = Math.max(0, Math.min(1800, Math.round(Number(seg) || 0)));
+      if (!id || s < 1) continue;
+      ops.push(env.DB.prepare("INSERT INTO lectura (fecha, ruta, seccion, segundos, vistas) VALUES (?, ?, ?, ?, ?) ON CONFLICT(fecha, ruta, seccion) DO UPDATE SET segundos = segundos + excluded.segundos, vistas = vistas + excluded.vistas")
+        .bind(fecha, ruta, id, s, vistas.has(sec) ? 1 : 0));
+    }
+    if (ops.length) await env.DB.batch(ops);
+  } catch { /* nada */ }
+  return nada;
+}
+// En la edición: mide cuántos segundos pasa cada sección en la franja central de la pantalla (sirve para secciones largas).
+const MEDIR = `<script>(function(){try{var r=location.pathname;function b(o){try{navigator.sendBeacon('/m',JSON.stringify(o))}catch(e){}}
+if(document.prerendering)document.addEventListener('prerenderingchange',function(){b({r:r,v:1})},{once:true});
+if(!('IntersectionObserver' in window)||!navigator.sendBeacon)return;var dentro={},t={},v={},acum={},vistos={};
+function activo(){return !document.hidden&&!document.prerendering}function abre(id,n){if(activo()&&!v[id])v[id]=n}
+function cierra(id,n){if(v[id]){t[id]=(t[id]||0)+(n-v[id])/1000;delete v[id]}}
+var io=new IntersectionObserver(function(es){var n=Date.now();es.forEach(function(e){var id=e.target.id;if(!id)return;if(e.isIntersecting){dentro[id]=1;abre(id,n)}else{delete dentro[id];cierra(id,n)}})},{rootMargin:'-40% 0px -40% 0px',threshold:0});
+document.querySelectorAll('section.sec[id]').forEach(function(s){io.observe(s)});
+function enviar(){var n=Date.now(),s={},nv=[],h=false;for(var k in v)cierra(k,n);for(var k2 in t){var x=Math.round(t[k2]);if(x>=1){s[k2]=Math.min(1800,x);h=true;acum[k2]=(acum[k2]||0)+x;if(acum[k2]>=3&&!vistos[k2]){vistos[k2]=1;nv.push(k2)}}}t={};if(h)b({r:r,s:s,n:nv})}
+function reabre(){var n=Date.now();for(var k in dentro)abre(k,n)}
+document.addEventListener('visibilitychange',function(){if(document.hidden)enviar();else reabre()});document.addEventListener('prerenderingchange',reabre);addEventListener('pagehide',enviar)}catch(e){}})();<\/script>`;
+
+// ---------- PANEL DE CONTROL (solo Germán): entra con la clave PANEL_CLAVE ----------
+async function esAdmin(req, env) {
+  if (!env.PANEL_CLAVE) return false;
+  const m = (req.headers.get("Cookie") || "").match(/(?:^|;\s*)cn_adm=(\d+)\.([a-f0-9]{64})/);
+  if (!m || Number(m[1]) < Date.now()) return false;
+  return iguales(m[2], await firma("adm|" + m[1], env.PANEL_CLAVE));
+}
+function paginaPanelLogin(error = "", status = 200, env = {}) {
+  const sinClave = !env.PANEL_CLAVE;
+  const cuerpo = `<section style="border:0;max-width:560px"><span class="kicker">Panel de Control</span><h1>Acceso de administración</h1>
+${sinClave ? `<p class="lede">El panel se abre cuando exista la clave <b>PANEL_CLAVE</b> en Cloudflare (Workers → cofrade-news-web → Settings → Variables and Secrets).</p>`
+    : `<form class="clave" method="post" action="/panel/entrar"><label for="pc" style="position:absolute;left:-9999px">Clave</label><input id="pc" name="clave" type="password" required placeholder="Clave de administración" autocomplete="current-password"><button type="submit">Entrar</button></form>`}
+${error ? `<p class="aviso" role="alert" style="color:var(--rojo)">${esc(error)}</p>` : ""}</section>`;
+  return html(marco({ titulo: "Panel · Cofrade News", descripcion: "", cuerpo }), status, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
+}
+async function entrarPanel(req, env) {
+  if (!env.PANEL_CLAVE) return paginaPanelLogin("", 200, env);
+  const hoy = fechaChile(), ip = await huellaVisitante(req, env, hoy, false);
+  if (env.DB) {
+    const r = await env.DB.prepare("SELECT n FROM intentos WHERE ip = ? AND fecha = ?").bind(ip, hoy).first().catch(() => null);
+    if (r && r.n >= 8) return paginaPanelLogin("Demasiados intentos fallidos hoy desde esta conexión. Prueba mañana.", 429, env);
+  }
+  const f = await req.formData().catch(() => null);
+  const clave = String((f && f.get("clave")) || "").slice(0, 200);
+  await new Promise((r) => setTimeout(r, 500));   // frena los intentos a ciegas
+  if (!iguales(await firma("c|" + clave, env.PANEL_CLAVE), await firma("c|" + env.PANEL_CLAVE, env.PANEL_CLAVE))) {
+    if (env.DB) await env.DB.prepare("INSERT INTO intentos (ip, fecha, n) VALUES (?, ?, 1) ON CONFLICT(ip, fecha) DO UPDATE SET n = n + 1").bind(ip, hoy).run().catch(() => {});
+    return paginaPanelLogin("Clave incorrecta.", 401, env);
+  }
+  const vence = Date.now() + 7 * 86400000;
+  return new Response(null, { status: 303, headers: { Location: "/panel", "Cache-Control": "no-store",
+    "Set-Cookie": `cn_adm=${vence}.${await firma("adm|" + vence, env.PANEL_CLAVE)}; Max-Age=${7 * 86400}; Path=/panel; Secure; HttpOnly; SameSite=Strict` } });
+}
+function barras(filas, color = "#B8892B") {   // filas: [[etiqueta, valor, nota?]]
+  if (!filas.length) return `<p class="aviso">Aún no hay datos.</p>`;
+  const max = Math.max(...filas.map((x) => x[1]), 1);
+  return `<div class="barras">${filas.map(([e, n, nota]) => `<div class="barra"><span class="be">${esc(e)}</span><span class="bb"><i style="width:${Math.max(2, n / max * 100).toFixed(1)}%;background:${color}"></i></span><b>${num(n, 0)}${nota ? ` <small>${esc(nota)}</small>` : ""}</b></div>`).join("")}</div>`;
+}
+function calor(filas) {   // [[sección, segundos, lecturas]]: mapa de calor de la atención por sección
+  if (!filas.length) return `<p class="aviso">Aún no hay lecturas medidas: el contador parte con esta versión del sitio.</p>`;
+  const max = Math.max(1, ...filas.map((x) => x[1]));
+  const tiempo = (s) => (s < 60 ? `${num(s, 0)} s` : s < 36000 ? `${num(s / 60, s < 600 ? 1 : 0)} min` : `${num(s / 3600, 1)} h`);
+  return `<div class="calor">${filas.map(([n, se, vi]) => `<div class="cel" style="--a:${(0.08 + 0.57 * se / max).toFixed(2)}"><b>${esc(n)}</b><span>${tiempo(se)} · ${num(vi, 0)} lecturas</span></div>`).join("")}</div>`;
+}
+function columnas(serie) {   // serie: [[fecha, únicos]]
+  if (!serie.length) return `<p class="aviso">Aún no hay visitas registradas: el contador parte con esta versión del sitio.</p>`;
+  const w = 720, h = 190, max = Math.max(...serie.map((x) => x[1]), 1), paso = Math.min(60, (w - 20) / serie.length), bw = Math.max(4, Math.min(44, Math.floor(paso) - 6));
+  const cada = Math.ceil(serie.length / 10);
+  return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto" role="img" aria-label="Lectores únicos por día">${serie.map(([f, u], i) => {
+    const hh = Math.max(2, Math.round(u / max * (h - 44))), x = 10 + i * paso;
+    return `<rect x="${x.toFixed(1)}" y="${h - 22 - hh}" width="${bw}" height="${hh}" rx="3" fill="#B8892B"><title>${f}: ${u} lectores</title></rect>`
+      + `<text x="${(x + bw / 2).toFixed(1)}" y="${h - 26 - hh}" font-size="10" text-anchor="middle" fill="currentColor">${u}</text>`
+      + (i % cada === 0 ? `<text x="${(x + bw / 2).toFixed(1)}" y="${h - 6}" font-size="10" text-anchor="middle" fill="#5B6472">${f.slice(8, 10)}-${f.slice(5, 7)}</text>` : "");
+  }).join("")}</svg>`;
+}
+const NOMBRE_SECCION = { economia: "Economía", politica: "Política y Congreso", emprendimiento: "Emprendimiento", tecnologia: "Tecnología", conflictos: "Conflictos",
+  efemerides: "Efemérides", naval: "Historia naval", onomastico: "Santoral", indicadores: "Indicadores", clima: "Clima", mar: "Mar y mareas", sismos: "Sismos", vuelos: "Vuelos",
+  feriados: "Feriados", inmobiliario: "Inmobiliario", industrias: "Industrias", entretenimiento: "Entretenimiento", biografia: "Biografía", ciencia: "Ciencia",
+  astronomia: "Astronomía", deportes: "Deportes", horoscopo: "Horóscopo" };
+async function panel(req, env) {
+  if (!(await esAdmin(req, env))) return paginaPanelLogin("", 200, env);
+  if (!env.DB) return html(marco({ titulo: "Panel", descripcion: "", cuerpo: `<section style="border:0"><h1>Falta la base de datos.</h1></section>` }), 503);
+  const hace30 = fechaChile(new Date(Date.now() - 30 * 86400000));
+  const q = (s, ...b) => env.DB.prepare(s).bind(...b).all().then((r) => r.results || []).catch(() => []);
+  const [dias, rutas, lect, paises, bz, bzTot, socios] = await Promise.all([
+    q("SELECT fecha, COUNT(DISTINCT visitante) AS u, COUNT(*) AS v FROM visitas WHERE fecha >= ? GROUP BY fecha ORDER BY fecha", hace30),
+    q("SELECT ruta, COUNT(DISTINCT visitante) AS u FROM visitas WHERE fecha >= ? GROUP BY ruta ORDER BY u DESC LIMIT 15", hace30),
+    q("SELECT seccion, SUM(segundos) AS s, SUM(vistas) AS v FROM lectura WHERE fecha >= ? GROUP BY seccion ORDER BY s DESC LIMIT 30", hace30),
+    q("SELECT pais, COUNT(DISTINCT visitante) AS u FROM visitas WHERE fecha >= ? GROUP BY pais ORDER BY u DESC LIMIT 10", hace30),
+    q("SELECT * FROM buzon ORDER BY id DESC LIMIT 500"),
+    q("SELECT COUNT(*) AS n, COALESCE(SUM(verificado), 0) AS ver FROM buzon"),
+    q("SELECT estado, COUNT(*) AS n FROM usuarios GROUP BY estado"),
+  ]);
+  const hoy = fechaChile(), dHoy = dias.find((x) => x.fecha === hoy) || { u: 0, v: 0 };
+  const prom = dias.length ? Math.round(dias.reduce((a, x) => a + x.u, 0) / dias.length) : 0;
+  const cuenta = (campo) => { const c = {}; bz.forEach((r) => { try { JSON.parse(r[campo] || "[]").forEach((x) => { c[x] = (c[x] || 0) + 1; }); } catch { /* nada */ } }); return Object.entries(c).sort((a, b) => b[1] - a[1]); };
+  const frec = {}; bz.forEach((r) => { if (r.frecuencia) frec[r.frecuencia] = (frec[r.frecuencia] || 0) + 1; });
+  const npsR = bz.filter((r) => typeof r.nps === "number");
+  const nps = npsR.length ? Math.round((npsR.filter((r) => r.nps >= 9).length - npsR.filter((r) => r.nps <= 6).length) / npsR.length * 100) : null;
+  const tot = bzTot[0] || { n: 0, ver: 0 };
+  const kpi = (t, v, s = "") => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${s ? `<br><small>${esc(s)}</small>` : ""}</div>`;
+  const cuerpo = `<section style="border:0;padding-top:30px"><span class="kicker">Panel de Control · solo administración</span><h1 class="titulo-lujo">Cómo va Cofrade News</h1>
+<p class="sub">Contador propio, sin cookies ni datos personales: cada lector cuenta una vez por día con una huella anónima que cambia cada día. Últimos 30 días. <a href="/panel/salir">Salir del panel</a></p>
+<div class="cifras">${kpi("Lectores hoy", num(dHoy.u, 0), num(dHoy.v, 0) + " páginas vistas")}${kpi("Promedio diario", num(prom, 0), "lectores únicos")}
+${kpi("Sugerencias en el Buzón", num(tot.n, 0), num(tot.ver, 0) + " con email confirmado")}
+${kpi("Recomendación (NPS)", nps === null ? "Sin respuestas" : (nps > 0 ? "+" : "") + nps, npsR.length + " respuestas")}
+${kpi("Socios activos", num(socios.filter((x) => ["activo", "prueba"].includes(x.estado)).reduce((a, x) => a + x.n, 0), 0), "Dashboard Financiero")}</div></section>
+<section><h3>Lectores por día</h3>${columnas(dias.map((x) => [x.fecha, x.u]))}</section>
+<section><h3>Mapa de calor de lectura</h3><p class="sub">Tiempo que los lectores pasan en cada sección de la edición (sumado, últimos 30 días). Más dorado = más leído.</p>${calor(lect.map((x) => [NOMBRE_SECCION[x.seccion] || x.seccion, x.s, x.v]))}</section>
+<section><div class="dos"><div class="tarjeta"><h4 class="kicker">Páginas más visitadas</h4>${barras(rutas.map((x) => [x.ruta === "/" ? "Portada" : x.ruta.replace("/edicion/", "Edición "), x.u]), "#23395B")}</div>
+<div class="tarjeta"><h4 class="kicker">Países</h4>${barras(paises.map((x) => [x.pais || "Sin país", x.u]), "#23395B")}</div></div></section>
+<section><h3>Buzón: lo que dicen los lectores</h3><div class="dos">
+<div class="tarjeta"><h4 class="kicker">Lo que más les gusta</h4>${barras(cuenta("gusta"))}</div>
+<div class="tarjeta"><h4 class="kicker">Lo que piden agregar</h4>${barras(cuenta("agregar"), "#1E7B4F")}</div>
+<div class="tarjeta"><h4 class="kicker">Frecuencia de lectura</h4>${barras(Object.entries(frec).sort((a, b) => b[1] - a[1]), "#23395B")}
+<p class="sub" style="margin-top:12px">NPS = % que responde 9 o 10, menos % que responde de 0 a 6. Sobre +30 es muy bueno; sobre +50, excelente.</p></div></div>
+<p style="margin:16px 0"><a class="btn linea" href="/panel/buzon.csv">Descargar todas las sugerencias (Excel / CSV)</a></p>
+<div class="tabla-buzon">${bz.slice(0, 60).map((r) => `<article class="tarjeta" style="margin:0 0 10px"><b>${esc(r.nombre)} ${esc(r.apellido)}</b> <span class="m">· ${esc(r.email)} · ${esc(String(r.fecha).slice(0, 16).replace("T", " "))} UTC · ${r.verificado ? "✓ email confirmado" : "email sin confirmar"}${r.estado === "revisar" ? " · ⚠ revisar lenguaje" : ""}${typeof r.nps === "number" ? " · NPS " + r.nps : ""}</span>
+${r.texto ? `<p style="margin:6px 0 0;white-space:pre-wrap">${esc(r.texto)}</p>` : ""}</article>`).join("") || `<p class="aviso">Todavía no llegan sugerencias.</p>`}</div></section>`;
+  return html(marco({ titulo: "Panel de Control · Cofrade News", descripcion: "", cuerpo }), 200, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
+}
+async function panelCsv(req, env) {
+  if (!(await esAdmin(req, env)) || !env.DB) return new Response("no autorizado", { status: 401 });
+  const filas = (await env.DB.prepare("SELECT fecha, nombre, apellido, email, verificado, gusta, agregar, frecuencia, nps, texto, estado, pais FROM buzon ORDER BY id").all()).results || [];
+  const c = (x) => { let s = String(x === null || x === undefined ? "" : x); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };   // sin fórmulas inyectadas
+  const lista = (j) => { try { return JSON.parse(j || "[]").join(" | "); } catch { return ""; } };
+  const csv = "﻿fecha;nombre;apellido;email;email_confirmado;le_gusta;quiere_agregar;frecuencia;nps;mensaje;estado;pais\n"
+    + filas.map((r) => [r.fecha, r.nombre, r.apellido, r.email, r.verificado ? "sí" : "no", lista(r.gusta), lista(r.agregar), r.frecuencia, r.nps, r.texto, r.estado, r.pais].map(c).join(";")).join("\n");
+  return new Response(csv, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="buzon-cofrade-news-${fechaChile()}.csv"`, "Cache-Control": "no-store", ...SEGURIDAD } });
+}
+
+
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
   const ms = (MARCAS && MARCAS.marcas) || [];
@@ -382,23 +892,95 @@ function bloqueMarcas() {
   return `<div class="hoja marcas" aria-label="Marcas que nos auspician"><h4>Marcas que nos auspician</h4><div class="cinta"><div class="pista">${lista.map((m, i) => uno(m, i >= ms.length)).join("")}${lista.map((m) => uno(m, true)).join("")}</div></div></div>`;
 }
 
-function marco({ titulo, descripcion, cuerpo, canonica }) {
+function marco({ titulo, descripcion, cuerpo, canonica, hero = "" }) {
   return `<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(titulo)}</title><meta name="description" content="${esc(descripcion)}"><link rel="canonical" href="https://${DOMINIO}${canonica || "/"}">
 <meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descripcion)}"><meta property="og:type" content="website">
 <meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL"><meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><style>${CSS}</style></head><body>
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&display=swap"><style>${CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha" data-iso="${fechaChile()}">${esc(fechaLarga(fechaChile()))}</span>
-<nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><a href="/#en-vivo">En vivo</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a><button class="tema idioma" id="idioma" type="button" lang="en" aria-pressed="false" aria-label="Read in English" title="English">EN</button><button class="tema" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></nav></div></header>
-<main class="hoja">${cuerpo}</main>
-${bloqueMarcas()}${DIALOGO}
-<footer class="hoja pie">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
-© ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}</script></body></html>`;
+<nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><button type="button" class="nav-b buzon-abrir" aria-haspopup="dialog"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></svg>Buzón</button><a href="/mercados">Mercados</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a></nav>
+<div class="herr"><button class="tema idioma" id="idioma" type="button" lang="en" aria-pressed="false" aria-label="Read in English" title="English">EN</button><button class="tema" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></div></div></header>
+${hero}<main class="hoja">${cuerpo}</main>
+${bloqueMarcas()}${DIALOGO}${BUZON}
+<footer class="hoja pie"><img class="pie-agua" src="/marca-agua.webp" alt="" aria-hidden="true">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
+Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar? <button type="button" class="enlace buzon-abrir">Escríbenos al Buzón</button>.<br>
+© ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}${BUZON_JS}${CABECERA_JS}</script>
+<script type="speculationrules">{"prerender":[{"where":{"or":[{"href_matches":"/edicion"},{"href_matches":"/edicion/*"}]},"eagerness":"moderate"}]}</script></body></html>`;
 }
 
 const SECCIONES = ["Crecimiento de Chile", "Economía y mercados", "Política y Congreso", "Conflictos en el mundo", "Perspectivas 2050",
   "Ciencia y Astronomía", "Deportes", "Clima, mar y sismos", "Vuelos comerciales", "Entretenimiento", "Fondos y subsidios", "Efemérides"];
+
+// 13-11-2026 · dibujos de cada sección (trazo dorado, 44 px)
+const ICONO = {
+  crecimiento: '<path d="M6 34 16 24l7 6 15-17"/><path d="M31 13h7v7"/><path d="M6 40h34"/>',
+  economia: '<path d="M10 10v26M22 6v32M34 14v20"/><rect x="7" y="16" width="6" height="12" rx="1"/><rect x="19" y="12" width="6" height="16" rx="1"/><rect x="31" y="18" width="6" height="9" rx="1"/>',
+  congreso: '<path d="M6 34a17 17 0 0 1 34 0"/><path d="M12 34a11 11 0 0 1 22 0"/><path d="M4 38h38"/><circle cx="23" cy="13" r="2"/>',
+  conflictos: '<circle cx="23" cy="23" r="16"/><path d="M7 23h32M23 7c-6 5-6 27 0 32M23 7c6 5 6 27 0 32"/><path d="M31 15l3-3"/>',
+  perspectivas: '<path d="M6 38V22h8v16M18 38V12h10v26M32 38V26h8v12"/><path d="M4 38h38M23 12V6l9 4"/>',
+  ciencia: '<ellipse cx="23" cy="23" rx="17" ry="7" transform="rotate(-25 23 23)"/><circle cx="23" cy="23" r="5"/><circle cx="37" cy="15" r="2"/>',
+  deportes: '<circle cx="23" cy="23" r="15"/><path d="M23 8v30M8 23h30M12 12c6 4 6 18 0 22M34 12c-6 4-6 18 0 22"/>',
+  clima: '<path d="M4 18c5-5 9-5 14 0s9 5 14 0 9-5 10-2"/><path d="M4 27c5-5 9-5 14 0s9 5 14 0 9-5 10-2"/><path d="M4 36c5-5 9-5 14 0s9 5 14 0 9-5 10-2"/>',
+  vuelos: '<path d="M6 34c10-16 22-22 34-24"/><path d="M33 7l7 3-3 7"/><circle cx="8" cy="34" r="2"/>',
+  entretenimiento: '<rect x="6" y="11" width="34" height="24" rx="3"/><path d="M6 17h34M6 29h34M13 11v24M33 11v24"/>',
+  fondos: '<ellipse cx="23" cy="12" rx="12" ry="4"/><path d="M11 12v8c0 2 5 4 12 4s12-2 12-4v-8M11 20v8c0 2 5 4 12 4s12-2 12-4v-8M11 28v6c0 2 5 4 12 4s12-2 12-4v-6"/>',
+  efemerides: '<circle cx="23" cy="9" r="3"/><path d="M23 12v26M15 18h16M9 28c0 6 6 10 14 10s14-4 14-10"/><path d="M9 28l-3 3M37 28l3 3"/>',
+};
+const icono = (n) => `<svg viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONO[n] || ""}</svg>`;
+const SECCIONES_LUJO = [
+  ["crecimiento", "Crecimiento de Chile", "El Imacec del mes, la proyección del año y cuánto avanza cada gobierno a igual período."],
+  ["economia", "Economía y mercados", "Dólar, UF, IPSA, Wall Street, cobre y petróleo, con su fuente y su hora."],
+  ["congreso", "Política y Congreso", "Cada votación de la Sala con el voto de cada diputado y senador, y cómo votan las bancadas."],
+  ["conflictos", "Conflictos en el mundo", "Mapas, cifras oficiales de refugiados y su efecto en los precios que pagas."],
+  ["perspectivas", "Perspectivas 2050", "Los megaproyectos que cambiarán Chile: inversión, etapa y año de término."],
+  ["ciencia", "Ciencia y Astronomía", "Descubrimientos de la semana y el cielo de esta noche, explicados en simple."],
+  ["deportes", "Deportes", "Tablas con proyección, fútbol, tenis, golf, Fórmula 1, NBA y equitación."],
+  ["clima", "Clima, mar y sismos", "El tiempo de 9 ciudades, oleaje y mareas de los puertos, y los sismos del día."],
+  ["vuelos", "Vuelos comerciales", "Salidas y llegadas confirmadas en los cinco aeropuertos principales."],
+  ["entretenimiento", "Entretenimiento", "Panoramas, estrenos y lo que no te puedes perder esta semana."],
+  ["fondos", "Fondos y subsidios", "Fondos concursables abiertos, con su plazo y el enlace para postular."],
+  ["efemerides", "Efemérides", "La historia naval y de Chile que se recuerda hoy."],
+];
+
+// Gráfico lineal mínimo (SVG) para la pizarra de la portada: área dorada y línea, sin bibliotecas.
+function spark(datos, w = 150, h = 46) {
+  const v = (datos || []).map((d) => Number(d[1])).filter((x) => isFinite(x));
+  if (v.length < 2) return "";
+  const min = Math.min(...v), max = Math.max(...v), r = max - min || 1;
+  const pts = v.map((y, i) => [((i / (v.length - 1)) * (w - 2) + 1).toFixed(1), (h - 3 - ((y - min) / r) * (h - 8)).toFixed(1)]);
+  const linea = pts.map((p, i) => (i ? "L" : "M") + p[0] + " " + p[1]).join("");
+  const id = "g" + Math.random().toString(36).slice(2, 8);
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6C77A" stop-opacity=".38"/><stop offset="1" stop-color="#E6C77A" stop-opacity="0"/></linearGradient></defs>`
+    + `<path d="${linea}L${w - 1} ${h}L1 ${h}Z" fill="url(#${id})"/><path d="${linea}" fill="none" stroke="#E6C77A" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`;
+}
+
+async function historia(ctx) {
+  try {
+    const r = await desdeGitHub("datos/historia.json", 3600, ctx);
+    return r ? await r.json() : null;
+  } catch { return null; }
+}
+
+function pizarra(h, p) {
+  const S = (h && h.series) || {};
+  const fila = (clave, titulo, pre, dec, dias = 365) => {
+    const s = S[clave];
+    if (!s || !s.datos || s.datos.length < 2) return "";
+    const datos = s.datos.slice(-Math.min(s.datos.length, Math.round(dias * 0.7)));   // ~250 días hábiles
+    const ult = datos[datos.length - 1], ant = s.datos[Math.max(0, s.datos.length - 22)];
+    const varp = ant && ant[1] ? ((ult[1] / ant[1]) - 1) * 100 : null;
+    return `<div class="piz-fila"><div><small>${esc(titulo)} · ${esc(ult[0].split("-").reverse().join("-"))}</small><b>${esc(pre)}${num(ult[1], dec)}</b>`
+      + `${varp !== null ? `<span class="var ${varp > 0 ? "sube" : varp < 0 ? "baja" : ""}">${varp > 0 ? "+" : varp < 0 ? "−" : ""}${num(Math.abs(varp), 1)} % en un mes</span>` : ""}</div>${spark(datos)}</div>`;
+  };
+  const filas = fila("dolar", "Dólar observado", "$", 2) + fila("cobre", "Cobre, US$ por libra", "US$", 2) + fila("uf", "Unidad de Fomento", "$", 2);
+  if (!filas) return "";
+  const tpm = S.tpm && S.tpm.datos && S.tpm.datos.length ? S.tpm.datos[S.tpm.datos.length - 1][1] : null;
+  return `<aside class="pizarra" aria-label="Pizarra del Banco Central"><div class="piz-cab">Pizarra del día <span>últimos 12 meses</span></div>${filas}`
+    + `${tpm !== null ? `<div class="piz-fila"><div><small>Tasa de Política Monetaria</small><b>${num(tpm, 2)} %</b></div><svg viewBox="0 0 150 46" aria-hidden="true"></svg></div>` : ""}`
+    + `<div class="piz-pie">Fuente: Banco Central de Chile, Base de Datos Estadísticos.</div></aside>`;
+}
 
 function bloqueCifras(p) {
   if (!p) return "";
@@ -444,29 +1026,93 @@ async function cuerpoPortada(ctx) {
   const estado = !ultima ? "La primera edición web aparece mañana a las 07:30."
     : ultima === hoy ? "La edición de hoy ya está publicada." : "La edición de hoy se publica a las 07:30. Mientras, lee la última.";
   const hora = p && p.generado ? String(p.generado).slice(11, 16) : "";
-  const cuerpo = `
-<div class="portada"><div><span class="kicker">El diario de la mañana · gratuito</span>
-<h1>Chile y el mundo, ordenados en minutos y con datos verificados.</h1>
+  const h = await historia(ctx);
+  const piz = pizarra(h, p);
+  const hero = `<section class="lujo" aria-label="Portada"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
+<div class="hoja lujo-in"><div class="lujo-txt"><span class="kicker">El diario de la mañana · Gratuito</span>
+<h1>Chile y el mundo, ordenados en minutos y con <em>datos verificados.</em></h1>
 <p class="lede">Cada mañana a las 07:30: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.</p>
-<div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn linea" href="#en-vivo">Ver lo último</a></div></div>
-<aside class="tarjeta edicion" aria-label="Edición"><span class="kicker">${ultima ? `<span>${ultima === hoy ? "Hoy ·" : "Última edición ·"}</span> <span data-iso="${ultima}">${esc(fechaLarga(ultima))}</span>` : "Muy pronto"}</span><h2>${esc(estado)}</h2>
-<ul>${SECCIONES.map((s) => `<li>${esc(s)}</li>`).join("")}</ul></aside></div>
+<div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn claro" href="#puente">Dashboard Financiero</a><a class="btn claro" href="/mercados">Mercados en vivo</a></div>
+<ul class="sellos"><li>${ultima ? (ultima === hoy ? "Edición de hoy publicada" : "Última edición: " + esc(fechaLarga(ultima))) : "Primera edición muy pronto"}</li><li>Cada dato con su fuente</li><li>Hecho en Chile</li></ul></div>
+${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${hoy}">${esc(fechaLarga(hoy))}</span></div><p style="margin:6px 0 0;color:#D8D2C4">${esc(estado)}</p></aside>`}</div></section>`;
+  const cuerpo = `
+<section aria-labelledby="t-secc" style="border:0;padding-top:40px"><span class="kicker">${ultima ? (ultima === hoy ? "Hoy · " : "Última edición · ") : ""}<span data-iso="${ultima || hoy}">${esc(fechaLarga(ultima || hoy))}</span></span>
+<h2 class="titulo-lujo" id="t-secc">${esc(estado)}</h2><p class="sub">Doce secciones, cada mañana, con la fuente de cada dato.</p>
+<div class="secc">${SECCIONES_LUJO.map(([ic, t, d]) => `<a class="sec-card" href="/edicion" style="text-decoration:none">${icono(ic)}<div><b>${esc(t)}</b><p>${esc(d)}</p></div></a>`).join("")}</div></section>
 <section id="en-vivo" aria-labelledby="t-vivo"><h3 id="t-vivo"><span class="vivo">En vivo</span></h3>
 <p class="sub">${hora ? `Actualizado a las ${esc(hora)}${p.proxima ? ` · próxima actualización ${esc(p.proxima)}` : ""}.` : "Se actualiza cada 2 horas, de 07:00 a 23:00."} Banco Central, Bolsa de Santiago, USGS, aire medido y los medios del país.</p>
 ${bloqueCifras(p)}${bloqueTierra(p)}${bloqueTitulares(p)}</section>
+<section aria-labelledby="t-gal"><h2 class="titulo-lujo" id="t-gal">Así se ve por dentro</h2><p class="sub">Algunos de los gráficos de la edición, tal como los recibes cada mañana.</p>
+<div class="galeria">
+<figure class="g-a"><img src="/capturas/indicadores.webp" alt="Gráfico del dólar en los últimos dos meses" loading="lazy" width="1000" height="426"><figcaption><b>Indicadores y monedas</b>El dólar día a día, con la UF, el euro y el yuan.</figcaption></figure>
+<figure class="g-b"><img src="/capturas/mercados.webp" alt="Variación diaria de los mercados" loading="lazy" width="962" height="886"><figcaption><b>Mercados</b>Wall Street, cobre, petróleo, IPSA y bolsas de Europa.</figcaption></figure>
+<figure class="g-c"><img src="/capturas/industrias.webp" alt="Mapa de Chile por industria" loading="lazy" width="700" height="1242"><figcaption><b>Industrias de Chile</b>Qué produce cada región.</figcaption></figure>
+<figure class="g-d"><img src="/capturas/perspectivas-2050.webp" alt="Inversión en megaproyectos por sector" loading="lazy" width="1000" height="721"><figcaption><b>Perspectivas 2050</b>Inversión en megaproyectos por sector.</figcaption></figure>
+<figure class="g-e"><img src="/capturas/gobiernos.webp" alt="Indicadores económicos por gobierno" loading="lazy" width="1000" height="319"><figcaption><b>Avances por gobierno</b>Crecimiento, inflación, desempleo y deuda.</figcaption></figure>
+<figure class="g-f"><img src="/capturas/estrecho.webp" alt="Mapa del Estrecho de Magallanes" loading="lazy" width="1000" height="367"><figcaption><b>Mar y navegación</b>Oleaje, mareas y el paso por el Estrecho de Magallanes.</figcaption></figure>
+</div></section>
+<section id="puente" style="border:0;padding:0"><div class="puente"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
+<span class="kicker">Para socios · Muy pronto</span><h2>Puente de Mando · Dashboard Financiero</h2>
+<p class="lede">Para quienes toman decisiones: bolsa chilena y extranjera, ETF, cripto y blockchain, el dinero que entra y sale de Chile, y el radar político y regulatorio que mueve los mercados. Todo en un solo lugar, explicado en simple.</p>
+<div class="pilares">
+<div class="pilar"><b>Mercados</b><span>IPSA, Wall Street, Europa y Asia, bonos, cobre, oro y petróleo.</span></div>
+<div class="pilar"><b>ETF y cripto</b><span>Los fondos que más se transan, Bitcoin, Ethereum y el ánimo del mercado cripto.</span></div>
+<div class="pilar"><b>Dinero en movimiento</b><span>Qué compran y venden las AFP, los fondos mutuos y los inversionistas extranjeros.</span></div>
+<div class="pilar"><b>Radar político</b><span>Las leyes y normas que se votan y a qué sectores afectan.</span></div>
+<div class="pilar"><b>Calendario</b><span>Reuniones del Banco Central, de la Reserva Federal y los datos que vienen.</span></div>
+<div class="pilar"><b>Herramientas</b><span>Conversor UF, dólar y euro, calculadora de IPC, interés compuesto y crédito hipotecario.</span></div>
+</div>
+<div class="precio-lujo"><span class="monto">$5.000 <small>al mes</small></span><span class="extra">7 días gratis · Plan anual $55.000 (un mes de regalo) · Socios de la Cofradía con precio preferente</span></div>
+<div class="acciones"><button type="button" class="btn oro pub-abrir" data-interes="Dashboard Financiero · socio fundador" aria-haspopup="dialog">Quiero ser socio fundador</button><a class="btn claro" href="/mercados">Ver mercados en vivo</a></div>
+<p class="legal">Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta, y no considera tu situación personal.</p></div></section>
 <section id="archivo" aria-labelledby="t-arch"><h3 id="t-arch">Archivo</h3><p class="sub">Las 12 ediciones publicadas más recientes.</p>
 ${lista.length ? `<div class="archivo">${lista.map((f) => `<a href="/edicion/${f}" data-iso="${f}">${esc(fechaLarga(f))}</a>`).join("")}</div>` : `<p class="aviso">El archivo empieza con la próxima edición.</p>`}</section>
 <section id="socios" aria-labelledby="t-soc"><div class="socios"><div><h3 id="t-soc">Área de socios</h3>
-<p class="sub">Informes financieros, análisis de mercado y contenidos exclusivos para socios.</p><a class="btn linea" href="/socios">Ingresar con mi clave</a></div>
+<p class="sub">Informes financieros, análisis de mercado y contenidos exclusivos para socios.</p><a class="btn linea" href="/socios">Ingresar</a></div>
 <div class="tarjeta" id="publicite"><span class="kicker">Publicite aquí</span><p style="margin:8px 0 6px">Su marca cada mañana frente a lectores que deciden.</p>
 <div class="precio">UF 1 <small style="font-size:15px;color:var(--gris)">al mes</small></div><div class="acciones" style="margin-top:14px"><button type="button" class="btn oro pub-abrir" data-interes="Cofrade News" aria-haspopup="dialog">Quiero publicitar</button></div></div></div></section>`;
-  return { cuerpo, p };
+  return { cuerpo, p, hero };
 }
 
 async function portada(env, ctx) {
-  const { cuerpo } = await cuerpoPortada(ctx);
-  return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo }), 200,
+  const { cuerpo, hero } = await cuerpoPortada(ctx);
+  return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero }), 200,
     { "Cache-Control": "public, max-age=120" });
+}
+
+// 13-11-2026 · /mercados: widgets oficiales de TradingView (gratis para sitios web, con su atribución visible). Datos con el desfase
+// que exigen las bolsas. Solo esta página los carga (su propia política de seguridad).
+function tv(tipo, cfg, alto) {
+  return `<div class="tradingview-widget-container" style="height:${alto}px"><div class="tradingview-widget-container__widget" style="height:calc(100% - 32px)"></div>`
+    + `<div class="tradingview-widget-copyright"><a href="https://es.tradingview.com/" rel="noopener nofollow" target="_blank">Gráficos de TradingView</a></div>`
+    + `<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-${tipo}.js" async>${JSON.stringify({ locale: "es", colorTheme: "light", isTransparent: true, ...cfg })}<\/script></div>`;
+}
+function paginaMercados() {
+  const cinta = tv("ticker-tape", { symbols: [
+    { proName: "FX_IDC:USDCLP", title: "Dólar / peso" }, { proName: "FOREXCOM:SPXUSD", title: "S&P 500" }, { proName: "FOREXCOM:NSXUSD", title: "Nasdaq 100" },
+    { proName: "FOREXCOM:DJI", title: "Dow Jones" }, { proName: "COMEX:HG1!", title: "Cobre" }, { proName: "TVC:GOLD", title: "Oro" }, { proName: "TVC:UKOIL", title: "Petróleo Brent" },
+    { proName: "BITSTAMP:BTCUSD", title: "Bitcoin" }, { proName: "BITSTAMP:ETHUSD", title: "Ethereum" }, { proName: "FX:EURUSD", title: "Euro / dólar" } ],
+    showSymbolLogo: true, displayMode: "adaptive" }, 78);
+  const resumen = tv("market-overview", { dateRange: "12M", showChart: true, width: "100%", height: "100%", tabs: [
+    { title: "Índices", symbols: [{ s: "FOREXCOM:SPXUSD", d: "S&P 500" }, { s: "FOREXCOM:NSXUSD", d: "Nasdaq 100" }, { s: "FOREXCOM:DJI", d: "Dow Jones" }, { s: "INDEX:NKY", d: "Nikkei 225" }, { s: "INDEX:DEU40", d: "DAX" }, { s: "FOREXCOM:UKXGBP", d: "FTSE 100" }] },
+    { title: "Materias primas", symbols: [{ s: "COMEX:HG1!", d: "Cobre" }, { s: "TVC:GOLD", d: "Oro" }, { s: "TVC:SILVER", d: "Plata" }, { s: "TVC:UKOIL", d: "Petróleo Brent" }, { s: "TVC:USOIL", d: "Petróleo WTI" }] },
+    { title: "Monedas", symbols: [{ s: "FX_IDC:USDCLP", d: "Dólar / peso chileno" }, { s: "FX:EURUSD", d: "Euro / dólar" }, { s: "FX_IDC:USDBRL", d: "Dólar / real" }, { s: "FX_IDC:USDCNY", d: "Dólar / yuan" }] },
+    { title: "ETF", symbols: [{ s: "AMEX:SPY", d: "SPY · S&P 500" }, { s: "NASDAQ:QQQ", d: "QQQ · Nasdaq 100" }, { s: "ECH", d: "ECH · Acciones de Chile" }, { s: "AMEX:EWZ", d: "EWZ · Brasil" }, { s: "AMEX:GLD", d: "GLD · Oro" }, { s: "NASDAQ:IBIT", d: "IBIT · Bitcoin" }] },
+    { title: "Cripto", symbols: [{ s: "BITSTAMP:BTCUSD", d: "Bitcoin" }, { s: "BITSTAMP:ETHUSD", d: "Ethereum" }, { s: "COINBASE:SOLUSD", d: "Solana" }] } ] }, 560);
+  const calor = tv("stock-heatmap", { dataSource: "SPX500", grouping: "sector", blockSize: "market_cap_basic", blockColor: "change", hasTopBar: false, isZoomEnabled: true, hasSymbolTooltip: true, width: "100%", height: "100%" }, 520);
+  const cripto = tv("crypto-coins-heatmap", { dataSource: "Crypto", blockSize: "market_cap_calc", blockColor: "change", hasTopBar: false, isZoomEnabled: true, hasSymbolTooltip: true, width: "100%", height: "100%" }, 460);
+  const agenda = tv("events", { importanceFilter: "0,1", countryFilter: "cl,us,eu,cn,br", width: "100%", height: "100%" }, 560);
+  const cuerpo = `<section style="border:0;padding-top:34px"><span class="kicker">Gratis · Datos con el desfase que exigen las bolsas</span>
+<h1 class="titulo-lujo" style="font-size:clamp(34px,5vw,54px)">Mercados en vivo</h1>
+<p class="lede">Índices, monedas, materias primas, ETF y cripto del mundo en una sola página. Los gráficos son de TradingView; la lectura de lo que significa para Chile llega cada mañana en la edición.</p></section>
+${cinta}
+<section aria-labelledby="t-res"><h2 class="titulo-lujo" id="t-res">Resumen del mundo</h2><p class="sub">Toca una pestaña y luego un instrumento para ver su gráfico de 12 meses.</p>${resumen}</section>
+<section aria-labelledby="t-cal"><h2 class="titulo-lujo" id="t-cal">Dónde se movió el dinero hoy</h2><p class="sub">Las 500 mayores empresas de EE. UU. por sector: el tamaño es su valor bursátil y el color, cuánto subió o bajó.</p>${calor}</section>
+<section aria-labelledby="t-cri"><h2 class="titulo-lujo" id="t-cri">Cripto</h2><p class="sub">Las principales criptomonedas por valor de mercado y su variación del día.</p>${cripto}</section>
+<section aria-labelledby="t-age"><h2 class="titulo-lujo" id="t-age">Agenda económica</h2><p class="sub">Los datos y decisiones que vienen en Chile, EE. UU., Europa, China y Brasil.</p>${agenda}</section>
+<p class="legal" style="color:var(--gris)">Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta. Los precios pueden tener un desfase de 15 minutos o más.</p>`;
+  return html(marco({ titulo: "Mercados en vivo · Cofrade News", descripcion: "Índices, monedas, materias primas, ETF y cripto del mundo en una sola página, gratis.", cuerpo, canonica: "/mercados" }), 200,
+    { "Cache-Control": "public, max-age=300" }, CSP_MERCADOS);
 }
 
 function paginaSocios(dentro, error = "") {
@@ -489,22 +1135,42 @@ export default {
     if (u.hostname === "cofrad.es") return Response.redirect(`https://${DOMINIO}${u.pathname}${u.search}`, 301);
     const p = u.pathname.replace(/\/+$/, "") || "/";
     try {
-      if (p === "/" && req.method === "GET") return await portada(env, ctx);
+      if (p === "/" && req.method === "GET") { ctx.waitUntil(contarVisita(req, env, "/")); return await portada(env, ctx); }
       if (p === "/edicion") {
         const l = await indice(ctx);
         return l.length ? Response.redirect(`https://${u.host}/edicion/${l[0]}`, 302) : Response.redirect(`https://${u.host}/`, 302);
       }
       const m = p.match(/^\/edicion\/(\d{4}-\d{2}-\d{2})$/);
       if (m) {
-        const r = (await desdeGitHub(`completa/${m[1]}`, 600, ctx, rutaEdicion(m[1], true))) || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, 600, ctx));
+        // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde y
+        // 1 hora en el navegador; la de hoy, 10 minutos. Los gráficos se dibujan recién cuando el lector llega a ellos (LENTO).
+        const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
+        const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true))) || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
-        const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive", "Cache-Control": "public, max-age=600", ...SEGURIDAD } });
+        ctx.waitUntil(contarVisita(req, env, p));
+        const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
+          "Cache-Control": pasada ? "public, max-age=3600, stale-while-revalidate=86400" : "public, max-age=600", ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.append(PROTEGER, { html: true }); } })
-          .on("head", { element(e) { e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">', { html: true }); } })
+          .on("body", { element(e) { e.append(PROTEGER + MEDIR, { html: true }); } })
+          .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">', { html: true }); } })
           .transform(resp);
+      }
+      if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
+      // 13-11-2026 · Buzón de sugerencias, medición de lectura y Panel de Control
+      if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx);
+      if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
+      if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
+      if (p === "/m" && req.method === "POST") return await recibirLectura(req, env);
+      if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
+      if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
+      if (p === "/panel/buzon.csv") return await panelCsv(req, env);
+      if (p === "/panel") return await panel(req, env);
+      const cap = p.match(/^\/capturas\/([a-z0-9-]+\.webp)$/);
+      if (cap || p === "/marca-agua.webp") {
+        const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp", 86400, ctx);
+        return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/contacto" && req.method === "POST") return await contacto(req, ctx);
       if (p === "/en.json") {
@@ -546,10 +1212,10 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return Response.redirect(`https://${u.host}/favicon-64.png`, 301);   // 13-11-2026: ícono = escudo de la Cofradía
-      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
+      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
       if (p === "/sitemap.xml") {
         const l = await indice(ctx);
-        const x = [`https://${DOMINIO}/`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
+        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
         return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${x}</urlset>`, { headers: { "Content-Type": "application/xml" } });
       }
       return html(marco({ titulo: "Página no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esta página no existe.</h1><p class="lede">Vuelve a la <a href="/">portada</a>.</p></section>` }), 404);
