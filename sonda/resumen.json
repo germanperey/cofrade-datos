@@ -1,0 +1,134 @@
+{
+ "tabsa_tramos": {
+  "url": "https://api-gw.tabsa.cl/api/cruce/tramos",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 401,
+  "tipo": "application/json",
+  "bytes": 62,
+  "inicio": "{\"status\":\"No se encontr\\u00f3 el Token de autorizaci\\u00f3n\"}",
+  "fechas_vistas": []
+ },
+ "tabsa_tramos2": {
+  "url": "https://api-gw.tabsa.cl/api/cruces/tramos",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 401,
+  "tipo": "application/json",
+  "bytes": 62,
+  "inicio": "{\"status\":\"No se encontr\\u00f3 el Token de autorizaci\\u00f3n\"}",
+  "fechas_vistas": []
+ },
+ "tabsa_suspension": {
+  "url": "https://api-gw.tabsa.cl/api/cruce/cruce/suspension",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 401,
+  "tipo": "application/json",
+  "bytes": 62,
+  "inicio": "{\"status\":\"No se encontr\\u00f3 el Token de autorizaci\\u00f3n\"}",
+  "fechas_vistas": []
+ },
+ "tabsa_cruce20_hoy": {
+  "url": "https://api-gw.tabsa.cl/api/cruce/cruce/20/fecha/2026-11-14",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 401,
+  "tipo": "application/json",
+  "bytes": 62,
+  "inicio": "{\"status\":\"No se encontr\\u00f3 el Token de autorizaci\\u00f3n\"}",
+  "fechas_vistas": []
+ },
+ "tabsa_cruce20_hoy2": {
+  "url": "https://api-gw.tabsa.cl/api/cruce/cruce/20/fecha/14-11-2026",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 401,
+  "tipo": "application/json",
+  "bytes": 62,
+  "inicio": "{\"status\":\"No se encontr\\u00f3 el Token de autorizaci\\u00f3n\"}",
+  "fechas_vistas": []
+ },
+ "tabsa_mes": {
+  "url": "https://api-gw.tabsa.cl/api/cruce/cruce/fecha/mes/2026-11",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 401,
+  "tipo": "application/json",
+  "bytes": 62,
+  "inicio": "{\"status\":\"No se encontr\\u00f3 el Token de autorizaci\\u00f3n\"}",
+  "fechas_vistas": []
+ },
+ "tabsa_mes2": {
+  "url": "https://api-gw.tabsa.cl/api/cruce/cruce/fecha/mes/11",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 401,
+  "tipo": "application/json",
+  "bytes": 62,
+  "inicio": "{\"status\":\"No se encontr\\u00f3 el Token de autorizaci\\u00f3n\"}",
+  "fechas_vistas": []
+ },
+ "seia_listado": {
+  "url": "https://seia.sea.gob.cl/busqueda/buscarProyectoAction.php?nombre=&titular=&folio=&sector=&region=&tipoPresentacion=&presentacion=&PAGE=1",
+  "robots_txt": 200,
+  "permitido": true,
+  "error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+ },
+ "seia_inicio": {
+  "url": "https://seia.sea.gob.cl/",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 200,
+  "tipo": "text/html; charset=UTF-8",
+  "bytes": 106072,
+  "inicio": " <!DOCTYPE html> <html lang=\"es\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ og: http://ogp.me/ns# rdfs: http://www.w3.org/2000/01/rdf-schema# schema: http://schema.org/ sioc: http://rdfs.org/sioc/ns# sioct: http://rdfs.org/sioc/types# skos: http://www.w3.org/2004/02/skos/core# xsd: http://www.w3.org/20",
+  "fechas_vistas": [
+   "2026-11-04",
+   "2026-11-05",
+   "2026-11-12",
+   "2026-11-16",
+   "2026-11-17",
+   "2026-11-19"
+  ]
+ },
+ "as_nba": {
+  "url": "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/baloncesto/subsection/nba/",
+  "robots_txt": 403,
+  "permitido": true,
+  "http": 200,
+  "tipo": "application/xml",
+  "bytes": 76032,
+  "inicio": "<?xml version=\"1.0\" encoding=\"utf-8\"?> <rss version=\"2.0\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:atom=\"http://www.w3.org/2005/Atom\" xmlns:media=\"http://search.yahoo.com/mrss/\"> <channel> <title>NBA Baloncesto </title> <description>La mejor información sobre la NBA, la liga estado",
+  "fechas_vistas": [
+   "Mon, 09 Nov 2026",
+   "Sat, 14 Nov 2026",
+   "Sun, 08 Nov 2026",
+   "Thu, 12 Nov 2026",
+   "Tue, 10 Nov 2026",
+   "Wed, 11 Nov 2026"
+  ]
+ },
+ "tabsa_js": {
+  "url": "https://www.tabsa.cl/",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 200,
+  "tipo": "text/html",
+  "bytes": 1186,
+  "inicio": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" type=\"image/png\" href=\"/favicon/favicon-96x96.png\" sizes=\"96x96\"/><link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon/favicon.svg\"/><link rel=\"shortcut icon\" href=\"/favicon/favicon.ico\"/><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/favicon/apple-touch-icon.png\"/><meta name=\"apple-mobile-web-app-title\" content=\"TAB",
+  "fechas_vistas": [],
+  "apis": [
+   "REL /api/cruce/cruce/suspension",
+   "REL /api/cruce/tramos",
+   "REL /api/cruces/tramos",
+   "https://api-gw.tabsa.cl/api/correo/correo/reclamo-sugerencia",
+   "https://api-gw.tabsa.cl/api/cruce/cruce/20/fecha/",
+   "https://api-gw.tabsa.cl/api/cruce/cruce/fecha/mes/",
+   "https://api-gw.tabsa.cl/api/cruce/tramos",
+   "https://api-reserva.tabsa.cl/api/reserva/valor/",
+   "https://recursos.tabsa.cl/api/file/save",
+   "https://us-central1-tabsacl-api.cloudfunctions.net/tabsaapi-v2"
+  ]
+ }
+}
