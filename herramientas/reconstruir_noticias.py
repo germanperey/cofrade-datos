@@ -130,6 +130,86 @@ def noticias(html, fecha):
     return secciones
 
 
+LIVIANA_SECCIONES = [("1. economía", "economia"), ("2. política", "politica"), ("3. emprendimiento", "emprendimiento"),
+                     ("4. tecnología", "tecnologia"), ("15. crecimiento inmobiliario", "inmobiliario"), ("21. deportes", "deportes")]
+
+
+class Liviana(HTMLParser):
+    """Edición liviana (la de Drive, sin listas «notas»): <h2> sección, <h3>/<h4> apartado y <li><b>Título</b> — comienzo del
+    resumen…</li>. Solo las noticias; las listas de datos (fondos, subsidios, Congreso, pronóstico) no tienen ese formato."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.sec, self.h3, self.h4, self.en, self.buf = None, "", "", None, []
+        self.li, self.b = None, None
+        self.notas = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("h2", "h3", "h4"):
+            self.en, self.buf = tag, []
+        elif tag == "li":
+            self.li, self.b = [], None
+        elif tag == "b" and self.li is not None and self.b is None and not "".join(self.li).strip():
+            self.b = []
+
+    def handle_endtag(self, tag):
+        if tag in ("h2", "h3", "h4") and self.en == tag:
+            t = _limpio("".join(self.buf))
+            if tag == "h2":
+                self.sec = next((k for pre, k in LIVIANA_SECCIONES if t.lower().startswith(pre)), None)
+                self.h3 = self.h4 = ""
+            elif tag == "h3":
+                self.h3, self.h4 = t, ""
+            else:
+                self.h4 = t
+            self.en = None
+        elif tag == "b" and self.b is not None and self.li is not None:
+            self.li.append("\x00")
+        elif tag == "li" and self.li is not None:
+            txt = "".join(self.li)
+            if self.sec and "\x00" in txt:
+                tit, _, resto = txt.partition("\x00")
+                resto = _limpio(resto)
+                if resto.startswith("— "):
+                    self.notas.append((self.sec, self.h3, self.h4, {"titulo": _limpio("".join(self.b or [])),
+                                                                   "texto": resto[2:].strip()}))
+            self.li, self.b = None, None
+
+    def handle_data(self, d):
+        if self.en:
+            self.buf.append(d)
+        elif self.li is not None:
+            if self.b is not None and "\x00" not in "".join(self.li):
+                self.b.append(d)
+            else:
+                self.li.append(d)
+
+
+def noticias_livianas(html, fecha):
+    """{sección: [notas]} desde una edición liviana: título y comienzo del resumen (sin enlace ni fuente, que no trae)."""
+    p = Liviana()
+    p.feed(html)
+    secciones = {}
+    m = re.search(r"<h2>Las \d+ del día</h2>(.*?)<h2", html, re.S)
+    tres = [_limpio(re.sub(r"<[^>]+>", " ", x)) for x in re.findall(r"<p>\s*\d\.\s*(.*?)</p>", m.group(1), re.S)] if m else []
+    if tres:
+        secciones["tres_del_dia"] = [{"titulo": t} for t in tres]
+    for sec, h3, h4, n in p.notas:
+        t3 = h3.lower()
+        if sec in ("economia", "politica"):
+            if t3 not in ("chile", "mundo"):
+                continue
+            k = f"{sec}/{t3}"
+        elif sec == "deportes":
+            k = clave("deportes", h3, h4)
+        elif h3:   # en Emprendimiento e Inmobiliario, después de las noticias vienen fondos y subsidios
+            continue
+        else:
+            k = sec
+        secciones.setdefault(k, []).append(n)   # sin «fecha» por nota: la liviana no la trae (el período abarca dos días)
+    return secciones
+
+
 def _git(args, binario=False):
     r = subprocess.run(["git"] + args, capture_output=True, text=not binario)
     return r.stdout if r.returncode == 0 else None
@@ -158,10 +238,14 @@ def main(argv=None):
         if not b:
             continue
         sec = noticias(b.decode("utf-8", "replace"), f)
+        if f not in completas and sum(len(v) for v in sec.values()) < 5:   # la liviana no trae listas «notas»
+            sec = noticias_livianas(b.decode("utf-8", "replace"), f)
+            origen = ("edición liviana (ediciones/), porque la completa no se guardó ese día: las primeras noticias de cada "
+                      "sección, con el título y el comienzo del resumen, sin enlace ni fuente")
         if sum(len(v) for v in sec.values()) < 5:
             print(f"AVISO {f}: la edición trae menos de 5 noticias reconocibles; no se reconstruye")
             continue
-        dia = {"fecha": f, "secciones": dict(sorted(sec.items())), "reconstruido": f"14-11-2026, desde la {origen}: solo las noticias "
+        dia = {"fecha": f, "secciones": dict(sorted(sec.items())), "reconstruido": f"14-11-2026, desde la {origen}; solo las noticias "
                "(sin biografía, efemérides ni historia naval, que esos días no se guardaron por separado)"}
         os.makedirs(os.path.dirname(destino), exist_ok=True)
         texto = json.dumps(dia, ensure_ascii=False, indent=1, sort_keys=True) + "\n"

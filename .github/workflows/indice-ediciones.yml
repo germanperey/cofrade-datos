@@ -33,12 +33,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 herramientas/completas_permanentes.py
+      # 14-11-2026: las ediciones livianas publicadas por una versión anterior de la Skill perdían títulos de sección
+      # («… y 5 más en la edición completa.## 4. Tecnología»). Si llega una así, se arregla aquí; si no, no cambia nada.
+      - name: Reparar las ediciones livianas
+        run: python3 herramientas/reparar_livianas.py
       - name: Armar el índice
         run: python3 herramientas/indice_ediciones.py --salida datos/ediciones.json
       - name: Guardar en el repositorio
         run: |
           git config user.name "cofrade-datos"
           git config user.email "actions@users.noreply.github.com"
-          git add datos/ediciones.json archivo/manifiesto/completas.json archivo/manifiesto/meses.json
+          git add datos/ediciones.json archivo/manifiesto/completas.json archivo/manifiesto/meses.json ediciones archivo/manifiesto
           git diff --cached --quiet || git commit -m "Índice y ediciones completas permanentes $(date -u +%Y-%m-%dT%H:%M)"
           for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 10; done

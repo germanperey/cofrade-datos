@@ -1240,6 +1240,38 @@ def respaldos_completas_y_noticias_reconstruidas():
     e = {x["f"]: x for x in json.load(open(sal))["ediciones"]}
     assert e["2026-10-30"]["c"] == 1 and e["2026-11-14"]["c"] == 1 and e["2026-11-13"] == {"f": "2026-11-13", "c": 0, "l": 1}, e
 
+@prueba
+def livianas_recuperan_los_titulos_pegados():
+    """14-11-2026: la edición liviana dejaba «… y 5 más en la edición completa.## 4. Tecnología» dentro de una viñeta; las ya
+    publicadas se arreglan en ediciones/ y la del día sin edición completa lleva un aviso (una sola vez)."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import reparar_livianas as RL
+    h = ("<main><h1>Cofrade News</h1>\n<p><b>Miércoles 11</b> · Noticias</p><h2>1. Economía</h2><ul><li>a</li>"
+         "<li>… y 5 más en la edición completa.## 4. Tecnología, Tendencias &amp; Innovación</li><li>b</li></ul>"
+         "<ul><li>… y 2 más en la edición completa.## 21. Deportes</li></ul><h3>Golf</h3></main>")
+    r, t = RL.reparar(h)
+    assert t == ["4. Tecnología, Tendencias &amp; Innovación", "21. Deportes"], t
+    assert "##" not in r and "<ul></ul>" not in r and r.count("<h2>") == 3, r
+    assert "<li>… y 5 más en la edición completa.</li></ul><h2>4. Tecnología, Tendencias &amp; Innovación</h2><ul><li>b</li></ul>" in r, r
+    assert "<h2>21. Deportes</h2><h3>Golf</h3>" in r and 'sin-completa' not in r, r
+    r3, _ = RL.reparar("<ul><li>… y 3 más en la edición completa.## 21. Deportes</li> </ul> <h3>Golf</h3>")
+    assert r3 == "<ul><li>… y 3 más en la edición completa.</li></ul><h2>21. Deportes</h2> <h3>Golf</h3>", r3
+    assert RL.reparar(r) == (r, [])   # idempotente
+    r2, _ = RL.reparar(h, sin_completa=True)
+    assert r2.count('class="sin-completa"') == 1 and r2.index('sin-completa') > r2.index("Noticias</p>"), r2
+    assert RL.reparar(r2, sin_completa=True)[0] == r2
+    import reconstruir_noticias as RN
+    liv = ("<h2>Las 3 del día</h2><p>1. Uno.</p><p>2. Dos.</p><h2>1. Economía, Negocios e Inversión</h2><h3>Chile</h3><ul>"
+           "<li><b>Codelco &amp; Adani</b> — Acuerdo de …</li><li>… y 1 más en la edición completa.</li></ul><h3>Perspectivas 2050</h3>"
+           "<ul><li><b>Puerto</b> — no es noticia</li></ul><h2>3. Emprendimiento</h2><ul><li><b>Fintech</b> — Crédito …</li></ul>"
+           "<h3>Fondos con postulación abierta</h3><ul><li><b>Corfo</b> — fondo</li></ul><h2>21. Deportes</h2><h3>Otros deportes</h3>"
+           "<h4>Rugby</h4><ul><li><b>Sudáfrica</b> — primera …</li></ul><h3>Tenis</h3><ul><li>Ronda 1: A a B 6-2</li></ul>")
+    sl = RN.noticias_livianas(liv, "2026-11-11")
+    assert sl == {"tres_del_dia": [{"titulo": "Uno."}, {"titulo": "Dos."}],
+                  "economia/chile": [{"titulo": "Codelco & Adani", "texto": "Acuerdo de …"}],
+                  "emprendimiento": [{"titulo": "Fintech", "texto": "Crédito …"}],
+                  "deportes/Rugby": [{"titulo": "Sudáfrica", "texto": "primera …"}]}, sl
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

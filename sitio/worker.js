@@ -598,6 +598,11 @@ Object.assign(EN_FIJO, {
 });
 // 13-11-2026 · textos del Buzón de sugerencias y del pie (las secciones ya están arriba)
 Object.assign(EN_FIJO, {
+  "Página no encontrada · Cofrade News": "Page not found · Cofrade News", "Esta página no existe.": "This page does not exist.",
+  "Vuelve a la": "Go back to the", "portada": "front page", "Edición no encontrada · Cofrade News": "Edition not found · Cofrade News",
+  "Esa edición no está.": "That edition is not available.", "para ver las disponibles.": "to see the available ones.",
+  "Panel · Cofrade News": "Dashboard · Cofrade News", "Panel de Control": "Control Panel", "Acceso de administración": "Administrator access",
+  "Clave": "Password", "Clave de administración": "Administrator password",
   "Buzón": "Suggestions", "Buzón de sugerencias": "Suggestion box", "Ayúdanos a hacer el mejor diario de Chile": "Help us make the best daily briefing in Chile",
   "Paso 1 de 3": "Step 1 of 3", "¿Qué es lo que más te gusta?": "What do you like most?", "Marca todas las que quieras.": "Tick as many as you like.",
   "¿Qué te gustaría que agreguemos?": "What would you like us to add?", "¿Con qué frecuencia lees Cofrade News?": "How often do you read Cofrade News?",
