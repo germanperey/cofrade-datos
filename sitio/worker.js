@@ -996,7 +996,7 @@ async function panel(req, env) {
   if (!env.DB) return html(marco({ titulo: "Panel", descripcion: "", cuerpo: `<section style="border:0"><h1>Falta la base de datos.</h1></section>` }), 503);
   const hace30 = fechaChile(new Date(Date.now() - 30 * 86400000));
   const q = (s, ...b) => env.DB.prepare(s).bind(...b).all().then((r) => r.results || []).catch(() => []);
-  const [dias, rutas, lect, paises, bz, bzTot, socios] = await Promise.all([
+  const [dias, rutas, lect, paises, bz, bzTot, socios, pulsoR] = await Promise.all([
     q("SELECT fecha, COUNT(DISTINCT visitante) AS u, COUNT(*) AS v FROM visitas WHERE fecha >= ? GROUP BY fecha ORDER BY fecha", hace30),
     q("SELECT ruta, COUNT(DISTINCT visitante) AS u FROM visitas WHERE fecha >= ? GROUP BY ruta ORDER BY u DESC LIMIT 15", hace30),
     q("SELECT seccion, SUM(segundos) AS s, SUM(vistas) AS v FROM lectura WHERE fecha >= ? GROUP BY seccion ORDER BY s DESC LIMIT 30", hace30),
@@ -1004,7 +1004,14 @@ async function panel(req, env) {
     q("SELECT * FROM buzon ORDER BY id DESC LIMIT 500"),
     q("SELECT COUNT(*) AS n, COALESCE(SUM(verificado), 0) AS ver FROM buzon"),
     q("SELECT estado, COUNT(*) AS n FROM usuarios GROUP BY estado"),
+    q("SELECT valor FROM config WHERE clave = 'pulso_resultado'"),
   ]);
+  // 14-11-2026: último pedido del sitio a GitHub para refrescar «En vivo» (204 = aceptado; 401/403 = la llave GITHUB_DISPATCH venció)
+  let pul = null;
+  try { pul = JSON.parse((pulsoR[0] || {}).valor || "null"); } catch { pul = null; }
+  const pulTxt = !pul ? "Sin pedidos" : pul.estado === "204" ? "Pedido aceptado" : ["401", "403"].includes(pul.estado) ? "Llave rechazada" : "Falló (" + pul.estado + ")";
+  const pulSub = !pul ? "Se activa con la clave GITHUB_DISPATCH" : ["401", "403"].includes(pul.estado) ? "Renovar GITHUB_DISPATCH · " + String(pul.hora).slice(0, 16).replace("T", " ") + " UTC"
+    : "Último pedido " + String(pul.hora).slice(0, 16).replace("T", " ") + " UTC";
   const hoy = fechaChile(), dHoy = dias.find((x) => x.fecha === hoy) || { u: 0, v: 0 };
   const prom = dias.length ? Math.round(dias.reduce((a, x) => a + x.u, 0) / dias.length) : 0;
   const cuenta = (campo) => { const c = {}; bz.forEach((r) => { try { JSON.parse(r[campo] || "[]").forEach((x) => { c[x] = (c[x] || 0) + 1; }); } catch { /* nada */ } }); return Object.entries(c).sort((a, b) => b[1] - a[1]); };
@@ -1018,7 +1025,8 @@ async function panel(req, env) {
 <div class="cifras">${kpi("Lectores hoy", num(dHoy.u, 0), num(dHoy.v, 0) + " páginas vistas")}${kpi("Promedio diario", num(prom, 0), "lectores únicos")}
 ${kpi("Sugerencias en el Buzón", num(tot.n, 0), num(tot.ver, 0) + " con email confirmado")}
 ${kpi("Recomendación (NPS)", nps === null ? "Sin respuestas" : (nps > 0 ? "+" : "") + nps, npsR.length + " respuestas")}
-${kpi("Socios activos", num(socios.filter((x) => ["activo", "prueba"].includes(x.estado)).reduce((a, x) => a + x.n, 0), 0), "Dashboard Financiero")}</div></section>
+${kpi("Socios activos", num(socios.filter((x) => ["activo", "prueba"].includes(x.estado)).reduce((a, x) => a + x.n, 0), 0), "Dashboard Financiero")}
+${kpi("«En vivo» al día", esc(pulTxt), pulSub)}</div></section>
 <section><h3>Lectores por día</h3>${columnas(dias.map((x) => [x.fecha, x.u]))}</section>
 <section><h3>Mapa de calor de lectura</h3><p class="sub">Tiempo que los lectores pasan en cada sección de la edición (sumado, últimos 30 días). Más dorado = más leído.</p>${calor(lect.map((x) => [NOMBRE_SECCION[x.seccion] || x.seccion, x.s, x.v]))}</section>
 <section><div class="dos"><div class="tarjeta"><h4 class="kicker">Páginas más visitadas</h4>${barras(rutas.map((x) => [x.ruta === "/" ? "Portada" : x.ruta.replace("/edicion/", "Edición "), x.u]), "#23395B")}</div>
@@ -1305,7 +1313,15 @@ ${error ? `<p class="aviso" role="alert" style="color:var(--rojo)">${esc(error)}
 // más de 2 horas y 10 minutos, el sitio le pide a GitHub que lo corra. Un candado en D1 (tabla config) deja pasar un pedido por hora
 // en todo el mundo. Necesita la clave GITHUB_DISPATCH (token de GitHub solo para «Actions» de cofrade-datos, creado por Germán);
 // sin ella no hace nada y la portada sigue igual. Si algún día este Worker tiene un reloj propio, scheduled() hace lo mismo.
+// Auditoría del 14-11: de noche no se pide (el Pulso programado va de 07 a 23 h; así los robots nocturnos no gastan corridas) y el
+// resultado de cada pedido queda en config ('pulso_resultado') y se ve en /panel: una llave vencida (401) ya no pasa en silencio.
 const PULSO_VIEJO_MIN = 130, PULSO_CANDADO_MIN = 60;
+const _FMT_HORA_CL = new Intl.DateTimeFormat("en-GB", { timeZone: "America/Santiago", hour: "2-digit", hourCycle: "h23" });
+function pulsoEnHorario(env, ms) {
+  const [a, b] = String(env.PULSO_HORAS || "7-23").split("-").map(Number);
+  const h = Number(_FMT_HORA_CL.format(new Date(ms)));
+  return !(Number.isFinite(a) && Number.isFinite(b) && Number.isFinite(h)) || (h >= a && h <= b);
+}
 async function pedirPulso(env) {
   if (!env.GITHUB_DISPATCH) return "sin clave";
   const r = await fetch("https://api.github.com/repos/germanperey/cofrade-datos/actions/workflows/pulso.yml/dispatches", {
@@ -1321,10 +1337,15 @@ async function revivirPulso(env, p) {
     if (!Number.isFinite(t)) return "sin fecha";
     const ahora = Date.now();
     if (ahora - t < PULSO_VIEJO_MIN * 60000) return "al día";
+    if (!pulsoEnHorario(env, ahora)) return "de noche";
     const r = await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('pulso_pedido', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor WHERE CAST(config.valor AS INTEGER) < ?2")
       .bind(String(ahora), ahora - PULSO_CANDADO_MIN * 60000).run();
     if (!r || !r.meta || r.meta.changes !== 1) return "ya pedido";
-    return await pedirPulso(env);
+    let res;
+    try { res = await pedirPulso(env); } catch { res = "sin conexión"; }
+    await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('pulso_resultado', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor")
+      .bind(JSON.stringify({ estado: res, hora: new Date(ahora).toISOString() })).run();
+    return res;
   } catch { return "error"; }
 }
 

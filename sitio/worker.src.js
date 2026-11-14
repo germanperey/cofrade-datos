@@ -907,7 +907,15 @@ ${error ? `<p class="aviso" role="alert" style="color:var(--rojo)">${esc(error)}
 // más de 2 horas y 10 minutos, el sitio le pide a GitHub que lo corra. Un candado en D1 (tabla config) deja pasar un pedido por hora
 // en todo el mundo. Necesita la clave GITHUB_DISPATCH (token de GitHub solo para «Actions» de cofrade-datos, creado por Germán);
 // sin ella no hace nada y la portada sigue igual. Si algún día este Worker tiene un reloj propio, scheduled() hace lo mismo.
+// Auditoría del 14-11: de noche no se pide (el Pulso programado va de 07 a 23 h; así los robots nocturnos no gastan corridas) y el
+// resultado de cada pedido queda en config ('pulso_resultado') y se ve en /panel: una llave vencida (401) ya no pasa en silencio.
 const PULSO_VIEJO_MIN = 130, PULSO_CANDADO_MIN = 60;
+const _FMT_HORA_CL = new Intl.DateTimeFormat("en-GB", { timeZone: "America/Santiago", hour: "2-digit", hourCycle: "h23" });
+function pulsoEnHorario(env, ms) {
+  const [a, b] = String(env.PULSO_HORAS || "7-23").split("-").map(Number);
+  const h = Number(_FMT_HORA_CL.format(new Date(ms)));
+  return !(Number.isFinite(a) && Number.isFinite(b) && Number.isFinite(h)) || (h >= a && h <= b);
+}
 async function pedirPulso(env) {
   if (!env.GITHUB_DISPATCH) return "sin clave";
   const r = await fetch("https://api.github.com/repos/germanperey/cofrade-datos/actions/workflows/pulso.yml/dispatches", {
@@ -923,10 +931,15 @@ async function revivirPulso(env, p) {
     if (!Number.isFinite(t)) return "sin fecha";
     const ahora = Date.now();
     if (ahora - t < PULSO_VIEJO_MIN * 60000) return "al día";
+    if (!pulsoEnHorario(env, ahora)) return "de noche";
     const r = await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('pulso_pedido', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor WHERE CAST(config.valor AS INTEGER) < ?2")
       .bind(String(ahora), ahora - PULSO_CANDADO_MIN * 60000).run();
     if (!r || !r.meta || r.meta.changes !== 1) return "ya pedido";
-    return await pedirPulso(env);
+    let res;
+    try { res = await pedirPulso(env); } catch { res = "sin conexión"; }
+    await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('pulso_resultado', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor")
+      .bind(JSON.stringify({ estado: res, hora: new Date(ahora).toISOString() })).run();
+    return res;
   } catch { return "error"; }
 }
 

@@ -135,7 +135,7 @@ def _en_espanol(n):
 
 
 def titulares(estado, horas=HORAS_TITULARES):
-    t = B.titulares(estado) or {}
+    t = B.titulares(estado, feeds=B.todas_las_fuentes(radar=False)) or {}   # 14-11-2026: sin las 54 búsquedas del radar (solo «Datos oficiales»)
     sec = t.get("secciones") or {}
     limite = (B.ahora() - dt.timedelta(hours=horas)).strftime("%Y-%m-%d %H:%M")
     out = []

@@ -806,8 +806,8 @@ FEEDS_EXTRA = {   # 01-11-2026 (Germán: «al menos 3 fuentes y más formas de c
                  # 08-11-2026 (equitación con 2 de 3 notas; NBA con 1): más búsquedas de noticias
                  ("Bing Noticias · Equitación internacional", _bing("salto ecuestre FEI Longines Global Champions"), "rss"),
                  ("Bing Noticias · Hípica y polo Chile", _bing("Federación Ecuestre de Chile concurso salto Club Hípico"), "rss"),
-                 # 08-11-2026: Google Noticias y Bing Noticias prohíben las búsquedas automáticas en su robots.txt (se saltan solas):
-                 # fuentes directas que sí lo permiten
+                 # 08-11-2026: fuentes directas de equitación (Google Noticias prohíbe la lectura automática en su robots.txt; Bing Noticias
+                 # la permite en /news/search: 14-11-2026, sus 38 direcciones respondían desde el 08-11)
                  ("FEI · Federación Ecuestre Internacional (RSS, inglés)", "https://inside.fei.org/rss.xml", "rss"),
                  ("Ecuestre.es · Revista Ecuestre (RSS)", "https://www.ecuestre.es/feed/", "rss"),
                  ("Bing Noticias · NBA", _bing("NBA resultados partido"), "rss"),
@@ -842,10 +842,87 @@ def redes(ruta="redes.json"):
     return out
 
 
-def todas_las_fuentes(ruta_redes="redes.json"):
-    """FEEDS + FEEDS_EXTRA + redes.json, sin repetir una dirección dentro de la misma sección."""
+# 14-11-2026 (auditoría): las 54 búsquedas de Bing Noticias del radar de la Skill (assets/fuentes-noticias.json, antes de Google
+# Noticias) se leen aquí con la MISMA dirección, así la tarea no tiene que pedirlas con web_fetch (fuentes.py plan salta lo que GitHub
+# ya leyó). Solo las lee «Datos oficiales» (pulso.py usa radar=False para no multiplicar los pedidos a Bing).
+FEEDS_RADAR = {
+    "economia/chile": [
+        ("Bing Noticias · Economía Chile", _bing("economía Chile"), "rss"),
+        ("Bing Noticias · Bolsa de Santiago", _bing("IPSA OR \"Bolsa de Santiago\""), "rss"),
+        ("Bing Noticias · Cobre y minería", _bing("cobre OR Codelco OR minería Chile"), "rss"),
+        ("Bing Noticias · Empresas Chile", _bing("empresas Chile (utilidades OR inversión OR exportaciones)"), "rss"),
+        ("Bing Noticias · Hacienda y presupuesto", _bing("Hacienda OR presupuesto OR \"Banco Central\" Chile"), "rss"),
+        ("Bing Noticias · Banco Central / IPC / dólar", _bing("(\"Banco Central\" OR IPC OR dólar OR IMACEC) Chile"), "rss"),
+        ("Bing Noticias · Inversiones y proyectos en Chile", _bing("inversión proyecto Chile \"millones de dólares\""), "rss"),
+    ],
+    "economia/mundo": [
+        ("Bing Noticias · Economía mundial", _bing("economía mundial OR Fed OR mercados"), "rss"),
+        ("Bing Noticias · Europa economía", _bing("BCE OR eurozona economía"), "rss"),
+        ("Bing Noticias · Petróleo", _bing("petróleo OR Brent OR OPEP"), "rss"),
+        ("Bing Noticias · China y comercio", _bing("China economía OR aranceles"), "rss"),
+        ("Bing Noticias · Reserva Federal", _bing("\"Reserva Federal\" OR Wall Street"), "rss"),
+        ("Bing Noticias · Economía Estados Unidos", _bing("economía \"Estados Unidos\" (inflación OR empleo OR PIB)"), "rss"),
+        ("Bing Noticias · FMI y Banco Mundial", _bing("(FMI OR \"Banco Mundial\" OR OCDE) economía"), "rss"),
+        ("Bing Noticias · Economía América Latina", _bing("economía (Argentina OR Brasil OR México OR Perú OR Colombia)"), "rss"),
+        ("Bing Noticias · Bolsas y mercados mundiales", _bing("(bolsas OR \"Wall Street\" OR mercados) cierre"), "rss"),
+        ("Bing Noticias · Comercio internacional", _bing("(comercio internacional OR exportaciones OR aranceles) economía mundial"), "rss"),
+    ],
+    "politica/chile": [
+        ("Bing Noticias · Política Chile", _bing("política Chile (gobierno OR Congreso OR Senado OR Cámara)"), "rss"),
+    ],
+    "politica/mundo": [
+        ("Bing Noticias · Internacional", _bing("internacional"), "rss"),
+        ("Bing Noticias · Medio Oriente", _bing("Israel OR Gaza OR Irán"), "rss"),
+        ("Bing Noticias · Europa", _bing("Unión Europea OR Europa gobierno"), "rss"),
+        ("Bing Noticias · América Latina", _bing("América Latina gobierno OR elecciones"), "rss"),
+        ("Bing Noticias · Mundo (EE. UU.)", _bing("Estados Unidos Casa Blanca"), "rss"),
+    ],
+    "emprendimiento": [
+        ("Bing Noticias · Emprendimiento Chile", _bing("(emprendimiento OR startup OR \"capital de riesgo\") Chile"), "rss"),
+        ("Bing Noticias · Innovación pymes", _bing("pymes innovación Chile"), "rss"),
+        ("Bing Noticias · Fintech Chile", _bing("fintech Chile"), "rss"),
+        ("Bing Noticias · Corfo", _bing("Corfo emprendimiento OR startups"), "rss"),
+        ("Bing Noticias · Startups Latinoamérica", _bing("startup Latinoamérica ronda inversión"), "rss"),
+        ("Bing Noticias · Startups Chile (semana)", _bing("startups Chile"), "rss"),
+        ("Bing Noticias · Rondas de inversión Latinoamérica", _bing("(\"ronda de inversión\" OR \"levantó\" OR \"serie A\") startup Latinoamérica"), "rss"),
+        ("Bing Noticias · Emprendedores Chile", _bing("emprendedores Chile"), "rss"),
+        ("Bing Noticias · Capital de riesgo Latinoamérica", _bing("(\"capital de riesgo\" OR \"venture capital\") Latinoamérica"), "rss"),
+        ("Bing Noticias · Innovación y empresas Chile", _bing("innovación empresas Chile (Corfo OR ANID OR \"Start-Up Chile\")"), "rss"),
+    ],
+    "tecnologia": [
+        ("Bing Noticias · Tecnología", _bing("tecnología (IA OR chips OR Apple OR Google OR Microsoft OR Nvidia)"), "rss"),
+        ("Bing Noticias · Inteligencia artificial", _bing("\"inteligencia artificial\" (OpenAI OR Anthropic OR Google OR Meta OR Nvidia)"), "rss"),
+        ("Bing Noticias · Ciberseguridad", _bing("ciberseguridad OR hackeo OR ciberataque"), "rss"),
+        ("Bing Noticias · Tecnología en Chile", _bing("tecnología Chile (startup OR innovación OR digital)"), "rss"),
+    ],
+    "inmobiliario": [
+        ("Bing Noticias · Inmobiliario Chile", _bing("(inmobiliario OR viviendas OR \"crédito hipotecario\") Chile"), "rss"),
+        ("Bing Noticias · Construcción", _bing("construcción CChC OR inmobiliarias Chile"), "rss"),
+        ("Bing Noticias · Tasas hipotecarias", _bing("\"tasa hipotecaria\" OR \"créditos hipotecarios\" Chile"), "rss"),
+        ("Bing Noticias · Permisos y viviendas", _bing("\"permisos de edificación\" OR \"venta de viviendas\" Chile"), "rss"),
+    ],
+    "deportes": [
+        ("Bing Noticias · Deportes Chile", _bing("deportes Chile"), "rss"),
+        ("Bing Noticias · Golf", _bing("golf (Niemann OR Pereira OR PGA)"), "rss"),
+        ("Bing Noticias · Fútbol chileno", _bing("\"Liga de Primera\" OR \"Colo-Colo\" OR \"Universidad de Chile\""), "rss"),
+        ("Bing Noticias · Equitación", _bing("equitación OR ecuestre OR \"salto ecuestre\""), "rss"),
+        ("Bing Noticias · Tenis chileno", _bing("tenis (Tabilo OR Jarry OR Garin OR Barrios)"), "rss"),
+        ("Bing Noticias · Fórmula 1", _bing("\"Fórmula 1\""), "rss"),
+        ("Bing Noticias · NBA", _bing("NBA"), "rss"),
+        ("Bing Noticias · Equitación en Chile (Sudamericano, Federación Ecuestre)", _bing("\"Federación Ecuestre de Chile\" OR \"Sudamericano de Salto\" OR \"salto ecuestre\" Chile"), "rss"),
+        ("Bing Noticias · Fórmula 1 (Gran Premio)", _bing("\"Gran Premio\" (F1 OR \"Fórmula 1\")"), "rss"),
+        ("Bing Noticias · Fórmula 1 pilotos", _bing("(Colapinto OR Verstappen OR Antonelli OR Norris OR Piastri OR Leclerc) Fórmula 1"), "rss"),
+        ("Bing Noticias · NBA resultados", _bing("NBA (resultados OR triunfo OR derrota OR puntos)"), "rss"),
+        ("Bing Noticias · NBA figuras", _bing("NBA (LeBron OR Curry OR Doncic OR Jokic OR Antetokounmpo OR Wembanyama)"), "rss"),
+        ("Bing Noticias · Rally y automovilismo Chile", _bing("(rally OR RallyMobil OR WRC OR automovilismo) Chile"), "rss"),
+    ],
+}
+
+
+def todas_las_fuentes(ruta_redes="redes.json", radar=True):
+    """FEEDS + FEEDS_EXTRA + redes.json (+ FEEDS_RADAR si radar=True), sin repetir una dirección dentro de la misma sección."""
     out = {k: list(v) for k, v in FEEDS.items()}
-    for extra in (FEEDS_EXTRA, redes(ruta_redes)):
+    for extra in (FEEDS_EXTRA, redes(ruta_redes)) + ((FEEDS_RADAR,) if radar else ()):
         for sec, L in extra.items():
             vistas = {u for _, u, _ in out.setdefault(sec, [])}
             out[sec] += [x for x in L if x[1] not in vistas]

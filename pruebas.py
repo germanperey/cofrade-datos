@@ -740,7 +740,7 @@ def pulso_del_dia():
               {"fuente": "Emol (RSS)", "titulo": "La nota 0 del día", "fecha": ahora, "url": "https://emol.com/0"},
               {"fuente": "Emol (RSS)", "titulo": "La nota vieja del día", "fecha": viejo, "url": "https://emol.com/v"}]
     tit = B.titulares
-    B.titulares = lambda estado: {"secciones": {"politica/chile": {"notas": notas}}}
+    B.titulares = lambda estado, **k: {"secciones": {"politica/chile": {"notas": notas}}}   # 14-11: pulso.py pasa feeds= (radar=False)
     try:
         t = P.titulares({})
     finally:
@@ -1182,6 +1182,27 @@ def sin_fuentes_que_su_robots_prohibe():
     prohibidos = ("news.google.com/rss", "query1.finance.yahoo.com/v7")
     assert not [u for u in urls if any(x in u for x in prohibidos)]
     assert all(len(L) >= 7 for L in F.values()), {k: len(v) for k, v in F.items()}
+
+@prueba
+def radar_de_bing_en_github_y_no_en_el_pulso():
+    """14-11-2026 (auditoría): las 54 búsquedas de Bing del radar de la Skill se leen en «Datos oficiales» con la misma dirección
+    (la tarea las salta en fuentes.py plan); el Pulso no las lee, para no multiplicar los pedidos a Bing."""
+    import pulso as P
+    from urllib.parse import quote
+    radar = [(sec, u) for sec, L in B.FEEDS_RADAR.items() for _, u, _ in L]
+    assert len(radar) == 54 and all(u.startswith("https://www.bing.com/news/search?q=") and u.endswith("&format=rss&cc=CL&setlang=es") for _, u in radar)
+    assert B._bing("política Chile (gobierno OR Congreso)") == "https://www.bing.com/news/search?q=" + quote("política Chile (gobierno OR Congreso)") + "&format=rss&cc=CL&setlang=es"
+    con, sin = B.todas_las_fuentes(), B.todas_las_fuentes(radar=False)
+    assert all(u in {x[1] for x in con[sec]} for sec, u in radar)
+    assert not any(u in {x[1] for x in sin.get(sec, [])} for sec, u in radar if u not in {x[1] for x in B.FEEDS_EXTRA.get(sec, [])})
+    visto = {}
+    viejo = B.titulares
+    B.titulares = lambda estado, feeds=None, hilos=8: visto.setdefault("feeds", feeds) and {}
+    try:
+        P.titulares({})
+    finally:
+        B.titulares = viejo
+    assert visto.get("feeds") is not None and sum(len(v) for v in visto["feeds"].values()) == sum(len(v) for v in sin.values())
 
 if __name__ == "__main__":
     malas = 0
