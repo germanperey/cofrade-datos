@@ -74,7 +74,7 @@ async function desdeGitHub(ruta, segundos, ctx, completa = null) {
   if (r) return r;
   // 14-11-2026 (auditoría): solo se guardan las respuestas buenas. Un release responde 302 hacia una dirección firmada que vence en
   // ~1 hora; con cacheTtl se guardaba también el 302 y al día siguiente la edición completa daba 403.
-  const o = await fetch(completa || RAW + ruta, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": segundos, "300-599": 0 } } });
+  const o = await fetch(completa || RAW + ruta, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": segundos, "300-599": -1 } } });
   if (!o.ok) return null;
   r = new Response(o.body, { headers: { "Cache-Control": `public, max-age=${segundos}` } });
   ctx.waitUntil(cache.put(clave, r.clone()));

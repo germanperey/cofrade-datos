@@ -74,7 +74,7 @@ async function desdeGitHub(ruta, segundos, ctx, completa = null) {
   if (r) return r;
   // 14-11-2026 (auditoría): solo se guardan las respuestas buenas. Un release responde 302 hacia una dirección firmada que vence en
   // ~1 hora; con cacheTtl se guardaba también el 302 y al día siguiente la edición completa daba 403.
-  const o = await fetch(completa || RAW + ruta, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": segundos, "300-599": 0 } } });
+  const o = await fetch(completa || RAW + ruta, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": segundos, "300-599": -1 } } });
   if (!o.ok) return null;
   r = new Response(o.body, { headers: { "Cache-Control": `public, max-age=${segundos}` } });
   ctx.waitUntil(cache.put(clave, r.clone()));
@@ -1106,7 +1106,7 @@ async function pctCofradia(env) {
   return Number.isFinite(n) && n > 0 && n <= 50 ? n : 20;
 }
 async function mpPedir(env, metodo, ruta, cuerpo) {
-  const r = await fetch(MP_API + ruta, { method: metodo, body: cuerpo ? JSON.stringify(cuerpo) : undefined,
+  const r = await fetch(MP_API + ruta, { method: metodo, body: cuerpo ? JSON.stringify(cuerpo) : undefined, signal: AbortSignal.timeout(10000),   // 10 s como máximo
     headers: { Authorization: `Bearer ${String(env.MP_ACCESS_TOKEN || "").trim()}`, "Content-Type": "application/json" } });
   let j = null;
   try { j = await r.json(); } catch { j = null; }
@@ -1248,13 +1248,13 @@ async function crearSuscripcion(req, env, ctx) {
   // Candado por correo (auditoría del 14-11): dos pestañas o un doble envío no crean dos suscripciones a la vez.
   const candado = "candado:" + (await sha256hex("sus|" + email)).slice(0, 24), t0 = Date.now();
   const tomado = await env.DB.prepare("INSERT INTO config (clave, valor) VALUES (?, ?) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor WHERE CAST(config.valor AS INTEGER) < ?")
-    .bind(candado, String(t0), t0 - 60000).run();
+    .bind(candado, String(t0), t0 - 90000).run();
   if (!tomado || !tomado.meta || tomado.meta.changes !== 1)
     return responder(false, "Ya estamos procesando una inscripción con ese correo. Espera un minuto y revisa tu cuenta de Mercado Pago.", 409);
   try {
     return await inscribir(env, responder, { nombre, email, plan, cofradia, ip });
   } finally {
-    await env.DB.prepare("DELETE FROM config WHERE clave = ?").bind(candado).run().catch(() => null);
+    await env.DB.prepare("DELETE FROM config WHERE clave = ? AND valor = ?").bind(candado, String(t0)).run().catch(() => null);   // solo el candado propio
   }
 }
 
@@ -1269,7 +1269,7 @@ async function inscribir(env, responder, { nombre, email, plan, cofradia, ip }) 
   }
   if (vivas.some((x) => ["activa", "pausada"].includes(x.estado)))
     return responder(false, "Ese correo ya tiene una suscripción de socio fundador. Revísala en tu cuenta de Mercado Pago, en «Suscripciones».", 409);
-  if (vivas.some((x) => x.estado === "creada" && Date.now() - Date.parse(x.creado) < 120000))
+  if (vivas.some((x) => x.estado === "creada" && Date.now() - Date.parse(x.creado) < 120000))   // con 10 s por pedido, nunca dura más
     return responder(false, "Ya estamos procesando una inscripción con ese correo. Espera un minuto y revisa tu cuenta de Mercado Pago.", 409);
   const igual = vivas.find((x) => x.estado === "pendiente" && x.enlace && DE_MP.test(x.enlace) && x.plan === plan && !!x.cofradia === cofradia
     && Date.now() - Date.parse(x.creado) < 86400000);
@@ -1299,7 +1299,12 @@ async function inscribir(env, responder, { nombre, email, plan, cofradia, ip }) 
       : "Mercado Pago no respondió. Intenta de nuevo en unos minutos.";
     return responder(false, msg, 502);
   }
-  await env.DB.prepare("UPDATE suscripciones SET estado = 'pendiente', mp_id = ?, enlace = ?, actualizado = ? WHERE ref = ?").bind(mpId, enlace, ahoraIso(), ref).run();
+  const u = await env.DB.prepare("UPDATE suscripciones SET estado = 'pendiente', mp_id = ?, enlace = ?, actualizado = ? WHERE ref = ? AND estado = 'creada'")
+    .bind(mpId, enlace, ahoraIso(), ref).run();
+  if (!u.meta || u.meta.changes !== 1) {   // otra inscripción del mismo correo la dio por perdida mientras Mercado Pago tardaba
+    await mpPedir(env, "PUT", `/preapproval/${encodeURIComponent(mpId)}`, { status: "cancelled" }).catch(() => null);
+    return responder(false, "Mercado Pago tardó demasiado en responder. Intenta de nuevo en unos minutos.", 502);
+  }
   return responder(true, enlace);
 }
 
@@ -1311,16 +1316,22 @@ async function actualizarSuscripcion(env, pre) {
   if (!fila) return null;
   let estado = ESTADO_MP[pre.status] || fila.estado, pausadaPor = fila.pausada_por || null;
   const ahora = new Date().toISOString();
-  const proximo = String(pre.next_payment_date || (pre.auto_recurring && pre.auto_recurring.start_date) || fila.inicio || "");
+  const proximo = pre.next_payment_date ? String(pre.next_payment_date) : (fila.proximo || null);   // solo el dato de Mercado Pago (auditoría N3)
   if (estado === "activa") {
     pausadaPor = null;
     const promesa = Date.parse(fila.inicio), prox = Date.parse(pre.next_payment_date || "");
     const antes = Number.isFinite(promesa) && Number.isFinite(prox) && Date.now() < promesa && prox < promesa - MARGEN_COBRO;
     const enPausa = (await leerConfig(env, "suscripciones_en_pausa")) === "1";
+    if (!antes && Number.isFinite(prox) && Number.isFinite(promesa) && prox >= promesa - MARGEN_COBRO)
+      await ponerConfig(env, "fecha_verificada", fila.ref).catch(() => null);   // Mercado Pago anotó la fecha prometida: se puede abrir
     if (antes || enPausa) {
       const r = await mpPedir(env, "PUT", `/preapproval/${encodeURIComponent(pre.id)}`, { status: "paused" }).catch(() => ({ ok: false }));
       if (r.ok) { estado = "pausada"; pausadaPor = antes ? "seguridad" : "admin"; }
-      if (antes) await ponerConfig(env, "alerta_mp", JSON.stringify({ ref: fila.ref, email: fila.email, proximo: pre.next_payment_date, prometido: fila.inicio, pausada: !!r.ok, hora: ahora })).catch(() => null);
+      if (antes) {
+        await ponerConfig(env, "fundadores_abierto", "0").catch(() => null);
+        await ponerConfig(env, "alerta_mp", JSON.stringify({ tipo: "fecha", ref: fila.ref, email: fila.email, proximo: pre.next_payment_date, prometido: fila.inicio, pausada: !!r.ok, hora: ahora })).catch(() => null);
+      }
+      if (!r.ok) throw new Error("No se pudo pausar en Mercado Pago");   // el aviso responde 500 y Mercado Pago lo repite (auditoría N5)
     }
   } else if (estado === "pausada" && fila.estado !== "pausada") {
     pausadaPor = null;   // la pausó el cliente desde Mercado Pago (las del Panel y las de seguridad llegan ya marcadas)
@@ -1337,13 +1348,23 @@ plan = excluded.plan, vence = excluded.vence, mp_id = excluded.mp_id`).bind(fila
 }
 async function registrarCobro(env, ap) {
   if (!ap || !ap.id) return null;
-  const fila = await env.DB.prepare("SELECT ref, email FROM suscripciones WHERE mp_id = ? LIMIT 1").bind(String(ap.preapproval_id || "")).first();
+  const fila = await env.DB.prepare("SELECT ref, email, inicio FROM suscripciones WHERE mp_id = ? LIMIT 1").bind(String(ap.preapproval_id || "")).first();
   if (!fila) return null;   // un cobro que no es de Cofrade News
   const pago = ap.payment || {};
-  const id = pago.id ? String(pago.id) : "ap-" + ap.id;
+  const id = pago.id ? String(pago.id) : "ap-" + ap.id, fecha = String(ap.debit_date || ap.date_created || new Date().toISOString());
+  const monto = Math.round(Number(ap.transaction_amount) || 0);
   await env.DB.prepare("INSERT OR REPLACE INTO pagos (id, email, monto, fecha, estado, tipo, ref) VALUES (?, ?, ?, ?, ?, 'suscripcion', ?)")
-    .bind(id, fila.email, Math.round(Number(ap.transaction_amount) || 0), String(ap.debit_date || ap.date_created || new Date().toISOString()),
-      String(pago.status || ap.status || ""), fila.ref).run();
+    .bind(id, fila.email, monto, fecha, String(pago.status || ap.status || ""), fila.ref).run();
+  // Auditoría N2: si Mercado Pago cobra ANTES de lo prometido (y corre la fecha siguiente), next_payment_date no lo delata;
+  // el cobro sí. Se pausa, se cierran las inscripciones y el Panel avisa en rojo para devolverlo.
+  const promesa = Date.parse(fila.inicio), cuando = Date.parse(fecha);
+  if (Number.isFinite(promesa) && Number.isFinite(cuando) && cuando < promesa - MARGEN_COBRO) {
+    const r = await mpPedir(env, "PUT", `/preapproval/${encodeURIComponent(String(ap.preapproval_id))}`, { status: "paused" }).catch(() => ({ ok: false }));
+    if (r.ok) await env.DB.prepare("UPDATE suscripciones SET estado = 'pausada', pausada_por = 'seguridad', actualizado = ? WHERE ref = ?").bind(new Date().toISOString(), fila.ref).run();
+    await ponerConfig(env, "fundadores_abierto", "0");
+    await ponerConfig(env, "alerta_mp", JSON.stringify({ tipo: "cobro", ref: fila.ref, email: fila.email, cobro: fecha, monto, prometido: fila.inicio, pausada: !!r.ok, hora: new Date().toISOString() }));
+    if (!r.ok) throw new Error("No se pudo pausar en Mercado Pago");
+  }
   return id;
 }
 // Lanza un error si hay que reintentar (Mercado Pago caído o la base no guardó): el aviso responde 500 y Mercado Pago lo repite.
@@ -1351,8 +1372,8 @@ async function procesarAvisoMP(env, tipo, id) {
   const ruta = /preapproval$/.test(tipo) ? `/preapproval/${encodeURIComponent(id)}` : /authorized_payment$/.test(tipo) ? `/authorized_payments/${encodeURIComponent(id)}` : null;
   if (!ruta) return;
   const r = await mpPedir(env, "GET", ruta);
-  if (r.status >= 500 || r.status === 429) throw new Error("Mercado Pago " + r.status);
-  if (!r.ok) return;   // 404: un aviso de prueba o de otro producto; no se reintenta
+  if (r.status === 404) return;   // un aviso de prueba o de otro producto: no se reintenta
+  if (!r.ok) throw new Error("Mercado Pago " + r.status);   // caído, llave cambiada o revocada: 500 y Mercado Pago reintenta
   if (/preapproval$/.test(tipo)) await actualizarSuscripcion(env, r.j);
   else await registrarCobro(env, r.j);
 }
@@ -1433,8 +1454,8 @@ function condiciones(pct) {
       "You can cancel anytime from your Mercado Pago account (the Subscriptions section) or by writing to us through the Suggestion box at www.cofrad.es. Canceling stops the following charges."],
     ["Boleta", "Por cada cobro, Destak E.I.R.L. emite la boleta electrónica que corresponde.",
       "For each charge, Destak E.I.R.L. issues the corresponding electronic receipt (boleta)."],
-    ["Tus datos", "Guardamos tu nombre, tu email, el estado de tu suscripción y una huella anónima de la conexión desde la que te inscribiste (no es tu dirección IP; sirve para frenar abusos), solo para darte acceso, emitir tus boletas y proteger el sitio. No los vendemos ni los compartimos, salvo con Mercado Pago para procesar el pago. Puedes pedir que los borremos escribiéndonos desde el Buzón de www.cofrad.es.",
-      "We keep your name, your email, the status of your subscription and an anonymous fingerprint of the connection you signed up from (it is not your IP address; it helps stop abuse), only to give you access, issue your receipts and protect the site. We do not sell or share them, except with Mercado Pago to process the payment. You can ask us to delete them by writing to us through the Suggestion box at www.cofrad.es."],
+    ["Tus datos", "Guardamos tu nombre, tu email, el estado de tu suscripción y una huella seudónima de la conexión desde la que te inscribiste (no guardamos tu dirección IP; la huella sirve para frenar abusos), solo para darte acceso, emitir tus boletas y proteger el sitio. No los vendemos ni los compartimos, salvo con Mercado Pago para procesar el pago. Puedes pedir que los borremos escribiéndonos desde el Buzón de www.cofrad.es.",
+      "We keep your name, your email, the status of your subscription and a pseudonymous fingerprint of the connection you signed up from (we do not store your IP address; the fingerprint helps stop abuse), only to give you access, issue your receipts and protect the site. We do not sell or share them, except with Mercado Pago to process the payment. You can ask us to delete them by writing to us through the Suggestion box at www.cofrad.es."],
     ["Qué no es", "El Dashboard Financiero es información general y educativa. No es asesoría de inversión ni una recomendación de compra o venta, y no considera tu situación personal.",
       "The Financial Dashboard is general and educational information. It is not investment advice or a recommendation to buy or sell, and it does not consider your personal situation."],
   ];
@@ -1472,6 +1493,7 @@ async function accionSuscripciones(req, env) {
     if (!env.MP_WEBHOOK_SECRET) return ir("falta-aviso");
     if ((await leerConfig(env, "suscripciones_en_pausa")) === "1") return ir("en-pausa");
     if (await leerConfig(env, "alerta_mp")) return ir("con-alerta");
+    if (!(await leerConfig(env, "fecha_verificada"))) return ir("sin-verificar");
     await ponerConfig(env, "fundadores_abierto", "1");
     return ir("abiertas");
   }
@@ -1513,7 +1535,8 @@ function mensajeAccion(r) {
   return { abiertas: "Inscripciones abiertas al público.", cerradas: "Inscripciones cerradas: la página muestra «Avísenme cuando abra».",
     "falta-aviso": "Para abrir las inscripciones falta la clave MP_WEBHOOK_SECRET en Cloudflare.",
     "en-pausa": "Las suscripciones están en pausa: reanúdalas antes de abrir las inscripciones.", "sin-llave": "Falta la clave MP_ACCESS_TOKEN en Cloudflare.",
-    "con-alerta": "Hay un aviso en rojo sin revisar: no se abren las inscripciones hasta revisarlo.", "alerta-borrada": "Aviso borrado." }[r] || "";
+    "con-alerta": "Hay un aviso en rojo sin revisar: no se abren las inscripciones hasta revisarlo.", "alerta-borrada": "Aviso borrado.",
+    "sin-verificar": "Todavía no hay una suscripción de prueba activa con la fecha de Mercado Pago: haz primero la prueba privada." }[r] || "";
 }
 
 // Panel (solo Germán): inscripciones y cobros. De paso, pone al día hasta 6 suscripciones que no se revisan hace más de 6 horas,
@@ -1526,10 +1549,10 @@ async function panelSocios(env, u) {
       new Date(Date.now() - 6 * 3600000).toISOString());
     await Promise.all(viejas.map((x) => mpPedir(env, "GET", `/preapproval/${encodeURIComponent(x.mp_id)}`).then((r) => (r.ok ? actualizarSuscripcion(env, r.j) : null)).catch(() => null)));
   }
-  const [subs, cobros, abierto, enPausa, alertaTxt] = await Promise.all([
+  const [subs, cobros, abierto, enPausa, alertaTxt, verificada] = await Promise.all([
     q("SELECT creado, nombre, email, plan, monto, cofradia, estado, proximo, inicio, pausada_por FROM suscripciones WHERE estado NOT IN ('creada', 'error') ORDER BY creado DESC LIMIT 200"),
     q("SELECT id, email, monto, fecha, estado FROM pagos WHERE tipo = 'suscripcion' ORDER BY fecha DESC LIMIT 200"),
-    leerConfig(env, "fundadores_abierto"), leerConfig(env, "suscripciones_en_pausa"), leerConfig(env, "alerta_mp"),
+    leerConfig(env, "fundadores_abierto"), leerConfig(env, "suscripciones_en_pausa"), leerConfig(env, "alerta_mp"), leerConfig(env, "fecha_verificada"),
   ]);
   let alerta = null;
   try { alerta = JSON.parse(alertaTxt || "null"); } catch { alerta = null; }
@@ -1538,20 +1561,24 @@ async function panelSocios(env, u) {
   const kpi = (t, v, s = "") => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${s ? `<br><small>${esc(s)}</small>` : ""}</div>`;
   const pausaTxt = (x) => x.estado !== "pausada" ? "" : x.pausada_por === "admin" ? " (Panel)" : x.pausada_por === "seguridad" ? " (seguridad)" : " (cliente)";
   const fila = (x) => `<tr><td>${esc(String(x.creado).slice(0, 10))}</td><td>${esc(x.nombre)}</td><td>${esc(x.email)}</td><td>${esc(x.plan)}${x.cofradia ? " · Cofradía" : ""}</td>
-<td>${pesos(x.monto)}</td><td>${esc(x.estado + pausaTxt(x))}</td><td>${esc(String(x.proximo || x.inicio || "").slice(0, 10))}</td></tr>`;
+<td>${pesos(x.monto)}</td><td>${esc(x.estado + pausaTxt(x))}</td><td>${x.proximo ? esc(String(x.proximo).slice(0, 10)) : `${esc(String(x.inicio || "").slice(0, 10))} <small>(prometido; Mercado Pago aún no lo confirma)</small>`}</td></tr>`;
   const msg = mensajeAccion(u ? u.searchParams.get("suscripciones") : "");
   const listas = mpActivo(env) && !!env.MP_WEBHOOK_SECRET;
   const boton = (accion, texto) => `<button class="btn linea" name="accion" value="${accion}" type="submit">${texto}</button>`;
   return `<section id="socios"><h3>Socios fundadores (Mercado Pago)</h3>
 ${msg ? `<p class="aviso" role="status">${esc(msg)}</p>` : ""}
-${alerta ? `<p class="aviso" role="alert" style="color:var(--rojo)">Mercado Pago anotó para ${esc(alerta.email || alerta.ref || "")} un primer cobro el ${esc(String(alerta.proximo || "").slice(0, 10))}, antes de lo prometido (${esc(String(alerta.prometido || "").slice(0, 10))}). ${alerta.pausada ? "La dejé en pausa en Mercado Pago" : "NO se pudo pausar: páusala tú en Mercado Pago"}. No abras las inscripciones hasta revisarlo conmigo.</p>
+${alerta ? `<p class="aviso" role="alert" style="color:var(--rojo)">${alerta.tipo === "cobro"
+    ? `Mercado Pago COBRÓ ${pesos(alerta.monto || 0)} a ${esc(alerta.email || alerta.ref || "")} el ${esc(String(alerta.cobro || "").slice(0, 10))}, antes de lo prometido (${esc(String(alerta.prometido || "").slice(0, 10))}). Hay que devolverle ese cobro desde tu cuenta de Mercado Pago.`
+    : `Mercado Pago anotó para ${esc(alerta.email || alerta.ref || "")} un primer cobro el ${esc(String(alerta.proximo || "").slice(0, 10))}, antes de lo prometido (${esc(String(alerta.prometido || "").slice(0, 10))}).`}
+${alerta.pausada ? "La dejé en pausa en Mercado Pago y cerré las inscripciones" : "NO se pudo pausar: páusala tú en Mercado Pago"}. No abras las inscripciones hasta revisarlo conmigo.</p>
 <form method="post" action="/panel/suscripciones" class="acciones" style="margin:0 0 12px"><button class="btn linea" name="accion" value="alerta" type="submit">Ya lo revisé: borrar el aviso</button></form>` : ""}
 ${mpActivo(env) ? "" : `<p class="aviso">Falta la clave MP_ACCESS_TOKEN en Cloudflare: el botón «Quiero ser socio fundador» todavía abre el formulario de interés.</p>`}
 ${mpActivo(env) && !env.MP_WEBHOOK_SECRET ? `<p class="aviso">Falta la clave MP_WEBHOOK_SECRET: los avisos de Mercado Pago esperan y las inscripciones no se pueden abrir al público.</p>` : ""}
+${enPausa === "1" && cuenta("activa") ? `<p class="aviso" role="alert" style="color:var(--rojo)">Hay ${num(cuenta("activa"), 0)} suscripción(es) activa(s) aunque pausaste todas: aprieta «Pausar todas» otra vez.</p>` : ""}
 ${mpActivo(env) ? `<p class="sub">Inscripciones: <b>${abierto === "1" ? "abiertas al público" : "cerradas al público"}</b>${enPausa === "1" ? " · <b>suscripciones en pausa</b> (nadie paga mientras sigan así)" : ""}.
-${abierto === "1" ? "" : "Antes de abrir: «Probar la inscripción», inscríbete con tu tarjeta y revisa abajo que el «Próximo cobro» diga 2026-12-01."}</p>
+${abierto === "1" ? "" : verificada ? "La prueba privada salió bien: Mercado Pago anotó el primer cobro en la fecha prometida." : "Antes de abrir: «Probar la inscripción», inscríbete con tu tarjeta y autoriza en Mercado Pago. Cuando tu suscripción de prueba quede activa con el «Próximo cobro» 2026-12-01, aparece el botón «Abrir inscripciones al público»."}</p>
 <div class="acciones" style="margin:10px 0 14px"><a class="btn linea" href="/panel/probar">Probar la inscripción (solo tú, 2 horas)</a>
-<form method="post" action="/panel/suscripciones" style="display:contents">${listas && abierto !== "1" && enPausa !== "1" && !alerta ? boton("abrir", "Abrir inscripciones al público") : ""}${abierto === "1" ? boton("cerrar", "Cerrar inscripciones") : ""}
+<form method="post" action="/panel/suscripciones" style="display:contents">${listas && abierto !== "1" && enPausa !== "1" && !alerta && verificada ? boton("abrir", "Abrir inscripciones al público") : ""}${abierto === "1" ? boton("cerrar", "Cerrar inscripciones") : ""}
 ${subs.length ? boton("pausar", "Pausar todas (no se cobra a nadie)") + boton("reanudar", "Reanudar las pausadas") : ""}</form></div>
 ${subs.length ? `<p class="sub">«Pausar todas» es lo que promete la cláusula «Si el lanzamiento se atrasa»: úsalo si el Dashboard no está listo el 1 de diciembre. «Reanudar» solo reactiva las que pausó el Panel.</p>` : ""}` : ""}
 <div class="cifras">${kpi("Inscritos con tarjeta autorizada", num(cuenta("activa"), 0), "cobro desde el 1 de diciembre")}${kpi("Pendientes de autorizar", num(cuenta("pendiente"), 0))}

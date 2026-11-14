@@ -47,4 +47,5 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add datos/ediciones.json archivo/manifiesto/completas.json archivo/manifiesto/meses.json ediciones archivo/manifiesto
           git diff --cached --quiet || git commit -m "Índice y ediciones completas permanentes $(date -u +%Y-%m-%dT%H:%M)"
-          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 10; done
+          ok=0; for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && ok=1 && break; sleep 10; done
+          [ "$ok" = 1 ] || { echo "No se pudo subir el índice tras 3 intentos"; exit 1; }
