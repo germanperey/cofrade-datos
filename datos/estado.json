@@ -1,791 +1,791 @@
 {
  "fecha": "2026-11-14",
- "generado": "2026-11-14T06:42:32-03:00",
+ "generado": "2026-11-14T07:22:55-03:00",
  "fuentes": {
   "uv": {
    "ok": true,
-   "hora": "2026-11-14T06:30:22-03:00",
+   "hora": "2026-11-14T07:03:51-03:00",
    "url": "https://api.open-meteo.com/v1/forecast?latitude=-18.48,-23.65,-29.9,-33.05,-33.45,-36.83,-38.74,-41.47,-53.16&longitude=-70.31,-70.4,-71.25,-71.61,-70.67,-73.05,-72.59,-72.94,-70.92&daily=uv_index_clear_sky_max&timezone=America%2FSantiago&forecast_days=8",
    "intentos": 1
   },
   "clima": {
    "ok": true,
-   "hora": "2026-11-14T06:30:23-03:00",
+   "hora": "2026-11-14T07:03:51-03:00",
    "url": "https://api.open-meteo.com/v1/forecast?latitude=-18.48,-23.65,-29.9,-33.05,-33.45,-36.83,-38.74,-41.47,-53.16&longitude=-70.31,-70.4,-71.25,-71.61,-70.67,-73.05,-72.59,-72.94,-70.92&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,weather_code&wind_speed_unit=ms&timezone=GMT&forecast_days=8",
    "intentos": 1
   },
   "imacec": {
    "ok": true,
-   "hora": "2026-11-14T06:30:29-03:00",
+   "hora": "2026-11-14T07:10:44-03:00",
    "url": "https://mindicador.cl/api/imacec/2026",
-   "intentos": 1
+   "intentos": 3
   },
   "indicadores": {
    "ok": true,
-   "hora": "2026-11-14T06:30:33-03:00",
+   "hora": "2026-11-14T07:10:50-03:00",
    "url": "https://mindicador.cl/api",
    "intentos": 1
   },
   "camara": {
    "ok": true,
-   "hora": "2026-11-14T06:30:40-03:00",
+   "hora": "2026-11-14T07:10:57-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXAnno?prmAnno=2026",
    "intentos": 1,
    "nominal": {
     "guardadas": 453,
     "pendientes": 184,
     "descartadas_otro_periodo": 110,
-    "ejemplo_descartada": "91423"
+    "ejemplo_descartada": "91424"
    }
+  },
+  "camara_detalle_91424": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:00-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91424",
+   "intentos": 1
+  },
+  "camara_detalle_91390": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:04-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91390",
+   "intentos": 1
+  },
+  "camara_detalle_91456": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:07-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91456",
+   "intentos": 1
+  },
+  "camara_detalle_91442": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:10-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91442",
+   "intentos": 1
+  },
+  "camara_detalle_91405": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:13-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91405",
+   "intentos": 1
+  },
+  "camara_detalle_91378": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:17-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91378",
+   "intentos": 1
+  },
+  "camara_detalle_91447": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:20-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91447",
+   "intentos": 1
+  },
+  "camara_detalle_91406": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:23-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91406",
+   "intentos": 1
+  },
+  "camara_detalle_91426": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:26-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91426",
+   "intentos": 1
   },
   "camara_detalle_91423": {
    "ok": true,
-   "hora": "2026-11-14T06:30:43-03:00",
+   "hora": "2026-11-14T07:11:29-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91423",
    "intentos": 1
   },
-  "camara_detalle_91414": {
+  "camara_detalle_91431": {
    "ok": true,
-   "hora": "2026-11-14T06:30:47-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91414",
+   "hora": "2026-11-14T07:11:32-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91431",
    "intentos": 1
   },
-  "camara_detalle_91398": {
+  "camara_detalle_91441": {
    "ok": true,
-   "hora": "2026-11-14T06:30:50-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91398",
+   "hora": "2026-11-14T07:11:35-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91441",
    "intentos": 1
   },
-  "camara_detalle_91452": {
+  "camara_detalle_91400": {
    "ok": true,
-   "hora": "2026-11-14T06:30:53-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91452",
+   "hora": "2026-11-14T07:11:39-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91400",
    "intentos": 1
   },
-  "camara_detalle_91449": {
+  "camara_detalle_91434": {
    "ok": true,
-   "hora": "2026-11-14T06:30:56-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91449",
+   "hora": "2026-11-14T07:11:42-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91434",
+   "intentos": 1
+  },
+  "camara_detalle_91454": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:45-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91454",
+   "intentos": 1
+  },
+  "camara_detalle_91419": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:48-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91419",
+   "intentos": 1
+  },
+  "camara_detalle_91385": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:51-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91385",
+   "intentos": 1
+  },
+  "camara_detalle_91430": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:54-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91430",
+   "intentos": 1
+  },
+  "camara_detalle_91397": {
+   "ok": true,
+   "hora": "2026-11-14T07:11:57-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91397",
+   "intentos": 1
+  },
+  "camara_detalle_91457": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:01-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91457",
+   "intentos": 1
+  },
+  "camara_detalle_91446": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:04-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91446",
+   "intentos": 1
+  },
+  "camara_detalle_91404": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:07-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91404",
+   "intentos": 1
+  },
+  "camara_detalle_91388": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:10-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91388",
    "intentos": 1
   },
   "camara_detalle_91436": {
    "ok": true,
-   "hora": "2026-11-14T06:30:59-03:00",
+   "hora": "2026-11-14T07:12:13-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91436",
    "intentos": 1
   },
-  "camara_detalle_91427": {
+  "camara_detalle_91411": {
    "ok": true,
-   "hora": "2026-11-14T06:31:02-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91427",
+   "hora": "2026-11-14T07:12:16-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91411",
    "intentos": 1
   },
-  "camara_detalle_91448": {
+  "camara_detalle_91414": {
    "ok": true,
-   "hora": "2026-11-14T06:31:06-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91448",
+   "hora": "2026-11-14T07:12:19-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91414",
    "intentos": 1
   },
-  "camara_detalle_91455": {
+  "camara_detalle_91391": {
    "ok": true,
-   "hora": "2026-11-14T06:31:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91455",
+   "hora": "2026-11-14T07:12:23-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91391",
    "intentos": 1
   },
   "camara_detalle_91451": {
    "ok": true,
-   "hora": "2026-11-14T06:31:12-03:00",
+   "hora": "2026-11-14T07:12:26-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91451",
+   "intentos": 1
+  },
+  "camara_detalle_91420": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:29-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91420",
+   "intentos": 1
+  },
+  "camara_detalle_91379": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:32-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91379",
+   "intentos": 1
+  },
+  "camara_detalle_91440": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:35-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91440",
+   "intentos": 1
+  },
+  "camara_detalle_91409": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:38-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91409",
+   "intentos": 1
+  },
+  "camara_detalle_91382": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:41-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91382",
+   "intentos": 1
+  },
+  "camara_detalle_91398": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:45-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91398",
+   "intentos": 1
+  },
+  "camara_detalle_91418": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:48-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91418",
+   "intentos": 1
+  },
+  "camara_detalle_91393": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:51-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91393",
+   "intentos": 1
+  },
+  "camara_detalle_91433": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:54-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91433",
+   "intentos": 1
+  },
+  "camara_detalle_91407": {
+   "ok": true,
+   "hora": "2026-11-14T07:12:57-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91407",
+   "intentos": 1
+  },
+  "camara_detalle_91425": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:00-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91425",
+   "intentos": 1
+  },
+  "camara_detalle_91452": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:04-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91452",
+   "intentos": 1
+  },
+  "camara_detalle_91435": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:07-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91435",
+   "intentos": 1
+  },
+  "camara_detalle_91384": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:10-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91384",
+   "intentos": 1
+  },
+  "camara_detalle_91395": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:13-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91395",
+   "intentos": 1
+  },
+  "camara_detalle_91458": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:16-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91458",
+   "intentos": 1
+  },
+  "camara_detalle_91401": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:19-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91401",
+   "intentos": 1
+  },
+  "camara_detalle_91402": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:22-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91402",
+   "intentos": 1
+  },
+  "camara_detalle_91439": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:26-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91439",
+   "intentos": 1
+  },
+  "camara_detalle_91444": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:29-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91444",
+   "intentos": 1
+  },
+  "camara_detalle_91429": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:32-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91429",
+   "intentos": 1
+  },
+  "camara_detalle_91396": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:35-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91396",
+   "intentos": 1
+  },
+  "camara_detalle_91437": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:38-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91437",
+   "intentos": 1
+  },
+  "camara_detalle_91381": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:41-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91381",
+   "intentos": 1
+  },
+  "camara_detalle_91453": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:44-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91453",
+   "intentos": 1
+  },
+  "camara_detalle_91380": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:48-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91380",
+   "intentos": 1
+  },
+  "camara_detalle_91449": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:51-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91449",
+   "intentos": 1
+  },
+  "camara_detalle_91412": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:54-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91412",
+   "intentos": 1
+  },
+  "camara_detalle_91455": {
+   "ok": true,
+   "hora": "2026-11-14T07:13:57-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91455",
+   "intentos": 1
+  },
+  "camara_detalle_91394": {
+   "ok": true,
+   "hora": "2026-11-14T07:14:00-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91394",
    "intentos": 1
   },
   "camara_detalle_91408": {
    "ok": true,
-   "hora": "2026-11-14T06:31:15-03:00",
+   "hora": "2026-11-14T07:14:03-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91408",
    "intentos": 1
   },
   "camara_detalle_91438": {
    "ok": true,
-   "hora": "2026-11-14T06:31:18-03:00",
+   "hora": "2026-11-14T07:14:06-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91438",
-   "intentos": 1
-  },
-  "camara_detalle_91418": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:21-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91418",
-   "intentos": 1
-  },
-  "camara_detalle_91434": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:25-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91434",
-   "intentos": 1
-  },
-  "camara_detalle_91457": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:28-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91457",
-   "intentos": 1
-  },
-  "camara_detalle_91392": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:31-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91392",
-   "intentos": 1
-  },
-  "camara_detalle_91378": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:34-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91378",
-   "intentos": 1
-  },
-  "camara_detalle_91433": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:37-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91433",
-   "intentos": 1
-  },
-  "camara_detalle_91384": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:40-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91384",
-   "intentos": 1
-  },
-  "camara_detalle_91422": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:43-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91422",
-   "intentos": 1
-  },
-  "camara_detalle_91445": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:47-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91445",
-   "intentos": 1
-  },
-  "camara_detalle_91409": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:50-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91409",
-   "intentos": 1
-  },
-  "camara_detalle_91402": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:53-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91402",
-   "intentos": 1
-  },
-  "camara_detalle_91440": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:56-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91440",
-   "intentos": 1
-  },
-  "camara_detalle_91437": {
-   "ok": true,
-   "hora": "2026-11-14T06:31:59-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91437",
-   "intentos": 1
-  },
-  "camara_detalle_91390": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:02-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91390",
-   "intentos": 1
-  },
-  "camara_detalle_91393": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:06-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91393",
-   "intentos": 1
-  },
-  "camara_detalle_91396": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91396",
-   "intentos": 1
-  },
-  "camara_detalle_91413": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:12-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91413",
-   "intentos": 1
-  },
-  "camara_detalle_91417": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:15-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91417",
-   "intentos": 1
-  },
-  "camara_detalle_91458": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:18-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91458",
    "intentos": 1
   },
   "camara_detalle_91443": {
    "ok": true,
-   "hora": "2026-11-14T06:32:21-03:00",
+   "hora": "2026-11-14T07:14:10-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91443",
    "intentos": 1
   },
-  "camara_detalle_91379": {
+  "camara_detalle_91422": {
    "ok": true,
-   "hora": "2026-11-14T06:32:24-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91379",
+   "hora": "2026-11-14T07:14:13-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91422",
    "intentos": 1
   },
-  "camara_detalle_91450": {
+  "camara_detalle_91417": {
    "ok": true,
-   "hora": "2026-11-14T06:32:28-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91450",
-   "intentos": 1
-  },
-  "camara_detalle_91383": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:31-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91383",
-   "intentos": 1
-  },
-  "camara_detalle_91454": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:34-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91454",
-   "intentos": 1
-  },
-  "camara_detalle_91429": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:37-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91429",
-   "intentos": 1
-  },
-  "camara_detalle_91421": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:40-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91421",
-   "intentos": 1
-  },
-  "camara_detalle_91377": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:43-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91377",
-   "intentos": 1
-  },
-  "camara_detalle_91424": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:47-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91424",
-   "intentos": 1
-  },
-  "camara_detalle_91389": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:50-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91389",
-   "intentos": 1
-  },
-  "camara_detalle_91456": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:53-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91456",
-   "intentos": 1
-  },
-  "camara_detalle_91446": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:56-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91446",
-   "intentos": 1
-  },
-  "camara_detalle_91441": {
-   "ok": true,
-   "hora": "2026-11-14T06:32:59-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91441",
-   "intentos": 1
-  },
-  "camara_detalle_91394": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:02-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91394",
-   "intentos": 1
-  },
-  "camara_detalle_91400": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:06-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91400",
-   "intentos": 1
-  },
-  "camara_detalle_91412": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91412",
-   "intentos": 1
-  },
-  "camara_detalle_91399": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:12-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91399",
-   "intentos": 1
-  },
-  "camara_detalle_91425": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:15-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91425",
-   "intentos": 1
-  },
-  "camara_detalle_91435": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:18-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91435",
+   "hora": "2026-11-14T07:14:16-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91417",
    "intentos": 1
   },
   "camara_detalle_91432": {
    "ok": true,
-   "hora": "2026-11-14T06:33:21-03:00",
+   "hora": "2026-11-14T07:14:19-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91432",
-   "intentos": 1
-  },
-  "camara_detalle_91395": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:24-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91395",
-   "intentos": 1
-  },
-  "camara_detalle_91397": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:28-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91397",
-   "intentos": 1
-  },
-  "camara_detalle_91405": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:31-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91405",
-   "intentos": 1
-  },
-  "camara_detalle_91419": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:34-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91419",
-   "intentos": 1
-  },
-  "camara_detalle_91416": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:37-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91416",
-   "intentos": 1
-  },
-  "camara_detalle_91388": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:40-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91388",
-   "intentos": 1
-  },
-  "camara_detalle_91444": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:43-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91444",
-   "intentos": 1
-  },
-  "camara_detalle_91401": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:47-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91401",
-   "intentos": 1
-  },
-  "camara_detalle_91380": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:50-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91380",
-   "intentos": 1
-  },
-  "camara_detalle_91381": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:53-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91381",
-   "intentos": 1
-  },
-  "camara_detalle_91404": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:56-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91404",
-   "intentos": 1
-  },
-  "camara_detalle_91431": {
-   "ok": true,
-   "hora": "2026-11-14T06:33:59-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91431",
-   "intentos": 1
-  },
-  "camara_detalle_91411": {
-   "ok": true,
-   "hora": "2026-11-14T06:34:02-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91411",
    "intentos": 1
   },
   "camara_detalle_91410": {
    "ok": true,
-   "hora": "2026-11-14T06:34:06-03:00",
+   "hora": "2026-11-14T07:14:22-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91410",
    "intentos": 1
   },
-  "camara_detalle_91385": {
+  "camara_detalle_91389": {
    "ok": true,
-   "hora": "2026-11-14T06:34:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91385",
+   "hora": "2026-11-14T07:14:25-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91389",
    "intentos": 1
   },
-  "camara_detalle_91420": {
+  "camara_detalle_91413": {
    "ok": true,
-   "hora": "2026-11-14T06:34:12-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91420",
+   "hora": "2026-11-14T07:14:28-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91413",
    "intentos": 1
   },
-  "camara_detalle_91426": {
+  "camara_detalle_91399": {
    "ok": true,
-   "hora": "2026-11-14T06:34:15-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91426",
+   "hora": "2026-11-14T07:14:32-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91399",
    "intentos": 1
   },
-  "camara_detalle_91407": {
+  "camara_detalle_91450": {
    "ok": true,
-   "hora": "2026-11-14T06:34:18-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91407",
+   "hora": "2026-11-14T07:14:35-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91450",
    "intentos": 1
   },
-  "camara_detalle_91406": {
+  "camara_detalle_91392": {
    "ok": true,
-   "hora": "2026-11-14T06:34:21-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91406",
+   "hora": "2026-11-14T07:14:38-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91392",
    "intentos": 1
   },
-  "camara_detalle_91391": {
+  "camara_detalle_91421": {
    "ok": true,
-   "hora": "2026-11-14T06:34:24-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91391",
+   "hora": "2026-11-14T07:14:41-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91421",
    "intentos": 1
   },
-  "camara_detalle_91382": {
+  "camara_detalle_91416": {
    "ok": true,
-   "hora": "2026-11-14T06:34:28-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91382",
+   "hora": "2026-11-14T07:14:44-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91416",
    "intentos": 1
   },
-  "camara_detalle_91447": {
+  "camara_detalle_91377": {
    "ok": true,
-   "hora": "2026-11-14T06:34:31-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91447",
+   "hora": "2026-11-14T07:14:47-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91377",
    "intentos": 1
   },
-  "camara_detalle_91430": {
+  "camara_detalle_91445": {
    "ok": true,
-   "hora": "2026-11-14T06:34:34-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91430",
+   "hora": "2026-11-14T07:14:51-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91445",
    "intentos": 1
   },
-  "camara_detalle_91442": {
+  "camara_detalle_91427": {
    "ok": true,
-   "hora": "2026-11-14T06:34:37-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91442",
+   "hora": "2026-11-14T07:14:54-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91427",
    "intentos": 1
   },
-  "camara_detalle_91453": {
+  "camara_detalle_91383": {
    "ok": true,
-   "hora": "2026-11-14T06:34:40-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91453",
+   "hora": "2026-11-14T07:14:57-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91383",
    "intentos": 1
   },
-  "camara_detalle_91439": {
+  "camara_detalle_91448": {
    "ok": true,
-   "hora": "2026-11-14T06:34:43-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91439",
+   "hora": "2026-11-14T07:15:00-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91448",
    "intentos": 1
   },
-  "camara_detalle_91288": {
+  "camara_detalle_91366": {
    "ok": true,
-   "hora": "2026-11-14T06:34:47-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91288",
+   "hora": "2026-11-14T07:15:03-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91366",
    "intentos": 1
   },
-  "camara_detalle_91346": {
+  "camara_detalle_91326": {
    "ok": true,
-   "hora": "2026-11-14T06:34:50-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91346",
+   "hora": "2026-11-14T07:15:06-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91326",
    "intentos": 1
   },
-  "camara_detalle_91168": {
+  "camara_detalle_91264": {
    "ok": true,
-   "hora": "2026-11-14T06:34:53-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91168",
+   "hora": "2026-11-14T07:15:09-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91264",
    "intentos": 1
   },
-  "camara_detalle_91217": {
+  "camara_detalle_91291": {
    "ok": true,
-   "hora": "2026-11-14T06:34:56-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91217",
-   "intentos": 1
-  },
-  "camara_detalle_91302": {
-   "ok": true,
-   "hora": "2026-11-14T06:34:59-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91302",
-   "intentos": 1
-  },
-  "camara_detalle_91290": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:02-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91290",
-   "intentos": 1
-  },
-  "camara_detalle_91139": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:06-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91139",
-   "intentos": 1
-  },
-  "camara_detalle_91170": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91170",
-   "intentos": 1
-  },
-  "camara_detalle_91185": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:12-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91185",
-   "intentos": 1
-  },
-  "camara_detalle_91280": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:15-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91280",
-   "intentos": 1
-  },
-  "camara_detalle_91275": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:18-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91275",
-   "intentos": 1
-  },
-  "camara_detalle_91269": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:21-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91269",
-   "intentos": 1
-  },
-  "camara_detalle_91151": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:24-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91151",
-   "intentos": 1
-  },
-  "camara_detalle_91229": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:28-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91229",
-   "intentos": 1
-  },
-  "camara_detalle_91157": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:31-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91157",
-   "intentos": 1
-  },
-  "camara_detalle_91342": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:34-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91342",
-   "intentos": 1
-  },
-  "camara_detalle_91194": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:37-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91194",
-   "intentos": 1
-  },
-  "camara_detalle_91305": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:40-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91305",
-   "intentos": 1
-  },
-  "camara_detalle_91311": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:43-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91311",
-   "intentos": 1
-  },
-  "camara_detalle_91178": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:47-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91178",
-   "intentos": 1
-  },
-  "camara_detalle_91338": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:50-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91338",
-   "intentos": 1
-  },
-  "camara_detalle_91152": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:53-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91152",
-   "intentos": 1
-  },
-  "camara_detalle_91285": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:56-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91285",
-   "intentos": 1
-  },
-  "camara_detalle_91307": {
-   "ok": true,
-   "hora": "2026-11-14T06:35:59-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91307",
-   "intentos": 1
-  },
-  "camara_detalle_91138": {
-   "ok": true,
-   "hora": "2026-11-14T06:36:02-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91138",
-   "intentos": 1
-  },
-  "camara_detalle_91322": {
-   "ok": true,
-   "hora": "2026-11-14T06:36:06-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91322",
-   "intentos": 1
-  },
-  "camara_detalle_91314": {
-   "ok": true,
-   "hora": "2026-11-14T06:36:09-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91314",
-   "intentos": 1
-  },
-  "camara_detalle_91250": {
-   "ok": true,
-   "hora": "2026-11-14T06:36:12-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91250",
-   "intentos": 1
-  },
-  "camara_detalle_91188": {
-   "ok": true,
-   "hora": "2026-11-14T06:36:15-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91188",
+   "hora": "2026-11-14T07:15:13-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91291",
    "intentos": 1
   },
   "camara_detalle_91310": {
    "ok": true,
-   "hora": "2026-11-14T06:36:18-03:00",
+   "hora": "2026-11-14T07:15:16-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91310",
+   "intentos": 1
+  },
+  "camara_detalle_91361": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:19-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91361",
+   "intentos": 1
+  },
+  "camara_detalle_91228": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:22-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91228",
+   "intentos": 1
+  },
+  "camara_detalle_91309": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:25-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91309",
+   "intentos": 1
+  },
+  "camara_detalle_91248": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:28-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91248",
+   "intentos": 1
+  },
+  "camara_detalle_91172": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:31-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91172",
+   "intentos": 1
+  },
+  "camara_detalle_91190": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:35-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91190",
+   "intentos": 1
+  },
+  "camara_detalle_91289": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:38-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91289",
+   "intentos": 1
+  },
+  "camara_detalle_91363": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:41-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91363",
+   "intentos": 1
+  },
+  "camara_detalle_91149": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:44-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91149",
+   "intentos": 1
+  },
+  "camara_detalle_91189": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:47-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91189",
+   "intentos": 1
+  },
+  "camara_detalle_91304": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:50-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91304",
+   "intentos": 1
+  },
+  "camara_detalle_91159": {
+   "ok": true,
+   "hora": "2026-11-14T07:15:53-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91159",
    "intentos": 1
   },
   "camara_detalle_91277": {
    "ok": true,
-   "hora": "2026-11-14T06:36:21-03:00",
+   "hora": "2026-11-14T07:15:57-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91277",
    "intentos": 1
   },
-  "camara_detalle_91354": {
+  "camara_detalle_91220": {
    "ok": true,
-   "hora": "2026-11-14T06:36:24-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91354",
+   "hora": "2026-11-14T07:16:00-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91220",
    "intentos": 1
   },
-  "camara_detalle_91273": {
+  "camara_detalle_91162": {
    "ok": true,
-   "hora": "2026-11-14T06:36:28-03:00",
-   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91273",
+   "hora": "2026-11-14T07:16:03-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91162",
+   "intentos": 1
+  },
+  "camara_detalle_91278": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:06-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91278",
+   "intentos": 1
+  },
+  "camara_detalle_91305": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:09-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91305",
+   "intentos": 1
+  },
+  "camara_detalle_91229": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:12-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91229",
+   "intentos": 1
+  },
+  "camara_detalle_91160": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:16-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91160",
+   "intentos": 1
+  },
+  "camara_detalle_91173": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:19-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91173",
+   "intentos": 1
+  },
+  "camara_detalle_91196": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:22-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91196",
+   "intentos": 1
+  },
+  "camara_detalle_91197": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:25-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91197",
+   "intentos": 1
+  },
+  "camara_detalle_91166": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:28-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91166",
+   "intentos": 1
+  },
+  "camara_detalle_91355": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:31-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91355",
+   "intentos": 1
+  },
+  "camara_detalle_91199": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:34-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91199",
+   "intentos": 1
+  },
+  "camara_detalle_91163": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:38-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91163",
+   "intentos": 1
+  },
+  "camara_detalle_91209": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:41-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91209",
+   "intentos": 1
+  },
+  "camara_detalle_91178": {
+   "ok": true,
+   "hora": "2026-11-14T07:16:44-03:00",
+   "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91178",
    "intentos": 1
   },
   "servicio_WSLegislativo": {
    "ok": true,
-   "hora": "2026-11-14T06:36:29-03:00",
+   "hora": "2026-11-14T07:16:45-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx",
    "intentos": 1
   },
   "servicio_WSSala": {
    "ok": true,
-   "hora": "2026-11-14T06:36:30-03:00",
+   "hora": "2026-11-14T07:16:46-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx",
    "intentos": 1
   },
   "servicio_WSDiputado": {
    "ok": true,
-   "hora": "2026-11-14T06:36:31-03:00",
+   "hora": "2026-11-14T07:16:47-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSDiputado.asmx",
    "intentos": 1
   },
   "servicio_WSComun": {
    "ok": true,
-   "hora": "2026-11-14T06:36:32-03:00",
+   "hora": "2026-11-14T07:16:48-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSComun.asmx",
    "intentos": 1
   },
   "servicio_retornarSesionesXAnno": {
    "ok": true,
-   "hora": "2026-11-14T06:36:34-03:00",
+   "hora": "2026-11-14T07:16:49-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx?op=retornarSesionesXAnno",
    "intentos": 1
   },
   "servicio_retornarSesionAsistencia": {
    "ok": true,
-   "hora": "2026-11-14T06:36:35-03:00",
+   "hora": "2026-11-14T07:16:51-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx?op=retornarSesionAsistencia",
    "intentos": 1
   },
   "servicio_retornarDiputadosPeriodoActual": {
    "ok": true,
-   "hora": "2026-11-14T06:36:36-03:00",
+   "hora": "2026-11-14T07:16:51-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSDiputado.asmx?op=retornarDiputadosPeriodoActual",
    "intentos": 1
   },
   "oleaje": {
    "ok": true,
-   "hora": "2026-11-14T06:42:09-03:00",
+   "hora": "2026-11-14T07:22:31-03:00",
    "url": "https://tablademareas.com (páginas de oleaje)",
    "n": 30,
    "nota": "modelo marino no permitido por robots.txt: se usan las páginas de tablademareas"
   },
   "unhcr_UKR": {
    "ok": true,
-   "hora": "2026-11-14T06:36:37-03:00",
+   "hora": "2026-11-14T07:16:53-03:00",
    "url": "https://api.unhcr.org/population/v1/population/?limit=100&yearFrom=2022&yearTo=2026&coo=UKR",
    "intentos": 1
   },
   "fred_PWHEAMTUSDM": {
    "ok": true,
-   "hora": "2026-11-14T06:36:38-03:00",
+   "hora": "2026-11-14T07:16:53-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=PWHEAMTUSDM&api_key=***&file_type=json&observation_start=2026-07-17",
    "intentos": 1
   },
   "gaza_v3": {
    "ok": true,
-   "hora": "2026-11-14T06:36:38-03:00",
+   "hora": "2026-11-14T07:16:54-03:00",
    "url": "https://data.techforpalestine.org/api/v3/summary.json",
    "intentos": 1
   },
   "fred_DCOILBRENTEU": {
    "ok": true,
-   "hora": "2026-11-14T06:36:38-03:00",
+   "hora": "2026-11-14T07:16:54-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=DCOILBRENTEU&api_key=***&file_type=json&observation_start=2026-07-17",
    "intentos": 1
   },
   "unhcr_SUD": {
    "ok": true,
-   "hora": "2026-11-14T06:36:39-03:00",
+   "hora": "2026-11-14T07:16:55-03:00",
    "url": "https://api.unhcr.org/population/v1/population/?limit=100&yearFrom=2022&yearTo=2026&coo=SUD",
    "intentos": 1
   },
   "conflictos_indicadores": {
    "ok": true,
-   "hora": "2026-11-14T06:36:39-03:00",
+   "hora": "2026-11-14T07:16:55-03:00",
    "url": "ACNUR · FRED · Tech for Palestine",
    "n": 8
   },
   "autores_boletines": {
    "ok": true,
-   "hora": "2026-11-14T06:36:39-03:00",
+   "hora": "2026-11-14T07:16:55-03:00",
    "url": "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=N",
    "nuevos": 0,
    "sin_ficha": 0,
@@ -795,26 +795,26 @@
   },
   "senado_api_votos": {
    "ok": false,
-   "hora": "2026-11-14T06:36:39-03:00",
+   "hora": "2026-11-14T07:16:55-03:00",
    "url": "https://web-back.senado.cl/api/votes?id_legislatura=507&limit=100&offset=0",
    "error": "HTTP 403",
    "intentos": 1
   },
   "senado_copia_votos": {
    "ok": true,
-   "hora": "2026-11-14T06:36:39-03:00",
+   "hora": "2026-11-14T07:16:55-03:00",
    "url": "https://raw.githubusercontent.com/tres-ases/open-data-scraping/master/senado/data/normalized/votaciones.json",
    "intentos": 1
   },
   "senado_copia_senadores": {
    "ok": true,
-   "hora": "2026-11-14T06:36:39-03:00",
+   "hora": "2026-11-14T07:16:55-03:00",
    "url": "https://raw.githubusercontent.com/tres-ases/open-data-scraping/master/senado/data/normalized/senadores.json",
    "intentos": 1
   },
   "senado_votos": {
    "ok": true,
-   "hora": "2026-11-14T06:36:39-03:00",
+   "hora": "2026-11-14T07:16:55-03:00",
    "url": "https://github.com/tres-ases/open-data-scraping",
    "n": 97,
    "ultima": "2026-10-21",
@@ -822,7 +822,7 @@
   },
   "asistencia": {
    "ok": true,
-   "hora": "2026-11-14T06:36:40-03:00",
+   "hora": "2026-11-14T07:16:56-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx/retornarSesionesXAnno?prmAnno=2026",
    "intentos": 1,
    "sesiones": {
@@ -832,1361 +832,1361 @@
   },
   "asistencia_4853": {
    "ok": true,
-   "hora": "2026-11-14T06:36:44-03:00",
+   "hora": "2026-11-14T07:17:00-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx/retornarSesionAsistencia?prmSesionId=4853",
    "intentos": 1
   },
   "asistencia_4852": {
    "ok": true,
-   "hora": "2026-11-14T06:36:48-03:00",
+   "hora": "2026-11-14T07:17:04-03:00",
    "url": "https://opendata.camara.cl/camaradiputados/WServices/WSSala.asmx/retornarSesionAsistencia?prmSesionId=4852",
    "intentos": 1
   },
   "opensky_cuenta": {
    "ok": true,
-   "hora": "2026-11-14T06:36:48-03:00"
+   "hora": "2026-11-14T07:17:04-03:00"
   },
   "vuelos_SCL_salidas": {
    "ok": true,
-   "hora": "2026-11-14T06:36:49-03:00",
+   "hora": "2026-11-14T07:17:06-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCEL&begin=1794538800&end=1794625200",
    "intentos": 1
   },
   "vuelos_SCL_llegadas": {
    "ok": false,
-   "hora": "2026-11-14T06:36:53-03:00",
+   "hora": "2026-11-14T07:17:09-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCEL&begin=1794538800&end=1794625200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_ANF_salidas": {
    "ok": false,
-   "hora": "2026-11-14T06:36:56-03:00",
+   "hora": "2026-11-14T07:17:12-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCFA&begin=1794538800&end=1794625200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_ANF_llegadas": {
    "ok": false,
-   "hora": "2026-11-14T06:36:59-03:00",
+   "hora": "2026-11-14T07:17:14-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCFA&begin=1794538800&end=1794625200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_CCP_salidas": {
    "ok": false,
-   "hora": "2026-11-14T06:37:02-03:00",
+   "hora": "2026-11-14T07:17:17-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCIE&begin=1794538800&end=1794625200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_CCP_llegadas": {
    "ok": false,
-   "hora": "2026-11-14T06:37:05-03:00",
+   "hora": "2026-11-14T07:17:21-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCIE&begin=1794538800&end=1794625200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_PMC_salidas": {
    "ok": true,
-   "hora": "2026-11-14T06:37:08-03:00",
+   "hora": "2026-11-14T07:17:23-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCTE&begin=1794538800&end=1794625200",
    "intentos": 1
   },
   "vuelos_PMC_llegadas": {
    "ok": false,
-   "hora": "2026-11-14T06:37:11-03:00",
+   "hora": "2026-11-14T07:17:27-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCTE&begin=1794538800&end=1794625200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_PUQ_salidas": {
    "ok": false,
-   "hora": "2026-11-14T06:37:14-03:00",
+   "hora": "2026-11-14T07:17:30-03:00",
    "url": "https://opensky-network.org/api/flights/departure?airport=SCCI&begin=1794538800&end=1794625200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_PUQ_llegadas": {
    "ok": false,
-   "hora": "2026-11-14T06:37:17-03:00",
+   "hora": "2026-11-14T07:17:33-03:00",
    "url": "https://opensky-network.org/api/flights/arrival?airport=SCCI&begin=1794538800&end=1794625200",
    "error": "HTTP 404",
    "intentos": 1
   },
   "vuelos_hoy": {
    "ok": true,
-   "hora": "2026-11-14T06:37:19-03:00",
+   "hora": "2026-11-14T07:17:35-03:00",
    "url": "AeroDataBox",
    "nota": "ya leído hoy (una lectura al día para cuidar el cupo gratuito)"
   },
   "liga": {
    "ok": true,
-   "hora": "2026-11-14T06:37:19-03:00",
+   "hora": "2026-11-14T07:17:35-03:00",
    "url": "https://en.wikipedia.org/api/rest_v1/page/html/2026_Liga_de_Primera",
    "intentos": 1
   },
   "liga_es_busqueda": {
    "ok": true,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:35-03:00",
    "url": "https://es.wikipedia.org/w/api.php?action=query&list=search&format=json&srlimit=5&srsearch=Primera%20Divisi%C3%B3n%20Chile%202026%20campeonato",
    "intentos": 1
   },
   "liga_es_fecha": {
    "ok": true,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:35-03:00",
    "url": "https://es.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=timestamp&format=json&titles=Liga%20de%20Primera%202026",
    "intentos": 1
   },
   "liga_es": {
    "ok": true,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:35-03:00",
    "url": "https://es.wikipedia.org/api/rest_v1/page/html/Liga_de_Primera_2026",
    "intentos": 1
   },
   "partidos": {
    "ok": true,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://www.thesportsdb.com/api/v1/json/123/eventspastleague.php?id=4627",
    "intentos": 1
   },
   "rss_economia_chile_6": {
    "ok": false,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=econom%C3%ADa+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_8": {
    "ok": false,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=cobre+OR+Codelco+OR+miner%C3%ADa+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_9": {
    "ok": false,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=empresas+Chile+(utilidades+OR+inversi%C3%B3n+OR+exportaciones)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_10": {
    "ok": false,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=Hacienda+OR+presupuesto+OR+%22Banco+Central%22+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_11": {
    "ok": false,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=(%22Banco+Central%22+OR+IPC+OR+d%C3%B3lar+OR+IMACEC)+Chile+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_12": {
    "ok": false,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=inversi%C3%B3n+proyecto+Chile+%22millones+de+d%C3%B3lares%22+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_chile_7": {
    "ok": false,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=IPSA+OR+%22Bolsa+de+Santiago%22+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
+  "rss_economia_chile_5": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:36-03:00",
+   "url": "https://www.infobae.com/arc/outboundfeeds/rss/category/economia/",
+   "intentos": 1
+  },
   "rss_economia_chile_3": {
    "ok": true,
-   "hora": "2026-11-14T06:37:20-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://chocale.cl/feed/",
    "intentos": 1
   },
-  "rss_economia_chile_5": {
+  "rss_economia_chile_13": {
    "ok": true,
-   "hora": "2026-11-14T06:37:20-03:00",
-   "url": "https://www.infobae.com/arc/outboundfeeds/rss/category/economia/",
+   "hora": "2026-11-14T07:17:36-03:00",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/pulso/?outputType=xml",
    "intentos": 1
   },
   "robots_www.capital.cl": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://www.capital.cl/robots.txt",
    "error": "SSLError"
   },
   "rss_economia_chile_1": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://www.capital.cl/feed/",
    "error": "robots.txt no respondió"
   },
-  "rss_economia_chile_13": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
-   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/pulso/?outputType=xml",
-   "intentos": 1
-  },
   "rss_economia_chile_17": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://www.bing.com/news/search?q=IPSA%20Bolsa%20de%20Santiago&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_economia_chile_16": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://www.bing.com/news/search?q=econom%C3%ADa%20Chile&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_economia_chile_18": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
-   "url": "https://www.ex-ante.cl/feed/",
    "intentos": 1
   },
   "rss_economia_mundo_0": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://feeds.bbci.co.uk/news/business/rss.xml",
+   "intentos": 1
+  },
+  "rss_economia_chile_18": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:36-03:00",
+   "url": "https://www.ex-ante.cl/feed/",
    "intentos": 1
   },
   "rss_economia_mundo_1": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://www.france24.com/es/econom%C3%ADa/rss",
    "intentos": 1
   },
   "rss_economia_mundo_3": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=econom%C3%ADa+mundial+OR+Fed+OR+mercados+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_4": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=BCE+OR+eurozona+econom%C3%ADa+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_5": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=petr%C3%B3leo+OR+Brent+OR+OPEP+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_6": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=China+econom%C3%ADa+OR+aranceles+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_7": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=%22Reserva+Federal%22+OR+Wall+Street+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_8": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=econom%C3%ADa+%22Estados+Unidos%22+(inflaci%C3%B3n+OR+empleo+OR+PIB)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_9": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=(FMI+OR+%22Banco+Mundial%22+OR+OCDE)+econom%C3%ADa+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_10": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=econom%C3%ADa+(Argentina+OR+Brasil+OR+M%C3%A9xico+OR+Per%C3%BA+OR+Colombia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_11": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=(bolsas+OR+%22Wall+Street%22+OR+mercados)+cierre+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_12": {
    "ok": false,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://news.google.com/rss/search?q=(comercio+internacional+OR+exportaciones+OR+aranceles)+econom%C3%ADa+mundial+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_economia_mundo_2": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:36-03:00",
    "url": "https://www.aljazeera.com/xml/rss/all.xml",
-   "intentos": 1
-  },
-  "rss_economia_mundo_13": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
-   "url": "https://feeds.bbci.co.uk/mundo/temas/economia/rss.xml",
    "intentos": 1
   },
   "rss_economia_mundo_14": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:37-03:00",
    "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada",
+   "intentos": 1
+  },
+  "rss_economia_mundo_13": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:37-03:00",
+   "url": "https://feeds.bbci.co.uk/mundo/temas/economia/rss.xml",
    "intentos": 1
   },
   "rss_economia_chile_0": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:37-03:00",
    "url": "https://www.df.cl/noticias/site/list/port/rss.xml",
    "intentos": 1
   },
   "rss_politica_chile_0": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:37-03:00",
    "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/nacional/?outputType=xml",
    "intentos": 1
   },
   "rss_economia_mundo_16": {
    "ok": true,
-   "hora": "2026-11-14T06:37:21-03:00",
+   "hora": "2026-11-14T07:17:37-03:00",
    "url": "https://www.bing.com/news/search?q=econom%C3%ADa%20mundial%20mercados&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_economia_chile_4": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://www.elmostrador.cl/feed/",
-   "error": "HTTP 404",
-   "intentos": 1
-  },
-  "rss_economia_chile_15": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
    "intentos": 1
   },
   "rss_economia_mundo_15": {
    "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:37-03:00",
    "url": "https://rss.dw.com/xml/rss-sp-all",
-   "intentos": 1
-  },
-  "rss_politica_chile_5": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://news.google.com/rss/search?q=pol%C3%ADtica+Chile+(gobierno+OR+Congreso+OR+Senado+OR+C%C3%A1mara)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_politica_chile_1": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://www.eldesconcierto.cl/feed/",
-   "error": "HTTP 404",
-   "intentos": 1
-  },
-  "rss_politica_chile_2": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://www.theclinic.cl/feed/",
-   "intentos": 1
-  },
-  "rss_economia_chile_14": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://www.elmostrador.cl/mercados/feed/",
-   "error": "HTTP 404",
    "intentos": 1
   },
   "rss_politica_chile_3": {
    "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:37-03:00",
    "url": "https://interferencia.cl/rss.xml",
    "intentos": 1
   },
-  "rss_politica_chile_11": {
+  "rss_politica_chile_2": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:37-03:00",
+   "url": "https://www.theclinic.cl/feed/",
+   "intentos": 1
+  },
+  "rss_politica_chile_5": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://news.google.com/rss/search?q=(Kast+OR+%22La+Moneda%22+OR+ministro)+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
+   "hora": "2026-11-14T07:17:37-03:00",
+   "url": "https://news.google.com/rss/search?q=pol%C3%ADtica+Chile+(gobierno+OR+Congreso+OR+Senado+OR+C%C3%A1mara)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
+  },
+  "rss_economia_chile_4": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:37-03:00",
+   "url": "https://www.elmostrador.cl/feed/",
+   "error": "HTTP 404",
+   "intentos": 1
+  },
+  "rss_economia_chile_14": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:37-03:00",
+   "url": "https://www.elmostrador.cl/mercados/feed/",
+   "error": "HTTP 404",
+   "intentos": 1
   },
   "rss_politica_chile_6": {
    "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:37-03:00",
    "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/politica/?outputType=xml",
    "intentos": 1
   },
   "rss_economia_chile_2": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:37-03:00",
    "url": "https://www.eldinamo.cl/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "rss_politica_mundo_0": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
-   "intentos": 1
+  "rss_politica_chile_11": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:37-03:00",
+   "url": "https://news.google.com/rss/search?q=(Kast+OR+%22La+Moneda%22+OR+ministro)+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
+   "error": "robots.txt no lo permite"
+  },
+  "rss_politica_chile_10": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://radio.uchile.cl/feed/",
+   "error": "robots.txt no lo permite"
   },
   "rss_politica_chile_12": {
    "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://www.bing.com/news/search?q=pol%C3%ADtica%20Chile%20Gobierno%20Congreso&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_politica_mundo_0": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+   "intentos": 1
+  },
+  "rss_economia_chile_15": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml",
    "intentos": 1
   },
   "rss_politica_mundo_1": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://rss.dw.com/xml/rss-sp-al",
    "intentos": 1,
    "error": "no es un RSS válido"
   },
   "rss_politica_mundo_3": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=internacional+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_4": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Israel+OR+Gaza+OR+Ir%C3%A1n+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_5": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Uni%C3%B3n+Europea+OR+Europa+gobierno+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_6": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Am%C3%A9rica+Latina+gobierno+OR+elecciones+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_7": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Estados+Unidos+Casa+Blanca+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_politica_mundo_2": {
+  "rss_politica_chile_13": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://ellibero.cl/feed/",
+   "intentos": 1,
+   "error": "no es un RSS válido"
+  },
+  "rss_politica_mundo_9": {
    "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/mundo/?outputType=xml",
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://www.france24.com/es/rss",
    "intentos": 1
   },
   "rss_politica_chile_4": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3_1__1.xml",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "rss_politica_mundo_9": {
+  "rss_politica_mundo_2": {
    "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://www.france24.com/es/rss",
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/mundo/?outputType=xml",
    "intentos": 1
-  },
-  "rss_politica_chile_10": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://radio.uchile.cl/feed/",
-   "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_13": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Sud%C3%A1n+OR+%22El+Fasher%22+OR+Sahel+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_politica_mundo_8": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://feeds.bbci.co.uk/mundo/rss.xml",
-   "intentos": 1
-  },
   "rss_politica_mundo_10": {
    "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada",
    "intentos": 1
   },
-  "rss_politica_chile_7": {
+  "rss_politica_chile_1": {
    "ok": false,
-   "hora": "2026-11-14T06:37:22-03:00",
-   "url": "https://www.elmostrador.cl/noticias/pais/feed/",
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://www.eldesconcierto.cl/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
   "rss_politica_mundo_11": {
    "ok": true,
-   "hora": "2026-11-14T06:37:22-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://www.infobae.com/arc/outboundfeeds/rss/",
+   "intentos": 1
+  },
+  "rss_politica_mundo_8": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://feeds.bbci.co.uk/mundo/rss.xml",
+   "intentos": 1
+  },
+  "rss_politica_chile_7": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://www.elmostrador.cl/noticias/pais/feed/",
+   "error": "HTTP 404",
    "intentos": 1
   },
   "rss_politica_mundo_18": {
    "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://www.france24.com/es/%C3%A1frica/rss",
    "intentos": 1
   },
-  "rss_politica_mundo_17": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://news.un.org/feed/subscribe/es/news/region/africa/feed/rss.xml",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_economia_chile_19": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://www.cnnchile.com/feed/",
-   "intentos": 1,
-   "error": "no es un RSS válido"
+  "rss_politica_mundo_14": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://www.bing.com/news/search?q=internacional%20noticias%20mundo&format=rss&cc=CL&setlang=es",
+   "intentos": 1
   },
   "rss_politica_mundo_21": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Gaza+(Israel+OR+Ham%C3%A1s)+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_22": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Ucrania+Rusia+guerra+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_23": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Ir%C3%A1n+(Israel+OR+Ormuz+OR+Hezbol%C3%A1+OR+hut%C3%ADes)+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_politica_mundo_24": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://news.google.com/rss/search?q=Sud%C3%A1n+guerra+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_politica_mundo_25": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://news.un.org/feed/subscribe/es/news/region/middle-east/feed/rss.xml",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_politica_mundo_26": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://news.un.org/feed/subscribe/es/news/region/europe/feed/rss.xml",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_politica_mundo_14": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://www.bing.com/news/search?q=internacional%20noticias%20mundo&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
   "rss_politica_mundo_15": {
    "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://www.bing.com/news/search?q=Sud%C3%A1n%20guerra%20El%20Fasher%20RSF&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_politica_mundo_16": {
    "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://www.bing.com/news/search?q=conflicto%20armado%20%C3%81frica%20Sahel%20Congo&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
-  "rss_emprendimiento_2": {
+  "rss_economia_chile_19": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://www.emprendepyme.net/feed",
-   "error": "robots.txt no lo permite"
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://www.cnnchile.com/feed/",
+   "intentos": 1,
+   "error": "no es un RSS válido"
   },
   "rss_politica_mundo_19": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:38-03:00",
    "url": "https://sudantribune.com/feed/",
    "error": "HTTP 403",
    "intentos": 1
   },
+  "rss_emprendimiento_2": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:38-03:00",
+   "url": "https://www.emprendepyme.net/feed",
+   "error": "robots.txt no lo permite"
+  },
+  "rss_emprendimiento_1": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://ecosistemastartup.com/feed/",
+   "intentos": 1
+  },
+  "rss_emprendimiento_4": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://techcrunch.com/category/venture/feed/",
+   "intentos": 1
+  },
   "rss_emprendimiento_6": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=(emprendimiento+OR+startup+OR+%22capital+de+riesgo%22)+Chile+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_7": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=pymes+innovaci%C3%B3n+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_8": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=fintech+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_9": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=Corfo+emprendimiento+OR+startups+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_10": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=startup+Latinoam%C3%A9rica+ronda+inversi%C3%B3n+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_11": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=startups+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_12": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=(%22ronda+de+inversi%C3%B3n%22+OR+%22levant%C3%B3%22+OR+%22serie+A%22)+startup+Latinoam%C3%A9rica+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_13": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=emprendedores+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_14": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=(%22capital+de+riesgo%22+OR+%22venture+capital%22)+Latinoam%C3%A9rica+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_15": {
    "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=innovaci%C3%B3n+empresas+Chile+(Corfo+OR+ANID+OR+%22Start-Up+Chile%22)+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_emprendimiento_4": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://techcrunch.com/category/venture/feed/",
-   "intentos": 1
+  "rss_politica_mundo_17": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://news.un.org/feed/subscribe/es/news/region/africa/feed/rss.xml",
+   "error": "robots.txt no lo permite"
   },
-  "rss_emprendimiento_17": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://latamlist.com/feed/",
-   "intentos": 1
+  "rss_politica_mundo_25": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://news.un.org/feed/subscribe/es/news/region/middle-east/feed/rss.xml",
+   "error": "robots.txt no lo permite"
+  },
+  "rss_politica_mundo_26": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://news.un.org/feed/subscribe/es/news/region/europe/feed/rss.xml",
+   "error": "robots.txt no lo permite"
   },
   "rss_emprendimiento_18": {
    "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://techcrunch.com/category/startups/feed/",
    "intentos": 1
   },
-  "rss_emprendimiento_1": {
+  "rss_politica_mundo_20": {
    "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://ecosistemastartup.com/feed/",
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://www.europapress.es/rss/rss.aspx?ch=00069",
    "intentos": 1
-  },
-  "rss_politica_chile_13": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://ellibero.cl/feed/",
-   "intentos": 1,
-   "error": "no es un RSS válido"
   },
   "rss_emprendimiento_20": {
    "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://www.bing.com/news/search?q=emprendimiento%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_emprendimiento_21": {
    "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://www.bing.com/news/search?q=startup%20Chile%20inversi%C3%B3n&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
-  "rss_politica_mundo_20": {
+  "rss_emprendimiento_17": {
    "ok": true,
-   "hora": "2026-11-14T06:37:23-03:00",
-   "url": "https://www.europapress.es/rss/rss.aspx?ch=00069",
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://latamlist.com/feed/",
    "intentos": 1
   },
-  "rss_emprendimiento_22": {
+  "rss_emprendimiento_19": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://www.bing.com/news/search?q=pymes%20Corfo%20Chile&format=rss&cc=CL&setlang=es",
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://startupchile.org/feed/",
    "intentos": 1
   },
   "rss_tecnologia_2": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=tecnolog%C3%ADa+(IA+OR+chips+OR+Apple+OR+Google+OR+Microsoft+OR+Nvidia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_tecnologia_3": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=%22inteligencia+artificial%22+(OpenAI+OR+Anthropic+OR+Google+OR+Meta+OR+Nvidia)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_tecnologia_4": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=ciberseguridad+OR+hackeo+OR+ciberataque+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_tecnologia_5": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=tecnolog%C3%ADa+Chile+(startup+OR+innovaci%C3%B3n+OR+digital)+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
+  "rss_tecnologia_1": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://www.wired.com/feed/rss",
+   "intentos": 1
+  },
+  "rss_emprendimiento_22": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://www.bing.com/news/search?q=pymes%20Corfo%20Chile&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
   "rss_emprendimiento_3": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://chocale.cl/categoria/emprendimiento/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "rss_tecnologia_1": {
+  "rss_tecnologia_0": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://www.wired.com/feed/rss",
-   "intentos": 1
-  },
-  "rss_emprendimiento_19": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://startupchile.org/feed/",
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://www.fayerwayer.com/arc/outboundfeeds/rss/?outputType=xml",
    "intentos": 1
   },
   "rss_tecnologia_9": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://techcrunch.com/feed/",
    "intentos": 1
   },
   "rss_tecnologia_10": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://www.theverge.com/rss/index.xml",
-   "intentos": 1
-  },
-  "rss_tecnologia_8": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://hipertextual.com/feed",
    "intentos": 1
   },
   "rss_tecnologia_11": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://feeds.arstechnica.com/arstechnica/index",
-   "intentos": 1
-  },
-  "rss_tecnologia_0": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://www.fayerwayer.com/arc/outboundfeeds/rss/?outputType=xml",
    "intentos": 1
   },
   "rss_tecnologia_6": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://www.xataka.com/feedburner.xml",
+   "intentos": 1
+  },
+  "rss_tecnologia_7": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://www.genbeta.com/feedburner.xml",
    "intentos": 1
   },
   "rss_inmobiliario_2": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://www.capital.cl/category/inmobiliario/feed/",
    "error": "robots.txt no respondió"
   },
-  "rss_emprendimiento_16": {
+  "rss_tecnologia_12": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://contxto.com/es/feed/",
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://www.bing.com/news/search?q=tecnolog%C3%ADa%20inteligencia%20artificial&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_inmobiliario_6": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=(inmobiliario+OR+viviendas+OR+%22cr%C3%A9dito+hipotecario%22)+Chile+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_7": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=construcci%C3%B3n+CChC+OR+inmobiliarias+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_8": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=%22tasa+hipotecaria%22+OR+%22cr%C3%A9ditos+hipotecarios%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_9": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=%22permisos+de+edificaci%C3%B3n%22+OR+%22venta+de+viviendas%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_10": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=%22mercado+inmobiliario%22+OR+%22venta+de+viviendas%22+OR+%22subsidio+habitacional%22+Chile+when:5d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_inmobiliario_11": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:39-03:00",
    "url": "https://news.google.com/rss/search?q=(IVA+viviendas+OR+DFL2+OR+contribuciones)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_tecnologia_7": {
+  "rss_tecnologia_8": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://www.genbeta.com/feedburner.xml",
-   "intentos": 1
-  },
-  "rss_tecnologia_12": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://www.bing.com/news/search?q=tecnolog%C3%ADa%20inteligencia%20artificial&format=rss&cc=CL&setlang=es",
+   "hora": "2026-11-14T07:17:39-03:00",
+   "url": "https://hipertextual.com/feed",
    "intentos": 1
   },
   "rss_inmobiliario_12": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml",
+   "intentos": 1
+  },
+  "rss_emprendimiento_16": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://contxto.com/es/feed/",
    "intentos": 1
   },
   "rss_inmobiliario_15": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://www.bing.com/news/search?q=arriendo%20departamentos%20Chile&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_inmobiliario_16": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://www.bing.com/news/search?q=permisos%20de%20edificaci%C3%B3n%20INE%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_inmobiliario_0": {
    "ok": false,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://www.plataformaurbana.cl/feed/",
    "error": "robots.txt no respondió"
   },
+  "rss_inmobiliario_16": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://www.bing.com/news/search?q=permisos%20de%20edificaci%C3%B3n%20INE%20Chile&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_inmobiliario_18": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://www.bing.com/news/search?q=subsidio%20habitacional%20Minvu&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
   "rss_inmobiliario_17": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://www.bing.com/news/search?q=C%C3%A1mara%20Chilena%20de%20la%20Construcci%C3%B3n%20viviendas&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_inmobiliario_19": {
    "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://www.bing.com/news/search?q=oficinas%20vacancia%20Santiago%20arriendo%20comercial&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_inmobiliario_18": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:24-03:00",
-   "url": "https://www.bing.com/news/search?q=subsidio%20habitacional%20Minvu&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_inmobiliario_21": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://www.bing.com/news/search?q=viviendas%20Chile%20CChC&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_inmobiliario_22": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://www.bing.com/news/search?q=cr%C3%A9dito%20hipotecario%20Chile&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_deportes_1": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://www.espn.com/espn/rss/tennis/news",
-   "error": "HTTP 202",
-   "intentos": 1
-  },
-  "rss_deportes_0": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://www.espn.com/espn/rss/golf/news",
-   "error": "HTTP 202",
    "intentos": 1
   },
   "rss_inmobiliario_20": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://www.bing.com/news/search?q=mercado%20inmobiliario%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
-  "rss_deportes_3": {
+  "rss_inmobiliario_22": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://www.bing.com/news/search?q=cr%C3%A9dito%20hipotecario%20Chile&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_deportes_0": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://www.espn.com/espn/rss/nba/news",
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://www.espn.com/espn/rss/golf/news",
+   "error": "HTTP 202",
+   "intentos": 1
+  },
+  "rss_deportes_1": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://www.espn.com/espn/rss/tennis/news",
    "error": "HTTP 202",
    "intentos": 1
   },
   "rss_deportes_2": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://www.espn.com/espn/rss/f1/news",
    "error": "HTTP 202",
    "intentos": 1
   },
-  "rss_deportes_6": {
+  "rss_deportes_3": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://www.golfdigest.com/feed/rss",
-   "error": "HTTP 403",
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://www.espn.com/espn/rss/nba/news",
+   "error": "HTTP 202",
+   "intentos": 1
+  },
+  "rss_inmobiliario_21": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://www.bing.com/news/search?q=viviendas%20Chile%20CChC&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_deportes_5": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://feeds.bbci.co.uk/sport/football/rss.xml",
    "intentos": 1
   },
   "rss_deportes_7": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=deportes+Chile+when:1d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_8": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=golf+(Niemann+OR+Pereira+OR+PGA)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_9": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=%22Liga+de+Primera%22+OR+%22Colo-Colo%22+OR+%22Universidad+de+Chile%22+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_10": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=equitaci%C3%B3n+OR+ecuestre+OR+%22salto+ecuestre%22+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_4": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/el-deportivo/?outputType=xml",
    "intentos": 1
   },
-  "rss_deportes_12": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/news",
+  "rss_deportes_6": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://www.golfdigest.com/feed/rss",
+   "error": "HTTP 403",
    "intentos": 1
   },
   "rss_deportes_11": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/news",
-   "intentos": 1
-  },
-  "rss_deportes_5": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://feeds.bbci.co.uk/sport/football/rss.xml",
    "intentos": 1
   },
   "rss_inmobiliario_1": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://chocale.cl/categoria/vivienda/feed/",
    "error": "HTTP 404",
    "intentos": 1
   },
+  "rss_deportes_13": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/racing/f1/news",
+   "intentos": 1
+  },
   "rss_deportes_14": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
+   "intentos": 1
+  },
+  "rss_deportes_12": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/news",
    "intentos": 1
   },
   "rss_deportes_15": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/news",
-   "intentos": 1
-  },
-  "rss_deportes_17": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://site.api.espn.com/apis/site/v2/sports/golf/pga/news",
    "intentos": 1
   },
   "rss_deportes_19": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=tenis+(Tabilo+OR+Jarry+OR+Garin+OR+Barrios)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_20": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=%22F%C3%B3rmula+1%22+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_21": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=NBA+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_22": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=%22Federaci%C3%B3n+Ecuestre+de+Chile%22+OR+%22Sudamericano+de+Salto%22+OR+%22salto+ecuestre%22+Chile+when:14d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_23": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=%22Gran+Premio%22+(F1+OR+%22F%C3%B3rmula+1%22)+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_24": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=(Colapinto+OR+Verstappen+OR+Antonelli+OR+Norris+OR+Piastri+OR+Leclerc)+F%C3%B3rmula+1+when:3d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_25": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=NBA+(resultados+OR+triunfo+OR+derrota+OR+puntos)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_26": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=NBA+(LeBron+OR+Curry+OR+Doncic+OR+Jokic+OR+Antetokounmpo+OR+Wembanyama)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_27": {
    "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://news.google.com/rss/search?q=(rally+OR+RallyMobil+OR+WRC+OR+automovilismo)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_16": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:40-03:00",
    "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
    "intentos": 1
   },
-  "rss_deportes_13": {
+  "rss_deportes_17": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://site.api.espn.com/apis/site/v2/sports/racing/f1/news",
-   "intentos": 1
-  },
-  "rss_deportes_29": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://feeds.bbci.co.uk/sport/tennis/rss.xml",
-   "intentos": 1
-  },
-  "rss_deportes_31": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://news.google.com/rss/search?q=(Libertadores+OR+Sudamericana+OR+%22La+Roja%22)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_deportes_30": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://feeds.bbci.co.uk/sport/formula1/rss.xml",
+   "hora": "2026-11-14T07:17:40-03:00",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/golf/pga/news",
    "intentos": 1
   },
   "rss_deportes_18": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/news",
+   "intentos": 1
+  },
+  "rss_deportes_31": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://news.google.com/rss/search?q=(Libertadores+OR+Sudamericana+OR+%22La+Roja%22)+when:2d&hl=es-419&gl=CL&ceid=CL:es-419",
+   "error": "robots.txt no lo permite"
+  },
+  "rss_deportes_29": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://feeds.bbci.co.uk/sport/tennis/rss.xml",
    "intentos": 1
   },
   "rss_deportes_28": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://feeds.bbci.co.uk/sport/golf/rss.xml",
+   "intentos": 1
+  },
+  "rss_deportes_30": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://feeds.bbci.co.uk/sport/formula1/rss.xml",
    "intentos": 1
   },
   "rss_deportes_32": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=f%C3%BAtbol%20chileno%20Liga%20de%20Primera&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_deportes_34": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=golf%20PGA%20Tour&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_deportes_33": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=tenis%20chileno%20ATP&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_politica_chile_8": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://www.ciperchile.cl/feed/",
    "intentos": 1
   },
   "rss_deportes_35": {
    "ok": true,
-   "hora": "2026-11-14T06:37:25-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=equitaci%C3%B3n%20salto%20Chile&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_emprendimiento_0": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:25-03:00",
-   "url": "https://www.elmostrador.cl/categoria/emprendedor/feed/",
-   "intentos": 1,
-   "error": "no es un RSS válido"
-  },
-  "rss_deportes_38": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://www.theplaidhorse.com/feed/",
    "intentos": 1
   },
   "rss_deportes_39": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=Longines%20Global%20Champions%20Tour%20salto&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_deportes_38": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://www.theplaidhorse.com/feed/",
+   "intentos": 1
+  },
+  "rss_deportes_40": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://www.bing.com/news/search?q=Copa%20de%20Naciones%20salto%20ecuestre%20FEI&format=rss&cc=CL&setlang=es",
+   "intentos": 1
+  },
+  "rss_deportes_36": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://jumpernews.com/category/news/feed/",
    "intentos": 1
   },
   "rss_deportes_43": {
    "ok": false,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://news.google.com/rss/search?q=(equitaci%C3%B3n+OR+%22salto+ecuestre%22+OR+FEI+OR+%22Global+Champions%22)+when:30d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_41": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=salto%20ecuestre%20FEI%20Longines%20Global%20Champions&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_deportes_42": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=Federaci%C3%B3n%20Ecuestre%20de%20Chile%20concurso%20salto%20Club%20H%C3%ADpico&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
-  "rss_deportes_40": {
+  "rss_emprendimiento_0": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://www.elmostrador.cl/categoria/emprendedor/feed/",
+   "intentos": 1,
+   "error": "no es un RSS válido"
+  },
+  "rss_deportes_47": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://www.bing.com/news/search?q=Copa%20de%20Naciones%20salto%20ecuestre%20FEI&format=rss&cc=CL&setlang=es",
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://feeds.bbci.co.uk/sport/rugby-union/rss.xml",
+   "intentos": 1
+  },
+  "rss_deportes_37": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:41-03:00",
+   "url": "https://www.worldofshowjumping.com/documents.rdf?idz=32&cid=9664",
    "intentos": 1
   },
   "rss_deportes_46": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=NBA%20resultados%20partido&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_deportes_47": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://feeds.bbci.co.uk/sport/rugby-union/rss.xml",
-   "intentos": 1
-  },
-  "rss_deportes_36": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://jumpernews.com/category/news/feed/",
-   "intentos": 1
-  },
-  "rss_ciencia_0": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://www.sciencedaily.com/rss/top/science.xml",
    "intentos": 1
   },
   "rss_deportes_48": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:41-03:00",
    "url": "https://www.bing.com/news/search?q=rugby%20Chile%20C%C3%B3ndores&format=rss&cc=CL&setlang=es",
-   "intentos": 1
-  },
-  "rss_inmobiliario_13": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://www.biobiochile.cl/static/feed-rss",
    "intentos": 1
   },
   "rss_deportes_49": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://www.bing.com/news/search?q=rugby%20test%20match%20Pumas%20All%20Blacks%20Springboks&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_ciencia_1": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://www.sciencedaily.com/rss/top/health.xml",
    "intentos": 1
   },
-  "rss_ciencia_4": {
+  "rss_ciencia_0": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://www.nih.gov/news-releases/feed.xml",
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://www.sciencedaily.com/rss/top/science.xml",
    "intentos": 1
   },
   "rss_ciencia_2": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://phys.org/rss-feed/biology-news/",
    "intentos": 1
   },
   "rss_ciencia_3": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://medicalxpress.com/rss-feed/",
+   "intentos": 1
+  },
+  "rss_inmobiliario_13": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://www.biobiochile.cl/static/feed-rss",
+   "intentos": 1
+  },
+  "rss_ciencia_4": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://www.nih.gov/news-releases/feed.xml",
    "intentos": 1
   },
   "rss_ciencia_8": {
    "ok": false,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://news.google.com/rss/search?q=(ensayo+cl%C3%ADnico+OR+longevidad+OR+trasplante+OR+pr%C3%B3tesis+OR+neuronas)+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
    "error": "robots.txt no lo permite"
   },
-  "rss_deportes_37": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://www.worldofshowjumping.com/documents.rdf?idz=32&cid=9664",
-   "intentos": 1
-  },
-  "rss_astronomia_0": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
-   "url": "https://www.nasa.gov/news-release/feed/",
-   "intentos": 1
-  },
   "rss_ciencia_7": {
    "ok": true,
-   "hora": "2026-11-14T06:37:26-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://www.technologyreview.com/feed/",
    "intentos": 1
   },
   "rss_ciencia_9": {
    "ok": true,
-   "hora": "2026-11-14T06:37:27-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://www.bing.com/news/search?q=avance%20cient%C3%ADfico%20medicina%20estudio&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
+  "rss_astronomia_0": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://www.nasa.gov/news-release/feed/",
+   "intentos": 1
+  },
+  "rss_politica_chile_8": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://www.ciperchile.cl/feed/",
+   "intentos": 1
+  },
+  "rss_ciencia_6": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://www.newscientist.com/feed/home/",
+   "error": "robots.txt no lo permite"
+  },
   "rss_inmobiliario_4": {
    "ok": false,
-   "hora": "2026-11-14T06:37:27-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://www.elmostrador.cl/categoria/mercados/feed/",
    "intentos": 1,
    "error": "no es un RSS válido"
   },
   "rss_astronomia_4": {
    "ok": true,
-   "hora": "2026-11-14T06:37:27-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://www.space.com/feeds/all",
    "intentos": 1
   },
-  "rss_astronomia_5": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:27-03:00",
-   "url": "https://spacenews.com/feed/",
-   "intentos": 1
-  },
-  "rss_ciencia_6": {
+  "rss_astronomia_6": {
    "ok": false,
-   "hora": "2026-11-14T06:37:27-03:00",
-   "url": "https://www.newscientist.com/feed/home/",
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://skyandtelescope.org/feed/",
    "error": "robots.txt no lo permite"
   },
-  "rss_deportes_45": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:27-03:00",
-   "url": "https://www.ecuestre.es/feed/",
-   "error": "HTTP 404",
+  "rss_astronomia_5": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://spacenews.com/feed/",
    "intentos": 1
   },
   "rss_astronomia_8": {
    "ok": false,
-   "hora": "2026-11-14T06:37:27-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://news.google.com/rss/search?q=(astronom%C3%ADa+OR+telescopio+OR+ALMA+OR+Rubin+OR+ESO)+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419",
-   "error": "robots.txt no lo permite"
-  },
-  "rss_astronomia_6": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:27-03:00",
-   "url": "https://skyandtelescope.org/feed/",
    "error": "robots.txt no lo permite"
   },
   "rss_deportes_44": {
    "ok": true,
-   "hora": "2026-11-14T06:37:27-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://inside.fei.org/rss.xml",
    "intentos": 1
   },
   "rss_astronomia_7": {
    "ok": true,
-   "hora": "2026-11-14T06:37:27-03:00",
+   "hora": "2026-11-14T07:17:42-03:00",
    "url": "https://phys.org/rss-feed/space-news/",
    "intentos": 1
   },
-  "rss_astronomia_3": {
-   "ok": true,
-   "hora": "2026-11-14T06:37:27-03:00",
-   "url": "https://noirlab.edu/public/news/feed/",
+  "rss_deportes_45": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:42-03:00",
+   "url": "https://www.ecuestre.es/feed/",
+   "error": "HTTP 404",
    "intentos": 1
   },
   "rss_astronomia_9": {
    "ok": true,
-   "hora": "2026-11-14T06:37:27-03:00",
+   "hora": "2026-11-14T07:17:43-03:00",
    "url": "https://www.bing.com/news/search?q=astronom%C3%ADa%20telescopio%20Chile&format=rss&cc=CL&setlang=es",
    "intentos": 1
   },
   "rss_astronomia_1": {
    "ok": false,
-   "hora": "2026-11-14T06:37:28-03:00",
+   "hora": "2026-11-14T07:17:43-03:00",
    "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Science",
    "error": "HTTP 404",
    "intentos": 1
   },
-  "rss_ciencia_5": {
-   "ok": false,
-   "hora": "2026-11-14T06:37:28-03:00",
-   "url": "https://www.agenciasinc.es/var/ezwebin_site/storage/rss/rss_portada.xml",
-   "error": "HTTP 404",
+  "rss_astronomia_3": {
+   "ok": true,
+   "hora": "2026-11-14T07:17:43-03:00",
+   "url": "https://noirlab.edu/public/news/feed/",
    "intentos": 1
   },
   "rss_astronomia_2": {
    "ok": true,
-   "hora": "2026-11-14T06:37:28-03:00",
+   "hora": "2026-11-14T07:17:43-03:00",
    "url": "https://www.eso.org/public/news/feed/",
+   "intentos": 1
+  },
+  "rss_ciencia_5": {
+   "ok": false,
+   "hora": "2026-11-14T07:17:43-03:00",
+   "url": "https://www.agenciasinc.es/var/ezwebin_site/storage/rss/rss_portada.xml",
+   "error": "HTTP 404",
    "intentos": 1
   },
   "titulares": {
    "ok": true,
-   "hora": "2026-11-14T06:37:28-03:00",
+   "hora": "2026-11-14T07:17:43-03:00",
    "url": "RSS públicos de los medios",
    "error": "",
    "intentos": 1,
@@ -2195,19 +2195,19 @@
   },
   "mercado_ipsa": {
    "ok": false,
-   "hora": "2026-11-14T06:37:28-03:00",
+   "hora": "2026-11-14T07:17:43-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIPSA?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "bcch_catalogo": {
    "ok": true,
-   "hora": "2026-11-14T06:37:30-03:00",
+   "hora": "2026-11-14T07:17:59-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=SearchSeries&frequency=DAILY",
    "intentos": 1
   },
   "bcch_series": {
    "ok": true,
-   "hora": "2026-11-14T06:37:30-03:00",
+   "hora": "2026-11-14T07:17:59-03:00",
    "url": "Banco Central (catálogo)",
    "error": "",
    "elegidas": {
@@ -2219,79 +2219,79 @@
   },
   "mercado_gspc": {
    "ok": false,
-   "hora": "2026-11-14T06:37:30-03:00",
+   "hora": "2026-11-14T07:17:59-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_gspc_fred": {
    "ok": true,
-   "hora": "2026-11-14T06:37:31-03:00",
+   "hora": "2026-11-14T07:18:00-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=SP500&api_key=***&file_type=json&observation_start=2026-10-30",
    "intentos": 1
   },
   "mercado_ixic": {
    "ok": false,
-   "hora": "2026-11-14T06:37:31-03:00",
+   "hora": "2026-11-14T07:18:00-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_ixic_fred": {
    "ok": true,
-   "hora": "2026-11-14T06:37:31-03:00",
+   "hora": "2026-11-14T07:18:01-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=NASDAQCOM&api_key=***&file_type=json&observation_start=2026-10-30",
    "intentos": 1
   },
   "mercado_dji": {
    "ok": false,
-   "hora": "2026-11-14T06:37:31-03:00",
+   "hora": "2026-11-14T07:18:01-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EDJI?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_dji_fred": {
    "ok": true,
-   "hora": "2026-11-14T06:37:32-03:00",
+   "hora": "2026-11-14T07:18:01-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=DJIA&api_key=***&file_type=json&observation_start=2026-10-30",
    "intentos": 1
   },
   "mercado_bzf": {
    "ok": false,
-   "hora": "2026-11-14T06:37:32-03:00",
+   "hora": "2026-11-14T07:18:01-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/BZ%3DF?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_bzf_fred": {
    "ok": true,
-   "hora": "2026-11-14T06:37:32-03:00",
+   "hora": "2026-11-14T07:18:01-03:00",
    "url": "https://api.stlouisfed.org/fred/series/observations?series_id=DCOILBRENTEU&api_key=***&file_type=json&observation_start=2026-10-30",
    "intentos": 1
   },
   "mercado_bzf_fredcsv": {
    "ok": true,
-   "hora": "2026-11-14T06:37:33-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILBRENTEU&cosd=2026-10-30",
    "intentos": 1
   },
   "mercado_hgf": {
    "ok": false,
-   "hora": "2026-11-14T06:37:33-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/HG%3DF?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercado_hgf_bcch": {
    "ok": true,
-   "hora": "2026-11-14T06:37:33-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F019.PPB.PRE.100.D&firstdate=2026-10-30&lastdate=2026-11-14",
    "intentos": 1
   },
   "mercado_btcusd": {
    "ok": false,
-   "hora": "2026-11-14T06:37:33-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?range=10d&interval=1d",
    "error": "robots.txt no lo permite"
   },
   "mercados": {
    "ok": true,
-   "hora": "2026-11-14T06:37:33-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "Yahoo Finance / Stooq / CNBC / Banco Central de Chile / FRED (Reserva Federal de St. Louis)",
    "error": "",
    "intentos": 1,
@@ -2303,79 +2303,79 @@
   },
   "bitcoin": {
    "ok": true,
-   "hora": "2026-11-14T06:37:33-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "https://api.coinbase.com/v2/prices/BTC-USD/spot",
    "intentos": 1
   },
   "tasas_hipotecaria": {
    "ok": true,
-   "hora": "2026-11-14T06:37:33-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F022.VIV.TIP.MA03.UF.Z.M&firstdate=2024-01-01&lastdate=2026-11-14",
    "intentos": 1
   },
   "tasas_consumo": {
    "ok": true,
-   "hora": "2026-11-14T06:37:34-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F022.CON.TIP.Z.NO.Z.M&firstdate=2024-01-01&lastdate=2026-11-14",
    "intentos": 1
   },
   "tasas_eee_0": {
    "ok": true,
-   "hora": "2026-11-14T06:37:34-03:00",
+   "hora": "2026-11-14T07:18:02-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F089.TPM.TAS.11.M&firstdate=2025-01-01&lastdate=2026-11-14",
    "intentos": 1
   },
   "tasas_eee_5": {
    "ok": true,
-   "hora": "2026-11-14T06:37:34-03:00",
+   "hora": "2026-11-14T07:18:03-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F089.TPM.TAS.26.M&firstdate=2025-01-01&lastdate=2026-11-14",
    "intentos": 1
   },
   "tasas_eee_11": {
    "ok": true,
-   "hora": "2026-11-14T06:37:34-03:00",
+   "hora": "2026-11-14T07:18:03-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F089.TPM.TAS.14.M&firstdate=2025-01-01&lastdate=2026-11-14",
    "intentos": 1
   },
   "tasas_eee_23": {
    "ok": true,
-   "hora": "2026-11-14T06:37:35-03:00",
+   "hora": "2026-11-14T07:18:03-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F089.TPM.TAS.15.M&firstdate=2025-01-01&lastdate=2026-11-14",
    "intentos": 1
   },
   "historia_dolar": {
    "ok": true,
-   "hora": "2026-11-14T06:37:35-03:00",
+   "hora": "2026-11-14T07:18:03-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate=2025-10-10&lastdate=2026-11-14",
    "intentos": 1
   },
   "historia_uf": {
    "ok": true,
-   "hora": "2026-11-14T06:37:35-03:00",
+   "hora": "2026-11-14T07:18:04-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F073.UFF.PRE.Z.D&firstdate=2025-10-10&lastdate=2026-11-14",
    "intentos": 1
   },
   "historia_euro": {
    "ok": true,
-   "hora": "2026-11-14T06:37:36-03:00",
+   "hora": "2026-11-14T07:18:04-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F072.CLP.EUR.N.O.D&firstdate=2025-10-10&lastdate=2026-11-14",
    "intentos": 1
   },
   "historia_cobre": {
    "ok": true,
-   "hora": "2026-11-14T06:37:36-03:00",
+   "hora": "2026-11-14T07:18:05-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F019.PPB.PRE.100.D&firstdate=2025-10-10&lastdate=2026-11-14",
    "intentos": 1
   },
   "historia_tpm": {
    "ok": true,
-   "hora": "2026-11-14T06:37:36-03:00",
+   "hora": "2026-11-14T07:18:05-03:00",
    "url": "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?token=***&function=GetSeries&timeseries=F022.TPM.TIN.D001.NO.Z.D&firstdate=2025-10-10&lastdate=2026-11-14",
    "intentos": 1
   },
   "historia_bcch": {
    "ok": true,
-   "hora": "2026-11-14T06:37:36-03:00",
+   "hora": "2026-11-14T07:18:05-03:00",
    "url": "Banco Central (historia diaria)",
    "error": "",
    "series": {
@@ -2388,45 +2388,45 @@
   },
   "fixtures": {
    "ok": true,
-   "hora": "2026-11-14T06:40:15-03:00",
+   "hora": "2026-11-14T07:20:41-03:00",
    "url": "recolectar.py --fixtures",
    "n": 28,
    "error": "25 sin respuesta"
   },
   "espejo": {
    "ok": true,
-   "hora": "2026-11-14T06:42:07-03:00",
+   "hora": "2026-11-14T07:22:29-03:00",
    "url": "páginas leídas por GitHub",
    "n": 50,
    "error": "9 sin texto"
   },
   "efemeride_naval": {
    "ok": true,
-   "hora": "2026-11-14T06:42:09-03:00",
+   "hora": "2026-11-14T07:22:31-03:00",
    "url": "https://www.armada.cl/tradicion-e-historia/efemerides-navales/noviembre/14-de-noviembre-de-1968",
    "intentos": 1
   },
   "sismos": {
    "ok": true,
-   "hora": "2026-11-14T06:42:09-03:00",
-   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmagnitude=2.5&minlatitude=-57&maxlatitude=-17&minlongitude=-80&maxlongitude=-65&starttime=2026-11-13T03:42:09",
+   "hora": "2026-11-14T07:22:31-03:00",
+   "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmagnitude=2.5&minlatitude=-57&maxlatitude=-17&minlongitude=-80&maxlongitude=-65&starttime=2026-11-13T04:22:31",
    "intentos": 1
   },
   "aire_waqi_arica": {
    "ok": true,
-   "hora": "2026-11-14T06:42:10-03:00",
+   "hora": "2026-11-14T07:22:32-03:00",
    "intentos": 1,
    "motivo": "aqi=19 · estación «Villa Maria Del Triunfo, Lima, Peru» a 997 km · medición 2026-11-14 04:00:00"
   },
   "aire_waqi_busca_arica": {
    "ok": true,
-   "hora": "2026-11-14T06:42:11-03:00",
+   "hora": "2026-11-14T07:22:32-03:00",
    "intentos": 1,
    "cerca": 1
   },
   "aire_waqi_uid_arica": {
    "ok": true,
-   "hora": "2026-11-14T06:42:11-03:00",
+   "hora": "2026-11-14T07:22:33-03:00",
    "intentos": 1,
    "motivos": [
     "aqi=57 · estación «Arica, Chile» a 2 km · medición 2026-11-09 13:00:00"
@@ -2434,19 +2434,19 @@
   },
   "aire_waqi_antofagasta": {
    "ok": true,
-   "hora": "2026-11-14T06:42:12-03:00",
+   "hora": "2026-11-14T07:22:34-03:00",
    "intentos": 1,
    "motivo": "aqi=19 · estación «Villa Maria Del Triunfo, Lima, Peru» a 1451 km · medición 2026-11-14 04:00:00"
   },
   "aire_waqi_busca_antofagasta": {
    "ok": true,
-   "hora": "2026-11-14T06:42:12-03:00",
+   "hora": "2026-11-14T07:22:34-03:00",
    "intentos": 1,
    "cerca": 1
   },
   "aire_waqi_uid_antofagasta": {
    "ok": true,
-   "hora": "2026-11-14T06:42:13-03:00",
+   "hora": "2026-11-14T07:22:35-03:00",
    "intentos": 1,
    "motivos": [
     "aqi=46 · estación «Antofagasta, Chile» a 4 km · medición 2026-11-09 20:00:00"
@@ -2454,31 +2454,31 @@
   },
   "aire_waqi_la-serena": {
    "ok": true,
-   "hora": "2026-11-14T06:42:14-03:00",
+   "hora": "2026-11-14T07:22:36-03:00",
    "intentos": 1,
    "motivo": "aqi=19 · estación «Villa Maria Del Triunfo, Lima, Peru» a 2057 km · medición 2026-11-14 04:00:00"
   },
   "aire_waqi_busca_la-serena": {
    "ok": true,
-   "hora": "2026-11-14T06:42:14-03:00",
+   "hora": "2026-11-14T07:22:36-03:00",
    "intentos": 1,
    "cerca": 0
   },
   "aire_waqi_valparaiso-y-vina-del-mar": {
    "ok": true,
-   "hora": "2026-11-14T06:42:15-03:00",
+   "hora": "2026-11-14T07:22:37-03:00",
    "intentos": 1,
    "motivo": "aqi=19 · estación «Villa Maria Del Triunfo, Lima, Peru» a 2384 km · medición 2026-11-14 04:00:00"
   },
   "aire_waqi_busca_valparaiso-y-vina-del-mar": {
    "ok": true,
-   "hora": "2026-11-14T06:42:15-03:00",
+   "hora": "2026-11-14T07:22:38-03:00",
    "intentos": 1,
    "cerca": 2
   },
   "aire_waqi_uid_valparaiso-y-vina-del-mar": {
    "ok": true,
-   "hora": "2026-11-14T06:42:17-03:00",
+   "hora": "2026-11-14T07:22:39-03:00",
    "intentos": 1,
    "motivos": [
     "aqi=22 · estación «Viña del Mar, Chile» a 6 km · medición 2026-11-09 20:00:00"
@@ -2486,19 +2486,19 @@
   },
   "aire_waqi_santiago": {
    "ok": true,
-   "hora": "2026-11-14T06:42:17-03:00",
+   "hora": "2026-11-14T07:22:40-03:00",
    "intentos": 1,
    "motivo": "aqi=19 · estación «Villa Maria Del Triunfo, Lima, Peru» a 2450 km · medición 2026-11-14 04:00:00"
   },
   "aire_waqi_busca_santiago": {
    "ok": true,
-   "hora": "2026-11-14T06:42:18-03:00",
+   "hora": "2026-11-14T07:22:40-03:00",
    "intentos": 1,
    "cerca": 6
   },
   "aire_waqi_uid_santiago": {
    "ok": true,
-   "hora": "2026-11-14T06:42:19-03:00",
+   "hora": "2026-11-14T07:22:42-03:00",
    "intentos": 1,
    "motivos": [
     "aqi=38 · estación «Cerrillos II, Chile» a 6 km · medición 2026-11-09 20:00:00"
@@ -2506,19 +2506,19 @@
   },
   "aire_waqi_concepcion": {
    "ok": true,
-   "hora": "2026-11-14T06:42:20-03:00",
+   "hora": "2026-11-14T07:22:43-03:00",
    "intentos": 1,
    "motivo": "aqi=19 · estación «Villa Maria Del Triunfo, Lima, Peru» a 2770 km · medición 2026-11-14 04:00:00"
   },
   "aire_waqi_busca_concepcion": {
    "ok": true,
-   "hora": "2026-11-14T06:42:21-03:00",
+   "hora": "2026-11-14T07:22:43-03:00",
    "intentos": 1,
    "cerca": 6
   },
   "aire_waqi_uid_concepcion": {
    "ok": true,
-   "hora": "2026-11-14T06:42:22-03:00",
+   "hora": "2026-11-14T07:22:45-03:00",
    "intentos": 1,
    "motivos": [
     "aqi=39 · estación «ENAP Price, Chile» a 8 km · medición 2026-11-09 21:00:00"
@@ -2526,19 +2526,19 @@
   },
   "aire_waqi_temuco": {
    "ok": true,
-   "hora": "2026-11-14T06:42:23-03:00",
+   "hora": "2026-11-14T07:22:46-03:00",
    "intentos": 1,
-   "motivo": "aqi=21 · estación «Presidente Prudente, São Paulo, Brazil» a 2733 km · medición 2026-11-14 05:00:00"
+   "motivo": "aqi=46 · estación «Presidente Prudente, São Paulo, Brazil» a 2733 km · medición 2026-11-14 06:00:00"
   },
   "aire_waqi_busca_temuco": {
    "ok": true,
-   "hora": "2026-11-14T06:42:23-03:00",
+   "hora": "2026-11-14T07:22:47-03:00",
    "intentos": 1,
    "cerca": 4
   },
   "aire_waqi_uid_temuco": {
    "ok": true,
-   "hora": "2026-11-14T06:42:25-03:00",
+   "hora": "2026-11-14T07:22:49-03:00",
    "intentos": 1,
    "motivos": [
     "aqi=78 · estación «Las Encinas Temuco, Chile» a 3 km · medición 2026-11-09 20:00:00"
@@ -2546,19 +2546,19 @@
   },
   "aire_waqi_puerto-montt": {
    "ok": true,
-   "hora": "2026-11-14T06:42:26-03:00",
+   "hora": "2026-11-14T07:22:49-03:00",
    "intentos": 1,
-   "motivo": "aqi=21 · estación «Presidente Prudente, São Paulo, Brazil» a 2945 km · medición 2026-11-14 05:00:00"
+   "motivo": "aqi=46 · estación «Presidente Prudente, São Paulo, Brazil» a 2945 km · medición 2026-11-14 06:00:00"
   },
   "aire_waqi_busca_puerto-montt": {
    "ok": true,
-   "hora": "2026-11-14T06:42:26-03:00",
+   "hora": "2026-11-14T07:22:50-03:00",
    "intentos": 1,
    "cerca": 3
   },
   "aire_waqi_uid_puerto-montt": {
    "ok": true,
-   "hora": "2026-11-14T06:42:28-03:00",
+   "hora": "2026-11-14T07:22:52-03:00",
    "intentos": 1,
    "motivos": [
     "aqi=89 · estación «Puerto Varas, Chile» a 16 km · medición 2026-11-09 21:00:00"
@@ -2566,19 +2566,19 @@
   },
   "aire_waqi_punta-arenas": {
    "ok": true,
-   "hora": "2026-11-14T06:42:29-03:00",
+   "hora": "2026-11-14T07:22:52-03:00",
    "intentos": 1,
-   "motivo": "aqi=21 · estación «Presidente Prudente, São Paulo, Brazil» a 3827 km · medición 2026-11-14 05:00:00"
+   "motivo": "aqi=46 · estación «Presidente Prudente, São Paulo, Brazil» a 3827 km · medición 2026-11-14 06:00:00"
   },
   "aire_waqi_busca_punta-arenas": {
    "ok": true,
-   "hora": "2026-11-14T06:42:29-03:00",
+   "hora": "2026-11-14T07:22:53-03:00",
    "intentos": 1,
    "cerca": 1
   },
   "aire_waqi_uid_punta-arenas": {
    "ok": true,
-   "hora": "2026-11-14T06:42:30-03:00",
+   "hora": "2026-11-14T07:22:54-03:00",
    "intentos": 1,
    "motivos": [
     "aqi=9 · estación «Punta Arenas, Chile» a 0 km · medición 2026-11-09 20:00:00"
@@ -2586,26 +2586,26 @@
   },
   "aire_waqi": {
    "ok": false,
-   "hora": "2026-11-14T06:42:30-03:00",
+   "hora": "2026-11-14T07:22:54-03:00",
    "url": "api.waqi.info",
    "n": 0,
    "error": "sin estación cercana o sin dato: Arica, Antofagasta, La Serena, Valparaíso, Santiago, Concepción, Temuco, Puerto Montt, Punta Arenas"
   },
   "aire": {
    "ok": false,
-   "hora": "2026-11-14T06:42:30-03:00",
+   "hora": "2026-11-14T07:22:54-03:00",
    "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=-18.48,-23.65,-29.9,-33.05,-33.45,-36.83,-38.74,-41.47,-53.16&longitude=-70.31,-70.4,-71.25,-71.61,-70.67,-73.05,-72.59,-72.94,-70.92&current=us_aqi,pm2_5&timezone=America%2FSantiago",
    "error": "robots.txt no lo permite"
   },
   "f1": {
    "ok": true,
-   "hora": "2026-11-14T06:42:31-03:00",
+   "hora": "2026-11-14T07:22:55-03:00",
    "url": "https://api.jolpi.ca/ergast/f1/2026/driverstandings.json",
    "intentos": 1
   },
   "f1_carrera": {
    "ok": true,
-   "hora": "2026-11-14T06:42:32-03:00",
+   "hora": "2026-11-14T07:22:55-03:00",
    "url": "https://api.jolpi.ca/ergast/f1/2026/20/races.json",
    "intentos": 1
   }
