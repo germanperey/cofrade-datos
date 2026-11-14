@@ -1204,6 +1204,42 @@ def radar_de_bing_en_github_y_no_en_el_pulso():
         B.titulares = viejo
     assert visto.get("feeds") is not None and sum(len(v) for v in visto["feeds"].values()) == sum(len(v) for v in sin.values())
 
+@prueba
+def respaldos_completas_y_noticias_reconstruidas():
+    """14-11-2026 (Germán: «los respaldos de cada Newsletter»): las ediciones completas que salen de la rama quedan en releases y
+    siguen en el índice; el archivo de noticias anterior al 13-11 se rehace desde las ediciones publicadas."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import reconstruir_noticias as RN
+    import indice_ediciones as IE
+    h = ('<section class="tres"><h2>Las 3 del día</h2><ol><li>Uno.</li><li>Dos.</li></ol></section>'
+         '<section class="sec" id="economia"><h2>1. Economía</h2><h3>Chile</h3><ul class="notas"><li><strong>Codelco &amp; Adani</strong> '
+         '<span>Acuerdo de exploración.</span> <em class="fuente"><time class="fnota">31-12</time> <a href="https://df.cl/a">Diario Financiero</a></em> '
+         '<span class="tambien">También en: <a href="https://latercera.com/b">La Tercera</a></span></li></ul><h3>Mundo</h3><ul class="notas">'
+         '<li><strong>Fed</strong> <span>Tasas.</span> <em class="fuente"><time class="fnota">01-01</time> <a href="https://x.com/c">X</a></em></li></ul></section>'
+         '<section class="sec" id="conflictos"><h3>Guerra de Gaza (Israel–Hamás)</h3><ul class="notas"><li><strong>Tregua</strong> <span>T.</span> '
+         '<em class="fuente"><time class="fnota">01-01</time> <a href="https://y.com/d">Y</a></em></li></ul></section>'
+         '<section class="sec" id="deportes"><div class="dep"><h3>Fútbol</h3><ul class="notas"><li><strong>Colo-Colo</strong> <span>Gana.</span> '
+         '<em class="fuente"><time class="fnota">01-01</time> <a href="https://z.com/e">Z</a></em></li></ul></div><div class="dep"><h3>Otros deportes</h3>'
+         '<div class="disc"><h4>Fórmula 1</h4><ul class="notas"><li><strong>GP</strong> <span>Carrera.</span> <em class="fuente">'
+         '<time class="fnota">01-01</time> <a href="https://w.com/f">W</a></em></li></ul></div></div></section>')
+    sec = RN.noticias(h, "2027-01-02")
+    assert sorted(sec) == ["conflictos/israel-gaza", "deportes/Fórmula 1", "deportes/futbol", "economia/chile", "economia/mundo", "tres_del_dia"], sorted(sec)
+    n = sec["economia/chile"][0]
+    assert n == {"titulo": "Codelco & Adani", "texto": "Acuerdo de exploración.", "fuente": "Diario Financiero", "url": "https://df.cl/a", "fecha": "2026-12-31"}, n
+    assert [x["titulo"] for x in sec["tres_del_dia"]] == ["Uno.", "Dos."] and sec["economia/mundo"][0]["fecha"] == "2027-01-01"
+    tmp = tempfile.mkdtemp()
+    man = os.path.join(tmp, "completas.json")
+    json.dump({"archivos": {"completas/2026-10/Cofrade-News-2026-10-30.html": {"h": "x", "b": 1, "u": "https://github.com/r/releases/download/t/f"}}}, open(man, "w"))
+    viejo = IE.archivos
+    IE.archivos = lambda ref, carpeta="": (["Cofrade-News-2026-11-14.html"] if "ediciones" in ref else ["ediciones/Cofrade-News-2026-11-13.html"])
+    try:
+        sal = os.path.join(tmp, "ed.json")
+        IE.main(["--salida", sal, "--permanentes", man])
+    finally:
+        IE.archivos = viejo
+    e = {x["f"]: x for x in json.load(open(sal))["ediciones"]}
+    assert e["2026-10-30"]["c"] == 1 and e["2026-11-14"]["c"] == 1 and e["2026-11-13"] == {"f": "2026-11-13", "c": 0, "l": 1}, e
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

@@ -53,9 +53,16 @@ def main(argv=None):
     ap.add_argument("--salida", default="datos/ediciones.json")
     ap.add_argument("--rama-completa", default="origin/ediciones")
     ap.add_argument("--rama-liviana", default="HEAD")
+    ap.add_argument("--permanentes", default="archivo/manifiesto/completas.json")
     a = ap.parse_args(argv)
     completas = fechas(archivos(a.rama_completa))
     livianas = fechas(archivos(a.rama_liviana, "ediciones"))
+    # 14-11-2026: las completas que ya salieron de la rama siguen para siempre en los releases (herramientas/completas_permanentes.py)
+    try:
+        permanentes = fechas(json.load(open(a.permanentes, encoding="utf-8")).get("archivos") or {})
+    except (OSError, ValueError, AttributeError):
+        permanentes = set()
+    completas |= permanentes
     if not (completas or livianas):
         print("Sin ediciones: no se escribe el índice (la portada usa su respaldo).")
         return 0

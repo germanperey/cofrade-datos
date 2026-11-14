@@ -7,6 +7,9 @@
 const RAW = "https://raw.githubusercontent.com/germanperey/cofrade-datos/main/";
 const RAW_ED = "https://raw.githubusercontent.com/germanperey/cofrade-datos/ediciones/";   // edición COMPLETA (gráficos interactivos), 14 días
 const rutaEdicion = (f, completa) => (completa ? RAW_ED : RAW + "ediciones/") + `Cofrade-News-${f}.html`;
+// 14-11-2026 (Germán: «los respaldos de cada Newsletter»): cuando una edición completa sale de la rama (guarda 16), queda para siempre en
+// el release mensual completas-AAAA-MM del repositorio (herramientas/completas_permanentes.py) y se sigue leyendo de ahí.
+const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/releases/download/completas-${f.slice(0, 7)}/Cofrade-News-${f}.html`;
 const DOMINIO = "www.cofrad.es";
 const FORMULARIO = "__FORMULARIO__";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -645,6 +648,7 @@ var p=false;function sombra(){var s=scrollY>4;if(s!==p){p=s;c.classList.toggle('
 function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scrollWidth-4)}mas();if(n)n.addEventListener('scroll',mas,{passive:true});addEventListener('resize',mas)})();`;
 
 /*__BUZON_PANEL__*/
+/*__SUSCRIPCIONES__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -833,8 +837,8 @@ ${bloqueCifras(p)}${bloqueTierra(p)}${bloqueTitulares(p)}</section>
 <div class="pilar"><b>Calendario</b><span>Reuniones del Banco Central, de la Reserva Federal y los datos que vienen.</span></div>
 <div class="pilar"><b>Herramientas</b><span>Conversor UF, dólar y euro, calculadora de IPC, interés compuesto y crédito hipotecario.</span></div>
 </div>
-<div class="precio-lujo"><span class="monto">$5.000 <small>al mes</small></span><span class="extra">7 días gratis · Plan anual $55.000 (un mes de regalo) · Socios de la Cofradía con precio preferente</span></div>
-<div class="acciones"><button type="button" class="btn oro pub-abrir" data-interes="Dashboard Financiero · socio fundador" aria-haspopup="dialog">Quiero ser socio fundador</button><a class="btn claro" href="/mercados">Ver mercados en vivo</a></div>
+<div class="precio-lujo"><span class="monto">$5.000 <small>al mes</small></span><span class="extra">7 días gratis · Plan anual $55.000 (un mes de regalo) · Socios de la Cofradía con precio preferente</span><span class="extra">Socios fundadores: te inscribes hoy y el primer cobro llega el 1 de diciembre de 2026.</span></div>
+<div class="acciones"><a class="btn oro" href="/socios/fundador">Quiero ser socio fundador</a><a class="btn claro" href="/mercados">Ver mercados en vivo</a></div>
 <p class="legal">Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta, y no considera tu situación personal.</p></div></section>
 <section id="archivo" aria-labelledby="t-arch"><h3 id="t-arch">Archivo</h3><p class="sub">Las 12 ediciones publicadas más recientes.</p>
 ${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `<a href="/edicion/${f}" data-iso="${f}"${i >= MAX_ARCHIVO ? " hidden" : ""}>${esc(fechaLarga(f))}</a>`).join("")}</div>${archivoMas(lista.length)}` : `<p class="aviso">El archivo empieza con la próxima edición.</p>`}</section>
@@ -962,7 +966,8 @@ export default {
         // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde y
         // 1 hora en el navegador; la de hoy, 10 minutos. Los gráficos se dibujan recién cuando el lector llega a ellos (LENTO).
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
-        const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true))) || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx));
+        const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true))) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]))))
+          || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
         ctx.waitUntil(contarVisita(req, env, p));
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
@@ -1012,6 +1017,14 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=300", ...SEGURIDAD } })
           : new Response("{}", { status: 503, headers: { "Content-Type": "application/json" } });
       }
+      // 14-11-2026: socios fundadores del Dashboard Financiero con Mercado Pago (modulos/suscripciones.js)
+      if (p === "/socios/fundador") {
+        if (req.method === "POST") return await crearSuscripcion(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos conectar con Mercado Pago. Intenta de nuevo en unos minutos." }, 503));
+        return paginaFundador(env, env.DB ? await pctCofradia(env) : 20);
+      }
+      if (p === "/socios/gracias") return await paginaGracias(u, env);
+      if (p === "/socios/condiciones") return paginaCondiciones();
+      if (p === "/mp/aviso" && req.method === "POST") return await avisoMP(req, u, env, ctx).catch(() => jsonR({ ok: false }, 500));
       if (p === "/socios/salir") return new Response(null, { status: 302, headers: { Location: "/socios", "Set-Cookie": "cn_socio=; Max-Age=0; Path=/; Secure; HttpOnly; SameSite=Lax" } });
       if (p === "/socios") {
         if (req.method === "POST") {

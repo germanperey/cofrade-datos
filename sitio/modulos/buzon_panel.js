@@ -374,6 +374,7 @@ async function panel(req, env) {
   const nps = npsR.length ? Math.round((npsR.filter((r) => r.nps >= 9).length - npsR.filter((r) => r.nps <= 6).length) / npsR.length * 100) : null;
   const tot = bzTot[0] || { n: 0, ver: 0 };
   const kpi = (t, v, s = "") => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${s ? `<br><small>${esc(s)}</small>` : ""}</div>`;
+  const fundadores = await panelSocios(env).catch(() => "");   // 14-11-2026: socios fundadores (modulos/suscripciones.js)
   const cuerpo = `<section style="border:0;padding-top:30px"><span class="kicker">Panel de Control · solo administración</span><h1 class="titulo-lujo">Cómo va Cofrade News</h1>
 <p class="sub">Contador propio, sin cookies ni datos personales: cada lector cuenta una vez por día con una huella anónima que cambia cada día. Últimos 30 días. <a href="/panel/salir">Salir del panel</a></p>
 <div class="cifras">${kpi("Lectores hoy", num(dHoy.u, 0), num(dHoy.v, 0) + " páginas vistas")}${kpi("Promedio diario", num(prom, 0), "lectores únicos")}
@@ -381,7 +382,7 @@ ${kpi("Sugerencias en el Buzón", num(tot.n, 0), num(tot.ver, 0) + " con email c
 ${kpi("Recomendación (NPS)", nps === null ? "Sin respuestas" : (nps > 0 ? "+" : "") + nps, npsR.length + " respuestas")}
 ${kpi("Socios activos", num(socios.filter((x) => ["activo", "prueba"].includes(x.estado)).reduce((a, x) => a + x.n, 0), 0), "Dashboard Financiero")}
 ${kpi("«En vivo» al día", esc(pulTxt), pulSub)}</div></section>
-<section><h3>Lectores por día</h3>${columnas(dias.map((x) => [x.fecha, x.u]))}</section>
+${fundadores}<section><h3>Lectores por día</h3>${columnas(dias.map((x) => [x.fecha, x.u]))}</section>
 <section><h3>Mapa de calor de lectura</h3><p class="sub">Tiempo que los lectores pasan en cada sección de la edición (sumado, últimos 30 días). Más dorado = más leído.</p>${calor(lect.map((x) => [NOMBRE_SECCION[x.seccion] || x.seccion, x.s, x.v]))}</section>
 <section><div class="dos"><div class="tarjeta"><h4 class="kicker">Páginas más visitadas</h4>${barras(rutas.map((x) => [x.ruta === "/" ? "Portada" : x.ruta.replace("/edicion/", "Edición "), x.u]), "#23395B")}</div>
 <div class="tarjeta"><h4 class="kicker">Países</h4>${barras(paises.map((x) => [x.pais || "Sin país", x.u]), "#23395B")}</div></div></section>

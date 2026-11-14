@@ -20,19 +20,25 @@ concurrency:
 jobs:
   indice:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
         with:
           ref: main
       - name: Leer la rama de ediciones
         run: git fetch --depth=1 origin ediciones:refs/remotes/origin/ediciones
+      # 14-11-2026 (Germán: «los respaldos de cada Newsletter»): la rama guarda solo 16 ediciones completas; antes de que se
+      # borre una, queda para siempre en el release mensual completas-AAAA-MM (no engorda el repositorio).
+      - name: Guardar las ediciones completas para siempre
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 herramientas/completas_permanentes.py
       - name: Armar el índice
         run: python3 herramientas/indice_ediciones.py --salida datos/ediciones.json
       - name: Guardar en el repositorio
         run: |
           git config user.name "cofrade-datos"
           git config user.email "actions@users.noreply.github.com"
-          git add datos/ediciones.json
-          git diff --cached --quiet || git commit -m "Índice de ediciones $(date -u +%Y-%m-%dT%H:%M)"
+          git add datos/ediciones.json archivo/manifiesto/completas.json archivo/manifiesto/meses.json
+          git diff --cached --quiet || git commit -m "Índice y ediciones completas permanentes $(date -u +%Y-%m-%dT%H:%M)"
           for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 10; done

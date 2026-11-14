@@ -2345,7 +2345,7 @@ def gasto_funcional(estado, salida, hoy):
                     nombres.setdefault(m.group(1), re.sub(r"\s+", " ", m.group(2)).strip())
                     for a_, v in zip(cols, vals):
                         anios.setdefault(str(a_), {})[m.group(1)] = v
-        clave = ("7", "707", "709", "7102", "7045", "7104", "706", "7106", "7105", "7041")
+        clave = ("7", "707", "709", "7102", "7045", "7046", "7104", "706", "7106", "7105", "7041")   # 14-11: 7046 entra a Conectividad
         if len(anios) < 30 or not all(all(c in v for c in clave) for v in anios.values()):
             raise ValueError(f"PDF con {len(anios)} años o sin las partidas de los 7 pilares")
         estado["gasto_funcional"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": DIPRES_FUNCIONAL,
