@@ -1,7 +1,7 @@
 {
  "fuente": "tablademareas.com (pronóstico de oleaje, leído por GitHub)",
  "url": "https://tablademareas.com/cl",
- "generado": "2026-11-14T07:22-03:00",
+ "generado": "2026-11-14T11:43-03:00",
  "puertos": {
   "ancud": [
    {
@@ -421,8 +421,8 @@
    {
     "fecha": "2026-11-17",
     "ola_max_m": 1.9,
-    "direccion": "W",
-    "direccion_grados": 270
+    "direccion": "WSW",
+    "direccion_grados": 248
    },
    {
     "fecha": "2026-11-18",
@@ -509,8 +509,8 @@
    {
     "fecha": "2026-11-17",
     "ola_max_m": 1.1,
-    "direccion": "SW",
-    "direccion_grados": 225
+    "direccion": "WSW",
+    "direccion_grados": 248
    },
    {
     "fecha": "2026-11-18",
@@ -526,7 +526,7 @@
    },
    {
     "fecha": "2026-11-20",
-    "ola_max_m": 1.5,
+    "ola_max_m": 1.4,
     "direccion": "WSW",
     "direccion_grados": 248
    }
@@ -734,19 +734,19 @@
    },
    {
     "fecha": "2026-11-18",
-    "ola_max_m": 1.6,
+    "ola_max_m": 1.5,
     "direccion": "WSW",
     "direccion_grados": 248
    },
    {
     "fecha": "2026-11-19",
     "ola_max_m": 1.9,
-    "direccion": "SW",
-    "direccion_grados": 225
+    "direccion": "W",
+    "direccion_grados": 270
    },
    {
     "fecha": "2026-11-20",
-    "ola_max_m": 2.9,
+    "ola_max_m": 2.2,
     "direccion": "WSW",
     "direccion_grados": 248
    }
@@ -754,25 +754,25 @@
   "puerto-chacabuco": [
    {
     "fecha": "2026-11-14",
-    "ola_max_m": 0.6,
+    "ola_max_m": 0.5,
     "direccion": "S",
     "direccion_grados": 180
    },
    {
     "fecha": "2026-11-15",
-    "ola_max_m": 0.8,
+    "ola_max_m": 0.7,
     "direccion": "NNE",
     "direccion_grados": 22
    },
    {
     "fecha": "2026-11-16",
-    "ola_max_m": 0.6,
-    "direccion": "N",
-    "direccion_grados": 0
+    "ola_max_m": 0.5,
+    "direccion": "NNE",
+    "direccion_grados": 22
    },
    {
     "fecha": "2026-11-17",
-    "ola_max_m": 0.6,
+    "ola_max_m": 0.5,
     "direccion": "NNE",
     "direccion_grados": 22
    },
@@ -784,15 +784,15 @@
    },
    {
     "fecha": "2026-11-19",
-    "ola_max_m": 0.4,
+    "ola_max_m": 0.6,
     "direccion": "N",
     "direccion_grados": 0
    },
    {
     "fecha": "2026-11-20",
-    "ola_max_m": 0.7,
-    "direccion": "NNE",
-    "direccion_grados": 22
+    "ola_max_m": 0.6,
+    "direccion": "N",
+    "direccion_grados": 0
    }
   ],
   "puerto-montt": [
@@ -887,8 +887,8 @@
    {
     "fecha": "2026-11-14",
     "ola_max_m": 0.8,
-    "direccion": "NW",
-    "direccion_grados": 315
+    "direccion": "WNW",
+    "direccion_grados": 292
    },
    {
     "fecha": "2026-11-15",
@@ -898,33 +898,33 @@
    },
    {
     "fecha": "2026-11-16",
-    "ola_max_m": 0.6,
-    "direccion": "SW",
-    "direccion_grados": 225
+    "ola_max_m": 0.7,
+    "direccion": "WSW",
+    "direccion_grados": 248
    },
    {
     "fecha": "2026-11-17",
     "ola_max_m": 0.6,
-    "direccion": "SSW",
-    "direccion_grados": 202
+    "direccion": "ESE",
+    "direccion_grados": 112
    },
    {
     "fecha": "2026-11-18",
-    "ola_max_m": 0.3,
+    "ola_max_m": 0.6,
+    "direccion": "SSE",
+    "direccion_grados": 158
+   },
+   {
+    "fecha": "2026-11-19",
+    "ola_max_m": 0.5,
     "direccion": "NNW",
     "direccion_grados": 338
    },
    {
-    "fecha": "2026-11-19",
-    "ola_max_m": 0.4,
-    "direccion": "NW",
-    "direccion_grados": 315
-   },
-   {
     "fecha": "2026-11-20",
-    "ola_max_m": 0.3,
-    "direccion": "W",
-    "direccion_grados": 270
+    "ola_max_m": 0.5,
+    "direccion": "WSW",
+    "direccion_grados": 248
    }
   ],
   "punta-arenas": [
@@ -1124,7 +1124,7 @@
    },
    {
     "fecha": "2026-11-17",
-    "ola_max_m": 1.5,
+    "ola_max_m": 1.4,
     "direccion": "WSW",
     "direccion_grados": 248
    },
@@ -1136,13 +1136,13 @@
    },
    {
     "fecha": "2026-11-19",
-    "ola_max_m": 1.4,
+    "ola_max_m": 1.5,
     "direccion": "W",
     "direccion_grados": 270
    },
    {
     "fecha": "2026-11-20",
-    "ola_max_m": 2.2,
+    "ola_max_m": 1.6,
     "direccion": "WSW",
     "direccion_grados": 248
    }
@@ -1224,7 +1224,7 @@
    },
    {
     "fecha": "2026-11-19",
-    "ola_max_m": 1.2,
+    "ola_max_m": 1.1,
     "direccion": "WNW",
     "direccion_grados": 292
    },
