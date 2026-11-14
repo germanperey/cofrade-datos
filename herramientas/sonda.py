@@ -13,30 +13,24 @@ UA = "CofradeNews/1.0 (boletin gratuito sin fines de lucro de la Cofradia de ofi
 HOY = dt.date.today()
 D0, D1 = HOY.strftime("%Y%m%d"), (HOY - dt.timedelta(days=1)).strftime("%Y%m%d")
 OBJETIVOS = [
-    ("sinca_listado", "https://sinca.mma.gob.cl/index.php/json/listadomapa2k19/"),
-    ("sinca_inicio", "https://sinca.mma.gob.cl/"),
-    ("airechile", "https://airechile.mma.gob.cl/"),
     ("espn_atp_sb", "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard"),
     ("espn_wta_sb", "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard"),
-    ("espn_atp_sb_hoy", f"https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates={D0}"),
-    ("espn_wta_sb_ayer", f"https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard?dates={D1}"),
     ("marca_nba", "https://e00-marca.uecdn.es/rss/baloncesto/nba.xml"),
-    ("as_baloncesto", "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/baloncesto/portada/"),
     ("as_nba", "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/baloncesto/subsection/nba/"),
-    ("espndeportes_nba", "https://espndeportes.espn.com/espn/rss/nba/news"),
-    ("fei_ranking", "https://data.fei.org/Ranking/Search.aspx?rankingCode=S_WR"),
+    ("airechile_inicio", "https://airechile.mma.gob.cl/"),
     ("tabsa_inicio", "https://www.tabsa.cl/"),
     ("seia_busqueda", "https://seia.sea.gob.cl/busqueda/buscarProyecto.php"),
     ("senado_ws_18851", "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18851"),
     ("senado_ws_18883", "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18883"),
-    ("senado_lista", "https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18883-14"),
     ("camara_ws_indice", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx"),
     ("camara_ws_proyecto", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarProyectoLey?prmNumeroBoletin=18883-14"),
     ("dipres_funcional1", "https://www.dipres.gob.cl/598/articles-45401_doc_pdf_Funcional1.pdf"),
     ("dipres_funcional2", "https://www.dipres.gob.cl/598/articles-45401_doc_pdf_Funcional2.pdf"),
     ("dipres_funcional3", "https://www.dipres.gob.cl/598/articles-45401_doc_pdf_Funcional3.pdf"),
     ("dipres_series", "https://www.dipres.gob.cl/598/w3-propertyname-706.html"),
+    ("directemar_puertos", "https://www.directemar.cl/directemar/site/tax/port/all/taxport_6_23__1.html"),
 ]
+EXTRA_JS = {"airechile_inicio", "tabsa_inicio"}   # en estas páginas se buscan los scripts y las direcciones de su API
 os.makedirs("sonda", exist_ok=True)
 robots, resumen = {}, {}
 
@@ -79,4 +73,24 @@ for nombre, url in OBJETIVOS:
             fila["error"] = f"{ex.__class__.__name__}: {str(ex)[:200]}"
     resumen[nombre] = fila
     print(nombre, json.dumps(fila, ensure_ascii=False)[:300])
+for nombre in EXTRA_JS:
+    f = f"sonda/{nombre}.html"
+    if not os.path.exists(f):
+        continue
+    base = resumen[nombre]["url"]
+    html = open(f, encoding="utf-8", errors="replace").read()
+    apis = set()
+    for i, src in enumerate(re.findall(r'<script[^>]+src="([^"]+)"', html)[:8]):
+        u = urllib.parse.urljoin(base, src)
+        ok, _ = permitido(u)
+        if not ok:
+            continue
+        try:
+            js = requests.get(u, headers={"User-Agent": UA}, timeout=40).text
+            apis |= set(re.findall(r'https?://[a-zA-Z0-9.-]+(?:/[A-Za-z0-9_./?=&%-]*)?(?:api|json|itinerar|horario|ruta|tramo|estacion|calidad|medic)[A-Za-z0-9_./?=&%-]*', js))
+            apis |= set("REL " + x for x in re.findall(r'["\'](/(?:api|v\d)[A-Za-z0-9_./-]{2,80})["\']', js))
+        except Exception as ex:
+            apis.add(f"error {u}: {ex.__class__.__name__}")
+    resumen[nombre]["apis"] = sorted(apis)[:80]
+    print(nombre, "APIS", json.dumps(sorted(apis)[:80], ensure_ascii=False)[:3000])
 json.dump(resumen, open("sonda/resumen.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)

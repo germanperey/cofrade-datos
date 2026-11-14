@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   sonda:
@@ -19,8 +19,8 @@ jobs:
           python-version: "3.12"
       - run: pip install --quiet requests==2.32.3
       - run: python herramientas/sonda.py
-      - uses: actions/upload-artifact@v4
-        with:
-          name: sonda
-          path: sonda/
-          retention-days: 7
+      - name: Dejar lo leído en la rama «sonda» (no toca main)
+        run: |
+          git config user.name "sonda-cofrade"; git config user.email "sonda@users.noreply.github.com"
+          mv sonda /tmp/sonda && git checkout --orphan sonda && git rm -rq --cached . && git clean -fdq
+          cp -r /tmp/sonda . && git add sonda && git commit -qm "Sonda de fuentes $(date -u +%F)" && git push -qf origin sonda
