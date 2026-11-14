@@ -26,7 +26,7 @@ jobs:
         with:
           ref: main
       - name: Leer la rama de ediciones
-        run: git fetch --depth=1 origin ediciones:refs/remotes/origin/ediciones || true
+        run: git fetch --depth=1 origin ediciones:refs/remotes/origin/ediciones
       - name: Armar el índice
         run: python3 herramientas/indice_ediciones.py --salida datos/ediciones.json
       - name: Guardar en el repositorio

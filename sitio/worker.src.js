@@ -25,10 +25,12 @@ function fechaChile(d = new Date()) {
   const p = new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
   return p; // AAAA-MM-DD
 }
+let _FMT_LARGA = null;   // 14-11-2026 (auditoría): un solo formateador; crear uno por fecha costaba ~20 ms de CPU con 400 ediciones
 function fechaLarga(iso) {
   const [y, m, d] = iso.split("-").map(Number);
   const f = new Date(Date.UTC(y, m - 1, d, 15));
-  const t = new Intl.DateTimeFormat("es-CL", { timeZone: TZ, weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(f);
+  _FMT_LARGA = _FMT_LARGA || new Intl.DateTimeFormat("es-CL", { timeZone: TZ, weekday: "long", day: "numeric", month: "long", year: "numeric" });
+  const t = _FMT_LARGA.format(f);
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
 function num(v, dec = 2) {
@@ -104,8 +106,10 @@ async function indice(ctx) {
   const recientes = Array.from({ length: lista.length ? 3 : DIAS_ARCHIVO }, (_, i) => fechaChile(new Date(hoy.getTime() - i * 86400000)));
   const nuevas = await Promise.all(recientes.filter((f) => !lista.includes(f)).map(async (f) => ((await existeEdicion(f)) ? f : null)));
   const tope = fechaChile();
+  const conIndice = lista.length > 0;
   lista = [...new Set([...lista, ...nuevas.filter(Boolean)])].filter((f) => f <= tope).sort().reverse().slice(0, TOPE_ARCHIVO);
-  ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(lista), { headers: { "Cache-Control": "public, max-age=900" } })));
+  // sin el índice de GitHub (respaldo de 20 días) se guarda solo 1 minuto: apenas vuelva el índice, el Archivo vuelve a estar completo
+  ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(lista), { headers: { "Cache-Control": `public, max-age=${conIndice ? 900 : 60}` } })));
   return lista;
 }
 
@@ -128,11 +132,15 @@ function textos(h) {
   }
   return [...out];
 }
+const RUMBO_EN = { N: "N", S: "S", E: "E", O: "W", NE: "NE", NO: "NW", SE: "SE", SO: "SW", NNE: "NNE", NNO: "NNW", ENE: "ENE", ESE: "ESE", SSE: "SSE", SSO: "SSW", ONO: "WNW", OSO: "WSW" };
 function enFijo(t) {   // reglas sin IA para las frases con números
   let m = t.match(/^Actualizado a las (\d\d:\d\d)(?: · próxima actualización (\d\d:\d\d))?\. (.+)$/);
   if (m) return `Updated at ${m[1]}${m[2] ? ` · next update ${m[2]}` : ""}. ` + (EN_FIJO[m[3]] || m[3]);
   if ((m = t.match(/^Sismo mayor 24 h · (\d+) sobre M 2,5$/))) return `Largest earthquake in 24 h · ${m[1]} above M 2.5`;
   if ((m = t.match(/^(.+) · cierre (\d\d-\d\d)$/))) return `${EN_FIJO[m[1]] || m[1]} · close ${m[2]}`;
+  if ((m = t.match(/^(.+) · (\d\d-\d\d-\d{4})$/)) && EN_FIJO[m[1]]) return `${EN_FIJO[m[1]]} · ${m[2]}`;
+  if ((m = t.match(/^([+−-]?[\d.,]+ %) en un mes$/))) return `${m[1]} over one month`;
+  if ((m = t.match(/^(\d+) km al ([NSEO]{1,3}) de (.+?)( · \d\d:\d\d)?$/)) && RUMBO_EN[m[2]]) return `${m[1]} km ${RUMBO_EN[m[2]]} of ${m[3]}${m[4] || ""}`;
   if ((m = t.match(/^Aire · (.+)$/))) return `Air · ${m[1]}`;
   if ((m = t.match(/^ICA (\d+) · (.*)$/))) return `AQI ${m[1]} · ${m[2]}`;
   if (AIRE_EN[t]) return AIRE_EN[t];
@@ -142,42 +150,63 @@ async function huella(t) {
   const d = await crypto.subtle.digest("SHA-1", new TextEncoder().encode(t));
   return [...new Uint8Array(d)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
-async function traducirUno(t, env, ctx) {
-  const fijo = enFijo(t);
-  if (fijo !== null) return fijo;
-  if (!env.AI) return null;
-  const cache = caches.default;
-  const clave = new Request("https://cache.cofrad.es/en/" + (await huella(t)));
-  const c = await cache.match(clave);
-  if (c) return c.text();
+// 14-11-2026 (Germán: «muchos textos no se están traduciendo»): /en.json caía. Cada frase leía y escribía la caché del borde y el plan
+// gratuito permite 50 de esas lecturas por visita (los titulares son ~90): la excepción botaba /en.json y la portada quedaba en español.
+// Ahora: memoria de traducciones en D1 (una consulta cada 90 frases), hasta 40 frases nuevas por visita con Workers AI, y la página
+// pide el resto en unos segundos (__faltan). Nunca devuelve error: en el peor caso, {}.
+const MAX_IA = 40;
+async function traducirIA(t, env) {
   try {
-    const r = await env.AI.run("@cf/meta/m2m100-1.2b", { text: t, source_lang: "es", target_lang: "en" });
-    const en = r && typeof r.translated_text === "string" ? r.translated_text.trim() : "";
-    if (!en) return null;
-    ctx.waitUntil(cache.put(clave, new Response(en, { headers: { "Cache-Control": "public, max-age=604800" } })));
-    return en;
+    let en = "";
+    if (env.AI) {
+      const r = await env.AI.run("@cf/meta/m2m100-1.2b", { text: t, source_lang: "es", target_lang: "en" });
+      en = r && typeof r.translated_text === "string" ? r.translated_text.trim() : "";
+    } else if (env.AI_PRUEBA) {   // solo en el arnés de pruebas (Miniflare)
+      en = (await (await env.AI_PRUEBA.fetch("https://ia.prueba/", { method: "POST", body: t })).text()).trim();
+    }
+    return en || null;
   } catch { return null; }
 }
 async function traduccionesPortada(env, ctx) {
   const { cuerpo, p } = await cuerpoPortada(ctx);
   const cache = caches.default;
-  const clave = new Request("https://cache.cofrad.es/en-portada/" + encodeURIComponent((p && p.generado) || "sin-pulso") + "/" + fechaChile());
+  const clave = new Request("https://cache.cofrad.es/en-portada-v2/" + encodeURIComponent((p && p.generado) || "sin-pulso") + "/" + fechaChile());
   const c = await cache.match(clave);
   if (c) return c.json();
-  const lista = textos(cuerpo);
   const res = {};
   const paraIA = [];
-  for (const t of lista) {
+  for (const t of textos(cuerpo)) {
     const f = enFijo(t);
     if (f !== null) res[t] = f;
     else if (/[a-záéíóúñ]{2}/.test(t)) paraIA.push(t);   // cifras como «US$6,30» o siglas no se mandan a traducir
   }
-  for (let i = 0; i < paraIA.length; i += 6) {   // de a 6 a la vez, sin saturar
-    const parte = paraIA.slice(i, i + 6);
-    const tr = await Promise.all(parte.map((t) => traducirUno(t, env, ctx)));
-    parte.forEach((t, k) => { if (tr[k]) res[t] = tr[k]; });
+  if (paraIA.length && env.DB) {
+    try {
+      for (let i = 0; i < paraIA.length; i += 90) {
+        const parte = paraIA.slice(i, i + 90);
+        const r = await env.DB.prepare(`SELECT es, en FROM traducciones WHERE es IN (${parte.map(() => "?").join(",")})`).bind(...parte).all();
+        for (const x of (r && r.results) || []) if (x && x.en) res[x.es] = x.en;
+      }
+    } catch { /* sin la tabla: se sigue con la IA */ }
   }
-  ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(res), { headers: { "Cache-Control": "public, max-age=7200" } })));
+  const pendientes = paraIA.filter((t) => res[t] === undefined).slice(0, MAX_IA);
+  const nuevas = [];
+  for (let i = 0; i < pendientes.length; i += 6) {   // de a 6 a la vez, sin saturar
+    const parte = pendientes.slice(i, i + 6);
+    const tr = await Promise.all(parte.map((t) => traducirIA(t, env)));
+    parte.forEach((t, k) => { if (tr[k]) { res[t] = tr[k]; nuevas.push([t, tr[k]]); } });
+  }
+  if (nuevas.length && env.DB) {
+    try {
+      const ahora = new Date().toISOString();
+      const st = env.DB.prepare("INSERT OR REPLACE INTO traducciones (es, en, creado) VALUES (?, ?, ?)");
+      await env.DB.batch(nuevas.map(([es, en]) => st.bind(es, en, ahora)));
+    } catch { /* la próxima visita las vuelve a pedir */ }
+  }
+  const faltan = paraIA.filter((t) => res[t] === undefined).length;
+  if (!faltan) ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(res), { headers: { "Cache-Control": "public, max-age=7200" } })));
+  else if (!nuevas.length) ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(res), { headers: { "Cache-Control": "public, max-age=600" } })));   // la IA no responde: se reintenta en 10 minutos
+  else res.__faltan = faltan;   // avanzó: la página vuelve a pedir en 2,5 segundos
   return res;
 }
 
@@ -405,19 +434,36 @@ else st.textContent=(j&&j.error)||(en()?'It could not be sent. Please try again 
 .finally(function(){bt.disabled=false})})})();
 // 13-11-2026 · botón EN/ES: textos fijos con diccionario; titulares y cifras «En vivo» traducidos en el servidor (/en.json).
 // Queda guardado en el equipo (la misma clave que usa la edición, así la edición también abre en inglés).
-(function(){var r=document.documentElement,b=document.getElementById('idioma');if(!b)return;var orig=new Map(),hecho=false,trad=null;
+(function(){var r=document.documentElement,b=document.getElementById('idioma');if(!b)return;var orig=new Map(),hecho=false,trad=null,vueltas=0,titulo0=document.title;
 var D=window.__EN||{};
+// 14-11-2026 (Germán: «muchos textos no se están traduciendo»): las frases con cifras, horas y fechas se traducen aquí con reglas
+// (no dependen de /en.json); los titulares del día llegan de /en.json por partes y la página los va poniendo
+var DIR={N:'N',S:'S',E:'E',O:'W',NE:'NE',NO:'NW',SE:'SE',SO:'SW',NNE:'NNE',NNO:'NNW',ENE:'ENE',ESE:'ESE',SSE:'SSE',SSO:'SSW',ONO:'WNW',OSO:'WSW'};
+function regla(t){var m;
+if((m=t.match(/^Actualizado a las (\\d\\d:\\d\\d)(?: · próxima actualización (\\d\\d:\\d\\d))?\\. (.+)$/)))return 'Updated at '+m[1]+(m[2]?' · next update '+m[2]:'')+'. '+(D[m[3]]||m[3]);
+if((m=t.match(/^(.+) · cierre (\\d\\d-\\d\\d)$/)))return (D[m[1]]||m[1])+' · close '+m[2];
+if((m=t.match(/^(.+) · (\\d\\d-\\d\\d-\\d{4})$/))&&D[m[1]])return D[m[1]]+' · '+m[2];
+if((m=t.match(/^([+−-]?[\\d.,]+ %) en un mes$/)))return m[1]+' over one month';
+if((m=t.match(/^Sismo mayor 24 h · (\\d+) sobre M 2,5$/)))return 'Largest earthquake in 24 h · '+m[1]+' above M 2.5';
+if((m=t.match(/^(\\d+) km al ([NSEO]{1,3}) de (.+?)( · \\d\\d:\\d\\d)?$/))&&DIR[m[2]])return m[1]+' km '+DIR[m[2]]+' of '+m[3]+(m[4]||'');
+if((m=t.match(/^Aire · (.+)$/)))return 'Air · '+(D[m[1]]||m[1]);
+if((m=t.match(/^ICA (\\d+) · (.*)$/)))return 'AQI '+m[1]+' · '+(D[m[2]]||m[2]);
+if(t.charAt(0)==='·')return t.split(' · ').map(function(x,i){var y=i===0?x.replace(/^·\\s*/,''):x;return (i===0?'· ':'')+(D[y]||y)}).join(' · ');
+return null}
 function nodos(){var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),o=[],n;while(n=w.nextNode()){var p=n.parentNode;if(!p||/^(SCRIPT|STYLE)$/.test(p.nodeName)||p.closest('[data-no-tr]'))continue;if(n.nodeValue.trim())o.push(n)}return o}
-function attrs(){return document.querySelectorAll('[aria-label],[placeholder],[title]')}
+function attrs(){return document.querySelectorAll('[aria-label],[placeholder],[title],[alt]')}
 function fecha(l){document.querySelectorAll('[data-iso]').forEach(function(e){var p=e.getAttribute('data-iso').split('-').map(Number),d=new Date(Date.UTC(p[0],p[1]-1,p[2],15));
 if(!orig.has(e))orig.set(e,e.textContent);e.textContent=l==='en'?new Intl.DateTimeFormat('en-US',{timeZone:'America/Santiago',weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(d):orig.get(e)})}
 function poner(l){r.lang=l==='en'?'en':'es-CL';
 nodos().forEach(function(n){if(n.parentNode&&n.parentNode.closest('[data-iso]'))return;if(!orig.has(n))orig.set(n,n.nodeValue);var o=orig.get(n),k=o.trim();
-if(l!=='en'){n.nodeValue=o;return}var t=D[k]!==undefined?D[k]:(trad&&trad[k]!==undefined?trad[k]:null);if(t!==null)n.nodeValue=o.replace(k,t)});
-attrs().forEach(function(e){['aria-label','placeholder','title'].forEach(function(a){var v=e.getAttribute(a);if(v===null)return;var key='data-o-'+a;if(!e.hasAttribute(key))e.setAttribute(key,v);var o=e.getAttribute(key);e.setAttribute(a,l==='en'&&D[o]?D[o]:o)})});
+if(l!=='en'){n.nodeValue=o;return}var t=D[k]!==undefined?D[k]:regla(k);if(t===null&&trad&&trad[k]!==undefined)t=trad[k];if(t!==null)n.nodeValue=o.replace(k,t)});
+document.title=l==='en'?(D[titulo0]||titulo0):titulo0;
+attrs().forEach(function(e){['aria-label','placeholder','title','alt'].forEach(function(a){var v=e.getAttribute(a);if(v===null)return;var key='data-o-'+a;if(!e.hasAttribute(key))e.setAttribute(key,v);var o=e.getAttribute(key);e.setAttribute(a,l==='en'&&D[o]?D[o]:o)})});
 fecha(l);b.textContent=l==='en'?'ES':'EN';b.setAttribute('aria-pressed',String(l==='en'));b.setAttribute('aria-label',l==='en'?'Ver en español':'Read in English');
 try{localStorage.setItem('cofrade-idioma',l)}catch(e){}
-if(l==='en'&&!trad&&!hecho){hecho=true;fetch('/en.json').then(function(x){return x.ok?x.json():{}}).then(function(j){trad=j||{};if(r.lang==='en')poner('en')}).catch(function(){})}}
+if(l==='en'&&!hecho){hecho=true;pedir()}}
+function pedir(){fetch('/en.json'+(vueltas?'?v='+vueltas:''),{cache:vueltas?'no-store':'default'}).then(function(x){return x.ok?x.json():{}}).then(function(j){j=j&&typeof j==='object'?j:{};var f=+j.__faltan||0;delete j.__faltan;
+trad=Object.assign(trad||{},j);if(r.lang==='en')poner('en');if(f>0&&vueltas<6){vueltas++;setTimeout(pedir,2500)}}).catch(function(){})}
 b.addEventListener('click',function(){poner(r.lang==='en'?'es':'en')});
 try{if(localStorage.getItem('cofrade-idioma')==='en')poner('en')}catch(e){}})();`;
 
@@ -436,13 +482,14 @@ function en(){return document.documentElement.lang==='en'}
 function vis(){var n=0;L.forEach(function(a){if(!a.hidden)n++});return n}
 function rotulo(){var n=vis(),t=L.length,todo=n>=t;tx.textContent=todo?(en()?'See less':'Ver menos'):(en()?'See more':'Ver más');
 b.setAttribute('aria-expanded',String(n>paso));b.classList.toggle('abierto',todo);
-c.textContent=n>paso?(en()?n+' of '+t+' editions':n+' de '+t+' ediciones'):(en()?t-n+' earlier':t-n+' anteriores')}
+var r=t-n;c.textContent=n>paso?(en()?n+' of '+t+' editions':n+' de '+t+' ediciones'):(en()?r+' earlier':r+(r===1?' anterior':' anteriores'))}
 b.addEventListener('click',function(){var n=vis();
 if(n>=L.length){L.forEach(function(a,i){a.hidden=i>=paso});var s=document.getElementById('archivo');
 if(s&&s.getBoundingClientRect().top<0)s.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
 else{var p=null;L.forEach(function(a,i){if(i<n+paso&&a.hidden){a.hidden=false;if(!p)p=a}});if(p&&document.activeElement===b&&b.matches(':focus-visible'))p.focus()}
 rotulo()});
-var idi=document.getElementById('idioma');if(idi)idi.addEventListener('click',function(){setTimeout(rotulo,0)});rotulo()})();`;
+var idi=document.getElementById('idioma');if(idi)idi.addEventListener('click',function(){setTimeout(rotulo,0)});rotulo();
+document.addEventListener('DOMContentLoaded',rotulo)})();`;   // el inglés guardado se aplica después de este script
 
 // Diccionario de los textos fijos de la portada (los dinámicos se traducen en /en.json)
 const EN_FIJO = {
@@ -493,6 +540,59 @@ const EN_FIJO = {
   "Resumen del mundo": "World overview", "Dónde se movió el dinero hoy": "Where the money moved today", "Cripto": "Crypto", "Agenda económica": "Economic calendar",
   "USGS ↗": "USGS ↗", "fuente ↗": "source ↗", "Ver en español": "Ver en español", "Read in English": "Read in English",
 };
+// 14-11-2026 (Germán: «muchos textos no se están traduciendo», con capturas): portada, galería, Dashboard Financiero, Mercados en vivo,
+// textos alternativos de las imágenes y el título de la pestaña. La prueba del arnés revisa que ningún texto fijo quede sin traducción.
+Object.assign(EN_FIJO, {
+  "Cofrade News · El diario de la mañana": "Cofrade News · The morning paper", "Mercados en vivo · Cofrade News": "Live markets · Cofrade News",
+  "Chile y el mundo, ordenados en minutos y con": "Chile and the world, sorted in minutes, with", "datos verificados.": "verified data.",
+  "El Imacec del mes, la proyección del año y cuánto avanza cada gobierno a igual período.": "This month's Imacec, the full-year forecast and how far each government had come at the same point in its term.",
+  "Dólar, UF, IPSA, Wall Street, cobre y petróleo, con su fuente y su hora.": "Dollar, UF, IPSA, Wall Street, copper and oil, each with its source and time.",
+  "Cada votación de la Sala con el voto de cada diputado y senador, y cómo votan las bancadas.": "Every floor vote, with how each deputy and senator voted and how each party bloc voted.",
+  "Mapas, cifras oficiales de refugiados y su efecto en los precios que pagas.": "Maps, official refugee figures and their effect on the prices you pay.",
+  "Los megaproyectos que cambiarán Chile: inversión, etapa y año de término.": "The megaprojects that will change Chile: investment, stage and completion year.",
+  "Descubrimientos de la semana y el cielo de esta noche, explicados en simple.": "This week's discoveries and tonight's sky, explained simply.",
+  "Tablas con proyección, fútbol, tenis, golf, Fórmula 1, NBA y equitación.": "Standings with projections: football, tennis, golf, Formula 1, NBA and equestrian.",
+  "El tiempo de 9 ciudades, oleaje y mareas de los puertos, y los sismos del día.": "Weather for 9 cities, waves and tides at the ports, and the day's earthquakes.",
+  "Salidas y llegadas confirmadas en los cinco aeropuertos principales.": "Confirmed departures and arrivals at the five main airports.",
+  "Panoramas, estrenos y lo que no te puedes perder esta semana.": "Things to do, premieres and what not to miss this week.",
+  "Fondos concursables abiertos, con su plazo y el enlace para postular.": "Open grant calls, with their deadline and the link to apply.",
+  "La historia naval y de Chile que se recuerda hoy.": "The naval and Chilean history we remember today.",
+  "Chile": "Chile", "Economía": "Economy", "Economía mundial": "World economy", "Tecnología": "Technology", "Mundo": "World", "Política": "Politics",
+  "Ciencia": "Science", "Negocios": "Business", "Nacional": "National", "Internacional": "International", "Opinión": "Opinion",
+  "Cultura": "Culture", "Salud": "Health", "Emprendimiento": "Entrepreneurship", "Inmobiliario": "Real estate", "Sociedad": "Society",
+  "El dólar día a día, con la UF, el euro y el yuan.": "The dollar day by day, with the UF, the euro and the yuan.",
+  "Wall Street, cobre, petróleo, IPSA y bolsas de Europa.": "Wall Street, copper, oil, IPSA and European stock markets.",
+  "Qué produce cada región.": "What each region produces.", "Inversión en megaproyectos por sector.": "Megaproject investment by sector.",
+  "Crecimiento, inflación, desempleo y deuda.": "Growth, inflation, unemployment and debt.",
+  "Oleaje, mareas y el paso por el Estrecho de Magallanes.": "Waves, tides and passage through the Strait of Magellan.",
+  "Para quienes toman decisiones: bolsa chilena y extranjera, ETF, cripto y blockchain, el dinero que entra y sale de Chile, y el radar político y regulatorio que mueve los mercados. Todo en un solo lugar, explicado en simple.":
+    "For decision-makers: Chilean and global stocks, ETFs, crypto and blockchain, the money flowing in and out of Chile, and the political and regulatory radar that moves markets. All in one place, explained simply.",
+  "IPSA, Wall Street, Europa y Asia, bonos, cobre, oro y petróleo.": "IPSA, Wall Street, Europe and Asia, bonds, copper, gold and oil.",
+  "Los fondos que más se transan, Bitcoin, Ethereum y el ánimo del mercado cripto.": "The most traded funds, Bitcoin, Ethereum and crypto market sentiment.",
+  "Qué compran y venden las AFP, los fondos mutuos y los inversionistas extranjeros.": "What pension funds (AFPs), mutual funds and foreign investors are buying and selling.",
+  "Las leyes y normas que se votan y a qué sectores afectan.": "The laws and rules being voted on, and which sectors they affect.",
+  "Reuniones del Banco Central, de la Reserva Federal y los datos que vienen.": "Central Bank and Federal Reserve meetings, and the data coming up.",
+  "Conversor UF, dólar y euro, calculadora de IPC, interés compuesto y crédito hipotecario.": "UF, dollar and euro converter, plus CPI, compound interest and mortgage calculators.",
+  "7 días gratis · Plan anual $55.000 (un mes de regalo) · Socios de la Cofradía con precio preferente": "7 days free · Annual plan CLP 55,000 (one month free) · Preferential price for Cofradía members",
+  "Página web": "Website", "English": "Español", "Portada": "Home", "Pizarra del Banco Central": "Central Bank board",
+  "Gráfico del dólar en los últimos dos meses": "US dollar chart for the last two months", "Variación diaria de los mercados": "Daily market moves",
+  "Mapa de Chile por industria": "Map of Chile by industry", "Indicadores económicos por gobierno": "Economic indicators by government",
+  "Mapa del Estrecho de Magallanes": "Map of the Strait of Magellan", "Inversión en megaproyectos por sector": "Megaproject investment by sector",
+  "Socios · Cofrade News": "Members · Cofrade News", "Ingresa con tu clave.": "Sign in with your password.",
+  "Informes financieros, análisis de mercado y contenidos exclusivos. La clave la entrega la Cofradía.": "Financial reports, market analysis and exclusive content. The Cofradía provides the password.",
+  "Clave de socio": "Member password", "Entrar": "Sign in",
+  "Gratis · Datos con el desfase que exigen las bolsas": "Free · Data delayed as the exchanges require",
+  "Índices, monedas, materias primas, ETF y cripto del mundo en una sola página. Los gráficos son de TradingView; la lectura de lo que significa para Chile llega cada mañana en la edición.":
+    "World indices, currencies, commodities, ETFs and crypto on a single page. Charts by TradingView; what it all means for Chile arrives every morning in the edition.",
+  "Gráficos de TradingView": "Charts by TradingView", "Toca una pestaña y luego un instrumento para ver su gráfico de 12 meses.": "Tap a tab and then an instrument to see its 12-month chart.",
+  "Las 500 mayores empresas de EE. UU. por sector: el tamaño es su valor bursátil y el color, cuánto subió o bajó.": "The 500 largest US companies by sector: size shows market value and colour shows how much each rose or fell.",
+  "Las principales criptomonedas por valor de mercado y su variación del día.": "The main cryptocurrencies by market value and their change on the day.",
+  "Los datos y decisiones que vienen en Chile, EE. UU., Europa, China y Brasil.": "Upcoming data and decisions in Chile, the US, Europe, China and Brazil.",
+  "Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta. Los precios pueden tener un desfase de 15 minutos o más.":
+    "General and educational information. It is not investment advice or a recommendation to buy or sell. Prices may be delayed by 15 minutes or more.",
+  "Bueno": "Good", "Regular": "Moderate", "Moderado": "Moderate", "Malo": "Poor", "Alerta": "Alert", "Preemergencia": "Pre-emergency",
+  "Emergencia": "Emergency", "Dañino para grupos sensibles": "Unhealthy for sensitive groups", "Dañino": "Unhealthy", "Muy dañino": "Very unhealthy", "Peligroso": "Hazardous",
+});
 // 13-11-2026 · textos del Buzón de sugerencias y del pie (las secciones ya están arriba)
 Object.assign(EN_FIJO, {
   "Buzón": "Suggestions", "Buzón de sugerencias": "Suggestion box", "Ayúdanos a hacer el mejor diario de Chile": "Help us make the best daily briefing in Chile",
@@ -845,8 +945,10 @@ export default {
       }
       if (p === "/contacto" && req.method === "POST") return await contacto(req, ctx);
       if (p === "/en.json") {
-        const t = await traduccionesPortada(env, ctx);
-        return new Response(JSON.stringify(t), { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=600", ...SEGURIDAD } });
+        let t = {};
+        try { t = await traduccionesPortada(env, ctx); } catch { t = {}; }
+        // a medio traducir: que el navegador no lo guarde (vuelve a pedir en 2,5 s); completo: 10 minutos
+        return new Response(JSON.stringify(t), { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": t.__faltan ? "no-store" : "public, max-age=600", ...SEGURIDAD } });
       }
       const mc = p.match(/^\/marcas\/([a-z0-9-]+\.webp)$/);
       if (mc && ((MARCAS && MARCAS.marcas) || []).some((x) => x.logo === mc[1])) {

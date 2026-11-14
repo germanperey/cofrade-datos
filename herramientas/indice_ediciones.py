@@ -64,6 +64,13 @@ def main(argv=None):
         viejo = json.load(open(a.salida, encoding="utf-8"))
     except (OSError, ValueError):
         viejo = {}
+    # 14-11-2026 (auditoría): si no se pudo leer la rama de ediciones completas, no se escribe un índice que las pierda
+    if not completas and any(x.get("c") for x in viejo.get("ediciones") or [] if isinstance(x, dict)):
+        print("Sin la rama de ediciones completas: se deja el índice anterior (no se pierden ediciones).")
+        return 0
+    perdidas = {x.get("f") for x in viejo.get("ediciones") or [] if isinstance(x, dict)} - {x["f"] for x in nuevo["ediciones"]}
+    if perdidas:
+        print(f"AVISO: {len(perdidas)} edición(es) del índice anterior ya no están en GitHub: {sorted(perdidas)[:5]}")
     if viejo.get("ediciones") == nuevo["ediciones"]:
         print(f"Índice sin cambios: {nuevo['total']} ediciones.")
         return 0
