@@ -98,14 +98,14 @@ def main(argv=None, hoy=None):
         return 0
     man = leer(MANIFIESTO, {})
     archivos = dict(man.get("archivos") or {})   # nunca se quitan entradas: lo copiado queda copiado
-    releases, subidas, fallas = {}, 0, []
+    releases, subidas, fallas, avisos = {}, 0, [], []
     for n in nombres:
         f = RX.match(n).group(1)
         mes, tag = f[:7], f"completas-{f[:7]}"
         clave = f"completas/{mes}/{n}"
         b = contenido(a.ref, n)
-        if not b:
-            fallas.append(f"{n}: no se pudo leer de la rama")
+        if not b:   # 14-11-2026 (auditoría): una edición vacía en la rama se salta con aviso; no traba las demás ni el índice
+            avisos.append(f"{n}: vacía o ilegible en la rama (se salta)")
             continue
         h = huella(b)
         if tag not in releases:
@@ -117,11 +117,16 @@ def main(argv=None, hoy=None):
             print(f"subiría {n} ({len(b):,} bytes) a {tag}")
             continue
         if ya is None:
+            # No se sabe si el release no existe o si «gh» falló una vez: se intenta crearlo y se vuelve a leer la lista REAL.
+            # Antes se suponía vacío y lo ya subido daba «already exists».
             ok, msg = crear_release(tag, mes)
-            if not ok and assets(tag) is None:
-                fallas.append(f"{tag}: no se pudo crear el release ({msg})")
+            ya = assets(tag)
+            if ya is None:
+                fallas.append(f"{tag}: no se pudo crear ni leer el release ({msg})")
                 continue
-            releases[tag] = ya = {}
+            releases[tag] = ya
+            if n in ya and (archivos.get(clave) or {}).get("h") == h:
+                continue
         tmp = os.path.join(tempfile.mkdtemp(), n)
         with open(tmp, "wb") as fh:
             fh.write(b)
@@ -140,7 +145,7 @@ def main(argv=None, hoy=None):
         if lista != meses.get("meses"):
             escribir_si_cambia(MESES, dict(meses, meses=lista))
         print(f"Ediciones completas permanentes: {subidas} nuevas; {len(archivos)} en total; manifiesto {'actualizado' if cambio else 'sin cambios'}.")
-    for x in fallas:
+    for x in avisos + fallas:
         print("AVISO:", x)
     return 1 if fallas else 0
 

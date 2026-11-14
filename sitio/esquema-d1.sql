@@ -12,6 +12,10 @@ CREATE TABLE IF NOT EXISTS intentos (ip TEXT, fecha TEXT, n INTEGER DEFAULT 0, P
 CREATE INDEX IF NOT EXISTS buzon_token ON buzon (token);
 CREATE INDEX IF NOT EXISTS buzon_email ON buzon (email, fecha);
 CREATE TABLE IF NOT EXISTS traducciones (es TEXT PRIMARY KEY, en TEXT NOT NULL, creado TEXT NOT NULL);
-CREATE TABLE IF NOT EXISTS suscripciones (ref TEXT PRIMARY KEY, creado TEXT NOT NULL, nombre TEXT, email TEXT NOT NULL, plan TEXT NOT NULL, monto INTEGER NOT NULL, cofradia INTEGER DEFAULT 0, inicio TEXT NOT NULL, estado TEXT DEFAULT 'creada', mp_id TEXT, enlace TEXT, proximo TEXT, actualizado TEXT, ip TEXT);
+CREATE TABLE IF NOT EXISTS suscripciones (ref TEXT PRIMARY KEY, creado TEXT NOT NULL, nombre TEXT, email TEXT NOT NULL, plan TEXT NOT NULL, monto INTEGER NOT NULL, cofradia INTEGER DEFAULT 0, inicio TEXT NOT NULL, estado TEXT DEFAULT 'creada', mp_id TEXT, enlace TEXT, proximo TEXT, actualizado TEXT, ip TEXT, pausada_por TEXT);
 CREATE INDEX IF NOT EXISTS suscripciones_mp ON suscripciones (mp_id);
 CREATE INDEX IF NOT EXISTS suscripciones_email ON suscripciones (email, creado);
+-- Migraciones ya aplicadas en producción (no volver a correrlas: SQLite no tiene «ADD COLUMN IF NOT EXISTS» y fallarían)
+--   14-11-2026  ALTER TABLE pagos ADD COLUMN ref TEXT
+--   14-11-2026  ALTER TABLE suscripciones ADD COLUMN pausada_por TEXT
+--   (pausada_por: 'admin' si la pausó el botón del panel, 'seguridad' si Mercado Pago iba a cobrar antes de tiempo, vacío si la pausó el cliente)

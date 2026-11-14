@@ -374,7 +374,7 @@ async function panel(req, env) {
   const nps = npsR.length ? Math.round((npsR.filter((r) => r.nps >= 9).length - npsR.filter((r) => r.nps <= 6).length) / npsR.length * 100) : null;
   const tot = bzTot[0] || { n: 0, ver: 0 };
   const kpi = (t, v, s = "") => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${s ? `<br><small>${esc(s)}</small>` : ""}</div>`;
-  const fundadores = await panelSocios(env).catch(() => "");   // 14-11-2026: socios fundadores (modulos/suscripciones.js)
+  const fundadores = await panelSocios(env, new URL(req.url)).catch(() => "");   // 14-11-2026: socios fundadores (modulos/suscripciones.js)
   const cuerpo = `<section style="border:0;padding-top:30px"><span class="kicker">Panel de Control · solo administración</span><h1 class="titulo-lujo">Cómo va Cofrade News</h1>
 <p class="sub">Contador propio, sin cookies ni datos personales: cada lector cuenta una vez por día con una huella anónima que cambia cada día. Últimos 30 días. <a href="/panel/salir">Salir del panel</a></p>
 <div class="cifras">${kpi("Lectores hoy", num(dHoy.u, 0), num(dHoy.v, 0) + " páginas vistas")}${kpi("Promedio diario", num(prom, 0), "lectores únicos")}

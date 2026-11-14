@@ -72,7 +72,9 @@ async function desdeGitHub(ruta, segundos, ctx, completa = null) {
   const clave = new Request("https://cache.cofrad.es/" + ruta);
   let r = await cache.match(clave);
   if (r) return r;
-  const o = await fetch(completa || RAW + ruta, { cf: { cacheTtl: segundos, cacheEverything: true } });
+  // 14-11-2026 (auditoría): solo se guardan las respuestas buenas. Un release responde 302 hacia una dirección firmada que vence en
+  // ~1 hora; con cacheTtl se guardaba también el 302 y al día siguiente la edición completa daba 403.
+  const o = await fetch(completa || RAW + ruta, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": segundos, "300-599": 0 } } });
   if (!o.ok) return null;
   r = new Response(o.body, { headers: { "Cache-Control": `public, max-age=${segundos}` } });
   ctx.waitUntil(cache.put(clave, r.clone()));
@@ -1025,10 +1027,11 @@ export default {
       // 14-11-2026: socios fundadores del Dashboard Financiero con Mercado Pago (modulos/suscripciones.js)
       if (p === "/socios/fundador") {
         if (req.method === "POST") return await crearSuscripcion(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos conectar con Mercado Pago. Intenta de nuevo en unos minutos." }, 503));
-        return paginaFundador(env, env.DB ? await pctCofradia(env) : 20);
+        return paginaFundador(env, env.DB ? await pctCofradia(env) : 20, await modoInscripcion(req, env));
       }
-      if (p === "/socios/gracias") return await paginaGracias(u, env);
-      if (p === "/socios/condiciones") return paginaCondiciones();
+      if (p === "/socios/gracias") return await paginaGracias(req, u, env);
+      if (p === "/socios/condiciones") return paginaCondiciones(env.DB ? await pctCofradia(env) : 20);
+      if (p === "/panel/probar") return await probarInscripcion(req, env);
       if (p === "/panel/suscripciones" && req.method === "POST") return await accionSuscripciones(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel" } }));
       if (p === "/mp/aviso" && req.method === "POST") return await avisoMP(req, u, env, ctx).catch(() => jsonR({ ok: false }, 500));
       if (p === "/socios/salir") return new Response(null, { status: 302, headers: { Location: "/socios", "Set-Cookie": "cn_socio=; Max-Age=0; Path=/; Secure; HttpOnly; SameSite=Lax" } });

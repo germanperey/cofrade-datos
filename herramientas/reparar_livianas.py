@@ -7,11 +7,13 @@ La Skill ya lo corrige al armarla (edicion_drive.py); este programa arregla las 
 y actualiza su huella en el manifiesto del mes para que el respaldo de Drive copie la versión arreglada.
 
 A la edición de un día SIN edición completa guardada (no está en archivo/manifiesto/completas.json) le agrega un aviso arriba,
-porque sus listas dicen «… y N más en la edición completa» y esa completa no existe (pasó el 11-11-2026).
-Se puede correr las veces que se quiera: lo ya arreglado no cambia.
+porque sus listas dicen «… y N más en la edición completa» y esa completa no existe (pasó el 11-11-2026). Solo a días de hace
+3 o más días (auditoría del 14-11: la liviana de hoy llega antes que su completa) y el aviso se quita si la completa aparece.
+Se puede correr las veces que se quiera: lo ya arreglado no cambia. Un archivo que no se pueda leer se salta con aviso.
 
 Uso:  python3 herramientas/reparar_livianas.py [--carpeta ediciones] [--seco]"""
 import argparse
+import datetime as dt
 import glob
 import hashlib
 import json
@@ -24,10 +26,12 @@ AVISO = ('<p class="sin-completa" style="border:1px solid #c9a227;border-radius:
          "De este día solo se conserva esta edición liviana: la edición completa no llegó a guardarse. Donde una lista dice "
          "«… y N más en la edición completa», esas notas no quedaron en ningún respaldo.</p>")
 RX_FECHA = re.compile(r"Cofrade-News-(\d{4}-\d{2}-\d{2})\.html$")
+RX_AVISO = re.compile(r'<p class="sin-completa"[^>]*>.*?</p>', re.S)
 
 
-def reparar(h, sin_completa=False):
-    """→ (html arreglado, títulos recuperados). Solo toca los títulos pegados y, si corresponde, agrega el aviso una vez."""
+def reparar(h, sin_completa=None):
+    """→ (html arreglado, títulos recuperados). Solo toca los títulos pegados y el aviso: sin_completa=True lo agrega (una vez),
+    False lo quita (la completa ya está), None no lo toca."""
     titulos = []
 
     def poner(m):
@@ -38,6 +42,8 @@ def reparar(h, sin_completa=False):
 
     h2 = PEGADO.sub(poner, h)
     h2 = re.sub(r"(</h2>)<ul>\s*</ul>", r"\1", h2)   # la lista vacía que queda cuando al título le seguía un subtítulo
+    if sin_completa is False:   # la completa ya existe: el aviso, si estaba, se quita
+        h2 = RX_AVISO.sub("", h2)
     if sin_completa and 'class="sin-completa"' not in h2:
         i = h2.find("</h1>")
         if i >= 0:
@@ -52,6 +58,7 @@ def main(argv=None):
     ap.add_argument("--carpeta", default="ediciones")
     ap.add_argument("--seco", action="store_true", help="solo contar, sin escribir")
     a = ap.parse_args(argv)
+    hace3 = (dt.datetime.now(dt.timezone(dt.timedelta(hours=-3))).date() - dt.timedelta(days=3)).isoformat()
     try:
         completas = {RX_FECHA.search(k).group(1) for k in json.load(open("archivo/manifiesto/completas.json", encoding="utf-8"))["archivos"]
                      if RX_FECHA.search(k)}
@@ -63,8 +70,13 @@ def main(argv=None):
         if not f:
             continue
         fecha = f.group(1)
-        h = open(ruta, encoding="utf-8").read()
-        nuevo, tit = reparar(h, sin_completa=completas is not None and fecha not in completas)
+        try:
+            h = open(ruta, encoding="utf-8").read()
+        except (OSError, UnicodeDecodeError) as ex:
+            print(f"AVISO {ruta}: no se pudo leer ({type(ex).__name__}); se salta")
+            continue
+        sin = None if completas is None else (False if fecha in completas else (True if fecha <= hace3 else None))
+        nuevo, tit = reparar(h, sin_completa=sin)
         if nuevo == h:
             continue
         total += len(tit)
@@ -75,7 +87,11 @@ def main(argv=None):
         mes = fecha[:7]
         if mes not in manifiestos:
             p = os.path.join("archivo", "manifiesto", f"{mes}.json")
-            manifiestos[mes] = (p, json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None)
+            try:
+                manifiestos[mes] = (p, json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None)
+            except (OSError, ValueError):
+                print(f"AVISO {p}: manifiesto ilegible; la huella la pone al día la Skill en su próxima corrida")
+                manifiestos[mes] = (p, None)
         man = manifiestos[mes][1]
         clave = ruta.replace(os.sep, "/")
         if man is not None and clave in man.get("archivos", {}):

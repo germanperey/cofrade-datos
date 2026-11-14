@@ -30,12 +30,14 @@ jobs:
       # 14-11-2026 (Germán: «los respaldos de cada Newsletter»): la rama guarda solo 16 ediciones completas; antes de que se
       # borre una, queda para siempre en el release mensual completas-AAAA-MM (no engorda el repositorio).
       - name: Guardar las ediciones completas para siempre
+        continue-on-error: true   # si falla, el índice se arma igual (auditoría del 14-11)
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 herramientas/completas_permanentes.py
       # 14-11-2026: las ediciones livianas publicadas por una versión anterior de la Skill perdían títulos de sección
       # («… y 5 más en la edición completa.## 4. Tecnología»). Si llega una así, se arregla aquí; si no, no cambia nada.
       - name: Reparar las ediciones livianas
+        continue-on-error: true
         run: python3 herramientas/reparar_livianas.py
       - name: Armar el índice
         run: python3 herramientas/indice_ediciones.py --salida datos/ediciones.json

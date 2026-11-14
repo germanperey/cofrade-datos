@@ -1260,6 +1260,9 @@ def livianas_recuperan_los_titulos_pegados():
     r2, _ = RL.reparar(h, sin_completa=True)
     assert r2.count('class="sin-completa"') == 1 and r2.index('sin-completa') > r2.index("Noticias</p>"), r2
     assert RL.reparar(r2, sin_completa=True)[0] == r2
+    r4, _ = RL.reparar(r2, sin_completa=False)   # llegó la completa: el aviso se quita
+    assert 'sin-completa' not in r4 and "<h2>4. Tecnología, Tendencias &amp; Innovación</h2>" in r4, r4
+    assert RL.reparar(r2)[0] == r2   # sin saber (None) no se toca el aviso
     import reconstruir_noticias as RN
     liv = ("<h2>Las 3 del día</h2><p>1. Uno.</p><p>2. Dos.</p><h2>1. Economía, Negocios e Inversión</h2><h3>Chile</h3><ul>"
            "<li><b>Codelco &amp; Adani</b> — Acuerdo de …</li><li>… y 1 más en la edición completa.</li></ul><h3>Perspectivas 2050</h3>"
@@ -1271,6 +1274,31 @@ def livianas_recuperan_los_titulos_pegados():
                   "economia/chile": [{"titulo": "Codelco & Adani", "texto": "Acuerdo de …"}],
                   "emprendimiento": [{"titulo": "Fintech", "texto": "Crédito …"}],
                   "deportes/Rugby": [{"titulo": "Sudáfrica", "texto": "primera …"}]}, sl
+
+@prueba
+def completas_permanentes_no_se_traban():
+    """14-11-2026 (auditoría): si «gh release view» falla una vez, se vuelve a leer la lista real (antes se suponía vacía y lo ya
+    subido daba «already exists»); una edición vacía en la rama se salta con aviso y no deja el código de salida en falla."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import completas_permanentes as CP
+    tmp = tempfile.mkdtemp()
+    viejo = (CP.MANIFIESTO, CP.MESES, CP.en_rama, CP.contenido, CP.assets, CP.crear_release, CP.subir)
+    b = b"<html>10</html>"
+    CP.MANIFIESTO, CP.MESES = os.path.join(tmp, "completas.json"), os.path.join(tmp, "meses.json")
+    json.dump({"archivos": {"completas/2026-11/Cofrade-News-2026-11-10.html": {"h": CP.huella(b), "b": len(b), "u": "x"}}}, open(CP.MANIFIESTO, "w"))
+    llamadas = {"assets": 0, "subir": []}
+    def assets(tag):
+        llamadas["assets"] += 1
+        return None if llamadas["assets"] == 1 else {"Cofrade-News-2026-11-10.html": len(b)}   # falla la primera vez
+    CP.en_rama = lambda ref: ["Cofrade-News-2026-11-09.html", "Cofrade-News-2026-11-10.html"]
+    CP.contenido = lambda ref, n: b"" if n.endswith("09.html") else b
+    CP.assets, CP.crear_release = assets, lambda tag, mes: (False, "already exists")
+    CP.subir = lambda tag, ruta, reemplazar=False: (llamadas["subir"].append((os.path.basename(ruta), reemplazar)) or (True, ""))
+    try:
+        rc = CP.main([], hoy="2026-11-14")
+    finally:
+        CP.MANIFIESTO, CP.MESES, CP.en_rama, CP.contenido, CP.assets, CP.crear_release, CP.subir = viejo
+    assert rc == 0 and llamadas["subir"] == [] and llamadas["assets"] == 2, (rc, llamadas)
 
 if __name__ == "__main__":
     malas = 0
