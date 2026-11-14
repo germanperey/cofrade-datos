@@ -1244,7 +1244,8 @@ ${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `
 }
 
 async function portada(env, ctx) {
-  const { cuerpo, hero } = await cuerpoPortada(ctx);
+  const { cuerpo, hero, p } = await cuerpoPortada(ctx);
+  ctx.waitUntil(revivirPulso(env, p));
   return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero }), 200,
     { "Cache-Control": "public, max-age=120" });
 }
@@ -1299,9 +1300,12 @@ ${error ? `<p class="aviso" role="alert" style="color:var(--rojo)">${esc(error)}
 
 
 // 14-11-2026 (Germán: «verificar que todo funcione»): «En vivo» decía «Actualizado a las 03:40» a las 11:39. GitHub corre los
-// horarios programados cuando puede (el «Pulso del día», programado 9 veces al día, corrió 2 o 3). Este reloj de Cloudflare
-// (Cron Trigger, gratis) le pide a GitHub que corra el Pulso cada 2 horas. Necesita la clave GITHUB_DISPATCH (token de GitHub
-// solo para «Actions» del repositorio cofrade-datos, creado por Germán); sin ella no hace nada.
+// horarios programados cuando puede: el «Pulso del día», programado 9 veces al día, corrió 2 o 3. La cuenta gratuita de Cloudflare
+// ya usa sus 5 relojes (Cron Triggers) en otros proyectos, así que el reloj es la visita: si alguien abre la portada y el Pulso tiene
+// más de 2 horas y 10 minutos, el sitio le pide a GitHub que lo corra. Un candado en D1 (tabla config) deja pasar un pedido por hora
+// en todo el mundo. Necesita la clave GITHUB_DISPATCH (token de GitHub solo para «Actions» de cofrade-datos, creado por Germán);
+// sin ella no hace nada y la portada sigue igual. Si algún día este Worker tiene un reloj propio, scheduled() hace lo mismo.
+const PULSO_VIEJO_MIN = 130, PULSO_CANDADO_MIN = 60;
 async function pedirPulso(env) {
   if (!env.GITHUB_DISPATCH) return "sin clave";
   const r = await fetch("https://api.github.com/repos/germanperey/cofrade-datos/actions/workflows/pulso.yml/dispatches", {
@@ -1309,6 +1313,19 @@ async function pedirPulso(env) {
     headers: { Authorization: `Bearer ${env.GITHUB_DISPATCH}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28",
       "User-Agent": "cofrade-news-web", "Content-Type": "application/json" } });
   return String(r.status);
+}
+async function revivirPulso(env, p) {
+  try {
+    if (!env.GITHUB_DISPATCH || !env.DB) return "sin clave";
+    const t = Date.parse(p && p.generado);
+    if (!Number.isFinite(t)) return "sin fecha";
+    const ahora = Date.now();
+    if (ahora - t < PULSO_VIEJO_MIN * 60000) return "al día";
+    const r = await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('pulso_pedido', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor WHERE CAST(config.valor AS INTEGER) < ?2")
+      .bind(String(ahora), ahora - PULSO_CANDADO_MIN * 60000).run();
+    if (!r || !r.meta || r.meta.changes !== 1) return "ya pedido";
+    return await pedirPulso(env);
+  } catch { return "error"; }
 }
 
 export default {
