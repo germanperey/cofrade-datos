@@ -485,7 +485,7 @@ ${alerta ? `<p class="aviso" role="alert" style="color:var(--rojo)">Mercado Pago
 ${mpActivo(env) ? "" : `<p class="aviso">Falta la clave MP_ACCESS_TOKEN en Cloudflare: el botón «Quiero ser socio fundador» todavía abre el formulario de interés.</p>`}
 ${mpActivo(env) && !env.MP_WEBHOOK_SECRET ? `<p class="aviso">Falta la clave MP_WEBHOOK_SECRET: los avisos de Mercado Pago esperan y las inscripciones no se pueden abrir al público.</p>` : ""}
 ${mpActivo(env) ? `<p class="sub">Inscripciones: <b>${abierto === "1" ? "abiertas al público" : "cerradas al público"}</b>${enPausa === "1" ? " · <b>suscripciones en pausa</b> (nadie paga mientras sigan así)" : ""}.
-Antes de abrir: «Probar la inscripción», inscríbete con tu tarjeta y revisa abajo que el «Próximo cobro» diga 2026-12-01.</p>
+${abierto === "1" ? "" : "Antes de abrir: «Probar la inscripción», inscríbete con tu tarjeta y revisa abajo que el «Próximo cobro» diga 2026-12-01."}</p>
 <div class="acciones" style="margin:10px 0 14px"><a class="btn linea" href="/panel/probar">Probar la inscripción (solo tú, 2 horas)</a>
 <form method="post" action="/panel/suscripciones" style="display:contents">${listas && abierto !== "1" && enPausa !== "1" && !alerta ? boton("abrir", "Abrir inscripciones al público") : ""}${abierto === "1" ? boton("cerrar", "Cerrar inscripciones") : ""}
 ${subs.length ? boton("pausar", "Pausar todas (no se cobra a nadie)") + boton("reanudar", "Reanudar las pausadas") : ""}</form></div>
