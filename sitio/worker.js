@@ -1298,7 +1298,23 @@ ${error ? `<p class="aviso" role="alert" style="color:var(--rojo)">${esc(error)}
 }
 
 
+// 14-11-2026 (Germán: «verificar que todo funcione»): «En vivo» decía «Actualizado a las 03:40» a las 11:39. GitHub corre los
+// horarios programados cuando puede (el «Pulso del día», programado 9 veces al día, corrió 2 o 3). Este reloj de Cloudflare
+// (Cron Trigger, gratis) le pide a GitHub que corra el Pulso cada 2 horas. Necesita la clave GITHUB_DISPATCH (token de GitHub
+// solo para «Actions» del repositorio cofrade-datos, creado por Germán); sin ella no hace nada.
+async function pedirPulso(env) {
+  if (!env.GITHUB_DISPATCH) return "sin clave";
+  const r = await fetch("https://api.github.com/repos/germanperey/cofrade-datos/actions/workflows/pulso.yml/dispatches", {
+    method: "POST", body: JSON.stringify({ ref: "main" }),
+    headers: { Authorization: `Bearer ${env.GITHUB_DISPATCH}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28",
+      "User-Agent": "cofrade-news-web", "Content-Type": "application/json" } });
+  return String(r.status);
+}
+
 export default {
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(pedirPulso(env).catch(() => "error"));
+  },
   async fetch(req, env, ctx) {
     const u = new URL(req.url);
     if (u.hostname === "cofrad.es") return Response.redirect(`https://${DOMINIO}${u.pathname}${u.search}`, 301);

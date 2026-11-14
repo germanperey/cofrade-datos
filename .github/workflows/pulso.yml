@@ -12,8 +12,8 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: cofrade-datos
+concurrency:   # 14-11-2026: grupo propio (en el de «Datos oficiales» una corrida en espera podía quedar cancelada)
+  group: cofrade-pulso
   cancel-in-progress: false
 
 jobs:
