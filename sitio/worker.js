@@ -11,8 +11,9 @@ const DOMINIO = "www.cofrad.es";
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
 const LOGO_OSCURO = "/logo-oscuro.webp";
-const DIAS_ARCHIVO = 60;   // 13-11-2026: se buscan 60 días hacia atrás…
-const MAX_ARCHIVO = 12;    // …y se muestran las 12 ediciones publicadas más recientes (Germán)
+const DIAS_ARCHIVO = 20;   // respaldo sin índice: 20 días hacia atrás (hasta 40 lecturas; el plan gratuito permite 50 por visita)
+const MAX_ARCHIVO = 12;    // la portada muestra las 12 ediciones más recientes (Germán, 13-11-2026)…
+const TOPE_ARCHIVO = 400;  // …y «Ver más» abre las anteriores de a 12 (Germán, 14-11-2026)
 const MARCAS = {"marcas": [{"nombre": "Caddie Golf", "logo": "caddie-icono.webp", "texto": "Caddie Golf", "fondo": "#0A1410", "color": "#E9F5EC", "url": "https://www.caddiegolf.cl/?utm_source=cofrad.es&utm_medium=carrusel"}, {"nombre": "Inbestu", "logo": "inbestu.webp", "fondo": "#FFFFFF", "contacto": true}, {"nombre": "Megabots", "logo": "megabots-blanco.webp", "fondo": "#121418", "contacto": true}]};
 const LENTO = "<script>(function(){if(window.__cnLento)return;window.__cnLento=1;\nvar E,realInit,realGet,porDom=new Map(),io=null,imprimiendo=false,\nCOLA={setOption:1,on:1,off:1,dispatchAction:1,showLoading:1,hideLoading:1,clear:1};\nfunction vivo(st){if(st.m||st.real)return st.real;st.real=realInit.apply(E,st.a);for(var i=0;i<st.q.length;i++){try{st.real[st.q[i][0]].apply(st.real,st.q[i][1])}catch(e){}}st.q.length=0;var z=null;for(var j=0;j<st.zq.length;j++){try{z=z||st.real.getZr();z[st.zq[j][0]].apply(z,st.zq[j][1])}catch(e){}}st.zq.length=0;if(io)io.unobserve(st.el);return st.real}\nfunction todos(){porDom.forEach(function(st){vivo(st)})}\nfunction lazyInit(dom){if(!dom||imprimiendo||!window.IntersectionObserver||!window.Proxy)return realInit.apply(E,arguments);\nvar prev=porDom.get(dom);if(prev&&!prev.m&&!(prev.real&&prev.real.isDisposed&&prev.real.isDisposed()))return prev.p;\nif(!io)io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){var st=porDom.get(x.target);if(st)vivo(st)}})},{rootMargin:'900px 0px'});\nvar st={el:dom,a:[].slice.call(arguments),q:[],zq:[],over:{},real:null,m:false};\nst.p=new Proxy(st,{set:function(t,k,v){t.over[k]=v;return true},get:function(t,k){\n if(Object.prototype.hasOwnProperty.call(t.over,k))return t.over[k];\n if(k==='dispose')return function(){if(t.real){try{t.real.dispose()}catch(e){}}t.m=true;t.q.length=0;if(io)io.unobserve(t.el);if(porDom.get(t.el)===t)porDom.delete(t.el)};\n if(COLA[k])return function(){if(t.real)return t.real[k].apply(t.real,arguments);if(!t.m)t.q.push([k,[].slice.call(arguments)])};\n if(t.real){var v=t.real[k];return typeof v==='function'?v.bind(t.real):v}\n if(k==='getDom')return function(){return t.el};\n if(k==='getZr')return function(){return new Proxy({},{get:function(_,kk){if(t.real){var z=t.real.getZr();var v=z[kk];return typeof v==='function'?v.bind(z):v}if(kk==='on'||kk==='off')return function(){if(!t.m)t.zq.push([kk,[].slice.call(arguments)])};if(kk==='then'||typeof kk==='symbol')return undefined;var r=vivo(t);if(!r)return undefined;var z2=r.getZr();var v2=z2[kk];return typeof v2==='function'?v2.bind(z2):v2}})};\n if(k==='isDisposed')return function(){return t.m};\n if(k==='resize')return function(){};\n if(k==='getOption')return function(){for(var i=t.q.length-1;i>=0;i--)if(t.q[i][0]==='setOption')return t.q[i][1][0];return null};\n if(k==='then'||typeof k==='symbol')return undefined;\n if(COLA[k])return function(){if(t.real)return t.real[k].apply(t.real,arguments);if(!t.m)t.q.push([k,[].slice.call(arguments)])};\n var r=vivo(t);if(!r)return undefined;var v2=r[k];return typeof v2==='function'?v2.bind(r):v2}});\nporDom.set(dom,st);io.observe(dom);return st.p}\nfunction lazyGet(dom){var st=porDom.get(dom);if(st&&!st.m)return st.p;return realGet?realGet.apply(E,arguments):undefined}\nfunction parchar(o){if(!o||o.__cnLento||typeof o.init!=='function')return;realInit=o.init;realGet=o.getInstanceByDom;\n try{o.init=lazyInit;o.getInstanceByDom=lazyGet}catch(e){}if(o.init!==lazyInit){try{Object.defineProperty(o,'init',{value:lazyInit,writable:true,configurable:true});Object.defineProperty(o,'getInstanceByDom',{value:lazyGet,writable:true,configurable:true})}catch(e){}}\n try{o.__cnLento=1}catch(e){}}\ntry{Object.defineProperty(window,'echarts',{configurable:true,enumerable:true,get:function(){parchar(E);return E},set:function(v){E=v}})}catch(e){}\naddEventListener('beforeprint',function(){imprimiendo=true;todos()});addEventListener('afterprint',function(){imprimiendo=false});\nvar pr=window.print;window.print=function(){imprimiendo=true;todos();try{return pr.apply(window,arguments)}finally{setTimeout(function(){imprimiendo=false},1500)}};\nwindow.__cnTodos=todos;})();</script>";   // 13-11-2026: capa que dibuja cada gráfico de la edición recién cuando el lector llega a él
 const TZ = "America/Santiago";
@@ -73,23 +74,37 @@ async function desdeGitHub(ruta, segundos, ctx, completa = null) {
   return r;
 }
 
+async function existeEdicion(f) {
+  for (const completa of [true, false]) {   // primero la completa; si no está, la liviana
+    try {
+      const r = await fetch(rutaEdicion(f, completa), { method: "HEAD" });
+      if (r.ok) return true;
+    } catch { /* sigue */ }
+  }
+  return false;
+}
+
+// 14-11-2026: el índice lo escribe GitHub (datos/ediciones.json, con cada edición y varias veces al día): UNA lectura en vez de
+// 60 a 120. Con el plan gratuito, sobre 50 lecturas por visita las demás fallaban y la edición del 11-11 no salía en el Archivo.
+// Los 3 últimos días se confirman igual (la edición de hoy puede llegar antes que el índice); sin índice, se buscan 20 días.
 async function indice(ctx) {
   const cache = caches.default;
-  const clave = new Request("https://cache.cofrad.es/indice-ediciones");
+  const clave = new Request("https://cache.cofrad.es/indice-ediciones-v2");
   const c = await cache.match(clave);
   if (c) return c.json();
-  const hoy = new Date();
-  const fechas = Array.from({ length: DIAS_ARCHIVO }, (_, i) => fechaChile(new Date(hoy.getTime() - i * 86400000)));
-  const ok = await Promise.all(fechas.map(async (f) => {
-    for (const completa of [true, false]) {   // primero la completa; si no está, la liviana
-      try {
-        const r = await fetch(rutaEdicion(f, completa), { method: "HEAD" });
-        if (r.ok) return f;
-      } catch { /* sigue */ }
+  let lista = [];
+  try {
+    const r = await fetch(RAW + "datos/ediciones.json", { cf: { cacheTtl: 300, cacheEverything: true } });
+    if (r.ok) {
+      const j = await r.json();
+      lista = (Array.isArray(j && j.ediciones) ? j.ediciones : []).map((x) => (typeof x === "string" ? x : x && x.f)).filter((f) => /^\d{4}-\d{2}-\d{2}$/.test(String(f)));
     }
-    return null;
-  }));
-  const lista = ok.filter(Boolean).slice(0, MAX_ARCHIVO);
+  } catch { /* respaldo abajo */ }
+  const hoy = new Date();
+  const recientes = Array.from({ length: lista.length ? 3 : DIAS_ARCHIVO }, (_, i) => fechaChile(new Date(hoy.getTime() - i * 86400000)));
+  const nuevas = await Promise.all(recientes.filter((f) => !lista.includes(f)).map(async (f) => ((await existeEdicion(f)) ? f : null)));
+  const tope = fechaChile();
+  lista = [...new Set([...lista, ...nuevas.filter(Boolean)])].filter((f) => f <= tope).sort().reverse().slice(0, TOPE_ARCHIVO);
   ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(lista), { headers: { "Cache-Control": "public, max-age=900" } })));
   return lista;
 }
@@ -249,7 +264,13 @@ section{padding:28px 0;border-top:1px solid var(--linea)}h3{font:600 26px/1.2 va
 .titulares ol{margin:0;padding-left:18px}.titulares li{margin:0 0 9px;font-size:15.5px;line-height:1.45}.titulares li a{text-decoration:none}.titulares li a:hover{text-decoration:underline}
 .titulares .m{color:var(--gris);font-size:12.5px;white-space:nowrap}
 .archivo{display:flex;flex-wrap:wrap;gap:8px}.archivo a{border:1px solid var(--linea);border-radius:999px;padding:10px 14px;text-decoration:none;font-size:14px;min-height:44px;display:inline-flex;align-items:center}
-.archivo a:hover{border-color:var(--oro)}
+.archivo a:hover{border-color:var(--oro)}.archivo a[hidden]{display:none}
+.arch-pie{display:flex;align-items:center;gap:6px 16px;flex-wrap:wrap;margin-top:12px}.arch-pie[hidden]{display:none}
+.arch-mas{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 2px;background:none;border:0;border-radius:0;cursor:pointer;
+color:var(--oro-t);font:600 12.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;box-shadow:inset 0 -1px 0 color-mix(in srgb,var(--oro) 45%,transparent);transition:box-shadow .2s,color .2s}
+.arch-mas:hover{box-shadow:inset 0 -2px 0 var(--oro)}.arch-mas svg{flex:none;transition:transform .28s cubic-bezier(.2,.7,.2,1)}.arch-mas.abierto svg{transform:rotate(180deg)}
+.am-cuenta{font-size:13px;color:var(--gris);font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.arch-mas,.arch-mas svg{transition:none}}
 .socios{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center}
 .precio{font:600 30px/1 var(--serif);color:var(--oro-t)}
 .pie{color:var(--gris);font-size:13.5px;padding:26px 0 40px;border-top:3px double var(--linea)}
@@ -400,6 +421,29 @@ if(l==='en'&&!trad&&!hecho){hecho=true;fetch('/en.json').then(function(x){return
 b.addEventListener('click',function(){poner(r.lang==='en'?'es':'en')});
 try{if(localStorage.getItem('cofrade-idioma')==='en')poner('en')}catch(e){}})();`;
 
+// 14-11-2026 (Germán: «un botón muy discreto, sobrio y elegante que diga "Ver más"»): el Archivo muestra 12 ediciones y el botón
+// abre las anteriores de a 12; con todas a la vista, «Ver menos» vuelve a las 12. Sin JavaScript, las 12 siguen ahí.
+function archivoMas(total) {
+  if (total <= MAX_ARCHIVO) return "";
+  return `<div class="arch-pie" id="archPie" hidden><button type="button" class="arch-mas" id="archMas" aria-controls="archivoLista" aria-expanded="false" data-no-tr `
+    + `data-paso="${MAX_ARCHIVO}"><span class="am-tx">Ver más</span><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" fill="none" `
+    + `stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>`
+    + `<span class="am-cuenta" id="archCuenta" aria-live="polite" data-no-tr></span></div><script>${ARCHIVO_JS}</script>`;
+}
+const ARCHIVO_JS = `(function(){var b=document.getElementById('archMas');if(!b)return;document.getElementById('archPie').hidden=false;var L=[].slice.call(document.querySelectorAll('#archivoLista a')),
+paso=+b.getAttribute('data-paso')||12,c=document.getElementById('archCuenta'),tx=b.querySelector('.am-tx');
+function en(){return document.documentElement.lang==='en'}
+function vis(){var n=0;L.forEach(function(a){if(!a.hidden)n++});return n}
+function rotulo(){var n=vis(),t=L.length,todo=n>=t;tx.textContent=todo?(en()?'See less':'Ver menos'):(en()?'See more':'Ver más');
+b.setAttribute('aria-expanded',String(n>paso));b.classList.toggle('abierto',todo);
+c.textContent=n>paso?(en()?n+' of '+t+' editions':n+' de '+t+' ediciones'):(en()?t-n+' earlier':t-n+' anteriores')}
+b.addEventListener('click',function(){var n=vis();
+if(n>=L.length){L.forEach(function(a,i){a.hidden=i>=paso});var s=document.getElementById('archivo');
+if(s&&s.getBoundingClientRect().top<0)s.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
+else{var p=null;L.forEach(function(a,i){if(i<n+paso&&a.hidden){a.hidden=false;if(!p)p=a}});if(p&&document.activeElement===b&&b.matches(':focus-visible'))p.focus()}
+rotulo()});
+var idi=document.getElementById('idioma');if(idi)idi.addEventListener('click',function(){setTimeout(rotulo,0)});rotulo()})();`;
+
 // Diccionario de los textos fijos de la portada (los dinámicos se traducen en /en.json)
 const EN_FIJO = {
   "Edición de hoy": "Today's edition", "En vivo": "Live", "Archivo": "Archive", "Socios": "Members", "Publicite": "Advertise",
@@ -421,6 +465,7 @@ const EN_FIJO = {
   "Se actualiza cada 2 horas, de 07:00 a 23:00.": "Updated every 2 hours, from 07:00 to 23:00.",
   "Los titulares de las últimas horas aparecen aquí en la próxima actualización.": "The latest headlines appear here at the next update.",
   "Las 12 ediciones publicadas más recientes.": "The 12 most recent published editions.", "El archivo empieza con la próxima edición.": "The archive starts with the next edition.",
+  "Ver más": "See more", "Ver menos": "See less",
   "Área de socios": "Members' area", "Informes financieros, análisis de mercado y contenidos exclusivos para socios.": "Financial reports, market analysis and exclusive content for members.",
   "Ingresar con mi clave": "Sign in with my password", "Publicite aquí": "Advertise here", "Su marca cada mañana frente a lectores que deciden.": "Your brand every morning in front of readers who make decisions.",
   "al mes": "per month", "Quiero publicitar": "I want to advertise", "Marcas que nos auspician": "Our sponsors",
@@ -1090,7 +1135,7 @@ ${bloqueCifras(p)}${bloqueTierra(p)}${bloqueTitulares(p)}</section>
 <div class="acciones"><button type="button" class="btn oro pub-abrir" data-interes="Dashboard Financiero · socio fundador" aria-haspopup="dialog">Quiero ser socio fundador</button><a class="btn claro" href="/mercados">Ver mercados en vivo</a></div>
 <p class="legal">Información general y educativa. No constituye asesoría de inversión ni recomendación de compra o venta, y no considera tu situación personal.</p></div></section>
 <section id="archivo" aria-labelledby="t-arch"><h3 id="t-arch">Archivo</h3><p class="sub">Las 12 ediciones publicadas más recientes.</p>
-${lista.length ? `<div class="archivo">${lista.map((f) => `<a href="/edicion/${f}" data-iso="${f}">${esc(fechaLarga(f))}</a>`).join("")}</div>` : `<p class="aviso">El archivo empieza con la próxima edición.</p>`}</section>
+${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `<a href="/edicion/${f}" data-iso="${f}"${i >= MAX_ARCHIVO ? " hidden" : ""}>${esc(fechaLarga(f))}</a>`).join("")}</div>${archivoMas(lista.length)}` : `<p class="aviso">El archivo empieza con la próxima edición.</p>`}</section>
 <section id="socios" aria-labelledby="t-soc"><div class="socios"><div><h3 id="t-soc">Área de socios</h3>
 <p class="sub">Informes financieros, análisis de mercado y contenidos exclusivos para socios.</p><a class="btn linea" href="/socios">Ingresar</a></div>
 <div class="tarjeta" id="publicite"><span class="kicker">Publicite aquí</span><p style="margin:8px 0 6px">Su marca cada mañana frente a lectores que deciden.</p>

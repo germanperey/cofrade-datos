@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Instalar librerías
-        run: pip install --quiet requests==2.32.3 pandas==2.2.3 lxml==5.3.0
+        run: pip install --quiet requests==2.32.3 pandas==2.2.3 lxml==5.3.0 pdfplumber==0.11.4
       - name: Probar el programa
         run: python pruebas.py
       - name: Bajar datos oficiales

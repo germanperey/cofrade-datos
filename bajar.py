@@ -28,6 +28,7 @@ import datetime as dt
 import io
 import json
 import html
+import glob
 import os
 import re
 import sys
@@ -617,6 +618,25 @@ def liga(estado, hoy):
 # los medios publican justamente para que otros programas lean sus titulares. Antes de cada sitio se lee su robots.txt y se
 # respeta: si el sitio no permite la lectura automática, NO se lee y queda anotado. Cada nota guarda su medio y su enlace.
 FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fuentes-noticias.json) + feeds públicos de los medios
+    # 14-11-2026 (informe: Perspectivas 2050 con 1 proyecto nuevo; Google News y DF rechazan a la tarea): megaproyectos de los últimos
+    # 7 días, leídos aquí, con enlace y fecha → titulares-perspectivas.json
+    "perspectivas": [
+        ("Google News · SEA y Comité de Ministros aprueban proyectos", "https://news.google.com/rss/search?q=(SEA+OR+%22Comit%C3%A9+de+Ministros%22+OR+%22Comisi%C3%B3n+de+Evaluaci%C3%B3n%22)+aprueba+proyecto+Chile+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Licitaciones y concesiones MOP", "https://news.google.com/rss/search?q=(licitaci%C3%B3n+OR+concesi%C3%B3n+OR+adjudica)+(MOP+OR+%22Obras+P%C3%BAblicas%22)+Chile+millones+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Proyectos mineros con inversión", "https://news.google.com/rss/search?q=proyecto+minero+Chile+inversi%C3%B3n+(%22US%24%22+OR+%22millones+de+d%C3%B3lares%22)+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Energía, hidrógeno verde y almacenamiento", "https://news.google.com/rss/search?q=(%22hidr%C3%B3geno+verde%22+OR+e%C3%B3lico+OR+solar+OR+almacenamiento+OR+transmisi%C3%B3n)+Chile+proyecto+inversi%C3%B3n+millones+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Puertos, aeropuertos, trenes y Metro", "https://news.google.com/rss/search?q=(puerto+OR+aeropuerto+OR+tren+OR+%22Metro%22+OR+autopista)+Chile+proyecto+inversi%C3%B3n+millones+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Centros de datos, desaladoras e inmobiliarios grandes", "https://news.google.com/rss/search?q=(%22centro+de+datos%22+OR+%22data+center%22+OR+desaladora+OR+hospital)+Chile+inversi%C3%B3n+millones+proyecto+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Google News · Megaproyectos en Chile", "https://news.google.com/rss/search?q=megaproyecto+Chile+OR+%22proyecto+de+inversi%C3%B3n%22+Chile+%22millones+de+d%C3%B3lares%22+when:7d&hl=es-419&gl=CL&ceid=CL:es-419", "rss"),
+        ("Bing Noticias · SEA aprueba proyectos", "https://www.bing.com/news/search?q=SEA%20aprueba%20proyecto%20inversi%C3%B3n%20Chile&format=rss&cc=CL&setlang=es", "rss"),
+        ("Bing Noticias · Comité de Ministros", "https://www.bing.com/news/search?q=Comit%C3%A9%20de%20Ministros%20aprueba%20proyecto%20Chile&format=rss&cc=CL&setlang=es", "rss"),
+        ("Bing Noticias · Licitaciones MOP", "https://www.bing.com/news/search?q=licitaci%C3%B3n%20concesi%C3%B3n%20MOP%20Chile%20millones&format=rss&cc=CL&setlang=es", "rss"),
+        ("Bing Noticias · Inversión minera", "https://www.bing.com/news/search?q=proyecto%20minero%20Chile%20inversi%C3%B3n%20millones%20de%20d%C3%B3lares&format=rss&cc=CL&setlang=es", "rss"),
+        ("Bing Noticias · Energía e hidrógeno verde", "https://www.bing.com/news/search?q=proyecto%20energ%C3%ADa%20hidr%C3%B3geno%20verde%20Chile%20inversi%C3%B3n&format=rss&cc=CL&setlang=es", "rss"),
+        ("Bing Noticias · Infraestructura y puertos", "https://www.bing.com/news/search?q=proyecto%20puerto%20aeropuerto%20tren%20Chile%20inversi%C3%B3n&format=rss&cc=CL&setlang=es", "rss"),
+        ("Minería Chilena (RSS)", "https://www.mch.cl/feed/", "rss"),
+        ("Revista Electricidad (RSS)", "https://www.revistaei.cl/feed/", "rss"),
+    ],
     "economia/chile": [
         ("Diario Financiero (RSS)", "https://www.df.cl/noticias/site/list/port/rss.xml", "rss"),
         ("Revista Capital (RSS)", "https://www.capital.cl/feed/", "rss"),
@@ -738,6 +758,8 @@ FEEDS = {   # 31-10-2026: las mismas direcciones RSS/JSON de la Skill (assets/fu
         ("ESPN · Tenis (RSS)", "https://www.espn.com/espn/rss/tennis/news", "rss"),
         ("ESPN · Fórmula 1 (RSS)", "https://www.espn.com/espn/rss/f1/news", "rss"),
         ("ESPN · NBA (RSS)", "https://www.espn.com/espn/rss/nba/news", "rss"),
+        # 14-11-2026 (informe del 14-11: la NBA salió con 2 notas porque ESPN solo traía previas): NBA en español, con fecha (sonda: al día)
+        ("AS · NBA en español (RSS)", "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/baloncesto/subsection/nba/", "rss"),
         ("La Tercera · El Deportivo (RSS)", "https://www.latercera.com/arc/outboundfeeds/rss/category/el-deportivo/?outputType=xml", "rss"),
         ("BBC Sport · Fútbol (RSS, inglés)", "https://feeds.bbci.co.uk/sport/football/rss.xml", "rss"),
         ("Golf Digest (RSS, inglés)", "https://www.golfdigest.com/feed/rss", "rss"),
@@ -902,7 +924,8 @@ def todas_las_fuentes(ruta_redes="redes.json"):
     return out
 
 
-VENTANA_H = {"ciencia": 240, "astronomia": 240, "emprendimiento": 120, "inmobiliario": 120}   # el resto: 72 horas
+VENTANA_H = { "perspectivas": 168,   # 14-11-2026: megaproyectos de los últimos 7 días
+   "ciencia": 240, "astronomia": 240, "emprendimiento": 120, "inmobiliario": 120}   # el resto: 72 horas
 TOPE_SECCION = 90
 # 13-11-2026 (Germán: equitación 2/3): en «deportes» el fútbol llenaba el tope y la equitación (que publica menos) quedaba fuera.
 # Cada disciplina con reserva tiene su propia ventana y un mínimo de cupos dentro del tope.
@@ -1240,7 +1263,14 @@ def leer_tramitacion(txt):
         aut = ["Mensaje presidencial"]
     if not (tit or aut):
         return None
-    return {"titulo": re.sub(r"\s+", " ", tit)[:400], "iniciativa": ini, "autores": aut[:40]}
+    out = {"titulo": re.sub(r"\s+", " ", tit)[:400], "iniciativa": ini, "autores": aut[:40]}
+    # 14-11-2026 (Germán: cada votación debe explicar de qué trata el proyecto): etapa, estado y documento de origen
+    for k, et in (("fecha_ingreso", "fecha_ingreso"), ("camara_origen", "camara_origen"), ("etapa", "etapa"), ("subetapa", "subetapa"),
+                  ("estado", "estado"), ("ley", "leynro"), ("urgencia", "urgencia_actual"), ("url_mocion", "link_mensaje_mocion")):
+        v = next((re.sub(r"\s+", " ", t).strip() for t in _xml_textos(txt, et) if t.strip()), "")
+        if v:
+            out[k] = v[:300]
+    return out
 
 
 # ---------- 13-11-2026 · votaciones de Sala del Senado (el servicio tramitacion.senado.cl no responde fuera de Chile) ----------
@@ -1308,16 +1338,27 @@ def senado_votaciones(estado, hoy, dias=62):
     return {"fuente": fuente, "url": url_f, "actualizado": ult, "votaciones": out}
 
 
+MEMORIA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "memoria")   # copias diarias de la memoria del diario
+
+
 def autores_boletines(estado, cam, previo, maximo=40):
     """Boletines votados este mes en la Cámara → autores y título oficiales (Senado, servicio público). Lo ya leído se conserva
     (no cambia); solo se piden los nuevos, de a uno con 2 s entre cada uno, máximo `maximo` por corrida."""
-    out = {k: v for k, v in (previo or {}).items() if isinstance(v, dict) and v.get("autores")}
+    out = {k: v for k, v in (previo or {}).items() if isinstance(v, dict) and (v.get("autores") or v.get("titulo"))}
     bols, completos = [], {}
-    for v in (cam or {}).get("camara_mes") or []:
-        m = re.search(r"Bolet[ií]n\s*N?[°º.]*\s*(\d{3,6})-(\d{1,2})", str(v.get("descripcion") or "") + " " + str(v.get("materia") or ""))
-        if m and m.group(1) not in out and m.group(1) not in bols:
-            bols.append(m.group(1))
-            completos[m.group(1)] = f"{m.group(1)}-{m.group(2)}"
+    # 14-11-2026: también «boletines 18282-07 y 18590-07», minúsculas y los boletines que el diario ya guardó en su memoria (memoria/)
+    textos = [str(v.get("descripcion") or "") + " " + str(v.get("materia") or "") for v in (cam or {}).get("camara_mes") or []]
+    try:
+        mems = sorted(glob.glob(os.path.join(MEMORIA_DIR, "cofrade-cache-*.json")))[-2:]
+        textos += [open(f, encoding="utf-8").read() for f in mems]
+    except Exception:   # noqa: BLE001
+        pass
+    for t in textos:
+        for m in re.finditer(r"(?i)bolet[ií]n(?:es)?\b[^0-9]{0,12}((?:\d{3,6}-\d{1,2}(?:[\s,y]+)?)+)|\"boletin\"\s*:\s*\"(\d{3,6}-\d{1,2})\"", t):
+            for n_, s_ in re.findall(r"(\d{3,6})-(\d{1,2})", m.group(1) or m.group(2) or ""):
+                if n_ not in out and n_ not in bols:
+                    bols.append(n_)
+                    completos[n_] = f"{n_}-{s_}"
     hechos, fallas, seguidas, t0, muestras, senado_caido = 0, 0, 0, time.monotonic(), [], False
     for n in bols[:maximo]:
         if seguidas >= 3 or time.monotonic() - t0 > 300:   # el Senado no responde: no se gasta la corrida (tope de 5 min)
@@ -1329,15 +1370,17 @@ def autores_boletines(estado, cam, previo, maximo=40):
         tmp = {}
         f, txt = None, ""
         bol_completo = completos.get(n, n)
-        tc = pedir(CAMARA_PROYECTO.format(b=bol_completo), tmp, "c", como="text", espera=(0, 5), limite=30)
-        f = leer_proyecto_camara(tc)
-        if f and f.get("autores"):
-            url = CAMARA_PROYECTO.format(b=bol_completo)
-        elif not senado_caido:
+        tc = ""
+        if not senado_caido:   # 14-11-2026: el Senado trae la ficha completa (título, etapa, estado y moción); la sonda confirmó que responde
             txt = pedir(url, tmp, "x", como="text", espera=(0, 5), limite=30)
-            f = leer_tramitacion(txt) or f
+            f = leer_tramitacion(txt)
             if not txt and "imeout" in str((tmp.get("x") or {}).get("error")):
                 senado_caido = True   # el Senado no responde: no se le insiste en esta corrida
+        if not (f and f.get("titulo")):
+            tc = pedir(CAMARA_PROYECTO.format(b=bol_completo), tmp, "c", como="text", espera=(0, 5), limite=30)
+            fc = leer_proyecto_camara(tc)
+            if fc:
+                f, url = fc, CAMARA_PROYECTO.format(b=bol_completo)
         if not f and tc and len(muestras) < 2:
             muestras.append({"url": CAMARA_PROYECTO.format(b=bol_completo), "error": (tmp.get("c") or {}).get("error", ""),
                              "inicio": re.sub(r"\s+", " ", str(tc))[:300]})
@@ -2156,7 +2199,7 @@ def waqi_ciudad(j, slug, la, lo):
         return None
     aqi = int(round(d["aqi"]))
     return {"nombre": dict(AIRE_CIUDADES)[slug], "aqi_us": aqi, "categoria": _categoria_aqi(aqi), "pm25": None,
-            "hora": hora[11:16], "estacion": str((d.get("city") or {}).get("name") or ""),
+            "hora": hora[11:16], "medido": hora[:16], "estacion": str((d.get("city") or {}).get("name") or ""),
             "url": str((d.get("city") or {}).get("url") or "https://aqicn.org/")}
 
 
@@ -2255,6 +2298,61 @@ def f1(estado, hoy):
     return {"nombre": "Fórmula 1", "tablas": [{"nombre": f"Campeonato de pilotos · top 10 (tras la ronda {ronda})", "columnas": ["Pos", "Piloto", "Equipo", "Puntos"],
             "valor_col": 3, "fuente": "Jolpica F1 (base de datos abierta Ergast)", "url": base + "/driverstandings/", "fecha": fecha,
             "gp": gp, "filas": filas}]}
+
+# ---------- 14-11-2026 · «7 pilares»: gasto del Gobierno Central por función (DIPRES, pesos de 2025), una vez al mes ----------
+DIPRES_FUNCIONAL = "https://www.dipres.gob.cl/598/articles-45401_doc_pdf_Funcional2.pdf"
+
+
+def gasto_funcional(estado, salida, hoy):
+    """PDF oficial de la DIPRES (no publica planilla) → datos/gasto-funcional.json {anios: {año: {código: millones}}, nombres}.
+    Se lee una vez al mes (la DIPRES suma un año a mediados de año). Si algo falla, queda el archivo anterior."""
+    ruta = os.path.join(salida, "gasto-funcional.json")
+    try:
+        prev = json.load(open(ruta, encoding="utf-8"))
+        if str(prev.get("consultado") or "")[:7] == hoy.isoformat()[:7]:
+            estado["gasto_funcional"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": DIPRES_FUNCIONAL, "nota": "ya leído este mes"}
+            return None
+    except Exception:   # noqa: BLE001
+        prev = None
+    if _no_permitido(DIPRES_FUNCIONAL, estado, "gasto_funcional"):
+        return None
+    try:
+        import io
+        import pdfplumber
+        r = requests.get(DIPRES_FUNCIONAL, headers={"User-Agent": UA}, timeout=60)
+        r.raise_for_status()
+        anios, nombres = {}, {}
+        fila = re.compile(r"^(7\d{0,3})\s+(.+?)\s+((?:-?[\d.]+\s+){5,}-?[\d.]+)\s*$")
+        with pdfplumber.open(io.BytesIO(r.content)) as pdf:
+            for pg in pdf.pages:
+                cols = []
+                for ln in (pg.extract_text() or "").split("\n"):
+                    ln = ln.strip()
+                    if re.fullmatch(r"(?:(?:19|20)\d\d\s+){3,}(?:19|20)\d\d", ln):
+                        cols = [int(x) for x in ln.split()]
+                        continue
+                    m = fila.match(ln)
+                    if not (m and cols):
+                        continue
+                    vals = [int(x.replace(".", "")) if re.fullmatch(r"-?\d{1,3}(?:\.\d{3})*|-?\d+", x) else None for x in m.group(3).split()]
+                    if len(vals) != len(cols) or None in vals:
+                        continue
+                    nombres.setdefault(m.group(1), re.sub(r"\s+", " ", m.group(2)).strip())
+                    for a_, v in zip(cols, vals):
+                        anios.setdefault(str(a_), {})[m.group(1)] = v
+        clave = ("7", "707", "709", "7102", "7045", "7104", "706", "7106", "7105", "7041")
+        if len(anios) < 30 or not all(all(c in v for c in clave) for v in anios.values()):
+            raise ValueError(f"PDF con {len(anios)} años o sin las partidas de los 7 pilares")
+        estado["gasto_funcional"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": DIPRES_FUNCIONAL,
+                                     "desde": min(anios), "hasta": max(anios)}
+        return {"fuente": "Dirección de Presupuestos (DIPRES), Clasificación funcional de erogaciones del Gobierno Central Total, millones de pesos de 2025",
+                "url": DIPRES_FUNCIONAL, "unidad": "millones de pesos de 2025", "desde": min(anios), "hasta": max(anios),
+                "consultado": hoy.isoformat(), "anios": dict(sorted(anios.items())), "nombres": nombres}
+    except Exception as ex:   # noqa: BLE001
+        estado["gasto_funcional"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": DIPRES_FUNCIONAL,
+                                     "error": f"{type(ex).__name__}: {str(ex)[:160]}"}
+        return None
+
 
 def escribir(ruta, contenido):
     if contenido is None or contenido == "":
@@ -2604,6 +2702,7 @@ def main(argv=None):
     try:   # 03-11-2026: tasas mensuales oficiales + TPM esperada (Encuesta de Expectativas); el catálogo, solo los lunes (diagnóstico)
         escribir(os.path.join(a.salida, "tasas-bcch.json"), tasas_bcch(estado, hoy))
         escribir(os.path.join(a.salida, "historia.json"), historia_bcch(estado, hoy))
+        escribir(os.path.join(a.salida, "gasto-funcional.json"), gasto_funcional(estado, a.salida, hoy))   # 14-11-2026: «7 pilares»
         if hoy.weekday() == 0:
             cat = tasas_catalogo(estado)
             if cat:

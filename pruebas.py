@@ -619,21 +619,29 @@ def autores_de_cada_boletin_desde_el_senado():
     assert f["autores"] == ["Pérez Olea, Joanna", "Longton Herrera, Andrés"] and f["titulo"].startswith("Modifica el Código Penal"), f
     assert B.leer_tramitacion("<x><iniciativa>Mensaje</iniciativa><titulo>Presupuesto</titulo></x>")["autores"] == ["Mensaje presidencial"]
     assert B.leer_tramitacion("") is None and B.leer_tramitacion("<html>error</html>") is None
-    viejos = B.pedir, B.robots_permite, B.time.sleep
+    viejos = B.pedir, B.robots_permite, B.time.sleep, B.MEMORIA_DIR
     pedidas = []
-    B.pedir = lambda url, est, cl, **k: pedidas.append(url) or xml
+    xml2 = xml.replace("</iniciativa>", "</iniciativa><fecha_ingreso>04/11/2026</fecha_ingreso><etapa>Primer trámite constitucional (Cámara)</etapa>"
+                       "<estado>En tramitación </estado><link_mensaje_mocion>http://www.senado.cl/x?iddocto=1</link_mensaje_mocion>")
+    B.pedir = lambda url, est, cl, **k: pedidas.append(url) or xml2
     B.robots_permite = lambda url, est: True
     B.time.sleep = lambda s: None
+    import tempfile
+    B.MEMORIA_DIR = tempfile.mkdtemp()   # sin copias de la memoria: la prueba no depende de lo que haya en el repositorio
     try:
+        # 14-11-2026: también «boletines 18590-07 y 18591-07» (plural, varios en una frase) y en minúsculas
         cam = {"camara_mes": [{"descripcion": "Boletín N° 18282-07 Proyecto de ley"}, {"descripcion": "Boletín N°18282-07 otra"},
-                              {"descripcion": "Boletín N° 17000-05"}, {"descripcion": "sin boletín"}]}
+                              {"descripcion": "Boletín N° 17000-05"}, {"descripcion": "sin boletín"},
+                              {"descripcion": "Cierre del debate de los boletines 18590-07 y 18591-07"}]}
         e = {}
         out = B.autores_boletines(e, cam, {"17000": {"autores": ["Ya leído"]}})
-        assert pedidas == ["https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarProyectoLey?prmNumeroBoletin=18282-07",
-                           "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18282"], pedidas   # Cámara primero; el ya leído no se repite
-        assert out["17000"]["autores"] == ["Ya leído"] and out["18282"]["autores"][0] == "Pérez Olea, Joanna" and e["autores_boletines"]["nuevos"] == 1
+        assert pedidas == ["https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18282",
+                           "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18590",
+                           "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18591"], pedidas   # Senado primero (ficha completa); el ya leído no se repite
+        assert out["17000"]["autores"] == ["Ya leído"] and out["18282"]["autores"][0] == "Pérez Olea, Joanna" and e["autores_boletines"]["nuevos"] == 3
+        assert out["18282"]["etapa"].startswith("Primer trámite") and out["18282"]["estado"] == "En tramitación" and out["18282"]["url_mocion"].startswith("http")
     finally:
-        B.pedir, B.robots_permite, B.time.sleep = viejos
+        B.pedir, B.robots_permite, B.time.sleep, B.MEMORIA_DIR = viejos
 
 
 @prueba
@@ -883,8 +891,8 @@ def aire_medido_de_las_9_ciudades_con_waqi():
     ok = {"status": "ok", "data": {"aqi": 57, "time": {"s": hoy + " 05:00:00"},
                                    "city": {"name": "Antofagasta, Chile", "geo": [-23.63, -70.39], "url": "https://aqicn.org/city/chile/antofagasta"}}}
     x = B.waqi_ciudad(ok, "antofagasta", -23.65, -70.40)
-    assert x == {"nombre": "Antofagasta", "aqi_us": 57, "categoria": "Moderada", "pm25": None, "hora": "05:00", "estacion": "Antofagasta, Chile",
-                 "url": "https://aqicn.org/city/chile/antofagasta"}, x
+    assert x == {"nombre": "Antofagasta", "aqi_us": 57, "categoria": "Moderada", "pm25": None, "hora": "05:00", "medido": hoy + " 05:00",
+                 "estacion": "Antofagasta, Chile", "url": "https://aqicn.org/city/chile/antofagasta"}, x   # 14-11: «medido» = fecha y hora de la medición
     lejos = {"status": "ok", "data": dict(ok["data"], city={"name": "Calama", "geo": [-22.46, -68.93]})}
     assert B.waqi_ciudad(lejos, "antofagasta", -23.65, -70.40) is None                          # 180 km: no es Antofagasta
     assert B.waqi_ciudad({"status": "ok", "data": dict(ok["data"], time={"s": "2026-01-01 05:00:00"})}, "antofagasta", -23.65, -70.40) is None
@@ -1138,6 +1146,32 @@ def senado_votos_y_feeds_filtrados():
         assert info["ok"] and [n["titulo"] for n in notas] == ["Venta de viviendas cae 10%"], notas
     finally:
         B.pedir, B.robots_permite = viejos
+
+
+@prueba
+def perspectivas_megaproyectos_de_la_semana():
+    """14-11-2026 (informe: Perspectivas 2050 con 1 proyecto nuevo de 4 o 5; Google News y DF rechazan a la tarea): GitHub lee las
+    noticias de megaproyectos de los últimos 7 días y las deja en titulares.json → titulares-perspectivas.json para el modelo."""
+    v = B.FEEDS["perspectivas"]
+    assert len(v) >= 12 and B.VENTANA_H["perspectivas"] == 168
+    assert len({u for _, u, _ in v}) == len(v)   # sin direcciones repetidas
+    assert sum("news.google.com" in u for _, u, _ in v) >= 6 and sum("bing.com" in u for _, u, _ in v) >= 6
+    assert all("when:7d" in u for _, u, _ in v if "news.google.com" in u)
+    # una nota de hace 6 días entra (168 h), una de hace 9 días no
+    viejos = B.robots_permite, B.pedir, B.ahora
+    ahora = dt.datetime(2026, 11, 14, 4, 17, tzinfo=B.TZ)
+    def rss(*fechas):
+        items = "".join(f"<item><title>Proyecto {i} US$ {100 + i} millones</title><link>https://ejemplo.cl/{i}</link>"
+                        f"<pubDate>{f}</pubDate><description>Inversión</description></item>" for i, f in enumerate(fechas))
+        return f"<rss><channel>{items}</channel></rss>"
+    B.robots_permite = lambda url, e: True
+    B.pedir = lambda url, estado, clave, **k: rss("Sun, 08 Nov 2026 10:00:00 -0300", "Thu, 05 Nov 2026 10:00:00 -0300")
+    B.ahora = lambda: ahora
+    try:
+        t2 = B.titulares({}, {"perspectivas": [("Prueba", "https://ejemplo.cl/rss", "rss")]}, hilos=1)
+    finally:
+        B.robots_permite, B.pedir, B.ahora = viejos
+    assert [n["titulo"] for n in t2["secciones"]["perspectivas"]["notas"]] == ["Proyecto 0 US$ 100 millones"], t2["secciones"]["perspectivas"]
 
 if __name__ == "__main__":
     malas = 0

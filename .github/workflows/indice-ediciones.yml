@@ -1,0 +1,38 @@
+# Cofrade News · Índice de ediciones (14-11-2026). Deja datos/ediciones.json con TODAS las ediciones publicadas: la portada de
+# www.cofrad.es lo lee de una vez para su Archivo y el botón «Ver más» (antes preguntaba día por día y se perdían ediciones).
+# Corre cuando se sube una edición, varias veces en la mañana y a mano: pestaña «Actions» → «Índice de ediciones» → «Run workflow».
+name: Índice de ediciones
+
+on:
+  push:
+    branches: [ediciones]
+  schedule:
+    - cron: "53 10,11,12,13,15,19,23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cofrade-indice
+  cancel-in-progress: false
+
+jobs:
+  indice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+      - name: Leer la rama de ediciones
+        run: git fetch --depth=1 origin ediciones:refs/remotes/origin/ediciones || true
+      - name: Armar el índice
+        run: python3 herramientas/indice_ediciones.py --salida datos/ediciones.json
+      - name: Guardar en el repositorio
+        run: |
+          git config user.name "cofrade-datos"
+          git config user.email "actions@users.noreply.github.com"
+          git add datos/ediciones.json
+          git diff --cached --quiet || git commit -m "Índice de ediciones $(date -u +%Y-%m-%dT%H:%M)"
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 10; done
