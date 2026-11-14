@@ -1350,6 +1350,26 @@ ${CONDICIONES.map(([t, d]) => `<h3>${esc(t)}</h3><p>${esc(d)}</p>`).join("\n")}
     cuerpo, canonica: "/socios/condiciones" }), 200, { "Cache-Control": "public, max-age=600" });
 }
 
+// POST /panel/suscripciones (solo Germán, desde el panel): pausar o reanudar TODAS las suscripciones. Es lo que promete la cláusula
+// «Si el lanzamiento se atrasa»: se pausan antes del 1 de diciembre y nadie paga hasta que el Dashboard esté disponible.
+async function accionSuscripciones(req, env) {
+  if (!ORIGEN_OK(req) || !(await esAdmin(req, env))) return new Response("No autorizado.", { status: 403 });
+  if (!mpActivo(env)) return new Response(null, { status: 303, headers: { Location: "/panel" } });
+  const f = new URLSearchParams((await leerCuerpo(req, 2000)) || "");
+  const accion = f.get("accion"), [desde, hacia, estado] = accion === "pausar" ? ["activa", "paused", "pausada"] : accion === "reanudar" ? ["pausada", "authorized", "activa"] : [];
+  if (!desde) return new Response(null, { status: 303, headers: { Location: "/panel" } });
+  const filas = (await env.DB.prepare("SELECT ref, mp_id FROM suscripciones WHERE estado = ? AND mp_id IS NOT NULL AND mp_id <> '' LIMIT 40").bind(desde).all()).results || [];
+  let hechas = 0;
+  for (const x of filas) {
+    const r = await mpPedir(env, "PUT", `/preapproval/${encodeURIComponent(x.mp_id)}`, { status: hacia }).catch(() => ({ ok: false }));
+    if (r.ok) {
+      await env.DB.prepare("UPDATE suscripciones SET estado = ?, actualizado = ? WHERE ref = ?").bind(estado, new Date().toISOString(), x.ref).run();
+      hechas++;
+    }
+  }
+  return new Response(null, { status: 303, headers: { Location: `/panel?suscripciones=${accion}-${hechas}-de-${filas.length}`, "Cache-Control": "no-store" } });
+}
+
 // Panel (solo Germán): inscripciones y cobros. De paso, pone al día hasta 6 suscripciones que no se revisan hace más de 6 horas,
 // por si algún aviso de Mercado Pago no llegó.
 async function panelSocios(env) {
@@ -1374,6 +1394,8 @@ ${mpActivo(env) ? "" : `<p class="aviso">Falta la clave MP_ACCESS_TOKEN en Cloud
 ${mpActivo(env) && !env.MP_WEBHOOK_SECRET ? `<p class="aviso">Falta la clave MP_WEBHOOK_SECRET: los avisos de Mercado Pago esperan; el panel revisa las suscripciones cada 6 horas.</p>` : ""}
 <div class="cifras">${kpi("Inscritos con tarjeta autorizada", num(cuenta("activa"), 0), "cobro desde el 1 de diciembre")}${kpi("Pendientes de autorizar", num(cuenta("pendiente"), 0))}
 ${kpi("En pausa o cancelados", num(cuenta("pausada") + cuenta("cancelada"), 0))}${kpi("Ingreso mensual esperado", pesos(Math.round(mensual)), "planes anuales divididos por 12")}</div>
+${mpActivo(env) && subs.length ? `<form method="post" action="/panel/suscripciones" class="acciones" style="margin:10px 0 14px"><button class="btn linea" name="accion" value="pausar" type="submit">Pausar todas (no se cobra a nadie)</button>
+<button class="btn linea" name="accion" value="reanudar" type="submit">Reanudar las pausadas</button><span class="sub" style="align-self:center">Úsalo si el Dashboard no está listo el 1 de diciembre: lo promete la cláusula «Si el lanzamiento se atrasa».</span></form>` : ""}
 ${subs.length ? `<div class="tabla"><table><thead><tr><th>Fecha</th><th>Nombre</th><th>Email</th><th>Plan</th><th>Monto</th><th>Estado</th><th>Próximo cobro</th></tr></thead><tbody>${subs.slice(0, 60).map(fila).join("")}</tbody></table></div>` : `<p class="aviso">Todavía no hay inscripciones.</p>`}
 <h4 class="kicker" style="margin-top:18px">Cobros recibidos (para emitir cada boleta)</h4>
 ${cobros.length ? `<div class="tabla"><table><thead><tr><th>Fecha</th><th>Email</th><th>Monto</th><th>Estado</th><th>N° Mercado Pago</th></tr></thead><tbody>${cobros.map((x) => `<tr><td>${esc(String(x.fecha).slice(0, 10))}</td><td>${esc(x.email)}</td><td>${pesos(x.monto)}</td><td>${esc(x.estado)}</td><td>${esc(x.id)}</td></tr>`).join("")}</tbody></table></div>` : `<p class="aviso">Aún no hay cobros: el primero llega el 1 de diciembre de 2026.</p>`}</section>`;
@@ -1754,6 +1776,7 @@ export default {
       }
       if (p === "/socios/gracias") return await paginaGracias(u, env);
       if (p === "/socios/condiciones") return paginaCondiciones();
+      if (p === "/panel/suscripciones" && req.method === "POST") return await accionSuscripciones(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel" } }));
       if (p === "/mp/aviso" && req.method === "POST") return await avisoMP(req, u, env, ctx).catch(() => jsonR({ ok: false }, 500));
       if (p === "/socios/salir") return new Response(null, { status: 302, headers: { Location: "/socios", "Set-Cookie": "cn_socio=; Max-Age=0; Path=/; Secure; HttpOnly; SameSite=Lax" } });
       if (p === "/socios") {

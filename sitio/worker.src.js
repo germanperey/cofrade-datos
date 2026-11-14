@@ -1024,6 +1024,7 @@ export default {
       }
       if (p === "/socios/gracias") return await paginaGracias(u, env);
       if (p === "/socios/condiciones") return paginaCondiciones();
+      if (p === "/panel/suscripciones" && req.method === "POST") return await accionSuscripciones(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel" } }));
       if (p === "/mp/aviso" && req.method === "POST") return await avisoMP(req, u, env, ctx).catch(() => jsonR({ ok: false }, 500));
       if (p === "/socios/salir") return new Response(null, { status: 302, headers: { Location: "/socios", "Set-Cookie": "cn_socio=; Max-Age=0; Path=/; Secure; HttpOnly; SameSite=Lax" } });
       if (p === "/socios") {
