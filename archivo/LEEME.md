@@ -9,4 +9,4 @@ Todo lo publicado queda aquí para siempre (nunca se borra):
 - `../memoria/mensual/`: la memoria completa del diario del día 1 de cada mes.
 - `manifiesto/`: la lista de archivos de cada mes con su huella; con ella el script de Google Drive copia todo a la carpeta «Cofrade-News-Archivo» (respaldo paralelo).
 
-Última actualización: 2026-11-13. Resumen en `indice.json`.
+Última actualización: 2026-11-14. Resumen en `indice.json`.
