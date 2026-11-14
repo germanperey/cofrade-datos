@@ -1,0 +1,26 @@
+# Sonda de fuentes (diagnóstico a pedido, 14-11-2026): revisa robots.txt y prueba fuentes oficiales nuevas antes de sumarlas
+# al programa de datos. No cambia nada del repositorio: deja lo leído como «artefacto» descargable de la corrida.
+name: Sonda de fuentes (diagnóstico)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet requests==2.32.3
+      - run: python herramientas/sonda.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sonda
+          path: sonda/
+          retention-days: 7
