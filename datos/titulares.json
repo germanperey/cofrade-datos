@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-14T05:17:20-03:00",
+ "generado": "2026-11-14T05:51:02-03:00",
  "secciones": {
   "economia/chile": {
    "consultadas": [
@@ -26,8 +26,9 @@
     {
      "fuente": "Chócale (RSS)",
      "url": "https://chocale.cl/feed/",
-     "ok": true,
-     "n": 10
+     "ok": false,
+     "n": 0,
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "El Mostrador (RSS)",
@@ -138,18 +139,18 @@
    ],
    "notas": [
     {
+     "fuente": "Infobae · Economía (RSS)",
+     "titulo": "Demoras y desvío: qué pasa con los vuelos programados para hoy desde Argentina a Estados Unidos",
+     "fecha": "2026-11-14 05:38",
+     "url": "https://www.infobae.com/economia/2026/11/13/que-pasara-con-los-vuelos-programados-para-hoy-desde-argentina-a-estados-unidos/",
+     "resumen": "Cuáles son los despegues programados para las próximas horas y los primeros que aparecen como “demorados”. Qué dicen, por el momento, las líneas aéreas que operan en el país"
+    },
+    {
      "fuente": "Diario Financiero (RSS)",
      "titulo": "TotalEnergies H2 desiste de megaproyecto para producir hidrógeno y amoníaco verde de US$ 16 mil millones",
      "fecha": "2026-11-14 05:03",
      "url": "http://www.df.cl/empresas/energia/totalenergies-h2-desiste-de-megaproyecto-para-producir-hidrogeno-y-amoniaco",
      "resumen": "El gerente general de la compañía en Chile, Antoine Liane, apuntó en su escrito al SEA a las condiciones de mercado, la demanda por moléculas verdes y los costos en los equipos. Esos factores -dicen- hacen que \"una inversión de la magnitud del proyecto H2 Magallanes resulte económicamente inviable\"."
-    },
-    {
-     "fuente": "Infobae · Economía (RSS)",
-     "titulo": "Demoras y desvío: qué pasa con los vuelos programados para hoy desde Argentina a Estados Unidos",
-     "fecha": "2026-11-14 01:50",
-     "url": "https://www.infobae.com/economia/2026/11/13/que-pasara-con-los-vuelos-programados-para-hoy-desde-argentina-a-estados-unidos/",
-     "resumen": "Cuáles son los despegues programados para las próximas horas y los primeros que aparecen como “demorados”. Qué dicen, por el momento, las líneas aéreas que operan en el país"
     },
     {
      "fuente": "Infobae · Economía (RSS)",
@@ -213,13 +214,6 @@
      "fecha": "2026-11-14 00:41",
      "url": "https://www.cooperativa.cl/noticias/mundo/ee-uu/la-casa-blanca-atribuyo-caos-aereo-en-ee-uu-a-un-sistema-obsoleto-va/2026-11-14/004126.html",
      "resumen": "El Gobierno del presidente de EE.UU., Donald Trump, atribuyó este viernes a la obsolescencia de los sistemas de comunicaciones aérea el fallo que obligó a suspender durante cuatro horas los despegues en todo Estados Unidos y provocó miles de cancelaciones y retrasos. La avería llevó a la Casa Blanca a reclamar al…"
-    },
-    {
-     "fuente": "Chócale (RSS)",
-     "titulo": "Congreso Futuro 2027 se instalará en Estación Mapocho en enero",
-     "fecha": "2026-11-14 00:28",
-     "url": "https://chocale.cl/2026/11/congreso-futuro-2027-se-instalara-en-estacion-mapocho-en-enero/",
-     "resumen": "La decimosexta edición, bajo el lema “El Desafío de Ser Humanos”, se realizará del 11 al 16 de enero. Antes, habrá dos encuentros gratuitos en noviembre."
     },
     {
      "fuente": "Cooperativa (RSS)",
@@ -460,13 +454,6 @@
      "resumen": "Si bien señaló que no hay grandes avances en el proceso de venta de la participación de Copec en Sonacol, el gerente de Administración y Finanzas de Empresas Copec, Rodrigo Huidobro, reconoció que \"hemos percibido un renovado interés por los activos chilenos en general\"."
     },
     {
-     "fuente": "Chócale (RSS)",
-     "titulo": "Entel vende sus operaciones en Perú a Millicom por US$1.714 millones",
-     "fecha": "2026-11-13 18:56",
-     "url": "https://chocale.cl/2026/11/entel-vende-sus-operaciones-en-peru-a-millicom/",
-     "resumen": "La transacción permitirá a Tigo ingresar al mercado peruano, llegando a 13 países de la región. Entel busca fortalecer su operación en Chile."
-    },
-    {
      "fuente": "Diario Financiero (RSS)",
      "titulo": "El inversionista de Wall Street que le dijo que no a Theranos se suma a fondo biotech chileno",
      "fecha": "2026-11-13 18:44",
@@ -663,13 +650,6 @@
      "resumen": "En redes sociales circularon imágenes suyas en el clásico Tiramisú, el concurrido restaurante de inspiración italiana conocido por sus pizzas, pastas y animado ambiente en el barrio El Golf."
     },
     {
-     "fuente": "Chócale (RSS)",
-     "titulo": "Scotiabank designa a Marcelo Gorrini como nuevo Vicepresidente Ejecutivo y Country Head para Chile y Uruguay",
-     "fecha": "2026-11-13 16:22",
-     "url": "https://chocale.cl/2026/11/scotiabank-designa-a-marcelo-gorrini-como-nuevo-vicepresidente-ejecutivo-y-country-head-para-chile-y-uruguay/",
-     "resumen": "El ejecutivo, con más de 30 años de trayectoria en Citibank, asumirá el 4 de enero de 2027."
-    },
-    {
      "fuente": "Diario Financiero (RSS)",
      "titulo": "Con Keiko Fujimori, BTG lanza oficialmente el banco en Perú",
      "fecha": "2026-11-13 16:11",
@@ -766,6 +746,27 @@
      "fecha": "2026-11-13 14:43",
      "url": "http://www.df.cl/df-mas/coffee-break/una-joyera-chilena-que-aparece-en-el-especial-de-joyeria-del-financial",
      "resumen": "El anillo de la chilena se llama Adamas Cabinet, inspirado en tres de sus museos favoritos, el de Historia Natural, el Victoria and Albert y el de Sir John Soane, y explora la diversidad geológica de los diamantes, según el diario británico."
+    },
+    {
+     "fuente": "Ex-Ante (RSS)",
+     "titulo": "Rebaja de penas: preso por estafa impugna nueva suspensión de beneficio anunciada por La Moneda",
+     "fecha": "2026-11-13 14:42",
+     "url": "https://www.ex-ante.cl/nacional/rebaja-de-penas-preso-impugna-beneficio/",
+     "resumen": "Un interno de la ex Penitenciaría de Santiago, donde cumple una condena de cuatro años de cárcel por estafa, presentó un recurso de amparo por…"
+    },
+    {
+     "fuente": "Diario Financiero (RSS)",
+     "titulo": "La caída de Jensen Huang",
+     "fecha": "2026-11-13 14:38",
+     "url": "http://www.df.cl/df-mas/glocal/la-caida-de-jensen-huang",
+     "resumen": "Tras 33 años convirtiendo a Nvidia en la empresa más valiosa del mundo, la carrera de su fundador se desmoronó en menos de dos semanas."
+    },
+    {
+     "fuente": "La Tercera · Pulso (RSS)",
+     "titulo": "Alfredo Solar vuelve a la presidencia de Acera después de diez años",
+     "fecha": "2026-11-13 14:38",
+     "url": "https://www.latercera.com/pulso/noticia/alfredo-solar-vuelve-a-la-presidencia-de-acera-despues-de-diez-anos/",
+     "resumen": "Los principales desafíos para este periodo serán entablar diálogos con las autoridades del sector para aprovechar el potencial renovable del país, así como fortalecer la seguridad y eficiencia del sistema basado en soluciones y tecnologías descarbonizadas."
     }
    ]
   },
@@ -875,7 +876,7 @@
      "fuente": "DW en español (RSS)",
      "url": "https://rss.dw.com/xml/rss-sp-all",
      "ok": true,
-     "n": 19
+     "n": 20
     },
     {
      "fuente": "Bing Noticias · Economía mundial",
@@ -886,11 +887,32 @@
    ],
    "notas": [
     {
+     "fuente": "Al Jazeera · Economía (RSS, inglés)",
+     "titulo": "Hungary seizes $18m cash tied to ex-Orban-era minister in probe",
+     "fecha": "2026-11-14 05:39",
+     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/14/hungary-seizes-18m-cash-tied-to-ex-orban-era-minister-in-probe?traffic_source=rss",
+     "resumen": "Anti-corruption authorities in Hungary say they found around $18 million in hidden cash."
+    },
+    {
+     "fuente": "DW en español (RSS)",
+     "titulo": "Irán informa de tres petroleros incendiados por la explosión de minas marinas en el estrecho de Ormuz y renueva sus advertencias",
+     "fecha": "2026-11-14 05:32",
+     "url": "https://www.dw.com/es/irán-informa-de-tres-petroleros-incendiados-por-la-explosión-de-minas-marinas-en-el-estrecho-de-ormuz-y-renueva-sus-advertencias/a-79946984?maca=spa-rss-sp-all-1122-xml-mrss",
+     "resumen": "El mes pasado fue el que registró más indicentes en la navegación en la zona, una de las más importantes para el tráfico marítimo de hidrocarburos, desde que empezó el conflicto en febrero."
+    },
+    {
      "fuente": "BBC News · Business (RSS, inglés)",
      "titulo": "Football kit giveaway aims to boost participation",
      "fecha": "2026-11-14 05:13",
      "url": "https://www.bbc.co.uk/news/articles/ck20v651473qo?at_medium=RSS&at_campaign=rss",
      "resumen": "Millie Bright helps hand out free kit to young girls to help them keep playing in spite of costs."
+    },
+    {
+     "fuente": "Al Jazeera · Economía (RSS, inglés)",
+     "titulo": "Warner accuses Cricket Australia of ‘cover-up’ in ball-tampering scandal",
+     "fecha": "2026-11-14 05:10",
+     "url": "https://www.aljazeera.com/sports/2026/11/14/warner-cricket-australia-ball-tampering-sandpapergate-khawaja-cummins?traffic_source=rss",
+     "resumen": "Former opener Warner was banned for a year for his involvement in the 2018 'Sandpapergate' incident in South Africa."
     },
     {
      "fuente": "Al Jazeera · Economía (RSS, inglés)",
@@ -1201,13 +1223,6 @@
      "resumen": "Más de 120 personas se encontraban en el barco turístico en el momento de la colisión."
     },
     {
-     "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "Former FAA official says ‘nobody really knows what is going on’",
-     "fecha": "2026-11-13 22:28",
-     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/14/former-faa-official-says-nobody-really-knows-what-is-going?traffic_source=rss",
-     "resumen": "Former FAA safety team representative Kyle Bailey says grounding flights is the safest course of action."
-    },
-    {
      "fuente": "DW en español (RSS)",
      "titulo": "EE.UU. afirma que suspensión de vuelos no se debió a un ataque terrorista sino a un fallo de telecomunicaciones",
      "fecha": "2026-11-13 21:31",
@@ -1220,13 +1235,6 @@
      "fecha": "2026-11-13 21:24",
      "url": "https://www.dw.com/es/microsoft-lamenta-profundamente-problemas-causados-por-caída-global/a-79946074?maca=spa-rss-sp-all-1122-xml-mrss",
      "resumen": "La interrupción en el servicio de Microsoft afectó a millones de usuarios y empresas en unos setenta países."
-    },
-    {
-     "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "UK police open sex offence probe into comedian and author David Walliams",
-     "fecha": "2026-11-13 21:22",
-     "url": "https://www.aljazeera.com/news/2026/11/14/uk-police-open-sex-offence-probe-into-comedian-and-author-david-walliams?traffic_source=rss",
-     "resumen": "The British TV personality, 55, denies sexual assault allegations, saying he has not broken the law."
     },
     {
      "fuente": "France 24 · Economía (RSS)",
@@ -1507,13 +1515,6 @@
      "fecha": "2026-11-13 01:45",
      "url": "https://elpais.com/economia/2026-11-13/los-que-no-hicieron-huelga-el-11-n-pero-llenaron-las-calles-no-podia-perder-un-dia-de-sueldo.html",
      "resumen": "Varios manifestantes, muy enfadados por la crisis de acceso a la vivienda, explican que no secundaron el paro laboral por el castigo económico, pese a que querrían haber participado"
-    },
-    {
-     "fuente": "El País · Economía (RSS)",
-     "titulo": "Los salarios de la banca multiplican hasta por cuatro los del sector servicios, la hostelería y el comercio",
-     "fecha": "2026-11-13 01:45",
-     "url": "https://elpais.com/economia/2026-11-13/los-salarios-de-la-banca-multiplican-hasta-por-cuatro-los-del-sector-servicios-la-hosteleria-y-el-comercio.html",
-     "resumen": "La remuneración media del sector financiero alcanza los 53.251 euros anuales, frente a los 14.867 de los servicios personales y de ocio, según la estadística tributaria"
     }
    ]
   },
@@ -2270,7 +2271,7 @@
      "fuente": "La Tercera · Mundo (RSS)",
      "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/mundo/?outputType=xml",
      "ok": true,
-     "n": 40
+     "n": 39
     },
     {
      "fuente": "Google News · Internacional",
@@ -2348,7 +2349,7 @@
      "fuente": "Bing Noticias · Internacional",
      "url": "https://www.bing.com/news/search?q=internacional%20noticias%20mundo&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 5
+     "n": 4
     },
     {
      "fuente": "Bing Noticias · Sudán",
@@ -2433,6 +2434,244 @@
    ],
    "notas": [
     {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cerrado un canal de redes sociales que captaba cuentas para mover dinero del cibercrimen",
+     "fecha": "2026-11-14 05:46",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/cerrado-un-canal-de-redes-sociales-que-captaba-cuentas-para-mover-dinero-del-cibercrimen/",
+     "resumen": "Granada, 14 nov (EFE).- La Guardia Civil ha cerrado un canal de TikTok que buscaba captar víctimas como “mulas económicas” para que creasen cuentas bancarias, a cambio de lo que supuestamente ofrecían hasta 100 euros, con el fin de recibir, transferir y ocultar dinero procedente de estafas y otros ciberdelitos. Han…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Se busca entre desconocidos a 24 habitantes de Macondo, sin experiencia como modelos",
+     "fecha": "2026-11-14 05:46",
+     "url": "https://www.infobae.com/america/agencias/2026/11/14/se-busca-entre-desconocidos-a-24-habitantes-de-macondo-sin-experiencia-como-modelos/",
+     "resumen": "Marta Teixidó Valls Nueva Delhi, 14 nov (EFE).- Óscar Perfer no conocía a la mujer que buscaba en Cartagena, pero un chivatazo indicaba que podía ser Úrsula Iguarán. El fotógrafo colombiano tomó un avión aquel mismo día; después de años buscando entre desconocidos a los personajes de 'Cien años de soledad', no estaba…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Alcaraz busca una corona pendiente, Zverev su tercer título y Jódar se estrena en Turín",
+     "fecha": "2026-11-14 05:45",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/alcaraz-busca-una-corona-pendiente-zverev-su-tercer-titulo-y-jodar-se-estrena-en-turin/",
+     "resumen": "Carlos Expósito Turín (Italia), 14 nov (EFE).- La pista dura del emblemático Inalpi Arena de Turín (Italia) acoge desde este domingo la 57.ª edición de las Finales ATP, marcada por el hambre de Carlos Alcaraz por ganar uno de los pocos trofeos que le faltan, por el debut de Rafa Jódar, la ausencia de Jannik Sinner y…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Juan Saurín, profesor de la Escuela de música, acompañará a la reconocida artista Marisela en sus conciertos en España",
+     "fecha": "2026-11-14 05:45",
+     "url": "https://www.infobae.com/america/agencias/2026/11/14/juan-saurin-profesor-de-la-escuela-de-musica-acompanara-a-la-reconocida-artista-marisela-en-sus-conciertos-en-espana/",
+     "resumen": "La Escuela de Música de la Asociación de Amigos de la Música de Yecla se enorgullece de anunciar la participación de uno de sus profesores en los próximos conciertos en España de Marisela, reconocida artista mexicano-estadounidense y una de las voces más destacadas de la música romántica latinoamericana. Su profesor…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Núñez, López, García y Mejía, que juegan en España, irán con R.Dominicana a Mundial sub-17",
+     "fecha": "2026-11-14 05:45",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/nunez-lopez-garcia-y-mejia-que-juegan-en-espana-iran-con-rdominicana-a-mundial-sub-17/",
+     "resumen": "Santo Domingo, 13 nov (EFE).- Iker Núñez (AD Alcorcón), Alejandro López (Rayo Vallecano), Adrián García (CD Leganés) y José Luis Mejía (Real Betis) integran la lista de 21 futbolistas convocados por la selección de República Dominicana para la disputa del Mundial sub-17 que se disputará en Catar del 19 de noviembre…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Francia desplegará 70.000 efectivos para afrontar el quinto sábado consecutivo de protestas",
+     "fecha": "2026-11-14 05:44",
+     "url": "https://www.infobae.com/america/mundo/2026/11/14/francia-desplegara-700000-efectivos-para-afrontar-el-quinto-sabado-consecutivo-de-protestas/",
+     "resumen": "Las movilizaciones, impulsadas por los chalecos amarillos y colectivos universitarios, volverán a rechazar el encarecimiento de la vida y reclamarán la defensa de los servicios públicos, mientras las autoridades preparan un amplio operativo de seguridad nacional"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Empresarios preparan propuesta fiscal alternativa y plantean nuevas fuentes de recaudo",
+     "fecha": "2026-11-14 05:41",
+     "url": "https://www.infobae.com/colombia/2026/11/14/empresarios-preparan-propuesta-fiscal-alternativa-y-plantean-nuevas-fuentes-de-recaudo/",
+     "resumen": "El Consejo Gremial planteará opciones para sustituir algunos impuestos del proyecto oficial y advierte que el ajuste no debe comprometer el crecimiento ni la viabilidad empresarial"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "“No es necesario”: Rafa Márquez desata polémica al explicar por qué no convocó a Henry Martín",
+     "fecha": "2026-11-14 05:39",
+     "url": "https://www.infobae.com/mexico/deportes/2026/11/14/no-es-necesario-rafa-marquez-desata-polemica-al-explicar-por-que-no-convoco-a-henry-martin/",
+     "resumen": "El técnico de la selección nacional zanjó el debate en torno a la ausencia del delantero para el partido de ida contra Jamaica, correspondiente a los Cuartos de Final de la Concacaf Nations League"
+    },
+    {
+     "fuente": "Al Jazeera (RSS, inglés)",
+     "titulo": "Hungary seizes $18m cash tied to ex-Orban-era minister in probe",
+     "fecha": "2026-11-14 05:39",
+     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/14/hungary-seizes-18m-cash-tied-to-ex-orban-era-minister-in-probe?traffic_source=rss",
+     "resumen": "Anti-corruption authorities in Hungary say they found around $18 million in hidden cash."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Demoras y desvío: qué pasa con los vuelos programados para hoy desde Argentina a Estados Unidos",
+     "fecha": "2026-11-14 05:38",
+     "url": "https://www.infobae.com/economia/2026/11/13/que-pasara-con-los-vuelos-programados-para-hoy-desde-argentina-a-estados-unidos/",
+     "resumen": "Cuáles son los despegues programados para las próximas horas y los primeros que aparecen como “demorados”. Qué dicen, por el momento, las líneas aéreas que operan en el país"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Karol G conquista el Estadio GNP de CDMX con su Tropitour: Thalía es la invitada especial",
+     "fecha": "2026-11-14 05:32",
+     "url": "https://www.infobae.com/mexico/2026/11/14/karol-g-conquista-el-estadio-gnp-de-cdmx-con-su-tropitour-thalia-es-la-invitada-especial/",
+     "resumen": "La cantante colombiana inició una serie de tres presentaciones en la capital mexicana con su gira Viajando por el Mundo, Tropitour"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Prohens participa este sábado en la jornada 'La igualdad se juega en los barrios'",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/prohens-participa-este-sabado-en-la-jornada-la-igualdad-se-juega-en-los-barrios/",
+     "resumen": "La presidenta del Govern, Marga Prohens, participará este sábado en la jornada deportiva 'La igualdad se juega en los barrios'. El encuentro, un torneo de fútbol femenino organizado por la Asociación Deporte para la Igualdad, se celebrará a las 11.45 horas en la pista de Son Ximelis."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Campaña de las elecciones generales 29-N, en directo: primer fin de semana de la carrera electoral",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/espana/2026/11/14/campana-de-las-elecciones-generales-29-n-en-directo-primer-fin-de-semana-de-la-campana-electoral/",
+     "resumen": "Los principales líderes políticos ofrecen mítines y entrevistas en el arranque de la carrera para captar votos"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Experta informática avisa: adoptar la IA ha ido mucho más rápido que su alfabetización",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/experta-informatica-avisa-adoptar-la-ia-ha-ido-mucho-mas-rapido-que-su-alfabetizacion/",
+     "resumen": "Concha Tejerina València, 14 nov (EFE).- La inteligencia artificial (IA) ha irrumpido en la vida cotidiana a una velocidad muy superior a la capacidad para comprender sus riesgos y, según Elena del Val, experta en esta tecnología, no es \"por falta de interés\" sino porque \"la adopción ha ido mucho más rápido que la…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Irene Montero participa este sábado en un mitin de Unidad del Pueblo Canario en Las Palmas de Gran Canaria",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/irene-montero-participa-este-sabado-en-un-mitin-de-unidad-del-pueblo-canario-en-las-palmas-de-gran-canaria/",
+     "resumen": "La candidata de Podemos a las elecciones generales del 29N, Irene Montero, participará este sábado, 14 de noviembre, en un mitin de Unidad del Pueblo Canario (UPC) que tendrá lugar a las 11.30 horas en la Plaza del Pilar de Las Palmas de Gran Canaria. Según informa la coalición de partidos de izquierdas canarios…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Sorteo 5 de la Triplex de la Once: comprueba los resultados de hoy",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/espana/2026/11/14/sorteo-5-de-la-triplex-de-la-once-comprueba-los-resultados-de-hoy/",
+     "resumen": "Juegos Once anunció la combinación ganadora del Sorteo 5 de las 21:15 horas"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Estudian cómo integrar los cambios hormonales de las mujeres en el control glucémico",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/estudian-como-integrar-los-cambios-hormonales-de-las-mujeres-en-el-control-glucemico/",
+     "resumen": "València, 14 nov (EFE).- Un equipo de la Universitat Politècnica de València (UPV) trabaja en la incorporación de los efectos de los cambios hormonales del ciclo menstrual a los sistemas que administran de forma automática insulina a mujeres con diabetes tipo 1, tras comprobar que esas variaciones fisiológicas no se…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Pedro Sánchez hace campaña este sábado en Mallorca en un acto en Son Fusteret",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/pedro-sanchez-hace-campana-este-sabado-en-mallorca-en-un-acto-en-son-fusteret/",
+     "resumen": "El presidente del Gobierno y candidato a la reelección por el PSOE, Pedro Sánchez, participará este sábado en un acto de la campaña electoral de las generales del 29 de noviembre en Palma. El encuentro se celebrará a partir de las 11.30 horas en el recinto de Son Fusteret, situado en el camino viejo de Bunyola de la…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Las defensas ucranianas neutralizan 81 de 96 drones rusos",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/14/las-defensas-ucranianas-neutralizan-81-de-96-drones-rusos/",
+     "resumen": "Berlín, 14 nov (EFE).- Las defensas ucranianas lograron neutralizar durante la noche 81 de los 96 drones lanzados por las fuerzas rusas contra el territorio del país invadido, según anunció la Fuerza Aérea ucraniana en su parte de este sábado. El enemigo atacó con 96 drones de los que 61 eran Shahed con propulsión a…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Medio siglo del 'harakiri' de las Cortes franquistas: persuasión, trámite exprés y voto nominal para disolver el Régimen",
+     "fecha": "2026-11-14 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/medio-siglo-del-harakiri-de-las-cortes-franquistas-persuasion-tramite-expres-y-voto-nominal-para-disolver-el-regimen/",
+     "resumen": "El 18 de noviembre de 1976, hace ahora cincuenta años, las Cortes franquistas dieron luz verde a su propia disolución con la aprobación de la Ley para la Reforma Política. Es lo que se conoce como el 'harakiri' del Régimen. Por el camino fueron necesarias muchas horas de persuasión de los procuradores para que al…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Un Colo Colo sin Vozinha ni Vidal se impuso 2-1 en amistoso contra el Racing argentino",
+     "fecha": "2026-11-14 05:30",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/un-colo-colo-sin-vozinha-ni-vidal-se-impuso-2-1-en-amistoso-contra-el-racing-argentino/",
+     "resumen": "Santiago de Chile, 13 nov (EFE).- El campeón chileno, Colo Colo, que jugó sin el guardameta caboverdiano Vozinha ni Arturo Vidal, derrotó por 2-1 este viernes al Racing Club argentino en un partido amistoso jugado en el estadio Ester Roa Rebolledo, en Concepción, donde impuso condiciones ante un rival que cierra una…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El TSJM confirma 15 años de cárcel por intentar asesinar a su pareja a puñaladas en Pinto",
+     "fecha": "2026-11-14 05:30",
+     "url": "https://www.infobae.com/america/agencias/2026/11/14/el-tsjm-confirma-15-anos-de-carcel-por-intentar-asesinar-a-su-pareja-a-punaladas-en-pinto/",
+     "resumen": "El Tribunal Superior de Justicia de Madrid (TSJM) ha confirmado una condena a quince años de prisión impuesta a un hombre por un delito de asesinato en grado de tentativa tras apuñalar repetidamente a su pareja en el portal de su vivienda en Pinto, en junio de 2022, cuando intentaba huir de la agresión. La Sala de lo…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El escándalo de Nvidia ensombrece las conversaciones entre Estados Unidos y China sobre inteligencia artificial",
+     "fecha": "2026-11-14 05:30",
+     "url": "https://www.infobae.com/america/mundo/2026/11/14/el-escandalo-de-nvidia-ensombrece-las-conversaciones-entre-estados-unidos-y-china-sobre-inteligencia-artificial/",
+     "resumen": "El encuentro de APEC, programado para el 18 y 19 de noviembre, reunirá a Trump y Xi en medio de inquietudes por los riesgos de los sistemas avanzados y la competencia tecnológica estratégica. La dimisión de Jensen Huang amenaza con eclipsar a los mandatarios"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Condenaron a un comerciante de Córdoba por matar a un inversor al que le debía una suma millonaria",
+     "fecha": "2026-11-14 05:20",
+     "url": "https://www.infobae.com/sociedad/policiales/2026/11/14/condenaron-a-un-comerciante-de-cordoba-por-matar-a-un-inversor-al-que-le-debia-una-suma-millonaria/",
+     "resumen": "La Justicia concluyó que Villada atravesaba problemas de liquidez, había acumulado compromisos con inversores y citó a la víctima a cenar antes del homicidio ocurrido en febrero de 2025"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Del \"problema vasco\" a un \"problema de ETA\": Así lo vivió Londres",
+     "fecha": "2026-11-14 05:17",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/del-problema-vasco-a-un-problema-de-eta-asi-lo-vivio-londres/",
+     "resumen": "Sagrario Ortega Madrid, 14 nov (EFE).- Londres, o sea el Reino Unido, no siempre vio igual el \"problema vasco\". De entender el terrorismo como un síntoma \"explicable\" del trauma que el franquismo infligió al nacionalismo vasco, poco a poco lo fue reduciendo a un \"problema\" de ETA. Lo explica así a EFE Niall Cullen…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Vaquero (PNV): PP-Vox nos tendrán enfrente, pero no cejaremos en trabajar por Euskadi",
+     "fecha": "2026-11-14 05:17",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/vaquero-pnv-pp-vox-nos-tendran-enfrente-pero-no-cejaremos-en-trabajar-por-euskadi/",
+     "resumen": "San Sebastián, 14 nov (EFE).- La candidata al Congreso del PNV por Gipuzkoa, Maribel Vaquero, tiene claro que un hipotético gobierno formado por PP y Vox tendrá \"enfrente\" a los jeltzales, quienes, no obstante, no renunciarán a negociar y trabajar por obtener beneficios para el País Vasco. \"Decimos claramente que…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Sábado de lluvia en toda España: la Aemet emite avisos amarillos por precipitaciones en Ávila, Salamanca y Cáceres",
+     "fecha": "2026-11-14 05:17",
+     "url": "https://www.infobae.com/espana/2026/11/14/sabado-de-lluvia-en-toda-espana-la-aemet-emite-avisos-amarillos-por-precipitaciones-en-avila-salamanca-y-caceres/",
+     "resumen": "Las temperaturas máximas subirán en el Cantábrico y el alto Ebro. En cambio, descenderán en el Pirineo y en los litorales del Mediterráneo norte"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Llegan las cenas de Navidad, un momento que eleva un 20 % la caja de los restaurantes",
+     "fecha": "2026-11-14 05:17",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/llegan-las-cenas-de-navidad-un-momento-que-eleva-un-20-la-caja-de-los-restaurantes/",
+     "resumen": "Manuel Weiss Madrid, 14 nov (EFE).- La restauración afronta el inicio de un momento clave en la temporada, las cenas y comidas de Navidad, para las que cada año se agotan antes las reservas en las fechas clave y que suponen aumentos en la facturación de hasta el 20 % respecto a noviembre, que sigue siendo un mes…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La CPI cierra expediente sobre Afganistán y mantiene la investigación sobre los talibanes",
+     "fecha": "2026-11-14 05:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/14/la-cpi-cierra-expediente-sobre-afganistan-y-mantiene-la-investigacion-sobre-los-talibanes/",
+     "resumen": "Kabul, 14 nov (EFE).- La Corte Penal Internacional (CPI) ordenó cerrar el expediente original sobre los presuntos crímenes de guerra y de lesa humanidad cometidos en Afganistán, que abarcaba posibles delitos de militares estadounidenses, y mantener abierta una causa separada centrada en la persecución ejercida por…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Los potros de dos años nacionales se miden en las Copas de Criadores",
+     "fecha": "2026-11-14 05:16",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/14/los-potros-de-dos-anos-nacionales-se-miden-en-las-copas-de-criadores/",
+     "resumen": "Madrid, 14 nov (EFE).- Los potros más precoces de la cabaña española se enfrentan este domingo en el Hipódromo de La Zarzuela de Madrid en las dos pruebas mejor dotadas a ellas reservadas, las Copas de Criadores, en versión de machos y de hembras. Dos carreras de 1.500 metros con 8.000 euros de dotación para el…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Hace un siglo del nacimiento del psiquiatra Juan Antonio Vallejo Nájera",
+     "fecha": "2026-11-14 05:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/14/hace-un-siglo-del-nacimiento-del-psiquiatra-juan-antonio-vallejo-najera/",
+     "resumen": "Madrid, 14 nov (EFE)..- Hace hoy cien años que nació Juan Antonio Vallejo Nájera, psiquiatra español y autor del superventas \"Ante la depresión\"."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El oro y el euro retroceden ante repunte del IPC de EEUU y el giro restrictivo de la Fed",
+     "fecha": "2026-11-14 05:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/14/el-oro-y-el-euro-retroceden-ante-repunte-del-ipc-de-eeuu-y-el-giro-restrictivo-de-la-fed/",
+     "resumen": "Madrid, 14 nov (EFE).- El oro y el euro registran este mes de noviembre fuertes retrocesos debido al repunte inesperado de la inflación en EE.UU. y al giro restrictivo de la Reserva Federal, lo que ha disparado el rendimiento de los bonos americanos y ha fortalecido el dólar. La inflación de EE.UU. en octubre que se…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Al menos tres muertos al naufragar una embarcación en un río en el suroeste de Canadá",
+     "fecha": "2026-11-14 05:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/14/al-menos-tres-muertos-al-naufragar-una-embarcacion-en-un-rio-en-el-suroeste-de-canada/",
+     "resumen": "Tres personas han fallecido y varias más han sido rescatadas tras colisionar una embarcación con un objeto no identificado en el el río Squamish, cerca de Squamish (Columbia Británica, Canadá), durante la jornada del jueves, marcada por las fuertes lluvias y las inundaciones. Así lo ha confirmado este viernes la Real…"
+    },
+    {
+     "fuente": "Al Jazeera (RSS, inglés)",
+     "titulo": "Warner accuses Cricket Australia of ‘cover-up’ in ball-tampering scandal",
+     "fecha": "2026-11-14 05:10",
+     "url": "https://www.aljazeera.com/sports/2026/11/14/warner-cricket-australia-ball-tampering-sandpapergate-khawaja-cummins?traffic_source=rss",
+     "resumen": "Former opener Warner was banned for a year for his involvement in the 2018 'Sandpapergate' incident in South Africa."
+    },
+    {
      "fuente": "Al Jazeera (RSS, inglés)",
      "titulo": "Pacers hold off Knicks in NBA Cup thriller, Spurs rout Warriors",
      "fecha": "2026-11-14 05:01",
@@ -2459,13 +2698,6 @@
      "fecha": "2026-11-14 04:53",
      "url": "https://www.infobae.com/estados-unidos/2026/11/14/en-vivo-suspension-de-vuelos-en-eeuu/",
      "resumen": "“Nos llevará tiempo reanudar las operaciones normales”, sostuvo el secretario de Transporte estadounidense, Sean Duffy. En el aeropuerto de Las Vegas, se les informó a los pasajeros que sus viajes se retrasarán debido al viento"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Karol G conquista el Estadio GNP de CDMX con su Tropitour: Thalía es la invitada especial",
-     "fecha": "2026-11-14 04:53",
-     "url": "https://www.infobae.com/mexico/2026/11/14/karol-g-conquista-el-estadio-gnp-de-cdmx-con-su-tropitour-thalia-es-la-invitada-especial/",
-     "resumen": "La cantante colombiana inició una serie de tres presentaciones en la capital mexicana con su gira Viajando por el Mundo, Tropitour"
     },
     {
      "fuente": "Infobae (RSS)",
@@ -2651,34 +2883,6 @@
     },
     {
      "fuente": "Infobae (RSS)",
-     "titulo": "De héroe a villano, Downey Jr. revela cómo encontró su lugar como Doctor Doom en el nuevo Avengers",
-     "fecha": "2026-11-14 04:00",
-     "url": "https://www.infobae.com/entretenimiento/2026/11/14/de-heroe-a-villano-downey-jr-revela-como-encontro-su-lugar-como-doctor-doom-en-el-nuevo-avengers/",
-     "resumen": "El ganador del Oscar describió el momento exacto en que comprendió que ya no estaba del lado de los superhéroes en la próxima gran apuesta del Universo Cinematográfico de Marvel"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Qué síntomas anticipan la menopausia y cuándo es necesario consultar",
-     "fecha": "2026-11-14 04:00",
-     "url": "https://www.infobae.com/salud/2026/11/14/que-sintomas-anticipan-la-menopausia-y-cuando-es-necesario-consultar/",
-     "resumen": "La especialista Pelin Batur, de Cleveland Clinic, detalló que esta transición puede durar hasta una década y puede estar acompañada de señales que el organismo envía mucho antes del desenlace hormonal"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "De la prueba del giro a la del codo: 5 formas de elegir el colchón ideal",
-     "fecha": "2026-11-14 04:00",
-     "url": "https://www.infobae.com/tendencias/2026/11/14/de-la-prueba-del-giro-a-la-del-codo-5-formas-de-elegir-el-colchon-ideal/",
-     "resumen": "Algunas verificaciones simples ayudan a detectar si una cama ofrece el espacio, la longitud y el soporte adecuados. Qué tener en cuenta"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Un queso francés que se mantuvo dos años en una repisa ganó el título mundial en los World Cheese Awards",
-     "fecha": "2026-11-14 04:00",
-     "url": "https://www.infobae.com/america/mundo/2026/11/14/un-queso-frances-que-se-mantuvo-dos-anos-en-una-repisa-gano-el-titulo-mundial-en-los-world-cheese-awards/",
-     "resumen": "El Comté DOP Fort des Rousses, madurado por 24 meses, se impuso tras un desempate el 12 de noviembre en una cita organizada por el Guild of Fine Food"
-    },
-    {
-     "fuente": "Infobae (RSS)",
      "titulo": "Subir escaleras: la rutina de pocos minutos que suma beneficios para el corazón y los huesos",
      "fecha": "2026-11-14 04:00",
      "url": "https://www.infobae.com/salud/2026/11/14/subir-escaleras-la-rutina-de-pocos-minutos-que-suma-beneficios-para-el-corazon-y-los-huesos/",
@@ -2697,6 +2901,34 @@
      "fecha": "2026-11-14 04:00",
      "url": "https://www.infobae.com/america/america-latina/2026/11/14/reaparecio-alvaro-garcia-linera-confirmo-su-asilo-en-mexico-y-apunto-contra-la-justicia-de-bolivia-esta-prostituida/",
      "resumen": "El ex vicepresidente boliviano obtuvo asilo político mientras enfrenta una investigación por el caso “Hotel Las Américas”, en el que se le acusa de asesinato y torturas"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Un queso francés que se mantuvo dos años en una repisa ganó el título mundial en los World Cheese Awards",
+     "fecha": "2026-11-14 04:00",
+     "url": "https://www.infobae.com/america/mundo/2026/11/14/un-queso-frances-que-se-mantuvo-dos-anos-en-una-repisa-gano-el-titulo-mundial-en-los-world-cheese-awards/",
+     "resumen": "El Comté DOP Fort des Rousses, madurado por 24 meses, se impuso tras un desempate el 12 de noviembre en una cita organizada por el Guild of Fine Food"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "De héroe a villano, Downey Jr. revela cómo encontró su lugar como Doctor Doom en el nuevo Avengers",
+     "fecha": "2026-11-14 04:00",
+     "url": "https://www.infobae.com/entretenimiento/2026/11/14/de-heroe-a-villano-downey-jr-revela-como-encontro-su-lugar-como-doctor-doom-en-el-nuevo-avengers/",
+     "resumen": "El ganador del Oscar describió el momento exacto en que comprendió que ya no estaba del lado de los superhéroes en la próxima gran apuesta del Universo Cinematográfico de Marvel"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Qué síntomas anticipan la menopausia y cuándo es necesario consultar",
+     "fecha": "2026-11-14 04:00",
+     "url": "https://www.infobae.com/salud/2026/11/14/que-sintomas-anticipan-la-menopausia-y-cuando-es-necesario-consultar/",
+     "resumen": "La especialista Pelin Batur, de Cleveland Clinic, detalló que esta transición puede durar hasta una década y puede estar acompañada de señales que el organismo envía mucho antes del desenlace hormonal"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "De la prueba del giro a la del codo: 5 formas de elegir el colchón ideal",
+     "fecha": "2026-11-14 04:00",
+     "url": "https://www.infobae.com/tendencias/2026/11/14/de-la-prueba-del-giro-a-la-del-codo-5-formas-de-elegir-el-colchon-ideal/",
+     "resumen": "Algunas verificaciones simples ayudan a detectar si una cama ofrece el espacio, la longitud y el soporte adecuados. Qué tener en cuenta"
     },
     {
      "fuente": "Al Jazeera (RSS, inglés)",
@@ -2819,13 +3051,6 @@
     },
     {
      "fuente": "Infobae (RSS)",
-     "titulo": "Francia desplegará 70.0000 efectivos para afrontar el quinto sábado consecutivo de protestas",
-     "fecha": "2026-11-14 03:10",
-     "url": "https://www.infobae.com/america/mundo/2026/11/14/francia-desplegara-700000-efectivos-para-afrontar-el-quinto-sabado-consecutivo-de-protestas/",
-     "resumen": "Las movilizaciones, impulsadas por los chalecos amarillos y colectivos universitarios, volverán a rechazar el encarecimiento de la vida y reclamarán la defensa de los servicios públicos, mientras las autoridades preparan un amplio operativo de seguridad nacional"
-    },
-    {
-     "fuente": "Infobae (RSS)",
      "titulo": "Temblor hoy en México: reportan sismo de magnitud 4.1 en Oaxaca",
      "fecha": "2026-11-14 03:06",
      "url": "https://www.infobae.com/mexico/2026/11/13/temblor-hoy-en-mexico-noticias-actividad-sismica-13-de-noviembre-de-2026/",
@@ -2837,230 +3062,6 @@
      "fecha": "2026-11-14 03:00",
      "url": "https://www.infobae.com/america/agencias/2026/11/14/trump-xi-y-putin-mantendran-una-reunion-historica-en-china-centrada-en-la-no-proliferacion-nuclear/",
      "resumen": "Los presidentes de Estados Unidos, China y Rusia mantendrán una reunión la próxima semana en el marco de la cumbre del Foro de Cooperación Económica Asia-Pacífico (APEC) en la ciudad china de Shenzhen, una cita histórica entre las tres principales potencias nucleares en la que previsiblemente abordarán el conflicto…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El repunte migratorio hacia Canarias incluye más mujeres y menores solos procedentes de Senegal y Gambia: en 15 días han llegado 700 niños",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/2026/11/14/el-repunte-migratorio-hacia-canarias-incluye-mas-mujeres-y-menores-solos-procedentes-de-senegal-y-gambia-en-15-dias-han-llegado-700-ninos/",
-     "resumen": "La escasez de oportunidades laborales, sobre todo entre los jóvenes, es uno de los factores que impulsan su salida. El Gobierno canario tutela a unos 3.000 menores migrantes"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Abel Pintos con Teleshow, tras su encuentro con el papa León XIV: “Lo que más rescato es su conexión con las personas”",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/teleshow/2026/11/14/abel-pintos-con-teleshow-tras-su-encuentro-con-el-papa-leon-xiv-lo-que-mas-rescato-es-su-conexion-con-las-personas/",
-     "resumen": "Tras interpretar “La llave” ante el pontífice, el músico habló de la experiencia que vivió en Claypole y del nuevo significado que adquirió una de sus canciones más conocidas"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La vivienda entra en campaña: qué medidas proponen los partidos que se presentan el 29-N y cómo han funcionado en otros países",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/2026/11/14/la-vivienda-entra-en-campana-que-medidas-proponen-los-partidos-que-se-presentan-el-29-n-y-como-han-funcionado-en-otros-paises/",
-     "resumen": "Ayudas a los jóvenes, regulación de los alquileres, restricciones a los fondos buitre y más parque público centran un debate en el que Europa ofrece experiencias con resultados desiguales"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Mejores destinos de nieve: 10 pueblos y ciudades de Europa con nieve garantizada en Navidad",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/viajes/2026/11/14/mejores-destinos-de-nieve-10-pueblos-y-ciudades-de-europa-con-nieve-garantizada-en-navidad/",
-     "resumen": "De ciudades nórdicas a regiones centroeuropeas, estas son las localidades menos buscadas en internet que ofrecen las mejores condiciones de nieve"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El lado más desconocido de Carlos III de Inglaterra: es autor de varios libros infantiles y un apasionado de las acuarelas",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/2026/11/14/el-lado-mas-desconocido-de-carlos-iii-de-inglaterra-es-autor-de-varios-libros-infantiles-y-un-apasionado-de-las-acuarelas/",
-     "resumen": "El monarca británico pasa su tiempo libre pintando obras que pueden observarse en ‘The King’s Foundation’"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "‘Latinos for Vox’ o por qué hay latinoamericanos que votarían un partido que “podría perjudicarles”: “Las identidades son múltiples y pueden combinar posiciones contradictorias”",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/2026/11/14/latinos-for-vox-o-por-que-hay-latinoamericanos-que-votarian-un-partido-que-podria-perjudicarles-las-identidades-son-multiples-y-pueden-combinar-posiciones-contradictorias/",
-     "resumen": "El partido de Abascal reivindica los vínculos con Hispanoamérica, pero defiende políticas migratorias restrictivas"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Un informe de inteligencia apunta a Rusia y al papel de un militar del Kremlin como incitador de las revueltas en Francia: “Moscú intenta avivar las tensiones sociales”",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/2026/11/14/un-informe-de-inteligencia-apunta-a-rusia-y-al-papel-de-un-militar-del-kremlin-como-incitador-de-las-revueltas-en-francia-moscu-intenta-avivar-las-tensiones-sociales/",
-     "resumen": "La investigación se basa en correos electrónicos que, según Inform Napalm, pertenecen al teniente coronel Stanislav Nemich, un oficial del Directorio Principal de Inteligencia ruso, conocido como GRU"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "David Gómez, psicólogo: “Si hay algo que me duele mucho y no lo validan, como la pérdida de mi animal, el dolor se multiplica por diez”",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/2026/11/14/david-gomez-psicologo-si-hay-algo-que-me-duele-mucho-y-no-lo-validan-como-la-perdida-de-mi-animal-el-dolor-se-multiplica-por-diez/",
-     "resumen": "En una entrevista con ‘Infobae’, el autor del libro ‘Duelo animal’ ahonda en la falta de reconocimiento que aún existe con respecto a lo que implican este tipo de muertes"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Así se preparan los menús para las personas con diabetes en las residencias de mayores en España: “Hay platos que puede comer todo el mundo y otros que no”",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/2026/11/14/asi-se-preparan-los-menus-para-las-personas-con-diabetes-en-las-residencias-de-mayores-en-espana-hay-platos-que-puede-comer-todo-el-mundo-y-otros-que-no/",
-     "resumen": "‘Infobae’ analiza con un nutricionista y tres residencias de diferentes puntos del país cómo se prepara una dieta adaptada a estos residentes"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Susana Abaitua investiga un gran crimen en ‘Infamia’, el nuevo thriller de HBO Max: “Nunca he tenido como objetivo cruzar el charco hacia Hollywood, no soy ese tipo de actriz”",
-     "fecha": "2026-11-14 03:00",
-     "url": "https://www.infobae.com/espana/cultura/2026/11/14/susana-abaitua-investiga-un-gran-crimen-en-infamia-el-nuevo-thriller-de-hbo-max-nunca-he-tenido-como-objetivo-cruzar-el-charco-hacia-hollywood-no-soy-ese-tipo-de-actriz/",
-     "resumen": "La actriz encarna a una abogada que empieza a investigar un caso cerrado desde hace años en esta serie basada en el best-seller homónimo con ecos de ‘Heridas abiertas’ o ‘Mare of Eastown’"
-    },
-    {
-     "fuente": "Al Jazeera (RSS, inglés)",
-     "titulo": "Goalkeeper Owono handed 12-match ban after De Miguel death",
-     "fecha": "2026-11-14 02:59",
-     "url": "https://www.aljazeera.com/sports/2026/11/14/jesus-de-miguel-death-goalkeeper-owono-12-match-ban-collision-tenerife-andorra?traffic_source=rss",
-     "resumen": "Owono and De Miguel ⁠collided during a Spanish second-tier match between FC Andorra and ​Tenerife on November 2."
-    },
-    {
-     "fuente": "BBC News · World (RSS, inglés)",
-     "titulo": "Trump, Putin and Xi plan historic joint meeting in China next week, White House says",
-     "fecha": "2026-11-14 02:52",
-     "url": "https://www.bbc.co.uk/news/articles/ckz74jzpy18do?at_medium=RSS&at_campaign=rss",
-     "resumen": "Trump will discuss the \"reduction of nuclear weapons\" during the unprecedented talks, a spokeswoman says."
-    },
-    {
-     "fuente": "Al Jazeera (RSS, inglés)",
-     "titulo": "Paranoid or practical? Britain’s ‘Be Ready’ citizen campaign",
-     "fecha": "2026-11-14 02:51",
-     "url": "https://www.aljazeera.com/features/2026/11/14/paranoid-or-practical-britains-be-ready-citizen?traffic_source=rss",
-     "resumen": "People in England and Wales are rushing to buy tinned goods and wind-up radios - but what's it all for?"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Reabren espacio aéreo de EEUU, pero continúan afectaciones en el AICM: más de 10 mil pasajeros afectados",
-     "fecha": "2026-11-14 02:50",
-     "url": "https://www.infobae.com/mexico/2026/11/14/reabren-espacio-aereo-de-eeuu-pero-continuan-afectaciones-en-el-aicm-mas-de-10-mil-pasajeros-afectados/",
-     "resumen": "Aunque Estados Unidos reabrió su espacio aéreo, las operaciones se restablecerán de manera gradual"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "EN VIVO: Estados Unidos reanuda las salidas de vuelos tras someter los sistemas a “pruebas exhaustivas”",
-     "fecha": "2026-11-14 02:50",
-     "url": "https://www.infobae.com/estados-unidos/2026/11/13/suspension-de-vuelos-en-estados-unidos-en-vivo-investigan-una-falla-que-afecta-a-todos-los-centros-de-control-aereo/",
-     "resumen": "La Administración Federal de Aviación informó que verificó la estabilidad de sus plataformas antes de autorizar el regreso gradual de las operaciones aéreas. La agencia recomendó a los pasajeros que consulten directamente con sus aerolíneas para conocer el estado actualizado de cada servicio"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Resultados del Gana Diario de este viernes 13 de noviembre: números ganadores del último sorteo",
-     "fecha": "2026-11-14 02:46",
-     "url": "https://www.infobae.com/peru/2026/11/14/resultados-del-gana-diario-de-este-viernes-13-de-noviembre-numeros-ganadores-del-ultimo-sorteo/",
-     "resumen": "Esta lotería peruana realiza un sorteo diariamente a las 20:30 horas. Descubra si se rompió el pozo millonario"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Irán informa del incendio de un petrolero tras chocar con una mina naval al este del estrecho de Ormuz",
-     "fecha": "2026-11-14 02:45",
-     "url": "https://www.infobae.com/america/agencias/2026/11/14/iran-informa-del-incendio-de-un-petrolero-tras-chocar-con-una-mina-naval-al-este-del-estrecho-de-ormuz/",
-     "resumen": "Las Fuerzas Armadas de Irán han informado este sábado de que un buque petrolero se ha incendiado y ha quedado detenido tras colisionar con una mina naval en una zona restringida al este del estrecho de Ormuz, en medio de las advertencias de Teherán a las buques que operan en el enclave marítimo. Según un comunicado…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "123-85. Los Spurs arrollan a los Warriors en la NBA Cup",
-     "fecha": "2026-11-14 02:45",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/14/123-85-los-spurs-arrollan-a-los-warriors-en-la-nba-cup/",
-     "resumen": "Redacción Deportes, 13 nov (EFE).- Los San Antonio Spurs arrollaron este viernes con una contundente victoria por 123-85 a los Golden State Warriors en el partido de fase de grupos de la NBA Cup en el que aprovechando la ausencia de su máxima estrella, Stephen Curry, por una lesión abdominal. Liderados por un Stephon…"
-    },
-    {
-     "fuente": "Al Jazeera (RSS, inglés)",
-     "titulo": "US air travel thrown into chaos after nationwide ground stop halts flights",
-     "fecha": "2026-11-14 02:42",
-     "url": "https://www.aljazeera.com/news/2026/11/14/faa-ground-stop-disrupts-nba-nhl-and-college-football-weekend-travel?traffic_source=rss",
-     "resumen": "More than 1.5 million passengers face travel disruption as domestic and international airlines warn of knock-on delays."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "EN VIVO | Clima CDMX y resto de México hoy sábado 14 de noviembre: frente frío 5 provoca lluvias y bajas temperaturas",
-     "fecha": "2026-11-14 02:41",
-     "url": "https://www.infobae.com/mexico/2026/11/14/en-vivo-clima-cdmx-y-resto-de-mexico-hoy-sabado-14-de-noviembre-frente-frio-5-provoca-lluvias-y-bajas-temperaturas/",
-     "resumen": "Consulta en tiempo real actualizaciones, alertas, noticias y reportes sobre las condiciones meteorológicas en el país"
-    },
-    {
-     "fuente": "Europa Press · Internacional (RSS)",
-     "titulo": "Trump, Xi y Putin mantendrÃ¡n una reuniÃ³n histÃ³rica en China centrada en la no proliferaciÃ³n nuclear",
-     "fecha": "2026-11-14 02:39",
-     "url": "https://www.europapress.es/internacional/noticia-trump-xi-putin-mantendran-reunion-historica-china-centrada-no-proliferacion-nuclear-20261114063927.html",
-     "resumen": "Los presidentes de Estados Unidos, China y Rusia mantendrÃ¡n una reuniÃ³n la prÃ³xima semana en el marco de la cumbre del Foro de CooperaciÃ³n EconÃ³mica Asia-PacÃ­fico (APEC) en la ciudad china de Shenzhen, una cita histÃ³rica entre las tres principales potencias nucleares en la que previsiblemente abordarÃ¡n el…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Vuelven las lluvias al AMBA y más de 15 provincias estarán bajo alerta por tormentas",
-     "fecha": "2026-11-14 02:30",
-     "url": "https://www.infobae.com/sociedad/2026/11/14/vuelven-las-lluvias-al-amba-y-mas-de-15-provincias-estaran-bajo-alerta-por-tormentas/",
-     "resumen": "El sábado comenzará con precipitaciones en Buenos Aires, mientras el Servicio Meteorológico Nacional activó advertencias amarillas y naranjas en gran parte del centro y norte del país"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Clima CDMX hoy 14 de noviembre: ¿qué alcaldías tendrán más frío y dónde llegará el termómetro a 25 grados?",
-     "fecha": "2026-11-14 02:25",
-     "url": "https://www.infobae.com/mexico/2026/11/14/prevision-meteorologica-del-estado-del-tiempo-en-ciudad-de-mexico-para-este-sabado-14-de-noviembre/",
-     "resumen": "Las temperaturas más elevadas se esperan en Venustiano Carranza e Iztacalco"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Los hutíes lanzaron misiles balísticos contra Adén, sede temporal del Gobierno yemení",
-     "fecha": "2026-11-14 02:25",
-     "url": "https://www.infobae.com/america/mundo/2026/11/14/los-huties-lanzaron-misiles-balisticos-contra-aden-sede-temporal-del-gobierno-yemeni/",
-     "resumen": "La ofensiva nocturna del viernes apuntó, según el Ejército, a población e infraestructura urbana de la capital provisional, aunque las autoridades no comunicaron hasta ahora víctimas, daños ni lugares impactados"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Segundo día de campaña: Sánchez en Mallorca, Feijóo en A Coruña y Abascal duplica actos",
-     "fecha": "2026-11-14 02:15",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/14/segundo-dia-de-campana-sanchez-en-mallorca-feijoo-en-a-coruna-y-abascal-duplica-actos/",
-     "resumen": "Madrid, 14 nov (EFE).- En el segundo día de campaña electoral los candidatos celebran actos y mítines en distintos puntos de la geografía nacional este sábado: Pedro Sánchez (PSOE) en Palma (Mallorca), Alberto Núñez Feijóo (PP) en Santiago de Compostela, Santiago Abascal (Vox) hace doblete en Almería y Murcia, y Ada…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Seúl insta a Tokio a reconocer el trabajo forzado impuesto durante el periodo colonial en la mina de Sado",
-     "fecha": "2026-11-14 02:15",
-     "url": "https://www.infobae.com/america/agencias/2026/11/14/seul-insta-a-tokio-a-reconocer-el-trabajo-forzado-impuesto-durante-el-periodo-colonial-en-la-mina-de-sado/",
-     "resumen": "El Gobierno de Corea del Sur ha instado este viernes a Japón a reconocer plenamente el trabajo forzado impuesto a ciudadanos coreanos durante el periodo colonial en la mina de Sado, en el marco de una ceremonia conmemorativa en honor a las víctimas. El embajador surcoreano ante Japón, Lee Hyuk, ha llamado a la…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Fallo en el sistema aéreo de EE. UU. afecta a 18.000 pasajeros en México",
-     "fecha": "2026-11-14 02:15",
-     "url": "https://www.infobae.com/america/agencias/2026/11/14/fallo-en-el-sistema-aereo-de-ee-uu-afecta-a-18000-pasajeros-en-mexico/",
-     "resumen": "Ciudad de México, 13 nov (EFE).- Las restricciones aéreas aplicadas este viernes en Estados Unidos afectaron los itinerarios de 193 vuelos y a 18.002 pasajeros en aeropuertos mexicanos, informó la Agencia Federal de Aviación Civil (AFAC), tras anunciar el levantamiento de las medidas y la recuperación paulatina de…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Adiós a la incertidumbre, conoce las condiciones climáticas en Zaragoza este 14 de noviembre",
-     "fecha": "2026-11-14 02:03",
-     "url": "https://www.infobae.com/espana/2026/11/14/adios-a-la-incertidumbre-conoce-las-condiciones-climaticas-en-zaragoza-este-14-de-noviembre/",
-     "resumen": "Para evitar cualquier imprevisto es importante conocer el pronóstico del tiempo"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Rocío Robles, a fondo sobre su presente en MasterChef y su relación con Adrián Suar: “Me enamoré por primera vez”",
-     "fecha": "2026-11-14 02:03",
-     "url": "https://www.infobae.com/teleshow/2026/11/14/rocio-robles-a-fondo-sobre-su-presente-en-masterchef-y-su-relacion-con-adrian-suar-me-enamore-por-primera-vez/",
-     "resumen": "La participante del reality culinario habló con Teleshow y repasó su recorrido en los medios, explicó cómo cuida su independencia profesional de su vida de pareja, habló de sus cruces con Edith Hermida y reveló en detalle lo que sucedió con Daniela Celis en Podemos Hablar, que se verá hoy por la noche"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Resultados Lotería de Medellín viernes 13 de noviembre: quién ganó el premio mayor de $16.000 millones",
-     "fecha": "2026-11-14 02:02",
-     "url": "https://www.infobae.com/colombia/2026/11/14/resultados-loteria-de-medellin-viernes-13-de-noviembre-quien-gano-el-premio-mayor-de-16000-millones/",
-     "resumen": "Como cada viernes aquí están los resultados de la Lotería de Medellín"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Lotería de Risaralda: resultados del premio mayor de este sábado 14 de noviembre",
-     "fecha": "2026-11-14 02:02",
-     "url": "https://www.infobae.com/colombia/2026/11/14/loteria-de-risaralda-resultados-del-premio-mayor-de-este-sabado-14-de-noviembre/",
-     "resumen": "Un tradicional juego de azar se ha convertido en una herramienta clave para financiar iniciativas en comunidades locales"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La caída de Microsoft revivió el fax en Japón: \"en caso de emergencia, teléfono o fax\"",
-     "fecha": "2026-11-14 02:01",
-     "url": "https://www.infobae.com/america/agencias/2026/11/14/la-caida-de-microsoft-revivio-el-fax-en-japon-en-caso-de-emergencia-telefono-o-fax/",
-     "resumen": "David Asta Alares Tokio, 14 nov (EFE).- El caos global desatado por la caída de Microsoft revivió en Japón el fax tanto en empresas como a nivel gubernamental, con administraciones locales urgiendo a desempolvar estas máquinas predominantes en los años 80 y 90 del siglo pasado, pero que en el archipiélago se resisten…"
     }
    ]
   },
@@ -3091,7 +3092,7 @@
      "url": "https://chocale.cl/categoria/emprendimiento/feed/",
      "ok": false,
      "n": 0,
-     "error": "HTTP 404"
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "TechCrunch · Venture (RSS)",
@@ -3210,7 +3211,7 @@
      "fuente": "Bing Noticias · Startups Chile",
      "url": "https://www.bing.com/news/search?q=startup%20Chile%20inversi%C3%B3n&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 7
+     "n": 8
     },
     {
      "fuente": "Bing Noticias · Pymes y Corfo",
@@ -3504,6 +3505,13 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "Xataka (RSS)",
+     "titulo": "EEUU para todos los despegues durante cuatro horas y cancela más de 10.000 vuelos: lo que sabemos (y lo que no) del caos aéreo",
+     "fecha": "2026-11-14 05:29",
+     "url": "https://www.xataka.com/movilidad/eeuu-para-todos-despegues-durante-cuatro-horas-cancela-6-000-vuelos-que-sabemos-que-no-caos-aereo",
+     "resumen": "Ayer viernes 13 de noviembre de 2026, la Administración Federal de Aviación (FAA) estadounidense ordenó que ningún avión despegara en todo Estados Unidos. La FAA explicaba inicialmente que tomaba esta decisión debido a \"circunstancias extraordinarias y por razones de seguridad\", como recoge NBC News, dejando claro…"
+    },
     {
      "fuente": "Genbeta (RSS)",
      "titulo": "Noruega multa a Xandr de Microsoft con 9.6 millones de dólares por compartir datos de Grindr",
@@ -4126,13 +4134,6 @@
      "fecha": "2026-11-13 11:51",
      "url": "https://www.fayerwayer.com/internet/2026/11/13/microsoft-reporta-alentadores-avances-tras-el-apagon-global-que-afecto-a-millones-de-usuarios-cual-es-el-estado-actual-de-los-servicios/",
      "resumen": "Descubre los detalles del avance en la recuperación del apagón global de Microsoft 365, el impacto en bancos y gobiernos, y qué regiones se recuperan más.."
-    },
-    {
-     "fuente": "Xataka (RSS)",
-     "titulo": "La empresa gallega Sargadelos cree que Nvidia copió su logotipo de uno de sus diseños: \"En el fondo, nos gusta\"",
-     "fecha": "2026-11-13 11:45",
-     "url": "https://www.xataka.com/magnet/empresa-gallega-sargadelos-muestra-como-nvidia-pudo-copiar-su-logotipo-uno-sus-disenos-fondo-nos-gusta",
-     "resumen": "No pocas empresas, al sospechar que una multinacional les ha copiado, llaman inmediatamente a los abogados. Claro, a ver cómo litigas con Nvidia, la cual, t ras su sorpaso a Apple, se ha tirado más de un año siendo la marca más valiosa del planeta. Así que una pequeña firma gallega de cerámica ha elegido otra…"
     }
    ]
   },
@@ -4150,7 +4151,7 @@
      "url": "https://chocale.cl/categoria/vivienda/feed/",
      "ok": false,
      "n": 0,
-     "error": "HTTP 404"
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "Revista Capital · Inmobiliario (RSS)",
@@ -4242,7 +4243,7 @@
      "fuente": "Bing Noticias · Arriendos",
      "url": "https://www.bing.com/news/search?q=arriendo%20departamentos%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 11
+     "n": 12
     },
     {
      "fuente": "Bing Noticias · Permisos de edificación",
@@ -4254,7 +4255,7 @@
      "fuente": "Bing Noticias · Cámara Chilena de la Construcción",
      "url": "https://www.bing.com/news/search?q=C%C3%A1mara%20Chilena%20de%20la%20Construcci%C3%B3n%20viviendas&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 10
     },
     {
      "fuente": "Bing Noticias · Subsidio habitacional",
@@ -4618,7 +4619,7 @@
      "fuente": "Bing Noticias · Tenis chileno",
      "url": "https://www.bing.com/news/search?q=tenis%20chileno%20ATP&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 10
     },
     {
      "fuente": "Bing Noticias · Golf",
@@ -4704,7 +4705,7 @@
      "fuente": "BBC Sport · Rugby (RSS, inglés)",
      "url": "https://feeds.bbci.co.uk/sport/rugby-union/rss.xml",
      "ok": true,
-     "n": 44
+     "n": 45
     },
     {
      "fuente": "Bing Noticias · Rugby Chile",
@@ -4716,10 +4717,31 @@
      "fuente": "Bing Noticias · Rugby internacional",
      "url": "https://www.bing.com/news/search?q=rugby%20test%20match%20Pumas%20All%20Blacks%20Springboks&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 8
+     "n": 6
     }
    ],
    "notas": [
+    {
+     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
+     "titulo": "Clough's longevity: landmark achievement or indictment on football?",
+     "fecha": "2026-11-14 05:35",
+     "url": "https://www.bbc.co.uk/sport/football/articles/cqr7grl145zpo?at_medium=RSS&at_campaign=rss",
+     "resumen": "Mansfield boss Nigel Clough discusses his longevity and staying power as he becomes a club's longest-serving manager for a second time in his career."
+    },
+    {
+     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
+     "titulo": "Titz and Clarke on Aberdeen shortlist - gossip",
+     "fecha": "2026-11-14 05:28",
+     "url": "https://www.bbc.co.uk/sport/football/articles/cmgre0jlw24yo?at_medium=RSS&at_campaign=rss",
+     "resumen": "Steve Clarke and Christian Titz are reportedly on Aberdeen's shortlist to replace Stephen Robinson as manager."
+    },
+    {
+     "fuente": "BBC Sport · Rugby (RSS, inglés)",
+     "titulo": "Japan's unlikely leader who turned down the All Blacks",
+     "fecha": "2026-11-14 05:22",
+     "url": "https://www.bbc.co.uk/sport/rugby-union/articles/cq74297dvnygo?at_medium=RSS&at_campaign=rss",
+     "resumen": "Warner Dearns did not want to go to Japan as a teenager. Now he is determined to stay and do his adopted country proud."
+    },
     {
      "fuente": "ESPN · NBA (noticias con fecha)",
      "titulo": "Oklahoma City visits Sacramento following Gilgeous-Alexander's 40-point game",
@@ -4924,6 +4946,13 @@
      "resumen": "Aryna Sabalenka's season ends in disappointment as Elina Svitolina beats the former world number one to claim her place in the knockout stage at the WTA Finals."
     },
     {
+     "fuente": "espaciodiario.com",
+     "titulo": "Leganés vuelve hoy a ser sede de ‘Los Leones’ en un partido internacional de rugby ante Chile",
+     "fecha": "2026-11-13 21:34",
+     "url": "https://espaciodiario.com/leganes-vuelve-hoy-a-ser-sede-de-los-leones-en-un-partido-internacional-de-rugby-ante-chile/",
+     "resumen": "La Selección española de rugby vuelve hoy a Leganés para enfrentarse a Chile, rival mundialista en su segundo enfrentamiento de la historia en territorio nacional. Los ‘cóndores’ chilenos se enfrentar..."
+    },
+    {
      "fuente": "La Tercera · El Deportivo (RSS)",
      "titulo": "Colo Colo festeja la corona ante Racing: el Cacique extiende su buen momento y supera a la Academia en Concepción",
      "fecha": "2026-11-13 20:55",
@@ -5057,18 +5086,18 @@
      "resumen": "Este viernes se aprobaron los nombres propuestos por el liquidador de Sartor, Eduardo Godoy. Jorge Burgos, Fernando Coloma, Macarena Letelier, Eduardo Álamos, Eduardo Escaffi, Gonzalo Molina y Edgar Kausel integran la nueva mesa, que tendrá carácter transitorio."
     },
     {
-     "fuente": "ElPeriodico.digital",
-     "titulo": "Jazz vs Rockets EN VIVO resultados highlights y estadísticas",
-     "fecha": "2026-11-13 18:26",
-     "url": "https://www.elperiodico.digital/baloncesto/jazz-vs-rockets-en-vivo-resultados-highlights-y-estadisticas-531472.html",
-     "resumen": "Utah Jazz y Houston Rockets se enfrentan en la jornada NBA del 13 de noviembre de 2026 en un duelo con seguimiento en directo. Esta página reúne la evolución..."
-    },
-    {
      "fuente": "ESPN · Tenis ATP (noticias con fecha)",
      "titulo": "ATP Finals preview: Can Alcaraz close out the year with a big win?",
      "fecha": "2026-11-13 17:42",
      "url": "https://www.espn.com/tennis/story/_/id/50473425/atp-finals-alcaraz-zverev-shelton-tiafoe-jodar-medvedev",
      "resumen": "Alcaraz has returned from injury and is on a hot streak, while Americans Shelton and Tiafoe are hoping to challenge for the ATP Finals title."
+    },
+    {
+     "fuente": "ElPeriodico.digital",
+     "titulo": "Jazz vs Rockets EN VIVO resultados highlights y estadísticas",
+     "fecha": "2026-11-13 17:26",
+     "url": "https://www.elperiodico.digital/baloncesto/jazz-vs-rockets-en-vivo-resultados-highlights-y-estadisticas-531472.html",
+     "resumen": "Utah Jazz y Houston Rockets se enfrentan en la jornada NBA del 13 de noviembre de 2026 en un duelo con seguimiento en directo. Esta página reúne la evolución..."
     },
     {
      "fuente": "La Tercera · El Deportivo (RSS)",
@@ -5267,34 +5296,6 @@
      "resumen": "El tenista chileno, 31° del ranking ATP, perdió contra el argentino (51°) en dos sets."
     },
     {
-     "fuente": "La Tercera · El Deportivo (RSS)",
-     "titulo": "Manchester United oficializa la llegada de Mauricio Pochettino como su nuevo entrenador",
-     "fecha": "2026-11-13 09:47",
-     "url": "https://www.latercera.com/el-deportivo/noticia/manchester-united-oficializa-la-llegada-de-mauricio-pochettino-como-su-nuevo-entrenador/",
-     "resumen": "Este viernes los Diablos Rojos confirmaron la llegada del técnico después de llegar a un acuerdo con la selección de Estados Unidos."
-    },
-    {
-     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
-     "titulo": "Odegaard backing Norway to avenge Wales defeat",
-     "fecha": "2026-11-13 09:43",
-     "url": "https://www.bbc.co.uk/sport/football/articles/cmq8lx38zwn4o?at_medium=RSS&at_campaign=rss",
-     "resumen": "Martin Odegaard backs Norway to brush off snow disruption and avenge their defeat by Wales when they meet again in Oslo on Saturday."
-    },
-    {
-     "fuente": "RedGol",
-     "titulo": "Fútbol chileno: amargó a Colo Colo, pelea por ir a Copa Sudamericana y avisan que no sigue como DT en 2027",
-     "fecha": "2026-11-13 09:30",
-     "url": "https://redgol.cl/chile/futbol-chileno-amargo-a-colo-colo-no-sigue-en-palestino-guillermo-farre",
-     "resumen": "El fútbol chileno cobra una nueva víctima, al menos a fin de año. DT que pelea por ir a Copa Sudamericana no renovará contrato."
-    },
-    {
-     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
-     "titulo": "Missing Israel games 'stressful' for captain Collins",
-     "fecha": "2026-11-13 09:26",
-     "url": "https://www.bbc.co.uk/sport/football/articles/cq7821vdgrevo?at_medium=RSS&at_campaign=rss",
-     "resumen": "Republic of Ireland captain Nathan Collins says he felt he left his team-mates \"on their own\" after missing the two controversial Nations League games against Israel."
-    },
-    {
      "fuente": "World of Showjumping (RSS)",
      "titulo": "FEI Update: Updated criteria of FEI Wild Card invitations in jumping",
      "fecha": "2026-11-13 05:13",
@@ -5415,7 +5416,7 @@
      "fuente": "Bing Noticias · Avances médicos",
      "url": "https://www.bing.com/news/search?q=avance%20cient%C3%ADfico%20medicina%20estudio&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 12
+     "n": 11
     }
    ],
    "notas": [
@@ -6056,8 +6057,9 @@
     {
      "fuente": "NASA · Noticias (RSS)",
      "url": "https://www.nasa.gov/news-release/feed/",
-     "ok": true,
-     "n": 10
+     "ok": false,
+     "n": 0,
+     "error": "HTTP 429"
     },
     {
      "fuente": "ESA · Noticias (RSS)",
@@ -6203,25 +6205,11 @@
      "resumen": "\"It’s amazing that by using radio wavelengths, we can detect the storms on a star over 5,000 light-years away.\""
     },
     {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "Outbursts from a Massive Star",
-     "fecha": "2026-11-13 13:39",
-     "url": "https://www.nasa.gov/image-article/outbursts-from-a-massive-star/",
-     "resumen": "Using NASA’s Chandra X-ray Observatory, astronomers have discovered what is triggering repeated outbursts from a giant, unstable star located in the galaxy shown in this image released on Nov. 9, 2026. The volatile star, known as AT 2016blu, is in the spiral galaxy NGC 4559, located about 30 million light-years from…"
-    },
-    {
      "fuente": "phys.org · Espacio (RSS)",
      "titulo": "Gemini and DECam showcase a young Type Ia supernova",
      "fecha": "2026-11-13 13:20",
      "url": "https://phys.org/news/2026-11-gemini-decam-showcase-young-ia.html",
      "resumen": "A star's explosive demise has added a shiny new feature to NGC 1433, a barred spiral galaxy approximately 50 million light-years away in the southern constellation Horologium (the Pendulum Clock). New images of supernova SN 2026ahvu from the U.S. Department of Energy–fabricated Dark Energy Camera (DECam) and the…"
-    },
-    {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "Gemini Astronaut Photos Inspired Early Earth Observation Program",
-     "fecha": "2026-11-13 13:05",
-     "url": "https://www.nasa.gov/image-article/gemini-astronaut-photos-inspired-early-earth-observation-program/",
-     "resumen": "Astronauts James A. Lovell Jr. and Edwin E. “Buzz” Aldrin Jr. orbited Earth from November 11 to 15, 1966, on Gemini XII, the final mission of NASA’s Gemini program. In addition to successfully completing rendezvous maneuvers and spacewalks, procedures vital to sending American astronauts to the Moon, the crew was…"
     },
     {
      "fuente": "Space.com (RSS)",
@@ -6287,25 +6275,11 @@
      "resumen": "SpaceX has inked a familiar phrase on the Starship rocket that will fly a historic mission today (Nov. 13) — \"Don't panic.\" And the company has invoked those words before."
     },
     {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "APOD: 2026 November 13 – NGC 206 and the Star Clouds of Andromeda",
-     "fecha": "2026-11-13 02:05",
-     "url": "https://science.nasa.gov/image-article/apod-2026-november-13-ngc-206-and-the-star-clouds-of-andromeda/",
-     "resumen": "APOD Science APOD APOD: 2026 November 13 – NGC… Today’s APOD Archive Submissions Index Search Calendar RSS Education About Discuss APOD Astronomy Picture of the Day Discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a…"
-    },
-    {
      "fuente": "Space.com (RSS)",
      "titulo": "Watch SpaceX attempt a historic Starship launch and double-catch landing today (Nov. 13)",
      "fecha": "2026-11-13 02:05",
      "url": "https://www.space.com/space-exploration/launches-spacecraft/spacex-launching-historic-double-catch-starship-test-flight-today-watch-it-live",
      "resumen": "SpaceX plans to launch its Starship megarocket on an unprecedented double-catch mission today (Nov. 13), and you can watch the action live."
-    },
-    {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "A Global Rebound for Mangroves",
-     "fecha": "2026-11-13 02:01",
-     "url": "https://science.nasa.gov/earth/earth-observatory/a-global-rebound-for-mangroves/",
-     "resumen": "After decades of decline, this ecologically significant type of forest is making a comeback."
     },
     {
      "fuente": "phys.org · Espacio (RSS)",
@@ -6378,13 +6352,6 @@
      "resumen": "On Nov. 12, 2014, a European spacecraft named Philae landed on Comet 67P, then bounced twice and got lost. Here's why it mattered."
     },
     {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "I Am Artemis Katie Spicer",
-     "fecha": "2026-11-12 17:10",
-     "url": "https://www.nasa.gov/missions/artemis/i-am-artemis-katie-spicer/",
-     "resumen": "For Katie Spicer, embracing opportunity and challenge has led to giant leaps during her time at NASA. Now as the NASA lander integration lead for Blue Origin’s Blue Moon Mark 2 lander, one of the commercially provided human landing systems for NASA’s Artemis program, Spicer will have her handprint on history. Spicer…"
-    },
-    {
      "fuente": "Space.com (RSS)",
      "titulo": "SpaceX's Starship megarocket will launch to orbit on Nov. 13. Will you be able to spot it in the night sky?",
      "fecha": "2026-11-12 17:00",
@@ -6406,13 +6373,6 @@
      "resumen": "In this episode, SpaceNews’ Jason Rainbow interviews Atle Woello, the CEO and senior vice president of the space systems and surveillance business unit at Kongsberg NanoAvionics. They discuss the role […] The post What role does industry play in Europe’s space sovereignty push? appeared first on SpaceNews."
     },
     {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "Heart in the Sky at NASA Kennedy",
-     "fecha": "2026-11-12 16:12",
-     "url": "https://www.nasa.gov/image-article/heart-in-the-sky-at-nasa-kennedy/",
-     "resumen": "The U.S. Air Force Thunderbirds create a heart-shaped smoke trail during a flight maneuver near NASA’s Vehicle Assembly Building during the agency’s MAX POWER expo and air show on Sunday, Nov. 8, 2026, at NASA’s Kennedy Space Center in Florida. NASA’s MAX POWER is an aerospace festival celebrating the past, present…"
-    },
-    {
      "fuente": "Space.com (RSS)",
      "titulo": "'Warhammer Survivors' is the perfect gateway into the 40K universe",
      "fecha": "2026-11-12 16:00",
@@ -6432,13 +6392,6 @@
      "fecha": "2026-11-12 15:20",
      "url": "https://phys.org/news/2026-11-rare-star-emits-radio-minutes.html",
      "resumen": "Scientists at the Curtin University node at the International Center for Radio Astronomy Research (ICRAR) have linked mysterious radio pulses to an unusual pairing of stars—a dead star that spins every eight minutes and a star similar to our own sun."
-    },
-    {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "NASA Ames Stars of the Month: November 2026",
-     "fecha": "2026-11-12 14:54",
-     "url": "https://www.nasa.gov/general/nasa-ames-stars-of-the-month-november-2026/",
-     "resumen": "The NASA Ames Science Directorate recognizes the outstanding contributions of (pictured left to right) Alyssa Villanueva, Steve Howell, and Samuel LeBlanc. Their commitment to the NASA mission represents the entrepreneurial spirit, technical expertise, and collaborative disposition needed to explore this world and…"
     },
     {
      "fuente": "phys.org · Espacio (RSS)",
@@ -6491,13 +6444,6 @@
     },
     {
      "fuente": "Space.com (RSS)",
-     "titulo": "I used the Vaonis Vespera 3 for weeks and here’s who I would recommend it to — full review",
-     "fecha": "2026-11-12 12:00",
-     "url": "https://www.space.com/stargazing/skywatching-kit/i-used-the-vaonis-vespera-3-for-weeks-and-heres-who-i-would-recommend-it-to-full-review",
-     "resumen": "I photographed nebulas and star clusters over multiple nights with the Vaonis Vespera 3. It’s one of the most capable smart telescopes I’ve used, but it won’t be for everyone."
-    },
-    {
-     "fuente": "Space.com (RSS)",
      "titulo": "Satellite snaps rare birds-eye view of the ISS | Space photo of the day for Nov. 12, 2026",
      "fecha": "2026-11-12 12:00",
      "url": "https://www.space.com/space-exploration/international-space-station/satellite-snaps-rare-birds-eye-view-of-the-iss-space-photo-of-the-day-for-nov-12-2026",
@@ -6505,24 +6451,17 @@
     },
     {
      "fuente": "Space.com (RSS)",
+     "titulo": "I used the Vaonis Vespera 3 for weeks and here’s who I would recommend it to — full review",
+     "fecha": "2026-11-12 12:00",
+     "url": "https://www.space.com/stargazing/skywatching-kit/i-used-the-vaonis-vespera-3-for-weeks-and-heres-who-i-would-recommend-it-to-full-review",
+     "resumen": "I photographed nebulas and star clusters over multiple nights with the Vaonis Vespera 3. It’s one of the most capable smart telescopes I’ve used, but it won’t be for everyone."
+    },
+    {
+     "fuente": "Space.com (RSS)",
      "titulo": "The 'eclipse of the century' will plunge these 8 wonders of the Roman Empire into darkness on Aug. 2, 2027",
      "fecha": "2026-11-12 11:00",
      "url": "https://www.space.com/stargazing/solar-eclipses/the-eclipse-of-the-century-will-plunge-these-8-wonders-of-the-roman-empire-into-darkness-on-aug-2-2027",
      "resumen": "Ancient Roman cities, temples and amphitheaters across the Mediterranean will fall into the moon's shadow during the total solar eclipse on Aug. 2, 2027."
-    },
-    {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "NASA’s Hubble Offers Cosmic Sampler of Targets for Roman",
-     "fecha": "2026-11-12 10:18",
-     "url": "https://science.nasa.gov/missions/hubble/nasas-hubble-offers-cosmic-sampler-of-targets-for-roman/",
-     "resumen": "A gallery of gravitational lenses captured by NASA’s Hubble Space Telescope showcases the diversity of this cosmic phenomenon and lays the groundwork for follow-up observations by the Nancy Grace Roman Space Telescope."
-    },
-    {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "Through NASA’s Lens: Capturing Space Shuttle Endeavour’s Move to LA",
-     "fecha": "2026-11-12 10:00",
-     "url": "https://www.nasa.gov/centers-and-facilities/armstrong/through-nasas-lens-capturing-space-shuttle-endeavours-move-to-la/",
-     "resumen": "As a new exhibit opens showcasing NASA’s space shuttle Endeavour, NASA photographers look back at the final mission. These photographers documented the iconic images shared around the world on Sept. 21, 2012, while millions watched space shuttle Endeavour fly on top of the agency’s 747 Shuttle Carrier Aircraft for…"
     },
     {
      "fuente": "Space.com (RSS)",
@@ -6551,13 +6490,6 @@
      "fecha": "2026-11-12 02:24",
      "url": "https://www.space.com/space-exploration/launches-spacecraft/spacex-launches-2nd-mystery-mission-for-us-space-force-in-6-day-span-photos",
      "resumen": "SpaceX launched a classified mission for the U.S. Space Force from California tonight (Nov. 11), the second such mission for the company in a six-day span."
-    },
-    {
-     "fuente": "NASA · Noticias (RSS)",
-     "titulo": "APOD: 2026 November 12 – Moon, Venus and Spica Meet",
-     "fecha": "2026-11-12 02:05",
-     "url": "https://science.nasa.gov/image-article/apod-2026-november-12-moon-venus-and-spica-meet/",
-     "resumen": "APOD Science APOD APOD: 2026 November 12 –… Today’s APOD Archive Submissions Index Search Calendar RSS Education About Discuss APOD Astronomy Picture of the Day Discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a…"
     },
     {
      "fuente": "SpaceNews (RSS)",
@@ -6659,17 +6591,17 @@
     },
     {
      "fuente": "Space.com (RSS)",
-     "titulo": "Why I recommend the Seestar S30 Plus smart telescope for beginners — full review",
-     "fecha": "2026-11-11 10:00",
-     "url": "https://www.space.com/stargazing/skywatching-kit/why-i-recommend-the-seestar-s30-plus-smart-telescope-for-beginners-full-review",
-     "resumen": "I photographed galaxies, nebulas and star clusters from a city with the Seestar S30 Plus. Here’s why I think it’s the best affordable smart telescope for beginners."
-    },
-    {
-     "fuente": "Space.com (RSS)",
      "titulo": "NASA's new UVEX space telescope will peer deep into the universe's most violent events",
      "fecha": "2026-11-11 10:00",
      "url": "https://www.space.com/science/astrophysics/nasas-new-uvex-space-telescope-will-peer-deep-into-the-universes-most-violent-events",
      "resumen": "NASA's new UVEX space telescope will study the universe in ultraviolet light to reveal the violent and turbulent events that bubble under what appears to be a cosmic sea of tranquility."
+    },
+    {
+     "fuente": "Space.com (RSS)",
+     "titulo": "Why I recommend the Seestar S30 Plus smart telescope for beginners — full review",
+     "fecha": "2026-11-11 10:00",
+     "url": "https://www.space.com/stargazing/skywatching-kit/why-i-recommend-the-seestar-s30-plus-smart-telescope-for-beginners-full-review",
+     "resumen": "I photographed galaxies, nebulas and star clusters from a city with the Seestar S30 Plus. Here’s why I think it’s the best affordable smart telescope for beginners."
     },
     {
      "fuente": "SpaceNews (RSS)",
@@ -6747,6 +6679,76 @@
      "fecha": "2026-11-10 18:20",
      "url": "https://phys.org/news/2026-11-earth-core-carbon-solar.html",
      "resumen": "A new study suggests that most of Earth's carbon originated in the outer solar system and didn't arrive here until the late stages of planetary development. The study, led by researchers at Yale and Columbia, is based upon an analysis of magma droplets called \"melt inclusions\" from historic volcano eruptions in…"
+    },
+    {
+     "fuente": "Space.com (RSS)",
+     "titulo": "A distant exoplanet mysteriously vanished from sight. Astronomers just discovered why",
+     "fecha": "2026-11-10 18:00",
+     "url": "https://www.space.com/astronomy/exoplanets/a-distant-exoplanet-mysteriously-vanished-from-sight-astronomers-just-discovered-why",
+     "resumen": "Astronomers have solved the mystery of an exoplanet that \"disappeared\" after seven years of observations."
+    },
+    {
+     "fuente": "phys.org · Espacio (RSS)",
+     "titulo": "Webb's controversial 'little red dots' may finally have an explanation",
+     "fecha": "2026-11-10 17:40",
+     "url": "https://phys.org/news/2026-11-webb-controversial-red-dots-explanation.html",
+     "resumen": "Astronomers may have solved one of the biggest mysteries uncovered by NASA's James Webb Space Telescope (JWST), using sophisticated simulations to show that enigmatic objects known as \"little red dots\" (LRDs) are likely the birthplaces of the first supermassive black holes."
+    },
+    {
+     "fuente": "phys.org · Espacio (RSS)",
+     "titulo": "Gravitational waves hint at black holes born from failed supernovae",
+     "fecha": "2026-11-10 17:10",
+     "url": "https://phys.org/news/2026-11-gravitational-hint-black-holes-born.html",
+     "resumen": "When the most massive stars in the universe die, they often detonate in fiery supernovae, dramatically blasting most of their matter into space. The remaining stellar cores collapse into neutron stars and, sometimes, black holes. However, theories suggest that some massive stars might die without a bang, instead…"
+    },
+    {
+     "fuente": "Space.com (RSS)",
+     "titulo": "How to watch 'We Chose to Go to the Moon' online — stream space race stage show from anywhere",
+     "fecha": "2026-11-10 17:00",
+     "url": "https://www.space.com/entertainment/space-movies-shows/how-to-watch-we-chose-to-go-to-the-moon-online-stream-space-race-stage-show-from-anywhere",
+     "resumen": "How to stream \"We Chose to Go to the Moon\", a live broadcast of the dazzling new stage retelling of the space race story."
+    },
+    {
+     "fuente": "Space.com (RSS)",
+     "titulo": "SpaceX Starship Flight 15 live updates: How to spot Starship in the night sky as it coasts in orbit",
+     "fecha": "2026-11-10 16:46",
+     "url": "https://www.space.com/news/live/spacex-starship-flight-15-live-updates-nov-13-2026-starship-first-double-landing-attempt",
+     "resumen": "Follow live updates as SpaceX attempts its Starship Flight 15 test flight with first double landings."
+    },
+    {
+     "fuente": "Space.com (RSS)",
+     "titulo": "Uranus has a weird magnetic field that's stumped scientists for 40 years — we may finally know why",
+     "fecha": "2026-11-10 16:00",
+     "url": "https://www.space.com/astronomy/uranus/scientists-may-finally-understand-the-weird-magnetic-fields-of-uranus-and-neptune",
+     "resumen": "The lopsided magnetic fields of Uranus and Neptune could be the product of extreme conditions inside the planets, increasing the electrical conductivity that enhances the dynamo effect."
+    },
+    {
+     "fuente": "NOIRLab (RSS)",
+     "titulo": "Science Release: Astronomers Discover Nāpōwawāʻenakaulua, the Oldest Compact Quasar Pair in the Universe",
+     "fecha": "2026-11-10 15:00",
+     "url": "http://noirlab.edu/public/news/noirlab2627/",
+     "resumen": "The oldest pair of compact quasars ever observed has been found only 900 million years after the Big Bang. Scientists say there is no theoretical explanation for how the pair of actively feeding black holes grew so massive at such an early time in the history of the Universe. The pair of quasars has been given the…"
+    },
+    {
+     "fuente": "phys.org · Espacio (RSS)",
+     "titulo": "Tiny solar whirlpools may hold the secret to the sun's blistering corona",
+     "fecha": "2026-11-10 14:40",
+     "url": "https://phys.org/news/2026-11-tiny-solar-whirlpools-secret-sun.html",
+     "resumen": "For the second time in a few weeks, we're writing about research into the temperature gap between the sun's surface and its corona. More and more data from various missions continue to feed this wave of discovery. A new paper by Katariina Nykyri of Embry-Riddle, recently published in The Astrophysical Journal…"
+    },
+    {
+     "fuente": "Space.com (RSS)",
+     "titulo": "Were there 'lost cosmonauts' in the early Soviet space program?",
+     "fecha": "2026-11-10 14:00",
+     "url": "https://www.space.com/space-exploration/launches-spacecraft/were-there-lost-cosmonauts-in-the-early-soviet-space-program",
+     "resumen": "At the height of the Cold War, two amateur radio operators alleged they intercepted signals from Soviet cosmonauts who perished during missions that remained secret."
+    },
+    {
+     "fuente": "Space.com (RSS)",
+     "titulo": "A robot just built a structure autonomously in space for the 1st time ever",
+     "fecha": "2026-11-10 13:00",
+     "url": "https://www.space.com/technology/a-robot-just-built-a-structure-autonomously-in-space-for-the-1st-time-ever",
+     "resumen": "A robot built part of an antenna in orbit recently, showcasing skills that could potentially allow the assembly of space telescopes and other large structures off Earth."
     }
    ]
   }
