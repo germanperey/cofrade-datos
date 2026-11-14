@@ -13,24 +13,19 @@ UA = "CofradeNews/1.0 (boletin gratuito sin fines de lucro de la Cofradia de ofi
 HOY = dt.date.today()
 D0, D1 = HOY.strftime("%Y%m%d"), (HOY - dt.timedelta(days=1)).strftime("%Y%m%d")
 OBJETIVOS = [
-    ("espn_atp_sb", "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard"),
-    ("espn_wta_sb", "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard"),
-    ("marca_nba", "https://e00-marca.uecdn.es/rss/baloncesto/nba.xml"),
+    ("tabsa_tramos", "https://api-gw.tabsa.cl/api/cruce/tramos"),
+    ("tabsa_tramos2", "https://api-gw.tabsa.cl/api/cruces/tramos"),
+    ("tabsa_suspension", "https://api-gw.tabsa.cl/api/cruce/cruce/suspension"),
+    ("tabsa_cruce20_hoy", f"https://api-gw.tabsa.cl/api/cruce/cruce/20/fecha/{HOY.isoformat()}"),
+    ("tabsa_cruce20_hoy2", f"https://api-gw.tabsa.cl/api/cruce/cruce/20/fecha/{HOY.strftime('%d-%m-%Y')}"),
+    ("tabsa_mes", f"https://api-gw.tabsa.cl/api/cruce/cruce/fecha/mes/{HOY.strftime('%Y-%m')}"),
+    ("tabsa_mes2", f"https://api-gw.tabsa.cl/api/cruce/cruce/fecha/mes/{HOY.month}"),
+    ("seia_listado", "https://seia.sea.gob.cl/busqueda/buscarProyectoAction.php?nombre=&titular=&folio=&sector=&region=&tipoPresentacion=&presentacion=&PAGE=1"),
+    ("seia_inicio", "https://seia.sea.gob.cl/"),
     ("as_nba", "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/baloncesto/subsection/nba/"),
-    ("airechile_inicio", "https://airechile.mma.gob.cl/"),
-    ("tabsa_inicio", "https://www.tabsa.cl/"),
-    ("seia_busqueda", "https://seia.sea.gob.cl/busqueda/buscarProyecto.php"),
-    ("senado_ws_18851", "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18851"),
-    ("senado_ws_18883", "https://tramitacion.senado.cl/wspublico/tramitacion.php?boletin=18883"),
-    ("camara_ws_indice", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx"),
-    ("camara_ws_proyecto", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarProyectoLey?prmNumeroBoletin=18883-14"),
-    ("dipres_funcional1", "https://www.dipres.gob.cl/598/articles-45401_doc_pdf_Funcional1.pdf"),
-    ("dipres_funcional2", "https://www.dipres.gob.cl/598/articles-45401_doc_pdf_Funcional2.pdf"),
-    ("dipres_funcional3", "https://www.dipres.gob.cl/598/articles-45401_doc_pdf_Funcional3.pdf"),
-    ("dipres_series", "https://www.dipres.gob.cl/598/w3-propertyname-706.html"),
-    ("directemar_puertos", "https://www.directemar.cl/directemar/site/tax/port/all/taxport_6_23__1.html"),
+    ("tabsa_js", "https://www.tabsa.cl/"),
 ]
-EXTRA_JS = {"airechile_inicio", "tabsa_inicio"}   # en estas páginas se buscan los scripts y las direcciones de su API
+EXTRA_JS = {"tabsa_js"}   # en estas páginas se buscan los scripts y las direcciones de su API
 os.makedirs("sonda", exist_ok=True)
 robots, resumen = {}, {}
 
