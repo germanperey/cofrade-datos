@@ -1153,10 +1153,10 @@ def perspectivas_megaproyectos_de_la_semana():
     """14-11-2026 (informe: Perspectivas 2050 con 1 proyecto nuevo de 4 o 5; Google News y DF rechazan a la tarea): GitHub lee las
     noticias de megaproyectos de los últimos 7 días y las deja en titulares.json → titulares-perspectivas.json para el modelo."""
     v = B.FEEDS["perspectivas"]
-    assert len(v) >= 12 and B.VENTANA_H["perspectivas"] == 168
+    assert len(v) >= 8 and B.VENTANA_H["perspectivas"] == 168
     assert len({u for _, u, _ in v}) == len(v)   # sin direcciones repetidas
-    assert sum("news.google.com" in u for _, u, _ in v) >= 6 and sum("bing.com" in u for _, u, _ in v) >= 6
-    assert all("when:7d" in u for _, u, _ in v if "news.google.com" in u)
+    # 14-11-2026: sin Google Noticias (robots.txt «Disallow: /»); Bing Noticias y los RSS propios de Minería Chilena y Revista Electricidad
+    assert not any("news.google.com" in u for _, u, _ in v) and sum("bing.com" in u for _, u, _ in v) >= 6
     # una nota de hace 6 días entra (168 h), una de hace 9 días no
     viejos = B.robots_permite, B.pedir, B.ahora
     ahora = dt.datetime(2026, 11, 14, 4, 17, tzinfo=B.TZ)
@@ -1172,6 +1172,16 @@ def perspectivas_megaproyectos_de_la_semana():
     finally:
         B.robots_permite, B.pedir, B.ahora = viejos
     assert [n["titulo"] for n in t2["secciones"]["perspectivas"]["notas"]] == ["Proyecto 0 US$ 100 millones"], t2["secciones"]["perspectivas"]
+
+@prueba
+def sin_fuentes_que_su_robots_prohibe():
+    """14-11-2026: las 74 direcciones de Google Noticias nunca se leyeron (robots.txt «Disallow: /»). Que no vuelvan, y que ninguna
+    sección quede corta al quitarlas."""
+    F = B.todas_las_fuentes()
+    urls = [u for L in F.values() for _, u, _ in L]
+    prohibidos = ("news.google.com/rss", "query1.finance.yahoo.com/v7")
+    assert not [u for u in urls if any(x in u for x in prohibidos)]
+    assert all(len(L) >= 7 for L in F.values()), {k: len(v) for k, v in F.items()}
 
 if __name__ == "__main__":
     malas = 0
