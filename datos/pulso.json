@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-13T20:41-03:00",
- "proxima": "22:17",
+ "generado": "2026-11-14T03:40-03:00",
+ "proxima": "07:17",
  "indicadores": [
   {
    "clave": "dolar",
@@ -23,10 +23,10 @@
   {
    "clave": "uf",
    "nombre": "UF",
-   "valor": 41322.93,
+   "valor": 41329.8,
    "prefijo": "$",
    "decimales": 2,
-   "fecha": "2026-11-13",
+   "fecha": "2026-11-14",
    "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
@@ -48,21 +48,28 @@
    "fuente": "Banco Central de Chile (vía mindicador.cl)"
   }
  ],
- "ipsa": null,
+ "ipsa": {
+  "nombre": "IPSA",
+  "valor": 10660.26,
+  "fuente": "LarrainVial (Bolsa de Santiago)",
+  "url": "https://mercados.larrainvial.com/",
+  "hora": "2026-11-14T03:40-03:00",
+  "variacion_pct": 0.33
+ },
  "sismos": {
   "n": 2,
   "mayores": [
    {
-    "hora": "2026-11-12T22:44-03:00",
-    "magnitud": 4.3,
-    "profundidad_km": 207.3,
-    "referencia": "173 km al SE de San Pedro de Atacama"
+    "hora": "2026-11-14T00:18-03:00",
+    "magnitud": 4.7,
+    "profundidad_km": 216.1,
+    "referencia": "186 km al SE de San Pedro de Atacama"
    },
    {
-    "hora": "2026-11-13T00:11-03:00",
-    "magnitud": 4.2,
-    "profundidad_km": 176.7,
-    "referencia": "173 km al SE de San Pedro de Atacama"
+    "hora": "2026-11-13T20:55-03:00",
+    "magnitud": 4.6,
+    "profundidad_km": 10.0,
+    "referencia": "191 km al SO de Concepción"
    }
   ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
@@ -73,34 +80,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "Entel logra acuerdo por US $1.714 millones para la venta del 100% de sus operaciones en Perú",
+     "titulo": "Detienen a dos integrantes de la WAM prófugos por homicidio de trabajador forestal en Carahue",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/detienen-a-dos-integrantes-de-la-wam-profugos-por-homicidio-de-trabajador-forestal-en-carahue/",
+     "hora": "23:35"
+    },
+    {
+     "titulo": "¿Meteorito o chatarra espacial?: Caída de objeto desde el cielo provoca estruendo en el Ñuble y Biobío",
      "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/13/entel-logra-acuerdo-por-us-1-714-millones-para-la-venta-del-100-de-sus-operaciones-en-peru/",
-     "hora": "20:30"
+     "url": "https://www.theclinic.cl/2026/11/13/meteorito-o-chatarra-espacial-caida-de-objeto-desde-el-cielo-provoca-estruendo-en-el-nuble-y-biobio/",
+     "hora": "22:42"
     },
     {
-     "titulo": "Directiva de RN se reúne con Kast en La Moneda y reafirma “total compromiso” con el gobierno en medio de discusión presupuestaria",
-     "medio": "La Tercera · Política",
-     "url": "https://www.latercera.com/politica/noticia/directiva-de-rn-se-reune-con-kast-en-la-moneda-y-reafirma-total-compromiso-con-el-gobierno-en-medio-de-discusion-presupuestaria/",
-     "hora": "20:22"
+     "titulo": "Controladores aéreos chilenos advierten retrasos en modernización de sistemas tras falla masiva en Estados Unidos",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/controladores-aereos-chilenos-advierten-retrasos-en-modernizacion-de-sistemas-tras-falla-masiva-en-estados-unidos/",
+     "hora": "22:28"
     },
     {
-     "titulo": "Campeón mundial: Lomo liso chileno es elegido el mejor del planeta y vale 50 mil pesos",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/negocios/lomo-liso-chileno-elegido-mejor-planeta/",
-     "hora": "20:15"
-    },
-    {
-     "titulo": "“El hijo del oligarca”: riqueza, crimen, corrupción y vista gorda en Londres",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/opinion/hijo-oligarca-riqueza-crimen-londres/",
-     "hora": "19:55"
-    },
-    {
-     "titulo": "Estados Unidos suspende todos sus vuelos: Gobierno lo atribuye a “problema de comunicación que afecta a todos los centros de control de tráfico aéreo”",
+     "titulo": "Viajes cancelados desde Chile, miles de afectados y una investigación en curso: qué se sabe de la suspensión de vuelos en EE.UU.",
      "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/13/estados-unidos-suspende-todos-sus-vuelos-gobierno-lo-atribuye-a-problema-de-comunicacion-que-afecta-a-todos-los-centros-de-control-de-trafico-aereo/",
-     "hora": "19:27"
+     "url": "https://www.theclinic.cl/2026/11/13/viajes-cancelados-desde-chile-miles-de-afectados-y-una-investigacion-en-curso-que-se-sabe-de-la-suspension-de-vuelos-en-ee-uu/",
+     "hora": "22:09"
+    },
+    {
+     "titulo": "Acuerdo con los camioneros: los detalles inéditos de la tensa negociación de 10 horas en La Moneda",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/politica/camioneros-detalles-ineditos-negociacion/",
+     "hora": "21:28"
     }
    ]
   },
@@ -108,34 +115,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Desgaste, informes de EY y un choque con el director laboral: la trama detrás de la salida de Julio Friedmann de ENAP",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/senal-df/el-deal/desgaste-informes-de-ey-y-un-choque-con-el-director-laboral-la-trama",
-     "hora": "20:38"
-    },
-    {
-     "titulo": "TotalEnergies H2 desiste de megaproyecto para producir hidrógeno y amoníaco verde de US$ 16 mil millones",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/empresas/energia/totalenergies-h2-desiste-de-megaproyecto-para-producir-hidrogeno-y-amoniaco",
-     "hora": "20:37"
-    },
-    {
      "titulo": "Demoras y desvío: qué pasa con los vuelos programados para hoy desde Argentina a Estados Unidos",
      "medio": "Infobae · Economía",
      "url": "https://www.infobae.com/economia/2026/11/13/que-pasara-con-los-vuelos-programados-para-hoy-desde-argentina-a-estados-unidos/",
-     "hora": "20:31"
+     "hora": "01:50"
     },
     {
-     "titulo": "Campeón mundial: Lomo liso chileno es elegido el mejor del planeta y vale 50 mil pesos",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/negocios/lomo-liso-chileno-elegido-mejor-planeta/",
-     "hora": "20:15"
+     "titulo": "¿Se estancó la desinflación?: el dato que esperanza al Gobierno y los riesgos que asoman en el cierre de 2026",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/14/se-estanco-la-desinflacion-el-dato-que-esperanza-al-gobierno-y-los-riesgos-que-asoman-en-el-cierre-de-2026/",
+     "hora": "00:49"
     },
     {
-     "titulo": "Festival gastronómico, nuevo hito en la revitalización del Mercado Central y el barrio Mapocho",
+     "titulo": "La Casa Blanca atribuyó caos aéreo en EE.UU. a un sistema obsoleto: \"Va a seguir fallando\"",
      "medio": "Cooperativa",
-     "url": "https://www.cooperativa.cl/noticias/magazine/panoramas/festival-gastronomico-nuevo-hito-en-la-revitalizacion-del-mercado/2026-11-13/200127.html",
-     "hora": "20:01"
+     "url": "https://www.cooperativa.cl/noticias/mundo/ee-uu/la-casa-blanca-atribuyo-caos-aereo-en-ee-uu-a-un-sistema-obsoleto-va/2026-11-14/004126.html",
+     "hora": "00:41"
+    },
+    {
+     "titulo": "Congreso Futuro 2027 se instalará en Estación Mapocho en enero",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/congreso-futuro-2027-se-instalara-en-estacion-mapocho-en-enero/",
+     "hora": "00:28"
+    },
+    {
+     "titulo": "Protesta estudiantil terminó con incidentes en el centro de Santiago",
+     "medio": "Cooperativa",
+     "url": "https://www.cooperativa.cl/noticias/pais/manifestaciones/protesta-estudiantil-termino-con-incidentes-en-el-centro-de-santiago/2026-11-13/231550.html",
+     "hora": "23:15"
     }
    ]
   },
@@ -143,34 +150,34 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "La autoridad de aviación de EE.UU. ordena suspender los despegues de vuelos en todo el país \"por circunstancias extraordinarias\"",
+     "titulo": "EN VIVO: Continúan los retrasos en EEUU luego de la reanudación de salidas de vuelos: más de 8.600 vuelos afectados",
+     "medio": "Infobae",
+     "url": "https://www.infobae.com/estados-unidos/2026/11/14/en-vivo-suspension-de-vuelos-en-eeuu/",
+     "hora": "03:35"
+    },
+    {
+     "titulo": "Crecida del río Paraná: Santa Fe se encuentra al límite de la evacuación y ya son más de 4.500 afectados en el Litoral",
+     "medio": "Infobae",
+     "url": "https://www.infobae.com/sociedad/2026/11/14/crecida-del-rio-parana-santa-fe-se-encuentra-al-limite-de-la-evacuacion-y-ya-son-mas-de-4500-afectados-en-el-litoral/",
+     "hora": "03:31"
+    },
+    {
+     "titulo": "Trump, Xi y Putin mantendrán una reunión histórica en China centrada en la no proliferación nuclear",
+     "medio": "Europa Press · Internacional",
+     "url": "https://www.europapress.es/internacional/noticia-trump-xi-putin-mantendran-reunion-historica-china-centrada-no-proliferacion-nuclear-20261114063927.html",
+     "hora": "02:39"
+    },
+    {
+     "titulo": "Autorizan de nuevo el despegue de aviones en EE.UU. tras la falla que obligó a suspender durante horas los vuelos en todo el país",
      "medio": "BBC Mundo",
      "url": "https://www.bbc.com/mundo/articles/crgqx8jpw3jvo?at_medium=RSS&at_campaign=rss",
-     "hora": "20:35"
+     "hora": "01:45"
     },
     {
-     "titulo": "Aerolíneas mexicanas reaccionan a la suspensión de vuelos en EEUU: Volaris alerta sobre posibles demoras o cancelaciones",
-     "medio": "Infobae",
-     "url": "https://www.infobae.com/mexico/2026/11/13/aerolineas-mexicanas-reaccionan-a-la-suspension-de-vuelos-en-eeuu-volaris-alerta-sobre-posibles-demoras-o-cancelaciones/",
-     "hora": "20:35"
-    },
-    {
-     "titulo": "Aeropuerto de CDMX informa sobre afectaciones de vuelos desde y hacia EEUU",
-     "medio": "Infobae",
-     "url": "https://www.infobae.com/mexico/2026/11/13/aeropuerto-de-cdmx-informa-sobre-afectaciones-de-vuelos-desde-y-hacia-eeuu/",
-     "hora": "20:34"
-    },
-    {
-     "titulo": "¿Cómo influye el creador de contenido Jordi Wild en la conversación sobre las elecciones españolas?",
-     "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/video/20261113-c%C3%B3mo-influye-el-creador-de-contenido-jordi-wild-en-la-conversaci%C3%B3n-sobre-las-elecciones-espa%C3%B1olas",
-     "hora": "20:31"
-    },
-    {
-     "titulo": "Microsoft avanza en la recuperación de sus sistemas tras caída mundial",
-     "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/video/20261113-microsoft-avanza-en-la-recuperaci%C3%B3n-de-sus-sistemas-tras-ca%C3%ADda-mundial",
-     "hora": "20:30"
+     "titulo": "Rusia lucha por imponer su sueño de vetar la presencia militar de la OTAN en Europa del este",
+     "medio": "El País · Internacional",
+     "url": "https://elpais.com/internacional/2026-11-14/rusia-lucha-por-imponer-su-sueno-de-vetar-la-presencia-militar-de-la-otan-en-europa-del-este.html",
+     "hora": "01:40"
     }
    ]
   },
@@ -178,34 +185,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "La autoridad de aviación de EE.UU. ordena suspender los despegues de vuelos en todo el país \"por circunstancias extraordinarias\"",
+     "titulo": "Autorizan de nuevo el despegue de aviones en EE.UU. tras la falla que obligó a suspender durante horas los vuelos en todo el país",
      "medio": "BBC Mundo · Economía",
      "url": "https://www.bbc.com/mundo/articles/crgqx8jpw3jvo?at_medium=RSS&at_campaign=rss",
-     "hora": "20:35"
+     "hora": "01:45"
     },
     {
-     "titulo": "Venezuela reforma su Ley de Energía Eléctrica para disminuir apagones",
-     "medio": "France 24 · Economía",
-     "url": "https://www.france24.com/es/programas/econom%C3%ADa/20261113-economia-venezuela-apagones-elecricidad-reforma",
-     "hora": "20:25"
+     "titulo": "La pobreza se enquista pese al crecimiento económico: “No puedo ni sentarme con mis amigos a tomar una Coca-Cola”",
+     "medio": "El País · Economía",
+     "url": "https://elpais.com/economia/2026-11-14/la-pobreza-se-enquista-pese-al-crecimiento-economico-no-puedo-ni-sentarme-con-mis-amigos-a-tomar-una-coca-cola.html",
+     "hora": "01:45"
     },
     {
-     "titulo": "Rescatan a decenas de pasajeros de un crucero que volcó en Nueva Orleans tras ser embestido por un buque cisterna",
+     "titulo": "La UE apura las últimas horas del pacto pesquero con Mauritania sin acuerdo para renovarlo",
+     "medio": "El País · Economía",
+     "url": "https://elpais.com/economia/2026-11-14/la-ue-apura-las-ultimas-horas-del-pacto-pesquero-con-mauritania-sin-acuerdo-para-renovarlo.html",
+     "hora": "01:45"
+    },
+    {
+     "titulo": "Un inflexible Putin eleva sus exigencias para alcanzar la paz con Ucrania",
      "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/c804wpyd29wro?at_medium=RSS&at_campaign=rss",
-     "hora": "20:05"
+     "url": "https://www.bbc.com/mundo/articles/crn80jqyw993o?at_medium=RSS&at_campaign=rss",
+     "hora": "00:06"
     },
     {
-     "titulo": "Miles de vuelos afectados en EE.UU. por fallo técnico en centros de control",
+     "titulo": "Estados Unidos levanta suspensión de vuelos tras horas de caos aéreo",
      "medio": "DW en español",
-     "url": "https://www.dw.com/es/miles-de-vuelos-afectados-en-ee-uu-por-fallo-técnico-en-centros-de-control/a-79945299?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "18:54"
-    },
-    {
-     "titulo": "Europa nombra a su equipo para conversaciones de paz sobre Ucrania",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/europa-nombra-a-su-equipo-para-conversaciones-de-paz-sobre-ucrania/a-79944989?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "17:58"
+     "url": "https://www.dw.com/es/estados-unidos-levanta-suspensión-de-vuelos-tras-horas-de-caos-aéreo/a-79946394?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "23:49"
     }
    ]
   },
@@ -213,34 +220,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
+     "titulo": "Los científicos coinciden: las personas más inteligentes son también las más solitarias por culpa de la evolución",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/investigacion/cientificos-coinciden-personas-inteligentes-tambien-solitarias-culpa-evolucion",
+     "hora": "03:31"
+    },
+    {
+     "titulo": "Hoy No Circula sabatino: qué autos pueden circular y cuáles descansan el 14 de noviembre",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/mexico/hoy-no-circula-sabatino-que-autos-pueden-circular-cuales-descansan-14-noviembre",
+     "hora": "01:01"
+    },
+    {
+     "titulo": "¿Puede la inteligencia artificial acabar con la burocracia?",
+     "medio": "elEconomista.es on MSN",
+     "url": "https://www.msn.com/es-es/noticias/other/puede-la-inteligencia-artificial-acabar-con-la-burocracia/ar-AA2hpQ0F",
+     "hora": "19:00"
+    },
+    {
+     "titulo": "China mandó científicos a EEUU hace 20 años para liderar hoy la inteligencia artificial mundial",
+     "medio": "THE OBJECTIVE",
+     "url": "https://theobjective.com/tecnologia/2026-11-14/china-cientificos-eeuu-liderazgo-ia/",
+     "hora": "18:26"
+    },
+    {
      "titulo": "Gemini ya puede conectarse con Google Wallet para acceder a tus finanzas",
      "medio": "Hipertextual",
      "url": "https://hipertextual.com/inteligencia-artificial/gemini-google-wallet-integracion-finanzas-gastos/",
      "hora": "18:21"
-    },
-    {
-     "titulo": "De Batman a 007: Robert Pattinson podría ser el nuevo James Bond",
-     "medio": "Hipertextual",
-     "url": "https://hipertextual.com/cine-television/de-batman-a-007-robert-pattinson-podria-ser-el-nuevo-james-bond/",
-     "hora": "17:29"
-    },
-    {
-     "titulo": "Bancos en Latinoamérica sufren caídas masivas reportadas en Downdetector: ¿Por qué fallan?",
-     "medio": "FayerWayer",
-     "url": "https://www.fayerwayer.com/internet/2026/11/13/bancos-en-latinoamerica-sufren-caidas-masivas-reportadas-en-downdetector-por-que-fallan/",
-     "hora": "17:23"
-    },
-    {
-     "titulo": "El USB del espacio: Europa crea un conector universal para reparar satélites en órbita en lugar de tirarlos",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/espacio/usb-espacio-europa-crea-conector-universal-para-reparar-satelites-orbita-lugar-tirarlos",
-     "hora": "17:01"
-    },
-    {
-     "titulo": "Muchos anuncios de GTA VI no muestran armas: no es que el juego se haya moderado, es que Rockstar sabe que muchos jugadores son menores",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/videojuegos/muchos-anuncios-gta-vi-no-muestran-armas-no-que-juego-se-haya-moderado-que-rockstar-sabe-que-muchos-jugadores-menores",
-     "hora": "16:01"
     }
    ]
   },
@@ -248,63 +255,28 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "En vivo: La Roja de Nicolás Córdova visita a Colombia en un duelo amistoso",
+     "titulo": "Oklahoma City Thunder vs. LA Clippers: Game Highlights",
+     "medio": "ESPN · NBA",
+     "url": "https://www.espn.com/video/clip/_/id/50477831/game-highlights",
+     "hora": "03:14"
+    },
+    {
+     "titulo": "El análisis de Córdova tras la caída de Chile en Colombia: “Veo esto con optimismo; la última vez nos llevamos cuatro goles”",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/en-vivo-la-roja-de-nicolas-cordova-visita-a-colombia-en-un-duelo-amistoso/",
-     "hora": "20:29"
+     "url": "https://www.latercera.com/el-deportivo/noticia/el-analisis-de-cordova-tras-la-caida-de-chile-en-colombia-veo-esto-con-optimismo-la-ultima-vez-nos-llevamos-cuatro-goles/",
+     "hora": "00:03"
     },
     {
-     "titulo": "“Auténtico terror”: el ex UC Matías Dituro sufre un robo en su casa en España",
+     "titulo": "La sinceridad de Gabriel Suazo tras la caída de la Roja: “¿Qué decirle a la gente? Que no somos la Generación Dorada”",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/autentico-terror-el-ex-uc-matias-dituro-sufre-un-robo-en-su-casa-en-espana/",
-     "hora": "19:44"
+     "url": "https://www.latercera.com/el-deportivo/noticia/la-sinceridad-de-gabriel-suazo-tras-la-caida-de-la-roja-que-decirle-a-la-gente-que-no-somos-la-generacion-dorada/",
+     "hora": "23:29"
     },
     {
-     "titulo": "Iván Morales cerca de volver al fútbol chileno: Deportes Concepción lo busca para 2027",
-     "medio": "RedGol on MSN",
-     "url": "https://www.msn.com/es-cl/deportes/futbol/iv%C3%A1n-morales-cerca-de-volver-al-f%C3%BAtbol-chileno-deportes-concepci%C3%B3n-lo-busca-para-2027/ar-AA2hoqPI",
-     "hora": "11:49"
-    },
-    {
-     "titulo": "Colo Colo vs. Coquimbo Unido: Hora y dónde ver por TV y streaming la semifinal de vuelta de la Liga Femenina",
-     "medio": "Prensa Fútbol",
-     "url": "https://www.prensafutbol.cl/colo-colo-vs-coquimbo-donde-ver-semis-vuelta/",
-     "hora": "10:40"
-    },
-    {
-     "titulo": "Fútbol chileno: amargó a Colo Colo, pelea por ir a Copa Sudamericana y avisan que no sigue como DT en 2027",
-     "medio": "RedGol",
-     "url": "https://redgol.cl/chile/futbol-chileno-amargo-a-colo-colo-no-sigue-en-palestino-guillermo-farre",
-     "hora": "09:30"
-    }
-   ]
-  },
-  {
-   "seccion": "Emprendimiento",
-   "notas": [
-    {
-     "titulo": "Grupo Tirant compra elDigesto y suma IA jurídica en Chile",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/grupo-tirant-compra-eldigesto-y-suma-ia-juridica-en-chile/",
-     "hora": "20:21"
-    },
-    {
-     "titulo": "Global Airlines: liquidación forzosa con su A380 en tierra",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/global-airlines-liquidacion-forzosa-con-su-a380-en-tierra/",
-     "hora": "20:21"
-    },
-    {
-     "titulo": "TACHI Bio, startup chilena de microalgas, gana Conectagro",
-     "medio": "ecosistemastartup",
-     "url": "https://ecosistemastartup.com/tachi-bio-startup-chilena-de-microalgas-gana-conectagro/",
-     "hora": "11:35"
-    },
-    {
-     "titulo": "Corfo y Fondo Esperanza unen fuerzas para ampliar el crédito a mujeres emprendedoras",
-     "medio": "Portal Innova",
-     "url": "https://portalinnova.cl/corfo-y-fondo-esperanza-unen-fuerzas-para-ampliar-el-credito-a-mujeres-emprendedoras/",
-     "hora": "10:26"
+     "titulo": "Jazz vs Rockets EN VIVO resultados highlights y estadísticas",
+     "medio": "ElPeriodico.digital",
+     "url": "https://www.elperiodico.digital/baloncesto/jazz-vs-rockets-en-vivo-resultados-highlights-y-estadisticas-531472.html",
+     "hora": "18:26"
     }
    ]
   }
@@ -313,23 +285,23 @@
  "mercados": [
   {
    "nombre": "S&P 500",
-   "valor": 7592.4,
-   "variacion_pct": -0.35,
-   "fecha": "2026-11-12",
+   "valor": 7561.67,
+   "variacion_pct": -0.4,
+   "fecha": "2026-11-13",
    "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
    "nombre": "Nasdaq",
-   "valor": 25366.09,
-   "variacion_pct": -0.39,
-   "fecha": "2026-11-12",
+   "valor": 25136.27,
+   "variacion_pct": -0.91,
+   "fecha": "2026-11-13",
    "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
    "nombre": "Dow Jones",
-   "valor": 52297.09,
-   "variacion_pct": -0.36,
-   "fecha": "2026-11-12",
+   "valor": 52347.55,
+   "variacion_pct": 0.1,
+   "fecha": "2026-11-13",
    "fuente": "FRED (Reserva Federal de St. Louis)"
   },
   {
@@ -341,16 +313,16 @@
   },
   {
    "nombre": "Cobre (Bolsa de Metales de Londres)",
-   "valor": 6.25,
-   "variacion_pct": -2.01,
-   "fecha": "2026-11-12",
+   "valor": 6.3,
+   "variacion_pct": 0.73,
+   "fecha": "2026-11-13",
    "fuente": "Banco Central de Chile"
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 68128.51,
-  "bitcoin_fecha": "2026-11-13",
+  "bitcoin_usd": 67256.35,
+  "bitcoin_fecha": "2026-11-14",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 142
+ "fuentes_ok": 146
 }
