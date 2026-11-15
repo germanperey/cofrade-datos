@@ -357,13 +357,17 @@ button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}
 .sec-card:hover{transform:translateY(-2px);border-color:var(--oro);box-shadow:0 14px 34px -22px rgba(11,31,58,.45)}
 .sec-card svg{width:44px;height:44px;color:var(--oro-t)}.sec-card b{display:block;font:600 19px/1.2 var(--display);margin-bottom:3px}.sec-card p{margin:0;font-size:13.5px;color:var(--gris);line-height:1.45}
 .titulo-lujo{font:600 clamp(28px,3.6vw,40px)/1.1 var(--display);margin:0 0 6px;letter-spacing:-.2px}
-.galeria{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;align-items:start}
+/* 15-11-2026 (Germán: «que se vea más armónico y compacto, hay muchos espacios entremedio»): filas justificadas. Cada tarjeta crece
+   en proporción al ancho/alto de su imagen (--r): en una fila todas las imágenes quedan de la MISMA altura y la fila llena el ancho,
+   sin huecos. Bajo 900 px: dos columnas con marcos iguales; bajo 600 px: una columna. */
+.galeria{display:grid;gap:16px}.g-fila{display:flex;gap:16px;align-items:stretch}
 .cab .fecha{display:none}
-.galeria figure{margin:0;background:#FBF8F1;border:1px solid var(--linea);border-radius:16px;padding:12px;box-shadow:0 18px 40px -30px rgba(11,31,58,.5);position:relative}
+.galeria figure{--p:10px;box-sizing:border-box;flex:var(--r) 1 0;min-width:0;margin:0;background:#FBF8F1;border:1px solid var(--linea);border-radius:16px;padding:var(--p);box-shadow:0 18px 40px -30px rgba(11,31,58,.5);position:relative;display:flex;flex-direction:column}
 .galeria figure::after{content:"";position:absolute;inset:6px;border:1px solid rgba(184,137,43,.28);border-radius:12px;pointer-events:none}
-.galeria img{width:100%;height:auto;display:block;border-radius:8px}.galeria figcaption{font-size:13px;color:#5B6472;padding:10px 4px 2px}
+.galeria img{width:100%;height:auto;aspect-ratio:var(--r);object-fit:contain;display:block;border-radius:8px;background:var(--f,#fff)}.galeria figcaption{font-size:13px;line-height:1.4;color:#5B6472;padding:9px 4px 1px}
 .galeria figcaption b{display:block;font:600 17px/1.2 var(--display);color:#0B1F3A}
-.g-a{grid-column:span 7}.g-b{grid-column:span 5}.g-c{grid-column:span 4}.g-d{grid-column:span 4}.g-e{grid-column:span 4}.g-f{grid-column:span 12}
+@media (max-width:899px){.galeria{grid-template-columns:1fr 1fr;gap:14px}.g-fila{display:contents}.galeria img{aspect-ratio:4/3}}
+@media (max-width:600px){.galeria{grid-template-columns:1fr}.galeria img{aspect-ratio:var(--r);max-height:420px}}
 .puente{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--noche2),var(--noche));color:var(--marfil);border-radius:24px;padding:44px 36px;margin:34px 0;border:1px solid rgba(230,199,122,.3)}
 .puente .agua{right:-140px;width:520px;opacity:.06}.puente .kicker{color:var(--oro-l)}.puente h2{font:600 clamp(30px,4vw,46px)/1.05 var(--display);color:#FFFDF8;margin:10px 0 10px}
 .puente p.lede{color:#D8D2C4;max-width:44em}
@@ -374,7 +378,7 @@ button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}
 .precio-lujo .monto{font:600 46px/1 var(--display);color:#FFFDF8}.precio-lujo .monto small{font-size:17px;color:#BFB7A6;font-family:var(--sans)}
 .precio-lujo .extra{font-size:14px;color:#D8D2C4}.legal{font-size:12px;color:#8E9AAB;margin:14px 0 0;max-width:60em}
 .pie-agua{display:block;width:64px;height:64px;margin:0 0 10px;opacity:.85}
-@media (max-width:980px){.lujo-in{grid-template-columns:1fr;gap:30px;padding:44px 16px}.agua{width:520px;right:-180px;top:30%}.g-a,.g-b,.g-c,.g-d,.g-e{grid-column:span 12}}
+@media (max-width:980px){.lujo-in{grid-template-columns:1fr;gap:30px;padding:44px 16px}.agua{width:520px;right:-180px;top:30%}}
 @media (max-width:820px){.portada,.socios{grid-template-columns:1fr;gap:22px}.portada{padding-top:26px}nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}nav a{white-space:nowrap}.edicion ul{columns:1}}
 /* 13-11-2026 · cabecera fija (Germán: «el header debe mantenerse fijo, para que siempre esté visible») */
 html{scroll-padding-top:calc(var(--alto-cab,112px) + 12px)}
@@ -634,6 +638,71 @@ const PROTEGER = `<script>(function(){function no(e){e.preventDefault();e.stopPr
 document.addEventListener('keydown',function(e){var k=(e.key||'').toLowerCase();if((e.ctrlKey||e.metaKey)&&(k==='s'||k==='u'))return no(e)},true);
 document.addEventListener('contextmenu',function(e){var t=e.target;if(t&&t.closest&&t.closest('input,textarea,[contenteditable]'))return;return no(e)},true);
 document.addEventListener('dragstart',function(e){if(e.target&&e.target.tagName==='IMG')no(e)},true);})();<\/script>`;
+
+// 15-11-2026 · Navegación que el sitio agrega a TODA edición (de hoy, por fecha, liviana o permanente). Un solo dueño: el sitio.
+// (a) Germán: «agregar una flecha que le permita al lector retroceder y volver al Landing page». Botón fijo arriba a la izquierda,
+//     con el lenguaje del botón «Índice» (azul marino, borde dorado). Es un enlace real a la portada: funciona sin JavaScript y con
+//     «abrir en pestaña nueva». Si el lector llegó desde la portada y no navegó dentro de la edición, vuelve con history.back()
+//     (regresa al mismo punto de la portada, al instante y sin contar otra visita). Donde tapa el texto, se esconde al bajar y
+//     reaparece al subir; con el teclado aparece al recibir el foco.
+// (b) Germán: «arriba del botón flotante del Índice agrega otro botón ... una flecha (que apunta hacia arriba) contenida dentro de un
+//     círculo, para que el lector pueda subir rápidamente al header». Círculo claro con aro dorado y doble flecha azul marino (su dibujo),
+//     centrado sobre «Índice». Aparece recién cuando el lector bajó casi una pantalla; sube suave (o al instante con «reducir movimiento»)
+//     y deja el foco arriba para quien usa teclado.
+// Ninguno de los dos se imprime (el PDF sale igual que antes) y ambos cambian su texto con el botón EN/ES (evento «cofrade-idioma»).
+const NAV_HTML = `<a id="cnVolver" class="cn-volver" href="/" data-no-tr translate="no" aria-label="Volver a la portada de Cofrade News" title="Volver a la portada de Cofrade News"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5.5M11.5 18.5 5 12l6.5-6.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>`;
+const SUBIR_HTML = `<button type="button" id="cnSubir" class="cn-subir" data-no-tr translate="no" aria-label="Subir al encabezado del boletín" title="Subir al encabezado del boletín"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 12.5 12 7l5.5 5.5M6.5 18 12 12.5l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+// 15-11-2026 (Germán: «un leve espacio adicional entre los 22 temas»): las ediciones nuevas lo traen de la Skill y lo declaran con
+// data-ritmo en <html>; a las ya publicadas se lo pone el sitio con los MISMOS valores. Así nunca se suma dos veces.
+const SITIO_CSS = `<style id="cnSitio">a.cn-volver{position:fixed;z-index:900;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));
+display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;box-sizing:border-box;
+background:#0B1F3A;color:#fff;border:2px solid #D9AE52;text-decoration:none;-webkit-tap-highlight-color:transparent;
+box-shadow:0 10px 26px rgba(11,31,58,.30),0 2px 6px rgba(11,31,58,.20);
+transition:transform .22s cubic-bezier(.2,.8,.2,1),opacity .18s ease-out,box-shadow .18s}
+a.cn-volver svg,button.cn-subir svg{display:block;transition:transform .18s cubic-bezier(.2,.8,.2,1)}
+a.cn-volver:hover{box-shadow:0 14px 32px rgba(11,31,58,.36),0 3px 8px rgba(11,31,58,.22)}a.cn-volver:hover svg{transform:translateX(-2px)}
+a.cn-volver:active{transform:scale(.95)}a.cn-volver:focus-visible,button.cn-subir:focus-visible{outline:3px solid #D9AE52;outline-offset:3px}
+a.cn-volver.cn-oculto{transform:translateY(calc(-100% - 24px));opacity:0;pointer-events:none}
+:root[data-theme=dark] a.cn-volver{background:#D9AE52;color:#0E1522;border-color:#F3D58F}
+button.cn-subir{position:fixed;z-index:900;right:var(--cn-sr,calc(max(16px,env(safe-area-inset-right)) + 32px));bottom:var(--cn-sb,calc(max(16px,env(safe-area-inset-bottom)) + 66px));
+display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;min-width:0;padding:0;margin:0;border-radius:50%;box-sizing:border-box;
+background:var(--card,#fff);color:var(--tinta,#0B1F3A);border:2px solid var(--oro,#B8892B);cursor:pointer;-webkit-tap-highlight-color:transparent;
+box-shadow:0 8px 22px rgba(11,31,58,.22),0 2px 6px rgba(11,31,58,.14);
+opacity:0;visibility:hidden;transform:translateY(10px) scale(.9);pointer-events:none;
+transition:opacity .2s ease-out,transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .18s,visibility 0s linear .22s}
+button.cn-subir.cn-on{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition-delay:0s}
+button.cn-subir.cn-on:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(11,31,58,.28),0 3px 8px rgba(11,31,58,.18)}
+button.cn-subir:hover svg{transform:translateY(-1px)}button.cn-subir.cn-on:active{transform:scale(.95)}
+@media (min-width:900px){a.cn-volver{top:16px;left:16px;width:48px;height:48px}button.cn-subir{width:48px;height:48px}}
+@media (prefers-reduced-motion:reduce){a.cn-volver,a.cn-volver svg,button.cn-subir,button.cn-subir svg{transition:none}a.cn-volver:hover svg,button.cn-subir:hover svg,button.cn-subir.cn-on:hover{transform:none}}
+@media print{a.cn-volver,button.cn-subir{display:none!important}}
+html:not([data-ritmo]) section.sec{margin-top:clamp(46px,5vw,60px);margin-bottom:clamp(46px,5vw,60px);padding-top:12px}
+html:not([data-ritmo]) main>h2{margin-top:clamp(46px,5vw,60px)}
+@media print{html:not([data-ritmo]) section.sec{margin-top:30px;margin-bottom:30px;padding-top:8px}html:not([data-ritmo]) main>h2{margin-top:30px}}</style>`;
+const NAV_JS = `<script>(function(){var a=document.getElementById('cnVolver'),s=document.getElementById('cnSubir'),R=document.documentElement;if(!a)return;
+var L0,h0;function base(){L0=history.length;h0=location.href}base();
+if(document.prerendering)document.addEventListener('prerenderingchange',base,{once:true});
+var desde=false;try{var r=new URL(document.referrer);desde=r.origin===location.origin&&r.pathname==='/'}catch(e){}
+a.addEventListener('click',function(ev){if(ev.defaultPrevented||ev.button||ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.altKey)return;
+if(desde&&L0>1&&history.length===L0&&location.href===h0){ev.preventDefault();history.back()}});
+var T={es:['Volver a la portada de Cofrade News','Subir al encabezado del boletín'],en:['Back to the Cofrade News home page','Back to the top of the newsletter']};
+function rot(el,t){if(el){el.setAttribute('aria-label',t);el.setAttribute('title',t)}}
+function idioma(l){var t=/^en/i.test(String(l||''))?T.en:T.es;rot(a,t[0]);rot(s,t[1]);setTimeout(lugar,60)}
+var cubre=true;function medir(){var c=document.querySelector('.hoja')||document.querySelector('main');if(!c){cubre=true;return}
+var cs=getComputedStyle(c);cubre=c.getBoundingClientRect().left+(parseFloat(cs.paddingLeft)||0)<a.getBoundingClientRect().right+12}
+function lugar(){if(!s)return;var f=document.getElementById('cnFab');
+if(!f||!f.offsetWidth){s.style.setProperty('--cn-sr','max(16px, env(safe-area-inset-right))');s.style.setProperty('--cn-sb','max(16px, env(safe-area-inset-bottom))');return}
+var cf=getComputedStyle(f),fr=parseFloat(cf.right)||16,fb=parseFloat(cf.bottom)||16;
+s.style.setProperty('--cn-sr',Math.round(fr+(f.offsetWidth-s.offsetWidth)/2)+'px');s.style.setProperty('--cn-sb',Math.round(fb+f.offsetHeight+12)+'px')}
+function todo(){medir();lugar()}
+idioma(R.lang);document.addEventListener('cofrade-idioma',function(e){idioma(e.detail)});
+todo();addEventListener('resize',todo,{passive:true});addEventListener('load',todo);
+var y0=scrollY,oc=false;function poner(o){if(o!==oc){oc=o;a.classList.toggle('cn-oculto',o)}}
+function verSubir(){if(s)s.classList.toggle('cn-on',scrollY>Math.max(600,innerHeight*0.9))}
+addEventListener('scroll',function(){verSubir();var y=scrollY,d=y-y0;if(Math.abs(d)<10&&y>140)return;y0=y;poner(cubre&&d>0&&y>140)},{passive:true});
+verSubir();a.addEventListener('focus',function(){poner(false)});
+if(s)s.addEventListener('click',function(){var q=matchMedia('(prefers-reduced-motion: reduce)').matches;
+try{scrollTo({top:0,behavior:q?'auto':'smooth'})}catch(e){scrollTo(0,0)}poner(false);try{a.focus({preventScroll:true})}catch(e){}})})();<\/script>`;
 
 const DIALOGO = `<dialog class="dlg-pub" id="dlgPub" aria-labelledby="dlgPubT"><form class="pub-form" method="dialog" novalidate>
 <button type="button" class="pub-cerrar" aria-label="Cerrar">✕</button><h3 id="dlgPubT">Déjenos sus datos y lo contactamos</h3><p class="sub" id="dlgPubSub" style="margin:0"></p>
@@ -1758,12 +1827,9 @@ ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${h
 ${bloqueCifras(p)}${bloqueTierra(p)}${bloqueTitulares(p)}</section>
 <section aria-labelledby="t-gal"><h2 class="titulo-lujo" id="t-gal">Así se ve por dentro</h2><p class="sub">Algunos de los gráficos de la edición, tal como los recibes cada mañana.</p>
 <div class="galeria">
-<figure class="g-a"><img src="/capturas/indicadores.webp" alt="Gráfico del dólar en los últimos dos meses" loading="lazy" width="1000" height="426"><figcaption><b>Indicadores y monedas</b>El dólar día a día, con la UF, el euro y el yuan.</figcaption></figure>
-<figure class="g-b"><img src="/capturas/mercados.webp" alt="Variación diaria de los mercados" loading="lazy" width="962" height="886"><figcaption><b>Mercados</b>Wall Street, cobre, petróleo, IPSA y bolsas de Europa.</figcaption></figure>
-<figure class="g-c"><img src="/capturas/industrias.webp" alt="Mapa de Chile por industria" loading="lazy" width="700" height="1242"><figcaption><b>Industrias de Chile</b>Qué produce cada región.</figcaption></figure>
-<figure class="g-d"><img src="/capturas/perspectivas-2050.webp" alt="Inversión en megaproyectos por sector" loading="lazy" width="1000" height="721"><figcaption><b>Perspectivas 2050</b>Inversión en megaproyectos por sector.</figcaption></figure>
-<figure class="g-e"><img src="/capturas/gobiernos.webp" alt="Indicadores económicos por gobierno" loading="lazy" width="1000" height="319"><figcaption><b>Avances por gobierno</b>Crecimiento, inflación, desempleo y deuda.</figcaption></figure>
-<figure class="g-f"><img src="/capturas/estrecho.webp" alt="Mapa del Estrecho de Magallanes" loading="lazy" width="1000" height="367"><figcaption><b>Mar y navegación</b>Oleaje, mareas y el paso por el Estrecho de Magallanes.</figcaption></figure>
+<div class="g-fila"><figure style="--r:2.347"><img src="/capturas/indicadores.webp" alt="Gráfico del dólar en los últimos dos meses" loading="lazy" width="1000" height="426"><figcaption><b>Indicadores y monedas</b>El dólar día a día, con la UF, el euro y el yuan.</figcaption></figure><figure style="--r:1.086"><img src="/capturas/mercados.webp" alt="Variación diaria de los mercados" loading="lazy" width="962" height="886"><figcaption><b>Mercados</b>Wall Street, cobre, petróleo, IPSA y bolsas de Europa.</figcaption></figure></div>
+<div class="g-fila"><figure style="--r:1.387;--f:#FBF8F2"><img src="/capturas/perspectivas-2050.webp" alt="Inversión en megaproyectos por sector" loading="lazy" width="1000" height="721"><figcaption><b>Perspectivas 2050</b>Inversión en megaproyectos por sector.</figcaption></figure><figure style="--r:2.725;--f:#FBF8F2"><img src="/capturas/estrecho.webp" alt="Mapa del Estrecho de Magallanes" loading="lazy" width="1000" height="367"><figcaption><b>Mar y navegación</b>Oleaje, mareas y el paso por el Estrecho de Magallanes.</figcaption></figure></div>
+<div class="g-fila"><figure style="--r:0.564"><img src="/capturas/industrias.webp" alt="Mapa de Chile por industria" loading="lazy" width="700" height="1242"><figcaption><b>Industrias de Chile</b>Qué produce cada región.</figcaption></figure><figure style="--r:3.135"><img src="/capturas/gobiernos.webp" alt="Indicadores económicos por gobierno" loading="lazy" width="1000" height="319"><figcaption><b>Avances por gobierno</b>Crecimiento, inflación, desempleo y deuda.</figcaption></figure></div>
 </div></section>
 <section id="puente" style="border:0;padding:0"><div class="puente"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
 <span class="kicker">Para socios · Muy pronto</span><h2>Puente de Mando · Dashboard Financiero</h2>
@@ -1914,8 +1980,8 @@ export default {
         if (typeof HTMLRewriter === "undefined") return resp;
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.append(PROTEGER + MEDIR, { html: true }); } })
-          .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">', { html: true }); } })
+          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS, { html: true }); } })
+          .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">' + SITIO_CSS, { html: true }); } })
           .transform(resp);
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
