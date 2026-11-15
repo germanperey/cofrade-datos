@@ -615,33 +615,25 @@ def _dia_chile(iso):
 
 def proxima_liga(estado, hoy):
     """15-11-2026 (Germán: «el gráfico del fútbol no está actualizado desde hace varios días»): la tabla del 08-11 SÍ estaba al día
-    (la fecha 28 se juega del 20 al 22-11), pero el pie no lo decía. Fecha de Chile del próximo partido de la Liga de Primera, para
-    que la tabla diga «al día; la próxima comienza el dd-mm». ESPN (calendario de los próximos 21 días) y, si no responde,
-    TheSportsDB (próximos partidos de la liga, API gratuita con su clave pública de prueba). → «AAAA-MM-DD» o None."""
-    fechas = []
-    j = pedir(f"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates={hoy:%Y%m%d}-{hoy + dt.timedelta(days=21):%Y%m%d}&limit=300",
-              estado, "liga_proxima", espera=(0, 20))
-    for ev in (j or {}).get("events") or []:
-        tipo = ((ev.get("status") or {}).get("type") or {}) if isinstance(ev, dict) else {}
-        if tipo.get("completed") or str(tipo.get("state") or "") in ("post", "in"):
-            continue
-        f = _dia_chile(ev.get("date"))
-        if f and f >= hoy:
-            fechas.append(f)
-    if not fechas:
-        for clave in ("123", "3"):
-            j = pedir(f"https://www.thesportsdb.com/api/v1/json/{clave}/eventsnextleague.php?id=4627", estado, "liga_proxima", espera=(0, 20))
-            for ev in (j or {}).get("events") or []:
-                f = _dia_chile(f"{ev.get('strTimestamp')}Z") if ev.get("strTimestamp") else None
-                if not f:
-                    try:
-                        f = dt.date.fromisoformat(str(ev.get("dateEventLocal") or ev.get("dateEvent"))[:10])
-                    except (TypeError, ValueError):
-                        f = None
+    (la fecha 28 se juega del 20 al 22-11), pero el pie no lo decía. Fecha de Chile en que comienza la próxima fecha de la Liga de
+    Primera, para que la tabla diga «al día; la próxima comienza el dd-mm». Fuente: el marcador de ESPN (la próxima jornada y el
+    calendario de la temporada). Diagnóstico del 15-11 (sonda): ESPN rechaza el rango de fechas (HTTP 400) y TheSportsDB tenía un
+    partido de la fecha 28 con fecha equivocada (22-11 en vez de 20-11): por eso solo ESPN y sin rango. Si una jornada ya empezó
+    (algún partido jugado o en juego), no se informa próxima fecha: la tabla no está «al día». → «AAAA-MM-DD» o None."""
+    j = pedir("https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard", estado, "liga_proxima", espera=(0, 20))
+    if not isinstance(j, dict):
+        return None
+    eventos = [ev for ev in (j.get("events") or []) if isinstance(ev, dict)]
+    estados = [str((((ev.get("status") or {}).get("type") or {}).get("state")) or "") for ev in eventos]
+    if any(e in ("post", "in") for e in estados) and any(e == "pre" for e in estados):
+        return None   # jornada en curso
+    fechas = [f for f in (_dia_chile(ev.get("date")) for ev, e in zip(eventos, estados) if e == "pre") if f and f >= hoy]
+    if not fechas:   # sin partidos por jugar en la jornada que muestra: el calendario de la temporada
+        for lg in j.get("leagues") or []:
+            for c in (lg.get("calendar") or []) if isinstance(lg, dict) else []:
+                f = _dia_chile(c.get("startDate") if isinstance(c, dict) else c)
                 if f and f >= hoy:
                     fechas.append(f)
-            if fechas:
-                break
     return min(fechas).isoformat() if fechas else None
 
 

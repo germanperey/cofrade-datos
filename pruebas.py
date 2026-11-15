@@ -1181,7 +1181,8 @@ def sin_fuentes_que_su_robots_prohibe():
     urls = [u for L in F.values() for _, u, _ in L]
     prohibidos = ("news.google.com/rss", "query1.finance.yahoo.com/v7")
     assert not [u for u in urls if any(x in u for x in prohibidos)]
-    assert all(len(L) >= 7 for L in F.values()), {k: len(v) for k, v in F.items()}
+    # 15-11-2026: las secciones de siempre no quedan cortas; las nuevas del directorio vivo crecen solas según lo que se verifica
+    assert all(len(F[k]) >= 7 for k in B.FEEDS), {k: len(v) for k, v in F.items()}
 
 @prueba
 def radar_de_bing_en_github_y_no_en_el_pulso():
@@ -1302,26 +1303,27 @@ def completas_permanentes_no_se_traban():
 
 
 @prueba
-def liga_proxima_fecha_espn_y_respaldo():
-    """15-11-2026: la próxima fecha de la Liga de Primera (fecha de Chile) desde ESPN; si ESPN no trae partidos, TheSportsDB."""
+def liga_proxima_fecha_espn():
+    """15-11-2026: la próxima fecha de la Liga de Primera (fecha de Chile) desde el marcador de ESPN; si la jornada ya empezó, nada."""
     hoy = dt.date(2026, 11, 15)
-    espn = {"events": [
-        {"date": "2026-11-08T21:00Z", "status": {"type": {"completed": True, "state": "post"}}},   # ya jugado
-        {"date": "2026-11-21T00:30Z", "status": {"type": {"completed": False, "state": "pre"}}},  # 20-11 21:30 en Chile
-        {"date": "2026-11-22T19:00Z", "status": {"type": {"completed": False, "state": "pre"}}},
-    ]}
+    pre = {"type": {"completed": False, "state": "pre"}}
+    espn = {"events": [{"date": "2026-11-21T00:30Z", "status": pre}, {"date": "2026-11-20T21:00Z", "status": pre}],
+            "leagues": [{"calendar": ["2026-11-08T08:00Z", "2026-11-20T08:00Z", "2026-11-29T08:00Z"]}]}
     viejo = B.pedir
     try:
         pedidos = []
-        def falso(url, estado, clave, **kw):
-            pedidos.append(url)
-            return espn if "espn" in url else None
-        B.pedir = falso
-        assert B.proxima_liga({}, hoy) == "2026-11-20", "la fecha de Chile (no la UTC) del primer partido por jugar"
-        assert "dates=20261115-20261206" in pedidos[0], pedidos[0]
-        tsdb = {"events": [{"strTimestamp": "2026-11-21T22:00:00", "dateEvent": "2026-11-21"}, {"dateEvent": "2026-11-14"}]}
-        B.pedir = lambda url, estado, clave, **kw: (None if "espn" in url else tsdb)
-        assert B.proxima_liga({}, hoy) == "2026-11-21"
+        B.pedir = lambda url, estado, clave, **kw: (pedidos.append(url) or espn)
+        assert B.proxima_liga({}, hoy) == "2026-11-20", "el primer partido por jugar, en fecha de Chile"
+        assert pedidos == ["https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard"], pedidos   # sin rango (ESPN da 400)
+        espn["events"][0]["date"] = "2026-11-21T02:30Z"   # 20-11 23:30 en Chile
+        espn["events"][1]["date"] = "2026-11-21T03:00Z"
+        assert B.proxima_liga({}, hoy) == "2026-11-20", "la hora UTC del día siguiente es todavía el 20 en Chile"
+        en_curso = {"events": [{"date": "2026-11-20T21:00Z", "status": {"type": {"completed": True, "state": "post"}}},
+                               {"date": "2026-11-21T21:00Z", "status": pre}]}
+        B.pedir = lambda url, estado, clave, **kw: en_curso
+        assert B.proxima_liga({}, dt.date(2026, 11, 21)) is None, "jornada en curso: la tabla no está al día"
+        B.pedir = lambda url, estado, clave, **kw: {"events": [], "leagues": [{"calendar": ["2026-11-08T08:00Z", "2026-11-29T08:00Z"]}]}
+        assert B.proxima_liga({}, hoy) == "2026-11-29", "sin partidos por jugar en la jornada: el calendario"
         B.pedir = lambda url, estado, clave, **kw: None
         assert B.proxima_liga({}, hoy) is None
     finally:
