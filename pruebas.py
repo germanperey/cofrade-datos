@@ -1446,6 +1446,56 @@ def vigia_no_repite_el_mismo_aviso_en_cada_vuelta():
     finally:
         V.gh, V.ahora = viejos
 
+
+@prueba
+def vigia_avisa_si_falta_un_grafico_o_una_seccion_de_ayer():
+    """15-11-2026 (Germán: «en la publicación de hoy faltó el gráfico» y «para que nunca falte nada de los contenidos»): el vigía compara
+    la edición más nueva con la anterior publicada; lo que falta es GRAVE (salvo sismos sin registros y el Congreso a inicio de mes)."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import vigia as V
+
+    def ed(graficos, secciones, extra=""):
+        g = "".join(f'<div class="chart" id="{i}" role="img" aria-label="{n}"></div>' for i, n in graficos)
+        g += "".join(f'<div class="chart" id="gRelleno{chr(65 + k)}" aria-label="Relleno"></div>' for k in range(10))   # 10 gráficos fijos más
+        return ("<html><body>" + "".join(f"<section class=\"sec\"><h2>{t}</h2></section>" for t in secciones) + g + extra
+                + "<script>var x='<div class=\"chart\" id=\"gFantasma\"></div>'</script></body></html>")
+    ayer = V.inventario_html(ed([("gCrecHist", "Crecimiento anual del PIB de Chile"), ("gSismos", "Sismos"), ("gLeyesAp_s", "Senado"),
+                                 ("gLey31", "Ley 31")], ["1. Economía", "11. Mar y mareas", "22. Horóscopo"]))
+    assert set(ayer["graficos"]) - {f"gRelleno{chr(65 + k)}" for k in range(10)} == {"gCrecHist", "gSismos", "gLeyesAp_s"} and not ayer["sin_sismos"], ayer
+    hoy = V.inventario_html(ed([("gLeyesAp_s", "Senado")], ["1. Economía", "10. Mar y mareas"], "<p>No hubo sismos registrados en 24 horas.</p>"))
+    f = V.faltantes_edicion(hoy, ayer, "2026-11-15", "2026-11-14")
+    assert f == ["gráfico «Crecimiento anual del PIB de Chile» (gCrecHist)", "sección «22. Horóscopo»"], f
+    sin_senado = V.inventario_html(ed([("gCrecHist", "PIB"), ("gSismos", "Sismos")], ["1. Economía", "11. Mar y mareas", "22. Horóscopo"]))
+    assert V.faltantes_edicion(sin_senado, ayer, "2026-12-01", "2026-11-30") == []                      # mes nuevo: el Senado aún no vota
+    assert V.faltantes_edicion(sin_senado, ayer, "2026-11-15", "2026-11-14") == ["gráfico «Senado» (gLeyesAp_s)"]
+    # en la vuelta del vigía: compara contra la anterior que encuentre (hasta 6 días) y lo deja como falla GRAVE
+    paginas = {"/edicion/2026-11-15": ed([("gSismos", "Sismos")], ["1. Economía", "11. Mar y mareas", "22. Horóscopo"]),
+               "/edicion/2026-11-13": ed([("gCrecHist", "Crecimiento anual del PIB de Chile"), ("gSismos", "Sismos")],
+                                         ["1. Economía", "11. Mar y mareas", "22. Horóscopo"])}
+
+    class R:
+        def __init__(self, t):
+            self.status_code, self.text = (200, t) if t else (404, "")
+    viejo = V.pedir
+    try:
+        V.pedir = lambda url, **k: R(paginas.get(url.replace(V.SITIO, "")))
+        inf = V.Informe()
+        V.revisar_contenido(inf, "2026-11-15")
+        assert [x["nombre"] for x in inf.graves] == ["Edición 2026-11-15: no falta nada de lo que salió el 2026-11-13"], inf.revisiones
+        assert "Crecimiento anual del PIB de Chile" in inf.graves[0]["detalle"], inf.graves
+        inf2 = V.Informe()
+        paginas["/edicion/2026-11-15"] = paginas["/edicion/2026-11-13"]
+        V.revisar_contenido(inf2, "2026-11-15")
+        assert not inf2.graves and inf2.revisiones and inf2.revisiones[0]["ok"], inf2.revisiones
+        inf3 = V.Informe()
+        V.revisar_contenido(inf3, None)
+        assert not inf3.revisiones
+    finally:
+        V.pedir = viejo
+    import inspect
+    assert "revisar_contenido(inf, fecha)" in inspect.getsource(V.main)
+
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

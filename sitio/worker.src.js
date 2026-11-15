@@ -348,7 +348,7 @@ button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}
 .piz-cab span{color:#9FB0C6;letter-spacing:.06em;text-transform:none;font-weight:500}
 .piz-fila{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:center;padding:12px 0;border-top:1px solid rgba(230,199,122,.14)}
 .piz-fila small{display:block;color:#AFB9C8;font-size:12.5px;letter-spacing:.02em}.piz-fila b{font:600 27px/1.15 var(--display);color:#FFFDF8;font-variant-numeric:tabular-nums}
-.piz-fila .var{font-size:12.5px;margin-left:6px}.piz-fila svg{width:150px;height:46px;display:block}
+.piz-fila .var{font-size:12.5px;margin-left:6px;white-space:nowrap}.piz-fila .nw{white-space:nowrap}.piz-fila svg{width:150px;height:46px;display:block}
 .lujo .sube{color:#7DDBA6}.lujo .baja{color:#F4A39C}
 .piz-pie{font-size:11.5px;color:#8E9AAB;margin-top:8px}
 .secc{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
@@ -379,6 +379,15 @@ button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}
 .precio-lujo .extra{font-size:14px;color:#D8D2C4}.legal{font-size:12px;color:#8E9AAB;margin:14px 0 0;max-width:60em}
 .pie-agua{display:block;width:64px;height:64px;margin:0 0 10px;opacity:.85}
 @media (max-width:980px){.lujo-in{grid-template-columns:1fr;gap:30px;padding:44px 16px}.agua{width:520px;right:-180px;top:30%}}
+/* 15-11-2026 (Germán: «estandarizar el largo de los 3 botones de la portada»): los tres miden lo mismo en todo tamaño de pantalla;
+   en el celular van uno bajo otro a todo el ancho y desde 601 px en dos columnas iguales */
+.lujo .acciones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:36rem}
+.lujo .acciones .btn{justify-content:center;text-align:center;padding:0 14px;white-space:nowrap}
+@media (max-width:600px){.lujo .acciones{grid-template-columns:minmax(0,1fr);max-width:none}}
+/* 15-11-2026: en celulares de 320 a 375 px la pizarra (cifra grande + gráfico de 150 px) ensanchaba la columna a 362 px y la portada
+   se cortaba por la derecha (título y texto incluidos). La columna ya no pasa del ancho de la pantalla y la pizarra se ajusta */
+@media (max-width:980px){.lujo-in{grid-template-columns:minmax(0,1fr)}.piz-fila .var{display:block;margin:2px 0 0}}
+@media (max-width:420px){.pizarra{padding:18px 16px 14px}.piz-fila{grid-template-columns:minmax(0,1fr) 104px;gap:10px}.piz-fila svg{width:104px;height:40px}.piz-fila b{font-size:24px}.piz-fila small{font-size:12px}}
 @media (max-width:820px){.portada,.socios{grid-template-columns:1fr;gap:22px}.portada{padding-top:26px}nav{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}nav a{white-space:nowrap}.edicion ul{columns:1}}
 /* 13-11-2026 · cabecera fija (Germán: «el header debe mantenerse fijo, para que siempre esté visible») */
 html{scroll-padding-top:calc(var(--alto-cab,112px) + 12px)}
@@ -845,7 +854,7 @@ function pizarra(h, p) {
     const datos = s.datos.slice(-Math.min(s.datos.length, Math.round(dias * 0.7)));   // ~250 días hábiles
     const ult = datos[datos.length - 1], ant = s.datos[Math.max(0, s.datos.length - 22)];
     const varp = ant && ant[1] ? ((ult[1] / ant[1]) - 1) * 100 : null;
-    return `<div class="piz-fila"><div><small>${esc(titulo)} · ${esc(ult[0].split("-").reverse().join("-"))}</small><b>${esc(pre)}${num(ult[1], dec)}</b>`
+    return `<div class="piz-fila"><div><small><span>${esc(titulo)}</span> <span class="nw">· ${esc(ult[0].split("-").reverse().join("-"))}</span></small><b>${esc(pre)}${num(ult[1], dec)}</b>`
       + `${varp !== null ? `<span class="var ${varp > 0 ? "sube" : varp < 0 ? "baja" : ""}">${varp > 0 ? "+" : varp < 0 ? "−" : ""}${num(Math.abs(varp), 1)} % en un mes</span>` : ""}</div>${spark(datos)}</div>`;
   };
   const filas = fila("dolar", "Dólar observado", "$", 2) + fila("cobre", "Cobre, US$ por libra", "US$", 2) + fila("uf", "Unidad de Fomento", "$", 2);

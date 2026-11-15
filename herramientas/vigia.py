@@ -4,7 +4,8 @@ Germán: «agrega un auditor que todos los días revise al menos cada 6 horas si
 funcionamiento de alguna aplicación (medios de pago, formularios, suscripción Socios, gráficos, etc.) para repararlo automáticamente»;
 el mismo día, a las 07:21: «que el "auditor" revise, audite, repare y mejore todo cada 3 horas (en vez de cada 6 horas)».
 
-Revisa el sitio como un lector (portada, edición del día, gráficos dibujados, sin errores de JavaScript, Buzón, Socios, Mercado Pago a
+Revisa el sitio como un lector (portada, edición del día, gráficos dibujados, que no falte ningún gráfico ni sección de la edición
+anterior, sin errores de JavaScript, Buzón, Socios, Mercado Pago a
 través de /salud, Mercados) y los datos de GitHub (frescura de los datos del día y del Pulso, corridas fallidas). Repara SOLO lo que es
 seguro y reversible: vuelve a correr las bajadas de datos y del Pulso, vuelve a correr una vez los trabajos fallidos y rehace el índice
 de ediciones. Nunca cobra, nunca completa captchas, nunca envía formularios reales. Lo que no se puede reparar aquí queda en
@@ -14,8 +15,10 @@ python3 herramientas/vigia.py [--sin-navegador] [--sin-reparar]
 """
 import argparse
 import datetime as dt
+import html
 import json
 import os
+import re
 import sys
 import time
 
@@ -169,6 +172,69 @@ def revisar_navegador(inf, fecha):
                 b.close()
 
 
+# ---------------------------------------------------------------- que nunca falte nada (15-11-2026)
+# Germán: «en la publicación de hoy faltó el gráfico» (Crecimiento anual del PIB) y «este tipo de detalles son importantísimos de verificar
+# en los LOOP y la auditoría, para que nunca falte nada de los contenidos». Misma regla que el control de calidad de la Skill
+# (scripts/inventario.py): un gráfico fijo o una sección que salió en la edición anterior y hoy no está es GRAVE. No cuentan los gráficos
+# numerados (gLey31, gTab9: cambian con las noticias), el mapa de sismos cuando la edición dice que no hubo, ni los del Congreso de una
+# cámara al empezar un mes (el mes nuevo parte vacío).
+_LEYES = re.compile(r"^gLeyes(?:Ap|Re)_[cs]$")
+
+
+def inventario_html(h):
+    """HTML de la edición completa → {"graficos": {id: nombre}, "secciones": [títulos], "sin_sismos": bool}."""
+    h = re.sub(r"<script\b.*?</script>|<style\b.*?</style>|<template\b.*?</template>", " ", h or "", flags=re.S | re.I)
+    graficos = {}
+    for m in re.finditer(r'<div\s+class="chart[^"]*"([^>]*)>', h):
+        i = re.search(r'\bid="([^"]+)"', m.group(1))
+        if not i or re.search(r"\d+$", i.group(1)):
+            continue
+        n = re.search(r'\baria-label="([^"]*)"', m.group(1))
+        graficos[i.group(1)] = html.unescape(n.group(1)).strip() if n and n.group(1).strip() else i.group(1)
+    secciones = [t for t in (re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", x))).strip()
+                             for x in re.findall(r"<h2\b[^>]*>(.*?)</h2>", h, flags=re.S | re.I)) if t]
+    return {"graficos": graficos, "secciones": secciones, "sin_sismos": "No hubo sismos registrados" in h}
+
+
+def _sin_numero(t):
+    return re.sub(r"^\s*\d+\s*[.)]\s*", "", str(t or "")).strip().lower()
+
+
+def faltantes_edicion(hoy, previa, fecha_hoy, fecha_previa):
+    """Inventarios de dos ediciones → lista de lo que falta hoy (vacía si no falta nada)."""
+    faltan = []
+    for gid, nombre in sorted(previa["graficos"].items()):
+        if gid in hoy["graficos"] or (gid == "gSismos" and hoy["sin_sismos"]) or (_LEYES.match(gid) and fecha_hoy[:7] != fecha_previa[:7]):
+            continue
+        faltan.append(f"gráfico «{nombre}» ({gid})")
+    hs = {_sin_numero(t) for t in hoy["secciones"]}
+    faltan += [f"sección «{t}»" for t in previa["secciones"] if _sin_numero(t) not in hs]
+    return faltan
+
+
+def revisar_contenido(inf, fecha):
+    """La edición más nueva contra la anterior publicada (hasta 6 días atrás), tal como las sirve el sitio."""
+    if not fecha:
+        return
+    try:
+        r = pedir(f"{SITIO}/edicion/{fecha}")
+        hoy = inventario_html(r.text) if r.status_code == 200 else None
+        if not hoy or len(hoy["graficos"]) < 10:
+            return   # sin la edición completa no se compara (eso ya lo dice la revisión «se sirve la edición completa»)
+        f0 = dt.date.fromisoformat(fecha)
+        for k in range(1, 7):
+            fp = (f0 - dt.timedelta(days=k)).isoformat()
+            rp = pedir(f"{SITIO}/edicion/{fp}", allow_redirects=False)
+            previa = inventario_html(rp.text) if rp.status_code == 200 else None
+            if previa and len(previa["graficos"]) >= 10:
+                faltan = faltantes_edicion(hoy, previa, fecha, fp)
+                inf.ok(f"Edición {fecha}: no falta nada de lo que salió el {fp}", not faltan,
+                       f"falta(n) {len(faltan)}: " + "; ".join(faltan[:8]))
+                return
+    except (requests.RequestException, ValueError) as ex:
+        inf.ok(f"Edición {fecha}: comparación con la edición anterior", False, type(ex).__name__, grave=False)
+
+
 def _hora(x):
     try:
         t = dt.datetime.fromisoformat(str(x))
@@ -280,6 +346,7 @@ def main(argv=None):
     fecha = revisar_sitio(inf)
     if not a.sin_navegador:
         revisar_navegador(inf, fecha)
+    revisar_contenido(inf, fecha)
     revisar_datos(inf, not a.sin_reparar)
     revisar_corridas(inf, not a.sin_reparar)
     salida = {"generado": ahora().isoformat(timespec="seconds"), "ok": not inf.graves, "graves": len(inf.graves),
