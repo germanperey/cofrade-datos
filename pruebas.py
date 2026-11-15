@@ -1300,6 +1300,33 @@ def completas_permanentes_no_se_traban():
         CP.MANIFIESTO, CP.MESES, CP.en_rama, CP.contenido, CP.assets, CP.crear_release, CP.subir = viejo
     assert rc == 0 and llamadas["subir"] == [] and llamadas["assets"] == 2, (rc, llamadas)
 
+
+@prueba
+def liga_proxima_fecha_espn_y_respaldo():
+    """15-11-2026: la próxima fecha de la Liga de Primera (fecha de Chile) desde ESPN; si ESPN no trae partidos, TheSportsDB."""
+    hoy = dt.date(2026, 11, 15)
+    espn = {"events": [
+        {"date": "2026-11-08T21:00Z", "status": {"type": {"completed": True, "state": "post"}}},   # ya jugado
+        {"date": "2026-11-21T00:30Z", "status": {"type": {"completed": False, "state": "pre"}}},  # 20-11 21:30 en Chile
+        {"date": "2026-11-22T19:00Z", "status": {"type": {"completed": False, "state": "pre"}}},
+    ]}
+    viejo = B.pedir
+    try:
+        pedidos = []
+        def falso(url, estado, clave, **kw):
+            pedidos.append(url)
+            return espn if "espn" in url else None
+        B.pedir = falso
+        assert B.proxima_liga({}, hoy) == "2026-11-20", "la fecha de Chile (no la UTC) del primer partido por jugar"
+        assert "dates=20261115-20261206" in pedidos[0], pedidos[0]
+        tsdb = {"events": [{"strTimestamp": "2026-11-21T22:00:00", "dateEvent": "2026-11-21"}, {"dateEvent": "2026-11-14"}]}
+        B.pedir = lambda url, estado, clave, **kw: (None if "espn" in url else tsdb)
+        assert B.proxima_liga({}, hoy) == "2026-11-21"
+        B.pedir = lambda url, estado, clave, **kw: None
+        assert B.proxima_liga({}, hoy) is None
+    finally:
+        B.pedir = viejo
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

@@ -604,6 +604,47 @@ def partidos_csv(j):
     return sorted(out, key=lambda x: x["fecha"])
 
 
+def _dia_chile(iso):
+    """«2026-11-21T00:30Z» (UTC) → fecha de Chile (2026-11-20). None si no se entiende."""
+    try:
+        t = dt.datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
+        return (t if t.tzinfo else t.replace(tzinfo=dt.timezone.utc)).astimezone(TZ).date()
+    except (TypeError, ValueError):
+        return None
+
+
+def proxima_liga(estado, hoy):
+    """15-11-2026 (Germán: «el gráfico del fútbol no está actualizado desde hace varios días»): la tabla del 08-11 SÍ estaba al día
+    (la fecha 28 se juega del 20 al 22-11), pero el pie no lo decía. Fecha de Chile del próximo partido de la Liga de Primera, para
+    que la tabla diga «al día; la próxima comienza el dd-mm». ESPN (calendario de los próximos 21 días) y, si no responde,
+    TheSportsDB (próximos partidos de la liga, API gratuita con su clave pública de prueba). → «AAAA-MM-DD» o None."""
+    fechas = []
+    j = pedir(f"https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates={hoy:%Y%m%d}-{hoy + dt.timedelta(days=21):%Y%m%d}&limit=300",
+              estado, "liga_proxima", espera=(0, 20))
+    for ev in (j or {}).get("events") or []:
+        tipo = ((ev.get("status") or {}).get("type") or {}) if isinstance(ev, dict) else {}
+        if tipo.get("completed") or str(tipo.get("state") or "") in ("post", "in"):
+            continue
+        f = _dia_chile(ev.get("date"))
+        if f and f >= hoy:
+            fechas.append(f)
+    if not fechas:
+        for clave in ("123", "3"):
+            j = pedir(f"https://www.thesportsdb.com/api/v1/json/{clave}/eventsnextleague.php?id=4627", estado, "liga_proxima", espera=(0, 20))
+            for ev in (j or {}).get("events") or []:
+                f = _dia_chile(f"{ev.get('strTimestamp')}Z") if ev.get("strTimestamp") else None
+                if not f:
+                    try:
+                        f = dt.date.fromisoformat(str(ev.get("dateEventLocal") or ev.get("dateEvent"))[:10])
+                    except (TypeError, ValueError):
+                        f = None
+                if f and f >= hoy:
+                    fechas.append(f)
+            if fechas:
+                break
+    return min(fechas).isoformat() if fechas else None
+
+
 def liga(estado, hoy):
     titulo = f"{hoy.year}_Liga_de_Primera"
     html = pedir(f"https://en.wikipedia.org/api/rest_v1/page/html/{titulo}", estado, "liga", como="texto")
@@ -2682,6 +2723,12 @@ def main(argv=None):
     tabla = liga(estado, hoy)
     if tabla:
         tabla["partidos"] = partidos_liga(estado) or []
+        try:   # 15-11-2026: inicio de la próxima fecha (para que el pie diga que la tabla está al día)
+            px = proxima_liga(estado, hoy)
+            if px and px > str(tabla.get("tabla_fecha") or "")[:10]:
+                tabla["proxima_fecha"] = px
+        except Exception as ex:   # noqa: BLE001 — nunca impide guardar la tabla
+            estado["liga_proxima"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "ESPN/TheSportsDB", "error": type(ex).__name__}
     escribir(os.path.join(a.salida, "liga-primera.json"), tabla)
     try:
         escribir(os.path.join(a.salida, "titulares.json"), titulares(estado))
