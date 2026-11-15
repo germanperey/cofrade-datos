@@ -651,8 +651,8 @@ async function salud(env, ctx) {
   if (r.mp_configurado) {
     try {
       const x = await fetch("https://api.mercadopago.com/users/me", { headers: { Authorization: `Bearer ${String(env.MP_ACCESS_TOKEN).trim()}` }, signal: AbortSignal.timeout(8000) });
-      r.mp_api = x.ok;
-    } catch (e) { r.mp_api = false; }
+      r.mp_api = x.ok ? true : (x.status === 401 || x.status === 403) ? false : null;   // 429 o 5xx: Mercado Pago ocupado, no la llave
+    } catch (e) { r.mp_api = null; }
   }
   r.turnstile = !!env.TURNSTILE_SECRET;
   r.correo = !!env.RESEND_API_KEY;
@@ -725,7 +725,7 @@ function verSubir(){if(s)s.classList.toggle('cn-on',scrollY>Math.max(600,innerHe
 addEventListener('scroll',function(){verSubir();var y=scrollY,d=y-y0;if(Math.abs(d)<10&&y>140)return;y0=y;poner(cubre&&d>0&&y>140)},{passive:true});
 verSubir();a.addEventListener('focus',function(){poner(false)});
 if(s)s.addEventListener('click',function(){var q=matchMedia('(prefers-reduced-motion: reduce)').matches;
-try{scrollTo({top:0,behavior:q?'auto':'smooth'})}catch(e){scrollTo(0,0)}poner(false);try{a.focus({preventScroll:true})}catch(e){}})})();<\/script>`;
+try{scrollTo({top:0,behavior:q?'auto':'smooth'})}catch(e){scrollTo(0,0)}poner(false);var hh=document.querySelector('h1')||a;if(hh!==a&&!hh.hasAttribute('tabindex'))hh.setAttribute('tabindex','-1');try{hh.focus({preventScroll:true})}catch(e){}})})();<\/script>`;
 
 const DIALOGO = `<dialog class="dlg-pub" id="dlgPub" aria-labelledby="dlgPubT"><form class="pub-form" method="dialog" novalidate>
 <button type="button" class="pub-cerrar" aria-label="Cerrar">✕</button><h3 id="dlgPubT">Déjenos sus datos y lo contactamos</h3><p class="sub" id="dlgPubSub" style="margin:0"></p>
@@ -1877,10 +1877,10 @@ ${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `
   return { cuerpo, p, hero };
 }
 
-async function portada(env, ctx) {
+async function portada(env, ctx, req) {
   const { cuerpo, hero, p } = await cuerpoPortada(ctx);
   ctx.waitUntil(revivirPulso(env, p));
-  ctx.waitUntil(revivirVigia(env));   // 15-11-2026: el vigía corre al menos cada 6 horas
+  if (!/CofradeNews-Vigia/.test((req && req.headers.get("User-Agent")) || "")) ctx.waitUntil(revivirVigia(env));   // 15-11-2026: el vigía corre al menos cada 6 horas
   return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero }), 200,
     { "Cache-Control": "public, max-age=120" });
 }
@@ -2005,7 +2005,7 @@ export default {
     if (u.hostname === "cofrad.es") return Response.redirect(`https://${DOMINIO}${u.pathname}${u.search}`, 301);
     const p = u.pathname.replace(/\/+$/, "") || "/";
     try {
-      if (p === "/" && req.method === "GET") { ctx.waitUntil(contarVisita(req, env, "/")); return await portada(env, ctx); }
+      if (p === "/" && req.method === "GET") { if (!/CofradeNews-Vigia/.test(req.headers.get("User-Agent") || "")) ctx.waitUntil(contarVisita(req, env, "/")); return await portada(env, ctx, req); }
       if (p === "/edicion") {
         const l = await indice(ctx);
         return l.length ? Response.redirect(`https://${u.host}/edicion/${l[0]}`, 302) : Response.redirect(`https://${u.host}/`, 302);

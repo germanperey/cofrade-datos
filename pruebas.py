@@ -1304,28 +1304,25 @@ def completas_permanentes_no_se_traban():
 
 @prueba
 def liga_proxima_fecha_espn():
-    """15-11-2026: la próxima fecha de la Liga de Primera (fecha de Chile) desde el marcador de ESPN; si la jornada ya empezó, nada."""
-    hoy = dt.date(2026, 11, 15)
-    pre = {"type": {"completed": False, "state": "pre"}}
-    espn = {"events": [{"date": "2026-11-21T00:30Z", "status": pre}, {"date": "2026-11-20T21:00Z", "status": pre}],
-            "leagues": [{"calendar": ["2026-11-08T08:00Z", "2026-11-20T08:00Z", "2026-11-29T08:00Z"]}]}
+    """15-11-2026: comienzo de la próxima jornada de la Liga de Primera (día de Chile) desde el calendario de ESPN; nada si la
+    jornada ya empezó o si hubo partidos después de la tabla (auditoría: el sábado con el viernes jugado decía «la próxima el 21-11»)."""
+    cal = ["2026-11-06T08:00Z", "2026-11-07T08:00Z", "2026-11-08T08:00Z", "2026-11-20T08:00Z", "2026-11-21T08:00Z", "2026-11-22T08:00Z", "2026-11-29T08:00Z"]
+    espn = {"events": [{"date": "2026-11-20T21:00Z"}], "leagues": [{"calendar": cal}]}
     viejo = B.pedir
     try:
         pedidos = []
         B.pedir = lambda url, estado, clave, **kw: (pedidos.append(url) or espn)
-        assert B.proxima_liga({}, hoy) == "2026-11-20", "el primer partido por jugar, en fecha de Chile"
+        assert B.proxima_liga({}, dt.date(2026, 11, 15), "2026-11-08") == "2026-11-20"
         assert pedidos == ["https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard"], pedidos   # sin rango (ESPN da 400)
-        espn["events"][0]["date"] = "2026-11-21T02:30Z"   # 20-11 23:30 en Chile
-        espn["events"][1]["date"] = "2026-11-21T03:00Z"
-        assert B.proxima_liga({}, hoy) == "2026-11-20", "la hora UTC del día siguiente es todavía el 20 en Chile"
-        en_curso = {"events": [{"date": "2026-11-20T21:00Z", "status": {"type": {"completed": True, "state": "post"}}},
-                               {"date": "2026-11-21T21:00Z", "status": pre}]}
-        B.pedir = lambda url, estado, clave, **kw: en_curso
-        assert B.proxima_liga({}, dt.date(2026, 11, 21)) is None, "jornada en curso: la tabla no está al día"
-        B.pedir = lambda url, estado, clave, **kw: {"events": [], "leagues": [{"calendar": ["2026-11-08T08:00Z", "2026-11-29T08:00Z"]}]}
-        assert B.proxima_liga({}, hoy) == "2026-11-29", "sin partidos por jugar en la jornada: el calendario"
+        assert B.proxima_liga({}, dt.date(2026, 11, 20), "2026-11-08") == "2026-11-20", "el mismo viernes: comienza hoy"
+        assert B.proxima_liga({}, dt.date(2026, 11, 21), "2026-11-08") is None, "sábado con el viernes jugado: jornada en curso"
+        assert B.proxima_liga({}, dt.date(2026, 11, 23), "2026-11-08") is None, "hubo partidos entre la tabla y la próxima jornada"
+        assert B.proxima_liga({}, dt.date(2026, 11, 23), "2026-11-22") == "2026-11-29"
+        espn2 = {"events": [{"date": "2026-11-21T02:30Z"}], "leagues": [{"calendar": []}]}   # 20-11 23:30 en Chile
+        B.pedir = lambda url, estado, clave, **kw: espn2
+        assert B.proxima_liga({}, dt.date(2026, 11, 15), "2026-11-08") == "2026-11-20", "hora UTC del día siguiente"
         B.pedir = lambda url, estado, clave, **kw: None
-        assert B.proxima_liga({}, hoy) is None
+        assert B.proxima_liga({}, dt.date(2026, 11, 15)) is None
     finally:
         B.pedir = viejo
 

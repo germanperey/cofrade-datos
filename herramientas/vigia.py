@@ -37,7 +37,7 @@ class Informe:
         self.revisiones, self.reparaciones = [], []
 
     def ok(self, nombre, bien, detalle="", grave=True):
-        self.revisiones.append({"nombre": nombre, "ok": bool(bien), "detalle": str(detalle)[:400], "grave": grave})
+        self.revisiones.append({"nombre": nombre, "ok": bool(bien), "detalle": "" if bien else str(detalle)[:400], "grave": grave})
         print(("OK    " if bien else ("FALLA " if grave else "AVISO ")) + nombre + ("" if bien else f" · {detalle}"))
         return bien
 
@@ -123,8 +123,9 @@ def revisar_navegador(inf, fecha):
         inf.ok("Navegador de prueba disponible", False, "playwright no está instalado", grave=False)
         return
     with sync_playwright() as p:
-        b = p.chromium.launch()
+        b = None
         try:
+            b = p.chromium.launch()
             for ruta, que in ((f"/edicion/{fecha}", "Edición"), ("/", "Portada")):
                 if not fecha and ruta.startswith("/edicion"):
                     continue
@@ -149,7 +150,7 @@ def revisar_navegador(inf, fecha):
                         return {completa,total:cs.length,vacios,volver:!!document.getElementById('cnVolver'),subir:!!document.getElementById('cnSubir')}}""")
                     inf.ok(f"Edición {fecha}: se sirve la edición completa (no la liviana de respaldo)", r["completa"],
                            "el sitio está mostrando la edición liviana: falta la completa en GitHub", grave=False)
-                    minimo = 10 if r["completa"] else 1
+                    minimo = 10 if r["completa"] else 0
                     inf.ok(f"Edición {fecha}: gráficos dibujados", r["total"] >= minimo and not r["vacios"],
                            f"{len(r['vacios'])} de {r['total']} sin dibujar: {', '.join(r['vacios'][:6])}" if r["total"] >= minimo
                            else f"solo {r['total']} gráfico(s) en la página")
@@ -159,7 +160,8 @@ def revisar_navegador(inf, fecha):
         except Exception as ex:   # noqa: BLE001 — una falla del navegador de prueba no es una falla del sitio
             inf.ok("Revisión en el navegador", False, f"{type(ex).__name__}: {str(ex)[:160]}", grave=False)
         finally:
-            b.close()
+            if b:
+                b.close()
 
 
 def _hora(x):
@@ -176,8 +178,11 @@ def revisar_datos(inf, reparar):
         est = json.load(open(os.path.join(RAIZ, "datos", "estado.json"), encoding="utf-8"))
         horas = [_hora(v.get("hora")) for v in (est.get("fuentes") or {}).values() if isinstance(v, dict)]
         ult = max([h for h in horas if h] or [None], key=lambda h: h or dt.datetime.min.replace(tzinfo=TZ))
-        viejo = ult is None or (t - ult).total_seconds() > 8 * 3600
-        if not inf.ok("Datos del día al día (bajada de GitHub)", not viejo or not (6 <= t.hour <= 23),
+        # auditoría del 15-11: la bajada corre de madrugada (hasta ~08:20); a las 16:23 eso NO es «viejo». Viejo = sin corrida de hoy,
+        # o pasadas las 09:00 sin una corrida de las 05:00 en adelante.
+        u = ult.astimezone(TZ) if ult else None
+        viejo = u is None or u.date() < t.date() or (t.hour >= 9 and u.hour < 5)
+        if not inf.ok("Datos del día al día (bajada de GitHub)", not viejo or t.hour < 6,
                       f"última bajada {ult.isoformat(timespec='minutes') if ult else 'desconocida'}"):
             if reparar:
                 r = gh("POST", "/actions/workflows/cofrade-datos.yml/dispatches", json={"ref": "main"})

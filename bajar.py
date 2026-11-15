@@ -613,28 +613,46 @@ def _dia_chile(iso):
         return None
 
 
-def proxima_liga(estado, hoy):
+def proxima_liga(estado, hoy, tabla_fecha=None):
     """15-11-2026 (Germán: «el gráfico del fútbol no está actualizado desde hace varios días»): la tabla del 08-11 SÍ estaba al día
-    (la fecha 28 se juega del 20 al 22-11), pero el pie no lo decía. Fecha de Chile en que comienza la próxima fecha de la Liga de
-    Primera, para que la tabla diga «al día; la próxima comienza el dd-mm». Fuente: el marcador de ESPN (la próxima jornada y el
-    calendario de la temporada). Diagnóstico del 15-11 (sonda): ESPN rechaza el rango de fechas (HTTP 400) y TheSportsDB tenía un
-    partido de la fecha 28 con fecha equivocada (22-11 en vez de 20-11): por eso solo ESPN y sin rango. Si una jornada ya empezó
-    (algún partido jugado o en juego), no se informa próxima fecha: la tabla no está «al día». → «AAAA-MM-DD» o None."""
+    (la fecha 28 se juega del 20 al 22-11), pero el pie no lo decía. → día de Chile en que COMIENZA la próxima jornada, o None.
+    Fuente: el calendario de la temporada del marcador de ESPN (días con partidos). Diagnóstico del 15-11 (sonda): ESPN rechaza el
+    rango de fechas (HTTP 400) y TheSportsDB tenía la fecha 28 corrida (22-11 en vez de 20-11): por eso solo ESPN.
+    Auditoría del 15-11: los días de una jornada van seguidos (3 días o menos entre uno y otro). Si hoy cae DENTRO de una jornada que
+    empezó antes de hoy (sábado con el viernes ya jugado), o si hubo días de partido entre la tabla y la próxima jornada, la tabla
+    no está «al día» y no se informa próxima fecha."""
     j = pedir("https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard", estado, "liga_proxima", espera=(0, 20))
     if not isinstance(j, dict):
         return None
-    eventos = [ev for ev in (j.get("events") or []) if isinstance(ev, dict)]
-    estados = [str((((ev.get("status") or {}).get("type") or {}).get("state")) or "") for ev in eventos]
-    if any(e in ("post", "in") for e in estados) and any(e == "pre" for e in estados):
-        return None   # jornada en curso
-    fechas = [f for f in (_dia_chile(ev.get("date")) for ev, e in zip(eventos, estados) if e == "pre") if f and f >= hoy]
-    if not fechas:   # sin partidos por jugar en la jornada que muestra: el calendario de la temporada
-        for lg in j.get("leagues") or []:
-            for c in (lg.get("calendar") or []) if isinstance(lg, dict) else []:
-                f = _dia_chile(c.get("startDate") if isinstance(c, dict) else c)
-                if f and f >= hoy:
-                    fechas.append(f)
-    return min(fechas).isoformat() if fechas else None
+    dias = set()
+    for lg in j.get("leagues") or []:
+        for c in (lg.get("calendar") or []) if isinstance(lg, dict) else []:
+            f = _dia_chile(c.get("startDate") if isinstance(c, dict) else c)
+            if f:
+                dias.add(f)
+    for ev in j.get("events") or []:
+        f = _dia_chile(ev.get("date")) if isinstance(ev, dict) else None
+        if f:
+            dias.add(f)
+    dias = sorted(dias)
+    futuros = [d for d in dias if d >= hoy]
+    if not futuros:
+        return None
+    inicio = futuros[0]
+    k = dias.index(inicio)
+    while k > 0 and (dias[k] - dias[k - 1]).days <= 3:   # el comienzo real de la jornada a la que pertenece ese día
+        k -= 1
+    if dias[k] < hoy:
+        return None   # jornada en curso: empezó antes de hoy
+    inicio = dias[k]
+    tf = None
+    try:
+        tf = dt.date.fromisoformat(str(tabla_fecha)[:10]) if tabla_fecha else None
+    except ValueError:
+        tf = None
+    if tf and any(tf < d < inicio for d in dias):
+        return None   # hubo partidos después de la tabla: no está al día
+    return inicio.isoformat()
 
 
 def liga(estado, hoy):
@@ -2758,7 +2776,7 @@ def main(argv=None):
     if tabla:
         tabla["partidos"] = partidos_liga(estado) or []
         try:   # 15-11-2026: inicio de la próxima fecha (para que el pie diga que la tabla está al día)
-            px = proxima_liga(estado, hoy)
+            px = proxima_liga(estado, hoy, tabla.get("tabla_fecha"))
             if px and px > str(tabla.get("tabla_fecha") or "")[:10]:
                 tabla["proxima_fecha"] = px
         except Exception as ex:   # noqa: BLE001 — nunca impide guardar la tabla
