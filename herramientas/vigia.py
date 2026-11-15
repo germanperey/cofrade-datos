@@ -134,18 +134,19 @@ def revisar_navegador(inf, fecha):
                 pg.goto(SITIO + ruta, wait_until="load", timeout=120000)
                 pg.wait_for_timeout(2500)
                 if que == "Edición":
-                    alto = pg.evaluate("document.documentElement.scrollHeight")
-                    y = 0
-                    while y < alto:
-                        y += 700
-                        pg.evaluate(f"scrollTo(0,{y})")
-                        pg.wait_for_timeout(120)
-                        alto = pg.evaluate("document.documentElement.scrollHeight")
-                    pg.wait_for_timeout(2500)
-                    r = pg.evaluate("""(()=>{const completa=!!document.querySelector('.hoja');
-                        const cs=[...document.querySelectorAll(completa?'.chart':'.graf')].filter(c=>c.offsetParent!==null);
-                        const vacios=cs.filter(c=>!c.querySelector('canvas,svg')).map(c=>c.id||c.getAttribute('aria-label')||'?');
-                        return {completa,total:cs.length,vacios,volver:!!document.getElementById('cnVolver'),subir:!!document.getElementById('cnSubir')}})()""")
+                    # 15-11-2026 (primera corrida: «195 de 245 sin dibujar»): la capa LENTO dibuja cada gráfico cuando el lector llega
+                    # a él. Se lleva cada gráfico VISIBLE a la pantalla y se espera un momento; los de pestañas, páginas o ventanas
+                    # cerradas (meses anteriores del Congreso, fichas de otra página) no cuentan: se dibujan al abrirlos.
+                    r = pg.evaluate("""async()=>{const completa=!!document.querySelector('.hoja');
+                        const oculto=c=>{if(!c.offsetParent||c.getBoundingClientRect().width<10)return true;
+                          for(let p=c;p;p=p.parentElement){if(p.hidden||p.getAttribute&&p.getAttribute('aria-hidden')==='true')return true;
+                            if(p.tagName==='DETAILS'&&!p.open)return true;if(p.tagName==='DIALOG'&&!p.open)return true;
+                            const cs=getComputedStyle(p);if(cs.display==='none'||cs.visibility==='hidden'||cs.contentVisibility==='hidden')return true}return false};
+                        const cs=[...document.querySelectorAll(completa?'.chart':'.graf')].filter(c=>!oculto(c));const vacios=[];
+                        for(const c of cs){if(c.querySelector('canvas,svg'))continue;c.scrollIntoView({block:'center'});
+                          for(let k=0;k<12&&!c.querySelector('canvas,svg');k++)await new Promise(r=>setTimeout(r,150));
+                          if(!c.querySelector('canvas,svg'))vacios.push(c.id||c.getAttribute('aria-label')||'?')}
+                        return {completa,total:cs.length,vacios,volver:!!document.getElementById('cnVolver'),subir:!!document.getElementById('cnSubir')}}""")
                     inf.ok(f"Edición {fecha}: se sirve la edición completa (no la liviana de respaldo)", r["completa"],
                            "el sitio está mostrando la edición liviana: falta la completa en GitHub", grave=False)
                     minimo = 10 if r["completa"] else 1
