@@ -1,84 +1,84 @@
 {
- "generado": "2026-11-15T04:58:00-03:00",
- "ok": false,
- "graves": 1,
+ "generado": "2026-11-15T07:52:29-03:00",
+ "ok": true,
+ "graves": 0,
  "revisiones": [
   {
    "nombre": "Portada responde",
    "ok": true,
-   "detalle": "HTTP 200",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Portada completa (galería y «En vivo»)",
    "ok": true,
-   "detalle": "faltan la galería o el bloque «En vivo»",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "La edición más nueva está publicada",
    "ok": true,
-   "detalle": "el sitio lleva a 2026-11-14; se espera 2026-11-14 o más nueva",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Mercados responde",
    "ok": true,
-   "detalle": "HTTP 200",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Socios responde",
    "ok": true,
-   "detalle": "HTTP 200",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Condiciones de Socios responde",
    "ok": true,
-   "detalle": "HTTP 200",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Buzón responde a un envío inválido sin caerse",
    "ok": true,
-   "detalle": "HTTP 400",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Base de datos de Socios y Buzón (D1)",
    "ok": true,
-   "detalle": "{\"hora\": \"2026-11-15T07:57:32.203Z\", \"d1\": true, \"mp_configurado\": true, \"mp_api\": true, \"turnstile\": true, \"correo\": false, \"ok\": true}",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Mercado Pago acepta la llave del sitio",
    "ok": true,
-   "detalle": "la API de Mercado Pago no aceptó la consulta de prueba",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Captcha del Buzón configurado",
    "ok": true,
-   "detalle": "falta el secreto de Turnstile",
+   "detalle": "",
    "grave": false
   },
   {
    "nombre": "Edición 2026-11-14: se sirve la edición completa (no la liviana de respaldo)",
    "ok": true,
-   "detalle": "el sitio está mostrando la edición liviana: falta la completa en GitHub",
+   "detalle": "",
    "grave": false
   },
   {
    "nombre": "Edición 2026-11-14: gráficos dibujados",
-   "ok": false,
-   "detalle": "195 de 245 sin dibujar: gLey4, gLey2, gLey3, gLey5, gLey6, gLey7",
+   "ok": true,
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "Edición 2026-11-14: flecha para volver y botón para subir",
    "ok": true,
-   "detalle": "{'completa': True, 'total': 245, 'vacios': ['gLey4', 'gLey2', 'gLey3', 'gLey5', 'gLey6', 'gLey7', 'gLey8', 'gLey9', 'gLey10', 'gLey11', 'gLey12', 'gLey13', 'gLey14', 'gLey15', 'gLey16', 'gLey17', 'gLey18', 'gLey19', 'gLey20', 'gLey21', 'gLey22', 'gLey23', 'gLey24', 'gLey25', 'gLey26', 'gLey27', 'gLey28', 'gLey29', 'gLey30', 'gLey32', 'gLey33', 'gLey528', 'gLey417', 'gLey418', 'gLey419', 'gLey515',",
+   "detalle": "",
    "grave": true
   },
   {
@@ -96,13 +96,13 @@
   {
    "nombre": "Datos del día al día (bajada de GitHub)",
    "ok": true,
-   "detalle": "última bajada 2026-11-15T04:50-03:00",
+   "detalle": "",
    "grave": true
   },
   {
    "nombre": "«En vivo» de la portada al día (Pulso)",
    "ok": true,
-   "detalle": "generado 2026-11-15T03:46-03:00",
+   "detalle": "",
    "grave": true
   },
   {
