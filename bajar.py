@@ -960,10 +960,25 @@ FEEDS_RADAR = {
 }
 
 
-def todas_las_fuentes(ruta_redes="redes.json", radar=True):
-    """FEEDS + FEEDS_EXTRA + redes.json (+ FEEDS_RADAR si radar=True), sin repetir una dirección dentro de la misma sección."""
+DIRECTORIO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "datos", "fuentes-directorio.json")
+
+
+def directorio(ruta=None):
+    """15-11-2026 (Germán: «centenares de nuevas fuentes ... siempre sitios habilitados»): fuentes que herramientas/verificar_fuentes.py
+    comprobó desde GitHub (robots.txt, RSS válido, notas recientes). Sin archivo o con uno roto: {} (nunca bota la corrida)."""
+    try:
+        j = json.load(open(ruta or DIRECTORIO, encoding="utf-8"))
+        return {sec: [tuple(x[:3]) for x in L if isinstance(x, list) and len(x) >= 3 and str(x[1]).startswith(("https://", "http://"))]
+                for sec, L in (j.get("secciones") or {}).items() if isinstance(L, list)}
+    except (OSError, ValueError, AttributeError):
+        return {}
+
+
+def todas_las_fuentes(ruta_redes="redes.json", radar=True, ruta_directorio=None):
+    """FEEDS + FEEDS_EXTRA + redes.json (+ FEEDS_RADAR si radar=True) + el directorio verificado, sin repetir una dirección dentro
+    de la misma sección."""
     out = {k: list(v) for k, v in FEEDS.items()}
-    for extra in (FEEDS_EXTRA, redes(ruta_redes)) + ((FEEDS_RADAR,) if radar else ()):
+    for extra in (FEEDS_EXTRA, redes(ruta_redes)) + ((FEEDS_RADAR,) if radar else ()) + (directorio(ruta_directorio),):
         for sec, L in extra.items():
             vistas = {u for _, u, _ in out.setdefault(sec, [])}
             out[sec] += [x for x in L if x[1] not in vistas]
@@ -971,7 +986,9 @@ def todas_las_fuentes(ruta_redes="redes.json", radar=True):
 
 
 VENTANA_H = { "perspectivas": 168,   # 14-11-2026: megaproyectos de los últimos 7 días
-   "ciencia": 240, "astronomia": 240, "emprendimiento": 120, "inmobiliario": 120}   # el resto: 72 horas
+   "ciencia": 240, "astronomia": 240, "emprendimiento": 120, "inmobiliario": 120,
+   # 15-11-2026: secciones nuevas del directorio de fuentes (titulares-<sección>.json para la tarea)
+   "industrias": 120, "entretenimiento": 168, "chilenos-mundo": 240}   # el resto (también «conflictos»): 72 horas
 TOPE_SECCION = 90
 # 13-11-2026 (Germán: equitación 2/3): en «deportes» el fútbol llenaba el tope y la equitación (que publica menos) quedaba fuera.
 # Cada disciplina con reserva tiene su propia ventana y un mínimo de cupos dentro del tope.
@@ -1568,8 +1585,33 @@ def _un_feed(args):
         return sec, {"fuente": fuente, "url": url, "ok": False, "n": 0, "error": type(ex).__name__}, []
 
 
+import threading as _hilos   # noqa: E402
+_GDELT = {"lock": _hilos.Lock(), "ultimo": 0.0}
+
+
+def _turno_gdelt(url):
+    """GDELT pide no más de una consulta cada 5 segundos: sus consultas van de a una, con 6 s entre ellas."""
+    if "api.gdeltproject.org" not in url:
+        return None
+    _GDELT["lock"].acquire()
+    espera = 6.0 - (time.time() - _GDELT["ultimo"])
+    if espera > 0:
+        time.sleep(espera)
+    return _GDELT["lock"]
+
+
 def _un_feed_(args):
     sec, fuente, url, tipo, estado, clave = args
+    lk = _turno_gdelt(url)
+    try:
+        return _un_feed_leer(sec, fuente, url, tipo, estado, clave)
+    finally:
+        if lk:
+            _GDELT["ultimo"] = time.time()
+            lk.release()
+
+
+def _un_feed_leer(sec, fuente, url, tipo, estado, clave):
     if not robots_permite(url, estado):
         m = _motivo_robots(url)
         estado[clave] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": url, "error": m}

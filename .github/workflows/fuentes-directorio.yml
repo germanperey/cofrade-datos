@@ -1,0 +1,36 @@
+# Directorio vivo de fuentes (15-11-2026, Germán: «centenares de nuevas fuentes ... siempre sitios habilitados»).
+# Revisa cada candidata y cada fuente del directorio desde GitHub: robots.txt, RSS válido y notas recientes. Las sanas quedan en
+# datos/fuentes-directorio.json (bajar.py las suma a sus fuentes en cada corrida); el informe completo, en datos/fuentes-salud.json.
+name: Directorio de fuentes
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 6 * * 1,4"   # lunes y jueves 03:41 de Chile (antes de los datos del día)
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fuentes-directorio
+  cancel-in-progress: false
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet requests==2.32.3
+      - run: python herramientas/verificar_fuentes.py --salida datos
+      - name: Guardar el directorio
+        run: |
+          git config user.name "fuentes-cofrade"; git config user.email "fuentes@users.noreply.github.com"
+          git add datos/fuentes-directorio.json datos/fuentes-salud.json
+          git diff --cached --quiet && { echo "sin cambios"; exit 0; }
+          git commit -qm "Directorio de fuentes $(date -u +%F)"
+          ok=0; for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && ok=1 && break; sleep 10; done
+          [ "$ok" = 1 ] || { echo "no se pudo subir el directorio"; exit 1; }

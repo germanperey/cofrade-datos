@@ -1327,6 +1327,51 @@ def liga_proxima_fecha_espn_y_respaldo():
     finally:
         B.pedir = viejo
 
+
+@prueba
+def directorio_de_fuentes_vivo():
+    """15-11-2026: las candidatas se verifican (robots, RSS válido, notas recientes); solo las sanas entran al directorio, que
+    bajar.py suma a sus fuentes. Una del directorio que falla 3 revisiones seguidas sale; un robots.txt que prohíbe, sale al tiro."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import verificar_fuentes as VF
+    ahora = B.ahora()
+    fresca = (ahora - dt.timedelta(hours=5)).strftime("%a, %d %b %Y %H:%M:%S -0300")
+    vieja = (ahora - dt.timedelta(days=30)).strftime("%a, %d %b %Y %H:%M:%S -0300")
+    rss = lambda f: f'<rss><channel><item><title>Nota de prueba</title><link>https://m.cl/n</link><pubDate>{f}</pubDate></item></channel></rss>'  # noqa: E731
+    respuestas = {"https://a.cl/feed/": rss(fresca), "https://b.cl/feed/": rss(vieja), "https://c.cl/feed/": "<html><body><p>no</body></html>",
+                  "https://e.cl/feed/": rss(fresca)}
+    viejos = (VF.B.robots_permite, VF.B.pedir, VF.PAUSA_HOST)
+    try:
+        VF.B.robots_permite = lambda url, estado: "d.cl" not in url
+        VF.B.pedir = lambda url, estado, clave, **kw: respuestas.get(url)
+        VF.PAUSA_HOST = {}
+        cand = [{"seccion": "industrias", "fuente": n, "url": f"https://{n}.cl/feed/", "tipo": "rss"} for n in "abcd"]
+        r = {x["fuente"]: x["estado"] for x in (VF.revisar(c, {}) for c in cand)}
+        assert r == {"a": "sana", "b": "vieja", "c": "invalida", "d": "robots"}, r
+        with tempfile.TemporaryDirectory() as t:
+            json.dump({"candidatas": cand}, open(os.path.join(t, "cand.json"), "w"))
+            viejo_aqui = VF.AQUI
+            VF.AQUI = t
+            os.rename(os.path.join(t, "cand.json"), os.path.join(t, "fuentes-candidatas.json"))
+            previo = {"secciones": {"deportes": [["E", "https://e.cl/feed/", "rss"], ["X", "https://x.cl/feed/", "rss"]]},
+                      "fallas": {"https://x.cl/feed/": 2}}
+            json.dump(previo, open(os.path.join(t, "fuentes-directorio.json"), "w"))
+            try:
+                VF.main(["--salida", t, "--hilos", "2"])
+            finally:
+                VF.AQUI = viejo_aqui
+            d = json.load(open(os.path.join(t, "fuentes-directorio.json")))
+            urls = {x[1] for L in d["secciones"].values() for x in L}
+            assert urls == {"https://a.cl/feed/", "https://e.cl/feed/"}, urls   # x.cl falló por 3.ª vez: sale
+            assert json.load(open(os.path.join(t, "fuentes-salud.json")))["revisadas"] == 6
+            todas = B.todas_las_fuentes(ruta_directorio=os.path.join(t, "fuentes-directorio.json"))
+            assert ("a", "https://a.cl/feed/", "rss") in todas["industrias"], todas.get("industrias")
+            assert B.directorio(os.path.join(t, "no-existe.json")) == {}
+            open(os.path.join(t, "roto.json"), "w").write("{roto")
+            assert B.directorio(os.path.join(t, "roto.json")) == {}
+    finally:
+        VF.B.robots_permite, VF.B.pedir, VF.PAUSA_HOST = viejos
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

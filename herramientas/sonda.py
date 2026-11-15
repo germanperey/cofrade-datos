@@ -12,20 +12,12 @@ import requests
 UA = "CofradeNews/1.0 (boletin gratuito sin fines de lucro de la Cofradia de oficiales navales de Chile; github.com/cofrade-datos)"
 HOY = dt.date.today()
 D0, D1 = HOY.strftime("%Y%m%d"), (HOY - dt.timedelta(days=1)).strftime("%Y%m%d")
-OBJETIVOS = [
-    ("tabsa_tramos", "https://api-gw.tabsa.cl/api/cruce/tramos"),
-    ("tabsa_tramos2", "https://api-gw.tabsa.cl/api/cruces/tramos"),
-    ("tabsa_suspension", "https://api-gw.tabsa.cl/api/cruce/cruce/suspension"),
-    ("tabsa_cruce20_hoy", f"https://api-gw.tabsa.cl/api/cruce/cruce/20/fecha/{HOY.isoformat()}"),
-    ("tabsa_cruce20_hoy2", f"https://api-gw.tabsa.cl/api/cruce/cruce/20/fecha/{HOY.strftime('%d-%m-%Y')}"),
-    ("tabsa_mes", f"https://api-gw.tabsa.cl/api/cruce/cruce/fecha/mes/{HOY.strftime('%Y-%m')}"),
-    ("tabsa_mes2", f"https://api-gw.tabsa.cl/api/cruce/cruce/fecha/mes/{HOY.month}"),
-    ("seia_listado", "https://seia.sea.gob.cl/busqueda/buscarProyectoAction.php?nombre=&titular=&folio=&sector=&region=&tipoPresentacion=&presentacion=&PAGE=1"),
+OBJETIVOS = [   # 15-11-2026: sin la API privada de TABSA (regla de Germán: no se usa). Para fuentes nuevas de titulares usar
+    # herramientas/verificar_fuentes.py (directorio vivo); esta sonda queda para diagnósticos puntuales de fuentes oficiales.
     ("seia_inicio", "https://seia.sea.gob.cl/"),
     ("as_nba", "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/baloncesto/subsection/nba/"),
-    ("tabsa_js", "https://www.tabsa.cl/"),
 ]
-EXTRA_JS = {"tabsa_js"}   # en estas páginas se buscan los scripts y las direcciones de su API
+EXTRA_JS = set()   # páginas donde se buscan scripts (ninguna por ahora)
 os.makedirs("sonda", exist_ok=True)
 robots, resumen = {}, {}
 

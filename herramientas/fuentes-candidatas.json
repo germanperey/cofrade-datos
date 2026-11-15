@@ -1,0 +1,3413 @@
+{
+ "nota": "Candidatas a fuentes de titulares (15-11-2026). Las verifica herramientas/verificar_fuentes.py desde GitHub: robots.txt, RSS válido y notas recientes. Solo las sanas pasan a datos/fuentes-directorio.json, que bajar.py lee en cada corrida.",
+ "candidatas": [
+  {
+   "seccion": "politica/chile",
+   "fuente": "Emol Nacional (RSS)",
+   "url": "https://www.emol.com/rss/nacional.asxml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "CHV Noticias (RSS)",
+   "url": "https://www.chvnoticias.cl/arc/outboundfeeds/rss/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Meganoticias (RSS)",
+   "url": "https://www.meganoticias.cl/arc/outboundfeeds/rss/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Publimetro Chile (RSS)",
+   "url": "https://www.publimetro.cl/arc/outboundfeeds/rss/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "ADN Radio Chile (RSS)",
+   "url": "https://www.adnradio.cl/arc/outboundfeeds/rss/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Cuarta (RSS)",
+   "url": "https://www.lacuarta.com/arc/outboundfeeds/rss/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "T13 (RSS)",
+   "url": "https://www.t13.cl/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Radio Agricultura (RSS)",
+   "url": "https://www.radioagricultura.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Ex-Ante Politica (RSS)",
+   "url": "https://www.ex-ante.cl/category/politica/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Ciudadano (RSS)",
+   "url": "https://www.elciudadano.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Siglo (RSS)",
+   "url": "https://www.elsiglo.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Quinto Poder (RSS)",
+   "url": "https://www.elquintopoder.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Resumen.cl (RSS)",
+   "url": "https://www.resumen.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Diario Constitucional (RSS)",
+   "url": "https://www.diarioconstitucional.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Servel (RSS)",
+   "url": "https://www.servel.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Gob.cl Noticias (RSS)",
+   "url": "https://www.gob.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Tercera Reportajes (RSS)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/reportajes/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Tercera Opinion (RSS)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/opinion/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Tercera Politica Actualidad (RSS)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/politica/actualidad/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Universidad de Chile Noticias (RSS)",
+   "url": "https://www.uchile.cl/rss/noticias",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Diario Concepcion (RSS)",
+   "url": "https://www.diarioconcepcion.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Sur de Concepcion (RSS)",
+   "url": "https://www.elsur.cl/rss/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Sabes.cl Concepcion (RSS)",
+   "url": "https://www.sabes.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Radio UdeC (RSS)",
+   "url": "https://www.radioudec.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Noticias UdeC (RSS)",
+   "url": "https://noticias.udec.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Discusion de Chillan (RSS)",
+   "url": "https://www.ladiscusion.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Diario El Centro Talca (RSS)",
+   "url": "https://www.diarioelcentro.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Diario La Prensa Curico (RSS)",
+   "url": "https://www.diariolaprensa.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Maule24 (RSS)",
+   "url": "https://www.maule24.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Rancaguino (RSS)",
+   "url": "https://www.elrancaguino.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Tipografo Rancagua (RSS)",
+   "url": "https://www.eltipografo.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Pura Noticia Valparaiso (RSS)",
+   "url": "https://www.puranoticia.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Soy Valparaiso (RSS)",
+   "url": "https://www.soyvalparaiso.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Martutino (RSS)",
+   "url": "https://www.elmartutino.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Naveghable (RSS)",
+   "url": "https://www.elnaveghable.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Observador Quillota (RSS)",
+   "url": "https://www.elobservador.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Dia de La Serena (RSS)",
+   "url": "https://www.diarioeldia.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Observatodo Coquimbo (RSS)",
+   "url": "https://www.elobservatodo.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Diario Atacama (RSS)",
+   "url": "https://www.diarioatacama.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Atacama Noticias (RSS)",
+   "url": "https://www.atacamanoticias.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Mercurio de Antofagasta (RSS)",
+   "url": "https://www.mercurioantofagasta.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Mercurio de Calama (RSS)",
+   "url": "https://www.mercuriocalama.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Estrella de El Loa (RSS)",
+   "url": "https://www.estrellaloa.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Estrella de Iquique (RSS)",
+   "url": "https://www.estrellaiquique.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Morrocotudo Arica (RSS)",
+   "url": "https://www.elmorrocotudo.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Estrella de Arica (RSS)",
+   "url": "https://www.estrellaarica.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Austral de la Araucania (RSS)",
+   "url": "https://www.australtemuco.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Austral de Valdivia (RSS)",
+   "url": "https://www.australvaldivia.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Llanquihue (RSS)",
+   "url": "https://www.ellanquihue.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Estrella de Chiloe (RSS)",
+   "url": "https://www.laestrelladechiloe.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Divisadero Coyhaique (RSS)",
+   "url": "https://www.eldivisadero.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Diario Aysen (RSS)",
+   "url": "https://www.diarioaysen.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "La Prensa Austral (RSS)",
+   "url": "https://www.laprensaaustral.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "El Pinguino (RSS)",
+   "url": "https://www.elpinguino.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Emol Economia (RSS)",
+   "url": "https://www.emol.com/rss/economia.asxml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Ex-Ante Economia (RSS)",
+   "url": "https://www.ex-ante.cl/category/economia/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Bloomberg Linea (RSS)",
+   "url": "https://www.bloomberglinea.com/arc/outboundfeeds/rss/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Bloomberg Linea Chile (RSS)",
+   "url": "https://www.bloomberglinea.com/arc/outboundfeeds/rss/category/latinoamerica/chile/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "America Economia (RSS)",
+   "url": "https://www.americaeconomia.com/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "La Tercera Pulso Negocios (RSS)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/pulso/negocios/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "La Tercera Pulso Economia (RSS)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/pulso/economia/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "La Tercera Pulso Mercados (RSS)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/pulso/mercados/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Infobae America Economia (RSS)",
+   "url": "https://www.infobae.com/arc/outboundfeeds/rss/category/america/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Revista Qué Pasa (RSS)",
+   "url": "https://www.quepasa.cl/arc/outboundfeeds/rss/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Economia y Negocios (RSS)",
+   "url": "https://www.economiaynegocios.cl/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Ministerio de Economia (RSS)",
+   "url": "https://www.economia.gob.cl/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "ProChile (RSS)",
+   "url": "https://www.prochile.gob.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "CPC Confederacion de la Produccion (RSS)",
+   "url": "https://www.cpc.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "SOFOFA (RSS)",
+   "url": "https://www.sofofa.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Camara de Comercio de Santiago (RSS)",
+   "url": "https://www.ccs.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Banco Central de Chile Noticias (RSS)",
+   "url": "https://www.bcentral.cl/rss/noticias",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "CMF Chile Noticias (RSS)",
+   "url": "https://www.cmfchile.cl/portal/prensa/rss",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "Hacienda Noticias (RSS)",
+   "url": "https://www.hacienda.cl/rss/noticias",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "INE Chile Noticias (RSS)",
+   "url": "https://www.ine.gob.cl/rss/noticias",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Endeavor Chile (RSS)",
+   "url": "https://www.endeavor.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Innovacion.cl (RSS)",
+   "url": "https://www.innovacion.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "ICARE (RSS)",
+   "url": "https://www.icare.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Diario Pyme (RSS)",
+   "url": "https://www.diariopyme.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Sercotec (RSS)",
+   "url": "https://www.sercotec.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Corfo Noticias (RSS)",
+   "url": "https://www.corfo.cl/sites/cpp/rss",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "FIA Innovacion Agraria (RSS)",
+   "url": "https://www.fia.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Startupeable (RSS)",
+   "url": "https://startupeable.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Crunchbase News (RSS)",
+   "url": "https://news.crunchbase.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Chocale Tecnologia (RSS)",
+   "url": "https://chocale.cl/categoria/tecnologia/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "Chocale Negocios (RSS)",
+   "url": "https://chocale.cl/categoria/negocios/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "El Mostrador Mercados Startups (RSS)",
+   "url": "https://www.elmostrador.cl/categoria/emprendedor/pymes/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "ASECH Emprendedores (RSS)",
+   "url": "https://www.asech.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "CNC Camara Nacional de Comercio (RSS)",
+   "url": "https://www.cnc.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "Minvu (RSS)",
+   "url": "https://www.minvu.gob.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "Minvu Noticias (RSS)",
+   "url": "https://www.minvu.gob.cl/category/noticias/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "Portal Inmobiliario Blog (RSS)",
+   "url": "https://www.portalinmobiliario.com/blog/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "TocToc Blog (RSS)",
+   "url": "https://blog.toctoc.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "CChC (RSS)",
+   "url": "https://cchc.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "Revista BiT CChC (RSS)",
+   "url": "https://www.revistabit.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "Revista Construccion (RSS)",
+   "url": "https://www.revistaconstruccion.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "ArchDaily Chile (RSS)",
+   "url": "https://www.archdaily.cl/cl/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "MapCity Blog (RSS)",
+   "url": "https://www.mapcity.com/blog/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Mining.com (RSS)",
+   "url": "https://www.mining.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Mining.com Copper (RSS)",
+   "url": "https://www.mining.com/tag/copper/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Mining.com Lithium (RSS)",
+   "url": "https://www.mining.com/tag/lithium/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Northern Miner (RSS)",
+   "url": "https://www.northernminer.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Mining Technology (RSS)",
+   "url": "https://www.mining-technology.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Nueva Mineria y Energia (RSS)",
+   "url": "https://www.nuevamineria.com/revista/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "SONAMI (RSS)",
+   "url": "https://sonami.cl/v2/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Consejo Minero (RSS)",
+   "url": "https://consejominero.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Cochilco (RSS)",
+   "url": "https://www.cochilco.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Codelco Noticias (RSS)",
+   "url": "https://www.codelco.com/rss/noticias",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Reporte Minero (RSS)",
+   "url": "https://www.reporteminero.cl/rss/noticias.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Revista Electricidad (RSS)",
+   "url": "https://www.revistaelectricidad.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Energia Estrategica (RSS)",
+   "url": "https://www.energiaestrategica.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "PV Magazine Latam (RSS)",
+   "url": "https://www.pv-magazine-latam.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "H2 Chile (RSS)",
+   "url": "https://h2chile.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Generadoras de Chile (RSS)",
+   "url": "https://generadoras.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Coordinador Electrico Nacional (RSS)",
+   "url": "https://www.coordinador.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Ministerio de Energia (RSS)",
+   "url": "https://energia.gob.cl/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Aqua.cl (RSS)",
+   "url": "https://www.aqua.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "SalmonChile (RSS)",
+   "url": "https://www.salmonchile.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Mundo Acuicola (RSS)",
+   "url": "https://www.mundoacuicola.cl/new/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Salmonexpert (RSS)",
+   "url": "https://www.salmonexpert.cl/rss",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Global Seafood Alliance (RSS)",
+   "url": "https://www.globalseafood.org/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Redagricola Chile (RSS)",
+   "url": "https://www.redagricola.com/cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Mundoagro (RSS)",
+   "url": "https://www.mundoagro.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Odepa (RSS)",
+   "url": "https://www.odepa.gob.cl/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "El Campesino SNA (RSS)",
+   "url": "https://www.elcampesino.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Sociedad Nacional de Agricultura (RSS)",
+   "url": "https://www.sna.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Vinos de Chile (RSS)",
+   "url": "https://www.vinosdechile.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Portal Fruticola (RSS)",
+   "url": "https://www.portalfruticola.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Chile Alimentos (RSS)",
+   "url": "https://www.chilealimentos.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Fedefruta (RSS)",
+   "url": "https://www.fedefruta.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "CORMA (RSS)",
+   "url": "https://www.corma.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Revista Lignum (RSS)",
+   "url": "https://www.lignum.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "CONAF (RSS)",
+   "url": "https://www.conaf.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "PortalPortuario (RSS)",
+   "url": "https://portalportuario.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "MundoMaritimo (RSS)",
+   "url": "https://www.mundomaritimo.cl/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Portal Movilidad (RSS)",
+   "url": "https://portalmovilidad.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Splash247 (RSS)",
+   "url": "https://splash247.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "The Loadstar (RSS)",
+   "url": "https://theloadstar.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Cadem (RSS)",
+   "url": "https://cadem.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "E-Commerce News Chile (RSS)",
+   "url": "https://www.ecommerce-news.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "NPR Mundo (RSS, inglés)",
+   "url": "https://feeds.npr.org/1004/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "NPR Política (RSS, inglés)",
+   "url": "https://feeds.npr.org/1014/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "The Guardian Mundo (RSS, inglés)",
+   "url": "https://www.theguardian.com/world/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "The Guardian Américas (RSS, inglés)",
+   "url": "https://www.theguardian.com/world/americas/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "The Guardian Europa (RSS, inglés)",
+   "url": "https://www.theguardian.com/world/europe-news/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "The Guardian Política EE.UU. (RSS, inglés)",
+   "url": "https://www.theguardian.com/us-news/us-politics/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "NYT Mundo (RSS, inglés)",
+   "url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "NYT Américas (RSS, inglés)",
+   "url": "https://rss.nytimes.com/services/xml/rss/nyt/Americas.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "NYT Política (RSS, inglés)",
+   "url": "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "NYT Asia Pacífico (RSS, inglés)",
+   "url": "https://rss.nytimes.com/services/xml/rss/nyt/AsiaPacific.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "NYT Europa (RSS, inglés)",
+   "url": "https://rss.nytimes.com/services/xml/rss/nyt/Europe.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "Politico Picks (RSS, inglés)",
+   "url": "https://www.politico.com/rss/politicopicks.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "Politico Europe (RSS, inglés)",
+   "url": "https://www.politico.eu/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "CBC Mundo (RSS, inglés)",
+   "url": "https://www.cbc.ca/webfeed/rss/rss-world",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "CBC Política (RSS, inglés)",
+   "url": "https://www.cbc.ca/webfeed/rss/rss-politics",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "ABC Australia Titulares (RSS, inglés)",
+   "url": "https://www.abc.net.au/news/feed/51120/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "Times of India Mundo (RSS, inglés)",
+   "url": "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "SCMP Mundo (RSS, inglés)",
+   "url": "https://www.scmp.com/rss/91/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "Japan Times (RSS, inglés)",
+   "url": "https://www.japantimes.co.jp/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "Sky News Mundo (RSS, inglés)",
+   "url": "https://feeds.skynews.com/feeds/rss/world.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "BBC Latinoamérica (RSS, inglés)",
+   "url": "https://feeds.bbci.co.uk/news/world/latin_america/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "BBC Europa (RSS, inglés)",
+   "url": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "BBC Asia (RSS, inglés)",
+   "url": "https://feeds.bbci.co.uk/news/world/asia/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "BBC EE.UU. y Canadá (RSS, inglés)",
+   "url": "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "CNBC Titulares (RSS, inglés)",
+   "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "CNBC Economía (RSS, inglés)",
+   "url": "https://www.cnbc.com/id/20910258/device/rss/rss.html",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "CNBC Inversión (RSS, inglés)",
+   "url": "https://www.cnbc.com/id/15839069/device/rss/rss.html",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "CNBC Mundo (RSS, inglés)",
+   "url": "https://www.cnbc.com/id/100727362/device/rss/rss.html",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "MarketWatch Titulares (RSS, inglés)",
+   "url": "https://feeds.marketwatch.com/marketwatch/topstories/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "MarketWatch Market Pulse (RSS, inglés)",
+   "url": "https://feeds.marketwatch.com/marketwatch/marketpulse/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "Expansión España portada (RSS)",
+   "url": "https://e00-expansion.uecdn.es/rss/portada.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "Expansión España Economía (RSS)",
+   "url": "https://e00-expansion.uecdn.es/rss/economia.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "Expansión España Mercados (RSS)",
+   "url": "https://e00-expansion.uecdn.es/rss/mercados.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "Cinco Días portada (RSS)",
+   "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/cincodias.elpais.com/portada",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "El Economista España (RSS)",
+   "url": "https://www.eleconomista.es/rss/rss-economia.php",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "Yahoo Finanzas (RSS)",
+   "url": "https://es.finance.yahoo.com/rss/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "Yahoo Finance (RSS, inglés)",
+   "url": "https://finance.yahoo.com/news/rssindex",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "BID Blogs (RSS)",
+   "url": "https://blogs.iadb.org/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "Reserva Federal Comunicados (RSS, inglés)",
+   "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "Banco Central Europeo Prensa (RSS, inglés)",
+   "url": "https://www.ecb.europa.eu/rss/press.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "BLS Últimas publicaciones (RSS, inglés)",
+   "url": "https://www.bls.gov/feed/bls_latest.rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "EIA Energía Hoy (RSS, inglés)",
+   "url": "https://www.eia.gov/rss/todayinenergy.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "OilPrice.com (RSS, inglés)",
+   "url": "https://oilprice.com/rss/main",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "The Guardian Negocios (RSS, inglés)",
+   "url": "https://www.theguardian.com/business/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "ReliefWeb Actualizaciones (RSS, inglés)",
+   "url": "https://reliefweb.int/updates/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "ReliefWeb Desastres (RSS, inglés)",
+   "url": "https://reliefweb.int/disasters/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Noticias ONU Paz y seguridad (RSS, español)",
+   "url": "https://news.un.org/feed/subscribe/es/news/topic/peace-and-security/feed/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Noticias ONU Ayuda humanitaria (RSS, español)",
+   "url": "https://news.un.org/feed/subscribe/es/news/topic/humanitarian-aid/feed/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Noticias ONU Migrantes y refugiados (RSS, español)",
+   "url": "https://news.un.org/feed/subscribe/es/news/topic/migrants-and-refugees/feed/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Noticias ONU Derechos humanos (RSS, español)",
+   "url": "https://news.un.org/feed/subscribe/es/news/topic/human-rights/feed/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Noticias ONU Paz y seguridad (RSS, inglés)",
+   "url": "https://news.un.org/feed/subscribe/en/news/topic/peace-and-security/feed/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Noticias ONU Américas (RSS, español)",
+   "url": "https://news.un.org/feed/subscribe/es/news/region/americas/feed/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Noticias ONU Asia-Pacífico (RSS, español)",
+   "url": "https://news.un.org/feed/subscribe/es/news/region/asia-pacific/feed/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "International Crisis Group (RSS, inglés)",
+   "url": "https://www.crisisgroup.org/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Kyiv Independent (RSS, inglés)",
+   "url": "https://kyivindependent.com/news-archive/rss/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Ukrainska Pravda English (RSS)",
+   "url": "https://www.pravda.com.ua/eng/rss/view_news/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Ukrinform Inglés (RSS)",
+   "url": "https://www.ukrinform.net/rss/block-lastnews",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Times of Israel (RSS, inglés)",
+   "url": "https://www.timesofisrael.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Jerusalem Post (RSS, inglés)",
+   "url": "https://www.jpost.com/rss/rssfeedsheadlines.aspx",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Al-Monitor (RSS, inglés)",
+   "url": "https://www.al-monitor.com/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Middle East Eye (RSS, inglés)",
+   "url": "https://www.middleeasteye.net/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "The New Arab (RSS, inglés)",
+   "url": "https://www.newarab.com/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Long War Journal (RSS, inglés)",
+   "url": "https://www.longwarjournal.org/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "War on the Rocks (RSS, inglés)",
+   "url": "https://warontherocks.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Defense News (RSS, inglés)",
+   "url": "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Breaking Defense (RSS, inglés)",
+   "url": "https://breakingdefense.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "ISW Institute for the Study of War (RSS)",
+   "url": "https://understandingwar.org/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "ACLED Blog (RSS, inglés)",
+   "url": "https://acleddata.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "Bellingcat (RSS, inglés)",
+   "url": "https://www.bellingcat.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "BBC Medio Oriente (RSS, inglés)",
+   "url": "https://feeds.bbci.co.uk/news/world/middle_east/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Xataka México (RSS)",
+   "url": "https://www.xataka.com.mx/feedburner.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Wired Ciencia (RSS, inglés)",
+   "url": "https://www.wired.com/feed/category/science/latest/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Wired Seguridad (RSS, inglés)",
+   "url": "https://www.wired.com/feed/category/security/latest/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Wired IA (RSS, inglés)",
+   "url": "https://www.wired.com/feed/tag/ai/latest/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "The Verge Tecnología (RSS, inglés)",
+   "url": "https://www.theverge.com/rss/tech/index.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "The Verge IA (RSS, inglés)",
+   "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "TechCrunch IA (RSS, inglés)",
+   "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "TechCrunch Seguridad (RSS, inglés)",
+   "url": "https://techcrunch.com/category/security/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Ars Technica Tecnología (RSS, inglés)",
+   "url": "https://feeds.arstechnica.com/arstechnica/technology-lab",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Ars Technica Gadgets (RSS, inglés)",
+   "url": "https://feeds.arstechnica.com/arstechnica/gadgets",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Ars Technica Política tecnológica (RSS, inglés)",
+   "url": "https://feeds.arstechnica.com/arstechnica/tech-policy",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Engadget (RSS, inglés)",
+   "url": "https://www.engadget.com/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "MIT Technology Review IA (RSS, inglés)",
+   "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "MIT Technology Review Computación (RSS, inglés)",
+   "url": "https://www.technologyreview.com/topic/computing/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "VentureBeat IA (RSS, inglés)",
+   "url": "https://venturebeat.com/category/ai/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Hacker News portada (RSS oficial)",
+   "url": "https://news.ycombinator.com/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "OpenAI Noticias (RSS, inglés)",
+   "url": "https://openai.com/news/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Google Blog IA (RSS, inglés)",
+   "url": "https://blog.google/technology/ai/rss/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Google Blog general (RSS, inglés)",
+   "url": "https://blog.google/rss/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Google Research (RSS, inglés)",
+   "url": "https://research.google/blog/rss/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Google DeepMind (RSS, inglés)",
+   "url": "https://deepmind.google/blog/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Microsoft Blog (RSS, inglés)",
+   "url": "https://blogs.microsoft.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "EurekAlert Titulares (RSS, inglés)",
+   "url": "https://www.eurekalert.org/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "ScienceDaily Todo (RSS, inglés)",
+   "url": "https://www.sciencedaily.com/rss/all.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "ScienceDaily Tecnología (RSS, inglés)",
+   "url": "https://www.sciencedaily.com/rss/top/technology.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "ScienceDaily Espacio y tiempo (RSS, inglés)",
+   "url": "https://www.sciencedaily.com/rss/space_time.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "ScienceDaily Tierra y clima (RSS, inglés)",
+   "url": "https://www.sciencedaily.com/rss/earth_climate.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "ScienceDaily Mente y cerebro (RSS, inglés)",
+   "url": "https://www.sciencedaily.com/rss/mind_brain.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Phys.org Últimas (RSS, inglés)",
+   "url": "https://phys.org/rss-feed/breaking/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Phys.org Física (RSS, inglés)",
+   "url": "https://phys.org/rss-feed/physics-news/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Phys.org Tierra (RSS, inglés)",
+   "url": "https://phys.org/rss-feed/earth-news/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Phys.org Química (RSS, inglés)",
+   "url": "https://phys.org/rss-feed/chemistry-news/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Phys.org Tecnología (RSS, inglés)",
+   "url": "https://phys.org/rss-feed/technology-news/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Nature (RSS, inglés)",
+   "url": "https://www.nature.com/nature.rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Science AAAS Noticias (RSS, inglés)",
+   "url": "https://www.science.org/rss/news_current.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Quanta Magazine (RSS, inglés)",
+   "url": "https://www.quantamagazine.org/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "The Conversation España (Atom)",
+   "url": "https://theconversation.com/es/articles.atom",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Muy Interesante (RSS)",
+   "url": "https://www.muyinteresante.com/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "NIH Noticias (RSS, inglés)",
+   "url": "https://www.nih.gov/news-events/feed.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "OMS Noticias (RSS, inglés)",
+   "url": "https://www.who.int/rss-feeds/news-english.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Live Science (RSS, inglés)",
+   "url": "https://www.livescience.com/feeds/all",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Science News (RSS, inglés)",
+   "url": "https://www.sciencenews.org/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Scientific American (RSS, inglés)",
+   "url": "https://rss.sciam.com/ScientificAmerican-Global",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Smithsonian Ciencia (RSS, inglés)",
+   "url": "https://www.smithsonianmag.com/rss/science-nature/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "ESO Anuncios (RSS)",
+   "url": "https://www.eso.org/public/announcements/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "ESO Imagen de la semana (RSS)",
+   "url": "https://www.eso.org/public/images/potw/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "ESO Blog (RSS)",
+   "url": "https://www.eso.org/public/blog/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "ALMA Observatory (RSS, inglés)",
+   "url": "https://www.almaobservatory.org/en/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "ALMA Observatory (RSS, español)",
+   "url": "https://www.almaobservatory.org/es/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NOIRLab Anuncios (RSS)",
+   "url": "https://noirlab.edu/public/announcements/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NOIRLab Imágenes (RSS)",
+   "url": "https://noirlab.edu/public/images/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASA portada (RSS)",
+   "url": "https://www.nasa.gov/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASA Ciencia (RSS)",
+   "url": "https://science.nasa.gov/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASA Ciencia en español (RSS)",
+   "url": "https://ciencia.nasa.gov/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASA Noticias de última hora (RSS)",
+   "url": "https://www.nasa.gov/rss/dyn/breaking_news.rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASA Imagen del día (RSS)",
+   "url": "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASA JPL Noticias (RSS)",
+   "url": "https://www.jpl.nasa.gov/feeds/news",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASA APOD (RSS)",
+   "url": "https://apod.nasa.gov/apod.rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASA Earth Observatory (RSS)",
+   "url": "https://earthobservatory.nasa.gov/feeds/earth-observatory.rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "ESA Observación de la Tierra (RSS)",
+   "url": "https://www.esa.int/rssfeed/Our_Activities/Observing_the_Earth",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "ESA Exploración humana y robótica (RSS)",
+   "url": "https://www.esa.int/rssfeed/Our_Activities/Human_and_Robotic_Exploration",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "ESA Transporte espacial (RSS)",
+   "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Transportation",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "Universe Today (RSS)",
+   "url": "https://www.universetoday.com/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "EarthSky (RSS)",
+   "url": "https://earthsky.org/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "Spaceflight Now (RSS)",
+   "url": "https://spaceflightnow.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "NASASpaceflight (RSS)",
+   "url": "https://www.nasaspaceflight.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Emol Deportes (RSS)",
+   "url": "https://www.emol.com/rss/deportes.asxml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "La Tercera Fútbol nacional (Arc)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/el-deportivo/futbol-nacional/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "La Tercera Deportes otros (Arc)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/el-deportivo/otros-deportes/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "La Tercera Tenis (Arc)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/el-deportivo/tenis/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Cooperativa Deportes (RSS)",
+   "url": "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_6___1.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "BioBioChile Deportes (RSS)",
+   "url": "https://www.biobiochile.cl/lista/categorias/deportes/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Infobae Deportes (Arc)",
+   "url": "https://www.infobae.com/arc/outboundfeeds/rss/category/deportes/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "AS Chile portada (RSS)",
+   "url": "https://feeds.as.com/mrss-s/pages/as/site/chile.as.com/portada",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "AS Fútbol (RSS)",
+   "url": "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/futbol/portada/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "AS Motor F1 (RSS)",
+   "url": "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/motor/subsection/formula_1/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Redgol (RSS)",
+   "url": "https://www.redgol.cl/rss",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Bolavip Chile (RSS)",
+   "url": "https://bolavip.com/cl/rss",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "En Cancha (RSS)",
+   "url": "https://www.encancha.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "DaleAlbo (Universidad de Chile)",
+   "url": "https://www.dalealbo.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Colo-Colo oficial",
+   "url": "https://www.colocolo.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Cruzados (U. Católica)",
+   "url": "https://www.cruzados.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ANFP",
+   "url": "https://www.anfp.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Fútbol Primera",
+   "url": "https://www.futbolprimera.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Conmebol",
+   "url": "https://www.conmebol.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Marca Fútbol (RSS)",
+   "url": "https://e00-marca.uecdn.es/rss/futbol.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Marca Tenis (RSS)",
+   "url": "https://e00-marca.uecdn.es/rss/tenis.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Marca Fórmula 1 (RSS)",
+   "url": "https://e00-marca.uecdn.es/rss/formula1.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Mundo Deportivo Fútbol (RSS)",
+   "url": "https://www.mundodeportivo.com/rss/futbol",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Mundo Deportivo Tenis (RSS)",
+   "url": "https://www.mundodeportivo.com/rss/tenis",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Mundo Deportivo Fórmula 1 (RSS)",
+   "url": "https://www.mundodeportivo.com/rss/formula1",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Sport Fútbol (RSS)",
+   "url": "https://www.sport.es/es/rss/futbol/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Goal en español (RSS)",
+   "url": "https://www.goal.com/feeds/es/news",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ESPN FC noticias (RSS)",
+   "url": "https://www.espn.com/espn/rss/soccer/news",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ESPN NFL (RSS)",
+   "url": "https://www.espn.com/espn/rss/nfl/news",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ESPN MLB (RSS)",
+   "url": "https://www.espn.com/espn/rss/mlb/news",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ESPN Deportes (español)",
+   "url": "https://espndeportes.espn.com/espn/rss/news",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ESPN API Libertadores",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/news",
+   "tipo": "json",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ESPN API Premier League",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/news",
+   "tipo": "json",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ESPN API Champions League",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/news",
+   "tipo": "json",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "BBC Sport Ciclismo (RSS)",
+   "url": "https://feeds.bbci.co.uk/sport/cycling/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "BBC Sport portada (RSS)",
+   "url": "https://feeds.bbci.co.uk/sport/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "The Guardian Fútbol (RSS)",
+   "url": "https://www.theguardian.com/football/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "The Guardian Tenis (RSS)",
+   "url": "https://www.theguardian.com/sport/tennis/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "The Guardian Fórmula 1 (RSS)",
+   "url": "https://www.theguardian.com/sport/formulaone/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Sky Sports Fútbol (RSS)",
+   "url": "https://www.skysports.com/rss/12040",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "CBS Sports NFL (RSS)",
+   "url": "https://www.cbssports.com/rss/headlines/nfl/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "CBS Sports NBA (RSS)",
+   "url": "https://www.cbssports.com/rss/headlines/nba/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "CBS Sports MLB (RSS)",
+   "url": "https://www.cbssports.com/rss/headlines/mlb/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "CBS Sports NHL (RSS)",
+   "url": "https://www.cbssports.com/rss/headlines/nhl/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "NBA.com (RSS)",
+   "url": "https://www.nba.com/rss/nba_rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "MLB.com noticias (RSS)",
+   "url": "https://www.mlb.com/feeds/news/rss.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "MLB.com en español (RSS)",
+   "url": "https://www.mlb.com/es/feeds/news/rss.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "NHL.com noticias (RSS)",
+   "url": "https://www.nhl.com/rss/news.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "NFL.com noticias (RSS)",
+   "url": "https://www.nfl.com/feeds-rs/news",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Olé (RSS)",
+   "url": "https://www.ole.com.ar/rss/ultimas-noticias/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Punto de Break (RSS)",
+   "url": "https://www.puntodebreak.com/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Tennis.com (RSS)",
+   "url": "https://www.tennis.com/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ATP Tour (RSS)",
+   "url": "https://www.atptour.com/en/media/rss-feed/xml-feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "WTA (RSS)",
+   "url": "https://www.wtatennis.com/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Tennis Majors (RSS)",
+   "url": "https://www.tennismajors.com/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Golf.com (RSS)",
+   "url": "https://golf.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Golfweek (RSS)",
+   "url": "https://golfweek.usatoday.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Golf Monthly (RSS)",
+   "url": "https://www.golfmonthly.com/feeds.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "PGA Tour (RSS)",
+   "url": "https://www.pgatour.com/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Golf Channel (RSS)",
+   "url": "https://www.golfchannel.com/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Federación Chilena de Golf",
+   "url": "https://www.fedegolf.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Formula1.com (RSS)",
+   "url": "https://www.formula1.com/content/fom-website/en/latest/all.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Motorsport.com ES F1 (RSS)",
+   "url": "https://es.motorsport.com/rss/f1/news/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Motorsport.com F1 (RSS)",
+   "url": "https://www.motorsport.com/rss/f1/news/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Autosport F1 (RSS)",
+   "url": "https://www.autosport.com/rss/f1/news/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "RaceFans (RSS)",
+   "url": "https://www.racefans.net/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Horse & Hound (RSS)",
+   "url": "https://www.horseandhound.co.uk/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Chronicle of the Horse (RSS)",
+   "url": "https://www.chronofhorse.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Horsetalk (RSS)",
+   "url": "https://www.horsetalk.co.nz/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Horse Sport (RSS)",
+   "url": "https://horsesport.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Eventing Nation (RSS)",
+   "url": "https://eventingnation.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Club Hípico de Santiago",
+   "url": "https://www.clubhipico.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Federación Ecuestre de Chile",
+   "url": "https://www.fechiecuestre.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "RugbyPass (RSS)",
+   "url": "https://www.rugbypass.com/feeds/rss/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Cyclingnews (RSS)",
+   "url": "https://www.cyclingnews.com/feeds.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "VeloNews (RSS)",
+   "url": "https://velo.outsideonline.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Athletics Weekly (RSS)",
+   "url": "https://athleticsweekly.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "SwimSwam (RSS)",
+   "url": "https://swimswam.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Ski Racing (RSS)",
+   "url": "https://www.skiracing.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Surfer (RSS)",
+   "url": "https://www.surfer.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "World Surf League (RSS)",
+   "url": "https://www.worldsurfleague.com/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "MMA Fighting (RSS)",
+   "url": "https://www.mmafighting.com/rss/current",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "MMA Junkie (RSS)",
+   "url": "https://mmajunkie.usatoday.com/feed",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "BoxingScene (RSS)",
+   "url": "https://www.boxingscene.com/rss/news",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Scuttlebutt Sailing News (RSS)",
+   "url": "https://www.sailingscuttlebutt.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Yachting World (RSS)",
+   "url": "https://www.yachtingworld.com/feeds.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Yachting Monthly (RSS)",
+   "url": "https://www.yachtingmonthly.com/feeds.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Sailing World (RSS)",
+   "url": "https://www.sailingworld.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Cruising World (RSS)",
+   "url": "https://www.cruisingworld.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Sail-World (RSS)",
+   "url": "https://www.sail-world.com/rss/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "Armada de Chile noticias",
+   "url": "https://www.armada.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Espinof (RSS)",
+   "url": "https://www.espinof.com/feedburner.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Sensacine noticias (RSS)",
+   "url": "https://www.sensacine.com/rss/noticias.xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Cinechile (RSS)",
+   "url": "https://cinechile.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Cinencuentro (RSS)",
+   "url": "https://cinencuentro.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Variety (RSS)",
+   "url": "https://variety.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "The Hollywood Reporter (RSS)",
+   "url": "https://www.hollywoodreporter.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Deadline (RSS)",
+   "url": "https://deadline.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "IndieWire (RSS)",
+   "url": "https://www.indiewire.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Rotten Tomatoes editorial (RSS)",
+   "url": "https://editorial.rottentomatoes.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Rockaxis (RSS)",
+   "url": "https://www.rockaxis.com/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Super 45",
+   "url": "https://super45.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Radio Futuro",
+   "url": "https://www.futuro.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Billboard (RSS)",
+   "url": "https://www.billboard.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Rolling Stone (RSS)",
+   "url": "https://www.rollingstone.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Pitchfork (RSS)",
+   "url": "https://pitchfork.com/feed/feed-news/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "GAM Centro Cultural",
+   "url": "https://gam.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Teatro Municipal de Santiago",
+   "url": "https://municipaldesantiago.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Ministerio de las Culturas",
+   "url": "https://www.cultura.gob.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Centro Cultural La Moneda",
+   "url": "https://www.ccplm.cl/sitio/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Biblioteca Nacional de Chile",
+   "url": "https://www.bibliotecanacional.gob.cl/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Santiago Cultura",
+   "url": "https://www.santiagocultura.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "La Tercera Culto (Arc)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/culto/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "La Tercera Finde (Arc)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/finde/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Emol Wikén / Espectáculos (RSS)",
+   "url": "https://www.emol.com/rss/espectaculosycultura.asxml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "El Mostrador Cultura (RSS)",
+   "url": "https://www.elmostrador.cl/cultura/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Sernatur Chile",
+   "url": "https://www.sernatur.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Letras Libres (RSS)",
+   "url": "https://letraslibres.com/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "El País Cultura (RSS)",
+   "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/cultura/portada",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "The Guardian Books (RSS)",
+   "url": "https://www.theguardian.com/books/rss",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Publishers Weekly (RSS)",
+   "url": "https://www.publishersweekly.com/pw/feeds/recent/index.xml",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "Literary Hub (RSS)",
+   "url": "https://lithub.com/feed/",
+   "tipo": "rss",
+   "idioma": "en",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Marca Chile / Imagen de Chile",
+   "url": "https://www.marcachile.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Cancillería de Chile (noticias)",
+   "url": "https://www.minrel.gob.cl/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "ANID noticias",
+   "url": "https://www.anid.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "ProChile",
+   "url": "https://www.prochile.gob.cl/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Chile Global",
+   "url": "https://www.chileglobal.org/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Fundación Imagen de Chile",
+   "url": "https://www.fundacionimagendechile.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Endeavor Chile",
+   "url": "https://endeavor.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Ministerio de Ciencia (Chile)",
+   "url": "https://www.minciencia.gob.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "El Mercurio de Valparaíso",
+   "url": "https://www.mercuriovalpo.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "La Tercera Tendencias (Arc)",
+   "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/tendencias/?outputType=xml",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "CIPER Académico (RSS)",
+   "url": "https://www.ciperchile.cl/category/ciper-academico/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "BioBioChile Mundo (RSS)",
+   "url": "https://www.biobiochile.cl/lista/categorias/internacional/feed",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Revista Capital Emprendimiento (RSS)",
+   "url": "https://www.capital.cl/category/emprendimiento/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Startup Chile blog (RSS)",
+   "url": "https://startupchile.org/blog/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Chile Abroad (DICOEX)",
+   "url": "https://chilenosenelexterior.gob.cl/feed/",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "investigación 15-11-2026"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "GDELT · Chile: gobierno y Congreso",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28gobierno+OR+ministro+OR+congreso+OR+senado+OR+diputados+OR+presidente%29&timespan=1d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "GDELT · Chile: economía",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28econom%C3%ADa+OR+inflaci%C3%B3n+OR+%22Banco+Central%22+OR+IPSA+OR+d%C3%B3lar+OR+exportaciones%29&timespan=1d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "GDELT · Chile: industrias",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28miner%C3%ADa+OR+cobre+OR+litio+OR+salm%C3%B3n+OR+celulosa+OR+vino+OR+energ%C3%ADa%29&timespan=2d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "GDELT · Chile: vivienda e inmobiliario",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28inmobiliario+OR+vivienda+OR+hipotecario+OR+arriendo+OR+%22subsidio+habitacional%22%29&timespan=3d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "emprendimiento",
+   "fuente": "GDELT · Chile: emprendimiento",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28emprendimiento+OR+emprendedores+OR+startup+OR+Corfo+OR+pyme%29&timespan=3d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "GDELT · tecnología (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28%22inteligencia+artificial%22+OR+ciberseguridad+OR+tecnolog%C3%ADa+OR+semiconductores%29&timespan=1d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "GDELT · conflictos (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28Ucrania+OR+Gaza+OR+Sud%C3%A1n+OR+%22alto+el+fuego%22+OR+bombardeo+OR+ofensiva%29&timespan=1d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "politica/mundo",
+   "fuente": "GDELT · mundo: política (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28elecciones+OR+cumbre+OR+canciller+OR+%22jefe+de+Estado%22+OR+parlamento%29&timespan=1d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "economia/mundo",
+   "fuente": "GDELT · mundo: economía (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28%22Reserva+Federal%22+OR+aranceles+OR+%22Wall+Street%22+OR+petr%C3%B3leo+OR+%22Banco+Mundial%22+OR+FMI%29&timespan=1d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "GDELT · Chile: deportes",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28f%C3%BAtbol+OR+tenis+OR+golf+OR+%22La+Roja%22+OR+campeonato%29&timespan=1d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "entretenimiento",
+   "fuente": "GDELT · Chile: panoramas y cultura",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28concierto+OR+festival+OR+estreno+OR+teatro+OR+exposici%C3%B3n+OR+panorama%29&timespan=3d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "GDELT · chilenos destacados en el mundo",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28chileno+OR+chilena%29+%28premio+OR+galard%C3%B3n+OR+reconocimiento+OR+%22en+el+extranjero%22%29&timespan=3d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "GDELT · ciencia y salud (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28cient%C3%ADficos+OR+investigadores%29+%28gen%C3%A9tica+OR+c%C3%A1ncer+OR+medicina+OR+biolog%C3%ADa+OR+neurociencia%29&timespan=2d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "GDELT · astronomía (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28astronom%C3%ADa+OR+telescopio+OR+NASA+OR+galaxia+OR+asteroide+OR+exoplaneta%29&timespan=3d",
+   "tipo": "rss",
+   "idioma": "es",
+   "origen": "GDELT DOC 2.0 (API abierta, miles de medios)"
+  }
+ ]
+}
