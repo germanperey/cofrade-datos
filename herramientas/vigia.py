@@ -1,7 +1,8 @@
-"""Vigía de Cofrade News (15-11-2026). Corre en GitHub cada 6 horas.
+"""Vigía de Cofrade News (15-11-2026). Corre en GitHub cada 3 horas.
 
 Germán: «agrega un auditor que todos los días revise al menos cada 6 horas si hay algún error en algún contenido y/o en el
-funcionamiento de alguna aplicación (medios de pago, formularios, suscripción Socios, gráficos, etc.) para repararlo automáticamente».
+funcionamiento de alguna aplicación (medios de pago, formularios, suscripción Socios, gráficos, etc.) para repararlo automáticamente»;
+el mismo día, a las 07:21: «que el "auditor" revise, audite, repare y mejore todo cada 3 horas (en vez de cada 6 horas)».
 
 Revisa el sitio como un lector (portada, edición del día, gráficos dibujados, sin errores de JavaScript, Buzón, Socios, Mercado Pago a
 través de /salud, Mercados) y los datos de GitHub (frescura de los datos del día y del Pulso, corridas fallidas). Repara SOLO lo que es
@@ -24,7 +25,11 @@ SITIO = os.environ.get("VIGIA_SITIO", "https://www.cofrad.es")
 REPO = os.environ.get("GITHUB_REPOSITORY", "germanperey/cofrade-datos")
 API = f"https://api.github.com/repos/{REPO}"
 UA = "CofradeNews-Vigia/1.0 (revision del propio sitio; github.com/germanperey/cofrade-datos)"
-TZ = dt.timezone(dt.timedelta(hours=-3))
+try:   # 15-11-2026 (auditoría, pendiente 13): hora de Chile real todo el año (UTC-3 en verano, UTC-4 de abril a septiembre)
+    from zoneinfo import ZoneInfo
+    TZ = ZoneInfo("America/Santiago")
+except Exception:   # sin base de husos horarios en la máquina: horario de verano de Chile
+    TZ = dt.timezone(dt.timedelta(hours=-3))
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -227,8 +232,19 @@ def revisar_corridas(inf, reparar):
         inf.ok("Corridas de GitHub de las últimas 24 h sin fallas", True)
 
 
-def avisar(inf):
-    """Un aviso (issue) abierto mientras haya fallas graves; se cierra solo cuando todo vuelve a estar bien."""
+def graves_previos(ruta):
+    """Fallas graves del informe anterior y su hora: con 8 vueltas al día, para no repetir el mismo aviso en cada vuelta."""
+    try:
+        p = json.load(open(ruta, encoding="utf-8"))
+        return {x["nombre"] for x in p.get("revisiones") or [] if not x.get("ok") and x.get("grave")}, _hora(p.get("generado"))
+    except (OSError, ValueError, TypeError, KeyError, AttributeError):
+        return None, None
+
+
+def avisar(inf, previos=(None, None)):
+    """Un aviso (issue) abierto mientras haya fallas graves; se cierra solo cuando todo vuelve a estar bien.
+    15-11-2026 (vigía cada 3 horas): cada comentario le llega a Germán como correo de GitHub. Con las mismas fallas que la vuelta
+    anterior no se comenta de nuevo, salvo un recordatorio al día (la primera vuelta desde las 09:00)."""
     r = gh("GET", "/issues?state=open&labels=vigia&per_page=5")
     abiertos = r.json() if r is not None and r.status_code == 200 else []
     if inf.graves:
@@ -238,7 +254,13 @@ def avisar(inf):
                      if inf.reparaciones else "")
                   + "\n\nEl auditor de Claude lee este informe (datos/salud-sitio.json) y sigue con la reparación.")
         if abiertos:
-            gh("POST", f"/issues/{abiertos[0]['number']}/comments", json={"body": cuerpo})
+            antes, cuando = previos
+            t = ahora()
+            recordatorio = t.hour >= 9 and (cuando is None or cuando.astimezone(TZ) < t.replace(hour=9, minute=0, second=0, microsecond=0))
+            if antes == {g["nombre"] for g in inf.graves} and not recordatorio:
+                print("Aviso abierto con las mismas fallas de la vuelta anterior: no se repite el comentario")
+            else:
+                gh("POST", f"/issues/{abiertos[0]['number']}/comments", json={"body": cuerpo})
         else:
             gh("POST", "/issues", json={"title": "Vigía de Cofrade News: algo necesita atención", "body": cuerpo, "labels": ["vigia"]})
     else:
@@ -254,6 +276,7 @@ def main(argv=None):
     a.add_argument("--salida", default=os.path.join(RAIZ, "datos", "salud-sitio.json"))
     a = a.parse_args(argv)
     inf = Informe()
+    previos = graves_previos(a.salida)   # el informe de la vuelta anterior, antes de reemplazarlo
     fecha = revisar_sitio(inf)
     if not a.sin_navegador:
         revisar_navegador(inf, fecha)
@@ -264,7 +287,7 @@ def main(argv=None):
     os.makedirs(os.path.dirname(a.salida), exist_ok=True)
     json.dump(salida, open(a.salida, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     if not a.sin_reparar:
-        avisar(inf)
+        avisar(inf, previos)
     print(f"\n{'TODO BIEN' if not inf.graves else str(len(inf.graves)) + ' FALLA(S) GRAVE(S)'} · {len(inf.revisiones)} revisiones · "
           f"{len(inf.reparaciones)} reparaciones")
     return 0   # el vigía informa; nunca deja la corrida en rojo por una falla del sitio (eso lo dice el informe)

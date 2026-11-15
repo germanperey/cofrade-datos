@@ -1,14 +1,18 @@
 # Vigía del sitio (15-11-2026, Germán: «un auditor que todos los días revise al menos cada 6 horas si hay algún error en algún
-# contenido y/o en el funcionamiento de alguna aplicación ... para repararlo automáticamente»).
+# contenido y/o en el funcionamiento de alguna aplicación ... para repararlo automáticamente»; ese mismo día, a las 07:21, lo ajustó:
+# «que el "auditor" revise, audite, repare y mejore todo cada 3 horas (en vez de cada 6 horas)»).
 # Revisa el sitio como un lector (edición, gráficos, Buzón, Socios, Mercado Pago vía /salud) y los datos de GitHub; repara solo lo
 # seguro (vuelve a correr bajadas y trabajos fallidos) y deja el informe en datos/salud-sitio.json. Si queda algo grave, abre un
-# aviso (issue) que GitHub manda por correo; el auditor de Claude (tarea programada cada 6 h) lo lee y sigue con la reparación.
+# aviso (issue) que GitHub manda por correo; el auditor de Claude (tarea programada cada 3 h, unos 35 minutos después) lo lee y sigue.
+# Si GitHub se atrasa más de media hora, la visita de un lector a la portada se lo vuelve a pedir (reloj de respaldo del sitio).
 name: Vigía del sitio
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "23 1,7,13,19 * * *"   # 22:23, 04:23, 10:23 y 16:23 de Chile
+    # cada 3 horas (GitHub usa hora UTC): 21:42, 00:42, 03:42, 06:42, 09:42, 12:42, 15:42 y 18:42 de Chile en horario de verano;
+    # en el de invierno (abril a septiembre), una hora antes
+    - cron: "42 0,3,6,9,12,15,18,21 * * *"
 
 permissions:
   contents: write

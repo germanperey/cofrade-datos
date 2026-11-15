@@ -1371,6 +1371,81 @@ def directorio_de_fuentes_vivo():
     finally:
         VF.B.robots_permite, VF.B.pedir, VF.PAUSA_HOST = viejos
 
+
+@prueba
+def vigia_cada_3_horas_con_hora_de_chile_todo_el_anio():
+    """15-11-2026, 07:21 (Germán: «que el "auditor" revise, audite, repare y mejore todo cada 3 horas (en vez de cada 6 horas)»)."""
+    import re
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    yml = open(os.path.join(raiz, ".github", "workflows", "vigia.yml"), encoding="utf-8").read()
+    m = re.search(r'cron:\s*"(\d{1,2}) ([\d,]+) \* \* \*"', yml)
+    assert m and 10 <= int(m.group(1)) <= 50, "el horario del vigía debe evitar el comienzo de la hora (GitHub se atrasa ahí)"
+    horas = [int(h) for h in m.group(2).split(",")]
+    assert len(horas) == 8 and all(b - a == 3 for a, b in zip(horas, horas[1:])) and horas[0] + 24 - horas[-1] == 3, horas
+    sys.path.insert(0, os.path.join(raiz, "herramientas"))
+    import vigia as V
+    utc = dt.timezone.utc
+    # desde las 10:00 de Chile se espera la edición de hoy: en verano (UTC-3) y también en invierno (UTC-4)
+    for iso, hoy in (("2026-11-15T12:59", False), ("2026-11-15T13:01", True), ("2027-06-15T13:30", False), ("2027-06-15T14:01", True)):
+        t = dt.datetime.fromisoformat(iso).replace(tzinfo=utc).astimezone(V.TZ)
+        assert (V.fecha_esperada(t) == t.date()) is hoy, (iso, t.isoformat(), V.fecha_esperada(t))
+    assert V.ahora().utcoffset() in (dt.timedelta(hours=-3), dt.timedelta(hours=-4)), V.ahora().isoformat()
+
+
+@prueba
+def vigia_no_repite_el_mismo_aviso_en_cada_vuelta():
+    """15-11-2026: con 8 vueltas al día, cada comentario del aviso es un correo de GitHub para Germán: solo si cambió algo o 1 al día."""
+    import tempfile
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import vigia as V
+    llamadas, abiertos = [], [[{"number": 7}]]
+
+    class R:
+        status_code = 200
+
+        def __init__(self, j):
+            self._j = j
+
+        def json(self):
+            return self._j
+
+    def gh(metodo, ruta, **k):
+        llamadas.append((metodo, ruta))
+        return R(abiertos[0] if metodo == "GET" else {})
+    viejos = V.gh, V.ahora
+    hoy = lambda h: dt.datetime(2026, 11, 15, h, 42, tzinfo=V.TZ)   # noqa: E731
+    comentarios = lambda: [c for c in llamadas if c == ("POST", "/issues/7/comments")]   # noqa: E731
+    try:
+        V.gh = gh
+        inf = V.Informe()
+        inf.ok("Portada responde", False, "HTTP 500")
+        V.ahora = lambda: hoy(12)
+        V.avisar(inf, ({"Portada responde"}, hoy(9)))     # misma falla, ya avisada hoy después de las 09:00: silencio
+        assert not comentarios(), llamadas
+        V.avisar(inf, ({"Otra falla"}, hoy(9)))           # cambió la falla: comenta
+        assert len(comentarios()) == 1, llamadas
+        llamadas.clear()
+        V.ahora = lambda: hoy(9)
+        V.avisar(inf, ({"Portada responde"}, hoy(6)))     # primera vuelta desde las 09:00: recordatorio del día
+        assert len(comentarios()) == 1, llamadas
+        llamadas.clear()
+        V.ahora = lambda: hoy(3)
+        V.avisar(inf, ({"Portada responde"}, hoy(0)))     # de madrugada y sin cambios: silencio
+        assert not comentarios(), llamadas
+        abiertos[0] = []
+        V.avisar(inf, ({"Portada responde"}, hoy(0)))     # sin aviso abierto: se abre uno
+        assert ("POST", "/issues") in llamadas, llamadas
+        with tempfile.TemporaryDirectory() as t:
+            ruta = os.path.join(t, "salud.json")
+            json.dump({"generado": "2026-11-15T09:42:00-03:00", "revisiones": [
+                {"nombre": "Portada responde", "ok": False, "grave": True}, {"nombre": "Captcha", "ok": False, "grave": False},
+                {"nombre": "Base de datos", "ok": True, "grave": True}]}, open(ruta, "w"))
+            antes, cuando = V.graves_previos(ruta)
+            assert antes == {"Portada responde"} and cuando.hour == 9, (antes, cuando)
+            assert V.graves_previos(os.path.join(t, "no-existe.json")) == (None, None)
+    finally:
+        V.gh, V.ahora = viejos
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

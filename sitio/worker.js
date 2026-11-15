@@ -1880,7 +1880,8 @@ ${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `
 async function portada(env, ctx, req) {
   const { cuerpo, hero, p } = await cuerpoPortada(ctx);
   ctx.waitUntil(revivirPulso(env, p));
-  if (!/CofradeNews-Vigia/.test((req && req.headers.get("User-Agent")) || "")) ctx.waitUntil(revivirVigia(env));   // 15-11-2026: el vigía corre al menos cada 6 horas
+  // 15-11-2026: el vigía corre cada 3 horas; su propia visita reinicia el reloj y la de un lector lo despierta si GitHub se atrasó
+  ctx.waitUntil(/CofradeNews-Vigia/.test((req && req.headers.get("User-Agent")) || "") ? marcarVigia(env) : revivirVigia(env));
   return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero }), 200,
     { "Cache-Control": "public, max-age=120" });
 }
@@ -1977,10 +1978,20 @@ async function revivirPulso(env, p) {
   } catch { return "error"; }
 }
 
-// 15-11-2026 (Germán: «un auditor que todos los días revise al menos cada 6 horas ... y lo repare automáticamente»): el «Vigía del
-// sitio» de GitHub está programado 4 veces al día, pero GitHub corre sus horarios cuando puede. Igual que con el Pulso, la visita es el
-// reloj: si nadie lo pidió en las últimas 6 horas, el sitio se lo pide a GitHub (un pedido cada 6 h en todo el mundo, candado en D1).
-const VIGIA_CADA_MIN = 360;
+// 15-11-2026 (Germán: «un auditor que todos los días revise al menos cada 6 horas ... y lo repare automáticamente»; a las 07:21 lo
+// ajustó: «que el "auditor" revise, audite, repare y mejore todo cada 3 horas»): el «Vigía del sitio» de GitHub está programado cada
+// 3 horas, pero GitHub corre sus horarios cuando puede. Igual que con el Pulso, la visita es el reloj de respaldo: cada vez que el vigía
+// pasa por la portada deja su hora en el candado de D1 (marcarVigia) y la visita de un lector solo se lo pide a GitHub si lleva 3 h 30 min
+// sin pasar (la media hora absorbe el atraso habitual de GitHub, así no se piden dos revisiones seguidas; un pedido como máximo por vez).
+const VIGIA_CADA_MIN = 210;
+async function marcarVigia(env) {
+  try {
+    // auditoría del 15-11: el User-Agent del vigía se puede imitar; como máximo una escritura cada 10 minutos, así no gasta la cuota de D1
+    const ahora = Date.now();
+    if (env.DB) await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('vigia_pedido', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor WHERE CAST(config.valor AS INTEGER) < ?2")
+      .bind(String(ahora), ahora - 10 * 60000).run();
+  } catch { /* sin base de datos: el respaldo sigue como estaba */ }
+}
 async function revivirVigia(env) {
   try {
     if (!env.GITHUB_DISPATCH || !env.DB) return "sin clave";
@@ -2029,7 +2040,7 @@ export default {
           .transform(resp);
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
-      if (p === "/salud") return await salud(env, ctx);   // 15-11-2026: para el vigía de GitHub (cada 6 h)
+      if (p === "/salud") return await salud(env, ctx);   // 15-11-2026: para el vigía de GitHub y el auditor de Claude (cada 3 h)
       // 13-11-2026 · Buzón de sugerencias, medición de lectura y Panel de Control
       if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos guardar tu sugerencia en este momento. Intenta de nuevo en unos minutos." }, 503));
       if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
@@ -2041,9 +2052,10 @@ export default {
       if (p === "/panel") return await panel(req, env);
       const cap = p.match(/^\/capturas\/([a-z0-9-]+\.webp)$/);
       if (cap || p === "/marca-agua.webp") {
-        // 15-11-2026: el vigía rehace las capturas con cada edición nueva (herramientas/capturas.py): 6 h de caché, no 7 días
-        const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp", cap ? 21600 : 86400, ctx);
-        return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": cap ? "public, max-age=21600" : "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
+        // 15-11-2026: el vigía rehace las capturas con cada edición nueva (herramientas/capturas.py) y corre cada 3 horas: 3 h de caché,
+        // así la galería de la portada nunca queda más de una vuelta del vigía atrás
+        const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp", cap ? 10800 : 86400, ctx);
+        return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": cap ? "public, max-age=10800" : "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/contacto" && req.method === "POST") return await contacto(req, ctx);
       if (p === "/en.json") {
