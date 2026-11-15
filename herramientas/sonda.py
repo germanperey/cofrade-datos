@@ -14,6 +14,10 @@ HOY = dt.date.today()
 D0, D1 = HOY.strftime("%Y%m%d"), (HOY - dt.timedelta(days=1)).strftime("%Y%m%d")
 OBJETIVOS = [   # 15-11-2026: sin la API privada de TABSA (regla de Germán: no se usa). Para fuentes nuevas de titulares usar
     # herramientas/verificar_fuentes.py (directorio vivo); esta sonda queda para diagnósticos puntuales de fuentes oficiales.
+    ("espn_chi1_rango", "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261115-20261206&limit=300"),
+    ("espn_chi1_dia20", "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261120"),
+    ("espn_chi1_hoy", "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard"),
+    ("tsdb_proximos", "https://www.thesportsdb.com/api/v1/json/123/eventsnextleague.php?id=4627"),
     ("seia_inicio", "https://seia.sea.gob.cl/"),
     ("as_nba", "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/baloncesto/subsection/nba/"),
 ]
