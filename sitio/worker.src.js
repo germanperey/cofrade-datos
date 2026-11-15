@@ -19,6 +19,60 @@ const MAX_ARCHIVO = 12;    // la portada muestra las 12 ediciones más recientes
 const TOPE_ARCHIVO = 400;  // …y «Ver más» abre las anteriores de a 12 (Germán, 14-11-2026)
 const MARCAS = __MARCAS__;
 const LENTO = __LENTO__;   // 13-11-2026: capa que dibuja cada gráfico de la edición recién cuando el lector llega a él
+// 15-11-2026 (Germán: «procura que la Landing Page y el Diario "Cofrade News" cargue mucho más rápido en la Web»): la librería de
+// gráficos (ECharts 6.1.0, 1,1 MB y 367 KB comprimida) es idéntica en todas las ediciones desde el 06-11. Medido con un celular
+// con 4G lento: servirla aparte en la PRIMERA visita era ~1 s más lento (el navegador se detiene en ella a mitad de la página), y en
+// las visitas siguientes ~1 s más rápido. Por eso: la primera visita la recibe dentro de la página, como siempre, y después de cargar
+// la deja guardada en el navegador (sin gastar datos si el lector activó el ahorro de datos) y marca la cookie cn_lib; con esa cookie
+// las ediciones siguientes la piden aparte y el navegador la toma de su memoria, con la compilación ya hecha. Solo se cambia si los
+// primeros 2.048 caracteres son exactamente los de esa versión (huella FNV-1a); si un día la edición trae otra versión, queda dentro.
+const ECHARTS_ARCHIVO = "echarts-b66b25ae.js", ECHARTS_PREFIJO = 2048, ECHARTS_HUELLA = 0xab20ba12;
+const ECHARTS_SHA = "b66b25aeb4df84e33199dc21694014d336d222cbd9deb0e5a7c14bd6aa0d0fd0";
+// El bloque es idéntico, byte a byte, al archivo oficial dist/echarts.min.js del paquete echarts@6.1.0 (comprobado el 15-11-2026):
+// si GitHub no responde, se toma de jsDelivr, y en ambos casos solo se sirve si la huella SHA-256 coincide.
+const ECHARTS_FUENTES = [RAW + "sitio/assets/" + ECHARTS_ARCHIVO, "https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"];
+const ECHARTS_COOKIE = "cn_lib=" + ECHARTS_ARCHIVO.slice(8, 16);
+const conLibreria = (req) => (req.headers.get("Cookie") || "").split(/;\s*/).includes(ECHARTS_COOKIE);
+// primera visita: con la página ya cargada (y 3 s de margen para no competir con los gráficos), baja la librería a la memoria del navegador
+const GUARDAR_LIBRERIA = `<script>addEventListener('load',function(){setTimeout(function(){try{var c=navigator.connection;if(c&&c.saveData)return;`
+  + `fetch('/a/${ECHARTS_ARCHIVO}',{credentials:'same-origin'}).then(function(r){return r.ok?r.arrayBuffer():null}).then(function(b){`
+  + `if(b&&b.byteLength>1e6)document.cookie='${ECHARTS_COOKIE};max-age=31536000;path=/;secure;samesite=lax'}).catch(function(){})}catch(e){}},3000)})</script>`;
+async function libreriaGraficos(ctx) {
+  const cache = caches.default, clave = new Request("https://cache.cofrad.es/a/" + ECHARTS_ARCHIVO);
+  const r0 = await cache.match(clave);
+  if (r0) return r0;
+  for (const u of ECHARTS_FUENTES) {
+    try {
+      const o = await fetch(u, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": 31536000, "300-599": -1 } } });
+      if (!o.ok) continue;
+      const b = await o.arrayBuffer();
+      const h = [...new Uint8Array(await crypto.subtle.digest("SHA-256", b))].map((x) => x.toString(16).padStart(2, "0")).join("");
+      if (h !== ECHARTS_SHA) continue;
+      const r = new Response(b, { headers: { "Content-Type": "application/javascript; charset=utf-8", "Cache-Control": "public, max-age=31536000, immutable" } });
+      ctx.waitUntil(cache.put(clave, r.clone()));
+      return r;
+    } catch { /* siguiente fuente */ }
+  }
+  return null;
+}
+function fnv1a(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
+function externalizarEcharts(activo) {
+  let buf = "", decidido = true, quitar = false;
+  return {
+    element() { buf = ""; decidido = !activo; quitar = false; },
+    text(t) {
+      if (decidido) { if (quitar) t.remove(); return; }
+      buf += t.text; t.remove();
+      if (buf.length < ECHARTS_PREFIJO && !t.lastInTextNode) return;
+      decidido = true;
+      if (buf.length >= ECHARTS_PREFIJO && fnv1a(buf.slice(0, ECHARTS_PREFIJO)) === ECHARTS_HUELLA) {
+        quitar = true;
+        t.before(`</script><script src="/a/${ECHARTS_ARCHIVO}"></script><script>window.echarts||document.write('<script src="/a/${ECHARTS_ARCHIVO}?r=2"><\\/script>')</script><script>`, { html: true });
+      } else t.before(buf, { html: true });
+      buf = "";
+    },
+  };
+}
 const TZ = "America/Santiago";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -767,7 +821,7 @@ function bloqueMarcas() {
   if (!ms.length) return "";
   const uno = (m, oculto) => {
     const est = `style="--mf:${/^#[0-9A-Fa-f]{6}$/.test(m.fondo || "") ? m.fondo : "#FFFFFF"};--mc:${/^#[0-9A-Fa-f]{6}$/.test(m.color || "") ? m.color : "#0B1F3A"}"`;
-    const dentro = `<img src="/marcas/${esc(m.logo)}" alt="${oculto ? "" : esc(m.nombre)}" decoding="async">${m.texto ? `<span data-no-tr>${esc(m.texto)}</span>` : ""}`;
+    const dentro = `<img src="/marcas/${esc(m.logo)}" alt="${oculto ? "" : esc(m.nombre)}" loading="lazy" decoding="async">${m.texto ? `<span data-no-tr>${esc(m.texto)}</span>` : ""}`;
     const ext = oculto ? ' aria-hidden="true" tabindex="-1"' : "";
     return m.url
       ? `<a class="marca-a" ${est} href="${esc(urlSegura(m.url))}" target="_blank" rel="noopener"${ext}>${dentro}</a>`
@@ -906,13 +960,12 @@ function bloqueTierra(p) {
 }
 
 async function cuerpoPortada(ctx) {
-  const [lista, p] = await Promise.all([indice(ctx), pulso(ctx)]);
+  const [lista, p, h] = await Promise.all([indice(ctx), pulso(ctx), historia(ctx)]);   // 15-11-2026: los tres a la vez
   const ultima = lista[0];
   const hoy = fechaChile();
   const estado = !ultima ? "La primera edición web aparece mañana a las 07:30."
     : ultima === hoy ? "La edición de hoy ya está publicada." : "La edición de hoy se publica a las 07:30. Mientras, lee la última.";
   const hora = p && p.generado ? String(p.generado).slice(11, 16) : "";
-  const h = await historia(ctx);
   const piz = pizarra(h, p);
   const hero = `<section class="lujo" aria-label="Portada"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
 <div class="hoja lujo-in"><div class="lujo-txt"><span class="kicker">El diario de la mañana · Gratuito</span>
@@ -1113,9 +1166,11 @@ export default {
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
           "Cache-Control": pasada ? "public, max-age=3600, stale-while-revalidate=86400" : "public, max-age=600", ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
+        const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS, { html: true }); } })
+          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA), { html: true }); } })
+          .on("script", externalizarEcharts(lib))
           .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">' + SITIO_CSS, { html: true }); } })
           .transform(resp);
       }
@@ -1134,8 +1189,13 @@ export default {
       if (cap || p === "/marca-agua.webp") {
         // 15-11-2026: el vigía rehace las capturas con cada edición nueva (herramientas/capturas.py) y corre cada 3 horas: 3 h de caché,
         // así la galería de la portada nunca queda más de una vuelta del vigía atrás
-        const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp", cap ? 10800 : 86400, ctx);
+        const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp?v=2", cap ? 10800 : 86400, ctx);   // ?v=2: 15-11-2026, 86 → 36 KB
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": cap ? "public, max-age=10800" : "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
+      }
+      if (p === `/a/${ECHARTS_ARCHIVO}`) {   // 15-11-2026: la librería de gráficos de las ediciones, con caché de un año (ver ECHARTS_ARCHIVO)
+        const r = await libreriaGraficos(ctx);
+        return r ? new Response(r.body, { headers: { "Content-Type": "application/javascript; charset=utf-8", "Cache-Control": "public, max-age=31536000, immutable", ...SEGURIDAD } })
+          : new Response("", { status: 503, headers: { "Cache-Control": "no-store" } });
       }
       if (p === "/contacto" && req.method === "POST") return await contacto(req, ctx);
       if (p === "/en.json") {
@@ -1185,7 +1245,7 @@ export default {
       }
       const lg = p.match(/^\/logo-(claro|oscuro)\.webp$/);
       if (lg) {
-        const r = await desdeGitHub(`sitio/logo-${lg[1]}.webp`, 86400, ctx);
+        const r = await desdeGitHub(`sitio/logo-${lg[1]}.webp?v=2`, 86400, ctx);   // ?v=2: 15-11-2026, 272 → 156 px
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return Response.redirect(`https://${u.host}/favicon-64.png`, 301);   // 13-11-2026: ícono = escudo de la Cofradía

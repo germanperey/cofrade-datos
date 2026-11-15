@@ -19,6 +19,60 @@ const MAX_ARCHIVO = 12;    // la portada muestra las 12 ediciones más recientes
 const TOPE_ARCHIVO = 400;  // …y «Ver más» abre las anteriores de a 12 (Germán, 14-11-2026)
 const MARCAS = {"marcas": [{"nombre": "Caddie Golf", "logo": "caddie-icono.webp", "texto": "Caddie Golf", "fondo": "#0A1410", "color": "#E9F5EC", "url": "https://www.caddiegolf.cl/?utm_source=cofrad.es&utm_medium=carrusel"}, {"nombre": "Inbestu", "logo": "inbestu.webp", "fondo": "#FFFFFF", "contacto": true}, {"nombre": "Megabots", "logo": "megabots-blanco.webp", "fondo": "#121418", "contacto": true}]};
 const LENTO = "<script>(function(){if(window.__cnLento)return;window.__cnLento=1;\nvar E,realInit,realGet,porDom=new Map(),io=null,imprimiendo=false,\nCOLA={setOption:1,on:1,off:1,dispatchAction:1,showLoading:1,hideLoading:1,clear:1};\nfunction vivo(st){if(st.m||st.real)return st.real;st.real=realInit.apply(E,st.a);for(var i=0;i<st.q.length;i++){try{st.real[st.q[i][0]].apply(st.real,st.q[i][1])}catch(e){}}st.q.length=0;var z=null;for(var j=0;j<st.zq.length;j++){try{z=z||st.real.getZr();z[st.zq[j][0]].apply(z,st.zq[j][1])}catch(e){}}st.zq.length=0;if(io)io.unobserve(st.el);return st.real}\nfunction todos(){porDom.forEach(function(st){vivo(st)})}\nfunction lazyInit(dom){if(!dom||imprimiendo||!window.IntersectionObserver||!window.Proxy)return realInit.apply(E,arguments);\nvar prev=porDom.get(dom);if(prev&&!prev.m&&!(prev.real&&prev.real.isDisposed&&prev.real.isDisposed()))return prev.p;\nif(!io)io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){var st=porDom.get(x.target);if(st)vivo(st)}})},{rootMargin:'900px 0px'});\nvar st={el:dom,a:[].slice.call(arguments),q:[],zq:[],over:{},real:null,m:false};\nst.p=new Proxy(st,{set:function(t,k,v){t.over[k]=v;return true},get:function(t,k){\n if(Object.prototype.hasOwnProperty.call(t.over,k))return t.over[k];\n if(k==='dispose')return function(){if(t.real){try{t.real.dispose()}catch(e){}}t.m=true;t.q.length=0;if(io)io.unobserve(t.el);if(porDom.get(t.el)===t)porDom.delete(t.el)};\n if(COLA[k])return function(){if(t.real)return t.real[k].apply(t.real,arguments);if(!t.m)t.q.push([k,[].slice.call(arguments)])};\n if(t.real){var v=t.real[k];return typeof v==='function'?v.bind(t.real):v}\n if(k==='getDom')return function(){return t.el};\n if(k==='getZr')return function(){return new Proxy({},{get:function(_,kk){if(t.real){var z=t.real.getZr();var v=z[kk];return typeof v==='function'?v.bind(z):v}if(kk==='on'||kk==='off')return function(){if(!t.m)t.zq.push([kk,[].slice.call(arguments)])};if(kk==='then'||typeof kk==='symbol')return undefined;var r=vivo(t);if(!r)return undefined;var z2=r.getZr();var v2=z2[kk];return typeof v2==='function'?v2.bind(z2):v2}})};\n if(k==='isDisposed')return function(){return t.m};\n if(k==='resize')return function(){};\n if(k==='getOption')return function(){for(var i=t.q.length-1;i>=0;i--)if(t.q[i][0]==='setOption')return t.q[i][1][0];return null};\n if(k==='then'||typeof k==='symbol')return undefined;\n if(COLA[k])return function(){if(t.real)return t.real[k].apply(t.real,arguments);if(!t.m)t.q.push([k,[].slice.call(arguments)])};\n var r=vivo(t);if(!r)return undefined;var v2=r[k];return typeof v2==='function'?v2.bind(r):v2}});\nporDom.set(dom,st);io.observe(dom);return st.p}\nfunction lazyGet(dom){var st=porDom.get(dom);if(st&&!st.m)return st.p;return realGet?realGet.apply(E,arguments):undefined}\nfunction parchar(o){if(!o||o.__cnLento||typeof o.init!=='function')return;realInit=o.init;realGet=o.getInstanceByDom;\n try{o.init=lazyInit;o.getInstanceByDom=lazyGet}catch(e){}if(o.init!==lazyInit){try{Object.defineProperty(o,'init',{value:lazyInit,writable:true,configurable:true});Object.defineProperty(o,'getInstanceByDom',{value:lazyGet,writable:true,configurable:true})}catch(e){}}\n try{o.__cnLento=1}catch(e){}}\ntry{Object.defineProperty(window,'echarts',{configurable:true,enumerable:true,get:function(){parchar(E);return E},set:function(v){E=v}})}catch(e){}\naddEventListener('beforeprint',function(){imprimiendo=true;todos()});addEventListener('afterprint',function(){imprimiendo=false});\nvar pr=window.print;window.print=function(){imprimiendo=true;todos();try{return pr.apply(window,arguments)}finally{setTimeout(function(){imprimiendo=false},1500)}};\nwindow.__cnTodos=todos;})();</script>";   // 13-11-2026: capa que dibuja cada gráfico de la edición recién cuando el lector llega a él
+// 15-11-2026 (Germán: «procura que la Landing Page y el Diario "Cofrade News" cargue mucho más rápido en la Web»): la librería de
+// gráficos (ECharts 6.1.0, 1,1 MB y 367 KB comprimida) es idéntica en todas las ediciones desde el 06-11. Medido con un celular
+// con 4G lento: servirla aparte en la PRIMERA visita era ~1 s más lento (el navegador se detiene en ella a mitad de la página), y en
+// las visitas siguientes ~1 s más rápido. Por eso: la primera visita la recibe dentro de la página, como siempre, y después de cargar
+// la deja guardada en el navegador (sin gastar datos si el lector activó el ahorro de datos) y marca la cookie cn_lib; con esa cookie
+// las ediciones siguientes la piden aparte y el navegador la toma de su memoria, con la compilación ya hecha. Solo se cambia si los
+// primeros 2.048 caracteres son exactamente los de esa versión (huella FNV-1a); si un día la edición trae otra versión, queda dentro.
+const ECHARTS_ARCHIVO = "echarts-b66b25ae.js", ECHARTS_PREFIJO = 2048, ECHARTS_HUELLA = 0xab20ba12;
+const ECHARTS_SHA = "b66b25aeb4df84e33199dc21694014d336d222cbd9deb0e5a7c14bd6aa0d0fd0";
+// El bloque es idéntico, byte a byte, al archivo oficial dist/echarts.min.js del paquete echarts@6.1.0 (comprobado el 15-11-2026):
+// si GitHub no responde, se toma de jsDelivr, y en ambos casos solo se sirve si la huella SHA-256 coincide.
+const ECHARTS_FUENTES = [RAW + "sitio/assets/" + ECHARTS_ARCHIVO, "https://cdn.jsdelivr.net/npm/echarts@6.1.0/dist/echarts.min.js"];
+const ECHARTS_COOKIE = "cn_lib=" + ECHARTS_ARCHIVO.slice(8, 16);
+const conLibreria = (req) => (req.headers.get("Cookie") || "").split(/;\s*/).includes(ECHARTS_COOKIE);
+// primera visita: con la página ya cargada (y 3 s de margen para no competir con los gráficos), baja la librería a la memoria del navegador
+const GUARDAR_LIBRERIA = `<script>addEventListener('load',function(){setTimeout(function(){try{var c=navigator.connection;if(c&&c.saveData)return;`
+  + `fetch('/a/${ECHARTS_ARCHIVO}',{credentials:'same-origin'}).then(function(r){return r.ok?r.arrayBuffer():null}).then(function(b){`
+  + `if(b&&b.byteLength>1e6)document.cookie='${ECHARTS_COOKIE};max-age=31536000;path=/;secure;samesite=lax'}).catch(function(){})}catch(e){}},3000)})</script>`;
+async function libreriaGraficos(ctx) {
+  const cache = caches.default, clave = new Request("https://cache.cofrad.es/a/" + ECHARTS_ARCHIVO);
+  const r0 = await cache.match(clave);
+  if (r0) return r0;
+  for (const u of ECHARTS_FUENTES) {
+    try {
+      const o = await fetch(u, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": 31536000, "300-599": -1 } } });
+      if (!o.ok) continue;
+      const b = await o.arrayBuffer();
+      const h = [...new Uint8Array(await crypto.subtle.digest("SHA-256", b))].map((x) => x.toString(16).padStart(2, "0")).join("");
+      if (h !== ECHARTS_SHA) continue;
+      const r = new Response(b, { headers: { "Content-Type": "application/javascript; charset=utf-8", "Cache-Control": "public, max-age=31536000, immutable" } });
+      ctx.waitUntil(cache.put(clave, r.clone()));
+      return r;
+    } catch { /* siguiente fuente */ }
+  }
+  return null;
+}
+function fnv1a(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
+function externalizarEcharts(activo) {
+  let buf = "", decidido = true, quitar = false;
+  return {
+    element() { buf = ""; decidido = !activo; quitar = false; },
+    text(t) {
+      if (decidido) { if (quitar) t.remove(); return; }
+      buf += t.text; t.remove();
+      if (buf.length < ECHARTS_PREFIJO && !t.lastInTextNode) return;
+      decidido = true;
+      if (buf.length >= ECHARTS_PREFIJO && fnv1a(buf.slice(0, ECHARTS_PREFIJO)) === ECHARTS_HUELLA) {
+        quitar = true;
+        t.before(`</script><script src="/a/${ECHARTS_ARCHIVO}"></script><script>window.echarts||document.write('<script src="/a/${ECHARTS_ARCHIVO}?r=2"><\\/script>')</script><script>`, { html: true });
+      } else t.before(buf, { html: true });
+      buf = "";
+    },
+  };
+}
 const TZ = "America/Santiago";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -763,7 +817,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 // Germán: «cambia "En vivo" por "Buzón": ventana emergente con selección múltiple, área libre, nombre, apellido y email,
 // captcha y verificación del email, para evitar spam, bots y haters; y que se puedan modelar los datos y sacar métricas».
 // Datos en Cloudflare D1 (binding DB, base cofrade-socios). Captcha: Cloudflare Turnstile (secreto TURNSTILE_SECRET).
-// Correo de verificación: binding EMAIL de Cloudflare Email Service (se activa cuando cofrad.es quede habilitado para enviar).
+// Correo: agradecimiento personalizado + confirmación desde hola@cofrad.es (15-11-2026), con Resend (RESEND_API_KEY) o el binding EMAIL.
 // Panel: /panel, con la clave PANEL_CLAVE (secreto que crea Germán en Cloudflare). Sin esa clave, el panel no abre.
 // =====================================================================================================================
 const TURNSTILE_SITEKEY = "0x4AAAAAAGAKCkb75CKKeT2q";   // clave pública del widget (va en el HTML; la secreta vive solo en Cloudflare)
@@ -950,12 +1004,13 @@ async function recibirBuzon(req, env, ctx) {
       String((req.cf && req.cf.country) || "").slice(0, 2), estado).run();
   let mensaje = "Tu sugerencia quedó en el Buzón. La leeremos con atención.";
   if (hayCorreo(env)) {
-    const enlace = `https://${DOMINIO}/buzon/verificar?t=${token}`;
+    // 15-11-2026 (Germán): «debes automatizar una respuesta automática, respondiéndole de manera personalizada (saludándolo por su
+    // Nombre) y agradeciéndole "sus sugerencias y comentarios", porque "nos permite ofrecerle a nuestros lectores un sitio más completo,
+    // y con contenidos de lectura más relevantes y de gran interés"». Un solo correo desde hola@cofrad.es: el agradecimiento y, abajo,
+    // el botón para confirmar (la verificación del 13-11 sigue: frena a quien escribe con un email ajeno).
     try {
-      const enviado = await enviarCorreo(env, { to: email, subject: "Confirma tu sugerencia en Cofrade News",
-        text: `Hola ${nombre}:\n\nGracias por escribirnos. Para confirmar que eres tú, abre este enlace y toca «Confirmar»:\n${enlace}\n\nEl enlace vence en 7 días. Si no fuiste tú, ignora este correo.\n\nCofrade News · www.cofrad.es`,
-        html: `<div style="font:16px/1.55 Georgia,serif;color:#0B1F3A;max-width:520px"><p>Hola ${esc(nombre)}:</p><p>Gracias por escribirnos. Para confirmar que eres tú, toca el botón:</p><p><a href="${enlace}" style="display:inline-block;background:#B8892B;color:#1A1406;padding:12px 22px;border-radius:999px;text-decoration:none;font:600 15px Arial,sans-serif">Confirmar mi sugerencia</a></p><p style="color:#5B6472;font:13px Arial,sans-serif">El enlace vence en 7 días. Si no fuiste tú, ignora este correo.<br>Cofrade News · www.cofrad.es</p></div>` });
-      if (enviado) mensaje = "Te enviamos un correo para confirmar que eres tú: ábrelo y toca «Confirmar mi sugerencia». Si no lo ves, revisa la carpeta de spam.";
+      const enviado = await enviarCorreo(env, { to: email, ...correoGracias({ nombre, gusta, agregar, enlace: `https://${DOMINIO}/buzon/verificar?t=${token}` }) });
+      if (enviado) mensaje = "Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi sugerencia». Si no lo ves, revisa la carpeta de spam o de promociones.";
     } catch { /* si el correo falla, la sugerencia queda guardada como no confirmada */ }
   }
   return jsonR({ ok: true, mensaje });
@@ -963,18 +1018,45 @@ async function recibirBuzon(req, env, ctx) {
 // Correo de confirmación: usa Cloudflare Email Service si está activo (binding EMAIL, requiere plan pagado de Workers);
 // si no, Resend (gratis hasta 100 correos al día) con el secreto RESEND_API_KEY. Sin ninguno, la sugerencia queda «sin confirmar».
 const hayCorreo = (env) => !!((env.EMAIL && typeof env.EMAIL.send === "function") || env.RESEND_API_KEY);
+const CORREO_HOLA = "hola@cofrad.es";   // 15-11-2026 (Germán): las respuestas salen de hola@cofrad.es y las respuestas del lector llegan ahí
 async function enviarCorreo(env, { to, subject, text, html: cuerpo }) {
-  const de = env.CORREO_REMITENTE || "buzon@cofrad.es";
+  const de = env.CORREO_REMITENTE || CORREO_HOLA;
   if (env.EMAIL && typeof env.EMAIL.send === "function") {
-    await env.EMAIL.send({ from: { email: de, name: "Cofrade News" }, to, subject, text, html: cuerpo });
+    await env.EMAIL.send({ from: { email: de, name: "Cofrade News" }, to, replyTo: CORREO_HOLA, subject, text, html: cuerpo });
     return true;
   }
   if (env.RESEND_API_KEY) {
     const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: `Cofrade News <${de}>`, to: [to], subject, text, html: cuerpo }) });
+      body: JSON.stringify({ from: `Cofrade News <${de}>`, to: [to], reply_to: CORREO_HOLA, subject, text, html: cuerpo }) });
     return r.ok;
   }
   return false;
+}
+// «Crecimiento de Chile, Deportes y Los gráficos» (máximo 4 y «N más»); los valores vienen de las listas fijas del Buzón, no del lector
+function enumerar(lista) {
+  const v = lista.slice(0, 4), resto = lista.length - v.length;
+  if (resto > 0) return `${v.join(", ")} y ${resto} más`;
+  return v.length > 1 ? `${v.slice(0, -1).join(", ")} y ${v[v.length - 1]}` : (v[0] || "");
+}
+function correoGracias({ nombre, gusta, agregar, enlace }) {
+  const subject = `¡Gracias por tus sugerencias, ${nombre}!`;
+  const extra = [gusta.length ? `Nos alegra saber que disfrutas ${enumerar(gusta)}.` : "", agregar.length ? `Y tomamos nota de lo que te gustaría que agreguemos: ${enumerar(agregar)}.` : ""].filter(Boolean);
+  const text = `Hola ${nombre}:\n\nMuchas gracias por tus sugerencias y comentarios, porque nos permiten ofrecerles a nuestros lectores un sitio más completo, y con contenidos de lectura más relevantes y de gran interés.\n\n`
+    + (extra.length ? extra.join(" ") + "\n\n" : "")
+    + `Para que tu mensaje quede registrado, confírmalo con un clic:\n${enlace}\n(El enlace vence en 7 días. Si no fuiste tú, ignora este correo.)\n\n`
+    + `Si quieres contarnos algo más, responde este correo: llega directo a nuestro equipo.\n\nUn cordial saludo,\nEquipo Cofrade News\nwww.cofrad.es · ${CORREO_HOLA}`;
+  const p = (t) => `<p style="margin:0 0 14px">${t}</p>`;
+  const html = `<div style="font:16px/1.6 Georgia,'Times New Roman',serif;color:#0B1F3A;max-width:560px;margin:0 auto;padding:8px 4px">`
+    + `<p style="margin:0 0 18px;font:700 13px/1 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9A7B2F">Cofrade News · Buzón</p>`
+    + p(`Hola ${esc(nombre)}:`)
+    + p("Muchas gracias por tus <b>sugerencias y comentarios</b>, porque nos permiten ofrecerles a nuestros lectores un sitio más completo, y con contenidos de lectura más relevantes y de gran interés.")
+    + extra.map((x) => p(esc(x))).join("")
+    + p("Para que tu mensaje quede registrado, confírmalo con un clic:")
+    + `<p style="margin:0 0 18px"><a href="${enlace}" style="display:inline-block;background:#C9A227;color:#0B1F3A;font:700 16px/1 Arial,sans-serif;text-decoration:none;padding:14px 26px;border-radius:999px">Confirmar mi sugerencia</a></p>`
+    + `<p style="margin:0 0 18px;font:13px/1.5 Arial,sans-serif;color:#5A6577">El enlace vence en 7 días. Si no fuiste tú, ignora este correo.</p>`
+    + p("Si quieres contarnos algo más, responde este correo: llega directo a nuestro equipo.")
+    + `<p style="margin:22px 0 0">Un cordial saludo,<br><b>Equipo Cofrade News</b><br><a href="https://${DOMINIO}/" style="color:#0B1F3A">www.cofrad.es</a> · <a href="mailto:${CORREO_HOLA}" style="color:#0B1F3A">${CORREO_HOLA}</a></p></div>`;
+  return { subject, text, html };
 }
 // Confirmación en dos pasos (abrir el enlace muestra un botón; el botón confirma): así los antivirus del correo, que abren
 // los enlaces solos, no confirman por la persona.
@@ -1699,7 +1781,7 @@ function bloqueMarcas() {
   if (!ms.length) return "";
   const uno = (m, oculto) => {
     const est = `style="--mf:${/^#[0-9A-Fa-f]{6}$/.test(m.fondo || "") ? m.fondo : "#FFFFFF"};--mc:${/^#[0-9A-Fa-f]{6}$/.test(m.color || "") ? m.color : "#0B1F3A"}"`;
-    const dentro = `<img src="/marcas/${esc(m.logo)}" alt="${oculto ? "" : esc(m.nombre)}" decoding="async">${m.texto ? `<span data-no-tr>${esc(m.texto)}</span>` : ""}`;
+    const dentro = `<img src="/marcas/${esc(m.logo)}" alt="${oculto ? "" : esc(m.nombre)}" loading="lazy" decoding="async">${m.texto ? `<span data-no-tr>${esc(m.texto)}</span>` : ""}`;
     const ext = oculto ? ' aria-hidden="true" tabindex="-1"' : "";
     return m.url
       ? `<a class="marca-a" ${est} href="${esc(urlSegura(m.url))}" target="_blank" rel="noopener"${ext}>${dentro}</a>`
@@ -1838,13 +1920,12 @@ function bloqueTierra(p) {
 }
 
 async function cuerpoPortada(ctx) {
-  const [lista, p] = await Promise.all([indice(ctx), pulso(ctx)]);
+  const [lista, p, h] = await Promise.all([indice(ctx), pulso(ctx), historia(ctx)]);   // 15-11-2026: los tres a la vez
   const ultima = lista[0];
   const hoy = fechaChile();
   const estado = !ultima ? "La primera edición web aparece mañana a las 07:30."
     : ultima === hoy ? "La edición de hoy ya está publicada." : "La edición de hoy se publica a las 07:30. Mientras, lee la última.";
   const hora = p && p.generado ? String(p.generado).slice(11, 16) : "";
-  const h = await historia(ctx);
   const piz = pizarra(h, p);
   const hero = `<section class="lujo" aria-label="Portada"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
 <div class="hoja lujo-in"><div class="lujo-txt"><span class="kicker">El diario de la mañana · Gratuito</span>
@@ -2045,9 +2126,11 @@ export default {
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
           "Cache-Control": pasada ? "public, max-age=3600, stale-while-revalidate=86400" : "public, max-age=600", ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
+        const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS, { html: true }); } })
+          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA), { html: true }); } })
+          .on("script", externalizarEcharts(lib))
           .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">' + SITIO_CSS, { html: true }); } })
           .transform(resp);
       }
@@ -2066,8 +2149,13 @@ export default {
       if (cap || p === "/marca-agua.webp") {
         // 15-11-2026: el vigía rehace las capturas con cada edición nueva (herramientas/capturas.py) y corre cada 3 horas: 3 h de caché,
         // así la galería de la portada nunca queda más de una vuelta del vigía atrás
-        const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp", cap ? 10800 : 86400, ctx);
+        const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp?v=2", cap ? 10800 : 86400, ctx);   // ?v=2: 15-11-2026, 86 → 36 KB
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": cap ? "public, max-age=10800" : "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
+      }
+      if (p === `/a/${ECHARTS_ARCHIVO}`) {   // 15-11-2026: la librería de gráficos de las ediciones, con caché de un año (ver ECHARTS_ARCHIVO)
+        const r = await libreriaGraficos(ctx);
+        return r ? new Response(r.body, { headers: { "Content-Type": "application/javascript; charset=utf-8", "Cache-Control": "public, max-age=31536000, immutable", ...SEGURIDAD } })
+          : new Response("", { status: 503, headers: { "Cache-Control": "no-store" } });
       }
       if (p === "/contacto" && req.method === "POST") return await contacto(req, ctx);
       if (p === "/en.json") {
@@ -2117,7 +2205,7 @@ export default {
       }
       const lg = p.match(/^\/logo-(claro|oscuro)\.webp$/);
       if (lg) {
-        const r = await desdeGitHub(`sitio/logo-${lg[1]}.webp`, 86400, ctx);
+        const r = await desdeGitHub(`sitio/logo-${lg[1]}.webp?v=2`, 86400, ctx);   // ?v=2: 15-11-2026, 272 → 156 px
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return Response.redirect(`https://${u.host}/favicon-64.png`, 301);   // 13-11-2026: ícono = escudo de la Cofradía

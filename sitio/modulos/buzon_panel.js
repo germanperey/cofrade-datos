@@ -3,7 +3,7 @@
 // Germán: «cambia "En vivo" por "Buzón": ventana emergente con selección múltiple, área libre, nombre, apellido y email,
 // captcha y verificación del email, para evitar spam, bots y haters; y que se puedan modelar los datos y sacar métricas».
 // Datos en Cloudflare D1 (binding DB, base cofrade-socios). Captcha: Cloudflare Turnstile (secreto TURNSTILE_SECRET).
-// Correo de verificación: binding EMAIL de Cloudflare Email Service (se activa cuando cofrad.es quede habilitado para enviar).
+// Correo: agradecimiento personalizado + confirmación desde hola@cofrad.es (15-11-2026), con Resend (RESEND_API_KEY) o el binding EMAIL.
 // Panel: /panel, con la clave PANEL_CLAVE (secreto que crea Germán en Cloudflare). Sin esa clave, el panel no abre.
 // =====================================================================================================================
 const TURNSTILE_SITEKEY = "0x4AAAAAAGAKCkb75CKKeT2q";   // clave pública del widget (va en el HTML; la secreta vive solo en Cloudflare)
@@ -190,12 +190,13 @@ async function recibirBuzon(req, env, ctx) {
       String((req.cf && req.cf.country) || "").slice(0, 2), estado).run();
   let mensaje = "Tu sugerencia quedó en el Buzón. La leeremos con atención.";
   if (hayCorreo(env)) {
-    const enlace = `https://${DOMINIO}/buzon/verificar?t=${token}`;
+    // 15-11-2026 (Germán): «debes automatizar una respuesta automática, respondiéndole de manera personalizada (saludándolo por su
+    // Nombre) y agradeciéndole "sus sugerencias y comentarios", porque "nos permite ofrecerle a nuestros lectores un sitio más completo,
+    // y con contenidos de lectura más relevantes y de gran interés"». Un solo correo desde hola@cofrad.es: el agradecimiento y, abajo,
+    // el botón para confirmar (la verificación del 13-11 sigue: frena a quien escribe con un email ajeno).
     try {
-      const enviado = await enviarCorreo(env, { to: email, subject: "Confirma tu sugerencia en Cofrade News",
-        text: `Hola ${nombre}:\n\nGracias por escribirnos. Para confirmar que eres tú, abre este enlace y toca «Confirmar»:\n${enlace}\n\nEl enlace vence en 7 días. Si no fuiste tú, ignora este correo.\n\nCofrade News · www.cofrad.es`,
-        html: `<div style="font:16px/1.55 Georgia,serif;color:#0B1F3A;max-width:520px"><p>Hola ${esc(nombre)}:</p><p>Gracias por escribirnos. Para confirmar que eres tú, toca el botón:</p><p><a href="${enlace}" style="display:inline-block;background:#B8892B;color:#1A1406;padding:12px 22px;border-radius:999px;text-decoration:none;font:600 15px Arial,sans-serif">Confirmar mi sugerencia</a></p><p style="color:#5B6472;font:13px Arial,sans-serif">El enlace vence en 7 días. Si no fuiste tú, ignora este correo.<br>Cofrade News · www.cofrad.es</p></div>` });
-      if (enviado) mensaje = "Te enviamos un correo para confirmar que eres tú: ábrelo y toca «Confirmar mi sugerencia». Si no lo ves, revisa la carpeta de spam.";
+      const enviado = await enviarCorreo(env, { to: email, ...correoGracias({ nombre, gusta, agregar, enlace: `https://${DOMINIO}/buzon/verificar?t=${token}` }) });
+      if (enviado) mensaje = "Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi sugerencia». Si no lo ves, revisa la carpeta de spam o de promociones.";
     } catch { /* si el correo falla, la sugerencia queda guardada como no confirmada */ }
   }
   return jsonR({ ok: true, mensaje });
@@ -203,18 +204,45 @@ async function recibirBuzon(req, env, ctx) {
 // Correo de confirmación: usa Cloudflare Email Service si está activo (binding EMAIL, requiere plan pagado de Workers);
 // si no, Resend (gratis hasta 100 correos al día) con el secreto RESEND_API_KEY. Sin ninguno, la sugerencia queda «sin confirmar».
 const hayCorreo = (env) => !!((env.EMAIL && typeof env.EMAIL.send === "function") || env.RESEND_API_KEY);
+const CORREO_HOLA = "hola@cofrad.es";   // 15-11-2026 (Germán): las respuestas salen de hola@cofrad.es y las respuestas del lector llegan ahí
 async function enviarCorreo(env, { to, subject, text, html: cuerpo }) {
-  const de = env.CORREO_REMITENTE || "buzon@cofrad.es";
+  const de = env.CORREO_REMITENTE || CORREO_HOLA;
   if (env.EMAIL && typeof env.EMAIL.send === "function") {
-    await env.EMAIL.send({ from: { email: de, name: "Cofrade News" }, to, subject, text, html: cuerpo });
+    await env.EMAIL.send({ from: { email: de, name: "Cofrade News" }, to, replyTo: CORREO_HOLA, subject, text, html: cuerpo });
     return true;
   }
   if (env.RESEND_API_KEY) {
     const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: `Cofrade News <${de}>`, to: [to], subject, text, html: cuerpo }) });
+      body: JSON.stringify({ from: `Cofrade News <${de}>`, to: [to], reply_to: CORREO_HOLA, subject, text, html: cuerpo }) });
     return r.ok;
   }
   return false;
+}
+// «Crecimiento de Chile, Deportes y Los gráficos» (máximo 4 y «N más»); los valores vienen de las listas fijas del Buzón, no del lector
+function enumerar(lista) {
+  const v = lista.slice(0, 4), resto = lista.length - v.length;
+  if (resto > 0) return `${v.join(", ")} y ${resto} más`;
+  return v.length > 1 ? `${v.slice(0, -1).join(", ")} y ${v[v.length - 1]}` : (v[0] || "");
+}
+function correoGracias({ nombre, gusta, agregar, enlace }) {
+  const subject = `¡Gracias por tus sugerencias, ${nombre}!`;
+  const extra = [gusta.length ? `Nos alegra saber que disfrutas ${enumerar(gusta)}.` : "", agregar.length ? `Y tomamos nota de lo que te gustaría que agreguemos: ${enumerar(agregar)}.` : ""].filter(Boolean);
+  const text = `Hola ${nombre}:\n\nMuchas gracias por tus sugerencias y comentarios, porque nos permiten ofrecerles a nuestros lectores un sitio más completo, y con contenidos de lectura más relevantes y de gran interés.\n\n`
+    + (extra.length ? extra.join(" ") + "\n\n" : "")
+    + `Para que tu mensaje quede registrado, confírmalo con un clic:\n${enlace}\n(El enlace vence en 7 días. Si no fuiste tú, ignora este correo.)\n\n`
+    + `Si quieres contarnos algo más, responde este correo: llega directo a nuestro equipo.\n\nUn cordial saludo,\nEquipo Cofrade News\nwww.cofrad.es · ${CORREO_HOLA}`;
+  const p = (t) => `<p style="margin:0 0 14px">${t}</p>`;
+  const html = `<div style="font:16px/1.6 Georgia,'Times New Roman',serif;color:#0B1F3A;max-width:560px;margin:0 auto;padding:8px 4px">`
+    + `<p style="margin:0 0 18px;font:700 13px/1 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9A7B2F">Cofrade News · Buzón</p>`
+    + p(`Hola ${esc(nombre)}:`)
+    + p("Muchas gracias por tus <b>sugerencias y comentarios</b>, porque nos permiten ofrecerles a nuestros lectores un sitio más completo, y con contenidos de lectura más relevantes y de gran interés.")
+    + extra.map((x) => p(esc(x))).join("")
+    + p("Para que tu mensaje quede registrado, confírmalo con un clic:")
+    + `<p style="margin:0 0 18px"><a href="${enlace}" style="display:inline-block;background:#C9A227;color:#0B1F3A;font:700 16px/1 Arial,sans-serif;text-decoration:none;padding:14px 26px;border-radius:999px">Confirmar mi sugerencia</a></p>`
+    + `<p style="margin:0 0 18px;font:13px/1.5 Arial,sans-serif;color:#5A6577">El enlace vence en 7 días. Si no fuiste tú, ignora este correo.</p>`
+    + p("Si quieres contarnos algo más, responde este correo: llega directo a nuestro equipo.")
+    + `<p style="margin:22px 0 0">Un cordial saludo,<br><b>Equipo Cofrade News</b><br><a href="https://${DOMINIO}/" style="color:#0B1F3A">www.cofrad.es</a> · <a href="mailto:${CORREO_HOLA}" style="color:#0B1F3A">${CORREO_HOLA}</a></p></div>`;
+  return { subject, text, html };
 }
 // Confirmación en dos pasos (abrir el enlace muestra un botón; el botón confirma): así los antivirus del correo, que abren
 // los enlaces solos, no confirman por la persona.
