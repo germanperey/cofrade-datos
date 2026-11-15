@@ -639,6 +639,29 @@ document.addEventListener('keydown',function(e){var k=(e.key||'').toLowerCase();
 document.addEventListener('contextmenu',function(e){var t=e.target;if(t&&t.closest&&t.closest('input,textarea,[contenteditable]'))return;return no(e)},true);
 document.addEventListener('dragstart',function(e){if(e.target&&e.target.tagName==='IMG')no(e)},true);})();<\/script>`;
 
+// 15-11-2026 (Germán: «un auditor que cada 6 horas revise ... medios de pago, formularios, suscripción Socios ... y lo repare»):
+// estado de las piezas que el vigía de GitHub no puede ver desde afuera. Solo dice SÍ o NO por pieza: nunca muestra llaves ni datos.
+// Mercado Pago se prueba con una consulta de solo lectura (la cuenta dueña de la llave). Se guarda 5 minutos para no repetir consultas.
+async function salud(env, ctx) {
+  const clave = new Request("https://www.cofrad.es/__salud");
+  try { const c = await caches.default.match(clave); if (c) return c; } catch (e) { /* sin caché: se calcula */ }
+  const r = { hora: new Date().toISOString() };
+  try { r.d1 = !!env.DB && !!(await env.DB.prepare("SELECT 1 AS uno").first()); } catch (e) { r.d1 = false; }
+  r.mp_configurado = !!(env.MP_ACCESS_TOKEN && String(env.MP_ACCESS_TOKEN).trim() && env.MP_WEBHOOK_SECRET);
+  if (r.mp_configurado) {
+    try {
+      const x = await fetch("https://api.mercadopago.com/users/me", { headers: { Authorization: `Bearer ${String(env.MP_ACCESS_TOKEN).trim()}` }, signal: AbortSignal.timeout(8000) });
+      r.mp_api = x.ok;
+    } catch (e) { r.mp_api = false; }
+  }
+  r.turnstile = !!env.TURNSTILE_SECRET;
+  r.correo = !!env.RESEND_API_KEY;
+  r.ok = r.d1 && r.mp_api !== false;
+  const resp = new Response(JSON.stringify(r), { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=300", "X-Robots-Tag": "noindex", ...SEGURIDAD } });
+  try { ctx.waitUntil(caches.default.put(clave, resp.clone())); } catch (e) { /* sin caché */ }
+  return resp;
+}
+
 // 15-11-2026 · Navegación que el sitio agrega a TODA edición (de hoy, por fecha, liviana o permanente). Un solo dueño: el sitio.
 // (a) Germán: «agregar una flecha que le permita al lector retroceder y volver al Landing page». Botón fijo arriba a la izquierda,
 //     con el lenguaje del botón «Índice» (azul marino, borde dorado). Es un enlace real a la portada: funciona sin JavaScript y con
@@ -925,6 +948,7 @@ ${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `
 async function portada(env, ctx) {
   const { cuerpo, hero, p } = await cuerpoPortada(ctx);
   ctx.waitUntil(revivirPulso(env, p));
+  ctx.waitUntil(revivirVigia(env));   // 15-11-2026: el vigía corre al menos cada 6 horas
   return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero }), 200,
     { "Cache-Control": "public, max-age=120" });
 }
@@ -993,9 +1017,10 @@ function pulsoEnHorario(env, ms) {
   const h = Number(_FMT_HORA_CL.format(new Date(ms)));
   return !(Number.isFinite(a) && Number.isFinite(b) && Number.isFinite(h)) || (h >= a && h <= b);
 }
-async function pedirPulso(env) {
+async function pedirPulso(env) { return pedirFlujo(env, "pulso.yml"); }
+async function pedirFlujo(env, archivo) {
   if (!env.GITHUB_DISPATCH) return "sin clave";
-  const r = await fetch("https://api.github.com/repos/germanperey/cofrade-datos/actions/workflows/pulso.yml/dispatches", {
+  const r = await fetch(`https://api.github.com/repos/germanperey/cofrade-datos/actions/workflows/${archivo}/dispatches`, {
     method: "POST", body: JSON.stringify({ ref: "main" }),
     headers: { Authorization: `Bearer ${env.GITHUB_DISPATCH}`, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28",
       "User-Agent": "cofrade-news-web", "Content-Type": "application/json" } });
@@ -1015,6 +1040,25 @@ async function revivirPulso(env, p) {
     let res;
     try { res = await pedirPulso(env); } catch { res = "sin conexión"; }
     await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('pulso_resultado', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor")
+      .bind(JSON.stringify({ estado: res, hora: new Date(ahora).toISOString() })).run();
+    return res;
+  } catch { return "error"; }
+}
+
+// 15-11-2026 (Germán: «un auditor que todos los días revise al menos cada 6 horas ... y lo repare automáticamente»): el «Vigía del
+// sitio» de GitHub está programado 4 veces al día, pero GitHub corre sus horarios cuando puede. Igual que con el Pulso, la visita es el
+// reloj: si nadie lo pidió en las últimas 6 horas, el sitio se lo pide a GitHub (un pedido cada 6 h en todo el mundo, candado en D1).
+const VIGIA_CADA_MIN = 360;
+async function revivirVigia(env) {
+  try {
+    if (!env.GITHUB_DISPATCH || !env.DB) return "sin clave";
+    const ahora = Date.now();
+    const r = await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('vigia_pedido', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor WHERE CAST(config.valor AS INTEGER) < ?2")
+      .bind(String(ahora), ahora - VIGIA_CADA_MIN * 60000).run();
+    if (!r || !r.meta || r.meta.changes !== 1) return "ya pedido";
+    let res;
+    try { res = await pedirFlujo(env, "vigia.yml"); } catch { res = "sin conexión"; }
+    await env.DB.prepare("INSERT INTO config (clave, valor) VALUES ('vigia_resultado', ?1) ON CONFLICT(clave) DO UPDATE SET valor = excluded.valor")
       .bind(JSON.stringify({ estado: res, hora: new Date(ahora).toISOString() })).run();
     return res;
   } catch { return "error"; }
@@ -1053,6 +1097,7 @@ export default {
           .transform(resp);
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
+      if (p === "/salud") return await salud(env, ctx);   // 15-11-2026: para el vigía de GitHub (cada 6 h)
       // 13-11-2026 · Buzón de sugerencias, medición de lectura y Panel de Control
       if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos guardar tu sugerencia en este momento. Intenta de nuevo en unos minutos." }, 503));
       if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
