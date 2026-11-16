@@ -2452,6 +2452,25 @@ def gasto_funcional(estado, salida, hoy):
         return None
 
 
+# ---------- 16-11-2026: avisos PAGADOS del Panel de www.cofrad.es ----------
+# Germán registra en el Panel a las empresas que pagan publicidad. El sitio publica los avisos vigentes (solo datos públicos: nunca
+# contacto, email, teléfono, RUT ni montos) en /publicidad.json; aquí se copian a datos/publicidad.json para que la Skill los sume a
+# los banners del diario. Solo pasan los avisos cuyos botones cuentan el clic en el sitio (/ir/…).
+PUBLICIDAD_PANEL = "https://www.cofrad.es/publicidad.json"
+RE_IR_PANEL = re.compile(r"^https://www\.cofrad\.es/ir/[a-z0-9][a-z0-9-]{0,60}\?b=[12]&o=diario$")
+
+
+def publicidad_panel(estado):
+    j = pedir(PUBLICIDAD_PANEL, estado, "publicidad_panel", espera=(0, 20))
+    if not isinstance(j, dict) or not isinstance(j.get("avisos"), list) or not re.match(r"^\d{4}-\d{2}-\d{2}$", str(j.get("fecha") or "")):
+        if isinstance(estado.get("publicidad_panel"), dict) and estado["publicidad_panel"].get("ok"):
+            estado["publicidad_panel"].update(ok=False, error="respuesta sin el formato esperado")
+        return None
+    avisos = [a for a in j["avisos"] if isinstance(a, dict) and RE_IR_PANEL.match(str(a.get("boton1_web") or ""))][:40]
+    estado["publicidad_panel"]["n"] = len(avisos)
+    return {"fecha": j["fecha"], "generado": str(j.get("generado") or "")[:30], "avisos": avisos}
+
+
 def escribir(ruta, contenido):
     if contenido is None or contenido == "":
         return False
@@ -2833,6 +2852,10 @@ def main(argv=None):
     except Exception as ex:   # noqa: BLE001
         estado["espejo"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "espejo", "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     escribir(os.path.join(a.salida, "robots.json"), {"fecha": hoy.isoformat(), "sitios": ROBOTS_VISTOS} if ROBOTS_VISTOS else None)
+    try:   # 16-11-2026: avisos pagados del Panel (nunca detiene lo demás)
+        escribir(os.path.join(a.salida, "publicidad.json"), publicidad_panel(estado))
+    except Exception as ex:   # noqa: BLE001
+        estado["publicidad_panel"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": PUBLICIDAD_PANEL, "error": type(ex).__name__}
     for nombre, fn in (("sismos.csv", lambda: sismos(estado)), ("aire.json", lambda: aire_waqi(estado) or aire(estado)), ("f1.json", lambda: f1(estado, hoy))):
         try:   # 02-11-2026: ninguna de estas tres detiene a las demás
             escribir(os.path.join(a.salida, nombre), fn())

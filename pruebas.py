@@ -1523,6 +1523,31 @@ def vigia_avisa_si_no_se_aplica_la_rapidez():
 
 
 @prueba
+def publicidad_pagada_del_panel_se_copia_sin_datos_privados():
+    """16-11-2026: datos/publicidad.json lleva los avisos vigentes del Panel; solo los que cuentan el clic en el sitio (/ir/…), y una
+    respuesta rara no deja archivo (la Skill sigue con las marcas propias)."""
+    ir = "https://www.cofrad.es/ir/ferreteria-lopez?b=1&o=diario"
+    bueno = {"generado": "2026-11-16T10:00:00Z", "fecha": "2026-11-16", "avisos": [{"activo": "SI", "empresa": "Ferretería López", "boton1_web": ir},
+             {"activo": "SI", "empresa": "Desvío", "boton1_web": "https://evil.example/x"}, "basura"]}
+    pedir = B.pedir
+    try:
+        for resp, esperado in ((bueno, ["Ferretería López"]), ({"fecha": "2026-11-16", "avisos": []}, []), ({"avisos": []}, None), (None, None), ("texto", None)):
+            def falso(url, estado, clave, **k):
+                assert url == "https://www.cofrad.es/publicidad.json" and clave == "publicidad_panel"
+                estado[clave] = {"ok": resp is not None, "hora": "2026-11-16T07:07:00-03:00", "url": url}
+                return resp
+            B.pedir = falso
+            estado = {}
+            r = B.publicidad_panel(estado)
+            if esperado is None:
+                assert r is None and not estado["publicidad_panel"]["ok"], (resp, r, estado)
+            else:
+                assert [a["empresa"] for a in r["avisos"]] == esperado and r["fecha"] == "2026-11-16" and estado["publicidad_panel"]["n"] == len(esperado), r
+    finally:
+        B.pedir = pedir
+
+
+@prueba
 def auditor_suma_fuentes_nuevas_con_resguardos():
     """15-11-2026 (Germán: «en la primera Auditoría diaria ... debe sumar más fuentes de datos nuevas»): la ronda de la 01:17 propone
     RSS nuevos; proponer_fuentes.py solo deja pasar direcciones https de medios (nada de buscadores, redes, IP, claves ni generadores
