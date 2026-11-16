@@ -136,10 +136,23 @@ def faltan(raiz=RAIZ, fecha=None):
     out = [f"Directorio revisado: {salud.get('generado', 'sin informe')} · candidatas: {len(cand)} · sumadas hoy por el Auditor: {hoy} "
            f"(tope {MAX_DIA} al día, {MAX_SITIO} por sitio)"]
     for _, s, sanas, meta, n in filas:
-        out.append(f"- {s}: {sanas} {'sana' if sanas == 1 else 'sanas'} de {meta} buscadas · {n} candidatas" + (" · DÉBIL" if sanas < meta / 2 else ""))
+        out.append(f"- {s}: {sanas} {'sana' if sanas == 1 else 'sanas'} de {meta} buscadas · {n} {'candidata' if n == 1 else 'candidatas'}" + (" · DÉBIL" if sanas < meta / 2 else ""))
     for _, s, sanas, meta, _ in [f for f in filas if f[2] < f[3] / 2][:5] or filas[:3]:
         sitios = sorted({_sitio(c["url"]) for c in cand if c.get("seccion") == s and c.get("url")})
         out.append(f"Ya están en {s} (no repetir): " + (", ".join(sitios) if sitios else "ninguno"))
+    # Lo que GitHub dijo de lo que el Auditor propuso los últimos 7 días: para aprender qué clase de fuente sirve y no repetir errores
+    desde = (dt.date.fromisoformat(fecha) - dt.timedelta(days=7)).isoformat()
+    suyas = {normalizar(c["url"]): c for c in cand if str(c.get("origen", "")).startswith("auditor ") and str(c.get("origen", ""))[8:18] >= desde}
+    if suyas:
+        vistos = {normalizar(r["url"]): r for r in salud.get("detalle") or [] if isinstance(r, dict) and r.get("url")}
+        res7 = {}
+        for k, c in suyas.items():
+            r = vistos.get(k)
+            res7.setdefault(r["estado"] if r else "sin revisar todavía", []).append((c, r))
+        out.append("Lo que propusiste los últimos 7 días: " + ", ".join(f"{len(v)} {k}" for k, v in sorted(res7.items())))
+        for k, v in sorted(res7.items()):
+            if k not in ("sana", "sin revisar todavía"):
+                out.extend(f"  descartada ({k}): {c['fuente']} · {c['url'][:90]} · {(r or {}).get('motivo', '')[:80]}" for c, r in v[:8])
     out.append("Agrega con: python3 herramientas/proponer_fuentes.py agregar /tmp/propuestas.json  (y luego «subir»)")
     return "\n".join(out)
 

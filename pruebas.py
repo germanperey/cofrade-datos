@@ -1579,6 +1579,12 @@ def auditor_suma_fuentes_nuevas_con_resguardos():
         s3, _ = PF.agregar([ok("https://manana.cl/feed")], t, "2026-11-17")
         assert len(s3) == 1
         assert PF.agregar([], t, "2026-11-17") == ([], [])
+        # al día siguiente, «faltan» cuenta lo que GitHub dijo de lo propuesto (para no repetir errores)
+        sal = json.load(open(os.path.join(t, "datos", "fuentes-salud.json")))
+        sal["detalle"] = [{"url": "https://nuevo.cl/feed", "estado": "sana"}, {"url": "https://www.fox.com/rss/", "estado": "robots", "motivo": "robots.txt lo prohíbe"}]
+        json.dump(sal, open(os.path.join(t, "datos", "fuentes-salud.json"), "w"))
+        f2 = PF.faltan(t, "2026-11-17")
+        assert "Lo que propusiste los últimos 7 días: 1 robots, 1 sana, 11 sin revisar todavía" in f2 and "descartada (robots): Medio www.fox.com/ (RSS) · https://www.fox.com/rss · robots.txt lo prohíbe" in f2, f2
 
     # «subir»: solo ese archivo, solo fichas nuevas al final y válidas, y solo hacia el repositorio de Cofrade News
     def g(*args, cwd):
