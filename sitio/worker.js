@@ -215,8 +215,9 @@ async function indice(ctx) {
   const tope = fechaChile();
   const conIndice = lista.length > 0;
   lista = [...new Set([...lista, ...nuevas.filter(Boolean)])].filter((f) => f <= tope).sort().reverse().slice(0, TOPE_ARCHIVO);
-  // sin el índice de GitHub (respaldo de 20 días) se guarda solo 1 minuto: apenas vuelva el índice, el Archivo vuelve a estar completo
-  ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(lista), { headers: { "Cache-Control": `public, max-age=${conIndice ? 900 : 60}` } })));
+  // sin el índice de GitHub (respaldo de 20 días) se guarda solo 1 minuto: apenas vuelva el índice, el Archivo vuelve a estar completo.
+  // 16-11-2026: mientras falta la edición de hoy también 1 minuto (antes 15): aparece apenas GitHub la publica, no hasta 15 min después
+  ctx.waitUntil(cache.put(clave, new Response(JSON.stringify(lista), { headers: { "Cache-Control": `public, max-age=${conIndice && lista[0] === tope ? 900 : 60}` } })));
   return lista;
 }
 
@@ -624,13 +625,14 @@ const EN_FIJO = {
   "Cofrade News, portada": "Cofrade News, home", "Cambiar entre modo claro y oscuro": "Switch between light and dark mode", "Secciones": "Sections",
   "El diario de la mañana · gratuito": "The morning paper · free",
   "Chile y el mundo, ordenados en minutos y con datos verificados.": "Chile and the world, sorted in minutes, with verified data.",
-  "Cada mañana a las 07:30: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.":
-    "Every morning at 07:30: economy, politics and Congress, conflicts, science, sports, weather, flights and more. Every figure with its source and date.",
+  "Cada mañana a las 9:00: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.":
+    "Every morning at 9:00: economy, politics and Congress, conflicts, science, sports, weather, flights and more. Every figure with its source and date.",
   "Leer la edición de hoy →": "Read today's edition →", "Leer la edición →": "Read the edition →", "Ver lo último": "See the latest",
   "Hoy ·": "Today ·", "Última edición ·": "Latest edition ·", "Muy pronto": "Coming soon", "Edición": "Edition",
   "La edición de hoy ya está publicada.": "Today's edition is out.",
-  "La edición de hoy se publica a las 07:30. Mientras, lee la última.": "Today's edition comes out at 07:30. Meanwhile, read the latest one.",
-  "La primera edición web aparece mañana a las 07:30.": "The first web edition comes out tomorrow at 07:30.",
+  "La edición de hoy se publica a las 9:00. Mientras, lee la última.": "Today's edition comes out at 9:00. Meanwhile, read the latest one.",
+  "La edición de hoy viene en camino. Mientras, lee la última.": "Today's edition is on its way. Meanwhile, read the latest one.",
+  "La primera edición web aparece mañana a las 9:00.": "The first web edition comes out tomorrow at 9:00.",
   "Crecimiento de Chile": "Chile's growth", "Economía y mercados": "Economy and markets", "Política y Congreso": "Politics and Congress",
   "Conflictos en el mundo": "Conflicts around the world", "Perspectivas 2050": "Outlook 2050", "Ciencia y Astronomía": "Science and Astronomy",
   "Deportes": "Sports", "Clima, mar y sismos": "Weather, sea and earthquakes", "Vuelos comerciales": "Commercial flights",
@@ -3063,18 +3065,27 @@ function bloqueTierra(p) {
   return out.length ? `<div class="cifras" style="margin-top:12px">${out.join("")}</div>` : "";
 }
 
+// 16-11-2026 · Germán: «en vez de colocar 07:30 cámbialo por las 9.00, porque antes de esa hora estás procesando el Newsletter y aún
+// no aparece publicado». La tarea parte a las 07:30 y la edición quedó arriba entre las 08:24 y las 09:04 (7 al 16-11). Pasadas
+// las 9:00 sin la edición de hoy, el aviso ya no promete una hora que pasó.
+const HORA_EDICION = 9;
+function estadoEdicion(ultima, hoy, hora) {
+  if (!ultima) return "La primera edición web aparece mañana a las 9:00.";
+  if (ultima === hoy) return "La edición de hoy ya está publicada.";
+  return hora < HORA_EDICION ? "La edición de hoy se publica a las 9:00. Mientras, lee la última." : "La edición de hoy viene en camino. Mientras, lee la última.";
+}
+
 async function cuerpoPortada(ctx) {
   const [lista, p, h] = await Promise.all([indice(ctx), pulso(ctx), historia(ctx)]);   // 15-11-2026: los tres a la vez
   const ultima = lista[0];
   const hoy = fechaChile();
-  const estado = !ultima ? "La primera edición web aparece mañana a las 07:30."
-    : ultima === hoy ? "La edición de hoy ya está publicada." : "La edición de hoy se publica a las 07:30. Mientras, lee la última.";
+  const estado = estadoEdicion(ultima, hoy, horaDeChile());
   const hora = p && p.generado ? String(p.generado).slice(11, 16) : "";
   const piz = pizarra(h, p);
   const hero = `<section class="lujo" aria-label="Portada"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
 <div class="hoja lujo-in"><div class="lujo-txt"><span class="kicker">El diario de la mañana · Gratuito</span>
 <h1>Chile y el mundo, ordenados en minutos y con <em>datos verificados.</em></h1>
-<p class="lede">Cada mañana a las 07:30: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.</p>
+<p class="lede">Cada mañana a las 9:00: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.</p>
 <div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn claro" href="#puente">Dashboard Financiero</a><a class="btn claro" href="/mercados">Mercados en vivo</a></div>
 <ul class="sellos"><li>${ultima ? (ultima === hoy ? "Edición de hoy publicada" : "Última edición: " + esc(fechaLarga(ultima))) : "Primera edición muy pronto"}</li><li>Cada dato con su fuente</li><li>Hecho en Chile</li></ul></div>
 ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${hoy}">${esc(fechaLarga(hoy))}</span></div><p style="margin:6px 0 0;color:#D8D2C4">${esc(estado)}</p></aside>`}</div></section>`;
