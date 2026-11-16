@@ -112,9 +112,10 @@ const TZ = "America/Santiago";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const urlSegura = (u) => (/^https?:\/\//i.test(String(u || "")) ? String(u) : "#");
 
+let _FMT_FECHA_CL = null;   // 16-11-2026: un solo formateador (se usa en cada visita y decenas de veces en el panel)
 function fechaChile(d = new Date()) {
-  const p = new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
-  return p; // AAAA-MM-DD
+  _FMT_FECHA_CL = _FMT_FECHA_CL || new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" });
+  return _FMT_FECHA_CL.format(d); // AAAA-MM-DD
 }
 let _FMT_LARGA = null;   // 14-11-2026 (auditoría): un solo formateador; crear uno por fecha costaba ~20 ms de CPU con 400 ediciones
 function fechaLarga(iso) {
@@ -124,8 +125,10 @@ function fechaLarga(iso) {
   const t = _FMT_LARGA.format(f);
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
+const _FMT_NUM = {};   // 16-11-2026: un formateador por cantidad de decimales (crear uno en cada número costaba CPU: el panel usa cientos)
 function num(v, dec = 2) {
-  return new Intl.NumberFormat("es-CL", { minimumFractionDigits: dec, maximumFractionDigits: dec }).format(v);
+  const f = _FMT_NUM[dec] || (_FMT_NUM[dec] = new Intl.NumberFormat("es-CL", { minimumFractionDigits: dec, maximumFractionDigits: dec }));
+  return f.format(v);
 }
 function pct(v) {
   if (typeof v !== "number" || !isFinite(v)) return "";
