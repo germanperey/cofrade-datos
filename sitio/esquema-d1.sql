@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS clics_unicos (fecha TEXT, slug TEXT, visitante TEXT, 
 CREATE INDEX IF NOT EXISTS clics_slug ON clics (slug, fecha);
 CREATE TABLE IF NOT EXISTS correos_anunciantes (id INTEGER PRIMARY KEY AUTOINCREMENT, fecha TEXT, anunciante_id INTEGER, contrato_id INTEGER, tipo TEXT, para TEXT, asunto TEXT, estado TEXT);
 CREATE INDEX IF NOT EXISTS correos_contrato ON correos_anunciantes (contrato_id, fecha);
+-- 16-11-2026: ícono de Cofrade News (acceso directo). Instalaciones y aperturas por día, evento y tipo de aparato, sin datos personales
+CREATE TABLE IF NOT EXISTS instalaciones (fecha TEXT NOT NULL, evento TEXT NOT NULL, aparato TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (fecha, evento, aparato));
 -- Migraciones ya aplicadas en producción (no volver a correrlas: SQLite no tiene «ADD COLUMN IF NOT EXISTS» y fallarían)
 --   14-11-2026  ALTER TABLE pagos ADD COLUMN ref TEXT
 --   14-11-2026  ALTER TABLE suscripciones ADD COLUMN pausada_por TEXT

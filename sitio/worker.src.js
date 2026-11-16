@@ -869,6 +869,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__BUZON_PANEL__*/
 /*__SUSCRIPCIONES__*/
 /*__TABLERO__*/
+/*__ICONO__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -895,7 +896,7 @@ function marco({ titulo, descripcion, cuerpo, canonica, hero = "" }) {
 <title>${esc(titulo)}</title><meta name="description" content="${esc(descripcion)}"><link rel="canonical" href="https://${DOMINIO}${canonica || "/"}">
 <meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descripcion)}"><meta property="og:type" content="website">
 <meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL"><meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}</style></head><body>
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">${ICONO_HEAD}<link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}${ICONO_CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha" data-iso="${fechaChile()}">${esc(fechaLarga(fechaChile()))}</span>
 <nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><button type="button" class="nav-b buzon-abrir" aria-haspopup="dialog"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></svg>Buzón</button><a href="/mercados">Mercados</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a></nav>
@@ -905,7 +906,7 @@ ${bloqueMarcas()}${DIALOGO}${BUZON}
 <footer class="hoja pie"><img class="pie-agua" src="/marca-agua.webp" alt="" aria-hidden="true">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
 Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar? <button type="button" class="enlace buzon-abrir">Escríbenos al Buzón</button>.<br>
 © ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}${BUZON_JS}${CABECERA_JS}</script>
-<script type="speculationrules">{"prerender":[{"where":{"or":[{"href_matches":"/edicion"},{"href_matches":"/edicion/*"}]},"eagerness":"moderate"}]}</script></body></html>`;
+<script type="speculationrules">{"prerender":[{"where":{"or":[{"href_matches":"/edicion"},{"href_matches":"/edicion/*"}]},"eagerness":"moderate"}]}</script>${ICONO_JS}</body></html>`;
 }
 
 const SECCIONES = ["Crecimiento de Chile", "Economía y mercados", "Política y Congreso", "Conflictos en el mundo", "Perspectivas 2050",
@@ -1041,7 +1042,7 @@ async function cuerpoPortada(ctx) {
 <div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn claro" href="#puente">Dashboard Financiero</a><a class="btn claro" href="/mercados">Mercados en vivo</a></div>
 <ul class="sellos"><li>${ultima ? (ultima === hoy ? "Edición de hoy publicada" : "Última edición: " + esc(fechaLarga(ultima))) : "Primera edición muy pronto"}</li><li>Cada dato con su fuente</li><li>Hecho en Chile</li></ul></div>
 ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${hoy}">${esc(fechaLarga(hoy))}</span></div><p style="margin:6px 0 0;color:#D8D2C4">${esc(estado)}</p></aside>`}</div></section>`;
-  const cuerpo = `
+  const cuerpo = `${INSTALAR_HTML}
 <section aria-labelledby="t-secc" style="border:0;padding-top:40px"><span class="kicker">${ultima ? (ultima === hoy ? "Hoy · " : "Última edición · ") : ""}<span data-iso="${ultima || hoy}">${esc(fechaLarga(ultima || hoy))}</span></span>
 <h2 class="titulo-lujo" id="t-secc">${esc(estado)}</h2><p class="sub">Doce secciones, cada mañana, con la fuente de cada dato.</p>
 <div class="secc">${SECCIONES_LUJO.map(([ic, t, d]) => `<a class="sec-card" href="/edicion" style="text-decoration:none">${icono(ic)}<div><b>${esc(t)}</b><p>${esc(d)}</p></div></a>`).join("")}</div></section>
@@ -1073,7 +1074,8 @@ ${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `
 <section id="socios" aria-labelledby="t-soc"><div class="socios"><div><h3 id="t-soc">Área de socios</h3>
 <p class="sub">Informes financieros, análisis de mercado y contenidos exclusivos para socios.</p><a class="btn linea" href="/socios">Ingresar</a></div>
 <div class="tarjeta" id="publicite"><span class="kicker">Publicite aquí</span><p style="margin:8px 0 6px">Su marca cada mañana frente a lectores que deciden.</p>
-<div class="precio">UF 1 <small style="font-size:15px;color:var(--gris)">al mes</small></div><div class="acciones" style="margin-top:14px"><button type="button" class="btn oro pub-abrir" data-interes="Cofrade News" aria-haspopup="dialog">Quiero publicitar</button></div></div></div></section>`;
+<div class="precio">UF 1 <small style="font-size:15px;color:var(--gris)">al mes</small></div><div class="acciones" style="margin-top:14px"><button type="button" class="btn oro pub-abrir" data-interes="Cofrade News" aria-haspopup="dialog">Quiero publicitar</button></div></div></div></section>
+${INSTALAR_DLG}${INSTALAR_JS}`;
   return { cuerpo, p, hero };
 }
 
@@ -1218,7 +1220,11 @@ export default {
     const p = u.pathname.replace(/\/+$/, "") || "/";
     try {
       // 16-11-2026: el carrusel del pie (todas las páginas) muestra los avisos pagados: la primera página de cada copia del sitio los carga
-      if (req.method === "GET" && !ANUNCIOS.t && p !== "/" && !p.startsWith("/ir/") && !/\.[a-z0-9]{2,5}$/i.test(p)) await prepararAnuncios(env);
+      if (req.method === "GET" && !ANUNCIOS.t && p !== "/" && !p.startsWith("/ir/") && !/\.[a-z0-9]{2,5}$/i.test(p) && p !== "/manifest.webmanifest") await prepararAnuncios(env);
+      // 16-11-2026: el ícono de Cofrade News (modulos/icono.js): ficha de instalación, lectura sin señal y aviso de instalación o apertura
+      if (p === "/manifest.webmanifest") return new Response(MANIFEST, { headers: { "Content-Type": "application/manifest+json; charset=utf-8", "Cache-Control": "public, max-age=3600", ...SEGURIDAD } });
+      if (p === "/sw.js") return new Response(SW_JS, { headers: { "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "no-cache", ...SEGURIDAD } });
+      if (p === "/instalacion") return await registrarIcono(req, env);
       if (p === "/" && req.method === "GET") { if (!/CofradeNews-Vigia/.test(req.headers.get("User-Agent") || "")) ctx.waitUntil(contarVisita(req, env, "/")); return await portada(env, ctx, req); }
       if (p === "/edicion") {
         const l = await indice(ctx);
@@ -1240,9 +1246,9 @@ export default {
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA), { html: true }); } })
+          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS, { html: true }); } })
           .on("script", scriptsEdicion(lib))
-          .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">' + SITIO_CSS, { html: true }); } })
+          .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
@@ -1297,7 +1303,8 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       const ic = { "/favicon.ico": ["favicon.ico", "image/x-icon"], "/favicon-64.png": ["favicon-64.png", "image/png"], "/apple-touch-icon.png": ["apple-touch-icon.png", "image/png"],
-        "/escudo-192.png": ["escudo-192.png", "image/png"] }[p];
+        "/escudo-192.png": ["escudo-192.png", "image/png"], "/icono-180.png": ["icono-180.png", "image/png"], "/icono-192.png": ["icono-192.png", "image/png"],
+        "/icono-512.png": ["icono-512.png", "image/png"], "/icono-maskable-192.png": ["icono-maskable-192.png", "image/png"], "/icono-maskable-512.png": ["icono-maskable-512.png", "image/png"] }[p];
       if (ic) {
         const r = await desdeGitHub(`sitio/${ic[0]}`, 86400, ctx);
         return r ? new Response(r.body, { headers: { "Content-Type": ic[1], "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });

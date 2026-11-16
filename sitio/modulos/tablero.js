@@ -416,6 +416,10 @@ async function datosTablero(env, P) {
     inicios: env.DB.prepare("SELECT (SELECT MIN(fecha) FROM vistas) AS vistas, (SELECT MIN(fecha) FROM visitas) AS visitas, (SELECT MIN(fecha) FROM dimensiones) AS dims, (SELECT MIN(fecha) FROM lectura) AS lectura, (SELECT MIN(fecha) FROM clics) AS clics"),
     hoyU: s("SELECT COUNT(DISTINCT visitante) AS u FROM visitas WHERE fecha = ?", P.hoy),
     hoyV: s("SELECT COALESCE(SUM(n), 0) AS n FROM vistas WHERE fecha = ? AND zona IN ('portada', 'diario')", P.hoy),
+    // 16-11-2026: ícono de Cofrade News (acceso directo); consultas aparte: si faltara la tabla, solo faltan estas cifras
+    icono: s("SELECT evento, aparato, SUM(n) AS n FROM instalaciones WHERE fecha BETWEEN ? AND ? GROUP BY evento, aparato", d, h),
+    antIcono: s("SELECT evento, SUM(n) AS n FROM instalaciones WHERE fecha BETWEEN ? AND ? GROUP BY evento", P.antDesde, P.antHasta),
+    iconoTot: env.DB.prepare("SELECT evento, SUM(n) AS n, MIN(fecha) AS desde FROM instalaciones GROUP BY evento"),
     anunciantes: env.DB.prepare(`SELECT a.id, a.slug, a.empresa, a.rut, a.rubro, a.contacto, a.email, a.telefono, a.web, a.titulo, a.texto, a.boton1_texto, a.boton1_web, a.boton2_texto,
       a.boton2_web, a.boton2_email, a.banner, a.orden, a.color_fondo, a.color_acento, a.logo_url, a.estado, a.notas, a.creado, l.tipo AS logo_tipo, l.version AS logo_v
       FROM anunciantes a LEFT JOIN logos_anuncios l ON l.anunciante_id = a.id ORDER BY a.estado = 'archivado', a.empresa`),
@@ -484,6 +488,8 @@ function mensajeAnuncios(r) {
 }
 
 const AYUDA = {
+  instalaciones: "Cuántas veces un lector instaló Cofrade News como ícono en su teléfono, tablet o computador durante el período. En Android y en computadores con Chrome o Edge se cuenta en el momento de instalar; en iPhone, iPad y Mac, la primera vez que se abre desde el ícono (esos aparatos no avisan al instalar). Cada aparato cuenta una vez, salvo que borre los datos del navegador. No cuentan robots ni redes de nubes.",
+  aperturas: "Cuántas veces se abrió Cofrade News tocando el ícono instalado: una por cada sesión de lectura. Es la señal más clara de lectores fieles, porque llegan directo, sin buscar el sitio ni depender de un enlace. Sirve también como argumento de alcance ante los anunciantes.",
   visitas: "Cuántas veces se abrieron la portada (el sitio web) y el diario en el período. Si una persona abre la página 3 veces, son 3 visitas. No cuentan robots, buscadores, vistas previas de WhatsApp o Telegram ni programas que entran desde redes de nubes (Amazon, Google, Microsoft). La comparación usa el promedio por día de días completos.",
   unicos: "Personas distintas que entraron cada día, en promedio. Cada persona se reconoce por su conexión (IP) y su navegador, y cuenta una sola vez por día aunque abra muchas páginas. No cuentan los robots que entran desde redes de nubes. La IP no se guarda: queda una huella anónima que cambia cada día; por eso la cifra es por día y no se suma entre días. Promedia solo días completos (no cuenta hoy, que va en curso).",
   diario: "Personas distintas que abrieron alguna edición del diario Cofrade News cada día, en promedio: es la audiencia del newsletter en la web. Promedia solo días completos.",
@@ -549,6 +555,13 @@ async function panel(req, env) {
   const tiempo = (s) => (s < 60 ? `${num(s, 0)} s` : s < 36000 ? `${num(s / 60, s < 600 ? 1 : 0)} min` : `${num(s / 3600, 1)} h`);
   const hoyU = Number((R.hoyU[0] || {}).u || 0), hoyV = Number((R.hoyV[0] || {}).n || 0);
   const desdeTxt = (f) => (f && f > P.desde ? ` · se mide desde el ${ddmm(f)}` : "");
+  // --- ícono de Cofrade News (16-11-2026): instalaciones y aperturas, con su desglose por aparato ---
+  const icoN = (filas, ev) => (filas || []).filter((x) => x.evento === ev).reduce((a, x) => a + Number(x.n || 0), 0);
+  const icoAparatos = (ev) => { const o = {}; (R.icono || []).filter((x) => x.evento === ev).forEach((x) => { o[x.aparato] = (o[x.aparato] || 0) + Number(x.n || 0); });
+    return ["celular", "computador", "tablet"].filter((k) => o[k]).map((k) => `${k} ${num(o[k], 0)}`).join(" · "); };
+  const icoIni = (R.iconoTot || []).map((x) => x.desde).filter(Boolean).sort()[0] || null;
+  const inst = icoN(R.icono, "instalada"), aper = icoN(R.icono, "apertura"), instTot = icoN(R.iconoTot, "instalada");
+  const icoSub = (n, ev, vacio) => (n ? icoAparatos(ev) : icoIni ? vacio : "se empieza a medir con esta versión") + desdeTxt(icoIni);
   const kAud = [
     kpiA("Visitas en el período", num(totalVis, 0), pVis.prom !== null ? `≈ ${num(Math.round(pVis.prom), 0)} al día${desdeTxt(ini.vistas)}` : "Aún sin visitas medidas", AYUDA.visitas, deltaTxt(pVis.prom, aVis.prom)),
     kpiA("Visitantes únicos al día", pUni.prom === null ? "Sin datos" : num(Math.round(pUni.prom), 0), "promedio de días completos" + desdeTxt(ini.visitas), AYUDA.unicos, deltaTxt(pUni.prom, aUni.prom)),
@@ -561,6 +574,8 @@ async function panel(req, env) {
     kpiA("Desde celular", totDims ? pctTxt((disp.celular || 0) / totDims * 100) : "Sin datos", totDims ? `computador ${pctTxt((disp.computador || 0) / totDims * 100)} · tablet ${pctTxt((disp.tablet || 0) / totDims * 100)}` : "se empieza a medir con esta versión", AYUDA.celular),
     kpiA("Origen principal", orgOrden.length ? esc(ORIGENES[orgOrden[0][0]] || orgOrden[0][0]) : "Sin datos", orgOrden.length ? `${pctTxt(orgOrden[0][1] / totDims * 100)} de las visitas` : "se empieza a medir con esta versión", AYUDA.origen),
     kpiA("Lectores hoy", num(hoyU, 0), cuantos(hoyV, "visita", "visitas") + " a la portada y al diario", AYUDA.hoy),
+    kpiA("Instalaciones del ícono", num(inst, 0), icoSub(inst, "instalada", "ninguna en el período") + (instTot > inst ? ` · ${num(instTot, 0)} en total` : ""), AYUDA.instalaciones, deltaTxt(inst, icoN(R.antIcono, "instalada"))),
+    kpiA("Aperturas desde el ícono", num(aper, 0), icoSub(aper, "apertura", "ninguna en el período"), AYUDA.aperturas, deltaTxt(aper, icoN(R.antIcono, "apertura"))),
   ].join("");
   // --- datos de los gráficos ---
   const parcial = (f) => f === P.hoy || f === ini.vistas || f === ini.visitas;
