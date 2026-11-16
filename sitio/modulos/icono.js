@@ -33,11 +33,14 @@ const MANIFEST = JSON.stringify({
 
 // Lectura sin señal. Red primero: con señal SIEMPRE se trae lo nuevo; sin señal (o si el sitio no responde) se muestra la copia
 // guardada con un aviso arriba. Solo atiende la portada y las ediciones: el panel, los clics de avisos (/ir/), los pagos, el Buzón,
-// Mercados y las imágenes pasan directo, sin tocarse. Guarda la portada y las 3 últimas ediciones leídas en ese aparato (por hora
-// de lectura, no por fecha: leer una edición vieja del Archivo no la borra). Sin señal, «/edicion» abre la última leída.
+// Mercados y las imágenes pasan directo, sin tocarse. Guarda UNA sola edición en el aparato: la más nueva que abrió con señal (no se
+// acumulan: Germán, 16-11 14:48). Sin señal, el ícono («/edicion») y la portada abren esa edición, con un aviso.
 // Para apagarlo en todos los aparatos: publicar un /sw.js que solo haga self.registration.unregister() (ver el documento del sitio).
 const SW_JS = String.raw`// Cofrade News · lectura sin señal (16-11-2026)
-var CACHE = "cofrade-lectura-v1", MAX_EDICIONES = 3, ED = /^\/edicion\/(\d{4}-\d{2}-\d{2})$/;
+// Germán (14:48): el caché no debe ser acumulativo, «sino únicamente de la versión más reciente o nueva del Newsletter». Se guarda UNA
+// sola edición: la más nueva que este aparato abrió con señal. Su versión corregida o una edición más nueva la reemplazan y se borra lo
+// demás; abrir una edición más antigua (Archivo) no la toca; la portada no se guarda. El nombre nuevo del caché borra el anterior (v1).
+var CACHE = "cofrade-lectura-v2", ED = /^\/edicion\/(\d{4}-\d{2}-\d{2})$/, cola = Promise.resolve();
 self.addEventListener("install", function () { self.skipWaiting(); });
 self.addEventListener("activate", function (e) {
   e.waitUntil(caches.keys().then(function (ks) {
@@ -52,39 +55,45 @@ self.addEventListener("fetch", function (e) {
   if (u.pathname !== "/" && u.pathname !== "/edicion" && !ED.test(u.pathname)) return;
   e.respondWith(fetch(r).then(function (resp) {
     if (resp.status >= 500) return sinRed(u).then(function (x) { return x.status === 200 ? x : resp; });
-    if (resp.status === 200 && resp.type === "basic" && u.pathname !== "/edicion" && /text\/html/i.test(resp.headers.get("Content-Type") || ""))
-      e.waitUntil(guardar(u, resp.clone()));
+    var m = u.pathname.match(ED);
+    if (m && resp.status === 200 && resp.type === "basic" && /text\/html/i.test(resp.headers.get("Content-Type") || ""))
+      e.waitUntil(guardar(u, m[1], resp.clone()));
     return resp;
   }, function () { return sinRed(u); }));
 });
-function clave(u) { return u.origin + u.pathname; }
-function guardar(u, resp) {
-  return resp.blob().then(function (b) {
-    var h = new Headers(resp.headers); h.set("X-Cn-Guardado", String(Date.now())); h.delete("Content-Length");
-    return caches.open(CACHE).then(function (c) {
-      return c.put(clave(u), new Response(b, { status: 200, headers: h })).then(function () { return podar(c); });
-    });
-  }).catch(function () {});
-}
-function ediciones(c) {   // las ediciones guardadas, la última leída primero (X-Cn-Guardado = cuándo se leyó con señal)
+function guardada(c) {   // la edición guardada ({ q, f }), o null; si quedara más de una por un corte, manda la de fecha más nueva
   return c.keys().then(function (ks) {
-    return Promise.all(ks.map(function (q) {
-      var m = new URL(q.url).pathname.match(ED);
-      return m ? c.match(q).then(function (r) { return { q: q, f: m[1], t: Number((r && r.headers.get("X-Cn-Guardado")) || 0) }; }) : null;
-    }));
-  }).then(function (l) { return l.filter(Boolean).sort(function (a, b) { return b.t - a.t; }); });
+    var l = ks.map(function (q) { var m = new URL(q.url).pathname.match(ED); return m ? { q: q, f: m[1] } : null; }).filter(Boolean)
+      .sort(function (a, b) { return a.f < b.f ? 1 : -1; });
+    return l.length ? l[0] : null;
+  });
 }
-function podar(c) {
-  return ediciones(c).then(function (l) { return Promise.all(l.slice(MAX_EDICIONES).map(function (x) { return c.delete(x.q); })); });
+function guardar(u, f, resp) {   // de a una por vez (cola), para que dos aperturas seguidas no se pisen
+  cola = cola.then(function () {
+    return caches.open(CACHE).then(function (c) {
+      return guardada(c).then(function (g) {
+        if (g && g.f > f) return;   // ya hay una edición más nueva guardada: la del Archivo no se guarda
+        return resp.blob().then(function (b) {
+          var h = new Headers(resp.headers); h.set("X-Cn-Guardado", String(Date.now())); h.delete("Content-Length");
+          return c.put(u.origin + u.pathname, new Response(b, { status: 200, headers: h }));
+        }).then(function () {   // queda una sola copia: se borra todo lo demás
+          return c.keys().then(function (ks) { return Promise.all(ks.filter(function (q) { return new URL(q.url).pathname !== u.pathname; }).map(function (q) { return c.delete(q); })); });
+        });
+      });
+    }).catch(function () {});
+  });
+  return cola;
 }
 // Idioma: español por defecto; cambia a inglés si el lector eligió inglés en el sitio o en la edición (localStorage «cofrade-idioma»,
 // la misma llave que usan el botón EN/ES de la portada y el de la edición). El cambio lo hace un script de 1 línea en la página.
 var A_INGLES = '<script>try{if(localStorage.getItem("cofrade-idioma")==="en"){document.documentElement.lang="en";[].forEach.call(document.querySelectorAll("[data-cn-en]"),function(x){x.textContent=x.getAttribute("data-cn-en")})}}catch(e){}</' + 'script>';
 function attr(t) { return String(t).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
-function sinRed(u) {
+function sinRed(u) {   // sin señal: la portada y «/edicion» abren la edición guardada; otra edición, la página «Sin conexión»
   return caches.open(CACHE).then(function (c) {
-    var copia = u.pathname === "/edicion" ? ediciones(c).then(function (l) { return l.length ? c.match(l[0].q) : null; }) : c.match(clave(u));
-    return copia.then(function (x) { return x ? conAviso(x) : paginaSinSenal(c); });
+    return guardada(c).then(function (g) {
+      var sirve = g && (u.pathname === "/" || u.pathname === "/edicion" || u.pathname === "/edicion/" + g.f);
+      return sirve ? c.match(g.q).then(function (x) { return x ? conAviso(x) : paginaSinSenal(null); }) : paginaSinSenal(g);
+    });
   }).catch(function () { return paginaSinSenal(null); });
 }
 function conAviso(copia) {
@@ -103,14 +112,14 @@ function conAviso(copia) {
     return new Response(out, { status: 200, headers: h });
   });
 }
-function paginaSinSenal(c) {
-  return (c ? ediciones(c) : Promise.resolve([])).then(function (l) {
-    var enlaces = l.slice().sort(function (a, b) { return a.f < b.f ? 1 : -1; }).map(function (x) { var f = x.f.split("-"); return '<a href="/edicion/' + x.f + '" style="display:inline-block;margin:6px;padding:10px 18px;border:1.5px solid #B8892B;border-radius:999px;color:#F5F0E6;text-decoration:none">' + f[2] + "-" + f[1] + "-" + f[0] + "</a>"; }).join("");
+function paginaSinSenal(g) {   // g: la edición guardada (o null)
+  return Promise.resolve(g ? [g] : []).then(function (l) {
+    var enlaces = l.map(function (x) { var f = x.f.split("-"); return '<a href="/edicion/' + x.f + '" style="display:inline-block;margin:6px;padding:10px 18px;border:1.5px solid #B8892B;border-radius:999px;color:#F5F0E6;text-decoration:none">' + f[2] + "-" + f[1] + "-" + f[0] + "</a>"; }).join("");
     var html = '<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0B1F3A"><title>Cofrade News</title></head>'
       + '<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0B1F3A;color:#F5F0E6;font:17px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;text-align:center;padding:24px;box-sizing:border-box">'
       + '<main style="max-width:440px"><p style="font:600 28px/1.2 Georgia,serif;color:#E7C77A;margin:0 0 8px">Cofrade News</p><h1 style="font-size:22px;margin:0 0 10px" data-cn-en="No connection">Sin conexión</h1>'
       + '<p data-cn-en="There is no signal and this page was not saved on this device.">No hay señal y esta página no quedó guardada en este aparato.</p>'
-      + (enlaces ? '<p data-cn-en="Editions saved to read offline:">Ediciones guardadas para leer sin señal:</p><p>' + enlaces + "</p>" : "")
+      + (enlaces ? '<p data-cn-en="Edition saved to read offline:">Edición guardada para leer sin señal:</p><p>' + enlaces + "</p>" : "")
       + '<p><button type="button" onclick="location.reload()" data-cn-en="Try again" style="min-height:48px;padding:0 26px;border:0;border-radius:999px;background:#B8892B;color:#1A1406;font:700 16px system-ui,sans-serif;cursor:pointer">Reintentar</button></p></main>' + A_INGLES + "</body></html>";
     return new Response(html, { status: 503, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } });
   });

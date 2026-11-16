@@ -75,6 +75,12 @@ const PARCHES_APP = [
   // las filas de pestañas se ordenan cuando el navegador ya las midió (ResizeObserver avisa al empezar), no 12 veces mientras carga
   ["todas.push(upd);if(window.ResizeObserver)new ResizeObserver(upd).observe(g);upd();});",
    "todas.push(upd);if(window.ResizeObserver)new ResizeObserver(upd).observe(g);else upd();});"],
+  // 16-11-2026: la tabla de vuelos se ubica en la hora actual cuando el lector llega a Vuelos (medía miles de filas al cargar)
+  ["try{desplazar()}catch(e){aviso(e)}setInterval(",
+   "try{(window.__cnCuandoSeVea?__cnCuandoSeVea(document.getElementById('vw'),desplazar):desplazar())}catch(e){aviso(e)}setInterval("],
+  // 16-11-2026: mk() medía el ancho de cada gráfico al cargar (0,15 s de página rearmada); ahora se mide al armarlo (__cnAncho)
+  ["if(opt&&opt.xAxis&&!Array.isArray(opt.xAxis)&&opt.xAxis.type==='value'&&el.clientWidth<600){opt.xAxis.splitNumber=3;opt.xAxis.axisLabel=Object.assign({},opt.xAxis.axisLabel||{},{hideOverlap:true})}",
+   "if(opt&&opt.xAxis&&!Array.isArray(opt.xAxis)&&opt.xAxis.type==='value'){const _x=opt.xAxis,_f=()=>{_x.splitNumber=3;_x.axisLabel=Object.assign({},_x.axisLabel||{},{hideOverlap:true})};window.__cnAncho?__cnAncho(el,_f):el.clientWidth<600&&_f()}"],
 ];
 const COLA_APP = Math.max(...PARCHES_APP.map(([a]) => a.length)) - 1;
 const parchearApp = (x) => { for (const [a, b] of PARCHES_APP) if (x.includes(a)) x = x.split(a).join(b); return x; };
@@ -797,7 +803,14 @@ const NAV_HTML = `<a id="cnVolver" class="cn-volver" href="/" data-no-tr transla
 const SUBIR_HTML = `<button type="button" id="cnSubir" class="cn-subir" data-no-tr translate="no" aria-label="Subir al encabezado del boletín" title="Subir al encabezado del boletín"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 12.5 12 7l5.5 5.5M6.5 18 12 12.5l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
 // 15-11-2026 (Germán: «un leve espacio adicional entre los 22 temas»): las ediciones nuevas lo traen de la Skill y lo declaran con
 // data-ritmo en <html>; a las ya publicadas se lo pone el sitio con los MISMOS valores. Así nunca se suma dos veces.
-const SITIO_CSS = `<style id="cnSitio">@media screen{.cg-det.cerrada>.cg-det-in{content-visibility:hidden}.cg-det-in{transition:content-visibility .35s allow-discrete}}@media screen and (prefers-reduced-motion:reduce){.cg-det-in{transition:none}}a.cn-volver{position:fixed;z-index:900;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));
+// 16-11-2026 (Germán: «carga muy lento el Newsletter, dejando bloqueado o paralizado el cursor»). Medido con la traza del navegador:
+// la edición tiene ~80 mil elementos y el navegador los volvía a ubicar y preparar para pintar completos varias veces mientras llegaba la
+// página y en cada cuadro de la animación de los gráficos (54 ms por cuadro). Ahora cada sección se dibuja recién cuando el lector se
+// acerca (content-visibility:auto) y lo que está plegado o en otra pestaña del Congreso no se dibuja (hidden). Al imprimir, todo.
+// Las votaciones del Congreso («Ver todas las votaciones») quedan ocultas desde el primer momento: la edición las pliega recién al
+// final de su script y, mientras tanto, el navegador las ubicaba completas (15 mil elementos, 0,14 s más de cursor congelado). Si
+// la edición no alcanzara a plegarlas (botón aún oculto), a los 1,5 s de cargar se muestran como antes (clase cn-sin-plegar).
+const SITIO_CSS = `<style id="cnSitio">@media screen{.cg-det.cerrada>.cg-det-in,html:not(.cn-sin-plegar) .cg-tog[hidden]+.cg-det>.cg-det-in{content-visibility:hidden}.cg-det-in{transition:content-visibility .35s allow-discrete}.hoja>section.sec{content-visibility:auto;contain-intrinsic-size:auto 3000px}.cg-mes:not(.activa),.cg-panel:not(.activa),.cg-pagina:not(.activa){content-visibility:hidden}.ley.plegable.cerrada .ley-det-in{content-visibility:hidden}.ley-det-in{transition:content-visibility .35s allow-discrete}}@media screen and (prefers-reduced-motion:reduce){.cg-det-in,.ley-det-in{transition:none}}a.cn-volver{position:fixed;z-index:900;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));
 display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;box-sizing:border-box;
 background:#0B1F3A;color:#fff;border:2px solid #D9AE52;text-decoration:none;-webkit-tap-highlight-color:transparent;
 box-shadow:0 10px 26px rgba(11,31,58,.30),0 2px 6px rgba(11,31,58,.20);
