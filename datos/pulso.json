@@ -1,63 +1,17 @@
 {
- "generado": "2026-11-16T07:07-03:00",
- "proxima": "08:17",
- "indicadores": [
-  {
-   "clave": "dolar",
-   "nombre": "Dólar",
-   "valor": 999.1,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-16",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "euro",
-   "nombre": "Euro",
-   "valor": 1102.03,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-16",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "uf",
-   "nombre": "UF",
-   "valor": 41343.55,
-   "prefijo": "$",
-   "decimales": 2,
-   "fecha": "2026-11-16",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "utm",
-   "nombre": "UTM",
-   "valor": 72440,
-   "prefijo": "$",
-   "decimales": 0,
-   "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  },
-  {
-   "clave": "libra_cobre",
-   "nombre": "Cobre (libra)",
-   "valor": 6.19,
-   "prefijo": "US$",
-   "decimales": 2,
-   "fecha": "2026-11-16",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
-  }
- ],
+ "generado": "2026-11-16T09:07-03:00",
+ "proxima": "10:17",
+ "indicadores": [],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10660.26,
+  "valor": 10712.51,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-16T07:07-03:00",
-  "variacion_pct": 0.33
+  "hora": "2026-11-16T09:09-03:00",
+  "variacion_pct": 0.49
  },
  "sismos": {
-  "n": 4,
+  "n": 2,
   "mayores": [
    {
     "hora": "2026-11-15T20:04-03:00",
@@ -70,18 +24,6 @@
     "magnitud": 4.2,
     "profundidad_km": 170.7,
     "referencia": "120 km al NE de Arica"
-   },
-   {
-    "hora": "2026-11-15T07:29-03:00",
-    "magnitud": 4.1,
-    "profundidad_km": 19.4,
-    "referencia": "57 km al O de Valparaíso"
-   },
-   {
-    "hora": "2026-11-15T08:23-03:00",
-    "magnitud": 4.1,
-    "profundidad_km": 27.2,
-    "referencia": "48 km al S de Iquique"
    }
   ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
@@ -92,34 +34,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "Ebrio manejaba conductor que protagonizó accidente en Avenida Costanera Sur y dejó dos heridos graves: quedó con arresto domiciliario",
+     "titulo": "Reportan hundimiento de un superpetrolero en el estrecho de Ormuz",
+     "medio": "La Discusion de Chillan",
+     "url": "https://ladiscusion.cl/reportan-hundimiento-de-un-superpetrolero-en-el-estrecho-de-ormuz/",
+     "hora": "09:06"
+    },
+    {
+     "titulo": "Sergio Ramírez en la RAE: «Un novelista ecuménico», su homenaje a Vargas Llosa",
+     "medio": "CIPER",
+     "url": "https://www.ciperchile.cl/2026/11/16/sergio-ramirez-en-la-rae-un-novelista-ecumenico-su-homenaje-a-vargas-llosa/?utm_source=rss&utm_medium=rss&utm_campaign=sergio-ramirez-en-la-rae-un-novelista-ecumenico-su-homenaje-a-vargas-llosa",
+     "hora": "09:04"
+    },
+    {
+     "titulo": "Penalización deja en suspenso el título de Christobal Masle",
      "medio": "La Prensa Austral",
-     "url": "https://laprensaaustral.cl/2026/11/16/ebrio-manejaba-conductor-que-protagonizo-accidente-en-avenida-costanera-sur-y-dejo-dos-heridos-graves-quedo-con-arresto-domiciliario/",
-     "hora": "07:04"
+     "url": "https://laprensaaustral.cl/2026/11/16/penalizacion-deja-en-suspenso-el-titulo-de-christobal-masle/",
+     "hora": "09:04"
     },
     {
-     "titulo": "La Vuelta del Estrecho 2026 ya tiene campeones",
-     "medio": "La Prensa Austral",
-     "url": "https://laprensaaustral.cl/2026/11/16/la-vuelta-del-estrecho-2026-ya-tiene-campeones/",
-     "hora": "07:03"
+     "titulo": "Pavez admite que paro camionero “afectó las prioridades del Gobierno”",
+     "medio": "La Discusion de Chillan",
+     "url": "https://ladiscusion.cl/pavez-admite-que-paro-camionero-afecto-las-prioridades-del-gobierno/",
+     "hora": "09:03"
     },
     {
-     "titulo": "“Asesino en serie” y “dictadura comunista”: Las veces que Kast condenó a Ho Chi Minh y al régimen vietnamita al que hoy rindió homenaje",
-     "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/16/asesino-en-serie-y-dictadura-comunista-las-veces-que-kast-condeno-a-ho-chi-minh-y-el-regimen-vietnamita-que-hoy-homenajeo/",
-     "hora": "07:00"
-    },
-    {
-     "titulo": "Camión choca contra torre de alta tensión en Tiltil: mantienen cortes y desvíos en la Ruta 5 Norte",
-     "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/16/camion-choca-contra-torre-de-alta-tension-en-tiltil-mantienen-cortes-y-desvios-en-la-ruta-5-norte/",
-     "hora": "07:00"
-    },
-    {
-     "titulo": "Partidos del fútbol chileno hoy 16 de noviembre: ¿qué duelos se juegan y dónde ver en vivo, por TV y online?",
-     "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/16/partidos-del-futbol-chileno-hoy-16-de-noviembre-que-duelos-se-juegan-y-donde-ver-en-vivo-por-tv-y-online/",
-     "hora": "07:00"
+     "titulo": "Reportan hallazgo del cuerpo de joven que desapareció arrastrado por el mar en Caleta Abarca el sábado",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/reportan-hallazgo-del-cuerpo-de-joven-que-desaparecio-arrastrado-por-el-mar-en-caleta-abarca-el-sabado/",
+     "hora": "09:02"
     }
    ]
   },
@@ -127,34 +69,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Goldman Sachs anticipa una normalización de los precios del petróleo y prevé que el Brent baje hasta US$ 78 por barril a fines de 2027",
+     "titulo": "Rigoberta Menchú, escritora y activista guatemalteca: “La paz no es solamente la ausencia de la guerra; mientras haya pobreza, racismo, discriminación y exclusión difícilmente podremos alcanzar un mundo de paz”",
+     "medio": "Infobae America Economia",
+     "url": "https://www.infobae.com/cultura/2026/11/16/rigoberta-menchu-escritora-y-activista-guatemalteca-la-paz-no-es-solamente-la-ausencia-de-la-guerra-mientras-haya-pobreza-racismo-discriminacion-y-exclusion-dificilmente-podremos-alcanzar-un-mundo-de-paz/",
+     "hora": "09:09"
+    },
+    {
+     "titulo": "Timonel de Sonami, Jorge Riesco, en la gira presidencial a Asia: “La minería está lejos de estar en crisis”",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/commodities/goldman-sachs-anticipa-una-normalizacion-de-los-precios-del-petroleo-y",
-     "hora": "07:04"
+     "url": "http://www.df.cl/economia-y-politica/comercio-exterior/timonel-de-sonami-jorge-riesco-en-la-gira-presidencial-a-asia-la",
+     "hora": "09:08"
     },
     {
-     "titulo": "Reforma previsional: pensión promedio aumenta 11% real en un año principalmente gracias al Seguro Social",
-     "medio": "La Tercera · Pulso",
-     "url": "https://www.latercera.com/pulso/noticia/reforma-previsional-pension-promedio-aumenta-11-real-en-un-ano-principalmente-gracias-al-seguro-social/",
-     "hora": "07:00"
-    },
-    {
-     "titulo": "Cómo el uso de derivados está acentuando las variaciones del dólar en Chile",
-     "medio": "La Tercera · Pulso",
-     "url": "https://www.latercera.com/pulso/noticia/como-el-uso-de-derivados-esta-acentuando-las-variaciones-del-dolar-en-chile/",
-     "hora": "07:00"
-    },
-    {
-     "titulo": "Colombia inicia gira en Nueva York que busca más de US$50.000 millones en inversión",
-     "medio": "Bloomberg Linea",
-     "url": "https://www.bloomberglinea.com/latinoamerica/colombia/colombia-inicia-gira-en-nueva-york-que-busca-mas-de-us50000-millones-en-inversion/",
-     "hora": "07:00"
-    },
-    {
-     "titulo": "El cobre toca un mínimo de cuatro meses en Londres ante el fortalecimiento del dólar",
+     "titulo": "Dólar abre al alza y retoma los niveles de $ 1.000 mientras agentes esperan los comentarios del presidente de la Fed",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/commodities/el-cobre-toca-un-minimo-de-cuatro-meses-en-londres-ante-el-fortalecimiento",
-     "hora": "06:56"
+     "url": "http://www.df.cl/mercados/bolsa-monedas/dolar-hoy-v3ymu",
+     "hora": "09:08"
+    },
+    {
+     "titulo": "Para Caputo, los “mejores 18 meses de las últimas decadas” no se dieron por el shock externo y el temor al regreso del kirchnerismo",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/16/para-caputo-los-mejores-18-meses-de-las-ultimas-decadas-no-se-dieron-por-el-shock-externo-y-el-temor-al-regreso-del-kirchnerismo/",
+     "hora": "09:06"
+    },
+    {
+     "titulo": "La ruta de los centroamericanos hacia Estados Unidos, entre narcotráfico, explotación sexual y secuestros",
+     "medio": "Infobae America Economia",
+     "url": "https://www.infobae.com/el-salvador/2026/11/16/la-ruta-de-los-centroamericanos-hacia-estados-unidos-entre-narcotrafico-explotacion-sexual-y-secuestros/",
+     "hora": "09:02"
     }
    ]
   },
@@ -162,34 +104,28 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Alberto Chicote, chef: “No recuerdo una Nochebuena en casa en la que no hayamos hecho lombarda; a mi madre y a mí nos sale siempre igual de buena”",
+     "titulo": "Misa en Las Palmas del Papa León XIV: filas enormes, niños perdidos y caos marcó el inicio del ingreso a la base aérea",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/espana/2026/11/16/alberto-chicote-chef-no-recuerdo-una-nochebuena-en-casa-en-la-que-no-hayamos-hecho-lombarda-a-mi-madre-y-a-mi-nos-sale-siempre-igual-de-buena/",
-     "hora": "07:06"
+     "url": "https://www.infobae.com/peru/2026/11/16/misa-en-las-palmas-del-papa-leon-xiv-filas-enormes-ninos-perdidos-y-caos-marco-el-inicio-del-ingreso-a-la-base-aerea/",
+     "hora": "09:06"
     },
     {
-     "titulo": "La Tinka del 15 de noviembre: estos son los números ganadores y resultados del ‘Sí o Sí’",
+     "titulo": "Elecciones generales España 29-N, en directo | El PP propone una “ley de nietos vasca” para que voten los que tuvieron que marcharse de Euskadi por ETA",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/peru/2026/11/16/la-tinka-del-15-de-noviembre-estos-son-los-numeros-ganadores-y-resultados-del-si-o-si/",
-     "hora": "07:03"
+     "url": "https://www.infobae.com/espana/2026/11/16/elecciones-generales-espana-2026-en-directo-ultima-hora-de-la-visita-de-lula-da-silva-el-futuro-de-yolanda-diaz-y-el-programa-del-frente-amplio/",
+     "hora": "09:06"
     },
     {
-     "titulo": "China confirma que Xi, Trump y Putin celebrarán una cumbre trilateral el 19 de noviembre en Shenzhen",
-     "medio": "La Tercera · Mundo",
-     "url": "https://www.latercera.com/mundo/noticia/china-confirma-que-xi-trump-y-putin-celebraran-una-cumbre-trilateral-el-19-de-noviembre-en-shenzhen/",
-     "hora": "07:01"
+     "titulo": "3 poco conocidas disputas limítrofes dentro de países de América Latina (y por qué algunas se han recrudecido)",
+     "medio": "BBC Mundo",
+     "url": "https://www.bbc.com/mundo/articles/cx7vpv49en34o?at_medium=RSS&at_campaign=rss",
+     "hora": "09:04"
     },
     {
-     "titulo": "Pelayo Castro, director para las Américas del Servicio Europeo de Acción Exterior: “Nosotros no le pedimos a Chile que escoja entre socios”",
-     "medio": "La Tercera · Mundo",
-     "url": "https://www.latercera.com/mundo/noticia/pelayo-castro-director-para-las-americas-del-servicio-europeo-de-accion-exterior-nosotros-no-le-pedimos-a-chile-que-escoja-entre-socios/",
-     "hora": "07:00"
-    },
-    {
-     "titulo": "Israel reivindica un bombardeo en Líbano contra un supuesto \"envío de armas\" a Hezbolá en la frontera con Siria",
-     "medio": "Europa Press · Internacional",
-     "url": "https://www.europapress.es/internacional/noticia-israel-reivindica-bombardeo-libano-contra-supuesto-envio-armas-hezbola-frontera-siria-20261116102537.html",
-     "hora": "06:25"
+     "titulo": "Jojo, el gorila que lleva 11 años solo tras la muerte de su familia y para el que los científicos buscan compañía",
+     "medio": "BBC Mundo",
+     "url": "https://www.bbc.com/mundo/articles/cmx2xn9gy40ko?at_medium=RSS&at_campaign=rss",
+     "hora": "08:36"
     }
    ]
   },
@@ -197,34 +133,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "Una empresa japonesa presenta una sorprendente tablet que permite mirar la pantalla como si estuviera a cinco metros de distancia",
+     "titulo": "3 poco conocidas disputas limítrofes dentro de países de América Latina (y por qué algunas se han recrudecido)",
+     "medio": "BBC Mundo · Economía",
+     "url": "https://www.bbc.com/mundo/articles/cx7vpv49en34o?at_medium=RSS&at_campaign=rss",
+     "hora": "09:04"
+    },
+    {
+     "titulo": "Telefónica abre una nueva etapa en su capital riesgo y nombra a Paloma Castellano directora general de Wayra",
      "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/smartlife/tablets/2026-11-16/una-empresa-japonesa-presenta-una-sorprendente-tablet-que-permite-mirar-la-pantalla-como-si-estuviera-a-cinco-metros-de-distancia.html",
-     "hora": "06:48"
+     "url": "https://cincodias.elpais.com/companias/2026-11-16/telefonica-abre-una-nueva-etapa-en-su-capital-riesgo-y-nombra-a-paloma-castellano-directora-general-de-wayra.html",
+     "hora": "09:02"
     },
     {
-     "titulo": "Solaria: en soporte y muy sobrevendido",
-     "medio": "Expansión España Mercados",
-     "url": "https://www.expansion.com/mercados/2026/11/16/solaria-soporte-sobrevendido.html",
-     "hora": "06:39"
-    },
-    {
-     "titulo": "El precio del Bitcoin hoy, 16 de noviembre: el Bitcoin desciende hasta los 64.932,5 dólares",
-     "medio": "Expansión España Mercados",
-     "url": "https://www.expansion.com/mercados/bitcoin/2026/11/16/precio-bitcoin-hoy-16-noviembre-bitcoin-desciende-64-932-5-dolares.html",
-     "hora": "06:30"
-    },
-    {
-     "titulo": "Alianza estratégica para redefinir la alta gastronomía del ibérico",
+     "titulo": "Las mejores hipotecas fijas, mixtas y variables de noviembre de 2026",
      "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/extras/2026-11-16/alianza-estrategica-para-redefinir-la-alta-gastronomia-del-iberico.html",
-     "hora": "06:26"
+     "url": "https://cincodias.elpais.com/herramientas/comparador-financiero/ranking-mejores-hipotecas-fijas-mixtas-variables.html",
+     "hora": "09:01"
     },
     {
-     "titulo": "Carney advierte de que Canadá recurrirá a fabricantes de China si fracasa el pacto comercial con EE.UU.",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/canad%C3%A1-recurrir%C3%ADa-fabricantes-chinos-fracasan-044121875.html",
-     "hora": "05:56"
+     "titulo": "Los sindicatos amagan con huelga en el transporte por carretera si el Gobierno no da luz verde a la jubilación anticipada",
+     "medio": "Expansión España Economía",
+     "url": "https://www.expansion.com/economia/2026/11/16/sindicatos-amagan-huelga-transporte-carretera-gobierno-da-luz-verde-jubilacion-anticipada.html",
+     "hora": "09:00"
+    },
+    {
+     "titulo": "Andrés Millán, abogado, sobre la edad a la que dejar de trabajar: \"Jubilarte dos años antes te quita un 21% de pensión para siempre\"",
+     "medio": "Expansión España Economía",
+     "url": "https://www.expansion.com/economia/2026/11/16/andres-millan-abogado-sobre-edad-dejar-trabajar-jubilarte-dos-anos-te-quita-21-pension-siempre.html",
+     "hora": "08:52"
     }
    ]
   },
@@ -232,34 +168,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "La I Maratón oficial de Toledo resulta no ser oficial: casi 3.500 corredores han sido \"estafados\" con Vox y PP en el centro de la polémica",
+     "titulo": "Los peñistas de Guadalajara piden una reunión urgente al Ayuntamiento tras recibir 30 expedientes sancionadores",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/magnet/i-maraton-oficial-toledo-resulta-no-ser-oficial-casi-3-500-corredores-han-sido-estafados-vox-pp-centro-polemica",
-     "hora": "07:01"
+     "url": "https://www.xataka.com/magnet/penistas-guadalajara-piden-reunion-urgente-al-ayuntamiento-recibir-30-expedientes-sancionadores",
+     "hora": "09:03"
     },
     {
-     "titulo": "Georgina Rodríguez: “Dejé el currículum en Inditex y empecé en Massimo Dutti, pero paseaba a veces por la Milla de Oro y me encantaba ver los escaparates. Cuando entraba a una boutique de lujo, para mí era como entrar…",
-     "medio": "Genbeta",
-     "url": "https://www.genbeta.com/actualidad/georgina-rodriguez-deje-curriculum-inditex-empece-massimo-dutti-paseaba-a-veces-milla-oro-me-encantaba-ver-escaparates-cuando-entraba-a-boutique-lujo-para-mi-era-como-entrar-museo",
-     "hora": "07:01"
-    },
-    {
-     "titulo": "Sonido de calidad y una cancelación activa de ruido excelente: los Sony WH-1000XM4 bajan (mucho) de precio en su última versión",
+     "titulo": "Carrefour está liquidando la tele perfecta para el dormitorio o la cocina: es de Xiaomi y cuesta 139 euros",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/seleccion/sonido-calidad-cancelacion-activa-ruido-excelente-sony-wh-1000xm4-bajan-mucho-precio-su-ultima-version",
-     "hora": "06:45"
+     "url": "https://www.xataka.com/seleccion/carrefour-esta-liquidando-tele-perfecta-para-dormitorio-cocina-xiaomi-cuesta-139-euros",
+     "hora": "09:01"
     },
     {
-     "titulo": "China encendió la turbina eólica marina más grande del mundo y se da cuenta de que influye hasta en el clima",
+     "titulo": "Una comunidad permite durante años el uso de una salida de humos y lo prohíbe tras el cambio de propietario la reforma del local: el Supremo anula el acuerdo por ir contra sus propios actos",
      "medio": "Genbeta",
-     "url": "https://www.genbeta.com/energia/china-encendio-turbina-eolica-marina-grande-mundo-se-da-cuenta-que-influye-clima",
-     "hora": "05:01"
+     "url": "https://www.genbeta.com/actualidad/comunidad-permite-durante-anos-uso-salida-humos-prohibe-cambio-propietario-reforma-local-supremo-anula-acuerdo-ir-sus-propios-actos",
+     "hora": "09:01"
     },
     {
-     "titulo": "EuroCop impulsa una seguridad pública más preventiva, conectada y eficaz con inteligencia artificial",
-     "medio": "La Vanguardia",
-     "url": "https://www.lavanguardia.com/vida/20261116/11682783/eurocop-impulsa-seguridad-publica-mas-preventiva-conectada-eficaz-inteligencia-artificial-brl.html",
-     "hora": "22:56"
+     "titulo": "Irene Gramage, especialista en herencias: \"Si en una herencia un hermano se aprovecha, hay que hacer un requerimiento notarial\"",
+     "medio": "Genbeta",
+     "url": "https://www.genbeta.com/actualidad/irene-gramage-especialista-herencias-herencia-hermano-se-aprovecha-hay-que-hacer-requerimiento-notarial",
+     "hora": "08:04"
+    },
+    {
+     "titulo": "La inteligencia artificial y su aplicación en las empresas centran una jornada en el Palacio de Maqua",
+     "medio": "Europa Press on MSN",
+     "url": "https://www.msn.com/es-es/noticias/otras/la-inteligencia-artificial-y-su-aplicaci%C3%B3n-en-las-empresas-centran-una-jornada-en-el-palacio-de-maqua/ar-AA2hx9jo",
+     "hora": "00:33"
     }
    ]
   },
@@ -267,34 +203,34 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "Macarena Miranda: “Empujar el carro del tenis femenino no es fácil”",
-     "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/macarena-miranda-empujar-el-carro-del-tenis-femenino-no-es-facil/",
-     "hora": "06:59"
-    },
-    {
-     "titulo": "Play Free, la fundación contra la ludopatía infantil que une a José Pedro Fuenzalida con exministros de Piñera y Boric",
-     "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/play-free-la-fundacion-contra-la-ludopatia-infantil-que-une-a-jose-pedro-fuenzalida-con-exministros-de-pinera-y-boric/",
-     "hora": "06:57"
-    },
-    {
-     "titulo": "Batalla campal y seis expulsados en la derrota del América ante los New York Red Bulls",
+     "titulo": "Sato, nominado a mejor jugador de Asia en su momento más difícil",
      "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/internacional/20261116/1004251544/batalla-campal-seis-expulsados-derrota-america-new-york-red-bulls.html",
-     "hora": "06:57"
+     "url": "https://www.mundodeportivo.com/futbol/valencia/20261116/1004251609/sato-nominado-mejor-jugador-asia-momento-dificil.html",
+     "hora": "08:58"
     },
     {
-     "titulo": "Gareth Bale se interesa por comprar el Sevilla",
+     "titulo": "La drástica decisión que tomó Romelu Lukaku",
+     "medio": "Olé",
+     "url": "https://www.ole.com.ar/futbol-internacional/retiro-romelu-lukaku-seleccion-belgica-belga-despedida-maximo-goleador-diablos-rojos_0_hF0B0JeJn0.html",
+     "hora": "08:56"
+    },
+    {
+     "titulo": "Dan a conocer nueva encuesta sobre Presidente Kast y así reacciona Iván Valenzuela en vivo: ojo a lo que dice de Piñera",
+     "medio": "AS Chile portada",
+     "url": "https://chile.as.com/videos/dan-a-conocer-nueva-encuesta-sobre-presidente-kast-y-asi-reacciona-ivan-valenzuela-en-vivo-ojo-a-lo-que-dice-de-pinera-f202611-v/",
+     "hora": "08:51"
+    },
+    {
+     "titulo": "El Atlético respira tras la última decisión de Eslovaquia con Hancko",
      "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/sevilla/20261116/1004251540/gareth-bale-interesa-comprar-sevilla.html",
-     "hora": "06:53"
+     "url": "https://www.mundodeportivo.com/futbol/atletico-madrid/20261116/1004251607/atletico-respira-ultima-decision-eslovaquia-hancko.html",
+     "hora": "08:49"
     },
     {
-     "titulo": "Fin a la ‘amenaza’ a Limak, que acabará el Spotify Camp Nou",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/primera/fin-a-la-amenaza-a-limak-que-acabara-el-spotify-camp-nou-f202611-n/",
-     "hora": "06:51"
+     "titulo": "Leyenda de Cobreloa sufrió delicado percance de salud: permanece internado en la UCI",
+     "medio": "AS Chile portada",
+     "url": "https://chile.as.com/futbol/leyenda-de-cobreloa-sufrio-delicado-percance-de-salud-permanece-internado-en-la-uci-f202611-n/",
+     "hora": "08:45"
     }
    ]
   },
@@ -302,39 +238,28 @@
    "seccion": "Ciencia",
    "notas": [
     {
+     "titulo": "¿Sabrías distinguir a esta mantis de una planta? Vivió hace 98 millones de años y llevaba 'hojas' en el abdomen",
+     "medio": "Muy Interesante",
+     "url": "https://muyinteresante.okdiario.com/naturaleza/mantis-de-hoja-fosil-98-millones-anos.html",
+     "hora": "08:59"
+    },
+    {
+     "titulo": "Un extraordinario descubrimiento revela cómo caminaban los neandertales hace 50.000 años: tenían una característica inesperada en sus pies",
+     "medio": "Muy Interesante",
+     "url": "https://muyinteresante.okdiario.com/historia/un-extraordinario-descubrimiento-revela-como-caminaban-los-neandertales-hace-50-000-anos-tenian-una-caracteristica.html",
+     "hora": "08:57"
+    },
+    {
      "titulo": "La conversación docente: ¿cada vez más alumnos con necesidades especiales?",
      "medio": "The Conversation España",
      "url": "https://theconversation.com/la-conversacion-docente-cada-vez-mas-alumnos-con-necesidades-especiales-296638",
      "hora": "05:36"
     },
     {
-     "titulo": "El regalo de Navidad que puede emocionar a padres y abuelos amantes de los coches: 40 años de historia en 132 páginas",
-     "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/actualidad/la-saga-del-peugeot-gti-libro-de-35-e-para-regalar-en-navidad.html",
-     "hora": "04:30"
-    },
-    {
      "titulo": "¿Por qué huele mal el sudor?",
      "medio": "The Conversation España",
      "url": "https://theconversation.com/por-que-huele-mal-el-sudor-295478",
      "hora": "03:29"
-    }
-   ]
-  },
-  {
-   "seccion": "Emprendimiento",
-   "notas": [
-    {
-     "titulo": "Stark Future: unicornio con ronda de 150 millones",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/stark-future-unicornio-con-ronda-de-150-millones/",
-     "hora": "06:03"
-    },
-    {
-     "titulo": "Mount Thor: US$45M para alquilar Macs a agentes de IA",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/mount-thor-us45m-para-alquilar-macs-a-agentes-de-ia/",
-     "hora": "05:21"
     }
    ]
   }
@@ -378,9 +303,9 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 64286.56,
+  "bitcoin_usd": 64088.89,
   "bitcoin_fecha": "2026-11-16",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 354
+ "fuentes_ok": 346
 }
