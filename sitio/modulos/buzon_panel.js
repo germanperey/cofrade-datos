@@ -276,6 +276,12 @@ async function registrarVisita(req, env, ruta) {
   const ua = req.headers.get("User-Agent") || "";
   if (!env.DB || !ua || BOT_UA.test(ua)) return;
   const fecha = fechaChile();
+  // 16-11-2026: robots que se hacen pasar por navegadores desde redes de nubes (Amazon, Google, Microsoft y otras, ver ASN_NUBE): no son
+  // lectores. No cuentan como visita ni como visitante; solo se suma cuántos se descartaron (zona «nube»), para que se vea.
+  if (ASN_NUBE.has(Number(req.cf && req.cf.asn))) {
+    await env.DB.prepare("INSERT INTO vistas (fecha, zona, n) VALUES (?, 'nube', 1) ON CONFLICT(fecha, zona) DO UPDATE SET n = n + 1").bind(fecha).run().catch(() => null);
+    return;
+  }
   await Promise.all([
     env.DB.prepare("INSERT OR IGNORE INTO visitas (fecha, ruta, visitante, pais) VALUES (?, ?, ?, ?)")
       .bind(fecha, ruta, await huellaVisitante(req, env, fecha), String((req.cf && req.cf.country) || "").slice(0, 2)).run().catch(() => null),
@@ -341,7 +347,7 @@ function seccionVisitas({ filas, inicio, previos }) {
   return `<section id="contador"><h3>Contador de visitas</h3>
 <p class="sub">Una <b>visita</b> es cada vez que alguien abre la página: si la abre 3 veces, son 3 visitas. Un <b>visitante único</b> es una persona por día,
 reconocida por su conexión (IP) y su navegador, para no juntar a quienes comparten la misma red (como pasa en las redes de celular). La IP no se guarda:
-queda solo una huella anónima que cambia cada día. Robots, buscadores y vistas previas no cuentan. Las visitas se cuentan desde el ${ddmm(inicio)}.</p>
+queda solo una huella anónima que cambia cada día. Robots, buscadores y vistas previas no cuentan, y desde el 16-11-2026 tampoco las visitas desde redes de nubes (robots que se hacen pasar por navegadores). Las visitas se cuentan desde el ${ddmm(inicio)}.</p>
 <div class="cifras c4">${kpi("Portada hoy", cuantos(hoy.pv, "visita", "visitas"), cuantos(hoy.pu, "visitante único", "visitantes únicos"))}${kpi("Diario hoy", cuantos(hoy.dv, "visita", "visitas"), cuantos(hoy.du, "visitante único", "visitantes únicos"))}
 ${kpi("Todo el sitio hoy", cuantos(hoy.su, "visitante único", "visitantes únicos"), "todas las páginas, cada persona una vez")}${kpi(treinta ? "Últimos 30 días" : "Desde el " + ddmm(filas[0] ? filas[0].fecha : inicio), cuantos(suma("pv") + suma("dv"), "visita", "visitas"), "a la portada y al diario")}</div>
 <div class="dos d2"><div class="tarjeta"><h4 class="kicker">Portada (Landing Page)</h4>${dobles(filas.map((x) => [x.fecha, x.pv, x.pu]), "Portada: visitas y visitantes únicos por día", "var(--tinta)")}</div>

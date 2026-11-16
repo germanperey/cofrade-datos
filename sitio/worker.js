@@ -1139,6 +1139,12 @@ async function registrarVisita(req, env, ruta) {
   const ua = req.headers.get("User-Agent") || "";
   if (!env.DB || !ua || BOT_UA.test(ua)) return;
   const fecha = fechaChile();
+  // 16-11-2026: robots que se hacen pasar por navegadores desde redes de nubes (Amazon, Google, Microsoft y otras, ver ASN_NUBE): no son
+  // lectores. No cuentan como visita ni como visitante; solo se suma cuántos se descartaron (zona «nube»), para que se vea.
+  if (ASN_NUBE.has(Number(req.cf && req.cf.asn))) {
+    await env.DB.prepare("INSERT INTO vistas (fecha, zona, n) VALUES (?, 'nube', 1) ON CONFLICT(fecha, zona) DO UPDATE SET n = n + 1").bind(fecha).run().catch(() => null);
+    return;
+  }
   await Promise.all([
     env.DB.prepare("INSERT OR IGNORE INTO visitas (fecha, ruta, visitante, pais) VALUES (?, ?, ?, ?)")
       .bind(fecha, ruta, await huellaVisitante(req, env, fecha), String((req.cf && req.cf.country) || "").slice(0, 2)).run().catch(() => null),
@@ -1204,7 +1210,7 @@ function seccionVisitas({ filas, inicio, previos }) {
   return `<section id="contador"><h3>Contador de visitas</h3>
 <p class="sub">Una <b>visita</b> es cada vez que alguien abre la página: si la abre 3 veces, son 3 visitas. Un <b>visitante único</b> es una persona por día,
 reconocida por su conexión (IP) y su navegador, para no juntar a quienes comparten la misma red (como pasa en las redes de celular). La IP no se guarda:
-queda solo una huella anónima que cambia cada día. Robots, buscadores y vistas previas no cuentan. Las visitas se cuentan desde el ${ddmm(inicio)}.</p>
+queda solo una huella anónima que cambia cada día. Robots, buscadores y vistas previas no cuentan, y desde el 16-11-2026 tampoco las visitas desde redes de nubes (robots que se hacen pasar por navegadores). Las visitas se cuentan desde el ${ddmm(inicio)}.</p>
 <div class="cifras c4">${kpi("Portada hoy", cuantos(hoy.pv, "visita", "visitas"), cuantos(hoy.pu, "visitante único", "visitantes únicos"))}${kpi("Diario hoy", cuantos(hoy.dv, "visita", "visitas"), cuantos(hoy.du, "visitante único", "visitantes únicos"))}
 ${kpi("Todo el sitio hoy", cuantos(hoy.su, "visitante único", "visitantes únicos"), "todas las páginas, cada persona una vez")}${kpi(treinta ? "Últimos 30 días" : "Desde el " + ddmm(filas[0] ? filas[0].fecha : inicio), cuantos(suma("pv") + suma("dv"), "visita", "visitas"), "a la portada y al diario")}</div>
 <div class="dos d2"><div class="tarjeta"><h4 class="kicker">Portada (Landing Page)</h4>${dobles(filas.map((x) => [x.fecha, x.pv, x.pu]), "Portada: visitas y visitantes únicos por día", "var(--tinta)")}</div>
@@ -2331,8 +2337,8 @@ function mensajeAnuncios(r) {
 }
 
 const AYUDA = {
-  visitas: "Cuántas veces se abrieron la portada (el sitio web) y el diario en el período. Si una persona abre la página 3 veces, son 3 visitas. No cuentan robots, buscadores ni vistas previas de WhatsApp o Telegram. La comparación usa el promedio por día de días completos.",
-  unicos: "Personas distintas que entraron cada día, en promedio. Cada persona se reconoce por su conexión (IP) y su navegador, y cuenta una sola vez por día aunque abra muchas páginas. La IP no se guarda: queda una huella anónima que cambia cada día; por eso la cifra es por día y no se suma entre días. Promedia solo días completos (no cuenta hoy, que va en curso).",
+  visitas: "Cuántas veces se abrieron la portada (el sitio web) y el diario en el período. Si una persona abre la página 3 veces, son 3 visitas. No cuentan robots, buscadores, vistas previas de WhatsApp o Telegram ni programas que entran desde redes de nubes (Amazon, Google, Microsoft). La comparación usa el promedio por día de días completos.",
+  unicos: "Personas distintas que entraron cada día, en promedio. Cada persona se reconoce por su conexión (IP) y su navegador, y cuenta una sola vez por día aunque abra muchas páginas. No cuentan los robots que entran desde redes de nubes. La IP no se guarda: queda una huella anónima que cambia cada día; por eso la cifra es por día y no se suma entre días. Promedia solo días completos (no cuenta hoy, que va en curso).",
   diario: "Personas distintas que abrieron alguna edición del diario Cofrade News cada día, en promedio: es la audiencia del newsletter en la web. Promedia solo días completos.",
   paginas: "Cuántas veces abre el sitio cada persona en un día, en promedio (visitas divididas por visitantes únicos). Más de 1,5 indica que la gente vuelve o pasa de la portada al diario: buena señal de interés.",
   minutos: "Tiempo promedio que cada lector del diario pasa leyendo. Se mide solo mientras una sección está en el centro de la pantalla y la pestaña está a la vista, así que es tiempo de lectura real, no tiempo con la página abierta.",
@@ -2375,13 +2381,13 @@ async function panel(req, env) {
   const diasG = dias.filter((f) => f >= primero), diasL = dias.filter((f) => ini.lectura && f >= ini.lectura);   // los gráficos parten el primer día medido
   const porDia = (filas, campo, filtro = () => true) => { const o = {}; filas.forEach((x) => { if (filtro(x)) o[x.fecha] = (o[x.fecha] || 0) + Number(x[campo] || 0); }); return o; };
   const pv = porDia(R.vistas, "n", (x) => x.zona === "portada"), dv = porDia(R.vistas, "n", (x) => x.zona === "diario");
-  const vt = porDia(R.vistas, "n", (x) => x.zona !== "otras"), su = porDia(R.unicos, "u"), du = porDia(R.unicosZona, "u", (x) => x.zona === "diario");
+  const vt = porDia(R.vistas, "n", (x) => x.zona === "portada" || x.zona === "diario"), su = porDia(R.unicos, "u"), du = porDia(R.unicosZona, "u", (x) => x.zona === "diario");
   const lecS = porDia(R.lecturaDia, "s"), lecV = porDia(R.lecturaDia, "v");
   // --- KPIs de audiencia ---
   const pVis = promedioCompleto(vt, P.desde, P.hasta, ini.vistas, P.hoy), pUni = promedioCompleto(su, P.desde, P.hasta, ini.visitas, P.hoy), pDia = promedioCompleto(du, P.desde, P.hasta, ini.visitas, P.hoy);
   const aVis = promedioCompleto(porDia(R.antVistas, "n"), P.antDesde, P.antHasta, ini.vistas, P.hoy), aUni = promedioCompleto(porDia(R.antUnicos, "u"), P.antDesde, P.antHasta, ini.visitas, P.hoy);
   const aDia = promedioCompleto(porDia(R.antDiario, "u"), P.antDesde, P.antHasta, ini.visitas, P.hoy);
-  const totalVis = Object.values(vt).reduce((a, x) => a + x, 0);
+  const totalVis = Object.values(vt).reduce((a, x) => a + x, 0), nubeTot = R.vistas.filter((x) => x.zona === "nube").reduce((a, x) => a + Number(x.n || 0), 0);
   const diasConVistas = dias.filter((f) => ini.vistas && f >= ini.vistas);
   const visConVistas = diasConVistas.reduce((a, f) => a + (vt[f] || 0), 0), uniConVistas = diasConVistas.reduce((a, f) => a + (su[f] || 0), 0);
   const lecDias = dias.filter((f) => ini.lectura && f >= ini.lectura), segTot = lecDias.reduce((a, f) => a + (lecS[f] || 0), 0), lecDiario = lecDias.reduce((a, f) => a + (du[f] || 0), 0);
@@ -2443,7 +2449,8 @@ async function panel(req, env) {
   const notaDims = ini.dims ? (ini.dims > P.desde ? `Horas, origen y aparato se miden desde el ${ddmm(ini.dims)}.` : "") : "Horas, origen y aparato se empiezan a medir con esta versión del sitio.";
   const vacioDims = ini.dims ? "Sin visitas medidas en este período." : "Se empieza a medir con esta versión del sitio: vuelve mañana.";
   const notaTen = (ini.vistas && ini.vistas > P.desde ? `Las visitas se cuentan desde el ${ddmm(ini.vistas)}; antes solo se registraban personas distintas (línea).` : "")
-    + (ten.parcial.length ? " El día de hoy va en curso, y el primer día de cada medición empezó a medias." : "");
+    + (ten.parcial.length ? " El día de hoy va en curso, y el primer día de cada medición empezó a medias." : "")
+    + (nubeTot ? ` Se descartaron ${cuantos(nubeTot, "apertura automática", "aperturas automáticas")} desde redes de nubes (robots que se hacen pasar por navegadores).` : "");
   const graficos = `<div class="dos d2">
 ${tarjetaG("tendencia", P.agrupar === "mes" ? "Visitas y personas por mes" : "Visitas y personas por día", P.agrupar === "mes" ? AYUDA.tendenciaMes : AYUDA.tendencia, { ancha: true, alto: 320, nota: notaTen.trim() })}
 ${tarjetaG("horas", "¿A qué hora leen?", AYUDA.horas, { vacio: vacioDims, nota: notaDims })}
