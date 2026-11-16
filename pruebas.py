@@ -1522,6 +1522,107 @@ def vigia_avisa_si_no_se_aplica_la_rapidez():
         V.pedir = viejo
 
 
+@prueba
+def auditor_suma_fuentes_nuevas_con_resguardos():
+    """15-11-2026 (Germán: «en la primera Auditoría diaria ... debe sumar más fuentes de datos nuevas»): la ronda de la 01:17 propone
+    RSS nuevos; proponer_fuentes.py solo deja pasar direcciones https de medios (nada de buscadores, redes, IP, claves ni generadores
+    de RSS ajenos), sin repetir, con tope diario y por sitio, sin tocar lo que había; y «subir» solo sube ese archivo."""
+    import re
+    import subprocess
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import proponer_fuentes as PF
+    vieja = {"seccion": "inmobiliario", "fuente": "Uno (RSS)", "url": "https://www.uno.cl/feed/", "tipo": "rss", "idioma": "es", "origen": "x"}
+    base = {"nota": "n", "candidatas": [vieja, dict(vieja, fuente="Dos (RSS)", url="https://dos.cl/rss", seccion="ciencia")]}
+
+    def armar(t):
+        os.makedirs(os.path.join(t, "herramientas"))
+        os.makedirs(os.path.join(t, "datos"))
+        open(os.path.join(t, PF.REL), "w", encoding="utf-8").write(json.dumps(base, ensure_ascii=False, indent=1))
+        json.dump({"secciones": {"deportes": [["Tres", "https://tres.cl/feed", "rss"]]}}, open(os.path.join(t, "datos", "fuentes-directorio.json"), "w"))
+        res = {x: {"sana": 40} for x in PF.SECCIONES}
+        res.update({"inmobiliario": {"sana": 0}, "ciencia": {"sana": 5}})
+        json.dump({"generado": "2026-11-15T04:50", "resumen": res},
+                  open(os.path.join(t, "datos", "fuentes-salud.json"), "w"))
+
+    with tempfile.TemporaryDirectory() as t:
+        armar(t)
+        f = PF.faltan(t, "2026-11-16")
+        lineas = [x for x in f.splitlines() if x.startswith("- ")]
+        assert lineas[0].startswith("- inmobiliario: 0 sanas") and "DÉBIL" in lineas[0] and lineas[1].startswith("- ciencia: 5 sanas"), f
+        assert "Ya están en inmobiliario (no repetir): uno.cl" in f and "Ya están en ciencia (no repetir): dos.cl" in f, f
+        ok = lambda u, sec="inmobiliario", **kw: dict({"seccion": sec, "fuente": "Medio " + u[8:20], "url": u}, **kw)  # noqa: E731
+        props = [ok("https://nuevo.cl/feed/", motivo="vivienda\nregional"), ok("http://plano.cl/feed"), ok("https://news.google.com/rss/x"),
+                 ok("https://www.fox.com/rss", sec="entretenimiento"), ok("https://192.168.0.1/feed"), ok("https://yo:clave@a.cl/feed"),
+                 ok("https://UNO.cl/feed?utm_source=x"), ok("https://tres.cl/feed/"), ok("https://otro.cl/a"), ok("https://otro.cl/b"),
+                 ok("https://otro.cl/c"), ok("https://mal.cl/feed", sec="farandula"), ok("https://x.cl/api.json", tipo="json"),
+                 ok("https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/news", sec="deportes", tipo="json"),
+                 ok("https://z.cl/feed?token=abc"), ok("https://k.cl/feed?keyword=casa"), ok("https://rss.app/feeds/x.xml"),
+                 ok("https://rss-bridge.org/?action=display"), ok("https://es.yahoo.com/rss"), ok("https://m.facebook.com/x/rss"),
+                 ok("https://localhost/feed"), ok("https://c.cl:8443/feed"), "no soy una ficha"]
+        sumadas, rech = PF.agregar(props, t, "2026-11-16")
+        assert [x["url"] for x in sumadas] == ["https://nuevo.cl/feed/", "https://www.fox.com/rss", "https://otro.cl/a", "https://otro.cl/b",
+                                              "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/news", "https://k.cl/feed?keyword=casa"], sumadas
+        motivos = dict(rech)
+        assert "ya está" in motivos["https://UNO.cl/feed?utm_source=x"] and "ya está" in motivos["https://tres.cl/feed/"], motivos
+        assert "por sitio" in motivos["https://otro.cl/c"] and "sección" in motivos["https://mal.cl/feed"] and "clave" in motivos["https://z.cl/feed?token=abc"]
+        assert all(u in motivos for u in ("http://plano.cl/feed", "https://news.google.com/rss/x", "https://192.168.0.1/feed", "https://yo:clave@a.cl/feed",
+                                          "https://x.cl/api.json", "https://rss.app/feeds/x.xml", "https://rss-bridge.org/?action=display",
+                                          "https://es.yahoo.com/rss", "https://m.facebook.com/x/rss", "https://localhost/feed", "https://c.cl:8443/feed")), motivos
+        assert sumadas[0]["fuente"].endswith("(RSS)") and sumadas[0]["origen"] == "auditor 2026-11-16" and "\n" not in sumadas[0]["motivo"]
+        texto = open(os.path.join(t, PF.REL), encoding="utf-8").read()
+        doc = json.loads(texto)
+        assert doc["candidatas"][:2] == base["candidatas"] and len(doc["candidatas"]) == 8 and texto == json.dumps(doc, ensure_ascii=False, indent=1)
+        # tope diario: cuentan también las sumadas antes el mismo día; al día siguiente vuelve a haber cupo
+        muchas = [ok(f"https://medio{i}.cl/feed") for i in range(12)]
+        s2, r2 = PF.agregar(muchas, t, "2026-11-16")
+        assert len(s2) == PF.MAX_DIA - 6 and all("tope" in m for _, m in r2), (len(s2), r2[:2])
+        s3, _ = PF.agregar([ok("https://manana.cl/feed")], t, "2026-11-17")
+        assert len(s3) == 1
+        assert PF.agregar([], t, "2026-11-17") == ([], [])
+
+    # «subir»: solo ese archivo, solo fichas nuevas al final y válidas, y solo hacia el repositorio de Cofrade News
+    def g(*args, cwd):
+        r = subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", *args], cwd=cwd, capture_output=True, text=True)
+        assert r.returncode == 0, r.stderr
+        return r.stdout.strip()
+
+    viejo_re = PF.ORIGEN_RE
+    with tempfile.TemporaryDirectory() as t:
+        remoto, w = os.path.join(t, "remoto.git"), os.path.join(t, "w")
+        g("init", "-q", "--bare", "-b", "main", remoto, cwd=t)
+        os.makedirs(w)
+        armar(w)
+        g("init", "-q", "-b", "main", cwd=w)
+        g("add", "-A", cwd=w)
+        g("commit", "-qm", "base", cwd=w)
+        g("remote", "add", "origin", remoto, cwd=w)
+        g("push", "-q", "origin", "main", cwd=w)
+        try:
+            PF.agregar([ok("https://nuevo.cl/feed/")], w, "2026-11-16")
+            assert PF.subir(w, "2026-11-16")[0] == 4   # el origen no es germanperey/cofrade-datos: no sube
+            PF.ORIGEN_RE = re.compile(re.escape(remoto) + "$")
+            assert PF.subir(w, "2026-11-16")[0] == 0
+            assert [x for x in g("log", "-1", "--name-only", "--format=%s", cwd=remoto).splitlines() if x] == ["Auditor: 1 fuentes candidatas nuevas 2026-11-16", PF.REL]
+            assert PF.subir(w, "2026-11-16") == (0, "nada que subir (no había fuentes nuevas)")
+            open(os.path.join(w, "datos", "otro.json"), "w").write("{}")
+            PF.agregar([ok("https://otro2.cl/feed")], w, "2026-11-16")
+            c, m = PF.subir(w, "2026-11-16")
+            assert c == 4 and "otros archivos" in m, m
+            os.remove(os.path.join(w, "datos", "otro.json"))
+            d = json.load(open(os.path.join(w, PF.REL), encoding="utf-8"))
+            for malo, aviso in (({**d, "candidatas": [dict(d["candidatas"][0], url="https://cambiada.cl/feed")] + d["candidatas"][1:]}, "se cambió"),
+                                ({**d, "candidatas": d["candidatas"][1:]}, "se cambió"),
+                                ({**d, "candidatas": d["candidatas"] + [dict(ok("https://extra.cl/feed"), tipo="rss", idioma="es", origen="auditor x", fuente="E (RSS)", oculto=1)]}, "no pasa"),
+                                ({**d, "candidatas": d["candidatas"] + [dict(ok("http://inseguro.cl/feed"), tipo="rss", idioma="es", origen="auditor x", fuente="I (RSS)")]}, "no pasa"),
+                                ({**d, "candidatas": d["candidatas"] + [dict(ok("https://bien.cl/feed"), tipo="rss", idioma="es", origen="a mano", fuente="B (RSS)")]}, "no pasa")):
+                open(os.path.join(w, PF.REL), "w", encoding="utf-8").write(json.dumps(malo, ensure_ascii=False, indent=1))
+                c, m = PF.subir(w, "2026-11-16")
+                assert c == 4 and aviso in m, (aviso, m)
+            assert len(g("log", "--oneline", cwd=remoto).splitlines()) == 2   # nada de lo malo llegó al remoto
+        finally:
+            PF.ORIGEN_RE = viejo_re
+
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

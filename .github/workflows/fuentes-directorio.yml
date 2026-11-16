@@ -5,6 +5,11 @@ name: Directorio de fuentes
 
 on:
   workflow_dispatch:
+  # 15-11-2026: cuando la ronda profunda del Auditor (01:17) suma candidatas, se verifican al tiro; así las sanas ya están en el
+  # directorio para las corridas de bajar.py de la madrugada y para la edición de las 07:30.
+  push:
+    branches: [main]
+    paths: ["herramientas/fuentes-candidatas.json"]
   schedule:
     - cron: "41 6 * * 1,4"   # lunes y jueves 03:41 de Chile (antes de los datos del día)
 
