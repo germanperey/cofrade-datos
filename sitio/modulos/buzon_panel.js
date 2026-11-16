@@ -205,15 +205,15 @@ async function recibirBuzon(req, env, ctx) {
 // si no, Resend (gratis hasta 100 correos al día) con el secreto RESEND_API_KEY. Sin ninguno, la sugerencia queda «sin confirmar».
 const hayCorreo = (env) => !!((env.EMAIL && typeof env.EMAIL.send === "function") || env.RESEND_API_KEY);
 const CORREO_HOLA = "hola@cofrad.es";   // 15-11-2026 (Germán): las respuestas salen de hola@cofrad.es y las respuestas del lector llegan ahí
-async function enviarCorreo(env, { to, subject, text, html: cuerpo }) {
+async function enviarCorreo(env, { to, subject, text, html: cuerpo, bcc }) {   // bcc: copia oculta (16-11-2026: avisos a anunciantes)
   const de = env.CORREO_REMITENTE || CORREO_HOLA;
   if (env.EMAIL && typeof env.EMAIL.send === "function") {
-    await env.EMAIL.send({ from: { email: de, name: "Cofrade News" }, to, replyTo: CORREO_HOLA, subject, text, html: cuerpo });
+    await env.EMAIL.send({ from: { email: de, name: "Cofrade News" }, to, replyTo: CORREO_HOLA, subject, text, html: cuerpo, ...(bcc ? { bcc } : {}) });
     return true;
   }
   if (env.RESEND_API_KEY) {
     const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: `Cofrade News <${de}>`, to: [to], reply_to: CORREO_HOLA, subject, text, html: cuerpo }) });
+      body: JSON.stringify({ from: `Cofrade News <${de}>`, to: [to], reply_to: CORREO_HOLA, subject, text, html: cuerpo, ...(bcc ? { bcc: [bcc] } : {}) }) });
     return r.ok;
   }
   return false;
@@ -281,6 +281,7 @@ async function registrarVisita(req, env, ruta) {
       .bind(fecha, ruta, await huellaVisitante(req, env, fecha), String((req.cf && req.cf.country) || "").slice(0, 2)).run().catch(() => null),
     env.DB.prepare("INSERT INTO vistas (fecha, zona, n) VALUES (?, ?, 1) ON CONFLICT(fecha, zona) DO UPDATE SET n = n + 1")
       .bind(fecha, zonaDe(ruta)).run().catch(() => null),
+    registrarDimensiones(req, env, fecha, zonaDe(ruta)).catch(() => null),   // 16-11-2026: hora, origen y aparato (modulos/tablero.js)
   ]);
 }
 // Las 2 zonas del contador, día por día (fechas de Chile), desde «desde» hasta hoy, con los días sin visitas en cero. Parte el día en que
@@ -444,58 +445,7 @@ const NOMBRE_SECCION = { economia: "Economía", politica: "Política y Congreso"
   efemerides: "Efemérides", naval: "Historia naval", onomastico: "Santoral", indicadores: "Indicadores", clima: "Clima", mar: "Mar y mareas", sismos: "Sismos", vuelos: "Vuelos",
   feriados: "Feriados", inmobiliario: "Inmobiliario", industrias: "Industrias", entretenimiento: "Entretenimiento", biografia: "Biografía", ciencia: "Ciencia",
   astronomia: "Astronomía", deportes: "Deportes", horoscopo: "Horóscopo" };
-async function panel(req, env) {
-  if (!(await esAdmin(req, env))) return paginaPanelLogin("", 200, env);
-  if (!env.DB) return html(marco({ titulo: "Panel", descripcion: "", cuerpo: `<section style="border:0"><h1>Falta la base de datos.</h1></section>` }), 503);
-  const hace30 = fechaChile(new Date(Date.now() - 30 * 86400000));
-  const q = (s, ...b) => env.DB.prepare(s).bind(...b).all().then((r) => r.results || []).catch(() => []);
-  const [dias, rutas, lect, paises, bz, bzTot, socios, pulsoR] = await Promise.all([
-    q("SELECT fecha, COUNT(DISTINCT visitante) AS u, COUNT(*) AS v FROM visitas WHERE fecha >= ? GROUP BY fecha ORDER BY fecha", hace30),
-    q("SELECT ruta, COUNT(DISTINCT visitante) AS u FROM visitas WHERE fecha >= ? GROUP BY ruta ORDER BY u DESC LIMIT 15", hace30),
-    q("SELECT seccion, SUM(segundos) AS s, SUM(vistas) AS v FROM lectura WHERE fecha >= ? GROUP BY seccion ORDER BY s DESC LIMIT 30", hace30),
-    q("SELECT pais, COUNT(DISTINCT visitante) AS u FROM visitas WHERE fecha >= ? GROUP BY pais ORDER BY u DESC LIMIT 10", hace30),
-    q("SELECT * FROM buzon ORDER BY id DESC LIMIT 500"),
-    q("SELECT COUNT(*) AS n, COALESCE(SUM(verificado), 0) AS ver FROM buzon"),
-    q("SELECT estado, COUNT(*) AS n FROM usuarios GROUP BY estado"),
-    q("SELECT valor FROM config WHERE clave = 'pulso_resultado'"),
-  ]);
-  // 14-11-2026: último pedido del sitio a GitHub para refrescar «En vivo» (204 = aceptado; 401/403 = la llave GITHUB_DISPATCH venció)
-  let pul = null;
-  try { pul = JSON.parse((pulsoR[0] || {}).valor || "null"); } catch { pul = null; }
-  const pulTxt = !pul ? "Sin pedidos" : pul.estado === "204" ? "Pedido aceptado" : ["401", "403"].includes(pul.estado) ? "Llave rechazada" : "Falló (" + pul.estado + ")";
-  const pulSub = !pul ? "Se activa con la clave GITHUB_DISPATCH" : ["401", "403"].includes(pul.estado) ? "Renovar GITHUB_DISPATCH · " + String(pul.hora).slice(0, 16).replace("T", " ") + " UTC"
-    : "Último pedido " + String(pul.hora).slice(0, 16).replace("T", " ") + " UTC";
-  const hoy = fechaChile(), dHoy = dias.find((x) => x.fecha === hoy) || { u: 0, v: 0 };
-  const cont = await contadorVisitas(env, hace30), cHoy = cont.filas[cont.filas.length - 1] || { pv: 0, dv: 0 };
-  const prom = dias.length ? Math.round(dias.reduce((a, x) => a + x.u, 0) / dias.length) : 0;
-  const cuenta = (campo) => { const c = {}; bz.forEach((r) => { try { JSON.parse(r[campo] || "[]").forEach((x) => { c[x] = (c[x] || 0) + 1; }); } catch { /* nada */ } }); return Object.entries(c).sort((a, b) => b[1] - a[1]); };
-  const frec = {}; bz.forEach((r) => { if (r.frecuencia) frec[r.frecuencia] = (frec[r.frecuencia] || 0) + 1; });
-  const npsR = bz.filter((r) => typeof r.nps === "number");
-  const nps = npsR.length ? Math.round((npsR.filter((r) => r.nps >= 9).length - npsR.filter((r) => r.nps <= 6).length) / npsR.length * 100) : null;
-  const tot = bzTot[0] || { n: 0, ver: 0 };
-  const kpi = (t, v, s = "") => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${s ? `<br><small>${esc(s)}</small>` : ""}</div>`;
-  const fundadores = await panelSocios(env, new URL(req.url)).catch(() => "");   // 14-11-2026: socios fundadores (modulos/suscripciones.js)
-  const cuerpo = `<section style="border:0;padding-top:30px"><span class="kicker">Panel de Control · solo administración</span><h1 class="titulo-lujo">Cómo va Cofrade News</h1>
-<p class="sub">Contador propio, sin cookies ni datos personales: cada lector cuenta una vez por día con una huella anónima que cambia cada día. Últimos 30 días. <a href="#contador">Ir al contador de visitas</a> · <a href="/panel/salir">Salir del panel</a></p>
-<div class="cifras">${kpi("Lectores hoy", num(dHoy.u, 0), num(cHoy.pv + cHoy.dv, 0) + " visitas a la portada y al diario")}${kpi("Promedio diario", num(prom, 0), "lectores únicos")}
-${kpi("Sugerencias en el Buzón", num(tot.n, 0), num(tot.ver, 0) + " con email confirmado")}
-${kpi("Recomendación (NPS)", nps === null ? "Sin respuestas" : (nps > 0 ? "+" : "") + nps, npsR.length + " respuestas")}
-${kpi("Socios activos", num(socios.filter((x) => ["activo", "prueba"].includes(x.estado)).reduce((a, x) => a + x.n, 0), 0), "Dashboard Financiero")}
-${kpi("«En vivo» al día", esc(pulTxt), pulSub)}</div></section>
-${fundadores}${seccionVisitas(cont)}
-<section><h3>Mapa de calor de lectura</h3><p class="sub">Tiempo que los lectores pasan en cada sección de la edición (sumado, últimos 30 días). Más dorado = más leído.</p>${calor(lect.map((x) => [NOMBRE_SECCION[x.seccion] || x.seccion, x.s, x.v]))}</section>
-<section><div class="dos"><div class="tarjeta"><h4 class="kicker">Páginas más visitadas</h4>${barras(rutas.map((x) => [x.ruta === "/" ? "Portada" : x.ruta.replace("/edicion/", "Edición "), x.u]), "#23395B")}</div>
-<div class="tarjeta"><h4 class="kicker">Países</h4>${barras(paises.map((x) => [x.pais || "Sin país", x.u]), "#23395B")}</div></div></section>
-<section><h3>Buzón: lo que dicen los lectores</h3><div class="dos">
-<div class="tarjeta"><h4 class="kicker">Lo que más les gusta</h4>${barras(cuenta("gusta"))}</div>
-<div class="tarjeta"><h4 class="kicker">Lo que piden agregar</h4>${barras(cuenta("agregar"), "#1E7B4F")}</div>
-<div class="tarjeta"><h4 class="kicker">Frecuencia de lectura</h4>${barras(Object.entries(frec).sort((a, b) => b[1] - a[1]), "#23395B")}
-<p class="sub" style="margin-top:12px">NPS = % que responde 9 o 10, menos % que responde de 0 a 6. Sobre +30 es muy bueno; sobre +50, excelente.</p></div></div>
-<p style="margin:16px 0"><a class="btn linea" href="/panel/buzon.csv">Descargar todas las sugerencias (Excel / CSV)</a></p>
-<div class="tabla-buzon">${bz.slice(0, 60).map((r) => `<article class="tarjeta" style="margin:0 0 10px"><b>${esc(r.nombre)} ${esc(r.apellido)}</b> <span class="m">· ${esc(r.email)} · ${esc(String(r.fecha).slice(0, 16).replace("T", " "))} UTC · ${r.verificado ? "✓ email confirmado" : "email sin confirmar"}${r.estado === "revisar" ? " · ⚠ revisar lenguaje" : ""}${typeof r.nps === "number" ? " · NPS " + r.nps : ""}</span>
-${r.texto ? `<p style="margin:6px 0 0;white-space:pre-wrap">${esc(r.texto)}</p>` : ""}</article>`).join("") || `<p class="aviso">Todavía no llegan sugerencias.</p>`}</div></section>`;
-  return html(marco({ titulo: "Panel de Control · Cofrade News", descripcion: "", cuerpo }), 200, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
-}
+// 16-11-2026: panel() pasó a modulos/tablero.js (tablero con filtros, ayudas, gráficos y publicidad pagada).
 async function panelCsv(req, env) {
   if (!(await esAdmin(req, env)) || !env.DB) return new Response("no autorizado", { status: 401 });
   const filas = (await env.DB.prepare("SELECT fecha, nombre, apellido, email, verificado, gusta, agregar, frecuencia, nps, texto, estado, pais FROM buzon ORDER BY id").all()).results || [];

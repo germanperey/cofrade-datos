@@ -863,17 +863,21 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 
 /*__BUZON_PANEL__*/
 /*__SUSCRIPCIONES__*/
+/*__TABLERO__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
-  const ms = (MARCAS && MARCAS.marcas) || [];
+  // 16-11-2026: primero los avisos pagados vigentes (registro del Panel, ver modulos/tablero.js) y después las marcas propias, que no
+  // vencen. Los enlaces pasan por /ir/… para contar los clics.
+  const ms = avisosCarrusel().concat(((MARCAS && MARCAS.marcas) || []).map((m) => (m.url ? { ...m, ir: `/ir/${slugMarca(m)}?o=portada` } : m)));
   if (!ms.length) return "";
   const uno = (m, oculto) => {
     const est = `style="--mf:${/^#[0-9A-Fa-f]{6}$/.test(m.fondo || "") ? m.fondo : "#FFFFFF"};--mc:${/^#[0-9A-Fa-f]{6}$/.test(m.color || "") ? m.color : "#0B1F3A"}"`;
-    const dentro = `<img src="/marcas/${esc(m.logo)}" alt="${oculto ? "" : esc(m.nombre)}" loading="lazy" decoding="async">${m.texto ? `<span data-no-tr>${esc(m.texto)}</span>` : ""}`;
+    const src = m.src || (m.logo ? `/marcas/${m.logo}` : "");
+    const dentro = `${src ? `<img src="${esc(src)}" alt="${oculto ? "" : esc(m.nombre)}" loading="lazy" decoding="async">` : ""}${m.texto ? `<span data-no-tr>${esc(m.texto)}</span>` : ""}`;
     const ext = oculto ? ' aria-hidden="true" tabindex="-1"' : "";
-    return m.url
-      ? `<a class="marca-a" ${est} href="${esc(urlSegura(m.url))}" target="_blank" rel="noopener"${ext}>${dentro}</a>`
+    return m.ir || m.url
+      ? `<a class="marca-a" ${est} href="${esc(m.ir || urlSegura(m.url))}" target="_blank" rel="noopener"${ext}>${dentro}</a>`
       : `<button type="button" class="marca-a pub-abrir" ${est} data-interes="${esc(m.nombre)}"${ext}>${dentro}</button>`;
   };
   let lista = ms;
@@ -1060,7 +1064,8 @@ ${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `
 }
 
 async function portada(env, ctx, req) {
-  const { cuerpo, hero, p } = await cuerpoPortada(ctx);
+  const [{ cuerpo, hero, p }] = await Promise.all([cuerpoPortada(ctx), prepararAnuncios(env)]);
+  ctx.waitUntil(revisarRenovaciones(env, ctx));   // 16-11-2026: correos de renovación de los anunciantes (como mucho 1 revisión por hora)
   ctx.waitUntil(revivirPulso(env, p));
   // 15-11-2026: el vigía corre cada 3 horas; su propia visita reinicia el reloj y la de un lector lo despierta si GitHub se atrasó
   ctx.waitUntil(/CofradeNews-Vigia/.test((req && req.headers.get("User-Agent")) || "") ? marcarVigia(env) : revivirVigia(env));
@@ -1198,10 +1203,12 @@ export default {
     if (u.hostname === "cofrad.es") return Response.redirect(`https://${DOMINIO}${u.pathname}${u.search}`, 301);
     const p = u.pathname.replace(/\/+$/, "") || "/";
     try {
+      // 16-11-2026: el carrusel del pie (todas las páginas) muestra los avisos pagados: la primera página de cada copia del sitio los carga
+      if (req.method === "GET" && !ANUNCIOS.t && p !== "/" && !p.startsWith("/ir/") && !/\.[a-z0-9]{2,5}$/i.test(p)) await prepararAnuncios(env);
       if (p === "/" && req.method === "GET") { if (!/CofradeNews-Vigia/.test(req.headers.get("User-Agent") || "")) ctx.waitUntil(contarVisita(req, env, "/")); return await portada(env, ctx, req); }
       if (p === "/edicion") {
         const l = await indice(ctx);
-        return l.length ? Response.redirect(`https://${u.host}/edicion/${l[0]}`, 302) : Response.redirect(`https://${u.host}/`, 302);
+        return l.length ? Response.redirect(`https://${u.host}/edicion/${l[0]}${u.search}`, 302) : Response.redirect(`https://${u.host}/`, 302);
       }
       const m = p.match(/^\/edicion\/(\d{4}-\d{2}-\d{2})$/);
       if (m) {
@@ -1212,6 +1219,7 @@ export default {
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
         ctx.waitUntil(contarVisita(req, env, p));
+        ctx.waitUntil(revisarRenovaciones(env, ctx));
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
           "Cache-Control": pasada ? "public, max-age=3600, stale-while-revalidate=86400" : "public, max-age=600", ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
@@ -1235,6 +1243,15 @@ export default {
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);
       if (p === "/panel/visitas.csv") return await panelVisitasCsv(req, env);   // 15-11-2026: contador de visitas completo
       if (p === "/panel") return await panel(req, env);
+      // 16-11-2026 · publicidad pagada: registro del Panel, clics, logos y avisos vigentes para el diario (modulos/tablero.js)
+      if (p === "/panel/anunciantes" && req.method === "POST") return await accionAnunciantes(req, env, ctx).catch(() => new Response(null, { status: 303, headers: { Location: "/panel?anuncios=formulario#publicidad" } }));
+      if (p === "/panel/anunciantes.csv") return await anunciantesCsv(req, env);
+      if (p === "/panel/anunciantes/correo") return await vistaCorreoAnunciante(req, env, ctx, u);
+      if (p === "/publicidad.json") return await publicidadJson(env);
+      const ira = p.match(/^\/ir\/([a-z0-9][a-z0-9-]{0,60})$/);
+      if (ira) return await irAnuncio(req, env, ctx, ira[1], u);
+      const lga = p.match(/^\/anuncios\/([a-z0-9][a-z0-9-]{0,60})\.(png|jpg|webp)$/);
+      if (lga) return await logoAnuncio(req, env, ctx, lga[1], lga[2]);
       const cap = p.match(/^\/capturas\/([a-z0-9-]+\.webp)$/);
       if (cap || p === "/marca-agua.webp") {
         // 15-11-2026: el vigía rehace las capturas con cada edición nueva (herramientas/capturas.py) y corre cada 3 horas: 3 h de caché,
@@ -1305,7 +1322,7 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return Response.redirect(`https://${u.host}/favicon-64.png`, 301);   // 13-11-2026: ícono = escudo de la Cofradía
-      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
+      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nDisallow: /ir/\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
       if (p === "/sitemap.xml") {
         const l = await indice(ctx);
         const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
