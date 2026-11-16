@@ -27,6 +27,9 @@ const LENTO = __LENTO__;   // 13-11-2026: capa que dibuja cada gráfico de la ed
 // las ediciones siguientes la piden aparte y el navegador la toma de su memoria, con la compilación ya hecha. Solo se cambia si los
 // primeros 2.048 caracteres son exactamente los de esa versión (huella FNV-1a); si un día la edición trae otra versión, queda dentro.
 const ECHARTS_ARCHIVO = "echarts-b66b25ae.js", ECHARTS_PREFIJO = 2048, ECHARTS_HUELLA = 0xab20ba12;
+// 15-11-2026 · la letra de títulos (Cormorant Garamond, licencia SIL OFL, sitio/fuentes/OFL.txt) se sirve desde cofrad.es, latín y
+// latín extendido (el navegador baja solo lo que la página usa): sin conectarse a fonts.googleapis.com ni fonts.gstatic.com ni esperar su CSS
+const FUENTES = "@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url(/f/cormorant-garamond-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url(/f/cormorant-garamond-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(/f/cormorant-garamond-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(/f/cormorant-garamond-latin-600-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url(/f/cormorant-garamond-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url(/f/cormorant-garamond-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:600;font-display:swap;src:url(/f/cormorant-garamond-latin-ext-600-italic.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:600;font-display:swap;src:url(/f/cormorant-garamond-latin-600-italic.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}";
 const ECHARTS_SHA = "b66b25aeb4df84e33199dc21694014d336d222cbd9deb0e5a7c14bd6aa0d0fd0";
 // El bloque es idéntico, byte a byte, al archivo oficial dist/echarts.min.js del paquete echarts@6.1.0 (comprobado el 15-11-2026):
 // si GitHub no responde, se toma de jsDelivr, y en ambos casos solo se sirve si la huella SHA-256 coincide.
@@ -56,20 +59,51 @@ async function libreriaGraficos(ctx) {
   return null;
 }
 function fnv1a(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; }
-function externalizarEcharts(activo) {
-  let buf = "", decidido = true, quitar = false;
+// 15-11-2026 · el script principal de la edición (empieza con «const D=») se corrige al vuelo en 3 puntos para que los gráficos no
+// obliguen a rearmar la página (ver __cnDiferir/__cnAlto en modulos/lento.js). Cada cambio exige el texto exacto; si la Skill
+// cambia ese código, no se toca nada y la edición queda como viene. Si los ayudantes no estuvieran, se usa el código original.
+const PARCHES_APP = [
+  ["el.style.height=h+'px';el.dataset.h=h;const c=mk(l.id,o);",
+   "(window.__cnDiferir?__cnDiferir(el,'height',h+'px'):el.style.height=h+'px');el.dataset.h=h;const c=mk(l.id,o);"],
+  ["if(el.clientHeight<min)el.style.minHeight=min+'px';",
+   "(window.__cnAlto?__cnAlto(el,min):el.clientHeight<min&&(el.style.minHeight=min+'px'));"],
+  ["el.style.height=Math.max(140,34*lista.length+40)+'px';mk(id,o);",
+   "(window.__cnDiferir?__cnDiferir(el,'height',Math.max(140,34*lista.length+40)+'px'):el.style.height=Math.max(140,34*lista.length+40)+'px');mk(id,o);"],
+  // el gráfico de cada ley del Congreso plegada espera a que el lector abra su votación (ver __cnLeyEspera en modulos/lento.js)
+  ["LY.forEach((l,li)=>{const el=document.getElementById(l.id);if(!l.partidos.length||!el)return;",
+   "LY.forEach(window.__cnLeyF=(l,li)=>{const el=document.getElementById(l.id);if(!l.partidos.length||!el)return;if(window.__cnLeyEspera&&__cnLeyEspera(el,l,li))return;"],
+  // las filas de pestañas se ordenan cuando el navegador ya las midió (ResizeObserver avisa al empezar), no 12 veces mientras carga
+  ["todas.push(upd);if(window.ResizeObserver)new ResizeObserver(upd).observe(g);upd();});",
+   "todas.push(upd);if(window.ResizeObserver)new ResizeObserver(upd).observe(g);else upd();});"],
+];
+const COLA_APP = Math.max(...PARCHES_APP.map(([a]) => a.length)) - 1;
+const parchearApp = (x) => { for (const [a, b] of PARCHES_APP) if (x.includes(a)) x = x.split(a).join(b); return x; };
+function scriptsEdicion(lib) {
+  let buf = "", cola = "", modo = "pasar";
+  const salidaApp = (t, x) => {   // corrige y deja guardados los últimos caracteres por si un patrón queda partido entre dos trozos
+    const s2 = parchearApp(cola + x);
+    if (t.lastInTextNode) { cola = ""; if (s2) t.before(s2, { html: true }); return; }
+    const corte = Math.max(0, s2.length - COLA_APP);
+    cola = s2.slice(corte);
+    if (corte) t.before(s2.slice(0, corte), { html: true });
+  };
   return {
-    element() { buf = ""; decidido = !activo; quitar = false; },
+    element() { buf = ""; cola = ""; modo = "decidir"; },
     text(t) {
-      if (decidido) { if (quitar) t.remove(); return; }
-      buf += t.text; t.remove();
+      if (modo === "pasar") return;
+      if (modo === "quitar") { t.remove(); return; }
+      const x = t.text; t.remove();
+      if (modo === "app") { salidaApp(t, x); return; }
+      buf += x;   // decidir: se miran los primeros 2.048 caracteres
       if (buf.length < ECHARTS_PREFIJO && !t.lastInTextNode) return;
-      decidido = true;
-      if (buf.length >= ECHARTS_PREFIJO && fnv1a(buf.slice(0, ECHARTS_PREFIJO)) === ECHARTS_HUELLA) {
-        quitar = true;
+      const b = buf; buf = "";
+      if (b.startsWith("\nconst D=")) { modo = "app"; salidaApp(t, b); return; }
+      if (lib && b.length >= ECHARTS_PREFIJO && fnv1a(b.slice(0, ECHARTS_PREFIJO)) === ECHARTS_HUELLA) {
+        modo = "quitar";
         t.before(`</script><script src="/a/${ECHARTS_ARCHIVO}"></script><script>window.echarts||document.write('<script src="/a/${ECHARTS_ARCHIVO}?r=2"><\\/script>')</script><script>`, { html: true });
-      } else t.before(buf, { html: true });
-      buf = "";
+        return;
+      }
+      modo = "pasar"; t.before(b, { html: true });
     },
   };
 }
@@ -106,7 +140,7 @@ const SEGURIDAD = {
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
 };
 // 13-11-2026: el captcha del Buzón (Cloudflare Turnstile) necesita su script y su recuadro desde challenges.cloudflare.com.
-const csp = ({ script = "", frame = "" } = {}) => "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; "
+const csp = ({ script = "", frame = "" } = {}) => "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; "
   + `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com${script}; connect-src 'self'; frame-src https://challenges.cloudflare.com${frame}; `
   + "frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://script.google.com";
 const CSP_PORTADA = csp();
@@ -121,17 +155,28 @@ function html(cuerpo, status = 200, extra = {}, csp = CSP_PORTADA) {
 }
 
 // ---------- lectura del repositorio con caché del borde (rápido y sin abusar de GitHub) ----------
-async function desdeGitHub(ruta, segundos, ctx, completa = null) {
+// 15-11-2026 · «frescura» (solo ediciones): la copia guardada se entrega al tiro aunque tenga más de esos segundos, y por detrás se
+// trae la versión de GitHub para el próximo lector (stale-while-revalidate). Antes, pasados 10 minutos, el primer lector esperaba
+// la descarga completa desde GitHub (448 ms antes del primer byte, medido en producción el 15-11).
+async function desdeGitHub(ruta, segundos, ctx, completa = null, frescura = 0) {
   const cache = caches.default;
   const clave = new Request("https://cache.cofrad.es/" + ruta);
-  let r = await cache.match(clave);
-  if (r) return r;
+  const r = await cache.match(clave);
+  if (r) {
+    if (frescura && Date.now() - Number(r.headers.get("X-Cn-Guardado") || 0) > frescura * 1000)
+      ctx.waitUntil(traerGitHub(clave, ruta, segundos, completa, frescura).then((x) => x && x.body && x.body.cancel()).catch(() => {}));
+    return r;
+  }
+  return await traerGitHub(clave, ruta, segundos, completa, frescura, ctx);
+}
+async function traerGitHub(clave, ruta, segundos, completa, frescura, ctx = null) {
   // 14-11-2026 (auditoría): solo se guardan las respuestas buenas. Un release responde 302 hacia una dirección firmada que vence en
   // ~1 hora; con cacheTtl se guardaba también el 302 y al día siguiente la edición completa daba 403.
   const o = await fetch(completa || RAW + ruta, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": segundos, "300-599": -1 } } });
   if (!o.ok) return null;
-  r = new Response(o.body, { headers: { "Cache-Control": `public, max-age=${segundos}` } });
-  ctx.waitUntil(cache.put(clave, r.clone()));
+  const r = new Response(o.body, { headers: { "Cache-Control": `public, max-age=${frescura ? 2592000 : segundos}`, "X-Cn-Guardado": String(Date.now()) } });
+  if (ctx) { ctx.waitUntil(caches.default.put(clave, r.clone())); return r; }
+  await caches.default.put(clave, r.clone());   // por detrás: se guarda y la copia sobrante se descarta
   return r;
 }
 
@@ -743,7 +788,7 @@ const NAV_HTML = `<a id="cnVolver" class="cn-volver" href="/" data-no-tr transla
 const SUBIR_HTML = `<button type="button" id="cnSubir" class="cn-subir" data-no-tr translate="no" aria-label="Subir al encabezado del boletín" title="Subir al encabezado del boletín"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 12.5 12 7l5.5 5.5M6.5 18 12 12.5l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
 // 15-11-2026 (Germán: «un leve espacio adicional entre los 22 temas»): las ediciones nuevas lo traen de la Skill y lo declaran con
 // data-ritmo en <html>; a las ya publicadas se lo pone el sitio con los MISMOS valores. Así nunca se suma dos veces.
-const SITIO_CSS = `<style id="cnSitio">a.cn-volver{position:fixed;z-index:900;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));
+const SITIO_CSS = `<style id="cnSitio">@media screen{.cg-det.cerrada>.cg-det-in{content-visibility:hidden}.cg-det-in{transition:content-visibility .35s allow-discrete}}@media screen and (prefers-reduced-motion:reduce){.cg-det-in{transition:none}}a.cn-volver{position:fixed;z-index:900;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));
 display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;box-sizing:border-box;
 background:#0B1F3A;color:#fff;border:2px solid #D9AE52;text-decoration:none;-webkit-tap-highlight-color:transparent;
 box-shadow:0 10px 26px rgba(11,31,58,.30),0 2px 6px rgba(11,31,58,.20);
@@ -837,7 +882,7 @@ function marco({ titulo, descripcion, cuerpo, canonica, hero = "" }) {
 <title>${esc(titulo)}</title><meta name="description" content="${esc(descripcion)}"><link rel="canonical" href="https://${DOMINIO}${canonica || "/"}">
 <meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descripcion)}"><meta property="og:type" content="website">
 <meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL"><meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&display=swap"><style>${CSS}</style></head><body>
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha" data-iso="${fechaChile()}">${esc(fechaLarga(fechaChile()))}</span>
 <nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><button type="button" class="nav-b buzon-abrir" aria-haspopup="dialog"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></svg>Buzón</button><a href="/mercados">Mercados</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a></nav>
@@ -1159,8 +1204,8 @@ export default {
         // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde y
         // 1 hora en el navegador; la de hoy, 10 minutos. Los gráficos se dibujan recién cuando el lector llega a ellos (LENTO).
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
-        const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true))) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]))))
-          || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx));
+        const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
+          || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
         ctx.waitUntil(contarVisita(req, env, p));
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
@@ -1170,7 +1215,7 @@ export default {
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA), { html: true }); } })
-          .on("script", externalizarEcharts(lib))
+          .on("script", scriptsEdicion(lib))
           .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64"><link rel="apple-touch-icon" href="/apple-touch-icon.png">' + SITIO_CSS, { html: true }); } })
           .transform(resp);
       }
@@ -1191,6 +1236,12 @@ export default {
         // así la galería de la portada nunca queda más de una vuelta del vigía atrás
         const r = await desdeGitHub(cap ? `sitio/capturas/${cap[1]}` : "sitio/marca-agua.webp?v=2", cap ? 10800 : 86400, ctx);   // ?v=2: 15-11-2026, 86 → 36 KB
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": cap ? "public, max-age=10800" : "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
+      }
+      const fu = p.match(/^\/f\/(cormorant-garamond-latin(?:-ext)?-(?:500|600|700)-(?:normal|italic)\.woff2)$/);
+      if (fu) {   // 15-11-2026: letra de títulos propia (ver FUENTES); caché de un año
+        const r = await desdeGitHub(`sitio/fuentes/${fu[1]}`, 31536000, ctx);
+        return r ? new Response(r.body, { headers: { "Content-Type": "font/woff2", "Cache-Control": "public, max-age=31536000, immutable", ...SEGURIDAD } })
+          : new Response("", { status: 404, headers: { "Cache-Control": "no-store" } });
       }
       if (p === `/a/${ECHARTS_ARCHIVO}`) {   // 15-11-2026: la librería de gráficos de las ediciones, con caché de un año (ver ECHARTS_ARCHIVO)
         const r = await libreriaGraficos(ctx);

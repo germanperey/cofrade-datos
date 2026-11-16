@@ -1496,6 +1496,32 @@ def vigia_avisa_si_falta_un_grafico_o_una_seccion_de_ayer():
     assert "revisar_contenido(inf, fecha)" in inspect.getsource(V.main)
 
 
+
+@prueba
+def vigia_avisa_si_no_se_aplica_la_rapidez():
+    """15-11-2026: las 5 correcciones de rapidez del sitio se revisan en la edición servida; si faltan es AVISO, no GRAVE."""
+    from herramientas import vigia as V
+    completa = "<script>\nconst D={};" + "".join(V.MARCAS_RAPIDEZ.values()) + "</script>"
+    assert V.rapidez_faltante(completa) == []
+    sin_una = completa.replace(V.MARCAS_RAPIDEZ["gráficos del Congreso al abrir"], "")
+    assert V.rapidez_faltante(sin_una) == ["gráficos del Congreso al abrir"]
+    assert V.rapidez_faltante("<html>edición liviana sin script principal</html>") == []
+
+    class R:
+        status_code = 200
+        text = sin_una
+    viejo = V.pedir
+    V.pedir = lambda url, **k: R()
+    try:
+        inf = V.Informe()
+        V.revisar_contenido(inf, "2026-11-15")
+        r = [x for x in inf.revisiones if "rapidez" in x["nombre"]]
+        assert len(r) == 1 and not r[0]["ok"] and r[0]["grave"] is False and "Congreso al abrir" in r[0]["detalle"]
+        assert not inf.graves
+    finally:
+        V.pedir = viejo
+
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

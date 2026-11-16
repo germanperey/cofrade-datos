@@ -212,12 +212,34 @@ def faltantes_edicion(hoy, previa, fecha_hoy, fecha_previa):
     return faltan
 
 
+# 15-11-2026 · el sitio corrige al vuelo 5 puntos del script de la edición para que cargue más rápido (sitio/worker.src.js, PARCHES_APP).
+# Si la Skill cambia ese código, el sitio no toca nada y la edición sigue igual, pero más lenta: es un AVISO para actualizar los parches.
+MARCAS_RAPIDEZ = {
+    "altos del Congreso en tanda": "(window.__cnDiferir?__cnDiferir(el,'height',h+'px')",
+    "mínimos de los gráficos en tanda": "(window.__cnAlto?__cnAlto(el,min)",
+    "altos de los consolidados en tanda": "__cnDiferir(el,'height',Math.max(140,34*lista.length+40)+'px')",
+    "gráficos del Congreso al abrir": "if(window.__cnLeyEspera&&__cnLeyEspera(el,l,li))return;",
+    "pestañas tras medir": "new ResizeObserver(upd).observe(g);else upd();",
+}
+
+
+def rapidez_faltante(html):
+    """Nombres de las correcciones de rapidez que no se aplicaron a la edición servida (vacío si están todas)."""
+    if "const D=" not in html:
+        return []
+    return [n for n, m in MARCAS_RAPIDEZ.items() if m not in html]
+
+
 def revisar_contenido(inf, fecha):
     """La edición más nueva contra la anterior publicada (hasta 6 días atrás), tal como las sirve el sitio."""
     if not fecha:
         return
     try:
         r = pedir(f"{SITIO}/edicion/{fecha}")
+        if r.status_code == 200:
+            falta = rapidez_faltante(r.text)
+            inf.ok(f"Edición {fecha}: el sitio aplica sus 5 correcciones de rapidez", not falta,
+                   "la Skill cambió ese código; la edición se ve igual pero carga más lenta. Falta: " + ", ".join(falta), grave=False)
         hoy = inventario_html(r.text) if r.status_code == 200 else None
         if not hoy or len(hoy["graficos"]) < 10:
             return   # sin la edición completa no se compara (eso ya lo dice la revisión «se sirve la edición completa»)
