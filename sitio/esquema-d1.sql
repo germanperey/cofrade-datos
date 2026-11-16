@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS config (clave TEXT PRIMARY KEY, valor TEXT);
 CREATE TABLE IF NOT EXISTS buzon (id INTEGER PRIMARY KEY AUTOINCREMENT, fecha TEXT, nombre TEXT, apellido TEXT, email TEXT, gusta TEXT, agregar TEXT, frecuencia TEXT, nps INTEGER, texto TEXT, verificado INTEGER DEFAULT 0, token TEXT, ip TEXT, pais TEXT, estado TEXT DEFAULT 'nuevo');
 CREATE INDEX IF NOT EXISTS buzon_ip ON buzon (ip, fecha);
 CREATE INDEX IF NOT EXISTS visitas_fecha ON visitas (fecha);
+-- 15-11-2026 · contador de visitas: cada apertura suma 1 por día y zona (portada, diario, otras). Los únicos siguen en visitas
+CREATE TABLE IF NOT EXISTS vistas (fecha TEXT, zona TEXT, n INTEGER DEFAULT 0, PRIMARY KEY (fecha, zona));
 CREATE TABLE IF NOT EXISTS intentos (ip TEXT, fecha TEXT, n INTEGER DEFAULT 0, PRIMARY KEY (ip, fecha));
 CREATE INDEX IF NOT EXISTS buzon_token ON buzon (token);
 CREATE INDEX IF NOT EXISTS buzon_email ON buzon (email, fecha);

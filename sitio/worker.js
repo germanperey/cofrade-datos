@@ -390,7 +390,11 @@ section{padding:28px 0;border-top:1px solid var(--linea)}h3{font:600 26px/1.2 va
 @keyframes latido{0%,100%{opacity:1}50%{opacity:.25}}@media (prefers-reduced-motion:reduce){.vivo::before{animation:none}.btn{transition:none}}
 .cifras{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .cifra{background:var(--card);border:1px solid var(--linea);border-radius:14px;padding:12px 14px}.cifra small{display:block;color:var(--gris);font-size:12.5px}
-.cifra b{font:600 21px/1.3 var(--serif);font-variant-numeric:tabular-nums}.var{font-size:13px;margin-left:4px}.sube{color:var(--verde)}.baja{color:var(--rojo)}
+.cifra b{font:600 21px/1.3 var(--serif);font-variant-numeric:tabular-nums}
+.tabla-vis{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}.tabla-vis th,.tabla-vis td{padding:7px 10px;border-bottom:1px solid var(--linea);text-align:right;white-space:nowrap}
+.tabla-vis th{font-size:13px;color:var(--gris);font-weight:600}.tabla-vis th:first-child,.tabla-vis td:first-child{text-align:left}.tabla-vis th[colspan]{text-align:center}
+.tabla-vis td:first-child{font-variant-numeric:normal}.cifras.c4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.dos.d2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+@media (max-width:560px){.tabla-vis{font-size:14px}.tabla-vis th,.tabla-vis td{padding:6px 7px}.tabla-vis th:first-child,.tabla-vis td:first-child{position:sticky;left:0;z-index:1;background:var(--card);box-shadow:1px 0 0 var(--linea)}}.var{font-size:13px;margin-left:4px}.sube{color:var(--verde)}.baja{color:var(--rojo)}
 .cifra a{font-size:12px;color:var(--gris)}
 .dos{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:14px}
 .titulares h4{font:600 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--oro-t);margin:0 0 8px}
@@ -1126,12 +1130,94 @@ async function verificarBuzon(req, u, env) {
 
 // ---------- medición propia: lectores únicos por día (sin cookies) y tiempo de lectura por sección ----------
 const BOT_UA = /bot|crawl|spider|slurp|preview|facebookexternalhit|whatsapp|telegram|monitor|headless|lighthouse|python|curl|wget|httpclient|java\/|go-http|axios|node-fetch|scrapy|okhttp/i;
+// 15-11-2026 (Germán: «el Panel de Administración debe llevar un registro de un "Contador de Visitas" al Sitio Web (Landing Page) y al
+// Newsletter "Cofrade News" (verificando el total de visitas diarias, y el total de visitas únicas que ingresan...)»). Cada apertura
+// suma 1 en vistas (fecha, zona); el visitante único del día sigue en visitas (IP + navegador, guardados solo como huella anónima del
+// día). Zonas: portada «/», diario «/edicion/…» y otras. Las dos escrituras van por separado: si una falla, la otra igual cuenta.
+const zonaDe = (ruta) => (ruta === "/" ? "portada" : String(ruta).startsWith("/edicion/") ? "diario" : "otras");
 async function registrarVisita(req, env, ruta) {
   const ua = req.headers.get("User-Agent") || "";
   if (!env.DB || !ua || BOT_UA.test(ua)) return;
   const fecha = fechaChile();
-  await env.DB.prepare("INSERT OR IGNORE INTO visitas (fecha, ruta, visitante, pais) VALUES (?, ?, ?, ?)")
-    .bind(fecha, ruta, await huellaVisitante(req, env, fecha), String((req.cf && req.cf.country) || "").slice(0, 2)).run();
+  await Promise.all([
+    env.DB.prepare("INSERT OR IGNORE INTO visitas (fecha, ruta, visitante, pais) VALUES (?, ?, ?, ?)")
+      .bind(fecha, ruta, await huellaVisitante(req, env, fecha), String((req.cf && req.cf.country) || "").slice(0, 2)).run().catch(() => null),
+    env.DB.prepare("INSERT INTO vistas (fecha, zona, n) VALUES (?, ?, 1) ON CONFLICT(fecha, zona) DO UPDATE SET n = n + 1")
+      .bind(fecha, zonaDe(ruta)).run().catch(() => null),
+  ]);
+}
+// Las 2 zonas del contador, día por día (fechas de Chile), desde «desde» hasta hoy, con los días sin visitas en cero. Parte el día en que
+// empezó a contar las visitas (el primero que hay en vistas), para no mostrar ceros falsos en días en que el contador aún no existía; los
+// visitantes únicos de esos días previos (la tabla visitas existe desde el 13-11-2026) vuelven aparte, en «previos».
+async function contadorVisitas(env, desde) {
+  const q = (sql, ...b) => env.DB.prepare(sql).bind(...b).all().then((r) => r.results || []).catch(() => []);
+  const [pri, vis, uni, tot] = await Promise.all([
+    env.DB.prepare("SELECT MIN(fecha) AS f FROM vistas").first().catch(() => null),
+    q("SELECT fecha, zona, n FROM vistas WHERE fecha >= ?", desde),
+    q("SELECT fecha, CASE WHEN ruta = '/' THEN 'portada' WHEN ruta LIKE '/edicion/%' THEN 'diario' ELSE 'otras' END AS zona, COUNT(DISTINCT visitante) AS u FROM visitas WHERE fecha >= ? GROUP BY fecha, zona", desde),
+    q("SELECT fecha, COUNT(DISTINCT visitante) AS u FROM visitas WHERE fecha >= ? GROUP BY fecha ORDER BY fecha", desde),
+  ]);
+  const hoy = fechaChile(), inicio = (pri && pri.f) || hoy, desdeReal = inicio > desde ? inicio : desde;
+  const dias = {}, dia = (f) => (dias[f] = dias[f] || { fecha: f, pv: 0, pu: 0, dv: 0, du: 0, su: 0 });
+  vis.forEach((x) => { if (x.zona === "portada") dia(x.fecha).pv = x.n; else if (x.zona === "diario") dia(x.fecha).dv = x.n; });
+  uni.forEach((x) => { if (x.zona === "portada") dia(x.fecha).pu = x.u; else if (x.zona === "diario") dia(x.fecha).du = x.u; });
+  tot.forEach((x) => { dia(x.fecha).su = x.u; });
+  const filas = [];
+  for (let t = Date.parse(desdeReal + "T12:00:00Z"); ; t += 86400000) {
+    const f = new Date(t).toISOString().slice(0, 10);
+    if (f > hoy) break;
+    filas.push(dias[f] || { fecha: f, pv: 0, pu: 0, dv: 0, du: 0, su: 0 });
+  }
+  return { filas, inicio, previos: tot.filter((x) => x.fecha < desdeReal && x.u > 0) };
+}
+const ddmm = (f) => `${f.slice(8, 10)}-${f.slice(5, 7)}-${f.slice(0, 4)}`;
+const cuantos = (n, uno, varios) => num(n, 0) + " " + (n === 1 ? uno : varios);
+// Columnas pareadas por día: visitas (borde y relleno suave) y visitantes únicos (sólido), con el color del tema (claro y oscuro) y una
+// escala a la izquierda. Con 7 días o menos, cada columna lleva su número encima (en el teléfono no hay «pasar el mouse»).
+function dobles(serie, titulo, color) {   // serie: [[fecha, visitas, únicos]]
+  if (!serie.some((x) => x[1] || x[2])) return `<p class="aviso">Aún no hay visitas registradas.</p>`;
+  const w = 420, h = 210, izq = 36, abajo = 24, arriba = 18, alto = h - abajo - arriba, n = serie.length;
+  const max = Math.max(...serie.map((x) => Math.max(x[1], x[2])), 1), paso = (w - izq - 6) / n, bw = Math.max(2, Math.min(22, Math.floor(paso / 2) - 2));
+  const cada = Math.ceil(n / 7), conNumeros = n <= 7, y = (v) => h - abajo - Math.round(v / max * alto);
+  const visita = `fill="${color}" fill-opacity=".3" stroke="${color}" stroke-width="1"`, unico = `fill="${color}"`;
+  const cols = serie.map(([f, v, u], i) => {
+    const x0 = izq + i * paso + (paso - (2 * bw + 2)) / 2, xu = x0 + bw + 2, yv = v ? Math.min(y(v), h - abajo - 2) : h - abajo, yu = u ? Math.min(y(u), h - abajo - 2) : h - abajo;
+    return (v ? `<rect x="${x0.toFixed(1)}" y="${yv}" width="${bw}" height="${h - abajo - yv}" rx="2" ${visita}><title>${ddmm(f)}: ${cuantos(v, "visita", "visitas")}</title></rect>` : "")
+      + (u ? `<rect x="${xu.toFixed(1)}" y="${yu}" width="${bw}" height="${h - abajo - yu}" rx="2" ${unico}><title>${ddmm(f)}: ${cuantos(u, "visitante único", "visitantes únicos")}</title></rect>` : "")
+      + (conNumeros ? `<text x="${(x0 + bw / 2).toFixed(1)}" y="${yv - 4}" font-size="11" text-anchor="middle" fill="var(--gris)">${num(v, 0)}</text><text x="${(xu + bw / 2).toFixed(1)}" y="${yu - 4}" font-size="11" text-anchor="middle" fill="var(--gris)">${num(u, 0)}</text>` : "")
+      + (i % cada === 0 ? `<text x="${(x0 + bw + 1).toFixed(1)}" y="${h - 7}" font-size="12" text-anchor="middle" fill="var(--gris)">${f.slice(8, 10)}-${f.slice(5, 7)}</text>` : "");
+  }).join("");
+  const escala = `<line x1="${izq}" x2="${w - 4}" y1="${h - abajo}" y2="${h - abajo}" stroke="var(--linea)"/>`
+    + (conNumeros ? "" : `<line x1="${izq}" x2="${w - 4}" y1="${y(max)}" y2="${y(max)}" stroke="var(--linea)" stroke-dasharray="3 4"/><text x="${izq - 6}" y="${y(max) + 4}" font-size="11" text-anchor="end" fill="var(--gris)">${num(max, 0)}</text>`)
+    + `<text x="${izq - 6}" y="${h - abajo + 4}" font-size="11" text-anchor="end" fill="var(--gris)">0</text>`;
+  const muestra = (attrs) => `<svg width="11" height="11" viewBox="0 0 11 11" aria-hidden="true" style="vertical-align:-1px"><rect x=".5" y=".5" width="10" height="10" rx="2" ${attrs}/></svg>`;
+  return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;display:block" role="img" aria-label="${esc(titulo)}">${escala}${cols}</svg>`
+    + `<p class="sub" style="margin:6px 0 0">${muestra(visita)} visitas &nbsp; ${muestra(unico)} visitantes únicos</p>`;
+}
+function seccionVisitas({ filas, inicio, previos }) {
+  const hoy = filas[filas.length - 1] || { pv: 0, pu: 0, dv: 0, du: 0, su: 0 };
+  const suma = (k) => filas.reduce((a, x) => a + x[k], 0), treinta = filas.length >= 30;
+  const kpi = (t, v, s) => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b><br><small>${esc(s)}</small></div>`;
+  const filasT = filas.slice().reverse().map((x) => `<tr><td>${ddmm(x.fecha)}</td><td>${num(x.pv, 0)}</td><td>${num(x.pu, 0)}</td><td>${num(x.dv, 0)}</td><td>${num(x.du, 0)}</td><td>${num(x.su, 0)}</td></tr>`).join("");
+  const antes = previos.length ? `<p class="sub" style="margin:10px 0 0">Antes del ${ddmm(inicio)} el panel solo registraba visitantes únicos (${previos.map((x) => `${ddmm(x.fecha)}: ${num(x.u, 0)}`).join(" · ")}).</p>` : "";
+  return `<section id="contador"><h3>Contador de visitas</h3>
+<p class="sub">Una <b>visita</b> es cada vez que alguien abre la página: si la abre 3 veces, son 3 visitas. Un <b>visitante único</b> es una persona por día,
+reconocida por su conexión (IP) y su navegador, para no juntar a quienes comparten la misma red (como pasa en las redes de celular). La IP no se guarda:
+queda solo una huella anónima que cambia cada día. Robots, buscadores y vistas previas no cuentan. Las visitas se cuentan desde el ${ddmm(inicio)}.</p>
+<div class="cifras c4">${kpi("Portada hoy", cuantos(hoy.pv, "visita", "visitas"), cuantos(hoy.pu, "visitante único", "visitantes únicos"))}${kpi("Diario hoy", cuantos(hoy.dv, "visita", "visitas"), cuantos(hoy.du, "visitante único", "visitantes únicos"))}
+${kpi("Todo el sitio hoy", cuantos(hoy.su, "visitante único", "visitantes únicos"), "todas las páginas, cada persona una vez")}${kpi(treinta ? "Últimos 30 días" : "Desde el " + ddmm(filas[0] ? filas[0].fecha : inicio), cuantos(suma("pv") + suma("dv"), "visita", "visitas"), "a la portada y al diario")}</div>
+<div class="dos d2"><div class="tarjeta"><h4 class="kicker">Portada (Landing Page)</h4>${dobles(filas.map((x) => [x.fecha, x.pv, x.pu]), "Portada: visitas y visitantes únicos por día", "var(--tinta)")}</div>
+<div class="tarjeta"><h4 class="kicker">Diario Cofrade News</h4>${dobles(filas.map((x) => [x.fecha, x.dv, x.du]), "Diario: visitas y visitantes únicos por día", "var(--oro)")}</div></div>
+<div class="tarjeta" style="margin-top:14px;padding:12px"><div style="overflow-x:auto"><table class="tabla-vis"><thead><tr><th rowspan="2">Día</th><th colspan="2">Portada</th><th colspan="2">Diario</th><th rowspan="2">Únicos en<br>todo el sitio</th></tr>
+<tr><th>Visitas</th><th>Únicos</th><th>Visitas</th><th>Únicos</th></tr></thead><tbody>${filasT}</tbody></table></div>${antes}</div>
+<p style="margin:14px 0 0"><a class="btn linea" href="/panel/visitas.csv">Descargar el contador completo (Excel / CSV)</a></p></section>`;
+}
+async function panelVisitasCsv(req, env) {
+  if (!(await esAdmin(req, env)) || !env.DB) return new Response("no autorizado", { status: 401 });
+  const { filas } = await contadorVisitas(env, "2000-01-01");   // todo el contador, desde su primer día
+  const csv = "\ufefffecha;portada_visitas;portada_unicos;diario_visitas;diario_unicos;sitio_unicos\n"
+    + filas.map((x) => [ddmm(x.fecha), x.pv, x.pu, x.dv, x.du, x.su].join(";")).join("\n");
+  return new Response(csv, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="cofrade-visitas-${fechaChile()}.csv"`, "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
 }
 async function contarVisita(req, env, ruta) {
   try {
@@ -1217,17 +1303,6 @@ function calor(filas) {   // [[sección, segundos, lecturas]]: mapa de calor de 
   const tiempo = (s) => (s < 60 ? `${num(s, 0)} s` : s < 36000 ? `${num(s / 60, s < 600 ? 1 : 0)} min` : `${num(s / 3600, 1)} h`);
   return `<div class="calor">${filas.map(([n, se, vi]) => `<div class="cel" style="--a:${(0.08 + 0.57 * se / max).toFixed(2)}"><b>${esc(n)}</b><span>${tiempo(se)} · ${num(vi, 0)} lecturas</span></div>`).join("")}</div>`;
 }
-function columnas(serie) {   // serie: [[fecha, únicos]]
-  if (!serie.length) return `<p class="aviso">Aún no hay visitas registradas: el contador parte con esta versión del sitio.</p>`;
-  const w = 720, h = 190, max = Math.max(...serie.map((x) => x[1]), 1), paso = Math.min(60, (w - 20) / serie.length), bw = Math.max(4, Math.min(44, Math.floor(paso) - 6));
-  const cada = Math.ceil(serie.length / 10);
-  return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto" role="img" aria-label="Lectores únicos por día">${serie.map(([f, u], i) => {
-    const hh = Math.max(2, Math.round(u / max * (h - 44))), x = 10 + i * paso;
-    return `<rect x="${x.toFixed(1)}" y="${h - 22 - hh}" width="${bw}" height="${hh}" rx="3" fill="#B8892B"><title>${f}: ${u} lectores</title></rect>`
-      + `<text x="${(x + bw / 2).toFixed(1)}" y="${h - 26 - hh}" font-size="10" text-anchor="middle" fill="currentColor">${u}</text>`
-      + (i % cada === 0 ? `<text x="${(x + bw / 2).toFixed(1)}" y="${h - 6}" font-size="10" text-anchor="middle" fill="#5B6472">${f.slice(8, 10)}-${f.slice(5, 7)}</text>` : "");
-  }).join("")}</svg>`;
-}
 const NOMBRE_SECCION = { economia: "Economía", politica: "Política y Congreso", emprendimiento: "Emprendimiento", tecnologia: "Tecnología", conflictos: "Conflictos",
   efemerides: "Efemérides", naval: "Historia naval", onomastico: "Santoral", indicadores: "Indicadores", clima: "Clima", mar: "Mar y mareas", sismos: "Sismos", vuelos: "Vuelos",
   feriados: "Feriados", inmobiliario: "Inmobiliario", industrias: "Industrias", entretenimiento: "Entretenimiento", biografia: "Biografía", ciencia: "Ciencia",
@@ -1254,6 +1329,7 @@ async function panel(req, env) {
   const pulSub = !pul ? "Se activa con la clave GITHUB_DISPATCH" : ["401", "403"].includes(pul.estado) ? "Renovar GITHUB_DISPATCH · " + String(pul.hora).slice(0, 16).replace("T", " ") + " UTC"
     : "Último pedido " + String(pul.hora).slice(0, 16).replace("T", " ") + " UTC";
   const hoy = fechaChile(), dHoy = dias.find((x) => x.fecha === hoy) || { u: 0, v: 0 };
+  const cont = await contadorVisitas(env, hace30), cHoy = cont.filas[cont.filas.length - 1] || { pv: 0, dv: 0 };
   const prom = dias.length ? Math.round(dias.reduce((a, x) => a + x.u, 0) / dias.length) : 0;
   const cuenta = (campo) => { const c = {}; bz.forEach((r) => { try { JSON.parse(r[campo] || "[]").forEach((x) => { c[x] = (c[x] || 0) + 1; }); } catch { /* nada */ } }); return Object.entries(c).sort((a, b) => b[1] - a[1]); };
   const frec = {}; bz.forEach((r) => { if (r.frecuencia) frec[r.frecuencia] = (frec[r.frecuencia] || 0) + 1; });
@@ -1263,13 +1339,13 @@ async function panel(req, env) {
   const kpi = (t, v, s = "") => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${s ? `<br><small>${esc(s)}</small>` : ""}</div>`;
   const fundadores = await panelSocios(env, new URL(req.url)).catch(() => "");   // 14-11-2026: socios fundadores (modulos/suscripciones.js)
   const cuerpo = `<section style="border:0;padding-top:30px"><span class="kicker">Panel de Control · solo administración</span><h1 class="titulo-lujo">Cómo va Cofrade News</h1>
-<p class="sub">Contador propio, sin cookies ni datos personales: cada lector cuenta una vez por día con una huella anónima que cambia cada día. Últimos 30 días. <a href="/panel/salir">Salir del panel</a></p>
-<div class="cifras">${kpi("Lectores hoy", num(dHoy.u, 0), num(dHoy.v, 0) + " páginas vistas")}${kpi("Promedio diario", num(prom, 0), "lectores únicos")}
+<p class="sub">Contador propio, sin cookies ni datos personales: cada lector cuenta una vez por día con una huella anónima que cambia cada día. Últimos 30 días. <a href="#contador">Ir al contador de visitas</a> · <a href="/panel/salir">Salir del panel</a></p>
+<div class="cifras">${kpi("Lectores hoy", num(dHoy.u, 0), num(cHoy.pv + cHoy.dv, 0) + " visitas a la portada y al diario")}${kpi("Promedio diario", num(prom, 0), "lectores únicos")}
 ${kpi("Sugerencias en el Buzón", num(tot.n, 0), num(tot.ver, 0) + " con email confirmado")}
 ${kpi("Recomendación (NPS)", nps === null ? "Sin respuestas" : (nps > 0 ? "+" : "") + nps, npsR.length + " respuestas")}
 ${kpi("Socios activos", num(socios.filter((x) => ["activo", "prueba"].includes(x.estado)).reduce((a, x) => a + x.n, 0), 0), "Dashboard Financiero")}
 ${kpi("«En vivo» al día", esc(pulTxt), pulSub)}</div></section>
-${fundadores}<section><h3>Lectores por día</h3>${columnas(dias.map((x) => [x.fecha, x.u]))}</section>
+${fundadores}${seccionVisitas(cont)}
 <section><h3>Mapa de calor de lectura</h3><p class="sub">Tiempo que los lectores pasan en cada sección de la edición (sumado, últimos 30 días). Más dorado = más leído.</p>${calor(lect.map((x) => [NOMBRE_SECCION[x.seccion] || x.seccion, x.s, x.v]))}</section>
 <section><div class="dos"><div class="tarjeta"><h4 class="kicker">Páginas más visitadas</h4>${barras(rutas.map((x) => [x.ruta === "/" ? "Portada" : x.ruta.replace("/edicion/", "Edición "), x.u]), "#23395B")}</div>
 <div class="tarjeta"><h4 class="kicker">Países</h4>${barras(paises.map((x) => [x.pais || "Sin país", x.u]), "#23395B")}</div></div></section>
@@ -2189,6 +2265,7 @@ export default {
       if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
       if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);
+      if (p === "/panel/visitas.csv") return await panelVisitasCsv(req, env);   // 15-11-2026: contador de visitas completo
       if (p === "/panel") return await panel(req, env);
       const cap = p.match(/^\/capturas\/([a-z0-9-]+\.webp)$/);
       if (cap || p === "/marca-agua.webp") {

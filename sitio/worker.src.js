@@ -390,7 +390,11 @@ section{padding:28px 0;border-top:1px solid var(--linea)}h3{font:600 26px/1.2 va
 @keyframes latido{0%,100%{opacity:1}50%{opacity:.25}}@media (prefers-reduced-motion:reduce){.vivo::before{animation:none}.btn{transition:none}}
 .cifras{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .cifra{background:var(--card);border:1px solid var(--linea);border-radius:14px;padding:12px 14px}.cifra small{display:block;color:var(--gris);font-size:12.5px}
-.cifra b{font:600 21px/1.3 var(--serif);font-variant-numeric:tabular-nums}.var{font-size:13px;margin-left:4px}.sube{color:var(--verde)}.baja{color:var(--rojo)}
+.cifra b{font:600 21px/1.3 var(--serif);font-variant-numeric:tabular-nums}
+.tabla-vis{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}.tabla-vis th,.tabla-vis td{padding:7px 10px;border-bottom:1px solid var(--linea);text-align:right;white-space:nowrap}
+.tabla-vis th{font-size:13px;color:var(--gris);font-weight:600}.tabla-vis th:first-child,.tabla-vis td:first-child{text-align:left}.tabla-vis th[colspan]{text-align:center}
+.tabla-vis td:first-child{font-variant-numeric:normal}.cifras.c4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.dos.d2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+@media (max-width:560px){.tabla-vis{font-size:14px}.tabla-vis th,.tabla-vis td{padding:6px 7px}.tabla-vis th:first-child,.tabla-vis td:first-child{position:sticky;left:0;z-index:1;background:var(--card);box-shadow:1px 0 0 var(--linea)}}.var{font-size:13px;margin-left:4px}.sube{color:var(--verde)}.baja{color:var(--rojo)}
 .cifra a{font-size:12px;color:var(--gris)}
 .dos{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:14px}
 .titulares h4{font:600 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--oro-t);margin:0 0 8px}
@@ -1229,6 +1233,7 @@ export default {
       if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
       if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);
+      if (p === "/panel/visitas.csv") return await panelVisitasCsv(req, env);   // 15-11-2026: contador de visitas completo
       if (p === "/panel") return await panel(req, env);
       const cap = p.match(/^\/capturas\/([a-z0-9-]+\.webp)$/);
       if (cap || p === "/marca-agua.webp") {
