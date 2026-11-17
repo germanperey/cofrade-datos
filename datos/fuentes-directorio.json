@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-16T13:32:08-03:00",
- "total": 202,
+ "generado": "2026-11-17T01:39:47-03:00",
+ "total": 199,
  "secciones": {
   "politica/chile": [
    [
@@ -116,11 +116,6 @@
     "FIA Innovacion Agraria (RSS)",
     "https://www.fia.cl/feed/",
     "rss"
-   ],
-   [
-    "Sercotec (RSS)",
-    "https://www.sercotec.cl/feed/",
-    "rss"
    ]
   ],
   "industrias": [
@@ -162,11 +157,6 @@
    [
     "Mining Technology (RSS)",
     "https://www.mining-technology.com/feed/",
-    "rss"
-   ],
-   [
-    "Mundo Acuicola (RSS)",
-    "https://www.mundoacuicola.cl/new/feed/",
     "rss"
    ],
    [
@@ -864,11 +854,6 @@
     "rss"
    ],
    [
-    "Sailing World (RSS)",
-    "https://www.sailingworld.com/feed/",
-    "rss"
-   ],
-   [
     "Scuttlebutt Sailing News (RSS)",
     "https://www.sailingscuttlebutt.com/feed/",
     "rss"
@@ -886,11 +871,6 @@
    [
     "Surfer (RSS)",
     "https://www.surfer.com/feed/",
-    "rss"
-   ],
-   [
-    "SwimSwam (RSS)",
-    "https://swimswam.com/feed/",
     "rss"
    ],
    [
@@ -1035,6 +1015,11 @@
     "rss"
    ],
    [
+    "Portal Minero · Noticias de proyectos (RSS)",
+    "https://www.portalminero.com/wp/category/noticias/feed/",
+    "rss"
+   ],
+   [
     "Revista Electricidad · proyectos de energía (RSS)",
     "https://www.revistaei.cl/feed/",
     "rss"
@@ -1042,11 +1027,20 @@
   ]
  },
  "fallas": {
-  "https://www.cpc.cl/feed/": 1,
-  "https://consejominero.cl/feed/": 1,
-  "https://feeds.bbci.co.uk/sport/cycling/rss.xml": 1,
-  "https://www.cbssports.com/rss/headlines/nhl/": 1,
-  "https://www.sailingworld.com/feed/": 2
+  "https://www.atacamanoticias.cl/feed/": 1,
+  "https://www.diarioaysen.cl/feed/": 1,
+  "https://www.cpc.cl/feed/": 2,
+  "https://sonami.cl/v2/feed/": 1,
+  "https://consejominero.cl/feed/": 2,
+  "https://www.aqua.cl/feed/": 1,
+  "https://splash247.com/feed/": 1,
+  "https://cadem.cl/feed/": 1,
+  "https://deepmind.google/blog/rss.xml": 1,
+  "https://blogs.microsoft.com/feed/": 1,
+  "https://www.science.org/rss/news_current.xml": 1,
+  "https://feeds.bbci.co.uk/sport/cycling/rss.xml": 2,
+  "https://www.racefans.net/feed/": 1,
+  "https://www.revistaei.cl/feed/": 1
  },
  "nota": "Fuentes verificadas desde GitHub (robots.txt, RSS válido y notas recientes). Las lee bajar.py."
 }

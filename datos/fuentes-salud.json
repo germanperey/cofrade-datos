@@ -1,13 +1,14 @@
 {
- "generado": "2026-11-16T13:32:08-03:00",
- "revisadas": 432,
+ "generado": "2026-11-17T01:39:47-03:00",
+ "revisadas": 439,
  "resumen": {
   "politica/chile": {
-   "http": 17,
+   "http": 18,
    "invalida": 5,
-   "sana": 15,
+   "sana": 13,
    "vacia": 2,
-   "robots": 16
+   "robots": 16,
+   "vieja": 1
   },
   "economia/chile": {
    "http": 11,
@@ -15,25 +16,25 @@
    "sana": 3,
    "robots": 3,
    "vieja": 2,
-   "invalida": 1
+   "invalida": 3
   },
   "emprendimiento": {
-   "robots": 1,
+   "robots": 2,
    "http": 7,
    "invalida": 3,
-   "sana": 4
+   "sana": 3
   },
   "inmobiliario": {
    "invalida": 1,
-   "robots": 6,
-   "http": 5
+   "robots": 7,
+   "http": 6
   },
   "industrias": {
-   "http": 13,
-   "sana": 17,
-   "robots": 5,
+   "http": 16,
+   "sana": 12,
+   "robots": 6,
    "vieja": 4,
-   "invalida": 3,
+   "invalida": 4,
    "vacia": 1
   },
   "politica/mundo": {
@@ -44,41 +45,40 @@
   "economia/mundo": {
    "sana": 12,
    "vieja": 2,
-   "http": 3,
-   "invalida": 2,
-   "robots": 1,
-   "vacia": 1
+   "http": 4,
+   "robots": 2,
+   "invalida": 1
   },
   "conflictos": {
    "robots": 10,
    "sana": 12,
    "vieja": 2,
-   "http": 2,
-   "vacia": 1
+   "http": 3
   },
   "tecnologia": {
-   "sana": 20,
-   "vieja": 1,
+   "sana": 18,
+   "vieja": 3,
    "http": 2
   },
   "ciencia": {
    "http": 3,
-   "sana": 18,
-   "vieja": 1,
+   "sana": 17,
+   "vieja": 2,
    "robots": 1
   },
   "astronomia": {
    "vieja": 4,
    "sana": 11,
    "invalida": 3,
-   "http": 5
+   "http": 4,
+   "vacia": 1
   },
   "deportes": {
-   "http": 34,
-   "sana": 41,
-   "invalida": 7,
-   "vieja": 8,
-   "robots": 2
+   "http": 37,
+   "sana": 40,
+   "invalida": 6,
+   "robots": 3,
+   "vieja": 6
   },
   "entretenimiento": {
    "sana": 18,
@@ -90,9 +90,11 @@
    "http": 10,
    "invalida": 1,
    "robots": 4,
-   "sana": 1
+   "sana": 1,
+   "vieja": 2
   },
   "perspectivas": {
+   "http": 1,
    "sana": 4
   }
  },
@@ -120,14 +122,6 @@
    "tipo": "rss",
    "estado": "http",
    "motivo": "HTTP 404"
-  },
-  {
-   "seccion": "astronomia",
-   "fuente": "GDELT · astronomía (español)",
-   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28astronom%C3%ADa+OR+telescopio+OR+NASA+OR+galaxia+OR+asteroide+OR+exoplaneta%29&timespan=3d",
-   "tipo": "rss",
-   "estado": "http",
-   "motivo": "HTTP 429"
   },
   {
    "seccion": "astronomia",
@@ -169,7 +163,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-13 07:00",
-   "horas": 78.5,
+   "horas": 90.6,
    "motivo": ""
   },
   {
@@ -180,7 +174,7 @@
    "estado": "sana",
    "n": 25,
    "ultima": "2026-11-16 02:00",
-   "horas": 11.5,
+   "horas": 23.6,
    "motivo": ""
   },
   {
@@ -191,7 +185,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 11:48",
-   "horas": 1.7,
+   "horas": 13.8,
    "motivo": ""
   },
   {
@@ -202,7 +196,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-13 17:30",
-   "horas": 68.0,
+   "horas": 80.1,
    "motivo": ""
   },
   {
@@ -212,8 +206,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 60,
-   "ultima": "2026-11-13 13:41",
-   "horas": 71.8,
+   "ultima": "2026-11-16 15:35",
+   "horas": 10.0,
    "motivo": ""
   },
   {
@@ -223,8 +217,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:22",
-   "horas": 1.1,
+   "ultima": "2026-11-16 20:12",
+   "horas": 5.4,
    "motivo": ""
   },
   {
@@ -234,8 +228,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:22",
-   "horas": 1.1,
+   "ultima": "2026-11-16 20:12",
+   "horas": 5.4,
    "motivo": ""
   },
   {
@@ -245,8 +239,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-13 01:24",
-   "horas": 84.1,
+   "ultima": "2026-11-16 18:57",
+   "horas": 6.6,
    "motivo": ""
   },
   {
@@ -256,8 +250,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 25,
-   "ultima": "2026-11-13 15:28",
-   "horas": 70.0,
+   "ultima": "2026-11-16 14:22",
+   "horas": 11.2,
    "motivo": ""
   },
   {
@@ -268,7 +262,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-15 16:16",
-   "horas": 21.2,
+   "horas": 33.3,
    "motivo": ""
   },
   {
@@ -278,9 +272,17 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-15 10:22",
-   "horas": 27.1,
+   "ultima": "2026-11-16 18:11",
+   "horas": 7.4,
    "motivo": ""
+  },
+  {
+   "seccion": "astronomia",
+   "fuente": "GDELT · astronomía (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28astronom%C3%ADa+OR+telescopio+OR+NASA+OR+galaxia+OR+asteroide+OR+exoplaneta%29&timespan=3d",
+   "tipo": "rss",
+   "estado": "vacia",
+   "motivo": "sin notas"
   },
   {
    "seccion": "astronomia",
@@ -290,8 +292,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-10-30 19:46",
-   "horas": 401.7,
-   "motivo": "última nota hace 16.7 días (tope 10.0)"
+   "horas": 413.8,
+   "motivo": "última nota hace 17.2 días (tope 10.0)"
   },
   {
    "seccion": "astronomia",
@@ -301,8 +303,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-10-30 19:46",
-   "horas": 401.7,
-   "motivo": "última nota hace 16.7 días (tope 10.0)"
+   "horas": 413.8,
+   "motivo": "última nota hace 17.2 días (tope 10.0)"
   },
   {
    "seccion": "astronomia",
@@ -312,8 +314,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-10-14 09:00",
-   "horas": 796.5,
-   "motivo": "última nota hace 33.2 días (tope 10.0)"
+   "horas": 808.6,
+   "motivo": "última nota hace 33.7 días (tope 10.0)"
   },
   {
    "seccion": "astronomia",
@@ -323,8 +325,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-10-21 13:40",
-   "horas": 623.8,
-   "motivo": "última nota hace 26.0 días (tope 10.0)"
+   "horas": 635.9,
+   "motivo": "última nota hace 26.5 días (tope 10.0)"
   },
   {
    "seccion": "chilenos-mundo",
@@ -454,8 +456,30 @@
    "estado": "sana",
    "n": 6,
    "ultima": "2026-11-16 10:37",
-   "horas": 2.8,
+   "horas": 15.0,
    "motivo": ""
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Cooperativa Ciencia · Científico chileno (RSS)",
+   "url": "https://www.cooperativaciencia.cl/etiqueta/cientifico-chileno/feed/",
+   "tipo": "rss",
+   "estado": "vieja",
+   "n": 3,
+   "ultima": "2026-08-20 15:00",
+   "horas": 2122.6,
+   "motivo": "última nota hace 88.4 días (tope 14.0)"
+  },
+  {
+   "seccion": "chilenos-mundo",
+   "fuente": "Cooperativa Ciencia · Reconocimiento (RSS)",
+   "url": "https://www.cooperativaciencia.cl/etiqueta/reconocimiento/feed/",
+   "tipo": "rss",
+   "estado": "vieja",
+   "n": 20,
+   "ultima": "2026-11-02 12:00",
+   "horas": 349.6,
+   "motivo": "última nota hace 14.6 días (tope 14.0)"
   },
   {
    "seccion": "ciencia",
@@ -496,8 +520,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 13:00",
-   "horas": 0.4,
+   "ultima": "2026-11-16 16:06",
+   "horas": 9.5,
    "motivo": ""
   },
   {
@@ -507,8 +531,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 10:34",
-   "horas": 2.9,
+   "ultima": "2026-11-16 17:30",
+   "horas": 8.1,
    "motivo": ""
   },
   {
@@ -519,7 +543,7 @@
    "estado": "sana",
    "n": 75,
    "ultima": "2026-11-15 21:00",
-   "horas": 16.4,
+   "horas": 28.6,
    "motivo": ""
   },
   {
@@ -529,8 +553,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 13:20",
-   "horas": 0.1,
+   "ultima": "2026-11-16 22:20",
+   "horas": 3.3,
    "motivo": ""
   },
   {
@@ -540,8 +564,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 12:40",
-   "horas": 0.8,
+   "ultima": "2026-11-16 20:40",
+   "horas": 4.9,
    "motivo": ""
   },
   {
@@ -551,8 +575,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 13:20",
-   "horas": 0.1,
+   "ultima": "2026-11-16 23:20",
+   "horas": 2.3,
    "motivo": ""
   },
   {
@@ -562,8 +586,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 13:00",
-   "horas": 0.4,
+   "ultima": "2026-11-16 23:20",
+   "horas": 2.3,
    "motivo": ""
   },
   {
@@ -573,8 +597,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 13:20",
-   "horas": 0.1,
+   "ultima": "2026-11-16 22:00",
+   "horas": 3.6,
    "motivo": ""
   },
   {
@@ -585,18 +609,7 @@
    "estado": "sana",
    "n": 5,
    "ultima": "2026-11-16 12:15",
-   "horas": 1.2,
-   "motivo": ""
-  },
-  {
-   "seccion": "ciencia",
-   "fuente": "Science AAAS Noticias (RSS, inglés)",
-   "url": "https://www.science.org/rss/news_current.xml",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-10 07:55",
-   "horas": 149.5,
+   "horas": 13.3,
    "motivo": ""
   },
   {
@@ -606,8 +619,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 13:00",
-   "horas": 0.4,
+   "ultima": "2026-11-16 15:30",
+   "horas": 10.1,
    "motivo": ""
   },
   {
@@ -618,7 +631,7 @@
    "estado": "sana",
    "n": 60,
    "ultima": "2026-11-16 11:02",
-   "horas": 2.4,
+   "horas": 14.6,
    "motivo": ""
   },
   {
@@ -629,7 +642,7 @@
    "estado": "sana",
    "n": 60,
    "ultima": "2026-11-16 09:41",
-   "horas": 3.8,
+   "horas": 15.9,
    "motivo": ""
   },
   {
@@ -640,7 +653,7 @@
    "estado": "sana",
    "n": 60,
    "ultima": "2026-11-16 11:02",
-   "horas": 2.4,
+   "horas": 14.6,
    "motivo": ""
   },
   {
@@ -651,7 +664,7 @@
    "estado": "sana",
    "n": 60,
    "ultima": "2026-11-16 08:40",
-   "horas": 4.8,
+   "horas": 16.9,
    "motivo": ""
   },
   {
@@ -662,7 +675,7 @@
    "estado": "sana",
    "n": 60,
    "ultima": "2026-11-16 11:31",
-   "horas": 1.9,
+   "horas": 14.1,
    "motivo": ""
   },
   {
@@ -673,7 +686,7 @@
    "estado": "sana",
    "n": 20,
    "ultima": "2026-11-16 09:00",
-   "horas": 4.4,
+   "horas": 16.6,
    "motivo": ""
   },
   {
@@ -683,8 +696,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 11:45",
-   "horas": 1.7,
+   "ultima": "2026-11-16 14:09",
+   "horas": 11.4,
    "motivo": ""
   },
   {
@@ -695,8 +708,19 @@
    "estado": "vieja",
    "n": 83,
    "ultima": "2026-10-10 04:49",
-   "horas": 896.6,
-   "motivo": "última nota hace 37.4 días (tope 10.0)"
+   "horas": 908.8,
+   "motivo": "última nota hace 37.9 días (tope 10.0)"
+  },
+  {
+   "seccion": "ciencia",
+   "fuente": "Science AAAS Noticias (RSS, inglés)",
+   "url": "https://www.science.org/rss/news_current.xml",
+   "tipo": "rss",
+   "estado": "vieja",
+   "n": 9,
+   "ultima": "2026-10-12 00:00",
+   "horas": 865.6,
+   "motivo": "última nota hace 36.1 días (tope 10.0)"
   },
   {
    "seccion": "conflictos",
@@ -704,7 +728,15 @@
    "url": "https://acleddata.com/feed/",
    "tipo": "rss",
    "estado": "http",
-   "motivo": "HTTP 404"
+   "motivo": "HTTP 403"
+  },
+  {
+   "seccion": "conflictos",
+   "fuente": "GDELT · conflictos (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28Ucrania+OR+Gaza+OR+Sud%C3%A1n+OR+%22alto+el+fuego%22+OR+bombardeo+OR+ofensiva%29&timespan=1d",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 429"
   },
   {
    "seccion": "conflictos",
@@ -801,8 +833,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 12:47",
-   "horas": 0.7,
+   "ultima": "2026-11-17 00:30",
+   "horas": 1.1,
    "motivo": ""
   },
   {
@@ -811,9 +843,9 @@
    "url": "https://feeds.bbci.co.uk/news/world/middle_east/rss.xml",
    "tipo": "rss",
    "estado": "sana",
-   "n": 26,
-   "ultima": "2026-11-16 12:46",
-   "horas": 0.7,
+   "n": 27,
+   "ultima": "2026-11-16 20:01",
+   "horas": 5.6,
    "motivo": ""
   },
   {
@@ -823,8 +855,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 15,
-   "ultima": "2026-11-16 13:06",
-   "horas": 0.3,
+   "ultima": "2026-11-16 22:17",
+   "horas": 3.3,
    "motivo": ""
   },
   {
@@ -834,8 +866,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 11:37",
-   "horas": 1.8,
+   "ultima": "2026-11-16 20:23",
+   "horas": 5.2,
    "motivo": ""
   },
   {
@@ -855,7 +887,7 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 15,
-   "ultima": "2026-11-16 13:14",
+   "ultima": "2026-11-17 01:23",
    "horas": 0.2,
    "motivo": ""
   },
@@ -866,8 +898,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-15 19:24",
-   "horas": 18.0,
+   "ultima": "2026-11-16 19:03",
+   "horas": 6.5,
    "motivo": ""
   },
   {
@@ -877,8 +909,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 13:24",
-   "horas": 0.0,
+   "ultima": "2026-11-17 01:22",
+   "horas": 0.2,
    "motivo": ""
   },
   {
@@ -887,9 +919,9 @@
    "url": "https://www.newarab.com/rss",
    "tipo": "rss",
    "estado": "sana",
-   "n": 101,
-   "ultima": "2026-11-16 12:53",
-   "horas": 0.6,
+   "n": 93,
+   "ultima": "2026-11-16 21:49",
+   "horas": 3.8,
    "motivo": ""
   },
   {
@@ -899,8 +931,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 12:43",
-   "horas": 0.7,
+   "ultima": "2026-11-16 16:31",
+   "horas": 9.1,
    "motivo": ""
   },
   {
@@ -910,8 +942,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 13:23",
-   "horas": 0.1,
+   "ultima": "2026-11-17 01:23",
+   "horas": 0.2,
    "motivo": ""
   },
   {
@@ -921,17 +953,9 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 100,
-   "ultima": "2026-11-16 06:00",
-   "horas": 7.4,
+   "ultima": "2026-11-16 16:30",
+   "horas": 9.1,
    "motivo": ""
-  },
-  {
-   "seccion": "conflictos",
-   "fuente": "GDELT · conflictos (español)",
-   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28Ucrania+OR+Gaza+OR+Sud%C3%A1n+OR+%22alto+el+fuego%22+OR+bombardeo+OR+ofensiva%29&timespan=1d",
-   "tipo": "rss",
-   "estado": "vacia",
-   "motivo": "sin notas"
   },
   {
    "seccion": "conflictos",
@@ -941,8 +965,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-11-05 06:46",
-   "horas": 270.7,
-   "motivo": "última nota hace 11.3 días (tope 4.0)"
+   "horas": 282.8,
+   "motivo": "última nota hace 11.8 días (tope 4.0)"
   },
   {
    "seccion": "conflictos",
@@ -952,8 +976,16 @@
    "estado": "vieja",
    "n": 30,
    "ultima": "2025-06-16 13:39",
-   "horas": 12431.8,
-   "motivo": "última nota hace 518.0 días (tope 4.0)"
+   "horas": 12443.9,
+   "motivo": "última nota hace 518.5 días (tope 4.0)"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "ANFP",
+   "url": "https://www.anfp.cl/feed/",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 403"
   },
   {
    "seccion": "deportes",
@@ -1089,7 +1121,7 @@
    "url": "https://www.horsetalk.co.nz/feed/",
    "tipo": "rss",
    "estado": "http",
-   "motivo": "HTTP 500"
+   "motivo": "HTTP 403"
   },
   {
    "seccion": "deportes",
@@ -1181,6 +1213,22 @@
   },
   {
    "seccion": "deportes",
+   "fuente": "Punto de Break (RSS)",
+   "url": "https://www.puntodebreak.com/feed",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 403"
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "RaceFans (RSS)",
+   "url": "https://www.racefans.net/feed/",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 403"
+  },
+  {
+   "seccion": "deportes",
    "fuente": "Sport Fútbol (RSS)",
    "url": "https://www.sport.es/es/rss/futbol/rss.xml",
    "tipo": "rss",
@@ -1269,14 +1317,6 @@
   },
   {
    "seccion": "deportes",
-   "fuente": "Punto de Break (RSS)",
-   "url": "https://www.puntodebreak.com/feed",
-   "tipo": "rss",
-   "estado": "invalida",
-   "motivo": "no es un RSS/Atom válido"
-  },
-  {
-   "seccion": "deportes",
    "fuente": "Redgol (RSS)",
    "url": "https://www.redgol.cl/rss",
    "tipo": "rss",
@@ -1301,13 +1341,21 @@
   },
   {
    "seccion": "deportes",
+   "fuente": "SwimSwam (RSS)",
+   "url": "https://swimswam.com/feed/",
+   "tipo": "rss",
+   "estado": "robots",
+   "motivo": "robots.txt no respondió"
+  },
+  {
+   "seccion": "deportes",
    "fuente": "AS Chile portada (RSS)",
    "url": "https://feeds.as.com/mrss-s/pages/as/site/chile.as.com/portada",
    "tipo": "rss",
    "estado": "sana",
-   "n": 89,
-   "ultima": "2026-11-16 12:56",
-   "horas": 0.5,
+   "n": 92,
+   "ultima": "2026-11-17 00:00",
+   "horas": 1.6,
    "motivo": ""
   },
   {
@@ -1317,8 +1365,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 51,
-   "ultima": "2026-11-16 13:24",
-   "horas": 0.1,
+   "ultima": "2026-11-16 18:49",
+   "horas": 6.8,
    "motivo": ""
   },
   {
@@ -1329,7 +1377,7 @@
    "estado": "sana",
    "n": 27,
    "ultima": "2026-11-16 13:08",
-   "horas": 0.3,
+   "horas": 12.5,
    "motivo": ""
   },
   {
@@ -1339,8 +1387,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 8,
-   "ultima": "2026-11-16 10:29",
-   "horas": 3.0,
+   "ultima": "2026-11-16 14:21",
+   "horas": 11.2,
    "motivo": ""
   },
   {
@@ -1350,8 +1398,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 06:52",
-   "horas": 6.6,
+   "ultima": "2026-11-16 14:30",
+   "horas": 11.1,
    "motivo": ""
   },
   {
@@ -1360,9 +1408,9 @@
    "url": "https://feeds.bbci.co.uk/sport/rss.xml",
    "tipo": "rss",
    "estado": "sana",
-   "n": 68,
-   "ultima": "2026-11-16 12:54",
-   "horas": 0.6,
+   "n": 66,
+   "ultima": "2026-11-17 01:29",
+   "horas": 0.1,
    "motivo": ""
   },
   {
@@ -1372,8 +1420,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 36,
-   "ultima": "2026-11-16 12:39",
-   "horas": 0.8,
+   "ultima": "2026-11-16 16:18",
+   "horas": 9.3,
    "motivo": ""
   },
   {
@@ -1383,8 +1431,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 36,
-   "ultima": "2026-11-16 12:59",
-   "horas": 0.5,
+   "ultima": "2026-11-16 20:01",
+   "horas": 5.6,
    "motivo": ""
   },
   {
@@ -1394,8 +1442,19 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 36,
-   "ultima": "2026-11-16 12:19",
-   "horas": 1.1,
+   "ultima": "2026-11-17 00:44",
+   "horas": 0.9,
+   "motivo": ""
+  },
+  {
+   "seccion": "deportes",
+   "fuente": "CBS Sports NHL (RSS)",
+   "url": "https://www.cbssports.com/rss/headlines/nhl/",
+   "tipo": "rss",
+   "estado": "sana",
+   "n": 36,
+   "ultima": "2026-11-16 17:09",
+   "horas": 8.4,
    "motivo": ""
   },
   {
@@ -1405,8 +1464,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 6,
-   "ultima": "2026-11-14 21:04",
-   "horas": 40.4,
+   "ultima": "2026-11-16 22:35",
+   "horas": 3.0,
    "motivo": ""
   },
   {
@@ -1416,8 +1475,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 15,
-   "ultima": "2026-11-16 13:15",
-   "horas": 0.2,
+   "ultima": "2026-11-16 22:29",
+   "horas": 3.1,
    "motivo": ""
   },
   {
@@ -1427,8 +1486,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-13 16:00",
-   "horas": 69.5,
+   "ultima": "2026-11-16 16:00",
+   "horas": 9.6,
    "motivo": ""
   },
   {
@@ -1438,8 +1497,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 12:44",
-   "horas": 0.7,
+   "ultima": "2026-11-16 15:47",
+   "horas": 9.8,
    "motivo": ""
   },
   {
@@ -1450,7 +1509,7 @@
    "estado": "sana",
    "n": 6,
    "ultima": "2026-11-16 11:27",
-   "horas": 2.0,
+   "horas": 14.1,
    "motivo": ""
   },
   {
@@ -1460,8 +1519,8 @@
    "tipo": "json",
    "estado": "sana",
    "n": 6,
-   "ultima": "2026-11-16 12:45",
-   "horas": 0.7,
+   "ultima": "2026-11-16 20:06",
+   "horas": 5.5,
    "motivo": ""
   },
   {
@@ -1471,8 +1530,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 02:01",
-   "horas": 11.4,
+   "ultima": "2026-11-16 14:30",
+   "horas": 11.1,
    "motivo": ""
   },
   {
@@ -1492,8 +1551,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 13:16",
-   "horas": 0.2,
+   "ultima": "2026-11-16 14:35",
+   "horas": 11.0,
    "motivo": ""
   },
   {
@@ -1503,8 +1562,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:02",
-   "horas": 1.4,
+   "ultima": "2026-11-16 18:35",
+   "horas": 7.0,
    "motivo": ""
   },
   {
@@ -1514,8 +1573,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 12:13",
-   "horas": 1.2,
+   "ultima": "2026-11-16 14:28",
+   "horas": 11.1,
    "motivo": ""
   },
   {
@@ -1525,8 +1584,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 100,
-   "ultima": "2026-11-16 13:11",
-   "horas": 0.3,
+   "ultima": "2026-11-17 00:48",
+   "horas": 0.8,
    "motivo": ""
   },
   {
@@ -1536,8 +1595,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 25,
-   "ultima": "2026-11-15 23:59",
-   "horas": 13.5,
+   "ultima": "2026-11-17 00:30",
+   "horas": 1.1,
    "motivo": ""
   },
   {
@@ -1547,8 +1606,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 25,
-   "ultima": "2026-11-16 13:15",
-   "horas": 0.2,
+   "ultima": "2026-11-17 00:00",
+   "horas": 1.6,
    "motivo": ""
   },
   {
@@ -1558,8 +1617,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 11:20",
-   "horas": 2.1,
+   "ultima": "2026-11-16 16:44",
+   "horas": 8.9,
    "motivo": ""
   },
   {
@@ -1569,8 +1628,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 13:17",
-   "horas": 0.2,
+   "ultima": "2026-11-16 15:45",
+   "horas": 9.8,
    "motivo": ""
   },
   {
@@ -1580,8 +1639,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 100,
-   "ultima": "2026-11-16 13:00",
-   "horas": 0.5,
+   "ultima": "2026-11-17 01:30",
+   "horas": 0.1,
    "motivo": ""
   },
   {
@@ -1591,8 +1650,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 100,
-   "ultima": "2026-11-16 12:40",
-   "horas": 0.8,
+   "ultima": "2026-11-16 18:27",
+   "horas": 7.1,
    "motivo": ""
   },
   {
@@ -1602,19 +1661,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:46",
-   "horas": 0.7,
-   "motivo": ""
-  },
-  {
-   "seccion": "deportes",
-   "fuente": "RaceFans (RSS)",
-   "url": "https://www.racefans.net/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 20,
-   "ultima": "2026-11-16 13:10",
-   "horas": 0.3,
+   "ultima": "2026-11-16 23:21",
+   "horas": 2.2,
    "motivo": ""
   },
   {
@@ -1624,8 +1672,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 13:19",
-   "horas": 0.1,
+   "ultima": "2026-11-17 01:25",
+   "horas": 0.2,
    "motivo": ""
   },
   {
@@ -1635,8 +1683,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 11:53",
-   "horas": 1.6,
+   "ultima": "2026-11-16 19:49",
+   "horas": 5.8,
    "motivo": ""
   },
   {
@@ -1646,8 +1694,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 40,
-   "ultima": "2026-11-16 08:56",
-   "horas": 4.5,
+   "ultima": "2026-11-16 18:44",
+   "horas": 6.9,
    "motivo": ""
   },
   {
@@ -1657,8 +1705,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 25,
-   "ultima": "2026-11-15 14:41",
-   "horas": 22.8,
+   "ultima": "2026-11-16 17:57",
+   "horas": 7.6,
    "motivo": ""
   },
   {
@@ -1668,8 +1716,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 12:00",
-   "horas": 1.5,
+   "ultima": "2026-11-16 19:30",
+   "horas": 6.1,
    "motivo": ""
   },
   {
@@ -1679,19 +1727,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 12:00",
-   "horas": 1.5,
-   "motivo": ""
-  },
-  {
-   "seccion": "deportes",
-   "fuente": "SwimSwam (RSS)",
-   "url": "https://swimswam.com/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-16 12:46",
-   "horas": 0.7,
+   "ultima": "2026-11-17 01:06",
+   "horas": 0.5,
    "motivo": ""
   },
   {
@@ -1701,8 +1738,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 21,
-   "ultima": "2026-11-16 13:19",
-   "horas": 0.1,
+   "ultima": "2026-11-17 03:45",
+   "horas": -2.2,
    "motivo": ""
   },
   {
@@ -1713,7 +1750,7 @@
    "estado": "sana",
    "n": 20,
    "ultima": "2026-11-15 21:01",
-   "horas": 16.4,
+   "horas": 28.6,
    "motivo": ""
   },
   {
@@ -1723,8 +1760,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 57,
-   "ultima": "2026-11-16 13:14",
-   "horas": 0.2,
+   "ultima": "2026-11-16 20:32",
+   "horas": 5.1,
    "motivo": ""
   },
   {
@@ -1734,8 +1771,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 11:55",
-   "horas": 1.5,
+   "ultima": "2026-11-16 19:46",
+   "horas": 5.8,
    "motivo": ""
   },
   {
@@ -1745,20 +1782,9 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 25,
-   "ultima": "2026-11-16 12:30",
-   "horas": 1.0,
+   "ultima": "2026-11-16 19:04",
+   "horas": 6.5,
    "motivo": ""
-  },
-  {
-   "seccion": "deportes",
-   "fuente": "ANFP",
-   "url": "https://www.anfp.cl/feed/",
-   "tipo": "rss",
-   "estado": "vieja",
-   "n": 10,
-   "ultima": "2026-11-06 11:05",
-   "horas": 242.4,
-   "motivo": "última nota hace 10.1 días (tope 4.0)"
   },
   {
    "seccion": "deportes",
@@ -1768,19 +1794,8 @@
    "estado": "vieja",
    "n": 21,
    "ultima": "2026-11-12 09:42",
-   "horas": 99.8,
-   "motivo": "última nota hace 4.2 días (tope 4.0)"
-  },
-  {
-   "seccion": "deportes",
-   "fuente": "CBS Sports NHL (RSS)",
-   "url": "https://www.cbssports.com/rss/headlines/nhl/",
-   "tipo": "rss",
-   "estado": "vieja",
-   "n": 36,
-   "ultima": "2026-11-12 08:33",
-   "horas": 100.9,
-   "motivo": "última nota hace 4.2 días (tope 4.0)"
+   "horas": 111.9,
+   "motivo": "última nota hace 4.7 días (tope 4.0)"
   },
   {
    "seccion": "deportes",
@@ -1790,8 +1805,8 @@
    "estado": "vieja",
    "n": 6,
    "ultima": "2026-10-14 03:49",
-   "horas": 801.6,
-   "motivo": "última nota hace 33.4 días (tope 4.0)"
+   "horas": 813.8,
+   "motivo": "última nota hace 33.9 días (tope 4.0)"
   },
   {
    "seccion": "deportes",
@@ -1801,8 +1816,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-01-16 11:59",
-   "horas": 7297.5,
-   "motivo": "última nota hace 304.1 días (tope 4.0)"
+   "horas": 7309.6,
+   "motivo": "última nota hace 304.6 días (tope 4.0)"
   },
   {
    "seccion": "deportes",
@@ -1812,8 +1827,8 @@
    "estado": "vieja",
    "n": 48,
    "ultima": "2026-11-05 12:56",
-   "horas": 264.5,
-   "motivo": "última nota hace 11.0 días (tope 4.0)"
+   "horas": 276.7,
+   "motivo": "última nota hace 11.5 días (tope 4.0)"
   },
   {
    "seccion": "deportes",
@@ -1823,8 +1838,8 @@
    "estado": "vieja",
    "n": 50,
    "ultima": "2026-11-05 10:05",
-   "horas": 267.4,
-   "motivo": "última nota hace 11.1 días (tope 4.0)"
+   "horas": 279.5,
+   "motivo": "última nota hace 11.6 días (tope 4.0)"
   },
   {
    "seccion": "deportes",
@@ -1834,8 +1849,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-11-11 19:37",
-   "horas": 113.8,
-   "motivo": "última nota hace 4.7 días (tope 4.0)"
+   "horas": 126.0,
+   "motivo": "última nota hace 5.2 días (tope 4.0)"
   },
   {
    "seccion": "economia/chile",
@@ -1927,6 +1942,22 @@
   },
   {
    "seccion": "economia/chile",
+   "fuente": "El Mostrador Mercados (RSS)",
+   "url": "https://www.elmostrador.cl/categoria/mercados/feed/",
+   "tipo": "rss",
+   "estado": "invalida",
+   "motivo": "no es un RSS/Atom válido"
+  },
+  {
+   "seccion": "economia/chile",
+   "fuente": "El Mostrador · Economía (RSS)",
+   "url": "https://www.elmostrador.cl/claves/economia/feed/",
+   "tipo": "rss",
+   "estado": "invalida",
+   "motivo": "no es un RSS/Atom válido"
+  },
+  {
+   "seccion": "economia/chile",
    "fuente": "INE Chile Noticias (RSS)",
    "url": "https://www.ine.gob.cl/rss/noticias",
    "tipo": "rss",
@@ -1964,8 +1995,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 100,
-   "ultima": "2026-11-16 11:07",
-   "horas": 2.3,
+   "ultima": "2026-11-16 19:37",
+   "horas": 6.0,
    "motivo": ""
   },
   {
@@ -1975,8 +2006,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 100,
-   "ultima": "2026-11-16 13:10",
-   "horas": 0.3,
+   "ultima": "2026-11-17 01:06",
+   "horas": 0.5,
    "motivo": ""
   },
   {
@@ -1986,8 +2017,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 11:26",
-   "horas": 2.0,
+   "ultima": "2026-11-16 15:45",
+   "horas": 9.8,
    "motivo": ""
   },
   {
@@ -2006,8 +2037,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-11-12 10:47",
-   "horas": 98.7,
-   "motivo": "última nota hace 4.1 días (tope 4.0)"
+   "horas": 110.8,
+   "motivo": "última nota hace 4.6 días (tope 4.0)"
   },
   {
    "seccion": "economia/chile",
@@ -2017,8 +2048,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-10-27 10:48",
-   "horas": 482.6,
-   "motivo": "última nota hace 20.1 días (tope 4.0)"
+   "horas": 494.8,
+   "motivo": "última nota hace 20.6 días (tope 4.0)"
   },
   {
    "seccion": "economia/mundo",
@@ -2038,6 +2069,14 @@
   },
   {
    "seccion": "economia/mundo",
+   "fuente": "GDELT · mundo: economía (español)",
+   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28%22Reserva+Federal%22+OR+aranceles+OR+%22Wall+Street%22+OR+petr%C3%B3leo+OR+%22Banco+Mundial%22+OR+FMI%29&timespan=1d",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 429"
+  },
+  {
+   "seccion": "economia/mundo",
    "fuente": "Yahoo Finance (RSS, inglés)",
    "url": "https://finance.yahoo.com/news/rssindex",
    "tipo": "rss",
@@ -2046,19 +2085,19 @@
   },
   {
    "seccion": "economia/mundo",
-   "fuente": "BID Blogs (RSS)",
-   "url": "https://blogs.iadb.org/feed/",
+   "fuente": "Reserva Federal Comunicados (RSS, inglés)",
+   "url": "https://www.federalreserve.gov/feeds/press_all.xml",
    "tipo": "rss",
    "estado": "invalida",
    "motivo": "no es un RSS/Atom válido"
   },
   {
    "seccion": "economia/mundo",
-   "fuente": "Reserva Federal Comunicados (RSS, inglés)",
-   "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+   "fuente": "BID Blogs (RSS)",
+   "url": "https://blogs.iadb.org/feed/",
    "tipo": "rss",
-   "estado": "invalida",
-   "motivo": "no es un RSS/Atom válido"
+   "estado": "robots",
+   "motivo": "robots.txt no respondió"
   },
   {
    "seccion": "economia/mundo",
@@ -2076,7 +2115,7 @@
    "estado": "sana",
    "n": 15,
    "ultima": "2026-11-16 10:00",
-   "horas": 3.4,
+   "horas": 15.6,
    "motivo": ""
   },
   {
@@ -2086,8 +2125,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-15 23:56",
-   "horas": 13.5,
+   "ultima": "2026-11-16 21:42",
+   "horas": 3.9,
    "motivo": ""
   },
   {
@@ -2097,8 +2136,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-14 11:02",
-   "horas": 50.4,
+   "ultima": "2026-11-16 16:06",
+   "horas": 9.5,
    "motivo": ""
   },
   {
@@ -2108,8 +2147,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 13:19",
-   "horas": 0.1,
+   "ultima": "2026-11-16 21:42",
+   "horas": 3.9,
    "motivo": ""
   },
   {
@@ -2119,8 +2158,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 13:20",
-   "horas": 0.1,
+   "ultima": "2026-11-16 21:42",
+   "horas": 3.9,
    "motivo": ""
   },
   {
@@ -2130,8 +2169,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 85,
-   "ultima": "2026-11-16 13:08",
-   "horas": 0.3,
+   "ultima": "2026-11-17 01:30",
+   "horas": 0.1,
    "motivo": ""
   },
   {
@@ -2141,8 +2180,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 49,
-   "ultima": "2026-11-16 12:31",
-   "horas": 0.9,
+   "ultima": "2026-11-16 20:46",
+   "horas": 4.8,
    "motivo": ""
   },
   {
@@ -2152,8 +2191,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 52,
-   "ultima": "2026-11-16 12:55",
-   "horas": 0.5,
+   "ultima": "2026-11-16 20:50",
+   "horas": 4.8,
    "motivo": ""
   },
   {
@@ -2163,8 +2202,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 13:20",
-   "horas": 0.1,
+   "ultima": "2026-11-16 23:30",
+   "horas": 2.1,
    "motivo": ""
   },
   {
@@ -2174,8 +2213,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 15,
-   "ultima": "2026-11-16 13:00",
-   "horas": 0.4,
+   "ultima": "2026-11-16 23:00",
+   "horas": 2.6,
    "motivo": ""
   },
   {
@@ -2185,8 +2224,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 12:43",
-   "horas": 0.7,
+   "ultima": "2026-11-16 19:01",
+   "horas": 6.6,
    "motivo": ""
   },
   {
@@ -2196,17 +2235,9 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 13:06",
-   "horas": 0.3,
+   "ultima": "2026-11-16 19:23",
+   "horas": 6.2,
    "motivo": ""
-  },
-  {
-   "seccion": "economia/mundo",
-   "fuente": "GDELT · mundo: economía (español)",
-   "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcelang%3Aspanish+%28%22Reserva+Federal%22+OR+aranceles+OR+%22Wall+Street%22+OR+petr%C3%B3leo+OR+%22Banco+Mundial%22+OR+FMI%29&timespan=1d",
-   "tipo": "rss",
-   "estado": "vacia",
-   "motivo": "sin notas"
   },
   {
    "seccion": "economia/mundo",
@@ -2216,8 +2247,8 @@
    "estado": "vieja",
    "n": 72,
    "ultima": "2026-11-05 00:51",
-   "horas": 276.6,
-   "motivo": "última nota hace 11.5 días (tope 4.0)"
+   "horas": 288.7,
+   "motivo": "última nota hace 12.0 días (tope 4.0)"
   },
   {
    "seccion": "economia/mundo",
@@ -2227,8 +2258,8 @@
    "estado": "vieja",
    "n": 30,
    "ultima": "2025-07-03 09:36",
-   "horas": 12027.8,
-   "motivo": "última nota hace 501.2 días (tope 4.0)"
+   "horas": 12040.0,
+   "motivo": "última nota hace 501.7 días (tope 4.0)"
   },
   {
    "seccion": "emprendimiento",
@@ -2320,13 +2351,21 @@
   },
   {
    "seccion": "emprendimiento",
+   "fuente": "Sercotec (RSS)",
+   "url": "https://www.sercotec.cl/feed/",
+   "tipo": "rss",
+   "estado": "robots",
+   "motivo": "robots.txt no respondió"
+  },
+  {
+   "seccion": "emprendimiento",
    "fuente": "CNC Camara Nacional de Comercio (RSS)",
    "url": "https://www.cnc.cl/feed/",
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
    "ultima": "2026-11-16 11:33",
-   "horas": 1.9,
+   "horas": 14.0,
    "motivo": ""
   },
   {
@@ -2337,7 +2376,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 09:00",
-   "horas": 4.4,
+   "horas": 16.6,
    "motivo": ""
   },
   {
@@ -2347,19 +2386,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 9,
-   "ultima": "2026-11-13 09:41",
-   "horas": 75.8,
-   "motivo": ""
-  },
-  {
-   "seccion": "emprendimiento",
-   "fuente": "Sercotec (RSS)",
-   "url": "https://www.sercotec.cl/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-12 16:41",
-   "horas": 92.8,
+   "ultima": "2026-11-16 15:04",
+   "horas": 10.5,
    "motivo": ""
   },
   {
@@ -2481,8 +2509,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 13:26",
-   "horas": 0.0,
+   "ultima": "2026-11-17 00:05",
+   "horas": 1.5,
    "motivo": ""
   },
   {
@@ -2492,7 +2520,7 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 12,
-   "ultima": "2026-11-16 13:22",
+   "ultima": "2026-11-17 01:30",
    "horas": 0.1,
    "motivo": ""
   },
@@ -2502,9 +2530,9 @@
    "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/cultura/portada",
    "tipo": "rss",
    "estado": "sana",
-   "n": 38,
-   "ultima": "2026-11-16 11:54",
-   "horas": 1.6,
+   "n": 35,
+   "ultima": "2026-11-17 01:30",
+   "horas": 0.1,
    "motivo": ""
   },
   {
@@ -2514,8 +2542,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 13:01",
-   "horas": 0.4,
+   "ultima": "2026-11-16 20:12",
+   "horas": 5.4,
    "motivo": ""
   },
   {
@@ -2525,8 +2553,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 12,
-   "ultima": "2026-11-16 12:06",
-   "horas": 1.4,
+   "ultima": "2026-11-16 21:00",
+   "horas": 4.6,
    "motivo": ""
   },
   {
@@ -2536,8 +2564,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:53",
-   "horas": 0.6,
+   "ultima": "2026-11-16 17:22",
+   "horas": 8.2,
    "motivo": ""
   },
   {
@@ -2548,7 +2576,7 @@
    "estado": "sana",
    "n": 1,
    "ultima": "2026-11-16 06:00",
-   "horas": 7.5,
+   "horas": 19.6,
    "motivo": ""
   },
   {
@@ -2558,8 +2586,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 03:34",
-   "horas": 9.9,
+   "ultima": "2026-11-16 17:01",
+   "horas": 8.6,
    "motivo": ""
   },
   {
@@ -2569,8 +2597,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 08:30",
-   "horas": 5.0,
+   "ultima": "2026-11-16 16:46",
+   "horas": 8.8,
    "motivo": ""
   },
   {
@@ -2580,8 +2608,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 10:54",
-   "horas": 2.6,
+   "ultima": "2026-11-16 19:58",
+   "horas": 5.6,
    "motivo": ""
   },
   {
@@ -2591,8 +2619,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:45",
-   "horas": 0.7,
+   "ultima": "2026-11-16 18:19",
+   "horas": 7.3,
    "motivo": ""
   },
   {
@@ -2602,8 +2630,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 13:19",
-   "horas": 0.1,
+   "ultima": "2026-11-16 23:18",
+   "horas": 2.3,
    "motivo": ""
   },
   {
@@ -2613,8 +2641,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 35,
-   "ultima": "2026-11-15 21:00",
-   "horas": 16.5,
+   "ultima": "2026-11-16 20:09",
+   "horas": 5.4,
    "motivo": ""
   },
   {
@@ -2624,8 +2652,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 13:00",
-   "horas": 0.5,
+   "ultima": "2026-11-16 18:00",
+   "horas": 7.6,
    "motivo": ""
   },
   {
@@ -2636,7 +2664,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-13 16:51",
-   "horas": 68.6,
+   "horas": 80.7,
    "motivo": ""
   },
   {
@@ -2647,7 +2675,7 @@
    "estado": "sana",
    "n": 28,
    "ultima": "2026-11-16 08:00",
-   "horas": 5.5,
+   "horas": 17.6,
    "motivo": ""
   },
   {
@@ -2657,8 +2685,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 13:00",
-   "horas": 0.5,
+   "ultima": "2026-11-17 01:27",
+   "horas": 0.1,
    "motivo": ""
   },
   {
@@ -2668,9 +2696,17 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 13:26",
-   "horas": 0.0,
+   "ultima": "2026-11-17 01:07",
+   "horas": 0.5,
    "motivo": ""
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Aqua.cl (RSS)",
+   "url": "https://www.aqua.cl/feed/",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 403"
   },
   {
    "seccion": "industrias",
@@ -2687,6 +2723,14 @@
    "tipo": "rss",
    "estado": "http",
    "motivo": "HTTP 404"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Consejo Minero (RSS)",
+   "url": "https://consejominero.cl/feed/",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 403"
   },
   {
    "seccion": "industrias",
@@ -2719,6 +2763,14 @@
    "tipo": "rss",
    "estado": "http",
    "motivo": "HTTP 429"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "H2 Chile (RSS)",
+   "url": "https://h2chile.cl/feed/",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 403"
   },
   {
    "seccion": "industrias",
@@ -2766,15 +2818,15 @@
    "url": "https://www.redagricola.com/cl/feed/",
    "tipo": "rss",
    "estado": "http",
-   "motivo": "HTTP 404"
+   "motivo": "HTTP 403"
   },
   {
    "seccion": "industrias",
-   "fuente": "Salmonexpert (RSS)",
-   "url": "https://www.salmonexpert.cl/rss",
+   "fuente": "Splash247 (RSS)",
+   "url": "https://splash247.com/feed/",
    "tipo": "rss",
    "estado": "http",
-   "motivo": "HTTP 404"
+   "motivo": "HTTP 403"
   },
   {
    "seccion": "industrias",
@@ -2794,6 +2846,14 @@
   },
   {
    "seccion": "industrias",
+   "fuente": "Salmonexpert (RSS)",
+   "url": "https://www.salmonexpert.cl/rss",
+   "tipo": "rss",
+   "estado": "invalida",
+   "motivo": "no es un RSS/Atom válido"
+  },
+  {
+   "seccion": "industrias",
    "fuente": "Vinos de Chile (RSS)",
    "url": "https://www.vinosdechile.cl/feed/",
    "tipo": "rss",
@@ -2804,6 +2864,14 @@
    "seccion": "industrias",
    "fuente": "E-Commerce News Chile (RSS)",
    "url": "https://www.ecommerce-news.cl/feed/",
+   "tipo": "rss",
+   "estado": "robots",
+   "motivo": "robots.txt no respondió"
+  },
+  {
+   "seccion": "industrias",
+   "fuente": "Mundo Acuicola (RSS)",
+   "url": "https://www.mundoacuicola.cl/new/feed/",
    "tipo": "rss",
    "estado": "robots",
    "motivo": "robots.txt no respondió"
@@ -2842,24 +2910,13 @@
   },
   {
    "seccion": "industrias",
-   "fuente": "Aqua.cl (RSS)",
-   "url": "https://www.aqua.cl/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-16 12:00",
-   "horas": 1.4,
-   "motivo": ""
-  },
-  {
-   "seccion": "industrias",
    "fuente": "CONAF (RSS)",
    "url": "https://www.conaf.cl/feed/",
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 09:53",
-   "horas": 3.6,
+   "ultima": "2026-11-16 17:46",
+   "horas": 7.8,
    "motivo": ""
   },
   {
@@ -2870,18 +2927,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 12:07",
-   "horas": 1.3,
-   "motivo": ""
-  },
-  {
-   "seccion": "industrias",
-   "fuente": "Cadem (RSS)",
-   "url": "https://cadem.cl/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 8,
-   "ultima": "2026-11-09 18:16",
-   "horas": 163.2,
+   "horas": 13.5,
    "motivo": ""
   },
   {
@@ -2891,8 +2937,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-12 10:12",
-   "horas": 99.2,
+   "ultima": "2026-11-16 19:14",
+   "horas": 6.4,
    "motivo": ""
   },
   {
@@ -2903,7 +2949,7 @@
    "estado": "sana",
    "n": 9,
    "ultima": "2026-11-10 12:11",
-   "horas": 145.3,
+   "horas": 157.4,
    "motivo": ""
   },
   {
@@ -2914,18 +2960,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 09:53",
-   "horas": 3.6,
-   "motivo": ""
-  },
-  {
-   "seccion": "industrias",
-   "fuente": "Mundo Acuicola (RSS)",
-   "url": "https://www.mundoacuicola.cl/new/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-16 12:16",
-   "horas": 1.2,
+   "horas": 15.7,
    "motivo": ""
   },
   {
@@ -2935,8 +2970,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 13:26",
-   "horas": 0.0,
+   "ultima": "2026-11-16 18:40",
+   "horas": 6.9,
    "motivo": ""
   },
   {
@@ -2947,7 +2982,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 07:11",
-   "horas": 6.3,
+   "horas": 18.4,
    "motivo": ""
   },
   {
@@ -2957,8 +2992,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 13:05",
-   "horas": 0.4,
+   "ultima": "2026-11-16 13:40",
+   "horas": 11.9,
    "motivo": ""
   },
   {
@@ -2968,19 +3003,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 15,
-   "ultima": "2026-11-16 13:18",
-   "horas": 0.1,
-   "motivo": ""
-  },
-  {
-   "seccion": "industrias",
-   "fuente": "SONAMI (RSS)",
-   "url": "https://sonami.cl/v2/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-09 16:04",
-   "horas": 165.4,
+   "ultima": "2026-11-17 01:00",
+   "horas": 0.6,
    "motivo": ""
   },
   {
@@ -2991,7 +3015,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-13 15:25",
-   "horas": 70.0,
+   "horas": 82.2,
    "motivo": ""
   },
   {
@@ -3002,18 +3026,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 11:51",
-   "horas": 1.6,
-   "motivo": ""
-  },
-  {
-   "seccion": "industrias",
-   "fuente": "Splash247 (RSS)",
-   "url": "https://splash247.com/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-16 09:54",
-   "horas": 3.5,
+   "horas": 13.7,
    "motivo": ""
   },
   {
@@ -3023,8 +3036,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 10:10",
-   "horas": 3.3,
+   "ultima": "2026-11-16 14:25",
+   "horas": 11.2,
    "motivo": ""
   },
   {
@@ -3037,14 +3050,14 @@
   },
   {
    "seccion": "industrias",
-   "fuente": "Consejo Minero (RSS)",
-   "url": "https://consejominero.cl/feed/",
+   "fuente": "Cadem (RSS)",
+   "url": "https://cadem.cl/feed/",
    "tipo": "rss",
    "estado": "vieja",
-   "n": 10,
-   "ultima": "2026-11-09 11:39",
-   "horas": 169.8,
-   "motivo": "última nota hace 7.1 días (tope 7.0)"
+   "n": 8,
+   "ultima": "2026-11-09 18:16",
+   "horas": 175.3,
+   "motivo": "última nota hace 7.3 días (tope 7.0)"
   },
   {
    "seccion": "industrias",
@@ -3054,8 +3067,8 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-11-06 10:27",
-   "horas": 243.0,
-   "motivo": "última nota hace 10.1 días (tope 7.0)"
+   "horas": 255.1,
+   "motivo": "última nota hace 10.6 días (tope 7.0)"
   },
   {
    "seccion": "industrias",
@@ -3065,24 +3078,32 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-10-21 11:26",
-   "horas": 626.0,
-   "motivo": "última nota hace 26.1 días (tope 7.0)"
+   "horas": 638.2,
+   "motivo": "última nota hace 26.6 días (tope 7.0)"
   },
   {
    "seccion": "industrias",
-   "fuente": "H2 Chile (RSS)",
-   "url": "https://h2chile.cl/feed/",
+   "fuente": "SONAMI (RSS)",
+   "url": "https://sonami.cl/v2/feed/",
    "tipo": "rss",
    "estado": "vieja",
    "n": 10,
-   "ultima": "2026-08-27 16:50",
-   "horas": 1940.6,
-   "motivo": "última nota hace 80.9 días (tope 7.0)"
+   "ultima": "2026-11-09 16:04",
+   "horas": 177.5,
+   "motivo": "última nota hace 7.4 días (tope 7.0)"
   },
   {
    "seccion": "inmobiliario",
    "fuente": "CChC (RSS)",
    "url": "https://cchc.cl/feed/",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 404"
+  },
+  {
+   "seccion": "inmobiliario",
+   "fuente": "Forbes Chile · Viviendas (RSS)",
+   "url": "https://forbes.cl/tag/viviendas/feed/",
    "tipo": "rss",
    "estado": "http",
    "motivo": "HTTP 404"
@@ -3161,6 +3182,14 @@
   },
   {
    "seccion": "inmobiliario",
+   "fuente": "Radio Universidad de Chile · Vivienda (RSS)",
+   "url": "https://radio.uchile.cl/tag/viviendas/feed/",
+   "tipo": "rss",
+   "estado": "robots",
+   "motivo": "robots.txt no lo permite"
+  },
+  {
+   "seccion": "inmobiliario",
    "fuente": "Revista BiT CChC (RSS)",
    "url": "https://www.revistabit.cl/feed/",
    "tipo": "rss",
@@ -3177,13 +3206,21 @@
   },
   {
    "seccion": "perspectivas",
+   "fuente": "Revista Electricidad · proyectos de energía (RSS)",
+   "url": "https://www.revistaei.cl/feed/",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 403"
+  },
+  {
+   "seccion": "perspectivas",
    "fuente": "Consejo de Políticas de Infraestructura (RSS)",
    "url": "https://www.infraestructurapublica.cl/feed/",
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 10:26",
-   "horas": 3.0,
+   "horas": 15.2,
    "motivo": ""
   },
   {
@@ -3193,8 +3230,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:25",
-   "horas": 1.1,
+   "ultima": "2026-11-16 17:02",
+   "horas": 8.6,
    "motivo": ""
   },
   {
@@ -3204,20 +3241,28 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 09:55",
-   "horas": 3.6,
+   "ultima": "2026-11-16 19:35",
+   "horas": 6.0,
    "motivo": ""
   },
   {
    "seccion": "perspectivas",
-   "fuente": "Revista Electricidad · proyectos de energía (RSS)",
-   "url": "https://www.revistaei.cl/feed/",
+   "fuente": "Portal Minero · Noticias de proyectos (RSS)",
+   "url": "https://www.portalminero.com/wp/category/noticias/feed/",
    "tipo": "rss",
    "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-16 13:10",
-   "horas": 0.3,
+   "n": 20,
+   "ultima": "2026-11-15 21:00",
+   "horas": 28.6,
    "motivo": ""
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Atacama Noticias (RSS)",
+   "url": "https://www.atacamanoticias.cl/feed/",
+   "tipo": "rss",
+   "estado": "http",
+   "motivo": "HTTP 403"
   },
   {
    "seccion": "politica/chile",
@@ -3530,30 +3575,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 100,
-   "ultima": "2026-11-16 13:18",
-   "horas": 0.1,
-   "motivo": ""
-  },
-  {
-   "seccion": "politica/chile",
-   "fuente": "Atacama Noticias (RSS)",
-   "url": "https://www.atacamanoticias.cl/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-16 13:05",
-   "horas": 0.4,
-   "motivo": ""
-  },
-  {
-   "seccion": "politica/chile",
-   "fuente": "Diario Aysen (RSS)",
-   "url": "https://www.diarioaysen.cl/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 12,
-   "ultima": "2026-11-12 18:09",
-   "horas": 91.3,
+   "ultima": "2026-11-16 23:51",
+   "horas": 1.7,
    "motivo": ""
   },
   {
@@ -3563,8 +3586,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 13:25",
-   "horas": 0.0,
+   "ultima": "2026-11-16 21:10",
+   "horas": 4.4,
    "motivo": ""
   },
   {
@@ -3574,8 +3597,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:44",
-   "horas": 0.7,
+   "ultima": "2026-11-16 22:57",
+   "horas": 2.6,
    "motivo": ""
   },
   {
@@ -3585,8 +3608,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:57",
-   "horas": 0.5,
+   "ultima": "2026-11-16 22:10",
+   "horas": 3.4,
    "motivo": ""
   },
   {
@@ -3596,8 +3619,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 13:15",
-   "horas": 0.2,
+   "ultima": "2026-11-16 18:00",
+   "horas": 7.6,
    "motivo": ""
   },
   {
@@ -3607,8 +3630,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 100,
-   "ultima": "2026-11-16 13:09",
-   "horas": 0.3,
+   "ultima": "2026-11-16 20:41",
+   "horas": 4.9,
    "motivo": ""
   },
   {
@@ -3618,8 +3641,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:20",
-   "horas": 1.1,
+   "ultima": "2026-11-16 21:57",
+   "horas": 3.6,
    "motivo": ""
   },
   {
@@ -3630,7 +3653,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 09:15",
-   "horas": 4.2,
+   "horas": 16.3,
    "motivo": ""
   },
   {
@@ -3639,9 +3662,9 @@
    "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/opinion/?outputType=xml",
    "tipo": "rss",
    "estado": "sana",
-   "n": 14,
-   "ultima": "2026-11-16 12:21",
-   "horas": 1.1,
+   "n": 9,
+   "ultima": "2026-11-16 19:02",
+   "horas": 6.5,
    "motivo": ""
   },
   {
@@ -3651,8 +3674,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:43",
-   "horas": 0.7,
+   "ultima": "2026-11-16 17:59",
+   "horas": 7.6,
    "motivo": ""
   },
   {
@@ -3661,9 +3684,9 @@
    "url": "https://www.publimetro.cl/arc/outboundfeeds/rss/?outputType=xml",
    "tipo": "rss",
    "estado": "sana",
-   "n": 5,
-   "ultima": "2026-11-16 12:35",
-   "horas": 0.9,
+   "n": 10,
+   "ultima": "2026-11-17 00:52",
+   "horas": 0.7,
    "motivo": ""
   },
   {
@@ -3674,7 +3697,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 13:16",
-   "horas": 0.2,
+   "horas": 12.3,
    "motivo": ""
   },
   {
@@ -3685,7 +3708,7 @@
    "estado": "sana",
    "n": 5,
    "ultima": "2026-11-13 12:22",
-   "horas": 73.1,
+   "horas": 85.2,
    "motivo": ""
   },
   {
@@ -3703,6 +3726,17 @@
    "tipo": "rss",
    "estado": "vacia",
    "motivo": "sin notas"
+  },
+  {
+   "seccion": "politica/chile",
+   "fuente": "Diario Aysen (RSS)",
+   "url": "https://www.diarioaysen.cl/feed/",
+   "tipo": "rss",
+   "estado": "vieja",
+   "n": 12,
+   "ultima": "2026-11-12 18:09",
+   "horas": 103.4,
+   "motivo": "última nota hace 4.3 días (tope 4.0)"
   },
   {
    "seccion": "politica/mundo",
@@ -3743,8 +3777,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 25,
-   "ultima": "2026-11-16 12:39",
-   "horas": 0.8,
+   "ultima": "2026-11-17 01:24",
+   "horas": 0.2,
    "motivo": ""
   },
   {
@@ -3754,8 +3788,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 17,
-   "ultima": "2026-11-16 04:19",
-   "horas": 9.1,
+   "ultima": "2026-11-16 22:26",
+   "horas": 3.2,
    "motivo": ""
   },
   {
@@ -3765,8 +3799,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 24,
-   "ultima": "2026-11-16 12:45",
-   "horas": 0.7,
+   "ultima": "2026-11-17 00:07",
+   "horas": 1.5,
    "motivo": ""
   },
   {
@@ -3776,8 +3810,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 13:03",
-   "horas": 0.4,
+   "ultima": "2026-11-16 20:20",
+   "horas": 5.3,
    "motivo": ""
   },
   {
@@ -3788,7 +3822,7 @@
    "estado": "sana",
    "n": 17,
    "ultima": "2026-11-16 09:42",
-   "horas": 3.7,
+   "horas": 15.9,
    "motivo": ""
   },
   {
@@ -3798,8 +3832,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 12:45",
-   "horas": 0.7,
+   "ultima": "2026-11-17 01:22",
+   "horas": 0.2,
    "motivo": ""
   },
   {
@@ -3809,8 +3843,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 09:08",
-   "horas": 4.3,
+   "ultima": "2026-11-16 20:49",
+   "horas": 4.8,
    "motivo": ""
   },
   {
@@ -3820,8 +3854,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 09:08",
-   "horas": 4.3,
+   "ultima": "2026-11-16 19:06",
+   "horas": 6.5,
    "motivo": ""
   },
   {
@@ -3831,8 +3865,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 10:22",
-   "horas": 3.1,
+   "ultima": "2026-11-16 18:08",
+   "horas": 7.5,
    "motivo": ""
   },
   {
@@ -3842,8 +3876,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 11:56",
-   "horas": 1.5,
+   "ultima": "2026-11-16 19:14",
+   "horas": 6.4,
    "motivo": ""
   },
   {
@@ -3853,8 +3887,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 13:19",
-   "horas": 0.1,
+   "ultima": "2026-11-16 22:09",
+   "horas": 3.4,
    "motivo": ""
   },
   {
@@ -3863,9 +3897,9 @@
    "url": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
    "tipo": "rss",
    "estado": "sana",
-   "n": 58,
-   "ultima": "2026-11-16 13:19",
-   "horas": 0.1,
+   "n": 57,
+   "ultima": "2026-11-16 22:09",
+   "horas": 3.4,
    "motivo": ""
   },
   {
@@ -3875,8 +3909,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 13:20",
-   "horas": 0.1,
+   "ultima": "2026-11-17 00:48",
+   "horas": 0.8,
    "motivo": ""
   },
   {
@@ -3886,8 +3920,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:43",
-   "horas": 0.7,
+   "ultima": "2026-11-17 01:30",
+   "horas": 0.1,
    "motivo": ""
   },
   {
@@ -3897,7 +3931,7 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 50,
-   "ultima": "2026-11-16 13:19",
+   "ultima": "2026-11-17 01:28",
    "horas": 0.1,
    "motivo": ""
   },
@@ -3908,8 +3942,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 9,
-   "ultima": "2026-11-16 12:25",
-   "horas": 1.0,
+   "ultima": "2026-11-16 13:20",
+   "horas": 12.3,
    "motivo": ""
   },
   {
@@ -3920,7 +3954,7 @@
    "estado": "sana",
    "n": 20,
    "ultima": "2026-11-16 10:00",
-   "horas": 3.4,
+   "horas": 15.6,
    "motivo": ""
   },
   {
@@ -3929,9 +3963,9 @@
    "url": "https://www.theguardian.com/world/europe-news/rss",
    "tipo": "rss",
    "estado": "sana",
-   "n": 21,
-   "ultima": "2026-11-16 13:11",
-   "horas": 0.3,
+   "n": 20,
+   "ultima": "2026-11-17 00:12",
+   "horas": 1.4,
    "motivo": ""
   },
   {
@@ -3941,8 +3975,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 45,
-   "ultima": "2026-11-16 13:11",
-   "horas": 0.3,
+   "ultima": "2026-11-17 01:05",
+   "horas": 0.5,
    "motivo": ""
   },
   {
@@ -3952,8 +3986,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 17,
-   "ultima": "2026-11-16 13:10",
-   "horas": 0.3,
+   "ultima": "2026-11-16 23:31",
+   "horas": 2.1,
    "motivo": ""
   },
   {
@@ -3963,8 +3997,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 12:57",
-   "horas": 0.5,
+   "ultima": "2026-11-17 00:30",
+   "horas": 1.1,
    "motivo": ""
   },
   {
@@ -3990,8 +4024,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 11:06",
-   "horas": 2.3,
+   "ultima": "2026-11-16 18:56",
+   "horas": 6.7,
    "motivo": ""
   },
   {
@@ -4001,8 +4035,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-13 20:17",
-   "horas": 65.2,
+   "ultima": "2026-11-16 17:37",
+   "horas": 8.0,
    "motivo": ""
   },
   {
@@ -4012,8 +4046,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-13 13:26",
-   "horas": 72.0,
+   "ultima": "2026-11-16 17:37",
+   "horas": 8.0,
    "motivo": ""
   },
   {
@@ -4023,8 +4057,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 13:15",
-   "horas": 0.2,
+   "ultima": "2026-11-16 22:30",
+   "horas": 3.1,
    "motivo": ""
   },
   {
@@ -4035,7 +4069,7 @@
    "estado": "sana",
    "n": 20,
    "ultima": "2026-11-16 11:00",
-   "horas": 2.4,
+   "horas": 14.6,
    "motivo": ""
   },
   {
@@ -4045,19 +4079,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 11:00",
-   "horas": 2.4,
-   "motivo": ""
-  },
-  {
-   "seccion": "tecnologia",
-   "fuente": "Google DeepMind (RSS, inglés)",
-   "url": "https://deepmind.google/blog/rss.xml",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 100,
-   "ultima": "2026-11-12 15:00",
-   "horas": 94.4,
+   "ultima": "2026-11-16 15:45",
+   "horas": 9.8,
    "motivo": ""
   },
   {
@@ -4068,7 +4091,7 @@
    "estado": "sana",
    "n": 100,
    "ultima": "2026-11-13 17:47",
-   "horas": 67.7,
+   "horas": 79.8,
    "motivo": ""
   },
   {
@@ -4078,8 +4101,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 30,
-   "ultima": "2026-11-16 12:24",
-   "horas": 1.0,
+   "ultima": "2026-11-16 23:17",
+   "horas": 2.3,
    "motivo": ""
   },
   {
@@ -4089,19 +4112,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 10:00",
-   "horas": 3.4,
-   "motivo": ""
-  },
-  {
-   "seccion": "tecnologia",
-   "fuente": "Microsoft Blog (RSS, inglés)",
-   "url": "https://blogs.microsoft.com/feed/",
-   "tipo": "rss",
-   "estado": "sana",
-   "n": 10,
-   "ultima": "2026-11-12 14:00",
-   "horas": 95.4,
+   "ultima": "2026-11-16 15:38",
+   "horas": 10.0,
    "motivo": ""
   },
   {
@@ -4110,9 +4122,9 @@
    "url": "https://openai.com/news/rss.xml",
    "tipo": "rss",
    "estado": "sana",
-   "n": 1393,
-   "ultima": "2026-11-16 06:00",
-   "horas": 7.4,
+   "n": 1398,
+   "ultima": "2026-11-16 14:00",
+   "horas": 11.6,
    "motivo": ""
   },
   {
@@ -4122,8 +4134,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 12:52",
-   "horas": 0.6,
+   "ultima": "2026-11-16 20:32",
+   "horas": 5.1,
    "motivo": ""
   },
   {
@@ -4133,8 +4145,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-14 14:45",
-   "horas": 46.7,
+   "ultima": "2026-11-16 20:32",
+   "horas": 5.1,
    "motivo": ""
   },
   {
@@ -4144,8 +4156,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 11:00",
-   "horas": 2.4,
+   "ultima": "2026-11-16 20:17",
+   "horas": 5.3,
    "motivo": ""
   },
   {
@@ -4155,8 +4167,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 10,
-   "ultima": "2026-11-16 12:19",
-   "horas": 1.1,
+   "ultima": "2026-11-16 20:17",
+   "horas": 5.3,
    "motivo": ""
   },
   {
@@ -4167,7 +4179,7 @@
    "estado": "sana",
    "n": 20,
    "ultima": "2026-11-16 13:00",
-   "horas": 0.4,
+   "horas": 12.6,
    "motivo": ""
   },
   {
@@ -4178,7 +4190,7 @@
    "estado": "sana",
    "n": 10,
    "ultima": "2026-11-16 13:12",
-   "horas": 0.2,
+   "horas": 12.4,
    "motivo": ""
   },
   {
@@ -4188,8 +4200,8 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-14 10:00",
-   "horas": 51.4,
+   "ultima": "2026-11-16 18:45",
+   "horas": 6.8,
    "motivo": ""
   },
   {
@@ -4199,9 +4211,20 @@
    "tipo": "rss",
    "estado": "sana",
    "n": 20,
-   "ultima": "2026-11-16 12:38",
-   "horas": 0.8,
+   "ultima": "2026-11-16 20:31",
+   "horas": 5.1,
    "motivo": ""
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Google DeepMind (RSS, inglés)",
+   "url": "https://deepmind.google/blog/rss.xml",
+   "tipo": "rss",
+   "estado": "vieja",
+   "n": 100,
+   "ultima": "2026-11-12 15:00",
+   "horas": 106.6,
+   "motivo": "última nota hace 4.4 días (tope 4.0)"
   },
   {
    "seccion": "tecnologia",
@@ -4211,8 +4234,19 @@
    "estado": "vieja",
    "n": 10,
    "ultima": "2026-10-19 06:00",
-   "horas": 679.4,
-   "motivo": "última nota hace 28.3 días (tope 4.0)"
+   "horas": 691.6,
+   "motivo": "última nota hace 28.8 días (tope 4.0)"
+  },
+  {
+   "seccion": "tecnologia",
+   "fuente": "Microsoft Blog (RSS, inglés)",
+   "url": "https://blogs.microsoft.com/feed/",
+   "tipo": "rss",
+   "estado": "vieja",
+   "n": 10,
+   "ultima": "2026-11-12 14:00",
+   "horas": 107.6,
+   "motivo": "última nota hace 4.5 días (tope 4.0)"
   }
  ]
 }
