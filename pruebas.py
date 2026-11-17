@@ -1732,6 +1732,9 @@ def materia_de_cada_votacion_desde_datos_abiertos():
         assert B.camara_materias(e4, cam4, {}) is None and cam4["camara_mes"][1]["descripcion"] == "Boletín N° 18885-05", cam4
         assert B.descripcion_votacion("1-1", "", v["90998"]) == "Boletín N° 1-1, admisibilidad de la indicación N° 5", \
             B.descripcion_votacion("1-1", "", v["90998"])   # la explicación del voto no es la materia
+        assert B.descripcion_votacion("1-1", "", {"votacion": "Admisibilidad", "articulo": "Articulado - Reclamación contra la declaración de "
+                                      "inadmisibilidad de las indicaciones N° 125.1 y 125.2"}) == ("Boletín N° 1-1, reclamación contra la "
+                                      "declaración de inadmisibilidad de las indicaciones N° 125.1 y 125.2")
     finally:
         B.pedir, B.time.sleep = viejos
 

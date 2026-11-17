@@ -411,7 +411,7 @@ def _autor_indicacion(a):
 def _materia_corta(a, partidas=None):
     """Qué se votó, en una frase completa y corta. Las indicaciones de la Ley de Presupuestos traen el texto entero de la glosa
     (hasta 2.600 letras): quedan como «indicación del diputado X en la Partida 16 (Ministerio de Salud)»."""
-    a = re.sub(r"^(Articulado|Aprobada)\s+-\s+En votaci[oó]n\s+", "", a)
+    a = re.sub(r"^(Articulado|Aprobada)\s+-\s+(En votaci[oó]n\s+)?", "", a)
     a = re.sub(r"\s*\((?:los|las|quienes) que votan[^)]*\)?", "", a).strip(" .")   # la explicación del voto no es la materia
     a = re.sub(r"^Partida\s+(\d+)\s+Indicaci[oó]n(es)?\s+([\d.,\sy]+?)\s+-\s+En votaci[oó]n\s+(la|el)\s+",
                lambda m: f"indicación{'es' if m.group(2) else ''} {m.group(3).strip()} de la Partida {m.group(1)}: {m.group(4)} ", a)
