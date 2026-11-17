@@ -1765,7 +1765,9 @@ def radar_de_conflictos_nuevos():
                  n("CrisisWatch: November 2026 Alerts and October Trends", "International Crisis Group (RSS, inglés)", "u12"),
                  n("Equatorial Guinea troops deployed to the border", "Reuters (RSS, inglés)", "u13"),
                  n("Papua New Guinea: tribal fighting kills 12", "ABC Australia (RSS, inglés)", "u14")] + \
-                [n(f"Al Shabaab fighters attack army base {i}", "Long War Journal (RSS, inglés)", f"s{i}") for i in range(6)]   # 6 de UN medio
+                [n(f"Al Shabaab fighters attack army base {i}", "Long War Journal (RSS, inglés)", f"s{i}") for i in range(6)] + \
+                [n(f"China and Japan: the chip war and the war of words {i}", m, f"c{i}") for i, m in enumerate(("NYT (RSS)", "BBC (RSS)",
+                 "SCMP (RSS)", "France 24 (RSS)", "El País (RSS)", "Infobae (RSS)"))]   # «guerra» figurada: no cuenta
         r = B.radar_conflictos(notas, {}, _dt.date(2026, 11, 17))
         c = {x["iso2"]: x for x in r["candidatos"]}
         assert c["MM"]["titulares_72h"] == 6 and c["MM"]["medios"] == 4 and c["MM"]["revisar"] is True, c.get("MM")
@@ -1775,7 +1777,7 @@ def radar_de_conflictos_nuevos():
         assert "GW" in c and "GN" not in c, c.keys()   # Guinea-Bisáu antes que Guinea
         assert "GQ" in c and "PG" in c and "ID" not in c, c.keys()   # «Guinea Ecuatorial» y «Papúa Nueva Guinea» enteros, no «Guinea» ni «Papúa»
         assert c["SO"]["titulares_72h"] == 6 and c["SO"]["medios"] == 1 and c["SO"]["revisar"] is False, c.get("SO")   # un solo medio no basta
-        assert "MX" not in c, c.keys()
+        assert "MX" not in c and "CN" not in c and "JP" not in c, c.keys()
         assert r["crisis_group"] and r["crisis_group"][0]["url"] == "u12", r["crisis_group"]
         assert r["historia"]["2026-11-17"]["MM"] == 6
         previo = {"historia": {f"2026-11-{d:02d}": {"MM": 6} for d in range(1, 17)}}   # Myanmar ya venía con 6 al día: no es nuevo

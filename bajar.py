@@ -1889,6 +1889,11 @@ RADAR_BELICO = re.compile(r"guerra|b[ée]lic|combates?\b|enfrentamientos armados
                           r"ceasefire|frontline|armed conflict|killed in (?:attack|strike|fighting)", re.I)
 
 
+RADAR_FIGURADO = re.compile(r"guerra (?:comercial|arancelaria|cultural|fr[íi]a|de (?:chips|precios|palabras|aranceles|divisas|talentos|"
+                            r"streaming|las consolas))|guerra contra el narco|(?:trade|price|chip|tariff|culture|currency|cold|streaming|"
+                            r"console) wars?|war of words|war on (?:drugs|crime|terror)|wars? for talent", re.I)   # «guerra» que no es guerra
+
+
 def radar_conflictos(notas, previo=None, hoy=None, ventana_h=72):
     """Titulares de guerra por país en las últimas `ventana_h` horas, sin los 4 conflictos conocidos.
     `revisar`: 5 o más titulares de 3 o más medios y el doble de su promedio de los 7 días anteriores (o sin historia)."""
@@ -1897,7 +1902,7 @@ def radar_conflictos(notas, previo=None, hoy=None, ventana_h=72):
     vistos, por = set(), {}
     crisis = []
     for n in notas or []:
-        t = f"{n.get('titulo', '')} {n.get('resumen', '')}"
+        t = RADAR_FIGURADO.sub(" ", f"{n.get('titulo', '')} {n.get('resumen', '')}")
         if not n.get("fecha") or n.get("url") in vistos:
             continue
         try:
