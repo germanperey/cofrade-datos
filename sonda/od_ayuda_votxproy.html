@@ -1,0 +1,477 @@
+
+
+<html>
+
+    <head><link rel="alternate" type="text/xml" href="/camaradiputados/WServices/WSLegislativo.asmx?disco" />
+
+    <style type="text/css">
+    
+		BODY { color: #000000; background-color: white; font-family: Verdana; margin-left: 0px; margin-top: 0px; }
+		#content { margin-left: 30px; font-size: .70em; padding-bottom: 2em; }
+		A:link { color: #336699; font-weight: bold; text-decoration: underline; }
+		A:visited { color: #6699cc; font-weight: bold; text-decoration: underline; }
+		A:active { color: #336699; font-weight: bold; text-decoration: underline; }
+		A:hover { color: cc3300; font-weight: bold; text-decoration: underline; }
+		P { color: #000000; margin-top: 0px; margin-bottom: 12px; font-family: Verdana; }
+		pre { background-color: #e5e5cc; padding: 5px; font-family: Courier New; font-size: x-small; margin-top: -5px; border: 1px #f0f0e0 solid; }
+		td { color: #000000; font-family: Verdana; font-size: .7em; }
+		h2 { font-size: 1.5em; font-weight: bold; margin-top: 25px; margin-bottom: 10px; border-top: 1px solid #003366; margin-left: -15px; color: #003366; }
+		h3 { font-size: 1.1em; color: #000000; margin-left: -15px; margin-top: 10px; margin-bottom: 10px; }
+		ul { margin-top: 10px; margin-left: 20px; }
+		ol { margin-top: 10px; margin-left: 20px; }
+		li { margin-top: 10px; color: #000000; }
+		font.value { color: darkblue; font: bold; }
+		font.key { color: darkgreen; font: bold; }
+		font.error { color: darkred; font: bold; }
+		.heading1 { color: #ffffff; font-family: Tahoma; font-size: 26px; font-weight: normal; background-color: #003366; margin-top: 0px; margin-bottom: 0px; margin-left: -30px; padding-top: 10px; padding-bottom: 3px; padding-left: 15px; width: 105%; }
+		.button { background-color: #dcdcdc; font-family: Verdana; font-size: 1em; border-top: #cccccc 1px solid; border-bottom: #666666 1px solid; border-left: #cccccc 1px solid; border-right: #666666 1px solid; }
+		.frmheader { color: #000000; background: #dcdcdc; font-family: Verdana; font-size: .7em; font-weight: normal; border-bottom: 1px solid #dcdcdc; padding-top: 2px; padding-bottom: 2px; }
+		.frmtext { font-family: Verdana; font-size: .7em; margin-top: 8px; margin-bottom: 0px; margin-left: 32px; }
+		.frmInput { font-family: Verdana; font-size: 1em; }
+		.intro { margin-left: -15px; }
+           
+    </style>
+
+    <title>
+	WSLegislativo Servicio Web
+</title></head>
+
+  <body>
+
+    <div id="content">
+
+      <p class="heading1">WSLegislativo</p><br>
+
+      
+
+      
+
+      <span>
+          <p class="intro">Haga clic <a href="WSLegislativo.asmx">aquí</a> para obtener una lista completa de operaciones.</p>
+          <h2>retornarVotacionesXProyectoLey</h2>
+          <p class="intro"></p>
+
+          <h3>Prueba</h3>
+          
+          Haga clic en el botón 'Invocar', para probar la operación utilizando el protocolo HTTP POST.
+
+
+
+                      <form target="_blank" action='https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXProyectoLey' method="POST">                      
+                        
+                          <table cellspacing="0" cellpadding="4" frame="box" bordercolor="#dcdcdc" rules="none" style="border-collapse: collapse;">
+                          <tr>
+	<td class="frmHeader" background="#dcdcdc" style="border-right: 2px solid white;">Parámetro</td>
+	<td class="frmHeader" background="#dcdcdc">Valor</td>
+</tr>
+
+                        
+                          <tr>
+                            <td class="frmText" style="color: #000000; font-weight: normal;">prmNumeroBoletin:</td>
+                            <td><input class="frmInput" type="text" size="50" name="prmNumeroBoletin"></td>
+                          </tr>
+                        
+                        <tr>
+                          <td></td>
+                          <td align="right"> <input type="submit" value="Invocar" class="button"></td>
+                        </tr>
+                        </table>
+                      
+
+                    </form>
+                  <span>
+              <h3>SOAP 1.1</h3>
+              <p>A continuación se muestra un ejemplo de solicitud y respuesta para SOAP 1.1. Es necesario reemplazar los <font class=value>marcadores de posición</font> que aparecen con valores reales.</p>
+
+              <pre>POST /camaradiputados/WServices/WSLegislativo.asmx HTTP/1.1
+Host: opendata.camara.cl
+Content-Type: text/xml; charset=utf-8
+Content-Length: <font class=value>length</font>
+SOAPAction: "http://opendata.camara.cl/camaradiputados/v1/retornarVotacionesXProyectoLey"
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;soap:Body&gt;
+    &lt;retornarVotacionesXProyectoLey xmlns="http://opendata.camara.cl/camaradiputados/v1"&gt;
+      &lt;prmNumeroBoletin&gt;<font class=value>string</font>&lt;/prmNumeroBoletin&gt;
+    &lt;/retornarVotacionesXProyectoLey&gt;
+  &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</pre>
+
+              <pre>HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Content-Length: <font class=value>length</font>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"&gt;
+  &lt;soap:Body&gt;
+    &lt;retornarVotacionesXProyectoLeyResponse xmlns="http://opendata.camara.cl/camaradiputados/v1"&gt;
+      &lt;retornarVotacionesXProyectoLeyResult&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;NumeroBoletin&gt;<font class=value>string</font>&lt;/NumeroBoletin&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;FechaIngreso&gt;<font class=value>dateTime</font>&lt;/FechaIngreso&gt;
+        &lt;TipoIniciativa /&gt;
+        &lt;CamaraOrigen /&gt;
+        &lt;Autores&gt;
+          &lt;ParlamentarioAutor&gt;
+            &lt;Orden&gt;<font class=value>int</font>&lt;/Orden&gt;
+            &lt;Diputado xsi:nil="true" /&gt;
+            &lt;Senador xsi:nil="true" /&gt;
+          &lt;/ParlamentarioAutor&gt;
+          &lt;ParlamentarioAutor&gt;
+            &lt;Orden&gt;<font class=value>int</font>&lt;/Orden&gt;
+            &lt;Diputado xsi:nil="true" /&gt;
+            &lt;Senador xsi:nil="true" /&gt;
+          &lt;/ParlamentarioAutor&gt;
+        &lt;/Autores&gt;
+        &lt;MinisteriosPatrocinantes&gt;
+          &lt;Ministerio&gt;
+            &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+            &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+          &lt;/Ministerio&gt;
+          &lt;Ministerio&gt;
+            &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+            &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+          &lt;/Ministerio&gt;
+        &lt;/MinisteriosPatrocinantes&gt;
+        &lt;Votaciones&gt;
+          &lt;VotacionProyectoLey&gt;
+            &lt;TipoVotacionProyectoLey xsi:nil="true" /&gt;
+            &lt;Articulo&gt;<font class=value>string</font>&lt;/Articulo&gt;
+            &lt;TramiteConstitucional xsi:nil="true" /&gt;
+            &lt;TramiteReglamentario xsi:nil="true" /&gt;
+          &lt;/VotacionProyectoLey&gt;
+          &lt;VotacionProyectoLey&gt;
+            &lt;TipoVotacionProyectoLey xsi:nil="true" /&gt;
+            &lt;Articulo&gt;<font class=value>string</font>&lt;/Articulo&gt;
+            &lt;TramiteConstitucional xsi:nil="true" /&gt;
+            &lt;TramiteReglamentario xsi:nil="true" /&gt;
+          &lt;/VotacionProyectoLey&gt;
+        &lt;/Votaciones&gt;
+        &lt;Materias&gt;
+          &lt;Materia&gt;
+            &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+            &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+          &lt;/Materia&gt;
+          &lt;Materia&gt;
+            &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+            &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+          &lt;/Materia&gt;
+        &lt;/Materias&gt;
+        &lt;Admisible&gt;<font class=value>boolean</font>&lt;/Admisible&gt;
+      &lt;/retornarVotacionesXProyectoLeyResult&gt;
+    &lt;/retornarVotacionesXProyectoLeyResponse&gt;
+  &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</pre>
+          </span>
+
+          <span>
+              <h3>SOAP 1.2</h3>
+              <p>A continuación se muestra un ejemplo de solicitud y respuesta para SOAP 1.2. Es necesario reemplazar los <font class=value>marcadores de posición</font> que aparecen con valores reales.</p>
+
+              <pre>POST /camaradiputados/WServices/WSLegislativo.asmx HTTP/1.1
+Host: opendata.camara.cl
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: <font class=value>length</font>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;soap12:Body&gt;
+    &lt;retornarVotacionesXProyectoLey xmlns="http://opendata.camara.cl/camaradiputados/v1"&gt;
+      &lt;prmNumeroBoletin&gt;<font class=value>string</font>&lt;/prmNumeroBoletin&gt;
+    &lt;/retornarVotacionesXProyectoLey&gt;
+  &lt;/soap12:Body&gt;
+&lt;/soap12:Envelope&gt;</pre>
+
+              <pre>HTTP/1.1 200 OK
+Content-Type: application/soap+xml; charset=utf-8
+Content-Length: <font class=value>length</font>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"&gt;
+  &lt;soap12:Body&gt;
+    &lt;retornarVotacionesXProyectoLeyResponse xmlns="http://opendata.camara.cl/camaradiputados/v1"&gt;
+      &lt;retornarVotacionesXProyectoLeyResult&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;NumeroBoletin&gt;<font class=value>string</font>&lt;/NumeroBoletin&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;FechaIngreso&gt;<font class=value>dateTime</font>&lt;/FechaIngreso&gt;
+        &lt;TipoIniciativa /&gt;
+        &lt;CamaraOrigen /&gt;
+        &lt;Autores&gt;
+          &lt;ParlamentarioAutor&gt;
+            &lt;Orden&gt;<font class=value>int</font>&lt;/Orden&gt;
+            &lt;Diputado xsi:nil="true" /&gt;
+            &lt;Senador xsi:nil="true" /&gt;
+          &lt;/ParlamentarioAutor&gt;
+          &lt;ParlamentarioAutor&gt;
+            &lt;Orden&gt;<font class=value>int</font>&lt;/Orden&gt;
+            &lt;Diputado xsi:nil="true" /&gt;
+            &lt;Senador xsi:nil="true" /&gt;
+          &lt;/ParlamentarioAutor&gt;
+        &lt;/Autores&gt;
+        &lt;MinisteriosPatrocinantes&gt;
+          &lt;Ministerio&gt;
+            &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+            &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+          &lt;/Ministerio&gt;
+          &lt;Ministerio&gt;
+            &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+            &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+          &lt;/Ministerio&gt;
+        &lt;/MinisteriosPatrocinantes&gt;
+        &lt;Votaciones&gt;
+          &lt;VotacionProyectoLey&gt;
+            &lt;TipoVotacionProyectoLey xsi:nil="true" /&gt;
+            &lt;Articulo&gt;<font class=value>string</font>&lt;/Articulo&gt;
+            &lt;TramiteConstitucional xsi:nil="true" /&gt;
+            &lt;TramiteReglamentario xsi:nil="true" /&gt;
+          &lt;/VotacionProyectoLey&gt;
+          &lt;VotacionProyectoLey&gt;
+            &lt;TipoVotacionProyectoLey xsi:nil="true" /&gt;
+            &lt;Articulo&gt;<font class=value>string</font>&lt;/Articulo&gt;
+            &lt;TramiteConstitucional xsi:nil="true" /&gt;
+            &lt;TramiteReglamentario xsi:nil="true" /&gt;
+          &lt;/VotacionProyectoLey&gt;
+        &lt;/Votaciones&gt;
+        &lt;Materias&gt;
+          &lt;Materia&gt;
+            &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+            &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+          &lt;/Materia&gt;
+          &lt;Materia&gt;
+            &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+            &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+          &lt;/Materia&gt;
+        &lt;/Materias&gt;
+        &lt;Admisible&gt;<font class=value>boolean</font>&lt;/Admisible&gt;
+      &lt;/retornarVotacionesXProyectoLeyResult&gt;
+    &lt;/retornarVotacionesXProyectoLeyResponse&gt;
+  &lt;/soap12:Body&gt;
+&lt;/soap12:Envelope&gt;</pre>
+          </span>
+
+          <span>
+              <h3>HTTP GET</h3>
+              <p>A continuación se muestra un ejemplo de solicitud y respuesta para HTTP GET. Es necesario reemplazar los <font class=value>marcadores de posición</font> que aparecen con valores reales.</p>
+
+              <pre>GET /camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXProyectoLey?<font class=key>prmNumeroBoletin</font>=<font class=value>string</font> HTTP/1.1
+Host: opendata.camara.cl
+</pre>
+
+              <pre>HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Content-Length: <font class=value>length</font>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ProyectoLey xmlns="http://opendata.camara.cl/camaradiputados/v1"&gt;
+  &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+  &lt;NumeroBoletin&gt;<font class=value>string</font>&lt;/NumeroBoletin&gt;
+  &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+  &lt;FechaIngreso&gt;<font class=value>dateTime</font>&lt;/FechaIngreso&gt;
+  &lt;TipoIniciativa /&gt;
+  &lt;CamaraOrigen /&gt;
+  &lt;Autores&gt;
+    &lt;ParlamentarioAutor&gt;
+      &lt;Orden&gt;<font class=value>int</font>&lt;/Orden&gt;
+      &lt;Diputado&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;Nombre2&gt;<font class=value>string</font>&lt;/Nombre2&gt;
+        &lt;ApellidoPaterno&gt;<font class=value>string</font>&lt;/ApellidoPaterno&gt;
+        &lt;ApellidoMaterno&gt;<font class=value>string</font>&lt;/ApellidoMaterno&gt;
+        &lt;FechaNacimiento&gt;<font class=value>dateTime</font>&lt;/FechaNacimiento&gt;
+        &lt;FechaDefucion&gt;<font class=value>dateTime</font>&lt;/FechaDefucion&gt;
+        &lt;RUT&gt;<font class=value>string</font>&lt;/RUT&gt;
+        &lt;RUTDV&gt;<font class=value>string</font>&lt;/RUTDV&gt;
+        &lt;Sexo d5p1:nil="true" xmlns:d5p1="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+        &lt;Militancias d5p1:nil="true" xmlns:d5p1="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+      &lt;/Diputado&gt;
+      &lt;Senador&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;ApellidoPaterno&gt;<font class=value>string</font>&lt;/ApellidoPaterno&gt;
+        &lt;ApellidoMaterno&gt;<font class=value>string</font>&lt;/ApellidoMaterno&gt;
+      &lt;/Senador&gt;
+    &lt;/ParlamentarioAutor&gt;
+    &lt;ParlamentarioAutor&gt;
+      &lt;Orden&gt;<font class=value>int</font>&lt;/Orden&gt;
+      &lt;Diputado&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;Nombre2&gt;<font class=value>string</font>&lt;/Nombre2&gt;
+        &lt;ApellidoPaterno&gt;<font class=value>string</font>&lt;/ApellidoPaterno&gt;
+        &lt;ApellidoMaterno&gt;<font class=value>string</font>&lt;/ApellidoMaterno&gt;
+        &lt;FechaNacimiento&gt;<font class=value>dateTime</font>&lt;/FechaNacimiento&gt;
+        &lt;FechaDefucion&gt;<font class=value>dateTime</font>&lt;/FechaDefucion&gt;
+        &lt;RUT&gt;<font class=value>string</font>&lt;/RUT&gt;
+        &lt;RUTDV&gt;<font class=value>string</font>&lt;/RUTDV&gt;
+        &lt;Sexo d5p1:nil="true" xmlns:d5p1="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+        &lt;Militancias d5p1:nil="true" xmlns:d5p1="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+      &lt;/Diputado&gt;
+      &lt;Senador&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;ApellidoPaterno&gt;<font class=value>string</font>&lt;/ApellidoPaterno&gt;
+        &lt;ApellidoMaterno&gt;<font class=value>string</font>&lt;/ApellidoMaterno&gt;
+      &lt;/Senador&gt;
+    &lt;/ParlamentarioAutor&gt;
+  &lt;/Autores&gt;
+  &lt;MinisteriosPatrocinantes&gt;
+    &lt;Ministerio&gt;
+      &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+      &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+    &lt;/Ministerio&gt;
+    &lt;Ministerio&gt;
+      &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+      &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+    &lt;/Ministerio&gt;
+  &lt;/MinisteriosPatrocinantes&gt;
+  &lt;Votaciones&gt;
+    &lt;VotacionProyectoLey&gt;
+      &lt;TipoVotacionProyectoLey /&gt;
+      &lt;Articulo&gt;<font class=value>string</font>&lt;/Articulo&gt;
+      &lt;TramiteConstitucional Id="<font class=value>int</font>" /&gt;
+      &lt;TramiteReglamentario Id="<font class=value>int</font>" /&gt;
+    &lt;/VotacionProyectoLey&gt;
+    &lt;VotacionProyectoLey&gt;
+      &lt;TipoVotacionProyectoLey /&gt;
+      &lt;Articulo&gt;<font class=value>string</font>&lt;/Articulo&gt;
+      &lt;TramiteConstitucional Id="<font class=value>int</font>" /&gt;
+      &lt;TramiteReglamentario Id="<font class=value>int</font>" /&gt;
+    &lt;/VotacionProyectoLey&gt;
+  &lt;/Votaciones&gt;
+  &lt;Materias&gt;
+    &lt;Materia&gt;
+      &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+      &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+    &lt;/Materia&gt;
+    &lt;Materia&gt;
+      &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+      &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+    &lt;/Materia&gt;
+  &lt;/Materias&gt;
+  &lt;Admisible&gt;<font class=value>boolean</font>&lt;/Admisible&gt;
+&lt;/ProyectoLey&gt;</pre>
+          </span>
+
+          <span>
+              <h3>HTTP POST</h3>
+              <p>A continuación se muestra un ejemplo de solicitud y respuesta para HTTP POST. Es necesario reemplazar los <font class=value>marcadores de posición</font> que aparecen con valores reales.</p>
+
+              <pre>POST /camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXProyectoLey HTTP/1.1
+Host: opendata.camara.cl
+Content-Type: application/x-www-form-urlencoded
+Content-Length: <font class=value>length</font>
+
+<font class=key>prmNumeroBoletin</font>=<font class=value>string</font></pre>
+
+              <pre>HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Content-Length: <font class=value>length</font>
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ProyectoLey xmlns="http://opendata.camara.cl/camaradiputados/v1"&gt;
+  &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+  &lt;NumeroBoletin&gt;<font class=value>string</font>&lt;/NumeroBoletin&gt;
+  &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+  &lt;FechaIngreso&gt;<font class=value>dateTime</font>&lt;/FechaIngreso&gt;
+  &lt;TipoIniciativa /&gt;
+  &lt;CamaraOrigen /&gt;
+  &lt;Autores&gt;
+    &lt;ParlamentarioAutor&gt;
+      &lt;Orden&gt;<font class=value>int</font>&lt;/Orden&gt;
+      &lt;Diputado&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;Nombre2&gt;<font class=value>string</font>&lt;/Nombre2&gt;
+        &lt;ApellidoPaterno&gt;<font class=value>string</font>&lt;/ApellidoPaterno&gt;
+        &lt;ApellidoMaterno&gt;<font class=value>string</font>&lt;/ApellidoMaterno&gt;
+        &lt;FechaNacimiento&gt;<font class=value>dateTime</font>&lt;/FechaNacimiento&gt;
+        &lt;FechaDefucion&gt;<font class=value>dateTime</font>&lt;/FechaDefucion&gt;
+        &lt;RUT&gt;<font class=value>string</font>&lt;/RUT&gt;
+        &lt;RUTDV&gt;<font class=value>string</font>&lt;/RUTDV&gt;
+        &lt;Sexo d5p1:nil="true" xmlns:d5p1="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+        &lt;Militancias d5p1:nil="true" xmlns:d5p1="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+      &lt;/Diputado&gt;
+      &lt;Senador&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;ApellidoPaterno&gt;<font class=value>string</font>&lt;/ApellidoPaterno&gt;
+        &lt;ApellidoMaterno&gt;<font class=value>string</font>&lt;/ApellidoMaterno&gt;
+      &lt;/Senador&gt;
+    &lt;/ParlamentarioAutor&gt;
+    &lt;ParlamentarioAutor&gt;
+      &lt;Orden&gt;<font class=value>int</font>&lt;/Orden&gt;
+      &lt;Diputado&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;Nombre2&gt;<font class=value>string</font>&lt;/Nombre2&gt;
+        &lt;ApellidoPaterno&gt;<font class=value>string</font>&lt;/ApellidoPaterno&gt;
+        &lt;ApellidoMaterno&gt;<font class=value>string</font>&lt;/ApellidoMaterno&gt;
+        &lt;FechaNacimiento&gt;<font class=value>dateTime</font>&lt;/FechaNacimiento&gt;
+        &lt;FechaDefucion&gt;<font class=value>dateTime</font>&lt;/FechaDefucion&gt;
+        &lt;RUT&gt;<font class=value>string</font>&lt;/RUT&gt;
+        &lt;RUTDV&gt;<font class=value>string</font>&lt;/RUTDV&gt;
+        &lt;Sexo d5p1:nil="true" xmlns:d5p1="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+        &lt;Militancias d5p1:nil="true" xmlns:d5p1="http://www.w3.org/2001/XMLSchema-instance" /&gt;
+      &lt;/Diputado&gt;
+      &lt;Senador&gt;
+        &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+        &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+        &lt;ApellidoPaterno&gt;<font class=value>string</font>&lt;/ApellidoPaterno&gt;
+        &lt;ApellidoMaterno&gt;<font class=value>string</font>&lt;/ApellidoMaterno&gt;
+      &lt;/Senador&gt;
+    &lt;/ParlamentarioAutor&gt;
+  &lt;/Autores&gt;
+  &lt;MinisteriosPatrocinantes&gt;
+    &lt;Ministerio&gt;
+      &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+      &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+    &lt;/Ministerio&gt;
+    &lt;Ministerio&gt;
+      &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+      &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+    &lt;/Ministerio&gt;
+  &lt;/MinisteriosPatrocinantes&gt;
+  &lt;Votaciones&gt;
+    &lt;VotacionProyectoLey&gt;
+      &lt;TipoVotacionProyectoLey /&gt;
+      &lt;Articulo&gt;<font class=value>string</font>&lt;/Articulo&gt;
+      &lt;TramiteConstitucional Id="<font class=value>int</font>" /&gt;
+      &lt;TramiteReglamentario Id="<font class=value>int</font>" /&gt;
+    &lt;/VotacionProyectoLey&gt;
+    &lt;VotacionProyectoLey&gt;
+      &lt;TipoVotacionProyectoLey /&gt;
+      &lt;Articulo&gt;<font class=value>string</font>&lt;/Articulo&gt;
+      &lt;TramiteConstitucional Id="<font class=value>int</font>" /&gt;
+      &lt;TramiteReglamentario Id="<font class=value>int</font>" /&gt;
+    &lt;/VotacionProyectoLey&gt;
+  &lt;/Votaciones&gt;
+  &lt;Materias&gt;
+    &lt;Materia&gt;
+      &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+      &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+    &lt;/Materia&gt;
+    &lt;Materia&gt;
+      &lt;Id&gt;<font class=value>int</font>&lt;/Id&gt;
+      &lt;Nombre&gt;<font class=value>string</font>&lt;/Nombre&gt;
+    &lt;/Materia&gt;
+  &lt;/Materias&gt;
+  &lt;Admisible&gt;<font class=value>boolean</font>&lt;/Admisible&gt;
+&lt;/ProyectoLey&gt;</pre>
+          </span>
+
+      </span>
+      
+
+    
+    
+      
+
+      
+
+    
+  </body>
+</html>

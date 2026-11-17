@@ -1,0 +1,59 @@
+{
+ "od_ayuda_votxproy": {
+  "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx?op=retornarVotacionesXProyectoLey",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 200,
+  "tipo": "text/html; charset=utf-8",
+  "bytes": 24117,
+  "inicio": " <html> <head><link rel=\"alternate\" type=\"text/xml\" href=\"/camaradiputados/WServices/WSLegislativo.asmx?disco\" /> <style type=\"text/css\"> BODY { color: #000000; background-color: white; font-family: Verdana; margin-left: 0px; margin-top: 0px; } #content { margin-left: 30px; font-size: .70em; padding-bottom: 2em; } A:link { color: #336699; font-weight: bold; text-dec",
+  "fechas_vistas": []
+ },
+ "od_votxproy_18885": {
+  "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXProyectoLey?prmNumeroBoletin=18885-05",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 200,
+  "tipo": "text/xml; charset=utf-8",
+  "bytes": 4463,
+  "inicio": "<?xml version=\"1.0\" encoding=\"utf-8\"?> <ProyectoLey xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://opendata.camara.cl/camaradiputados/v1\"> <Id>19564</Id> <NumeroBoletin>18885-05</NumeroBoletin> <Nombre>Establece medidas para contener las alzas de los precios de la gasolina automotriz y el petróleo diesel, y aliviar la carg",
+  "fechas_vistas": [
+   "2026-11-12",
+   "2026-11-16"
+  ]
+ },
+ "od_votxproy_18702": {
+  "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXProyectoLey?prmNumeroBoletin=18702-05",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 200,
+  "tipo": "text/xml; charset=utf-8",
+  "bytes": 607482,
+  "inicio": "<?xml version=\"1.0\" encoding=\"utf-8\"?> <ProyectoLey xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://opendata.camara.cl/camaradiputados/v1\"> <Id>19391</Id> <NumeroBoletin>18702-05</NumeroBoletin> <Nombre>Ley de Presupuestos para el Sector Público correspondiente al año 2027</Nombre> <FechaIngreso>2026-09-30T00:00:00</Fech",
+  "fechas_vistas": [
+   "2026-09-30",
+   "2026-11-09",
+   "2026-11-10",
+   "2026-11-11",
+   "2026-11-12",
+   "2026-11-13"
+  ]
+ },
+ "od_proyecto_18702": {
+  "url": "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarProyectoLey?prmNumeroBoletin=18702-05",
+  "robots_txt": 200,
+  "permitido": true,
+  "http": 200,
+  "tipo": "text/xml; charset=utf-8",
+  "bytes": 607482,
+  "inicio": "<?xml version=\"1.0\" encoding=\"utf-8\"?> <ProyectoLey xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://opendata.camara.cl/camaradiputados/v1\"> <Id>19391</Id> <NumeroBoletin>18702-05</NumeroBoletin> <Nombre>Ley de Presupuestos para el Sector Público correspondiente al año 2027</Nombre> <FechaIngreso>2026-09-30T00:00:00</Fech",
+  "fechas_vistas": [
+   "2026-09-30",
+   "2026-11-09",
+   "2026-11-10",
+   "2026-11-11",
+   "2026-11-12",
+   "2026-11-13"
+  ]
+ }
+}
