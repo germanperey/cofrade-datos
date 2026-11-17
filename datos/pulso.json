@@ -1,13 +1,59 @@
 {
- "generado": "2026-11-16T21:07-03:00",
- "proxima": "22:17",
- "indicadores": [],
+ "generado": "2026-11-16T23:07-03:00",
+ "proxima": "07:17",
+ "indicadores": [
+  {
+   "clave": "dolar",
+   "nombre": "Dólar",
+   "valor": 999.1,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-16",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "euro",
+   "nombre": "Euro",
+   "valor": 1102.03,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-16",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "uf",
+   "nombre": "UF",
+   "valor": 41343.55,
+   "prefijo": "$",
+   "decimales": 2,
+   "fecha": "2026-11-16",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "utm",
+   "nombre": "UTM",
+   "valor": 72440,
+   "prefijo": "$",
+   "decimales": 0,
+   "fecha": "2026-11-01",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  },
+  {
+   "clave": "libra_cobre",
+   "nombre": "Cobre (libra)",
+   "valor": 6.19,
+   "prefijo": "US$",
+   "decimales": 2,
+   "fecha": "2026-11-16",
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+  }
+ ],
  "ipsa": {
   "nombre": "IPSA",
   "valor": 10525.26,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-16T21:08-03:00",
+  "hora": "2026-11-16T23:07-03:00",
   "variacion_pct": -1.27
  },
  "sismos": {
@@ -21,34 +67,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "“Cualquier persona se cree con la potestad de sacar un arma”: El desgarrador clamor de la hermana del joven baleado en Toltén",
+     "titulo": "Tras dos shows agotados en el Santander Arena: Los Tres logran Disco de Oro con “XCLNT”",
+     "medio": "The Clinic",
+     "url": "https://www.theclinic.cl/2026/11/16/tras-dos-shows-agotados-en-el-santander-arena-los-tres-logran-disco-de-oro-con-xclnt/",
+     "hora": "23:00"
+    },
+    {
+     "titulo": "Tras aprobación del Senado: Congreso despacha proyecto que busca frenar alzas de combustibles",
+     "medio": "Diario El Centro Talca",
+     "url": "https://www.diarioelcentro.cl/2026/11/16/tras-aprobacion-del-senado-congreso-despacha-proyecto-que-busca-frenar-alzas-de-combustibles/",
+     "hora": "22:57"
+    },
+    {
+     "titulo": "La comuna de Santiago que impulsa el emprendimiento local con innovación y alianzas estratégicas",
      "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/16/cualquier-persona-se-cree-con-la-potestad-de-sacar-un-arma-el-desgarrador-clamor-de-la-hermana-del-joven-baleado-en-tolten/",
-     "hora": "20:52"
+     "url": "https://www.adnradio.cl/2026/11/16/la-comuna-de-santiago-que-impulsa-el-emprendimiento-local-con-innovacion-y-alianzas-estrategicas/",
+     "hora": "22:54"
     },
     {
-     "titulo": "“No sé si hay proyecto, no depende de mí, pero me encantaría seguir; me siento un hincha más del club”",
+     "titulo": "“La cultura del dinero fácil nos está ganando”: Rafael Rodríguez ante alza de negocios ilegales en colegios",
      "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/16/no-se-si-hay-proyecto-no-depende-de-mi-pero-me-encantaria-seguir-me-siento-un-hincha-mas-del-club/",
-     "hora": "20:42"
+     "url": "https://www.adnradio.cl/2026/11/16/la-cultura-del-dinero-facil-nos-esta-ganando-rafael-rodriguez-ante-alza-de-negocios-ilegales-en-colegios/",
+     "hora": "22:53"
     },
     {
-     "titulo": "Alarmante versión sobre Mauricio Pinilla impactó a todos: hubo desmentido pero la preocupación por su salud continúa",
-     "medio": "La Cuarta",
-     "url": "https://www.lacuarta.com/espectaculos/noticia/alarmante-version-sobre-mauricio-pinilla-impacto-a-todos-hubo-desmentido-pero-la-preocupacion-por-su-salud-continua/",
-     "hora": "20:41"
-    },
-    {
-     "titulo": "Banco Central advierte deterioro en capacidad de pago de hogares y empresas",
-     "medio": "Atacama Noticias",
-     "url": "https://www.atacamanoticias.cl/2026/11/16/banco-central-advierte-deterioro-en-capacidad-de-pago-de-hogares-y-empresas/",
-     "hora": "20:37"
-    },
-    {
-     "titulo": "Corte de San Miguel descarta relación laboral de trabajador contratado a honorarios durante más de cuatro años por Municipalidad de Talagante",
-     "medio": "Diario Constitucional",
-     "url": "https://www.diarioconstitucional.cl/laboral/corte-de-san-miguel-descarta-relacion-laboral-de-trabajador-contratado-a-honorarios-durante-mas-de",
-     "hora": "20:34"
+     "titulo": "Senado aprueba proyecto que contiene alza de los combustibles: iniciativa quedó lista para ser promulgada a ley",
+     "medio": "The Clinic",
+     "url": "https://www.theclinic.cl/2026/11/16/senado-aprueba-proyecto-que-contiene-alza-de-los-combustibles-iniciativa-quedo-lista-para-ser-promulgada-a-ley/",
+     "hora": "22:31"
     }
    ]
   },
@@ -56,34 +102,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Estados Unidos detectó planes de Irán para atacar a altos funcionarios en Washington con armas no convencionales",
+     "titulo": "Susto en Miss Universe 2026: hospitalizaron a la representante cubana Mia Dio en Puerto Rico",
      "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/estados-unidos/2026/11/17/estados-unidos-detecto-planes-de-iran-para-atacar-a-altos-funcionarios-en-washington-con-armas-no-convencionales/",
-     "hora": "21:02"
+     "url": "https://www.infobae.com/cuba/2026/11/17/susto-en-miss-universe-2026-hospitalizaron-a-la-representante-cubana-mia-dio-en-puerto-rico/",
+     "hora": "23:00"
     },
     {
-     "titulo": "Laura Fernández condena asesinato del periodista Camilo Rodríguez y ordena colaboración policial para esclarecer el crimen",
+     "titulo": "Madre habría intentado asfixiar durante más de 10 minutos a su hija de un año en Costa Rica: Policía logró rescatarla",
      "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/costa-rica/2026/11/17/laura-fernandez-condena-asesinato-del-periodista-camilo-rodriguez-y-ordena-colaboracion-policial-para-esclarecer-el-crimen/",
-     "hora": "21:00"
+     "url": "https://www.infobae.com/costa-rica/2026/11/17/madre-habria-intentado-asfixiar-durante-mas-de-10-minutos-a-su-hija-de-un-ano-en-costa-rica-policia-logro-rescatarla/",
+     "hora": "22:56"
     },
     {
-     "titulo": "Las regiones, el paro camionero y los desafíos 2027: Las definiciones de los dos candidatos a la CPC, Antonio Walker y Richard von Appen",
-     "medio": "La Tercera · Pulso",
-     "url": "https://www.latercera.com/pulso/noticia/las-regiones-el-paro-camionero-y-los-desafios-2027-las-definiciones-de-los-dos-candidatos-a-la-cpc-antonio-walker-y-richard-von-appen/",
-     "hora": "20:58"
+     "titulo": "Medios firman la Declaración de Copiapó y piden reglas claras para el uso de noticias por la IA",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/medios-firman-la-declaracion-de-copiapo-y-piden-reglas-claras-para-el-uso-de-noticias-por-la-ia/",
+     "hora": "22:54"
     },
     {
-     "titulo": "Fondo de Global Forest Partners alista compra de bosques de Arauco en el Maule",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/senal-df/fondo-de-global-forest-partners-alista-compra-de-bosques-de-arauco-en-el",
-     "hora": "20:56"
+     "titulo": "Una aerolínea europea suspendió por tiempo indeterminado sus vuelos a la Argentina: qué deberán hacer los pasajeros",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/17/una-aerolinea-europea-suspendio-por-tiempo-indeterminado-sus-vuelos-a-la-argentina-que-deberan-hacer-los-pasajeros/",
+     "hora": "22:53"
     },
     {
-     "titulo": "Sala de la Cámara despacha al Senado proyecto que congela alza de los combustibles",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/economia-y-politica/df-tax/costara-al-fisco-us-820-millones-hacienda-ingresa-al-congreso-indicacion",
-     "hora": "20:54"
+     "titulo": "18 fotos de la cena del Consejo Interamericano de Comercio y Producción con Javier Milei como invitado especial",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/fotos/2026/11/17/18-fotos-de-la-cena-del-consejo-interamericano-de-comercio-y-produccion-con-javier-milei-como-invitado-especial/",
+     "hora": "22:52"
     }
    ]
   },
@@ -91,40 +137,46 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Jeanette Alonzo anuncia que asumirá la alcaldía de Lima en respaldo a López Aliaga: “Me siento preparada y con mucha experiencia”",
+     "titulo": "Lorena de la Garza ofrece disculpas tras fumigación que habría afectado a mariposas monarca en Monterrey",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/peru/2026/11/16/jeanette-alonzo-defiende-a-rafael-lopez-aliaga-pero-anuncia-que-asumira-la-alcaldia-de-lima-me-siento-preparada-y-con-mucha-experiencia/",
-     "hora": "21:06"
+     "url": "https://www.infobae.com/mexico/2026/11/17/lorena-de-la-garza-ofrece-disculpas-tras-fumigacion-que-habria-afectado-a-mariposas-monarca-en-monterrey/",
+     "hora": "23:04"
     },
     {
-     "titulo": "Aire-e Intervenida no prestará servicios de energía en algunos barrios de Barranquilla y municipios del Atlántico el martes 17 de noviembre",
+     "titulo": "Antonella Petro rechazó los ataques que fueron dirigidos contra Lucía de la Espriella: “No tiene por qué recibir una avalancha de odio”",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/2026/11/17/aire-e-intervenida-no-prestara-servicios-de-energia-en-algunos-barrios-de-barranquilla-y-municipios-del-atlantico-el-martes-17-de-noviembre/",
-     "hora": "21:05"
+     "url": "https://www.infobae.com/colombia/2026/11/17/antonella-petro-rechazo-los-ataques-que-fueron-dirigidos-contra-lucia-de-la-espriella-no-tiene-por-que-recibir-una-avalancha-de-odio/",
+     "hora": "23:01"
     },
     {
-     "titulo": "Francia: el actor Gérard Depardieu acepta condena por agresión sexual y retira su apelación",
+     "titulo": "Robert Pattinson es el nuevo James Bond: comienza una nueva era para 007",
      "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/video/20261116-francia-el-actor-g%C3%A9rard-depardieu-acepta-condena-por-agresi%C3%B3n-sexual-y-retira-su-apelaci%C3%B3n",
-     "hora": "20:58"
+     "url": "https://www.france24.com/es/video/20261117-robert-pattinson-es-el-nuevo-james-bond-comienza-una-nueva-era-para-007",
+     "hora": "22:58"
     },
     {
-     "titulo": "Paraguay: ordenan el traslado de Santiago Peña a una cárcel militar tras crisis de Ueno Bank",
+     "titulo": "León XIV se despide: los mensajes que marcaron su paso por Uruguay, Argentina y Perú",
      "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/video/20261116-paraguay-ordenan-el-traslado-de-santiago-pe%C3%B1a-a-una-c%C3%A1rcel-militar-tras-crisis-de-ueno-bank",
-     "hora": "20:54"
-    },
-    {
-     "titulo": "León XIV se despide de Perú entre el reclamo de las víctimas de la represión y la ausencia de Keiko Fujimori",
-     "medio": "La Tercera · Mundo",
-     "url": "https://www.latercera.com/mundo/noticia/leon-xiv-se-despide-de-peru-entre-el-reclamo-de-las-victimas-de-la-represion-y-la-ausencia-de-keiko-fujimori/",
-     "hora": "20:30"
+     "url": "https://www.france24.com/es/video/20261117-le%C3%B3n-xiv-se-despide-los-mensajes-que-marcaron-su-paso-por-uruguay-argentina-y-per%C3%BA",
+     "hora": "22:55"
     }
    ]
   },
   {
    "seccion": "Economía mundial",
    "notas": [
+    {
+     "titulo": "Rusia y Ucrania intercambian ataques nocturnos con drones",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/rusia-y-ucrania-intercambian-ataques-nocturnos-con-drones/a-79964444?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "22:12"
+    },
+    {
+     "titulo": "EE.UU. anuncia arresto de capo guatemalteco y ofrece recompensa por otro",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/ee-uu-anuncia-arresto-de-capo-guatemalteco-y-ofrece-recompensa-por-otro/a-79964435?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "21:59"
+    },
     {
      "titulo": "Cinco sectores europeos para 2027",
      "medio": "Expansión España Mercados",
@@ -142,18 +194,6 @@
      "medio": "Expansión España Economía",
      "url": "https://www.expansion.com/economia/2026/11/17/millon-devoluciones-renta-aire-hacienda-revisa-plusvalias-criptos-autonomos.html",
      "hora": "20:46"
-    },
-    {
-     "titulo": "El gran agujero de las pensiones: un 'rescate' de 350.000 millones en diez años",
-     "medio": "Expansión España Economía",
-     "url": "https://www.expansion.com/economia/2026/11/17/gran-agujero-pensiones-rescate-350-000-millones-diez-anos.html",
-     "hora": "20:46"
-    },
-    {
-     "titulo": "ActualizaciÃ³n: Los Ã­ndices bursÃ¡tiles estadounidenses caen a medida que los fabricantes de chips se hunden despuÃ©s de que el Departamento de Comercio planeara cerrar las lagunas legales para adquirir chips de IA…",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/actualizaci%C3%B3n-%C3%ADndices-burs%C3%A1tiles-estadounidenses-caen-222335169.html",
-     "hora": "19:23"
     }
    ]
   },
@@ -196,34 +236,34 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "Arozarena podría ser una de las figuras en la mira de los Orioles",
-     "medio": "MLB.com en español",
-     "url": "https://www.mlb.com/es/news/arozarena-podria-estar-en-la-mira-de-los-orioles",
-     "hora": "21:02"
+     "titulo": "Guía de Medios – Final CONMEBOL Sudamericana",
+     "medio": "Conmebol",
+     "url": "https://www.conmebol.com/documentos/guia-de-medios-final-conmebol-sudamericana-2/",
+     "hora": "22:35"
     },
     {
-     "titulo": "La Dirección de Arbitraje de la AFA endureció las penas por protestas y lanzó una advertencia por los agarrones en el área",
+     "titulo": "Congreso despachó el tiempo récord ley para rebajar precios de combustibles",
+     "medio": "Cooperativa Deportes",
+     "url": "https://www.cooperativa.cl/noticias/pais/consumidores/combustibles/congreso-despacho-el-tiempo-record-ley-para-rebajar-precios-de/2026-11-16/222912.html",
+     "hora": "22:29"
+    },
+    {
+     "titulo": "El jugador de la selección argentina que renovó con su club hasta 2031 y está en la mira de tres clubes europeos",
      "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/16/la-direccion-de-arbitraje-de-la-afa-endurecio-las-penas-por-protestas-y-lanzo-una-advertencia-por-los-agarrones-en-el-area/",
-     "hora": "20:59"
+     "url": "https://www.infobae.com/deportes/2026/11/17/el-jugador-de-la-seleccion-argentina-que-renovo-con-su-club-hasta-2031-y-esta-en-la-mira-de-tres-clubes-europeos/",
+     "hora": "22:10"
     },
     {
-     "titulo": "La locura de Godoy Cruz en Mendoza: caravana multitudinaria y fiesta en el Gambarte tras la vuelta a Primera",
+     "titulo": "Var en la final del Ascenso: con pocas cámaras no tiene sentido",
      "medio": "Olé",
-     "url": "https://www.ole.com.ar/futbol-ascenso/godoycruz-mendoza-primera-gatooldra-pablodemuner-tristansuarez-gambarte-caravana-fiesta_0_6QK7pixDfK.html",
-     "hora": "20:57"
+     "url": "https://www.ole.com.ar/futbol-ascenso/b-nacional/ascenso-godoy-suarez-var-primera-ramirez_0_Ldb4cap04d.html",
+     "hora": "22:08"
     },
     {
-     "titulo": "Con el regreso del Dibu Martínez y varias caras nuevas: la posible formación de Argentina para enfrentar a Costa Rica",
-     "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/16/con-el-regreso-del-dibu-martinez-y-varias-caras-nuevas-la-posible-formacion-de-argentina-para-enfrentar-a-costa-rica/",
-     "hora": "20:53"
-    },
-    {
-     "titulo": "Duro golpe para Gimnasia: Nicolás Barros Schelotto se lesionó y se perderá los octavos ante Newell's",
-     "medio": "Olé",
-     "url": "https://www.ole.com.ar/futbol-primera/gimnasia-nicolas-barros-schelotto-lesion-newells_0_YcEwxjpphs.html",
-     "hora": "20:53"
+     "titulo": "Colo Colo, cerca de asegurar a su primer ‘refuerzo’ para el 2027: US$ 500 mil",
+     "medio": "AS Chile portada",
+     "url": "https://chile.as.com/futbol/colo-colo-cerca-de-asegurar-a-su-primer-refuerzo-para-el-2027-us-500-mil-f202611-n/",
+     "hora": "22:04"
     }
    ]
   },
@@ -241,35 +281,6 @@
      "medio": "Muy Interesante",
      "url": "https://muyinteresante.okdiario.com/bazar/el-lego-technic-mclaren-mcl39-de-formula-1-se-desploma-a-minimo-historico-antes-del-black-friday.html",
      "hora": "15:12"
-    },
-    {
-     "titulo": "Aunque no compensa los efectos negativos, el humo de los incendios ayuda a fertilizar la selva amazónica",
-     "medio": "The Conversation España",
-     "url": "https://theconversation.com/aunque-no-compensa-los-efectos-negativos-el-humo-de-los-incendios-ayuda-a-fertilizar-la-selva-amazonica-295406",
-     "hora": "14:09"
-    },
-    {
-     "titulo": "¿Qué votamos en las elecciones generales del 29-N?",
-     "medio": "The Conversation España",
-     "url": "https://theconversation.com/que-votamos-en-las-elecciones-generales-del-29-n-294026",
-     "hora": "14:03"
-    }
-   ]
-  },
-  {
-   "seccion": "Emprendimiento",
-   "notas": [
-    {
-     "titulo": "Corma, startup de ciberseguridad IA, levanta US$125M",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/corma-startup-de-ciberseguridad-ia-levanta-us125m/",
-     "hora": "20:54"
-    },
-    {
-     "titulo": "España, 2ª del grupo medio en el Scoreboard UE 2026",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/espana-2a-del-grupo-medio-en-el-scoreboard-ue-2026/",
-     "hora": "20:39"
     }
    ]
   }
@@ -313,9 +324,9 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 64694.33,
+  "bitcoin_usd": 64756.96,
   "bitcoin_fecha": "2026-11-16",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 353
+ "fuentes_ok": 356
 }
