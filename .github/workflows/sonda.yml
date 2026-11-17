@@ -4,6 +4,9 @@ name: Sonda de fuentes (diagnóstico)
 
 on:
   workflow_dispatch:
+  push:   # 17-11-2026: también corre sola al subir un cambio de la lista de la sonda
+    branches: [main]
+    paths: ["herramientas/sonda.py"]
 
 permissions:
   contents: write

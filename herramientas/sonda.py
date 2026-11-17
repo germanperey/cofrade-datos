@@ -12,14 +12,14 @@ import requests
 UA = "CofradeNews/1.0 (boletin gratuito sin fines de lucro de la Cofradia de oficiales navales de Chile; github.com/cofrade-datos)"
 HOY = dt.date.today()
 D0, D1 = HOY.strftime("%Y%m%d"), (HOY - dt.timedelta(days=1)).strftime("%Y%m%d")
-OBJETIVOS = [   # 15-11-2026: sin la API privada de TABSA (regla de Germán: no se usa). Para fuentes nuevas de titulares usar
-    # herramientas/verificar_fuentes.py (directorio vivo); esta sonda queda para diagnósticos puntuales de fuentes oficiales.
-    ("espn_chi1_rango", "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261115-20261206&limit=300"),
-    ("espn_chi1_dia20", "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261120"),
-    ("espn_chi1_hoy", "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard"),
-    ("tsdb_proximos", "https://www.thesportsdb.com/api/v1/json/123/eventsnextleague.php?id=4627"),
-    ("seia_inicio", "https://seia.sea.gob.cl/"),
-    ("as_nba", "https://feeds.as.com/mrss-s/pages/as/site/as.com/section/baloncesto/subsection/nba/"),
+OBJETIVOS = [   # 17-11-2026: materia de cada votación de la Cámara (Germán: «409 votaciones de la Cámara cuya materia no se pudo
+    # leer desde la tarea»). Se prueba desde GitHub la ficha oficial de la votación y el detalle de datos abiertos, con su robots.txt.
+    # Para fuentes nuevas de titulares usar herramientas/verificar_fuentes.py; esta sonda queda para diagnósticos puntuales.
+    ("camara_ficha_91563", "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=91563"),
+    ("camara_ficha_90791", "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90791"),
+    ("camara_ficha_www_91563", "https://www.camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=91563"),
+    ("opendata_detalle_91563", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91563"),
+    ("opendata_detalle_90791", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90791"),
 ]
 EXTRA_JS = set()   # páginas donde se buscan scripts (ninguna por ahora)
 os.makedirs("sonda", exist_ok=True)
