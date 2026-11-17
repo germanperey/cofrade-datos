@@ -26,8 +26,20 @@ SECCIONES = (("politica/chile", "Chile"), ("economia/chile", "Economía"), ("pol
              ("ciencia", "Ciencia"), ("emprendimiento", "Emprendimiento"))
 POR_SECCION = 5
 HORAS_TITULARES = 12
-INDICADORES = (("dolar", "Dólar", "$", 2), ("euro", "Euro", "$", 2), ("uf", "UF", "$", 2), ("utm", "UTM", "$", 0),
-               ("libra_cobre", "Cobre (libra)", "US$", 2))
+# 17-11-2026 (Germán: «En el Landing page de www.cofrad.es está incompleta la cantidad de Indicadores económicos»): desde el 16-11
+# mindicador.cl falla de día cuando lo pide GitHub (13 de 18 pulsos entre el 16-11 09:07 y el 17-11 17:07 salieron sin dólar, euro,
+# UF, UTM ni cobre) y la franja «En vivo» quedaba sin ellos. Ahora cada indicador recorre una cascada y solo falta si no hay ningún
+# dato confiable de sus últimos días: (1) mindicador.cl, (2) la API oficial del Banco Central (cuenta gratuita de GitHub), (3) lo que
+# GitHub bajó en la mañana (datos/indicadores.json y datos/historia.json) y (4) el último pulso bueno. Cada cifra lleva su fecha.
+INDICADORES = (   # clave, nombre, prefijo, sufijo, decimales, serie del Banco Central, días que vale el dato
+    ("dolar", "Dólar observado", "$", "", 2, "F073.TCO.PRE.Z.D", 6),
+    ("euro", "Euro", "$", "", 2, "F072.CLP.EUR.N.O.D", 6),
+    ("uf", "UF", "$", "", 2, "F073.UFF.PRE.Z.D", 3),
+    ("utm", "UTM", "$", "", 0, "F073.UTR.PRE.Z.M", 40),
+    ("tpm", "TPM", "", " %", 2, "F022.TPM.TIN.D001.NO.Z.D", 10),
+    ("libra_cobre", "Cobre (libra)", "US$", "", 2, "F019.PPB.PRE.100.D", 6),
+)
+HISTORIA_CLAVE = {"dolar": "dolar", "euro": "euro", "uf": "uf", "tpm": "tpm", "libra_cobre": "cobre"}   # datos/historia.json
 LUGARES = (("Arica", -18.48, -70.31), ("Iquique", -20.21, -70.15), ("Calama", -22.46, -68.93), ("Antofagasta", -23.65, -70.40),
            ("Copiapó", -27.37, -70.33), ("La Serena", -29.90, -71.25), ("Valparaíso", -33.05, -71.61), ("Santiago", -33.45, -70.67),
            ("Rancagua", -34.17, -70.74), ("Talca", -35.43, -71.66), ("Concepción", -36.83, -73.05), ("Temuco", -38.74, -72.59),
@@ -52,15 +64,66 @@ def referencia(lat, lon):
     return f"{round(d)} km al {rumbo} de {nom}"
 
 
-def indicadores(estado):
-    j = B.pedir("https://mindicador.cl/api", estado, "indicadores", espera=(0, 20))
-    out = []
-    for k, nom, pre, dec in INDICADORES:
-        x = (j or {}).get(k) or {}
-        if isinstance(x.get("valor"), (int, float)):
-            out.append({"clave": k, "nombre": nom, "valor": x["valor"], "prefijo": pre, "decimales": dec,
-                        "fecha": str(x.get("fecha") or "")[:10], "fuente": "Banco Central de Chile (vía mindicador.cl)"})
-    return out
+def _vigente(fecha, hoy, dias):
+    """¿El dato es de hoy o de los `dias` anteriores? (nunca del futuro: la UF se publica con semanas de anticipación)."""
+    try:
+        f = dt.date.fromisoformat(str(fecha)[:10])
+    except ValueError:
+        return False
+    return 0 <= (hoy - f).days <= dias
+
+
+def _leer(carpeta, nombre):
+    try:
+        return json.load(open(os.path.join(carpeta, nombre), encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return None
+
+
+def indicadores(estado, carpeta=None):
+    """→ lista de indicadores en el orden de INDICADORES. `carpeta` (datos/) habilita los respaldos guardados por GitHub."""
+    hoy = B.ahora().date()
+    out, origen = {}, {}
+
+    def poner(k, valor, fecha, fuente, de):
+        t = next(x for x in INDICADORES if x[0] == k)
+        if k in out or not isinstance(valor, (int, float)) or isinstance(valor, bool) or valor <= 0 or not _vigente(fecha, hoy, t[6]):
+            return
+        out[k] = {"clave": k, "nombre": t[1], "valor": valor, "prefijo": t[2], "sufijo": t[3], "decimales": t[4],
+                  "fecha": str(fecha)[:10], "fuente": fuente}
+        origen[k] = de
+
+    j = B.pedir("https://mindicador.cl/api", estado, "indicadores", espera=(0, 20))   # 1) mindicador.cl
+    for t in INDICADORES:
+        x = (j or {}).get(t[0]) or {}
+        poner(t[0], x.get("valor"), x.get("fecha"), "Banco Central de Chile (vía mindicador.cl)", "mindicador")
+    auth = B._bcch_auth()   # 2) API oficial del Banco Central, solo para lo que falta
+    if auth and len(out) < len(INDICADORES) and B.robots_permite(B.BCCH_URL, estado):
+        for t in INDICADORES:
+            if t[0] in out:
+                continue
+            desde = (hoy - dt.timedelta(days=t[6] + 3)).isoformat()
+            url = f"{B.BCCH_URL}?{auth}&function=GetSeries&timeseries={t[5]}&firstdate={desde}&lastdate={hoy.isoformat()}"
+            obs = B.cierres_bcch(B.pedir(url, estado, f"pulso_bcch_{t[0]}", espera=(0, 10), limite=40), hoy + dt.timedelta(days=1))
+            if obs:
+                poner(t[0], round(obs[-1][1], 4), obs[-1][0], "Banco Central de Chile", "banco_central")
+    if carpeta:   # 3) lo que GitHub bajó en la mañana y 4) el último pulso bueno
+        m = _leer(carpeta, "indicadores.json") or {}
+        for t in INDICADORES:
+            x = m.get(t[0]) if isinstance(m.get(t[0]), dict) else {}
+            poner(t[0], x.get("valor"), x.get("fecha"), "Banco Central de Chile (vía mindicador.cl, lectura de la mañana)", "manana")
+        h = ((_leer(carpeta, "historia.json") or {}).get("series")) or {}
+        for k, hk in HISTORIA_CLAVE.items():
+            d = (h.get(hk) or {}).get("datos") if isinstance(h.get(hk), dict) else None
+            if isinstance(d, list) and d and isinstance(d[-1], list) and len(d[-1]) == 2:
+                poner(k, d[-1][1], d[-1][0], "Banco Central de Chile", "manana")
+        for x in (_leer(carpeta, "pulso.json") or {}).get("indicadores") or []:
+            if isinstance(x, dict) and x.get("clave") in {t[0] for t in INDICADORES}:
+                poner(x["clave"], x.get("valor"), x.get("fecha"), x.get("fuente") or "Banco Central de Chile", "pulso_anterior")
+    faltan = [t[1] for t in INDICADORES if t[0] not in out]
+    estado["indicadores_cascada"] = {"ok": not faltan, "hora": B.ahora().isoformat(timespec="seconds"), "origen": origen,
+                                     "error": ("sin dato: " + ", ".join(faltan)) if faltan else ""}
+    return [out[t[0]] for t in INDICADORES if t[0] in out]
 
 
 def ipsa(estado):
@@ -169,9 +232,11 @@ def aire(estado):
     return {"ciudades": out, "fuente": r.get("fuente")} if out else None
 
 
-def armar(estado):
+def armar(estado, carpeta=None):
+    """`carpeta`: la de datos/ (respaldos de los indicadores). Sin ella, el pulso solo usa lo que responde ahora."""
     p = {"generado": B.ahora().isoformat(timespec="minutes"), "proxima": None}
-    for nombre, fn in (("indicadores", indicadores), ("ipsa", ipsa), ("sismos", sismos), ("titulares", titulares), ("aire", aire)):
+    for nombre, fn in (("indicadores", lambda e: indicadores(e, carpeta)), ("ipsa", ipsa), ("sismos", sismos), ("titulares", titulares),
+                       ("aire", aire)):
         try:
             p[nombre] = fn(estado)
         except Exception as ex:   # noqa: BLE001 — un bloque roto no detiene a los demás
@@ -187,6 +252,7 @@ def armar(estado):
     siguiente = h.replace(minute=17, second=0, microsecond=0) + dt.timedelta(hours=2 - h.hour % 2)
     p["proxima"] = siguiente.strftime("%H:%M") if 7 <= siguiente.hour <= 23 else "07:17"
     p["fuentes_ok"] = sum(1 for v in estado.values() if isinstance(v, dict) and v.get("ok"))
+    p["indicadores_origen"] = (estado.get("indicadores_cascada") or {}).get("origen") or {}   # 17-11-2026: de dónde salió cada cifra
     return p
 
 
@@ -195,11 +261,13 @@ def main(argv=None):
     ap.add_argument("--salida", default="datos")
     a = ap.parse_args(argv)
     estado = {}
-    p = armar(estado)
+    p = armar(estado, a.salida)
     os.makedirs(a.salida, exist_ok=True)
     json.dump(p, open(os.path.join(a.salida, "pulso.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     n_tit = sum(len(s["notas"]) for s in p.get("titulares") or [])
-    print(f"PULSO {p['generado']}: {len(p.get('indicadores') or [])} indicadores, IPSA {'sí' if p.get('ipsa') else 'no'}, "
+    cas = estado.get("indicadores_cascada") or {}
+    print(f"PULSO {p['generado']}: {len(p.get('indicadores') or [])} de {len(INDICADORES)} indicadores "
+          f"({', '.join(f'{k}: {v}' for k, v in (cas.get('origen') or {}).items())}{'; ' + cas['error'] if cas.get('error') else ''}), IPSA {'sí' if p.get('ipsa') else 'no'}, "
           f"{len(p.get('mercados') or [])} mercados, {(p.get('sismos') or {}).get('n', 0)} sismos, {n_tit} titulares, "
           f"{len((p.get('aire') or {}).get('ciudades') or [])} ciudades con aire")
     return 0

@@ -252,6 +252,8 @@ function enFijo(t) {   // reglas sin IA para las frases con números
   if (m) return `Updated at ${m[1]}${m[2] ? ` · next update ${m[2]}` : ""}. ` + (EN_FIJO[m[3]] || m[3]);
   if ((m = t.match(/^Sismo mayor 24 h · (\d+) sobre M 2,5$/))) return `Largest earthquake in 24 h · ${m[1]} above M 2.5`;
   if ((m = t.match(/^(.+) · cierre (\d\d-\d\d)$/))) return `${EN_FIJO[m[1]] || m[1]} · close ${m[2]}`;
+  if ((m = t.match(/^(.+) · (\d\d-\d\d|\d\d:\d\d)$/)) && EN_FIJO[m[1]]) return `${EN_FIJO[m[1]]} · ${m[2]}`;   // 17-11-2026: cifras con su fecha
+  if ((m = t.match(/^(.+) · ([a-z]+) (\d{4})$/)) && EN_FIJO[m[1]] && MESES_ES.includes(m[2])) return `${EN_FIJO[m[1]]} · ${MESES_EN[MESES_ES.indexOf(m[2])]} ${m[3]}`;
   if ((m = t.match(/^(.+) · (\d\d-\d\d-\d{4})$/)) && EN_FIJO[m[1]]) return `${EN_FIJO[m[1]]} · ${m[2]}`;
   if ((m = t.match(/^([+−-]?[\d.,]+ %) en un mes$/))) return `${m[1]} over one month`;
   if ((m = t.match(/^(\d+) km al ([NSEO]{1,3}) de (.+?)( · \d\d:\d\d)?$/)) && RUMBO_EN[m[2]]) return `${m[1]} km ${RUMBO_EN[m[2]]} of ${m[3]}${m[4] || ""}`;
@@ -406,6 +408,7 @@ section{padding:28px 0;border-top:1px solid var(--linea)}h3{font:600 26px/1.2 va
 .tabla-vis td:first-child{font-variant-numeric:normal}.cifras.c4{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.dos.d2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
 @media (max-width:560px){.tabla-vis{font-size:14px}.tabla-vis th,.tabla-vis td{padding:6px 7px}.tabla-vis th:first-child,.tabla-vis td:first-child{position:sticky;left:0;z-index:1;background:var(--card);box-shadow:1px 0 0 var(--linea)}}.var{font-size:13px;margin-left:4px}.sube{color:var(--verde)}.baja{color:var(--rojo)}
 .cifra a{font-size:12px;color:var(--gris)}
+.cifra.c2{display:flex;flex-direction:column;gap:2px}.cifra.c2 .cv{margin-top:auto}.vivo-grupo+.vivo-grupo{margin-top:18px}.vivo-tit{font:600 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--oro-t);margin:0 0 9px}
 .dos{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:14px}
 .titulares h4{font:600 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--oro-t);margin:0 0 8px}
 .titulares ol{margin:0;padding-left:18px}.titulares li{margin:0 0 9px;font-size:15.5px;line-height:1.45}.titulares li a{text-decoration:none}.titulares li a:hover{text-decoration:underline}
@@ -573,9 +576,12 @@ var D=window.__EN||{};
 // 14-11-2026 (Germán: «muchos textos no se están traduciendo»): las frases con cifras, horas y fechas se traducen aquí con reglas
 // (no dependen de /en.json); los titulares del día llegan de /en.json por partes y la página los va poniendo
 var DIR={N:'N',S:'S',E:'E',O:'W',NE:'NE',NO:'NW',SE:'SE',SO:'SW',NNE:'NNE',NNO:'NNW',ENE:'ENE',ESE:'ESE',SSE:'SSE',SSO:'SSW',ONO:'WNW',OSO:'WSW'};
+var MES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
 function regla(t){var m;
 if((m=t.match(/^Actualizado a las (\\d\\d:\\d\\d)(?: · próxima actualización (\\d\\d:\\d\\d))?\\. (.+)$/)))return 'Updated at '+m[1]+(m[2]?' · next update '+m[2]:'')+'. '+(D[m[3]]||m[3]);
 if((m=t.match(/^(.+) · cierre (\\d\\d-\\d\\d)$/)))return (D[m[1]]||m[1])+' · close '+m[2];
+if((m=t.match(/^(.+) · (\\d\\d-\\d\\d|\\d\\d:\\d\\d)$/))&&D[m[1]])return D[m[1]]+' · '+m[2];
+if((m=t.match(/^(.+) · ([a-z]+) (\\d{4})$/))&&D[m[1]]&&MES.indexOf(m[2])>=0)return D[m[1]]+' · '+MON[MES.indexOf(m[2])]+' '+m[3];
 if((m=t.match(/^(.+) · (\\d\\d-\\d\\d-\\d{4})$/))&&D[m[1]])return D[m[1]]+' · '+m[2];
 if((m=t.match(/^([+−-]?[\\d.,]+ %) en un mes$/)))return m[1]+' over one month';
 if((m=t.match(/^Sismo mayor 24 h · (\\d+) sobre M 2,5$/)))return 'Largest earthquake in 24 h · '+m[1]+' above M 2.5';
@@ -643,7 +649,10 @@ const EN_FIJO = {
   "Conflictos en el mundo": "Conflicts around the world", "Perspectivas 2050": "Outlook 2050", "Ciencia y Astronomía": "Science and Astronomy",
   "Deportes": "Sports", "Clima, mar y sismos": "Weather, sea and earthquakes", "Vuelos comerciales": "Commercial flights",
   "Entretenimiento": "Entertainment", "Fondos y subsidios": "Grants and subsidies", "Efemérides": "On this day",
-  "Banco Central, Bolsa de Santiago, USGS, aire medido y los medios del país.": "Central Bank, Santiago Stock Exchange, USGS, measured air quality and the country's media.",
+  "Banco Central, Bolsa de Santiago, Reserva Federal de St. Louis, Coinbase, USGS y los medios del país.": "Central Bank, Santiago Stock Exchange, St. Louis Fed, Coinbase, USGS and the country's media.",
+  "Banco Central, Bolsa de Santiago, Reserva Federal de St. Louis, Coinbase, USGS, aire medido y los medios del país.": "Central Bank, Santiago Stock Exchange, St. Louis Fed, Coinbase, USGS, measured air quality and the country's media.",
+  "Mercados del mundo": "World markets", "Sismos": "Earthquakes", "Sismos y calidad del aire": "Earthquakes and air quality",
+  "TPM": "Monetary policy rate",
   "Se actualiza cada 2 horas, de 07:00 a 23:00.": "Updated every 2 hours, from 07:00 to 23:00.",
   "Los titulares de las últimas horas aparecen aquí en la próxima actualización.": "The latest headlines appear here at the next update.",
   "Las 12 ediciones publicadas más recientes.": "The 12 most recent published editions.", "El archivo empieza con la próxima edición.": "The archive starts with the next edition.",
@@ -994,19 +1003,42 @@ function pizarra(h, p) {
     + `<div class="piz-pie">Fuente: Banco Central de Chile, Base de Datos Estadísticos.</div></aside>`;
 }
 
+// 17-11-2026 (Germán: «En el Landing page de www.cofrad.es está incompleta la cantidad de Indicadores económicos»): mindicador.cl
+// falló de día desde el 16-11 y la franja salía sin dólar, euro, UF, UTM ni cobre. El pulso ya trae cada indicador con su cascada
+// de fuentes (pulso.py) y aquí van en dos grupos fijos, Chile y Mercados del mundo, cada cifra con la fecha de su dato (la hora si
+// es del día). El vigía revisa cada 3 horas que no falte ninguna (herramientas/vigia.py, VIVO_REQUERIDAS).
+const MESES_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const MESES_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function fechaCifra(f, mensual) {
+  const m = String(f || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return "";
+  return mensual ? `${MESES_ES[Number(m[2]) - 1]} ${m[1]}` : `${m[3]}-${m[2]}`;
+}
+function tarjetaCifra(nombre, cuando, valor, extra) {
+  return `<div class="cifra c2"><small>${esc(nombre)}${cuando ? " · " + esc(cuando) : ""}</small><div class="cv"><b>${valor}</b>${extra || ""}</div></div>`;
+}
+function grupoCifras(titulo, c) {
+  return c.length ? `<div class="vivo-grupo"><h4 class="vivo-tit">${esc(titulo)}</h4><div class="cifras">${c.join("")}</div></div>` : "";
+}
+const VIVO_CHILE = ["dolar", "euro", "uf", "utm", "tpm"];
+const VIVO_FUENTES = "Banco Central, Bolsa de Santiago, Reserva Federal de St. Louis, Coinbase, USGS y los medios del país.";
+const VIVO_FUENTES_AIRE = "Banco Central, Bolsa de Santiago, Reserva Federal de St. Louis, Coinbase, USGS, aire medido y los medios del país.";
 function bloqueCifras(p) {
   if (!p) return "";
-  const c = [];
-  for (const x of p.indicadores || []) {
-    c.push(`<div class="cifra"><small>${esc(x.nombre)}</small><b>${esc(x.prefijo || "")}${num(x.valor, x.decimales ?? 2)}</b></div>`);
-  }
-  if (p.ipsa) c.push(`<div class="cifra"><small>IPSA (puntos)</small><b>${num(p.ipsa.valor, 2)}</b>${pct(p.ipsa.variacion_pct)}</div>`);
-  const hayCobre = (p.indicadores || []).some((x) => x.clave === "libra_cobre");
-  for (const m of (p.mercados || []).filter((m) => !(hayCobre && /^cobre/i.test(m.nombre || ""))).slice(0, 6)) {
-    c.push(`<div class="cifra"><small>${esc(m.nombre)} · cierre ${esc((m.fecha || "").split("-").reverse().slice(0, 2).join("-"))}</small><b>${num(m.valor, 2)}</b>${pct(m.variacion_pct)}</div>`);
-  }
-  if (p.bitcoin && p.bitcoin.bitcoin_usd) c.push(`<div class="cifra"><small>Bitcoin</small><b>US$${num(p.bitcoin.bitcoin_usd, 0)}</b></div>`);
-  return c.length ? `<div class="cifras">${c.join("")}</div>` : "";
+  const ind = {};
+  for (const x of p.indicadores || []) if (x && x.clave && typeof x.valor === "number") ind[x.clave] = x;
+  const val = (x) => `${esc(x.prefijo || "")}${num(x.valor, x.decimales ?? 2)}${esc(x.sufijo || "")}`;
+  const chile = VIVO_CHILE.filter((k) => ind[k]).map((k) => tarjetaCifra(ind[k].nombre, fechaCifra(ind[k].fecha, k === "utm"), val(ind[k])));
+  if (p.ipsa && typeof p.ipsa.valor === "number") chile.push(tarjetaCifra("IPSA (puntos)", String(p.ipsa.hora || "").slice(11, 16), num(p.ipsa.valor, 2), pct(p.ipsa.variacion_pct)));
+  const merc = (p.mercados || []).filter((m) => m && m.nombre && typeof m.valor === "number");
+  const cierre = (m) => tarjetaCifra(m.nombre, m.fecha ? "cierre " + fechaCifra(m.fecha) : "", num(m.valor, 2), pct(m.variacion_pct));
+  const materia = /^(cobre|petr[oó]leo|oro|plata)/i;
+  const mundo = merc.filter((m) => !materia.test(m.nombre)).map(cierre);
+  if (ind.libra_cobre) mundo.push(tarjetaCifra(ind.libra_cobre.nombre, fechaCifra(ind.libra_cobre.fecha), val(ind.libra_cobre)));
+  else mundo.push(...merc.filter((m) => /^cobre/i.test(m.nombre)).map(cierre));
+  mundo.push(...merc.filter((m) => materia.test(m.nombre) && !/^cobre/i.test(m.nombre)).map(cierre));
+  if (p.bitcoin && typeof p.bitcoin.bitcoin_usd === "number") mundo.push(tarjetaCifra("Bitcoin", fechaCifra(p.bitcoin.bitcoin_fecha), `US$${num(p.bitcoin.bitcoin_usd, 0)}`));
+  return grupoCifras("Chile", chile) + grupoCifras("Mercados del mundo", mundo.slice(0, 6));
 }
 
 function bloqueTitulares(p) {
@@ -1028,7 +1060,7 @@ function bloqueTierra(p) {
   for (const x of (a || []).slice(0, 5)) {
     out.push(`<div class="cifra"><small>Aire · ${esc(x.ciudad)}</small><b>${esc(x.estado || "")}</b><br><small>ICA ${esc(x.aqi)} · ${esc(x.hora || "")}</small><a href="${esc(urlSegura(x.url))}" target="_blank" rel="noopener">fuente ↗</a></div>`);
   }
-  return out.length ? `<div class="cifras" style="margin-top:12px">${out.join("")}</div>` : "";
+  return grupoCifras(a && a.length ? "Sismos y calidad del aire" : "Sismos", out);
 }
 
 // 16-11-2026 · Germán: «en vez de colocar 07:30 cámbialo por las 9.00, porque antes de esa hora estás procesando el Newsletter y aún
@@ -1060,7 +1092,7 @@ ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${h
 <h2 class="titulo-lujo" id="t-secc">${esc(estado)}</h2><p class="sub">Doce secciones, cada mañana, con la fuente de cada dato.</p>
 <div class="secc">${SECCIONES_LUJO.map(([ic, t, d]) => `<a class="sec-card" href="/edicion" style="text-decoration:none">${icono(ic)}<div><b>${esc(t)}</b><p>${esc(d)}</p></div></a>`).join("")}</div></section>
 <section id="en-vivo" aria-labelledby="t-vivo"><h3 id="t-vivo"><span class="vivo">En vivo</span></h3>
-<p class="sub">${hora ? `Actualizado a las ${esc(hora)}${p.proxima ? ` · próxima actualización ${esc(p.proxima)}` : ""}.` : "Se actualiza cada 2 horas, de 07:00 a 23:00."} Banco Central, Bolsa de Santiago, USGS, aire medido y los medios del país.</p>
+<p class="sub">${hora ? `Actualizado a las ${esc(hora)}${p.proxima ? ` · próxima actualización ${esc(p.proxima)}` : ""}.` : "Se actualiza cada 2 horas, de 07:00 a 23:00."} ${p && p.aire && (p.aire.ciudades || []).length ? VIVO_FUENTES_AIRE : VIVO_FUENTES}</p>
 ${bloqueCifras(p)}${bloqueTierra(p)}${bloqueTitulares(p)}</section>
 <section aria-labelledby="t-gal"><h2 class="titulo-lujo" id="t-gal">Así se ve por dentro</h2><p class="sub">Algunos de los gráficos de la edición, tal como los recibes cada mañana.</p>
 <div class="galeria">

@@ -1740,6 +1740,88 @@ def materia_de_cada_votacion_desde_datos_abiertos():
 
 
 @prueba
+def indicadores_en_vivo_nunca_faltan():
+    """17-11-2026 (Germán: «En el Landing page de www.cofrad.es está incompleta la cantidad de Indicadores económicos»): mindicador.cl
+    falló de día desde el 16-11 y la franja «En vivo» quedó sin dólar, euro, UF, UTM ni cobre. Cascada: mindicador → Banco Central →
+    lectura de la mañana → último pulso bueno; cada cifra con su fecha, nunca del futuro ni vencida."""
+    import pulso as P
+    viejos = B.pedir, B.robots_permite, B.ahora, os.environ.get("BCCH_TOKEN")
+    B.ahora = lambda: dt.datetime(2026, 11, 17, 17, 7, tzinfo=B.TZ)
+    B.robots_permite = lambda url, e: True
+    os.environ["BCCH_TOKEN"] = "llave-de-prueba"
+    claves = [t[0] for t in P.INDICADORES]
+    hoy = dt.date(2026, 11, 17)
+    assert P._vigente("2026-11-14T03:00:00.000Z", hoy, 3) and not P._vigente("2026-11-13", hoy, 3)   # vencido
+    assert not P._vigente("2026-11-18", hoy, 3) and not P._vigente("", hoy, 3) and not P._vigente(None, hoy, 3)   # futuro o sin fecha
+    mind = {"dolar": {"valor": 1001.17, "fecha": "2026-11-17T03:00:00.000Z"}, "euro": {"valor": 1102, "fecha": "2026-11-17T03:00:00.000Z"},
+            "uf": {"valor": 41350.42, "fecha": "2026-11-17T03:00:00.000Z"}, "utm": {"valor": 72440, "fecha": "2026-11-01T03:00:00.000Z"},
+            "tpm": {"valor": 4.5, "fecha": "2026-11-17T03:00:00.000Z"}, "libra_cobre": {"valor": 6.11, "fecha": "2026-11-17T03:00:00.000Z"}}
+    bc = {"F073.TCO.PRE.Z.D": [("14-11-2026", "999,5"), ("17-11-2026", "1001.17")], "F072.CLP.EUR.N.O.D": [("17-11-2026", "1102")],
+          "F073.UFF.PRE.Z.D": [("17-11-2026", "41350.42"), ("18-11-2026", "41352.1")],   # la UF de mañana no se usa
+          "F073.UTR.PRE.Z.M": [("01-11-2026", "72440")], "F022.TPM.TIN.D001.NO.Z.D": [("17-11-2026", "4.5")],
+          "F019.PPB.PRE.100.D": [("17-11-2026", "6.1089")]}
+    pedidas = []
+
+    def pedir(url, est, cl, **k):
+        pedidas.append(url)
+        if "mindicador.cl" in url:
+            return modo["mind"]
+        if "bcentral.cl" in url and modo["bc"]:
+            sid = url.split("timeseries=")[1].split("&")[0]
+            return {"Series": {"Obs": [{"indexDateString": f, "value": v, "statusCode": "OK"} for f, v in bc.get(sid, [])]}}
+        return None
+    B.pedir = pedir
+    try:
+        modo = {"mind": mind, "bc": True}   # 1) mindicador responde: el Banco Central no se consulta
+        est = {}
+        r = P.indicadores(est)
+        assert [x["clave"] for x in r] == claves and not any("bcentral" in u for u in pedidas), (r, pedidas)
+        assert r[0]["nombre"] == "Dólar observado" and r[0]["fecha"] == "2026-11-17" and r[4]["sufijo"] == " %" and r[3]["decimales"] == 0
+        assert est["indicadores_cascada"]["ok"] and set(est["indicadores_cascada"]["origen"].values()) == {"mindicador"}
+        modo, pedidas[:] = {"mind": {k: v for k, v in mind.items() if k != "utm"}, "bc": True}, []   # 1b) falta solo la UTM
+        est = {}
+        assert [x["clave"] for x in P.indicadores(est)] == claves and est["indicadores_cascada"]["origen"]["utm"] == "banco_central"
+        assert [u for u in pedidas if "bcentral" in u] == [u for u in pedidas if "F073.UTR.PRE.Z.M" in u] and len(pedidas) == 2, pedidas
+        modo, pedidas[:] = {"mind": None, "bc": True}, []   # 2) mindicador cae: todo sale del Banco Central
+        est = {}
+        r = P.indicadores(est)
+        d = {x["clave"]: x for x in r}
+        assert list(d) == claves and set(est["indicadores_cascada"]["origen"].values()) == {"banco_central"}, est
+        assert d["uf"]["valor"] == 41350.42 and d["uf"]["fecha"] == "2026-11-17" and d["dolar"]["valor"] == 1001.17, d
+        assert d["libra_cobre"]["valor"] == 6.1089 and d["utm"]["fecha"] == "2026-11-01" and d["dolar"]["fuente"] == "Banco Central de Chile"
+        with tempfile.TemporaryDirectory() as tmp:   # 3) sin red: la lectura de la mañana y la historia del Banco Central
+            json.dump({"dolar": {"valor": 1001.17, "fecha": "2026-11-17T03:00:00.000Z"}, "utm": {"valor": 72440, "fecha": "2026-11-01T03:00:00.000Z"},
+                       "euro": {"valor": 0, "fecha": "2026-11-17"}, "uf": {"valor": True, "fecha": "2026-11-17"},   # cero y verdadero no son cifras
+                       "tpm": {"valor": "4,5", "fecha": "2026-11-17"}}, open(os.path.join(tmp, "indicadores.json"), "w"))
+            json.dump({"series": {"euro": {"datos": [["2026-11-17", 1102.0]]}, "uf": {"datos": [["2026-11-17", 41350.42]]},
+                                  "tpm": {"datos": [["2026-11-17", 4.5]]}, "cobre": {"datos": [["2026-11-10", 5.9]]}}},   # cobre vencido
+                      open(os.path.join(tmp, "historia.json"), "w"))
+            json.dump({"indicadores": [{"clave": "libra_cobre", "valor": 6.05, "fecha": "2026-11-16", "fuente": "Banco Central de Chile"},
+                                       {"clave": "dolar", "valor": 990, "fecha": "2026-11-16"}]}, open(os.path.join(tmp, "pulso.json"), "w"))
+            modo = {"mind": None, "bc": False}
+            est = {}
+            d = {x["clave"]: x for x in P.indicadores(est, tmp)}
+            o = est["indicadores_cascada"]["origen"]
+            assert list(d) == claves and d["dolar"]["valor"] == 1001.17 and o["dolar"] == "manana", (d, o)   # la mañana antes que el pulso viejo
+            assert d["euro"]["valor"] == 1102.0 and d["uf"]["valor"] == 41350.42 and d["tpm"]["valor"] == 4.5 and o["tpm"] == "manana", d
+            assert d["libra_cobre"]["valor"] == 6.05 and o["libra_cobre"] == "pulso_anterior", (d, o)   # el cobre del 10-11 no vale
+            json.dump({"indicadores": [{"clave": "dolar", "valor": 990, "fecha": "2026-11-09"}]}, open(os.path.join(tmp, "pulso.json"), "w"))
+            os.remove(os.path.join(tmp, "indicadores.json"))
+            os.remove(os.path.join(tmp, "historia.json"))
+            est = {}
+            assert P.indicadores(est, tmp) == [] and "Dólar observado" in est["indicadores_cascada"]["error"]   # 4) todo vencido: nada inventado
+        os.environ.pop("BCCH_TOKEN")
+        modo, pedidas[:] = {"mind": None, "bc": True}, []   # sin la cuenta del Banco Central no se le pide nada
+        assert P.indicadores({}) == [] and not any("bcentral" in u for u in pedidas)
+    finally:
+        B.pedir, B.robots_permite, B.ahora = viejos[:3]
+        if viejos[3] is None:
+            os.environ.pop("BCCH_TOKEN", None)
+        else:
+            os.environ["BCCH_TOKEN"] = viejos[3]
+
+
+@prueba
 def radar_de_conflictos_nuevos():
     """17-11-2026 (Germán: «verificar si surge algún otro conflicto bélico nuevo, para agregarlo también»): por país, titulares de guerra
     de las últimas 72 h que no son de los 4 conflictos de la edición; «revisar» con 5 o más titulares de 3 o más medios y el doble de

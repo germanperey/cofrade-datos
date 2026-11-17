@@ -8,6 +8,9 @@ on:
     - cron: "17 10,12,14,16,18,20,22 * * *"
     - cron: "17 0,2 * * *"
   workflow_dispatch:
+  push:   # 17-11-2026: al cambiar el armado del pulso corre al tiro, así la portada no espera 2 horas para mostrar el arreglo
+    branches: [main]
+    paths: [pulso.py]
 
 permissions:
   contents: write
