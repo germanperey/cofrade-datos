@@ -84,21 +84,17 @@ for nombre in EXTRA_JS:
     print(nombre, "APIS", json.dumps(sorted(apis)[:80], ensure_ascii=False)[:3000])
 json.dump(resumen, open("sonda/resumen.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
-# 17-11-2026: prueba EN VIVO de la materia de las votaciones de la Cámara (bajar.camara + bajar.camara_materias), sin tocar main.
+# 17-11-2026: prueba EN VIVO del radar de conflictos nuevos (bajar.titulares + bajar.radar_conflictos), sin tocar main.
 try:
     import sys as _sys
     _sys.path.insert(0, os.getcwd())
     import bajar as _B
     _e = {}
-    _cam, _ = _B.camara(_e, _B.ahora().date(), {}, maximo=0)
-    _g = _B.camara_materias(_e, _cam, {})
-    _filas = (_cam or {}).get("camara_mes") or []
-    _con = [f for f in _filas if f.get("descripcion_oficial")]
-    json.dump({"estado": _e.get("camara_materias"), "filas_mes": len(_filas), "con_materia": len(_con),
-               "ejemplos": [f["descripcion"] for f in _con[:25]], "largo_max": max((len(f["descripcion"]) for f in _con), default=0)},
-              open("sonda/materias-en-vivo.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print("materias en vivo:", _e.get("camara_materias"))
+    _B.titulares(_e)
+    _r = _B.radar_conflictos(_B.RADAR_NOTAS, {}, _B.ahora().date())
+    json.dump({"notas": len(_B.RADAR_NOTAS), "titulares": _e.get("titulares"), "radar": _r},
+              open("sonda/conflictos-radar-en-vivo.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("radar en vivo:", len(_B.RADAR_NOTAS), "notas;", [(c["pais"], c["titulares_72h"], c["medios"], c["revisar"]) for c in _r["candidatos"][:8]])
 except Exception as _ex:   # noqa: BLE001
-    open("sonda/materias-en-vivo.json", "w", encoding="utf-8").write(json.dumps({"error": f"{type(_ex).__name__}: {_ex}"}))
-    print("materias en vivo: ERROR", _ex)
-
+    open("sonda/conflictos-radar-en-vivo.json", "w", encoding="utf-8").write(json.dumps({"error": f"{type(_ex).__name__}: {_ex}"}))
+    print("radar en vivo: ERROR", _ex)

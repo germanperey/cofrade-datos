@@ -1738,6 +1738,56 @@ def materia_de_cada_votacion_desde_datos_abiertos():
     finally:
         B.pedir, B.time.sleep = viejos
 
+
+@prueba
+def radar_de_conflictos_nuevos():
+    """17-11-2026 (Germán: «verificar si surge algún otro conflicto bélico nuevo, para agregarlo también»): por país, titulares de guerra
+    de las últimas 72 h que no son de los 4 conflictos de la edición; «revisar» con 5 o más titulares de 3 o más medios y el doble de
+    su promedio. Lo decide la tarea con fuentes: aquí solo se cuenta."""
+    import datetime as _dt
+    viejo = B.ahora
+    B.ahora = lambda: _dt.datetime(2026, 11, 17, 9, 0, tzinfo=B.TZ)
+    try:
+        def n(titulo, fuente, url, fecha="2026-11-17 08:00", resumen=""):
+            return {"titulo": titulo, "fuente": fuente, "url": url, "fecha": fecha, "resumen": resumen}
+        notas = [n("Myanmar army airstrikes kill 30 in Sagaing", "BBC News · World (RSS, inglés)", "u1"),
+                 n("Myanmar junta launches offensive in Rakhine", "BBC News · World (RSS, inglés)", "u2"),
+                 n("Bombardeos del ejército de Birmania dejan decenas de muertos", "El País · Internacional (RSS)", "u3"),
+                 n("Ofensiva militar en Myanmar: miles huyen", "El País · Internacional (RSS)", "u4"),
+                 n("Myanmar rebels seize border town after fighting", "NYT Asia Pacífico (RSS, inglés)", "u5"),
+                 n("Myanmar rebels seize border town after fighting", "NYT Asia Pacífico (RSS, inglés)", "u5"),   # repetida: cuenta una vez
+                 n("Myanmar: troops and militias clash near Mandalay", "The Guardian Mundo (RSS, inglés)", "u6"),
+                 n("Myanmar army shelling", "The Guardian Mundo (RSS, inglés)", "u7", fecha="2026-11-13 08:00"),   # más de 72 h
+                 n("Russian missiles hit Kyiv; Poland scrambles jets", "Kyiv Independent (RSS, inglés)", "u8"),   # conflicto conocido
+                 n("South Sudan clashes kill 20 in Jonglei", "Al Jazeera (RSS, inglés)", "u9"),
+                 n("Guinea-Bissau: troops seize the presidential palace", "France 24 (RSS)", "u10"),
+                 n("México presenta su plan económico para 2027", "Infobae (RSS)", "u11"),   # sin palabras de guerra
+                 n("CrisisWatch: November 2026 Alerts and October Trends", "International Crisis Group (RSS, inglés)", "u12"),
+                 n("Equatorial Guinea troops deployed to the border", "Reuters (RSS, inglés)", "u13"),
+                 n("Papua New Guinea: tribal fighting kills 12", "ABC Australia (RSS, inglés)", "u14")] + \
+                [n(f"Al Shabaab fighters attack army base {i}", "Long War Journal (RSS, inglés)", f"s{i}") for i in range(6)]   # 6 de UN medio
+        r = B.radar_conflictos(notas, {}, _dt.date(2026, 11, 17))
+        c = {x["iso2"]: x for x in r["candidatos"]}
+        assert c["MM"]["titulares_72h"] == 6 and c["MM"]["medios"] == 4 and c["MM"]["revisar"] is True, c.get("MM")
+        assert c["MM"]["pais"] == "Myanmar" and len(c["MM"]["ejemplos"]) == 5 and c["MM"]["ejemplos"][0]["fuente"] == "BBC News · World"
+        assert "PL" not in c and "RU" not in c and "UA" not in c, c.keys()   # lo de Ucrania no es un conflicto nuevo
+        assert c["SS"]["titulares_72h"] == 1 and c["SS"]["revisar"] is False, c.get("SS")   # Sudán del Sur no se confunde con Sudán
+        assert "GW" in c and "GN" not in c, c.keys()   # Guinea-Bisáu antes que Guinea
+        assert "GQ" in c and "PG" in c and "ID" not in c, c.keys()   # «Guinea Ecuatorial» y «Papúa Nueva Guinea» enteros, no «Guinea» ni «Papúa»
+        assert c["SO"]["titulares_72h"] == 6 and c["SO"]["medios"] == 1 and c["SO"]["revisar"] is False, c.get("SO")   # un solo medio no basta
+        assert "MX" not in c, c.keys()
+        assert r["crisis_group"] and r["crisis_group"][0]["url"] == "u12", r["crisis_group"]
+        assert r["historia"]["2026-11-17"]["MM"] == 6
+        previo = {"historia": {f"2026-11-{d:02d}": {"MM": 6} for d in range(1, 17)}}   # Myanmar ya venía con 6 al día: no es nuevo
+        r2 = B.radar_conflictos(notas, previo, _dt.date(2026, 11, 17))
+        m2 = next(x for x in r2["candidatos"] if x["iso2"] == "MM")
+        assert m2["prom_7d"] == 6 and m2["revisar"] is False, m2
+        assert len(r2["historia"]) == 15 and "2026-11-02" not in r2["historia"], sorted(r2["historia"])
+        previo3 = {"historia": {f"2026-11-{d:02d}": {"MM": 2} for d in range(10, 17)}}   # subió al triple: se revisa
+        assert next(x for x in B.radar_conflictos(notas, previo3, _dt.date(2026, 11, 17))["candidatos"] if x["iso2"] == "MM")["revisar"]
+    finally:
+        B.ahora = viejo
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

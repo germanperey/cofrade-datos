@@ -19,6 +19,7 @@ Archivos que deja en datos/:
   liga-primera.json   tabla completa del Campeonato Nacional (API de Wikipedia, inglés o español) y los últimos
                       partidos jugados (TheSportsDB, API gratuita)
   titulares.json      31-10-2026: titulares de las últimas horas de cada sección, leídos de los RSS PÚBLICOS de los medios
+  conflictos-radar.json 17-11-2026: países con titulares de guerra que no son de los 4 conflictos de la edición (posible conflicto nuevo)
                       (BBC, El País, DW, France 24, La Tercera, Xataka, NASA, ESA, ESO, ScienceDaily…) y de Google News,
                       solo donde el robots.txt del sitio lo permite
   mercados.json       31-10-2026: último CIERRE del IPSA, S&P 500, Nasdaq, Dow Jones, Brent, cobre Comex y bitcoin (con su fecha)
@@ -1841,6 +1842,97 @@ def _norm(t):
     return re.sub(r"[^a-z0-9áéíóúñü ]", "", str(t).lower())[:90]
 
 
+# ---------- 17-11-2026: radar de conflictos nuevos ----------
+# Germán (17-11-2026): «debes procurar que diariamente se actualicen las últimas Noticias relacionadas a los 4 conflictos bélicos
+# vigentes (junto con verificar si surge algún otro conflicto bélico nuevo, para agregarlo también)». Con los RSS de Mundo y de
+# Conflictos que ya se leen (BBC, NYT, The Guardian, France 24, El País, Infobae, Crisis Group, Long War Journal…), cuenta por país los
+# titulares de guerra de las últimas 72 h que NO son de los 4 conflictos de la edición y marca «revisar» cuando un país junta varios
+# medios y sube fuerte frente a su promedio. La tarea diaria lo verifica con fuentes y decide si lo agrega: aquí no se decide nada.
+RADAR_NOTAS = []
+_PAISES_TXT = (
+    "AF:Afganistán|Afghanistan|talibán|taliban;AL:Albania;DZ:Argelia|Algeria;AO:Angola;AR:Argentina;AM:Armenia;AZ:Azerbaiyán|Azerbaijan;"
+    "BD:Bangladés|Bangladesh;BF:Burkina Faso;BI:Burundi;BJ:Benín|Benin;BO:Bolivia;BA:Bosnia;BR:Brasil|Brazil;CF:República Centroafricana|"
+    "Central African Republic;CL:Chile;CM:Camerún|Cameroon;CN:China|Pekín|Beijing;CO:Colombia;CD:Congo|RDC|DRC|Kinshasa|M23|Goma;"
+    "CG:República del Congo|Congo-Brazzaville;CU:Cuba;CY:Chipre|Cyprus;DJ:Yibuti|Djibouti;EC:Ecuador;EG:Egipto|Egypt;ER:Eritrea;"
+    "ET:Etiopía|Ethiopia|Tigray|Amhara;GE:Georgia;GH:Ghana;GN:Guinea;GT:Guatemala;GW:Guinea-Bisáu|Guinea-Bissau;GY:Guyana|Esequibo|Essequibo;"
+    "HN:Honduras;HT:Haití|Haiti;IN:India|Cachemira|Kashmir;ID:Indonesia|Papúa|Papua;IQ:Irak|Iraq;JO:Jordania|Jordan;KE:Kenia|Kenya;"
+    "KP:Corea del Norte|North Korea|Pyongyang;KR:Corea del Sur|South Korea|Seúl|Seoul;KG:Kirguistán|Kyrgyzstan;KH:Camboya|Cambodia;"
+    "LA:Laos;LY:Libia|Libya|Trípoli|Tripoli;ML:Malí|Mali;MM:Myanmar|Birmania|Burma;MX:México|Mexico;MZ:Mozambique|Cabo Delgado;"
+    "NE:Níger|Niger;NG:Nigeria|Boko Haram;NI:Nicaragua;PK:Pakistán|Pakistan|Baluchistán|Balochistan;PA:Panamá|Panama;PE:Perú|Peru;"
+    "PH:Filipinas|Philippines;PY:Paraguay;RS:Serbia;RW:Ruanda|Rwanda;SN:Senegal;SO:Somalia|Al Shabab|Al Shabaab|al-Shabaab;SS:Sudán del Sur|"
+    "South Sudan;SY:Siria|Syria|Damasco|Damascus;TD:Chad;TH:Tailandia|Thailand;TJ:Tayikistán|Tajikistan;TN:Túnez|Tunisia;"
+    "TR:Turquía|Turkey|Türkiye|PKK;TW:Taiwán|Taiwan;UG:Uganda;VE:Venezuela|Caracas;VN:Vietnam;XK:Kosovo;ZW:Zimbabue|Zimbabwe;"
+    "MD:Moldavia|Moldova|Transnistria;ZA:Sudáfrica|South Africa;SA:Arabia Saudita|Saudi Arabia;AE:Emiratos|Emirates|UAE;"
+    "QA:Catar|Qatar;KW:Kuwait;BH:Baréin|Bahrain;OM:Omán|Oman;GR:Grecia|Greece;PL:Polonia|Poland;"
+    "LT:Lituania|Lithuania;LV:Letonia|Latvia;EE:Estonia;FI:Finlandia|Finland;DK:Groenlandia|Greenland;JP:Japón|Japan;"
+    "LK:Sri Lanka;NP:Nepal;MG:Madagascar;MR:Mauritania;TG:Togo;CI:Costa de Marfil|Ivory Coast|Côte d'Ivoire;SL:Sierra Leona|Sierra Leone;"
+    "LR:Liberia;GQ:Guinea Ecuatorial|Equatorial Guinea;PG:Papúa Nueva Guinea|Papua New Guinea;SV:El Salvador;DO:República Dominicana|"
+    "Dominican Republic;EH:Sahara Occidental|Western Sahara|Polisario;MA:Marruecos|Morocco;UZ:Uzbekistán|Uzbekistan;TM:Turkmenistán|"
+    "Turkmenistan;KZ:Kazajistán|Kazakhstan;MN:Mongolia")
+PAISES_RADAR = {}
+for _x in _PAISES_TXT.split(";"):
+    _iso, _nombres = _x.split(":", 1)
+    PAISES_RADAR[_iso] = _nombres.split("|")
+# Más largo primero: «Sudán del Sur» antes que «Sudán», «Guinea-Bisáu» antes que «Guinea», «Corea del Norte» antes que «Corea».
+_RADAR_NOMBRES = sorted(((n, iso) for iso, ns in PAISES_RADAR.items() for n in ns), key=lambda t: -len(t[0]))
+_RADAR_RX = re.compile(r"(?<![\w-])(" + "|".join(re.escape(n) for n, _ in _RADAR_NOMBRES) + r")(?![\w-])", re.I)
+_RADAR_ISO = {n.lower(): iso for n, iso in _RADAR_NOMBRES}
+# Los 4 conflictos que ya salen todos los días (assets/conflictos-base.json de la Skill): un titular sobre ellos no es un conflicto nuevo.
+RADAR_CONOCIDOS = re.compile(r"Ucrania|Ukrain|Rusia\b|Russia|Kremlin|Kyiv|Kiev|Mosc[úu]|Moscow|Crimea|Donbas|Donb[áa]s|Zelensk|Putin|Gaza|Ham[áa]s|"
+                             r"Israel|Cisjordania|West Bank|Palestin|Ir[áa]n\b|Teher[áa]n|Tehran|hut[íi]es|Houthi|Hezbol|L[íi]bano|Lebanon|Yemen|"
+                             r"Ormuz|Hormuz|Bab el|(?<!South )Sud[áa]n(?! del Sur)|\bRSF\b|Apoyo R[áa]pido|Rapid Support|Darfur|Kordof|El Fasher|Jartum|"
+                             r"Khartoum", re.I)
+RADAR_BELICO = re.compile(r"guerra|b[ée]lic|combates?\b|enfrentamientos armados|ofensiva|bombarde|ataques? a[ée]reos?|ataques? con (?:drones|misiles|"
+                          r"cohetes)|misil|artiller[íi]a|invasi[óo]n|invad|tropas|ej[ée]rcito|militares|insurgent|rebeldes|milicia|yihadist|"
+                          r"alto el fuego|cese al fuego|conflicto armado|\bwar\b|wartime|offensive|air ?strikes?|airstrikes?|shelling|missiles?\b|"
+                          r"drone (?:strike|attack)s?|fighting|clashes|invasion|invade|troops|\barmy\b|insurgen|rebels?\b|militias?\b|jihadist|"
+                          r"ceasefire|frontline|armed conflict|killed in (?:attack|strike|fighting)", re.I)
+
+
+def radar_conflictos(notas, previo=None, hoy=None, ventana_h=72):
+    """Titulares de guerra por país en las últimas `ventana_h` horas, sin los 4 conflictos conocidos.
+    `revisar`: 5 o más titulares de 3 o más medios y el doble de su promedio de los 7 días anteriores (o sin historia)."""
+    hoy = hoy or ahora().date()
+    limite = ahora() - dt.timedelta(hours=ventana_h)
+    vistos, por = set(), {}
+    crisis = []
+    for n in notas or []:
+        t = f"{n.get('titulo', '')} {n.get('resumen', '')}"
+        if not n.get("fecha") or n.get("url") in vistos:
+            continue
+        try:
+            f = dt.datetime.strptime(n["fecha"], "%Y-%m-%d %H:%M").replace(tzinfo=TZ)
+        except ValueError:
+            continue
+        if f < limite:
+            continue
+        vistos.add(n.get("url"))
+        fuente = re.sub(r"\s*\(.*$", "", str(n.get("fuente") or "")).strip()
+        if "crisis group" in fuente.lower() and re.search(r"CrisisWatch|alert|deteriorat|risk", t, re.I):
+            crisis.append({"titulo": n.get("titulo"), "url": n.get("url"), "fecha": n["fecha"]})
+        if not RADAR_BELICO.search(t) or RADAR_CONOCIDOS.search(t):
+            continue
+        for iso in {_RADAR_ISO[m.group(1).lower()] for m in _RADAR_RX.finditer(t)}:
+            x = por.setdefault(iso, {"n": 0, "medios": set(), "ejemplos": []})
+            x["n"] += 1
+            x["medios"].add(fuente)
+            if len(x["ejemplos"]) < 5:
+                x["ejemplos"].append({"titulo": n.get("titulo"), "fuente": fuente, "url": n.get("url"), "fecha": n["fecha"]})
+    hist = dict(((previo or {}).get("historia") or {})) if isinstance(previo, dict) else {}
+    hist[hoy.isoformat()] = {iso: x["n"] for iso, x in por.items()}
+    hist = {k: v for k, v in sorted(hist.items())[-15:]}
+    antes = [v for k, v in hist.items() if k < hoy.isoformat()][-7:]
+    cand = []
+    for iso, x in sorted(por.items(), key=lambda kv: (-len(kv[1]["medios"]), -kv[1]["n"])):
+        prom = round(sum(v.get(iso, 0) for v in antes) / len(antes), 1) if antes else 0
+        cand.append({"iso2": iso, "pais": PAISES_RADAR[iso][0], "titulares_72h": x["n"], "medios": len(x["medios"]), "prom_7d": prom,
+                     "revisar": x["n"] >= 5 and len(x["medios"]) >= 3 and (not antes or x["n"] >= 2 * max(prom, 1)),
+                     "ejemplos": x["ejemplos"]})
+    return {"generado": ahora().isoformat(timespec="seconds"), "ventana_h": ventana_h,
+            "excluidos": "Rusia–Ucrania, Gaza, Irán y frente regional y Sudán (ya salen todos los días)",
+            "candidatos": cand[:15], "crisis_group": crisis[:6], "historia": hist}
+
+
 def titulares(estado, feeds=None, hilos=8):
     """{"generado", "secciones": {sec: {"consultadas": [...], "notas": [...]}}} en el formato candidatos/<sección>.json de la Skill."""
     feeds = feeds or todas_las_fuentes()
@@ -1859,6 +1951,7 @@ def titulares(estado, feeds=None, hilos=8):
             _, cons, notas = leidas[unicas_url[url]]
             res.append((sec, dict(cons, fuente=fuente), [dict(n, fuente=fuente) if n["fuente"] == leidas[unicas_url[url]][1]["fuente"] else n for n in notas]))
     limite = ahora()
+    RADAR_NOTAS[:] = [n for sec, _, notas in res if sec in ("conflictos", "politica/mundo") for n in notas]   # 17-11-2026: radar
     for sec, cons, notas in res:
         secs[sec]["consultadas"].append(cons)
         h0 = VENTANA_H.get(sec, 72)
@@ -3009,6 +3102,18 @@ def main(argv=None):
         escribir(os.path.join(a.salida, "titulares.json"), titulares(estado))
     except Exception as ex:   # noqa: BLE001 — los titulares nunca impiden guardar lo demás
         estado["titulares"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "RSS", "error": type(ex).__name__}
+    try:   # 17-11-2026: radar de conflictos nuevos (lo verifica la tarea diaria)
+        try:
+            prev_r = json.load(open(os.path.join(a.salida, "conflictos-radar.json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            prev_r = {}
+        rad = radar_conflictos(RADAR_NOTAS, prev_r if isinstance(prev_r, dict) else {}, hoy)
+        escribir(os.path.join(a.salida, "conflictos-radar.json"), rad)
+        estado["conflictos_radar"] = {"ok": bool(RADAR_NOTAS), "hora": ahora().isoformat(timespec="seconds"), "url": "RSS de Mundo y Conflictos",
+                                      "candidatos": len(rad["candidatos"]), "revisar": [c["pais"] for c in rad["candidatos"] if c["revisar"]],
+                                      **({} if RADAR_NOTAS else {"error": "sin titulares de Mundo ni de Conflictos"})}
+    except Exception as ex:   # noqa: BLE001
+        estado["conflictos_radar"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "RSS", "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     try:
         mer = mercados(estado, hoy)
     except Exception as ex:   # noqa: BLE001
