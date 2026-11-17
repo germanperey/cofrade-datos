@@ -81,12 +81,47 @@ def fecha_esperada(t=None):
     return t.date() if t.hour >= 10 else t.date() - dt.timedelta(days=1)
 
 
+# 17-11-2026 (Germán: «En el Landing page de www.cofrad.es está incompleta la cantidad de Indicadores económicos»): el vigía solo
+# miraba que el pulso fuera reciente, y desde el 16-11 salía reciente pero sin dólar, euro, UF, UTM ni cobre. Ahora revisa también que
+# estén TODAS las cifras: en el pulso (datos/pulso.json) y en la portada publicada.
+VIVO_REQUERIDAS = {"dolar": "Dólar observado", "euro": "Euro", "uf": "UF", "utm": "UTM", "tpm": "TPM", "libra_cobre": "Cobre (libra)"}
+VIVO_MERCADOS = ("S&P 500", "Nasdaq", "Dow Jones", "Petróleo Brent")
+VIVO_PORTADA = ("Dólar observado", "Euro", "UF", "UTM", "TPM", "IPSA (puntos)", "S&P 500", "Nasdaq", "Dow Jones", "Cobre", "Petróleo Brent", "Bitcoin")
+
+
+def _es_cifra(v):
+    return isinstance(v, (int, float)) and not isinstance(v, bool)
+
+
+def faltan_en_pulso(pu):
+    """Cifras que el pulso debería traer y no trae → lista de nombres."""
+    pu = pu if isinstance(pu, dict) else {}
+    hay = {x.get("clave") for x in pu.get("indicadores") or [] if isinstance(x, dict) and _es_cifra(x.get("valor"))}
+    faltan = [n for k, n in VIVO_REQUERIDAS.items() if k not in hay]
+    if not _es_cifra((pu.get("ipsa") or {}).get("valor")):
+        faltan.append("IPSA")
+    merc = {m.get("nombre") for m in pu.get("mercados") or [] if isinstance(m, dict) and _es_cifra(m.get("valor"))}
+    faltan += [n for n in VIVO_MERCADOS if n not in merc]
+    if not _es_cifra((pu.get("bitcoin") or {}).get("bitcoin_usd")):
+        faltan.append("Bitcoin")
+    return faltan
+
+
+def faltan_en_portada(h):
+    """Cifras que la portada publicada no muestra en «En vivo» (se compara el nombre, sin la fecha) → lista de nombres."""
+    m = re.search(r'<section id="en-vivo".*?</section>', h or "", re.S)
+    nombres = [html.unescape(x).split(" · ")[0].strip() for x in re.findall(r'<div class="cifra[^"]*"><small>([^<]*)</small>', m.group(0) if m else "")]
+    return [n for n in VIVO_PORTADA if not any(x == n or (n == "Cobre" and x.startswith("Cobre")) for x in nombres)]
+
+
 def revisar_sitio(inf):
     try:
         r = pedir(SITIO + "/")
         inf.ok("Portada responde", r.status_code == 200, f"HTTP {r.status_code}")
         inf.ok("Portada completa (galería y «En vivo»)", 'class="g-fila"' in r.text and 'id="en-vivo"' in r.text,
                "faltan la galería o el bloque «En vivo»")
+        f = faltan_en_portada(r.text) if r.status_code == 200 else list(VIVO_PORTADA)
+        inf.ok("«En vivo» de la portada con todos los indicadores", not f, "no se ven: " + ", ".join(f))
     except requests.RequestException as ex:
         inf.ok("Portada responde", False, type(ex).__name__)
     fecha = None
@@ -286,8 +321,10 @@ def revisar_datos(inf, reparar):
         pu = json.load(open(os.path.join(RAIZ, "datos", "pulso.json"), encoding="utf-8"))
         g = _hora(pu.get("generado"))
         viejo = g is None or (t - g).total_seconds() > 3 * 3600
-        if not inf.ok("«En vivo» de la portada al día (Pulso)", not viejo or not (8 <= t.hour <= 23),
-                      f"generado {pu.get('generado')}"):
+        al_dia = inf.ok("«En vivo» de la portada al día (Pulso)", not viejo or not (8 <= t.hour <= 23), f"generado {pu.get('generado')}")
+        faltan = faltan_en_pulso(pu)
+        completo = inf.ok("«En vivo» con todos los indicadores (Pulso)", not faltan, "faltan: " + ", ".join(faltan))
+        if not (al_dia and completo):
             if reparar:
                 r = gh("POST", "/actions/workflows/pulso.yml/dispatches", json={"ref": "main"})
                 inf.reparar("Volver a generar el Pulso", r is not None and r.status_code == 204, f"HTTP {getattr(r, 'status_code', 'sin token')}")

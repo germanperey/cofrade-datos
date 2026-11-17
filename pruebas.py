@@ -1822,6 +1822,79 @@ def indicadores_en_vivo_nunca_faltan():
 
 
 @prueba
+def vigia_revisa_que_en_vivo_tenga_todas_las_cifras():
+    """17-11-2026: el vigía solo miraba que el pulso fuera reciente; el 16 y 17-11 salía reciente pero sin dólar, euro, UF, UTM ni
+    cobre. Ahora revisa cada cifra en el pulso y en la portada publicada, y si falta una vuelve a pedir el pulso."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import vigia as V
+    ind = [{"clave": k, "valor": 1.0} for k in ("dolar", "euro", "uf", "utm", "tpm", "libra_cobre")]
+    merc = [{"nombre": n, "valor": 1.0} for n in ("S&P 500", "Nasdaq", "Dow Jones", "Petróleo Brent", "Cobre (Bolsa de Metales de Londres)")]
+    pu = {"indicadores": ind, "ipsa": {"valor": 10477.22}, "mercados": merc, "bitcoin": {"bitcoin_usd": 63665.29}}
+    assert V.faltan_en_pulso(pu) == []
+    assert V.faltan_en_pulso(dict(pu, indicadores=[])) == ["Dólar observado", "Euro", "UF", "UTM", "TPM", "Cobre (libra)"]
+    assert V.faltan_en_pulso(dict(pu, indicadores=ind[:3] + [{"clave": "utm", "valor": True}] + ind[4:])) == ["UTM"]   # verdadero no es cifra
+    assert V.faltan_en_pulso(dict(pu, ipsa=None, bitcoin={}, mercados=merc[:3])) == ["IPSA", "Petróleo Brent", "Bitcoin"]
+    assert V.faltan_en_pulso(None)[:2] == ["Dólar observado", "Euro"]
+    t = lambda n, f, v: f'<div class="cifra c2"><small>{n} · {f}</small><div class="cv"><b>{v}</b></div></div>'   # noqa: E731
+    chile = "".join(t(n, "17-11", "1") for n in ("Dólar observado", "Euro", "UF", "TPM")) + t("UTM", "noviembre 2026", "1") + t("IPSA (puntos)", "17:08", "1")
+    mundo = "".join(t(n, "cierre 16-11", "1") for n in ("S&amp;P 500", "Nasdaq", "Dow Jones", "Petróleo Brent")) + t("Cobre (libra)", "17-11", "1") + t("Bitcoin", "17-11", "1")
+    portada = (f'<section id="en-vivo"><div class="vivo-grupo"><h4 class="vivo-tit">Chile</h4><div class="cifras">{chile}</div></div>'
+               f'<div class="vivo-grupo"><h4 class="vivo-tit">Mercados del mundo</h4><div class="cifras">{mundo}</div></div></section>')
+    assert V.faltan_en_portada(portada) == [], V.faltan_en_portada(portada)
+    assert V.faltan_en_portada(portada.replace("Cobre (libra)", "Cobre (Bolsa de Metales de Londres)")) == []   # el cobre de respaldo vale
+    vieja = portada.replace(t("Dólar observado", "17-11", "1"), "").replace(t("UTM", "noviembre 2026", "1"), "")
+    assert V.faltan_en_portada(vieja) == ["Dólar observado", "UTM"], V.faltan_en_portada(vieja)   # lo que pasó el 16 y 17-11
+    assert V.faltan_en_portada('<div class="cifra"><small>Euro</small></div>') == list(V.VIVO_PORTADA)   # fuera de «En vivo» no cuenta
+    class P:   # revisar_sitio: la portada publicada sin dos cifras → falla grave con sus nombres
+        def __init__(self, st=200, txt="", hdr=None, j=None):
+            self.status_code, self.text, self.headers, self._j = st, txt, hdr or {}, j
+
+        def json(self):
+            return self._j
+    respuestas = {"/": P(txt='<div class="g-fila"></div>' + vieja), "/edicion": P(302, hdr={"Location": "/edicion/2026-11-17"}),
+                  "/salud": P(j={"d1": True, "turnstile": True})}
+    viejo_pedir = V.pedir
+    try:
+        V.pedir = lambda url, **k: respuestas.get(url.replace(V.SITIO, ""), P())
+        inf = V.Informe()
+        V.revisar_sitio(inf)
+        mal = [x for x in inf.revisiones if not x["ok"]]
+        assert [x["nombre"] for x in mal] == ["«En vivo» de la portada con todos los indicadores"] and mal[0]["grave"], inf.revisiones
+        assert mal[0]["detalle"] == "no se ven: Dólar observado, UTM", mal[0]
+        respuestas["/"] = P(txt='<div class="g-fila"></div>' + portada)
+        inf = V.Informe()
+        V.revisar_sitio(inf)
+        assert all(x["ok"] for x in inf.revisiones), inf.revisiones
+    finally:
+        V.pedir = viejo_pedir
+    import tempfile   # revisar_datos: pulso reciente pero incompleto → falla grave y se vuelve a pedir el pulso UNA vez
+    llamadas = []
+
+    class R:
+        status_code = 204
+    viejos = V.RAIZ, V.gh, V.ahora
+    try:
+        with tempfile.TemporaryDirectory() as raiz:
+            os.makedirs(os.path.join(raiz, "datos"))
+            V.ahora = lambda: dt.datetime(2026, 11, 17, 18, 42, tzinfo=V.TZ)
+            json.dump({"fuentes": {"x": {"hora": "2026-11-17T08:47:17-03:00"}}}, open(os.path.join(raiz, "datos", "estado.json"), "w"))
+            json.dump(dict(pu, indicadores=[], generado="2026-11-17T17:07-03:00"), open(os.path.join(raiz, "datos", "pulso.json"), "w"))
+            V.RAIZ, V.gh = raiz, (lambda m, r, **k: llamadas.append((m, r)) or R())
+            inf = V.Informe()
+            V.revisar_datos(inf, True)
+            mal = [x for x in inf.revisiones if not x["ok"]]
+            assert [x["nombre"] for x in mal] == ["«En vivo» con todos los indicadores (Pulso)"] and mal[0]["grave"], inf.revisiones
+            assert "Dólar observado" in mal[0]["detalle"] and llamadas == [("POST", "/actions/workflows/pulso.yml/dispatches")], llamadas
+            json.dump(dict(pu, generado="2026-11-17T17:07-03:00"), open(os.path.join(raiz, "datos", "pulso.json"), "w"))
+            llamadas.clear()
+            inf = V.Informe()
+            V.revisar_datos(inf, True)
+            assert all(x["ok"] for x in inf.revisiones) and not llamadas, (inf.revisiones, llamadas)   # completo y al día: nada que pedir
+    finally:
+        V.RAIZ, V.gh, V.ahora = viejos
+
+
+@prueba
 def radar_de_conflictos_nuevos():
     """17-11-2026 (Germán: «verificar si surge algún otro conflicto bélico nuevo, para agregarlo también»): por país, titulares de guerra
     de las últimas 72 h que no son de los 4 conflictos de la edición; «revisar» con 5 o más titulares de 3 o más medios y el doble de
