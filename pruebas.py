@@ -1654,6 +1654,87 @@ def auditor_suma_fuentes_nuevas_con_resguardos():
             PF.ORIGEN_RE = viejo_re
 
 
+
+@prueba
+def materia_de_cada_votacion_desde_datos_abiertos():
+    """17-11-2026 (Germán: «409 votaciones de la Cámara cuya materia no se pudo leer desde la tarea»): camara.cl responde 403
+    «Just a moment» a GitHub y a la tarea. Los datos abiertos (retornarVotacionesXProyectoLey) traen qué se votó en cada votación del
+    proyecto; la fila del mes queda con una descripción legible que la Skill usa tal cual como título."""
+    import re as _re
+    xml = ("<ProyectoLey xmlns=\"http://opendata.camara.cl/camaradiputados/v1\"><Id>19564</Id><NumeroBoletin>18885-05</NumeroBoletin>"
+           "<Nombre>Establece medidas para contener las alzas de los precios de la gasolina automotriz y el petróleo diesel, y aliviar la "
+           "carga financiera de las empresas de transporte de carga</Nombre><MinisteriosPatrocinantes><Ministerio><Id>2</Id><Nombre>Ministerio "
+           "de Hacienda</Nombre></Ministerio></MinisteriosPatrocinantes><Votaciones>"
+           "<VotacionProyectoLey><Id>91562</Id><Descripcion>Boletín N°18885-05</Descripcion><TipoVotacionProyectoLey Valor=\"1\">General"
+           "</TipoVotacionProyectoLey><Articulo /><TramiteConstitucional Id=\"1\">Primer Trámite</TramiteConstitucional></VotacionProyectoLey>"
+           "<VotacionProyectoLey><Id>91564</Id><TipoVotacionProyectoLey Valor=\"2\">Particular</TipoVotacionProyectoLey><Articulo>Numeral 3 "
+           "del artículo 3, cuya votación separada ha sido solicitada por las diputadas Irací Hassler y Emilia Schneider, y que consta en la "
+           "página 11 del comparado.</Articulo><TramiteConstitucional Id=\"1\">Primer Trámite</TramiteConstitucional></VotacionProyectoLey>"
+           "<VotacionProyectoLey><Id>91565</Id><TipoVotacionProyectoLey Valor=\"3\">Admisibilidad</TipoVotacionProyectoLey><Articulo>"
+           "Admisibilidad de la indicación del diputado Daniel Manouchehri, para intercalar un artículo 6 nuevo al proyecto. (los que votan "
+           "a favor lo hacen por la admisibilidad de la indicación, los que votan en contra lo hacen por su inadmisibilidad). </Articulo>"
+           "<TramiteConstitucional Id=\"3\">Tercer Trámite</TramiteConstitucional></VotacionProyectoLey>"
+           "<VotacionProyectoLey><Id>90790</Id><TipoVotacionProyectoLey Valor=\"2\">Particular</TipoVotacionProyectoLey><Articulo>Votación "
+           "Separada Partida 18 MINISTERIO DE VIVIENDA Y URBANISMO Capítulo 22 Serviu Región de Antofagasta Programa 01 Serviu Región de "
+           "Antofagasta Subtítulo 21 GASTOS EN PERSONAL Indicaciones: 67.1, 67.2 y 67.3</Articulo></VotacionProyectoLey>"
+           "<VotacionProyectoLey><Id>90795</Id><TipoVotacionProyectoLey Valor=\"2\">Particular</TipoVotacionProyectoLey><Articulo>del "
+           "diputado Brito Jorge Part 18 - Cap 02 \"Para agregar una nueva glosa del siguiente tenor: “La Subsecretaría informará "
+           + "trimestralmente a la Comisión Especial Mixta de Presupuestos " * 6 + "”\"</Articulo></VotacionProyectoLey>"
+           "<VotacionProyectoLey><Id>90998</Id><TipoVotacionProyectoLey Valor=\"3\">Admisibilidad</TipoVotacionProyectoLey><Articulo>"
+           "Admisibilidad de la indicación N° 5. (los que votan a favor lo hacen por la admisibilidad)</Articulo></VotacionProyectoLey>"
+           "<VotacionProyectoLey><Id>90999</Id><TipoVotacionProyectoLey Valor=\"1\">General</TipoVotacionProyectoLey><Articulo />"
+           "</VotacionProyectoLey></Votaciones><Materias /></ProyectoLey>")
+    nombre, v = B.materias_proyecto(xml)
+    assert nombre.startswith("Establece medidas para contener") and "Ministerio de Hacienda" not in nombre, nombre
+    assert sorted(v) == ["90790", "90795", "90998", "90999", "91562", "91564", "91565"] and v["91564"]["votacion"] == "Particular", v
+    assert "comparado" not in v["91564"]["articulo"] and v["91564"]["articulo"].endswith("Emilia Schneider"), v["91564"]
+    viejos = B.pedir, B.time.sleep
+    pedidas = []
+    B.pedir = lambda url, est, cl, **k: pedidas.append(url) or xml
+    B.time.sleep = lambda s: None
+    try:
+        filas = [{"id": "91562", "descripcion": "Boletín N° 18885-05"}, {"id": "91564", "descripcion": "Boletín N° 18885-05"},
+                 {"id": "91565", "descripcion": "Boletín N° 18885-05"}, {"id": "90790", "descripcion": "5-Cambio de Trámite"},
+                 {"id": "90795", "descripcion": "Boletín N° 18885-05"}, {"id": "90700", "descripcion": "1-Otros"},
+                 {"id": "90851", "descripcion": "Proyecto de Resolución N° 108"}, {"id": "90999", "descripcion": "Proyecto de Acuerdo N° 7"}]
+        cam, e = {"camara_mes": [dict(x) for x in filas]}, {}
+        g = B.camara_materias(e, cam, {})
+        assert pedidas == [B.CAMARA + "/retornarVotacionesXProyectoLey?prmNumeroBoletin=18885-05"], pedidas
+        d = {x["id"]: x["descripcion"] for x in cam["camara_mes"]}
+        assert d["91562"] == ("Establece medidas para contener las alzas de los precios de la gasolina automotriz y el petróleo diesel "
+                              "(Boletín N° 18885-05), votación en general"), d["91562"]   # nombre largo: hasta su primera cláusula
+        assert d["91564"].endswith("en particular: numeral 3 del artículo 3, cuya votación separada ha sido solicitada por las diputadas "
+                                   "Irací Hassler y Emilia Schneider"), d["91564"]
+        assert "los que votan" not in d["91565"] and d["91565"].endswith("(tercer trámite)"), d["91565"]
+        assert "votación separada en la Partida 18 (Ministerio de Vivienda y Urbanismo, Serviu Región de Antofagasta), indicaciones 67.1, " \
+               "67.2 y 67.3" in d["90790"], d["90790"]   # la de trámite también: está en la lista del proyecto
+        assert d["90795"].endswith("en particular: indicación del diputado Jorge Brito en la Partida 18 (Ministerio de Vivienda y Urbanismo)"), d["90795"]
+        assert d["90700"] == "1-Otros" and d["90851"] == "Proyecto de Resolución N° 108" and d["90999"] == "Proyecto de Acuerdo N° 7"   # sin dato: igual; con descripción real: no se toca
+        generica = _re.compile(r"^\s*(\d+\s*-\s*)?(Otros|Cambio de Tr[aá]mite|Bolet[ií]n\s*N?°?\s*[\d-]+)\s*$", _re.I)   # la de la Skill
+        for i in ("91562", "91564", "91565", "90790", "90795"):
+            assert not generica.match(d[i]) and _re.search(r"Bolet[ií]n\s*N?°?\s*([\d]+-[\d]+)", d[i]).group(1) == "18885-05", d[i]
+            assert "—" not in d[i] and d[i].count("(") <= d[i].count(")") and len(d[i]) < 300, d[i]
+        assert B.descripcion_votacion("18702-05", "Ley de Presupuestos para el Sector Público correspondiente al año 2027",
+                                      {"votacion": "General"}) == "Ley de Presupuestos 2027 (Boletín N° 18702-05), votación en general"
+        f = next(x for x in cam["camara_mes"] if x["id"] == "91564")
+        assert f["descripcion_oficial"] == "Boletín N° 18885-05" and f["boletin"] == "18885-05" and f["votacion"] == "Particular"
+        assert e["camara_materias"]["con_materia"] == 5 and e["camara_materias"]["sin_materia"] == 1, e
+        pedidas.clear()   # segunda corrida: lo ya leído no se vuelve a pedir y la fila queda igual
+        cam2 = {"camara_mes": [dict(x) for x in filas]}
+        B.camara_materias({}, cam2, g)
+        assert pedidas == [] and cam2["camara_mes"][1]["descripcion"] == d["91564"], pedidas
+        B.pedir = lambda url, est, cl, **k: est.update({cl: {"ok": False, "error": "HTTP 500"}}) or None   # el servicio no responde
+        cam3, e3 = {"camara_mes": [dict(x) for x in filas]}, {}
+        assert B.camara_materias(e3, cam3, {}) is None and cam3["camara_mes"][1]["descripcion"] == "Boletín N° 18885-05", cam3
+        assert e3["camara_materias"]["fallas"] == ["18885-05: HTTP 500"], e3
+        B.pedir = lambda url, est, cl, **k: "<html><title>Error</title>"   # respuesta que no es XML: no se cae, la fila queda igual
+        cam4, e4 = {"camara_mes": [dict(x) for x in filas]}, {}
+        assert B.camara_materias(e4, cam4, {}) is None and cam4["camara_mes"][1]["descripcion"] == "Boletín N° 18885-05", cam4
+        assert B.descripcion_votacion("1-1", "", v["90998"]) == "Boletín N° 1-1, admisibilidad de la indicación N° 5", \
+            B.descripcion_votacion("1-1", "", v["90998"])   # la explicación del voto no es la materia
+    finally:
+        B.pedir, B.time.sleep = viejos
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

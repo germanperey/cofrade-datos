@@ -12,6 +12,7 @@ Archivos que deja en datos/:
   indicadores.json    respuesta completa de https://mindicador.cl/api
   camara-mes.json     votaciones de la Sala de la Cámara del mes (datos abiertos de la Cámara)
   camara-nominal.json voto de cada diputado en TODAS las votaciones de los últimos 62 días (acumulado)
+  camara-materias.json qué se votó en cada votación de un proyecto (artículo o indicación, en general o en particular; 17-11-2026)
   descubrimiento.json operaciones que publica cada servicio oficial de la Cámara
   camara-asistencia.json  asistencia de cada diputado a las sesiones de Sala de los últimos 62 días (resumen)
   vuelos-ayer.json    salidas y llegadas de AYER en los 5 aeropuertos (OpenSky Network, gratis)
@@ -330,6 +331,201 @@ def camara(estado, hoy, previo=None, maximo=110):
     control = {"total_mes": len(mes), "fuente": f"{CAMARA}/retornarVotacionesXAnno?prmAnno={hoy.year}",
                "ultima_oficial": mes[0]["fecha"][:10] if mes else ""}
     return {"mes": hoy.strftime("%Y-%m"), "camara_mes": mes, "control": control}, nominal
+
+
+# ---------- 17-11-2026: qué se votó en cada votación de un proyecto (materia) ----------
+# Germán (17-11-2026): «409 votaciones de la Cámara cuya materia no se pudo leer desde la tarea». La lista del año solo dice
+# «Boletín N° 18702-05», «1-Otros» o «5-Cambio de Trámite», y la ficha de camara.cl responde 403 «Just a moment» (desafío de
+# Cloudflare) a GitHub y a la tarea: no se usa ni se rodea. Los datos abiertos de la Cámara sí lo traen: retornarVotacionesXProyectoLey
+# entrega, por cada votación del proyecto, si fue en general o en particular, el artículo o la indicación votada y el trámite.
+# Con eso la descripción de la fila queda legible y la Skill la usa tal cual como título (sin cambiar la Skill).
+CAMARA_VOT_PROY = CAMARA + "/retornarVotacionesXProyectoLey?prmNumeroBoletin={b}"
+_GENERICA_CAM = re.compile(r"^\s*(\d+\s*-\s*)?(Otros|Cambio de Tr[aá]mite|Bolet[ií]n\s*N?°?\s*[\d-]+)\s*$", re.I)
+_BOLETIN_CAM = re.compile(r"Bolet[ií]n\s*N?°?\s*(\d{3,6}-\d{1,2})", re.I)
+_MINUSCULA = re.compile(r"^(Artículos?|Numeral(es)?|Admisibilidad|Indicaci[oó]n(es)?|Partidas?|Letras?|Incisos?|Cap[ií]tulos?|T[ií]tulos?|"
+                        r"Glosas?|N[uú]meros?|P[aá]rrafos?|Renovaci[oó]n|Solicitud|Reclamaci[oó]n|Proposici[oó]n|Informe|La|El|Los|Las)\b")
+
+
+def _articulo_limpio(t):
+    """«Artículo 3, … y que consta en las páginas 10 a 13 del comparado.» → sin la referencia a las páginas del comparado."""
+    t = re.sub(r"\s+", " ", str(t or "")).strip()
+    t = re.sub(r",?\s*(y\s+)?que\s+consta(n)?\s+en\s+(la|las)\s+p[aá]ginas?\s+[\d\sya,]+del\s+comparado", "", t, flags=re.I)
+    return t.strip(" .;,")
+
+
+def materias_proyecto(xml_txt):
+    """XML de retornarVotacionesXProyectoLey → (nombre del proyecto, {id: {votacion, articulo, tramite}})."""
+    raiz = ET.fromstring(xml_txt)
+    nombre = next((_texto(h) for h in raiz if _sin_ns(h.tag) == "nombre"), "")
+    out = {}
+    for v in raiz.iter():
+        if _sin_ns(v.tag) != "votacionproyectoley":
+            continue
+        idv = _texto(_hijo(v, r"^id$"))
+        if idv:
+            out[idv] = {"votacion": _texto(_hijo(v, r"^tipovotacionproyectoley$")), "articulo": _articulo_limpio(_texto(_hijo(v, r"^articulo$"))),
+                        "tramite": _texto(_hijo(v, r"^tramiteconstitucional$"))}
+    return re.sub(r"\s+", " ", nombre).strip().rstrip("."), out
+
+
+_PARTIDA_NOMBRE = re.compile(r"\bPartida\s+(\d{1,2})\s+[\"“]?((?:MINISTERIO|PRESIDENCIA|CONGRESO|PODER JUDICIAL|CONTRALOR[IÍ]A|TESORO|SERVICIO|"
+                             r"GOBIERNOS)[^,;:\"”]{2,80}?)(?=\s+Cap[ií]tulo\b|\s+Programa\b|\s+Votaci|\s+Indicaci|\s*[,;:\"”(]|\s*$)", re.I)
+_MENORES = {"de", "del", "y", "e", "la", "las", "los", "el", "al", "en", "para", "con", "a"}
+_MAYUSCULAS = re.compile(r"\b[A-ZÁÉÍÓÚÑ]{3,}(?:,?\s+(?:DE|DEL|Y|E|LA|LAS|LOS|EL|EN|PARA|[A-ZÁÉÍÓÚÑ]{3,})\b)+")
+_CODIGO_PARTIDA = re.compile(r"\bPart\s+(\d{1,2})(?:\s+-\s+(?:Cap|Prog|Sub|Item|Ítem)\s+\d+)*\s*")
+
+
+def _nombre_propio(t):
+    """«MINISTERIO DE VIVIENDA Y URBANISMO» → «Ministerio de Vivienda y Urbanismo»."""
+    t = re.sub(r"\s+", " ", t).strip()
+    if t.upper() != t:
+        return t
+    return " ".join(w if (i and w in _MENORES) else w[:1].upper() + w[1:] for i, w in enumerate(t.lower().split()))
+
+
+def partidas_de(articulos):
+    """Partida → nombre oficial, aprendido de los textos del mismo proyecto («Partida 18 MINISTERIO DE VIVIENDA…»)."""
+    out = {}
+    for a in articulos:
+        for m in _PARTIDA_NOMBRE.finditer(a or ""):
+            out.setdefault(m.group(1).zfill(2), _nombre_propio(m.group(2)))
+    return out
+
+
+def _autor_indicacion(a):
+    m = re.match(r"^(?:\([^)]*\)\s*)?(del Ejecutivo|del diputado|de la diputada|de los diputados|de las diputadas)\b\s*(.*?)"
+                 r"(?=\s+-\s+|\s+Part\b|\s+Partida\b|\s*[\"“]|\s+Para\b|\s+Votaci|$)", a)
+    if not m:
+        return ""
+    quien, nom = m.group(1), m.group(2).strip()
+    if quien == "del Ejecutivo" or not nom:
+        return quien
+    otros = " y otros" if nom.endswith(" y otros") else ""
+    nom = nom[:-8] if otros else nom
+    w = nom.split()
+    if len(w) == 2:   # «Brito Jorge» → «Jorge Brito»
+        nom = f"{w[1]} {w[0]}"
+    return f"{quien} {nom}{otros}"
+
+
+def _materia_corta(a, partidas=None):
+    """Qué se votó, en una frase completa y corta. Las indicaciones de la Ley de Presupuestos traen el texto entero de la glosa
+    (hasta 2.600 letras): quedan como «indicación del diputado X en la Partida 16 (Ministerio de Salud)»."""
+    a = re.sub(r"^(Articulado|Aprobada)\s+-\s+En votaci[oó]n\s+", "", a)
+    a = re.sub(r"\s*\((?:los|las|quienes) que votan[^)]*\)?", "", a).strip(" .")   # la explicación del voto no es la materia
+    a = re.sub(r"^Partida\s+(\d+)\s+Indicaci[oó]n(es)?\s+([\d.,\sy]+?)\s+-\s+En votaci[oó]n\s+(la|el)\s+",
+               lambda m: f"indicación{'es' if m.group(2) else ''} {m.group(3).strip()} de la Partida {m.group(1)}: {m.group(4)} ", a)
+    estructurada = re.match(r"^(?:\([^)]*\)\s*)?(Votaci[oó]n Separada|del |de la |de los |de las )", a)
+    a = _MAYUSCULAS.sub(lambda m: _nombre_propio(m.group(0)), a)   # «MINISTERIO DE SALUD» → «Ministerio de Salud»
+    mcod = _CODIGO_PARTIDA.search(a)
+    if mcod and re.match(r"^(?:\([^)]*\)\s*)?(del |de la |de los |de las )", a):
+        # «del diputado X Part 32 - Cap 01 - Prog 01 - Sub 22 En el literal b) reemplázase …»: autor, partida y lo que cambia
+        p = mcod.group(1).zfill(2)
+        resto = a[mcod.end():].strip(" -\"“”")
+        cab = f"indicación {_autor_indicacion(a)} en la Partida {p}" + (f" ({(partidas or {}).get(p)})" if (partidas or {}).get(p) else "")
+        if resto and len(cab) + len(resto) <= 230 and not re.match(r"^(Para agregar|Agr[eé]g|Incorp|“|\")", resto):
+            return f"{cab}: {resto[:1].lower() + resto[1:]}"
+        return cab
+    if len(a) <= 200 and not re.search(r"Votaci[oó]n Separada", a, re.I):
+        return a
+    mp = re.search(r"\bPart(?:ida)?\.?\s+(\d{1,2})\b", a)
+    if estructurada and mp:
+        p = mp.group(1).zfill(2)
+        mn = _PARTIDA_NOMBRE.search(a)
+        minis = _nombre_propio(mn.group(2)) if mn else (partidas or {}).get(p, "")
+        mc = re.search(r"\bCap[ií]tulo\s+\d+\s+(.{3,70}?)(?=\s+Programa\b|\s+Subt[ií]tulo\b|\s*$)", a)
+        cap = mc.group(1).strip() if mc and len(mc.group(1).strip()) <= 60 else ""
+        tipo = "votación separada" if re.search(r"Votaci[oó]n Separada", a, re.I) else "indicación"
+        autor = _autor_indicacion(a)
+        detalle = ", ".join(x for x in (minis, cap) if x and (x != cap or cap.lower() not in minis.lower()))
+        s = f"{tipo}{' ' + autor if autor else ''} en la Partida {p}" + (f" ({detalle})" if detalle else "")
+        mi = re.search(r"Indicaciones?:?\s*((?:\d+(?:\.\d+)?)(?:\s*(?:,|y)\s*\d+(?:\.\d+)?)*)", a)
+        return s + (f", indicaciones {mi.group(1)}" if mi and tipo == "votación separada" else "")
+    if len(a) <= 200:
+        return a
+    corte = max(a.rfind(", ", 0, 200), a.rfind("; ", 0, 200))   # hasta la última cláusula completa
+    t = a[:corte] if corte >= 60 else ""
+    if t.count("(") > t.count(")"):   # nunca un paréntesis abierto
+        t = t[:t.rfind("(")].rstrip(" ,;")
+    return t if len(t) >= 60 else "votación en particular"
+
+
+def descripcion_votacion(boletin, proyecto, m, partidas=None):
+    """Qué se votó, en una frase que se entiende sola: «<proyecto> (Boletín N° X), en particular: artículo 3 …»."""
+    nombre = re.sub(r"^Ley de Presupuestos (?:para el|del) Sector P[uú]blico (?:correspondiente al|para el) año (\d{4})$", r"Ley de Presupuestos \1",
+                    proyecto or "")   # se repite en cientos de votaciones: la forma corta se entiende igual
+    if len(nombre) > 140 and len(nombre.split(", y ")[0]) >= 40:   # nombres muy largos: hasta su primera cláusula completa
+        nombre = nombre.split(", y ")[0]
+    base = f"{nombre} (Boletín N° {boletin})" if nombre else f"Boletín N° {boletin}"
+    vot, art = str(m.get("votacion") or "").strip().lower(), _materia_corta(str(m.get("articulo") or "").strip(), partidas)
+    if art:
+        art = art[:1].lower() + art[1:] if _MINUSCULA.match(art) else art
+        pre = {"general": "en general: ", "particular": "en particular: ", "única": "votación única: ", "unica": "votación única: "}
+        det = next((v for k, v in pre.items() if vot.startswith(k)), "") + art
+    elif vot.startswith("general"):
+        det = "votación en general"
+    elif vot.startswith("particular"):
+        det = "votación en particular"
+    else:
+        det = "votación del proyecto"
+    tr = str(m.get("tramite") or "").strip()
+    if tr and not re.match(r"primer", tr, re.I):
+        det += f" ({tr.lower()})"
+    return f"{base}, {det}"
+
+
+def camara_materias(estado, cam, previo=None, maximo=12):
+    """Completa las filas de `camara_mes` que solo dicen «Boletín N° …», «1-Otros» o «5-Cambio de Trámite» con lo que se votó
+    (datos abiertos de la Cámara, una lectura por proyecto). Lo ya leído se conserva; un proyecto se vuelve a pedir solo si tiene
+    votaciones del mes que todavía no están. Modifica `cam` en su lugar. → lo guardado para la próxima corrida (o None)."""
+    filas = (cam or {}).get("camara_mes") or []
+    guard = dict((previo or {}).get("proyectos") or {}) if isinstance(previo, dict) else {}
+    genericas = [v for v in filas if _GENERICA_CAM.match(str(v.get("descripcion") or ""))]
+    if not genericas and not guard:
+        return None
+    por_bol = {}
+    for v in genericas:
+        m = _BOLETIN_CAM.search(str(v.get("descripcion") or ""))
+        if m:
+            por_bol.setdefault(m.group(1), set()).add(str(v.get("id")))
+    pedidos, fallas = 0, []
+    s = requests.Session()
+    for b, ids in sorted(por_bol.items(), key=lambda kv: -len(kv[1])):
+        ya = set(((guard.get(b) or {}).get("votaciones") or {}).keys())
+        if ids <= ya or pedidos >= maximo:
+            continue
+        if pedidos:
+            time.sleep(2)   # de a una, con calma
+        pedidos += 1
+        tmp = {}
+        txt = pedir(CAMARA_VOT_PROY.format(b=b), tmp, "x", como="texto", espera=(0, 10), sesion=s, limite=90)
+        try:
+            nombre, vots = materias_proyecto(txt) if txt else ("", {})
+        except ET.ParseError:
+            nombre, vots = "", {}
+        if vots:
+            guard[b] = {"nombre": nombre or (guard.get(b) or {}).get("nombre", ""), "votaciones": vots, "leido": ahora().isoformat(timespec="seconds")}
+        else:
+            fallas.append(f"{b}: {(tmp.get('x') or {}).get('error') or 'sin votaciones en la respuesta'}")
+    donde = {idv: (b, p.get("nombre") or "") for b, p in guard.items() for idv in (p.get("votaciones") or {})}
+    partidas = {b: partidas_de([x.get("articulo") for x in (p.get("votaciones") or {}).values()]) for b, p in guard.items()}
+    hechas = 0
+    for v in genericas:
+        idv = str(v.get("id"))
+        if idv not in donde:
+            continue
+        b, nombre = donde[idv]
+        m = guard[b]["votaciones"][idv]
+        v["descripcion_oficial"] = v.get("descripcion")
+        v["descripcion"] = descripcion_votacion(b, nombre, m, partidas.get(b))
+        v["materia"] = m.get("articulo") or ""
+        v["votacion"] = m.get("votacion") or ""
+        v["boletin"] = b
+        hechas += 1
+    estado["camara_materias"] = {"ok": not fallas or bool(hechas), "hora": ahora().isoformat(timespec="seconds"),
+                                 "url": CAMARA_VOT_PROY.format(b="N"), "proyectos_leidos": pedidos, "con_materia": hechas,
+                                 "sin_materia": len(genericas) - hechas, "fallas": fallas[:6]}
+    return {"actualizado": ahora().isoformat(timespec="seconds"), "proyectos": guard} if guard else None
 
 
 # ---------- Qué ofrecen los servicios oficiales (para sumar asistencia y otros datos con nombres verificados) ----------
@@ -2749,6 +2945,14 @@ def main(argv=None):
     except (OSError, ValueError):
         previo = {}
     cam, nom = camara(estado, hoy, previo if isinstance(previo, dict) else {})
+    try:   # 17-11-2026: qué se votó en cada votación de un proyecto (antes: 409 filas que solo decían «Boletín N° …»)
+        try:
+            prev_m = json.load(open(os.path.join(a.salida, "camara-materias.json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            prev_m = {}
+        escribir(os.path.join(a.salida, "camara-materias.json"), camara_materias(estado, cam, prev_m if isinstance(prev_m, dict) else {}))
+    except Exception as ex:   # noqa: BLE001
+        estado["camara_materias"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     escribir(os.path.join(a.salida, "camara-mes.json"), cam)
     escribir(os.path.join(a.salida, "camara-nominal.json"), nom or None)
     escribir(os.path.join(a.salida, "descubrimiento.json"), descubrir(estado) or None)
