@@ -12,14 +12,12 @@ import requests
 UA = "CofradeNews/1.0 (boletin gratuito sin fines de lucro de la Cofradia de oficiales navales de Chile; github.com/cofrade-datos)"
 HOY = dt.date.today()
 D0, D1 = HOY.strftime("%Y%m%d"), (HOY - dt.timedelta(days=1)).strftime("%Y%m%d")
-OBJETIVOS = [   # 17-11-2026: materia de cada votación de la Cámara (Germán: «409 votaciones de la Cámara cuya materia no se pudo
-    # leer desde la tarea»). Se prueba desde GitHub la ficha oficial de la votación y el detalle de datos abiertos, con su robots.txt.
-    # Para fuentes nuevas de titulares usar herramientas/verificar_fuentes.py; esta sonda queda para diagnósticos puntuales.
-    ("camara_ficha_91563", "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=91563"),
-    ("camara_ficha_90791", "https://camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=90791"),
-    ("camara_ficha_www_91563", "https://www.camara.cl/legislacion/sala_sesiones/votacion_detalle.aspx?prmIdVotacion=91563"),
-    ("opendata_detalle_91563", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=91563"),
-    ("opendata_detalle_90791", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionDetalle?prmVotacionId=90791"),
+OBJETIVOS = [   # 17-11-2026: materia de cada votación de la Cámara. camara.cl responde 403 «Just a moment» (desafío de Cloudflare) a GitHub:
+    # no se usa. Se prueban los servicios de datos abiertos por proyecto (votaciones con su artículo o partida).
+    ("od_ayuda_votxproy", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx?op=retornarVotacionesXProyectoLey"),
+    ("od_votxproy_18885", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXProyectoLey?prmNumeroBoletin=18885-05"),
+    ("od_votxproy_18702", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarVotacionesXProyectoLey?prmNumeroBoletin=18702-05"),
+    ("od_proyecto_18702", "https://opendata.camara.cl/camaradiputados/WServices/WSLegislativo.asmx/retornarProyectoLey?prmNumeroBoletin=18702-05"),
 ]
 EXTRA_JS = set()   # páginas donde se buscan scripts (ninguna por ahora)
 os.makedirs("sonda", exist_ok=True)
