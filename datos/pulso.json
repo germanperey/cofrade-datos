@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-18T15:54-03:00",
- "proxima": "16:17",
+ "generado": "2026-11-18T17:07-03:00",
+ "proxima": "18:17",
  "indicadores": [
   {
    "clave": "dolar",
@@ -10,7 +10,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-18",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "euro",
@@ -20,7 +20,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-18",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "uf",
@@ -30,17 +30,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-18",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440,
+   "valor": 72440.0,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "tpm",
@@ -50,30 +50,37 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-18",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 6.02,
+   "valor": 6.0246,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-18",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   }
  ],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10368.39,
+  "valor": 10362.7,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-18T15:54-03:00",
-  "variacion_pct": -1.04
+  "hora": "2026-11-18T17:07-03:00",
+  "variacion_pct": -1.09
  },
  "sismos": {
-  "n": 0,
-  "mayores": [],
+  "n": 1,
+  "mayores": [
+   {
+    "hora": "2026-11-18T15:46-03:00",
+    "magnitud": 4.5,
+    "profundidad_km": 133.9,
+    "referencia": "25 km al SO de Ollagüe"
+   }
+  ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
   "url": "https://earthquake.usgs.gov/earthquakes/map/"
  },
@@ -82,34 +89,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "“Existe libre mercado, pero también hay límites”: Diputado denuncia alza de pasajes de avión de hasta $500 mil de Calama a Santiago por final de Cobreloa",
-     "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/18/existe-libre-mercado-pero-tambien-hay-limites-diputado-denuncia-alza-de-pasajes-de-avion-de-hasta-500-mil-de-calama-a-santiago-por-final-de-cobreloa/",
-     "hora": "15:50"
-    },
-    {
-     "titulo": "En prisión preventiva investigado por cohecho: alcalde de Río Bueno presenta su renuncia al cargo",
-     "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/18/en-prision-preventiva-investigado-pro-cohecho-alcalde-de-rio-bueno-presenta-su-renuncia-al-cargo/",
-     "hora": "15:48"
-    },
-    {
-     "titulo": "Gobierno deja sin financiamiento el Plan Nacional de Búsqueda: Alertan que podría quedar sin ejecución",
+     "titulo": "Tras amenaza de Acusación Constitucional en su contra: Quiroz cede y repone el financiamiento de la reforma de pensiones",
      "medio": "El Ciudadano",
-     "url": "https://www.elciudadano.com/politica/gobierno-deja-sin-financiamiento-el-plan-nacional-de-busqueda-alertan-que-podria-quedar-sin-ejecucion/11/18/",
-     "hora": "15:48"
+     "url": "https://www.elciudadano.com/chile/tras-amenaza-de-acusacion-constitucional-en-su-contra-quiroz-cede-y-repone-el-financiamiento-de-la-reforma-de-pensiones/11/18/",
+     "hora": "17:07"
     },
     {
-     "titulo": "SML realizará diversos peritajes para establecer identidades y causa de muerte de tres cadáveres enterrados en casa de Barrio Yungay",
+     "titulo": "Con inversión de US$35 millones: Cenco Malls levantará su primer outlet en Santiago en este emblemático lugar",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/18/con-inversion-de-us35-millones-cenco-malls-levantara-su-primer-outlet-en-santiago-en-este-emblematico-lugar/",
+     "hora": "17:06"
+    },
+    {
+     "titulo": "Informe de Fiscalía por crimen organizado consigna baja de homicidios en 2025 y alerta por cifras de este año",
      "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/sml-realizara-diversos-peritajes-para-establecer-identidades-y-causa-de-muerte-de-tres-cadaveres-enterrados-en-casa-de-barrio-yungay/",
-     "hora": "15:41"
+     "url": "https://www.latercera.com/nacional/noticia/informe-de-fiscalia-por-crimen-organizado-consigna-baja-de-homicidios-en-2025-y-alerta-por-cifras-de-este-ano/",
+     "hora": "17:04"
     },
     {
-     "titulo": "Entregarán subsidios de hasta $9 millones a 52 restaurantes de Ñuble que apuesten por la sostenibilidad",
-     "medio": "La Discusion de Chillan",
-     "url": "https://ladiscusion.cl/entregaran-subsidios-de-hasta-9-millones-a-52-restaurantes-de-nuble-que-apuesten-por-la-sostenibilidad/",
-     "hora": "15:40"
+     "titulo": "Panorama UdeC vuelve al papel en la celebración de los 70 años de las comunicaciones universitarias",
+     "medio": "Noticias UdeC",
+     "url": "https://noticias.udec.cl/panorama-udec-vuelve-al-papel-en-la-celebracion-de-los-70-anos-de-las-comunicaciones-universitarias/",
+     "hora": "17:03"
+    },
+    {
+     "titulo": "Comisión de Agricultura pide a Kast intervenir para que ministro Jaime Campos se disculpe por dichos sobre exportaciones frutícolas",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/18/comision-de-agricultura-pide-a-kast-intervenir-para-que-ministro-jaime-campos-se-disculpe-por-dichos-sobre-exportaciones-fruticolas/",
+     "hora": "17:01"
     }
    ]
   },
@@ -117,34 +124,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Economía panameña encadenó cuatro meses consecutivos con un crecimiento superior al 7%",
-     "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/panama/2026/11/18/economia-panamena-encadeno-cuatro-meses-consecutivos-con-un-crecimiento-superior-al-7/",
-     "hora": "15:51"
-    },
-    {
-     "titulo": "Usuarios costarricenses y salvadoreños, entre los vinculados a una red internacional de abuso sexual infantil",
-     "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/costa-rica/2026/11/18/usuarios-costarricenses-y-salvadorenos-entre-los-vinculados-a-una-red-internacional-de-abuso-sexual-infantil/",
-     "hora": "15:50"
-    },
-    {
-     "titulo": "Grupo automotor Yusic duplica su representación de marcas y consolida su expansión desde Calama a Santiago",
+     "titulo": "Bolsa de Santiago cierra con fuerte caída por debajo de 10.400 puntos presionada por los resultados y previsiones de SQM",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/regiones/antofagasta/grupo-yusic-duplica-sus-ventas-suma-nuevas-marcas-y-consolida-su-expansion",
-     "hora": "15:49"
+     "url": "http://www.df.cl/mercados/bolsa-monedas/bolsas-hoy-oempy",
+     "hora": "17:05"
     },
     {
-     "titulo": "El dólar “contado con liquidación” superó los $1.700 y la brecha con el oficial alcanzó el 10 por ciento",
+     "titulo": "Dos sectores en pleno boom marcarán récords de producción y exportación: cuándos dólares aportarán en 2026",
      "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/18/el-dolar-contado-con-liquidacion-supero-los-1700-y-la-brecha-con-el-oficial-alcanzo-el-10-por-ciento/",
-     "hora": "15:47"
+     "url": "https://www.infobae.com/economia/2026/11/18/dos-sectores-en-pleno-boom-marcaran-records-de-produccion-y-exportacion-cuandos-dolares-aportaran-en-2026/",
+     "hora": "17:01"
     },
     {
-     "titulo": "Frutas de Chile descarta crisis en el sector para la próxima temporada y no ve caída en volúmenes de exportación",
-     "medio": "La Tercera · Pulso",
-     "url": "https://www.latercera.com/pulso/noticia/frutas-de-chile-descarta-crisis-en-el-sector-para-la-proxima-temporada-y-no-ve-caida-en-volumenes-de-exportacion/",
-     "hora": "15:47"
+     "titulo": "Más que un cambio de gabinete",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/opinion/mas-que-un-cambio-de-gabinete/",
+     "hora": "16:58"
+    },
+    {
+     "titulo": "Economía recibió a la UIA para tratar medidas de alivio fiscal para el sector",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/18/economia-recibio-a-la-uia-para-tratar-medidas-de-alivio-fiscal-para-el-sector/",
+     "hora": "16:56"
+    },
+    {
+     "titulo": "“Nuestro crecimiento está restringido por la capacidad del aeropuerto El Dorado”: CEO Grupo Latam",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/df-sud/multilatinas/colombia/nuestro-crecimiento-esta-restringido-por-la-capacidad-del-aeropuerto-el",
+     "hora": "16:51"
     }
    ]
   },
@@ -152,16 +159,28 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Erika Eleniak, ex actriz de 'Baywatch', admitió que OnlyFans la salvó de ser desalojada por no pagar el alquiler",
+     "titulo": "Acribillaron a aspirante morenista del municipio de Xochistlahuaca en Guerrrero y a su acompañante",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/entretenimiento/2026/11/18/erika-eleniak-ex-actriz-de-baywatch-admitio-que-onlyfans-la-salvo-de-ser-desalojada-por-no-pagar-el-alquiler/",
-     "hora": "15:51"
+     "url": "https://www.infobae.com/mexico/2026/11/18/acribillaron-a-aspirante-morenista-del-municipio-de-xochistlahuaca-en-guerrrero-y-a-su-acompanante/",
+     "hora": "17:05"
     },
     {
-     "titulo": "No solo a los alimentos de la canasta familiar: Gobierno de Abelardo de la Espriella también descartó el IVA a la salud prepagada en la Ley de Rescate Económico",
+     "titulo": "Llega “GTA VI”, un retrato social salvaje y despiadado convertido en fenómeno mundial",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/2026/11/18/no-solo-a-los-alimentos-de-la-canasta-familiar-gobierno-de-abelardo-de-la-espriella-tambien-descarto-el-iva-a-la-salud-prepagada-en-la-ley-de-rescate-economico/",
-     "hora": "15:51"
+     "url": "https://www.infobae.com/cultura/2026/11/18/llega-gta-vi-un-retrato-social-salvaje-y-despiadado-convertido-en-fenomeno-mundial/",
+     "hora": "17:05"
+    },
+    {
+     "titulo": "Unas imágenes excepcionales de un contacto con indígenas aislados subrayan las amenazas a la Amazonia en Brasil",
+     "medio": "El País · Internacional",
+     "url": "https://elpais.com/internacional/2026-11-18/unas-imagenes-ineditas-en-30-anos-de-un-contacto-con-indigenas-aislados-subrayan-las-amenazas-a-la-amazonia-en-brasil.html",
+     "hora": "16:50"
+    },
+    {
+     "titulo": "'GTA VI': ¿por qué causa tanto furor y críticas al mismo tiempo?",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/programas/en-contexto/20261118-gta-vi-por-qu%C3%A9-causa-tanto-furor-y-cr%C3%ADticas-al-mismo-tiempo",
+     "hora": "16:48"
     }
    ]
   },
@@ -169,34 +188,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "Deutsche Bank: millones de documentos revelan prácticas dudosas",
+     "titulo": "Repsol y sus socios en Reino Unido compran por 874 millones los pozos petrolíferos de EnQuest en el Mar del Norte",
+     "medio": "Cinco Días portada",
+     "url": "https://cincodias.elpais.com/companias/2026-11-18/repsol-y-sus-socios-en-reino-unido-compran-por-874-millones-los-pozos-petroliferos-de-enquest-en-el-mar-del-norte.html",
+     "hora": "16:58"
+    },
+    {
+     "titulo": "Rockstar lanza \"GTA VI\" y desata una fiebre global entre los jugadores",
      "medio": "DW en español",
-     "url": "https://www.dw.com/es/deutsche-bank-millones-de-documentos-revelan-prácticas-dudosas/a-79985529?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "15:36"
+     "url": "https://www.dw.com/es/rockstar-lanza-gta-vi-y-desata-una-fiebre-global-entre-los-jugadores/a-79986047?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "16:34"
     },
     {
-     "titulo": "Cumbre APEC: avanzan los temas económicos más allá del encuentro entre Xi, Trump y Putin",
-     "medio": "France 24 · Economía",
-     "url": "https://www.france24.com/es/programas/econom%C3%ADa/20261118-economia-china-apec-rusia-comercio",
-     "hora": "15:23"
-    },
-    {
-     "titulo": "Diallo contra Infantino: batalla por el control del fútbol mundial",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/diallo-contra-infantino-batalla-por-el-control-del-fútbol-mundial/a-79985014?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "15:23"
-    },
-    {
-     "titulo": "Los fondos cotizados en bolsa y las acciones estadounidenses presentan resultados mixtos tras la media jornada.",
+     "titulo": "Los futuros del trigo, el maíz y la soja caen por el fortalecimiento del dólar",
      "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/fondos-cotizados-bolsa-acciones-estadounidenses-181634535.html",
-     "hora": "15:16"
+     "url": "https://es.finance.yahoo.com/noticias/futuros-trigo-ma%C3%ADz-soja-caen-193434453.html",
+     "hora": "16:34"
     },
     {
-     "titulo": "El Eurogrupo amplía el plazo para presentar candidatos a la dirección del BCE con Hernández de Cos como favorito a la presidencia",
-     "medio": "El País · Economía",
-     "url": "https://elpais.com/economia/2026-11-18/el-eurogrupo-amplia-el-plazo-para-presentar-candidatos-a-la-direccion-del-bce-con-hernandez-de-cos-como-favorito-a-la-presidencia.html",
-     "hora": "15:15"
+     "titulo": "Ataques informáticos, IA o actualizaciones pendientes: qué hay detrás de la ola de problemas tecnológicos de los últimos días",
+     "medio": "BBC Mundo · Economía",
+     "url": "https://www.bbc.com/mundo/articles/cq98x39klx03o?at_medium=RSS&at_campaign=rss",
+     "hora": "16:31"
+    },
+    {
+     "titulo": "The Good Daughter, una miniserie que no debes perderte si te gustan los thrillers",
+     "medio": "Cinco Días portada",
+     "url": "https://cincodias.elpais.com/smartlife/smart-tv/2026-11-18/the-good-daughter-serie-thriller.html",
+     "hora": "16:00"
     }
    ]
   },
@@ -204,34 +223,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "Rockstar lo volvió a hacer: Digital Foundry define a GTA 6 como \"un hito técnico fundamental\" para el estudio",
-     "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/otros-1/rockstar-volvio-a-hacer-digital-foundry-define-a-gta-6-como-hito-tecnico-fundamental-para-estudio",
-     "hora": "15:33"
-    },
-    {
-     "titulo": "Amazon está rematando la rasuradora más completa para dejar tu barba impecable: Philips Multigroom Serie 3000",
-     "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/seleccion/amazon-esta-rematando-rasuradora-completa-para-dejar-tu-barba-impecable-philips-multigroom-serie-3000",
-     "hora": "15:33"
-    },
-    {
-     "titulo": "GTA 6 es el mejor juego de la historia, según la crítica especializada",
-     "medio": "Hipertextual",
-     "url": "https://hipertextual.com/videojuegos/gta-6-juego-mejor-valorado-historia/",
-     "hora": "15:09"
-    },
-    {
-     "titulo": "El Gobierno da el último paso para aprobar una inversión récord en la red eléctrica hasta 2030",
+     "titulo": "El Hierro ha recibido en dos semanas casi tantas personas como habitantes tiene. El Gobierno responde con 5 millones y un marco",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/energia/gobierno-da-ultimo-paso-para-aprobar-inversion-record-red-electrica-2030",
-     "hora": "15:01"
+     "url": "https://www.xataka.com/magnet/hierro-ha-recibido-dos-semanas-casi-tantas-personas-como-habitantes-tiene-gobierno-responde-5-millones-marco",
+     "hora": "17:01"
     },
     {
-     "titulo": "Casi 64 millones de visualizaciones en Netflix con sus 6 episodios: la miniserie de Netflix que estrena segunda temporada en noviembre",
-     "medio": "Genbeta",
-     "url": "https://www.genbeta.com/actualidad/casi-64-millones-visualizaciones-netflix-sus-6-episodios-miniserie-netflix-que-estrena-segunda-temporada-noviembre",
-     "hora": "15:01"
+     "titulo": "Hyundai encontró una forma de esquivar los aranceles de México: ahora fabrica en Vietnam los Creta que antes importaba de Indonesia",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/automovil/hyundai-encontro-forma-esquivar-aranceles-mexico-ahora-fabrica-vietnam-creta-que-antes-importaba-indonesia",
+     "hora": "17:01"
+    },
+    {
+     "titulo": "Final Fantasy VII: Revelation: la conclusión de la trilogía de uno de los mejores remakes de la historia ya se puede apartar en México",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/seleccion/final-fantasy-vii-revelation-conclusion-trilogia-uno-mejores-remakes-historia-se-puede-apartar-mexico",
+     "hora": "16:35"
+    },
+    {
+     "titulo": "Hackean una herramienta de Microsoft y la convierten en malware para robar tus datos",
+     "medio": "Hipertextual",
+     "url": "https://hipertextual.com/seguridad/hackeo-herramienta-microsoft-robo-credenciales-python/",
+     "hora": "16:32"
+    },
+    {
+     "titulo": "Antonio Roma tiene 350.000 seguidores y no existe. Lo más loco es que va a dar un concierto en Madrid ante 500 espectadores",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/musica/antonio-roma-tiene-350-000-seguidores-no-existe-loco-que-va-a-dar-concierto-madrid-500-espectadores",
+     "hora": "16:01"
     }
    ]
   },
@@ -239,34 +258,34 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "De GTA V a GTA VI: cómo evolucionó la rivalidad entre Messi y Ronaldo",
-     "medio": "Olé",
-     "url": "https://www.ole.com.ar/fuera-de-juego/lionel-messi-cristianoronaldo-gtavi-gtav-fcbarcelona-realmadrid-intermiamicf-al-nassrfc_0_0CwYd8WgMS.html",
-     "hora": "15:45"
+     "titulo": "Mercado de fichajes, en directo: rumores, altas y bajas de LaLiga, Premier, Serie A...",
+     "medio": "AS Fútbol",
+     "url": "https://as.com/futbol/internacional/mercado-de-fichajes-en-directo-rumores-altas-y-bajas-de-laliga-premier-serie-a-f202611-d-9/",
+     "hora": "17:06"
     },
     {
-     "titulo": "¿Se ha reducido la puja por Skubal a una batalla entre dos equipos?",
-     "medio": "MLB.com en español",
-     "url": "https://www.mlb.com/es/news/se-ha-reducido-la-puja-por-skubal-a-una-batalla-entre-dos-equipos",
-     "hora": "15:43"
+     "titulo": "Primera ronda de Copa del Rey, en directo: partidos del miércoles 18, hoy en vivo",
+     "medio": "AS Fútbol",
+     "url": "https://as.com/futbol/copa_del_rey/primera-ronda-de-copa-del-rey-en-directo-partidos-del-miercoles-18-hoy-en-vivo-f202611-d/",
+     "hora": "17:04"
     },
     {
-     "titulo": "El increíble dato de Tagliafico que muestra su importancia en la Scaloneta",
-     "medio": "Olé",
-     "url": "https://www.ole.com.ar/seleccion/nicolas-tagliafico-seleccion-scaloneta-convocatorias_0_ZjJIovqCJN.html",
-     "hora": "15:41"
-    },
-    {
-     "titulo": "Histórico: chilena es seleccionada por la FIA para su exclusivo programa de talentos junto a Escudería Ferrari",
-     "medio": "AS Chile portada",
-     "url": "https://chile.as.com/masdeporte/historico-chilena-es-seleccionada-por-la-fia-para-su-exclusivo-programa-de-talentos-junto-a-escuderia-ferrari-f202611-n/",
-     "hora": "15:36"
-    },
-    {
-     "titulo": "Cinco cosas a tener en cuenta en el GP de Las Vegas de F1 2026",
+     "titulo": "Cadillac elige a Valtteri Bottas sobre Colton Herta para la F1 2027",
      "medio": "Motorsport.com ES F1",
-     "url": "https://es.motorsport.com/f1/news/cinco-cosas-tener-cuenta-las-vegas-2026/10875331/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
-     "hora": "15:25"
+     "url": "https://es.motorsport.com/f1/news/cadillac-valtteri-bottas-colton-herta-formula1-2027/10875218/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
+     "hora": "17:02"
+    },
+    {
+     "titulo": "Horacio Zeballos y Marcel Granollers perdieron en las ATP Finals y se jugarán la clasificación en el último partido del grupo",
+     "medio": "Infobae Deportes",
+     "url": "https://www.infobae.com/deportes/2026/11/18/horacio-zeballos-y-marcel-granollers-perdieron-en-las-atp-finals-y-se-jugaran-la-clasificacion-en-el-ultimo-partido-del-grupo/",
+     "hora": "16:58"
+    },
+    {
+     "titulo": "La descarnada confesión de un peleador de UFC que fue hospitalizado por sobredosis: “Estás arriesgando tu vida”",
+     "medio": "Infobae Deportes",
+     "url": "https://www.infobae.com/deportes/2026/11/18/la-descarnada-confesion-de-un-peleador-de-ufc-que-fue-hospitalizado-por-sobredosis-estas-arriesgando-tu-vida/",
+     "hora": "16:53"
     }
    ]
   },
@@ -274,16 +293,16 @@
    "seccion": "Ciencia",
    "notas": [
     {
+     "titulo": "¿Sabes realmente qué distingue tu cerebro del de un chimpancé?",
+     "medio": "Muy Interesante",
+     "url": "https://muyinteresante.okdiario.com/ciencia/diferencias-cerebro-humano-chimpance.html",
+     "hora": "16:33"
+    },
+    {
      "titulo": "Por qué brillan los ojos de los gatos: el espejo que no fabrica luz",
      "medio": "Muy Interesante",
      "url": "https://muyinteresante.okdiario.com/ciencia/ojos-de-gato.html",
      "hora": "15:01"
-    },
-    {
-     "titulo": "Hace 7.000 años, los hombres del sudeste asiático medían 1,78 metros, pero algo cambió y acabaron perdiendo casi 18 centímetros de altura",
-     "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/historia/estudio-18457-esqueletos-estatura-humana-7000-anos-progreso-tecnologico.html",
-     "hora": "14:34"
     },
     {
      "titulo": "Cuidarse por dentro para verse mejor por fuera: ¿funciona la nutricosmética?",
@@ -303,16 +322,10 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "Santiago, 2º polo de innovación corporativa de LatAm",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/santiago-2o-polo-de-innovacion-corporativa-de-latam/",
-     "hora": "15:51"
-    },
-    {
-     "titulo": "Foro ScaleUP Málaga: 10 startups ante inversores el 26-N",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/foro-scaleup-malaga-10-startups-ante-inversores-el-26-n/",
-     "hora": "15:21"
+     "titulo": "Walmart Chile y Desafío Levantemos Chile cierran programa que apoyó a 120 emprendedores del Biobío tras los incendios de enero",
+     "medio": "desafiolevantemoschile.org",
+     "url": "https://desafiolevantemoschile.org/walmart-chile-y-desafio-levantemos-chile-cierran-programa-que-apoyo-a-120-emprendedores-del-biobio-tras-los-incendios-de-enero/",
+     "hora": "08:27"
     }
    ]
   }
@@ -356,17 +369,17 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 63106.18,
+  "bitcoin_usd": 62628.29,
   "bitcoin_fecha": "2026-11-18",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 350,
+ "fuentes_ok": 357,
  "indicadores_origen": {
-  "dolar": "mindicador",
-  "euro": "mindicador",
-  "uf": "mindicador",
-  "utm": "mindicador",
-  "tpm": "mindicador",
-  "libra_cobre": "mindicador"
+  "dolar": "banco_central",
+  "euro": "banco_central",
+  "uf": "banco_central",
+  "utm": "banco_central",
+  "tpm": "banco_central",
+  "libra_cobre": "banco_central"
  }
 }
