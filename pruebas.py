@@ -258,6 +258,43 @@ ATOM = """<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2
 
 
 @prueba
+def sudan_con_cupo_propio_en_politica_mundo():
+    """18-11-2026 (revisión de conflictos: Sudán salió tres días seguidos con 2 notas). En «politica/mundo» las 90 notas más nuevas
+    eran casi todas de Infobae y las de Sudán quedaban fuera aunque fueran de las últimas 72 h. Ahora Sudán tiene un cupo propio
+    dentro del tope; Sudán del Sur (South Sudan) no entra en ese cupo y lo de más de 72 h tampoco."""
+    hoy = dt.datetime(2026, 11, 18, 8, 0, tzinfo=B.TZ)
+    gmt = lambda d: d.astimezone(dt.timezone.utc).strftime("%a, %d %b %Y %H:%M:%S GMT")
+    rss = lambda items: ('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>x</title>' + "".join(
+        f"<item><title>{t}</title><link>{u}</link><pubDate>{gmt(f)}</pubDate></item>" for t, u, f in items) + "</channel></rss>")
+    # un diario general (que llena el tope) con una nota de Sudán y dos de Sudán del Sur; y la búsqueda dedicada a Sudán
+    general = rss([(f"Nota general {i}", f"https://www.infobae.com/n{i}", hoy - dt.timedelta(minutes=5 + i)) for i in range(100)]
+                  + [("Sudán: el ejército recupera Bara", "https://www.infobae.com/sd", hoy - dt.timedelta(hours=50)),
+                     ("South Sudan holds talks with rebels", "https://www.infobae.com/ss", hoy - dt.timedelta(hours=10)),
+                     ("Sudán del Sur aplaza las elecciones", "https://www.infobae.com/ss2", hoy - dt.timedelta(hours=11))])
+    sudan = rss([("Sudán: las RSF atacan El Fasher", "https://www.swissinfo.ch/s1", hoy - dt.timedelta(hours=20)),
+                 ("Sudan army retakes town in Kordofan", "https://apnews.com/s2", hoy - dt.timedelta(hours=30)),
+                 ("Hambruna en Darfur: la ONU pide acceso", "https://elpais.com/s3", hoy - dt.timedelta(hours=40)),
+                 ("Sudán: nota de hace cuatro días", "https://ej.cl/vieja", hoy - dt.timedelta(hours=96))])
+    feeds = {"politica/mundo": [("Infobae (RSS)", "https://www.infobae.com/rss", "rss"), ("Bing Noticias · Sudán", "https://www.bing.com/news/sudan", "rss")]}
+    viejos = B.robots_permite, B.pedir, B.ahora
+
+    def pedir(url, estado, clave, **k):
+        estado[clave] = {"ok": True}
+        return sudan if "bing" in url else general
+    B.robots_permite, B.pedir, B.ahora = (lambda url, e: True), pedir, (lambda: hoy)
+    try:
+        t = B.titulares({}, feeds, hilos=1)
+    finally:
+        B.robots_permite, B.pedir, B.ahora = viejos
+    tit = [n["titulo"] for n in t["secciones"]["politica/mundo"]["notas"]]
+    assert len(tit) == B.TOPE_SECCION, len(tit)
+    assert {"Sudán: las RSF atacan El Fasher", "Sudan army retakes town in Kordofan", "Hambruna en Darfur: la ONU pide acceso",
+            "Sudán: el ejército recupera Bara"} <= set(tit), tit[-6:]
+    assert "Sudán: nota de hace cuatro días" not in tit, "más de 72 h"
+    assert "South Sudan holds talks with rebels" not in tit and "Sudán del Sur aplaza las elecciones" not in tit, tit[-6:]
+
+
+@prueba
 def rss_y_atom_con_medio_real_y_fecha_de_chile():
     n = B.leer_feed(RSS_GN, "Google News · Política")
     assert len(n) == 2, n

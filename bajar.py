@@ -1201,7 +1201,12 @@ TOPE_SECCION = 90
 # Cada disciplina con reserva tiene su propia ventana y un mínimo de cupos dentro del tope.
 RESERVA = {"deportes": [(re.compile(r"equitaci|ecuestre|salto ecuestre|show ?jumping|jumper|horse|\bFEI\b|Global Champions|"
                                     r"Copa de Naciones|Nations Cup|Club H[íi]pico|polo\b", re.I), 10, 240),
-                        (re.compile(r"\bNFL\b|\bNHL\b", re.I), 6, 72)]}
+                        (re.compile(r"\bNFL\b|\bNHL\b", re.I), 6, 72)],
+           # 18-11-2026 (revisión de conflictos: Sudán salió el 16, el 17 y el 18-11 con solo 2 notas). En «politica/mundo» las 90 notas
+           # más nuevas eran casi todas de Infobae, y las de Sudán (Bing Noticias · Sudán, France 24 · África: 12 y 30 leídas el 18-11)
+           # quedaban fuera aunque fueran de las últimas 72 h. Sudán tiene ahora su cupo dentro del tope; Sudán del Sur no entra en él.
+           "politica/mundo": [(re.compile(r"(?<!south )\bsud[áa]n(?!\s+del\s+sur)|darfur|el fasher|jartum|khartoum|kordof[áa]n|"
+                                          r"fuerzas de apoyo r[áa]pido|rapid support forces", re.I), 8, 72)]}
 FILTRO = {   # 01-11-2026: en secciones temáticas, de un diario general solo entran las notas del tema
     # 13-11-2026: «departament», «construcci», «propiedad» y «urban» dejaban pasar el Departamento de Estado, antenas y autos robados
     "inmobiliario": re.compile(r"inmobiliari|vivienda|(?<!el )(?<!del )departamentos? (?:en venta|en arriendo|nuevos|usados|se (?:vende|arrienda|renta))|venta de departamentos|arriendo|"
