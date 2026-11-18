@@ -11,6 +11,10 @@ const rutaEdicion = (f, completa) => (completa ? RAW_ED : RAW + "ediciones/") + 
 // el release mensual completas-AAAA-MM del repositorio (herramientas/completas_permanentes.py) y se sigue leyendo de ahí.
 const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/releases/download/completas-${f.slice(0, 7)}/Cofrade-News-${f}.html`;
 const DOMINIO = "www.cofrad.es";
+// 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
+// etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
+const VERSION_SITIO = "__VERSION_SITIO__";
+const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "__FORMULARIO__";
 const LOGO_CLARO = "/logo-claro.webp";
 const LOGO_OSCURO = "/logo-oscuro.webp";
@@ -183,7 +187,8 @@ async function traerGitHub(clave, ruta, segundos, completa, frescura, ctx = null
   // ~1 hora; con cacheTtl se guardaba también el 302 y al día siguiente la edición completa daba 403.
   const o = await fetch(completa || RAW + ruta, { cf: { cacheEverything: true, cacheTtlByStatus: { "200-299": segundos, "300-599": -1 } } });
   if (!o.ok) return null;
-  const r = new Response(o.body, { headers: { "Cache-Control": `public, max-age=${frescura ? 2592000 : segundos}`, "X-Cn-Guardado": String(Date.now()) } });
+  const et = (o.headers.get("ETag") || "").replace(/[^\w.-]/g, "").slice(0, 80);   // 18-11-2026: versión de la fuente (ETag de GitHub)
+  const r = new Response(o.body, { headers: { "Cache-Control": `public, max-age=${frescura ? 2592000 : segundos}`, "X-Cn-Guardado": String(Date.now()), ...(et ? { "X-Cn-Fuente": et } : {}) } });
   if (ctx) { ctx.waitUntil(caches.default.put(clave, r.clone())); return r; }
   await caches.default.put(clave, r.clone());   // por detrás: se guarda y la copia sobrante se descarta
   return r;
@@ -1278,16 +1283,24 @@ export default {
       }
       const m = p.match(/^\/edicion\/(\d{4}-\d{2}-\d{2})$/);
       if (m) {
-        // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde y
-        // 1 hora en el navegador; la de hoy, 10 minutos. Los gráficos se dibujan recién cuando el lector llega a ellos (LENTO).
+        // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde (la de hoy,
+        // 10 minutos); en el navegador, ver la etiqueta más abajo (18-11). Los gráficos se dibujan cuando el lector llega a ellos (LENTO).
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
         const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
         ctx.waitUntil(contarVisita(req, env, p));
         ctx.waitUntil(revisarRenovaciones(env, ctx));
+        // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): el navegador guardaba la edición 1 hora (la de hoy, 10 minutos)
+        // y un cambio del sitio tardaba en verse. Ahora la revisa en cada apertura con su etiqueta: edición + versión del sitio + librería
+        // de gráficos. Si nada cambió responde «sin cambios» (304) sin volver a mandar la página, así que abre igual de rápido.
+        const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}"`;
+        if (etiquetaIgual(req.headers.get("If-None-Match"), etiqueta)) {
+          if (r.body) r.body.cancel().catch(() => {});
+          return new Response(null, { status: 304, headers: { ETag: etiqueta, "Cache-Control": "no-cache", ...SEGURIDAD } });
+        }
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
-          "Cache-Control": pasada ? "public, max-age=3600, stale-while-revalidate=86400" : "public, max-age=600", ...SEGURIDAD } });
+          "Cache-Control": "no-cache", ETag: etiqueta, ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
         const cp = compacto();   // 18-11-2026: títulos de bloque más grandes y gráficos del Congreso en barra compacta (modulos/compacto.js)
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)

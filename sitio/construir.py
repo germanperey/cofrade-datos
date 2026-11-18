@@ -2,7 +2,7 @@
 """Arma worker.js desde worker.src.js: logos, dirección del formulario de publicidad, marcas auspiciadoras,
 la capa rápida de gráficos de la edición (modulos/lento.js), el Buzón + Panel de Control (modulos/buzon_panel.js) y los
 socios fundadores con Mercado Pago (modulos/suscripciones.js) y el tablero con la publicidad pagada (modulos/tablero.js)."""
-import json, os
+import hashlib, json, os
 aqui = os.path.dirname(os.path.abspath(__file__))
 leer = lambda *r: open(os.path.join(aqui, *r), encoding="utf-8").read()
 src = leer("worker.src.js")
@@ -22,5 +22,8 @@ for k, v in {
 }.items():
     assert src.count(k) == 1, k
     src = src.replace(k, v)
+# 18-11-2026: huella de esta versión del sitio (va en la etiqueta de cada edición; ver VERSION_SITIO en worker.src.js)
+assert src.count("__VERSION_SITIO__") == 1
+src = src.replace("__VERSION_SITIO__", hashlib.sha256(src.encode()).hexdigest()[:12])
 open(os.path.join(aqui, "worker.js"), "w", encoding="utf-8").write(src)
 print("worker.js", len(src.encode()), "bytes")
