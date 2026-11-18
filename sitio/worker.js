@@ -2968,7 +2968,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 //     al abrirse (la capa LENTO espera a que se vean) y al imprimir se abren todos. Un mes sin proyectos queda como estaba.
 const COMPACTO_CSS = `<style id="cnCompacto">
 #cgw>h3,#fondos>h3,#tasw>h3,#subsidios>h3{font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:6px 0 10px;padding-bottom:5px}
-#mar>h3.tabtit:has(+p.sub+.leyenda-naves),#mar>h3.tabtit:has(+.leyenda-naves){font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:18px 0 10px;padding-bottom:5px}
+#mar>h3.tabtit:has(+p.sub+.leyenda-naves),#mar>h3.tabtit:has(+.leyenda-naves){font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:28px 0 10px;padding-bottom:5px}
 details.cn-cmp{margin:12px 0 6px}
 details.cn-cmp>summary{list-style:none;display:flex;flex-direction:column;gap:9px;padding:12px 14px;min-height:44px;box-sizing:border-box;background:var(--card,#fff);border:1px solid var(--linea,#DDD3BF);border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;transition:border-color .15s ease-out,box-shadow .15s ease-out}
 details.cn-cmp>summary::-webkit-details-marker{display:none}
@@ -2995,6 +2995,24 @@ details.cn-cmp>.dos{margin-top:14px}
 @media (prefers-reduced-motion:reduce){details.cn-cmp>summary,.cn-cmp-v svg{transition:none}}
 @media print{details.cn-cmp>summary{display:none}details.cn-cmp>.dos{margin-top:0}}
 </style>`;
+// 18-11-2026 03:06 · Germán (20 capturas con «=» en rojo): «son espacios que debes ampliar entre un contenido y otro, para que los textos
+// no estén tan amontonados, oxigenando un poco más la lectura y todo se vea más armónico y equilibrado»; en Industrias: «agrandar letras»
+// (el título de cada industria, «⛏ Minería»). La edición fija .ciudad-tit con !important: por eso estas dos reglas también lo llevan. Regla: más aire ENTRE grupos (texto → tabla, gráfico → tabla, tabla → gráfico, nota →
+// título, recuadros → botones) y nada dentro de un grupo (un título sigue pegado a lo suyo). Solo en pantalla: el PDF queda igual.
+const AIRE_CSS = `<style id="cnAire">@media screen{
+#crecw .dos+.dos{margin-top:16px}#crecw p.leer{margin-top:16px}.sec p.leer+.tabla{margin-top:20px}
+#cgw .cga{margin-top:30px}
+#gobiernos .gob-kpis{margin-top:22px}#gobiernos .gob-kpis+.pg-wrap{margin-top:24px}#gobiernos .gob-panel{margin-top:26px}#gobiernos .gob-servel{margin-top:18px}#gobiernos .gob-grid+.tabla{margin-top:22px}
+#fondos .fz-filtros{margin-top:18px}#fondos .fz-cuenta{margin-top:14px}
+.sec h3.ciudad-tit{margin-top:24px!important}
+.sec .panel-ciudad+p.tabtit{margin-top:28px}.sec>h3.tabtit{margin-top:28px}.sec>h2+h3.tabtit{margin-top:6px}
+#vw{margin-top:18px}#vw h4.h-vuelo{margin-top:24px}
+#tasw p.ts-inm-tit{margin-top:24px}#tasw .ts-inm+.ts-bs{margin-top:22px}
+.sec .fz,.sec .ts-bloque{margin-top:clamp(30px,3.5vw,40px)}
+#industrias h3.ind-tit{margin-top:40px!important;font-size:clamp(20px,2.6vw,24px)!important;line-height:1.2!important}
+.dep .tabbloque+.tabla,.dep .chart+.tabla{margin-top:18px}.dep .tabla+.tabbloque{margin-top:30px}.dep .tabla+.notas{margin-top:22px}.disciplinas>.disc+.disc{margin-top:28px}
+.horo .vista-horo{margin-top:16px}.horo .vista-horo+.signos{margin-top:22px}
+}</style>`;
 const COMPACTO_JS = `<script>(function(){var D=[].slice.call(document.querySelectorAll('details.cn-cmp'));if(!D.length)return;var R=document.documentElement,E=[].slice.call(document.querySelectorAll('details.cn-cmp [data-en]'));
 E.forEach(function(e){e.setAttribute('data-es',e.textContent)});
 function idioma(l){var en=/^en/i.test(String(l||''));E.forEach(function(e){var t=e.getAttribute(en?'data-en':'data-es');if(t!=null&&e.textContent!==t)e.textContent=t})}
@@ -3013,7 +3031,7 @@ function compacto() {
   const cifra = (s) => { const t = String(s).trim(); return /^(?:\d{1,3}(?:\.\d{3})+|\d{1,5})$/.test(t) ? parseInt(t.replace(/\./g, ""), 10) : null; };
   const plural = (n, uno, varios) => (n === 1 ? uno : varios);
   return {
-    cabeza: { element(e) { e.append(COMPACTO_CSS, { html: true }); } },
+    cabeza: { element(e) { e.append(COMPACTO_CSS + AIRE_CSS, { html: true }); } },
     cuerpo: { element(e) { e.append(COMPACTO_JS, { html: true }); } },
     kpis: { element() { ap = null; re = null; } },
     kn: { element() { rot = ""; }, text(t) { rot += t.text; } },
