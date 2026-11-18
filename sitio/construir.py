@@ -10,10 +10,13 @@ logos = json.load(open(os.path.join(aqui, "logos.json"), encoding="utf-8"))
 marcas = json.load(open(os.path.join(aqui, "marcas.json"), encoding="utf-8"))
 lento = leer("modulos", "lento.js").strip()
 assert "</script" not in lento.lower()
+navegar = leer("modulos", "navegar.js").strip()   # 18-11-2026: el Índice llega exacto al tema
+assert "</script" not in navegar.lower()
 for k, v in {
     "__FORMULARIO__": logos["formulario"],
     "__MARCAS__": json.dumps({"marcas": marcas["marcas"]}, ensure_ascii=False),
     "__LENTO__": json.dumps("<script>" + lento + "</script>", ensure_ascii=False),
+    "__NAVEGAR__": json.dumps("<script>" + navegar + "</script>", ensure_ascii=False),
     "/*__BUZON_PANEL__*/": leer("modulos", "buzon_panel.js"),
     "/*__SUSCRIPCIONES__*/": leer("modulos", "suscripciones.js"),   # 14-11-2026: socios fundadores con Mercado Pago
     "/*__TABLERO__*/": leer("modulos", "tablero.js"),   # 16-11-2026: Panel con filtros, ayudas y gráficos + publicidad pagada

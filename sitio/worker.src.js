@@ -23,6 +23,7 @@ const MAX_ARCHIVO = 12;    // la portada muestra las 12 ediciones más recientes
 const TOPE_ARCHIVO = 400;  // …y «Ver más» abre las anteriores de a 12 (Germán, 14-11-2026)
 const MARCAS = __MARCAS__;
 const LENTO = __LENTO__;   // 13-11-2026: capa que dibuja cada gráfico de la edición recién cuando el lector llega a él
+const NAVEGAR = __NAVEGAR__;   // 18-11-2026: Índice, buscador y enlaces internos llegan exacto al tema aunque las secciones aún no se dibujen (modulos/navegar.js)
 // 15-11-2026 (Germán: «procura que la Landing Page y el Diario "Cofrade News" cargue mucho más rápido en la Web»): la librería de
 // gráficos (ECharts 6.1.0, 1,1 MB y 367 KB comprimida) es idéntica en todas las ediciones desde el 06-11. Medido con un celular
 // con 4G lento: servirla aparte en la PRIMERA visita era ~1 s más lento (el navegador se detiene en ella a mitad de la página), y en
@@ -1315,7 +1316,7 @@ export default {
           .on("head", cp.cabeza).on("body", cp.cuerpo).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("script", scriptsEdicion(lib))
-          .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
+          .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
