@@ -457,7 +457,7 @@ button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}
 .lujo h1 em{font-style:italic;color:var(--oro-l)}.lujo .lede{color:#D8D2C4;font-size:19px}
 .btn.claro{border:1px solid rgba(230,199,122,.55);color:var(--marfil)}.btn.claro:hover{background:rgba(230,199,122,.08)}
 .sellos{display:flex;flex-wrap:wrap;gap:8px 22px;list-style:none;padding:0;margin:26px 0 0;font-size:13.5px;color:#BFB7A6;letter-spacing:.03em}
-.sellos li::before{content:"◆";color:var(--oro-l);font-size:9px;margin-right:8px;vertical-align:2px}
+.sellos li{display:flex;align-items:baseline}.sellos li::before{content:"◆";color:var(--oro-l);font-size:9px;margin-right:8px;flex:none;position:relative;top:-2px}
 .pizarra{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(230,199,122,.32);border-radius:20px;padding:22px 22px 16px;
  box-shadow:0 30px 80px -30px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(6px)}
 .piz-cab{display:flex;justify-content:space-between;align-items:center;font:600 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--oro-l);margin-bottom:10px}
@@ -669,7 +669,7 @@ const EN_FIJO = {
   "Acepto que usen estos datos solo para responder mi consulta (Ley 19.628).": "I agree that this data is used only to answer my inquiry (Chilean Law 19.628).",
   "IPSA (puntos)": "IPSA (points)", "Dólar": "US dollar", "Euro": "Euro", "UF": "UF", "UTM": "UTM", "Cobre (libra)": "Copper (pound)", "Bitcoin": "Bitcoin", "Petróleo Brent": "Brent crude", "Cobre": "Copper", "Oro": "Gold", "Plata": "Silver",
   "Mercados": "Markets", "Mercados en vivo": "Live markets", "El diario de la mañana · Gratuito": "The morning paper · Free",
-  "Dashboard Financiero": "Financial Dashboard", "Cada dato con su fuente": "Every figure with its source", "Hecho en Chile": "Made in Chile",
+  "Dashboard Financiero": "Financial Dashboard", "Cada dato con su fuente": "Every figure with its source", "Bienvenido a Chile, la joya del Pacífico, y el mejor país para invertir": "Welcome to Chile, the jewel of the Pacific, and the best country to invest in",
   "Edición de hoy publicada": "Today's edition is out", "Pizarra del día": "Today's board", "últimos 12 meses": "last 12 months",
   "Dólar observado": "US dollar (official rate)", "Cobre, US$ por libra": "Copper, US$ per pound", "Unidad de Fomento": "Unidad de Fomento (UF)",
   "Tasa de Política Monetaria": "Monetary policy rate", "Fuente: Banco Central de Chile, Base de Datos Estadísticos.": "Source: Central Bank of Chile, Statistical Database.",
@@ -3504,7 +3504,7 @@ async function cuerpoPortada(ctx) {
 <h1>Chile y el mundo, ordenados en minutos y con <em>datos verificados.</em></h1>
 <p class="lede">Cada mañana a las 9:00: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.</p>
 <div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn claro" href="#puente">Dashboard Financiero</a><a class="btn claro" href="/mercados">Mercados en vivo</a></div>
-<ul class="sellos"><li>${ultima ? (ultima === hoy ? "Edición de hoy publicada" : "Última edición: " + esc(fechaLarga(ultima))) : "Primera edición muy pronto"}</li><li>Cada dato con su fuente</li><li>Hecho en Chile</li></ul></div>
+<ul class="sellos"><li>${ultima ? (ultima === hoy ? "Edición de hoy publicada" : "Última edición: " + esc(fechaLarga(ultima))) : "Primera edición muy pronto"}</li><li>Cada dato con su fuente</li><li>Bienvenido a Chile, la joya del Pacífico, y el mejor país para invertir</li></ul></div>
 ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${hoy}">${esc(fechaLarga(hoy))}</span></div><p style="margin:6px 0 0;color:#D8D2C4">${esc(estado)}</p></aside>`}</div></section>`;
   const cuerpo = `${INSTALAR_HTML}
 <section aria-labelledby="t-secc" style="border:0;padding-top:40px"><span class="kicker">${ultima ? (ultima === hoy ? "Hoy · " : "Última edición · ") : ""}<span data-iso="${ultima || hoy}">${esc(fechaLarga(ultima || hoy))}</span></span>
