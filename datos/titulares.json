@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-18T05:18:41-03:00",
+ "generado": "2026-11-18T05:38:19-03:00",
  "secciones": {
   "perspectivas": {
    "consultadas": [
@@ -42,14 +42,16 @@
     {
      "fuente": "Minería Chilena (RSS)",
      "url": "https://www.mch.cl/feed/",
-     "ok": true,
-     "n": 10
+     "ok": false,
+     "n": 0,
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "Revista Electricidad (RSS)",
      "url": "https://www.revistaei.cl/feed/",
-     "ok": true,
-     "n": 10
+     "ok": false,
+     "n": 0,
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "Consejo de Políticas de Infraestructura (RSS)",
@@ -141,13 +143,6 @@
      "resumen": "El órgano fiscalizador detectó vacíos normativos y excesos en las facultades delegadas, como inconsistencias en las concesiones de distribución eléctrica y en proyectos geotérmicos. The post Contraloría frena decreto clave de la Ley de Permisos Sectoriales y objeta cambios en energía appeared first on Electrominería."
     },
     {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "EcoVera Territorium: Presentan al MOP proyecto de US$800 millones para transformar residuos en energía",
-     "fecha": "2026-11-17 17:06",
-     "url": "https://www.revistaei.cl/ecovera-territorium-presentan-al-mop-proyecto-de-us800-millones-para-transformar-residuos-en-energia/",
-     "resumen": "La construcción de la iniciativa generará alrededor de 4.000 empleos durante su etapa de mayor actividad. La entrada EcoVera Territorium: Presentan al MOP proyecto de US$800 millones para transformar residuos en energía se publicó primero en Revista Electricidad."
-    },
-    {
      "fuente": "Minería en Línea · proyectos mineros (RSS)",
      "titulo": "Goldman Sachs proyecta oro a US$5.600 por onza en 2028: análisis de volatilidad y oportunidades",
      "fecha": "2026-11-17 16:50",
@@ -197,25 +192,11 @@
      "resumen": "La consejera del Coordinador Eléctrico Nacional también resaltó una mayor apertura del organismo al diálogo con la industria y la importancia de anticipar los cambios regulatorios y tecnológicos que enfrenta el sistema eléctrico. The post Bernardita Espinoza plantea los desafíos ante el crecimiento del almacenamiento…"
     },
     {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "Cuentas de electricidad registrarán una disminución promedio de 4,4% en 13 regiones a partir de enero de 2027",
-     "fecha": "2026-11-17 15:15",
-     "url": "https://www.revistaei.cl/cuentas-de-electricidad-registraran-una-disminucion-promedio-de-44-en-13-regiones-a-partir-de-enero-de-2027/",
-     "resumen": "El Informe Técnico Definitivo del Precio Nudo Promedio, elaborado por la Comisión Nacional de Energía (CNE), establece que las mayores bajas se registrarán en Antofagasta, Atacama y Arica y Parinacota. La entrada Cuentas de electricidad registrarán una disminución promedio de 4,4% en 13 regiones a partir de enero de…"
-    },
-    {
      "fuente": "Electromineria (RSS)",
      "titulo": "Metro y Transelec presentan 85% de avance en infraestructura que energizará las líneas 7, 9 y A",
      "fecha": "2026-11-17 14:14",
      "url": "https://electromineria.cl/metro-transelec-85-avance-infraestructura-lineas-7-9-a/",
      "resumen": "Contempla nuevos paños de 220 kV, transformadores de poder de 80 MVA, además de una línea de interconexión de 58 metros sobre monopostes. The post Metro y Transelec presentan 85% de avance en infraestructura que energizará las líneas 7, 9 y A appeared first on Electrominería."
-    },
-    {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "Proyecto de expansión de Minera Centinela alcanza relevante hito",
-     "fecha": "2026-11-17 13:20",
-     "url": "https://www.mch.cl/proyecto-de-expansion-de-minera-centinela-alcanza-relevante-hito/",
-     "resumen": "Nicolas Rivera, gerente general de la compañía, abordó los avances de la iniciativa. La entrada Proyecto de expansión de Minera Centinela alcanza relevante hito se publicó primero en Mch."
     },
     {
      "fuente": "Electromineria (RSS)",
@@ -232,13 +213,6 @@
      "resumen": "El retiro del megaproyecto H2 Magallanes, de TotalEnergies, expone las dificultades de una industria presentada durante años como una nueva fuente de riqueza para Chile. La empresa reconoce que no con..."
     },
     {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "Chile promueve oportunidades de inversión en minería, litio y energías renovables en China",
-     "fecha": "2026-11-17 13:00",
-     "url": "https://www.mch.cl/chile-promueve-oportunidades-de-inversion-en-mineria-litio-y-energias-renovables-en-china/",
-     "resumen": "En el marco de ChileWeek China 2026, InvestChile presentó al país como destino para el capital internacional y destacó una cartera de 20 proyectos vinculados a inversionistas chinos por US$4.012 millones. La entrada Chile promueve oportunidades de inversión en minería, litio y energías renovables en China se publicó…"
-    },
-    {
      "fuente": "Electromineria (RSS)",
      "titulo": "Coordinador identifica PMGDs que pueden desconectarse sin representar riesgos para el sistema eléctrico",
      "fecha": "2026-11-17 12:46",
@@ -246,60 +220,11 @@
      "resumen": "El documento contabiliza 261 de estos medios de generación en zonas con restricciones de transmisión y otros 17 que contribuyen a recuperar el suministro ante fallas. The post Coordinador identifica PMGDs que pueden desconectarse sin representar riesgos para el sistema eléctrico appeared first on Electrominería."
     },
     {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "Empleo minero en Coquimbo crece 17% pese a caída de la actividad del sector",
-     "fecha": "2026-11-17 12:38",
-     "url": "https://www.mch.cl/empleo-minero-en-coquimbo-crece-17-pese-a-caida-de-la-actividad-del-sector/",
-     "resumen": "El Termómetro Laboral de la región registró 58.800 trabajadores vinculados a la minería entre julio y septiembre, posicionándola como la segunda actividad económica con mayor ocupación. La entrada Empleo minero en Coquimbo crece 17% pese a caída de la actividad del sector se publicó primero en Mch."
-    },
-    {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "Aprueban construcción de parque eólico de US$150 millones en Ovalle",
-     "fecha": "2026-11-17 12:36",
-     "url": "https://www.revistaei.cl/aprueban-construccion-de-parque-eolico-de-us150-millones-en-ovalle/",
-     "resumen": "La energía generada se evacuará a través de un trazado subterráneo de 36,8 kilómetros. La entrada Aprueban construcción de parque eólico de US$150 millones en Ovalle se publicó primero en Revista Electricidad."
-    },
-    {
      "fuente": "Electromineria (RSS)",
      "titulo": "Proyecto de expansión de Minera Centinela alcanza 90% de avance con realización de pruebas a equipos clave",
      "fecha": "2026-11-17 11:10",
      "url": "https://electromineria.cl/minera-centinela-90-por-ciento-avance-proyecto-expansion/",
      "resumen": "En distintas áreas de la construcción de la nueva concentradora, el chancador primario y el Muelle se acerca la puesta en marcha para 2027. The post Proyecto de expansión de Minera Centinela alcanza 90% de avance con realización de pruebas a equipos clave appeared first on Electrominería."
-    },
-    {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "Cesco Week Santiago da a conocer la fecha de su versión 2027",
-     "fecha": "2026-11-17 10:40",
-     "url": "https://www.mch.cl/cesco-week-santiago-da-a-conocer-la-fecha-de-su-version-2027/",
-     "resumen": "El encuentro internacional convocará a autoridades, ejecutivos, inversionistas y especialistas para abordar los principales desafíos de una industria marcada por la creciente demanda de minerales críticos y la necesidad de impulsar nuevos proyectos. La entrada Cesco Week Santiago da a conocer la fecha de su versión…"
-    },
-    {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "CGE publica vacantes de trabajo para ingenieros y otros profesionales",
-     "fecha": "2026-11-17 10:08",
-     "url": "https://www.revistaei.cl/cge-publica-vacantes-de-trabajo-para-ingenieros-y-otros-profesionales-7/",
-     "resumen": "La compañía eléctrica dispone de ofertas laborales para sus distintas áreas y operaciones en cuatro regiones del país. La entrada CGE publica vacantes de trabajo para ingenieros y otros profesionales se publicó primero en Revista Electricidad."
-    },
-    {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "Subsecretario Hugo Briones: “Tenemos que lograr que la energía más barata que se produce en el norte pueda llegar a las zonas de mayor demanda”",
-     "fecha": "2026-11-17 10:00",
-     "url": "https://www.revistaei.cl/subsecretario-hugo-briones-tenemos-que-lograr-que-la-energia-mas-barata-que-se-produce-en-el-norte-pueda-llegar-a-las-zonas-de-mayor-demanda/",
-     "resumen": "La autoridad aborda las reformas regulatorias, los desafíos para agilizar las inversiones y las medidas para mejorar la calidad del suministro y las tarifas eléctricas. La entrada Subsecretario Hugo Briones: “Tenemos que lograr que la energía más barata que se produce en el norte pueda llegar a las zonas de mayor…"
-    },
-    {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "Cesco advierte que histórica inversión minera no ha logrado revertir estancamiento productivo del cobre",
-     "fecha": "2026-11-17 09:52",
-     "url": "https://www.mch.cl/cesco-advierte-que-historica-inversion-minera-no-ha-logrado-revertir-estancamiento-productivo-del-cobre/",
-     "resumen": "Estudio de la institución revela que, pese al récord de US$15.524 millones registrado por la gran minería del cobre y oro en 2025, la producción nacional continúa por debajo de su máximo alcanzado en 2013. La entrada Cesco advierte que histórica inversión minera no ha logrado revertir estancamiento productivo del…"
-    },
-    {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "BHP es reconocida como la minera con mayor participación femenina en Chile en cargos ejecutivos",
-     "fecha": "2026-11-17 09:40",
-     "url": "https://www.mch.cl/bhp-es-reconocida-como-la-minera-con-mayor-participacion-femenina-en-chile-en-cargos-ejecutivos/",
-     "resumen": "La compañía fue distinguida durante la Cena Anual de Women in Mining Chile (WIM Chile) por la presencia de mujeres en posiciones de liderazgo. La entrada BHP es reconocida como la minera con mayor participación femenina en Chile en cargos ejecutivos se publicó primero en Mch."
     },
     {
      "fuente": "Consejo de Políticas de Infraestructura (RSS)",
@@ -337,20 +262,6 @@
      "resumen": "17 de noviembre de 2026 · ENERGIAFUTURA.CL – Los embalses de Chile guardaban 7.896 millones de metros cúbicos de agua al 9 de noviembre de 2026, un 26% más que a fines de noviembre de 2025, según el Boletín Hidrometeorológico de la Dirección General de Aguas (DGA) del Ministerio de Obras Públicas. La cifra…"
     },
     {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "Tantay Atacama: Enami selecciona startups para desafíos en Vallenar, El Salado y Matta",
-     "fecha": "2026-11-17 09:30",
-     "url": "https://www.mch.cl/tantay-atacama-enami-selecciona-startups-para-desafios-en-vallenar-el-salado-y-matta/",
-     "resumen": "La instancia contempló el desarrollo de soluciones para seguridad, digitalización de procesos y optimización operacional. La entrada Tantay Atacama: Enami selecciona startups para desafíos en Vallenar, El Salado y Matta se publicó primero en Mch."
-    },
-    {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "COP31: Chile destaca que alcanzó su peak de emisiones cuatro años antes de la meta",
-     "fecha": "2026-11-17 09:30",
-     "url": "https://www.revistaei.cl/cop31-chile-destaca-que-alcanzo-su-peak-de-emisiones-cuatro-anos-antes-de-la-meta/",
-     "resumen": "La intervención de la ministra Toledo se realizó en el marco de su segunda jornada participando en esta cumbre internacional que se celebra en Antalya (Turquía). La entrada COP31: Chile destaca que alcanzó su peak de emisiones cuatro años antes de la meta se publicó primero en Revista Electricidad."
-    },
-    {
      "fuente": "Consejo de Políticas de Infraestructura (RSS)",
      "titulo": "Collahuasi llevará agua desalada a más de 4.400 metros de altura mediante un acueducto de casi 200 kilómetros",
      "fecha": "2026-11-17 09:29",
@@ -372,13 +283,6 @@
      "resumen": "17 de noviembre de 2026 · LA TERCERA – Cada cierto tiempo, los transportistas de carga despliegan demostraciones de fuerza en defensa de sus intereses, sin considerar el bien superior del país. Ocurrió bajo los gobiernos de la Concertación y en las administraciones de los presidentes Piñera y Boric, y el libreto se…"
     },
     {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "Enel inicia programa para renovar espacios deportivos y comunitarios en la Región Metropolitana",
-     "fecha": "2026-11-17 09:28",
-     "url": "https://www.revistaei.cl/enel-inicia-programa-para-renovar-espacios-deportivos-y-comunitarios-en-la-region-metropolitana/",
-     "resumen": "La iniciativa contempla la recuperación de multicanchas ubicadas en distintas comunas, incorporando sistemas de iluminación LED de alta eficiencia energética. La entrada Enel inicia programa para renovar espacios deportivos y comunitarios en la Región Metropolitana se publicó primero en Revista Electricidad."
-    },
-    {
      "fuente": "Consejo de Políticas de Infraestructura (RSS)",
      "titulo": "Arándanos con agua desalada en Atacama: los desafíos ambientales de cultivar en el desierto más árido",
      "fecha": "2026-11-17 09:28",
@@ -391,27 +295,6 @@
      "fecha": "2026-11-17 09:28",
      "url": "https://cpichile.org/proyecto-de-us-800-millones-busca-convertir-residuos-domiciliarios-en-electricidad-equivalente-al-consumo-de-cuatro-comunas-de-santiago/?utm_source=rss&utm_medium=rss&utm_campaign=proyecto-de-us-800-millones-busca-convertir-residuos-domiciliarios-en-electricidad-equivalente-al-consumo-de-cuatro-comunas-de-santiago",
      "resumen": "17 de noviembre de 2026 · CNNCHILE.COM – Sigdo Koppers y AMG Alliance impulsan un proyecto de US$ 800 millones para construir una planta que transformaría residuos sólidos domiciliarios en electricidad. La iniciativa, denominada EcoVera Territorium, fue presentada al Ministerio de Obras Públicas (MOP). Según informó…"
-    },
-    {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "ChileValora certifica por primera vez a operadores de camiones fábrica para tronaduras",
-     "fecha": "2026-11-17 09:20",
-     "url": "https://www.mch.cl/chilevalora-certifica-por-primera-vez-a-operadores-de-camiones-fabrica-para-tronaduras/",
-     "resumen": "Un total de 19 trabajadores acreditaron sus competencias laborales para el carguío de pozos en minas a rajo abierto, en un proceso que busca reconocer su experiencia y validar sus conocimientos bajo estándares de la industria. La entrada ChileValora certifica por primera vez a operadores de camiones fábrica para…"
-    },
-    {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "Avanza proyecto que busca entregar exención tributaria a obras ferroviarias",
-     "fecha": "2026-11-17 09:19",
-     "url": "https://www.revistaei.cl/avanza-proyecto-que-busca-entregar-exencion-tributaria-a-obras-ferroviarias/",
-     "resumen": "La iniciativa busca destrabar y abaratar la actual cartera de inversiones de la Empresa de los Ferrocarriles del Estado, igualándola con el régimen que tiene Metro S.A. La entrada Avanza proyecto que busca entregar exención tributaria a obras ferroviarias se publicó primero en Revista Electricidad."
-    },
-    {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "Minera Las Cenizas expone a Sonami su experiencia en recuperación de antiguos tranques de relaves",
-     "fecha": "2026-11-17 09:10",
-     "url": "https://www.mch.cl/minera-las-cenizas-expone-a-sonami-su-experiencia-en-recuperacion-de-antiguos-tranques-de-relaves/",
-     "resumen": "La visita del Comité de Asuntos Ambientales de la gremial a las instalaciones de Cabildo permitió conocer los desarrollos de la compañía en este ámbito. La entrada Minera Las Cenizas expone a Sonami su experiencia en recuperación de antiguos tranques de relaves se publicó primero en Mch."
     },
     {
      "fuente": "zonazero.cl",
@@ -447,13 +330,6 @@
      "fecha": "2026-11-16 23:06",
      "url": "https://www.prensa-latina.cu/2026/11/17/retiran-en-chile-proyecto-para-producir-hidrogeno-verde/",
      "resumen": "Santiago de Chile, 17 nov (Prensa Latina) El multimillonario proyecto H2 Magallanes, para producir hidrógeno verde en esa región austral chilena, está hoy detenido por tiempo indefinido tras su retiro..."
-    },
-    {
-     "fuente": "Revista Electricidad (RSS)",
-     "titulo": "Despachan a ley proyecto que estabiliza precios de combustibles",
-     "fecha": "2026-11-16 22:54",
-     "url": "https://www.revistaei.cl/despachan-a-ley-proyecto-que-estabiliza-precios-de-combustibles/",
-     "resumen": "La iniciativa establece techos temporales a los precios de las gasolinas y del petróleo diésel hasta el 7 abril de 2027. La entrada Despachan a ley proyecto que estabiliza precios de combustibles se publicó primero en Revista Electricidad."
     },
     {
      "fuente": "BioBioChile",
@@ -552,13 +428,6 @@
      "fecha": "2026-11-16 21:00",
      "url": "https://www.portalminero.com/totalenergies-retira-proyecto-de-hidrogeno-verde-de-us16000-millones-en-magallanes",
      "resumen": "La compañía resolvió no continuar con H2 Magallanes debido a que la evolución de la demanda por moléculas verdes y los costos de los equipos no permitían asegurar su viabilidad económica."
-    },
-    {
-     "fuente": "Minería Chilena (RSS)",
-     "titulo": "Exponor anuncia la fecha de su versión 2028",
-     "fecha": "2026-11-16 19:35",
-     "url": "https://www.mch.cl/exponor-anuncia-la-fecha-de-su-version-2028/",
-     "resumen": "“Es un espacio donde se generan oportunidades concretas de negocios, inversión y colaboración, fortaleciendo el desarrollo de nuestra industria y su competitividad”, afirmó Marko Razmilic, presidente de la AIA. La entrada Exponor anuncia la fecha de su versión 2028 se publicó primero en Mch."
     },
     {
      "fuente": "Minería en Línea · proyectos mineros (RSS)",
@@ -706,6 +575,27 @@
      "fecha": "2026-11-13 13:00",
      "url": "https://bocadepozo.com.ar/2026/11/14/punta-arenas-totalenergies-abandona-el-megaproyecto-de-usd-16-000-millones-de-hidrogeno-verde-en-chile-y-crecen-las-dudas-sobre-las-inversiones-en-argentina/",
      "resumen": "La decisión de TotalEnergies de retirar H2 Magallanes representa un fuerte golpe para las expectativas de inversión, empleo y exportaciones de Chile, y vuelve a poner en discusión la viabilidad económ..."
+    },
+    {
+     "fuente": "La Tercera",
+     "titulo": "TE H2 Chile desiste de su megaproyecto de hidrógeno y amoníaco verde de US$16.000 millones",
+     "fecha": "2026-11-13 09:52",
+     "url": "https://www.latercera.com/pulso/noticia/te-h2-chile-desiste-del-proyecto-de-hidrogeno-y-amoniaco-verde-de-us16000-millones/",
+     "resumen": "El proyecto \"Proyecto de Producción de Hidrógeno y Amoniaco Verde - H2 Magallanes\" había comenzado su tramitación ambiental en mayo del año pasado."
+    },
+    {
+     "fuente": "Revista Digital Minera REDIMIN",
+     "titulo": "TotalEnergies desiste de megaproyecto de hidrógeno verde por US$16.000 millones en Magallanes y golpea expectativas de inversión energética",
+     "fecha": "2026-11-13 05:44",
+     "url": "https://www.redimin.cl/totalenergies-desiste-de-megaproyecto-de-hidrogeno-verde-por-us-16-000-millones-en-magallanes-y-golpea-expectativas-de-inversion-energetica",
+     "resumen": "TotalEnergies desiste del proyecto H2 Magallanes por US$16.000 millones, afectando las expectativas de inversión en energía renovable en Magallanes."
+    },
+    {
+     "fuente": "The Clinic",
+     "titulo": "Con contrato de US$ 40 millones: MOP busca al operador del histórico Puente Chacao y evalúa su concesión",
+     "fecha": "2026-11-12 03:36",
+     "url": "https://www.theclinic.cl/2026/11/12/con-contrato-de-us-40-millones-mop-busca-al-operador-del-historico-puente-chacao-y-evalua-su-concesion/",
+     "resumen": "La Contraloría General de la República tomó razón de las bases de precalificación para la operación del Puente Chacao."
     }
    ]
   },
@@ -779,7 +669,7 @@
      "fuente": "Bing Noticias · IPSA y Bolsa de Santiago",
      "url": "https://www.bing.com/news/search?q=IPSA%20Bolsa%20de%20Santiago&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 10
     },
     {
      "fuente": "Ex-Ante (RSS)",
@@ -862,6 +752,13 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "Infobae America Economia (RSS)",
+     "titulo": "El milagro también necesitó oficio",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://www.infobae.com/america/opinion/2026/11/18/el-milagro-tambien-necesito-oficio/",
+     "resumen": "El crecimiento de México entre 1940 y 1970 no fue espontáneo: confluyeron políticas, ingenieros, maestras y empresarios capaces de coordinarse. Esa seriedad colectiva sigue siendo la única ruta hacia una transformación duradera"
+    },
     {
      "fuente": "Infobae America Economia (RSS)",
      "titulo": "Donald Trump destacó la alianza de Filipinas con EEUU en su visita a Manila antes de las conversaciones con China",
@@ -1484,13 +1381,6 @@
      "fecha": "2026-11-17 19:21",
      "url": "http://www.df.cl/opinion/cartas/chile-china-como-acercar-los-beneficios-de-esta-relacion-a-nuestras",
      "resumen": ""
-    },
-    {
-     "fuente": "Diario Financiero (RSS)",
-     "titulo": "Conductas de los contribuyentes",
-     "fecha": "2026-11-17 19:20",
-     "url": "http://www.df.cl/opinion/cartas/conductas-de-los-contribuyentes-0",
-     "resumen": ""
     }
    ]
   },
@@ -1596,7 +1486,7 @@
      "fuente": "Bing Noticias · Comercio internacional",
      "url": "https://www.bing.com/news/search?q=%28comercio%20internacional%20OR%20exportaciones%20OR%20aranceles%29%20econom%C3%ADa%20mundial&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 11
     },
     {
      "fuente": "Banco Central Europeo Prensa (RSS, inglés)",
@@ -1608,7 +1498,7 @@
      "fuente": "Cinco Días portada (RSS)",
      "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/cincodias.elpais.com/portada",
      "ok": true,
-     "n": 82
+     "n": 83
     },
     {
      "fuente": "CNBC Economía (RSS, inglés)",
@@ -1673,11 +1563,60 @@
    ],
    "notas": [
     {
+     "fuente": "El País · Economía (RSS)",
+     "titulo": "Hacienda obliga a los empleadores a recalcular las nóminas para dejar sin retención de IRPF al salario mínimo",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://elpais.com/economia/2026-11-18/hacienda-obliga-a-los-empleadores-a-recalcular-las-nominas-para-dejar-sin-retencion-de-irpf-al-salario-minimo.html",
+     "resumen": "Con el cambio en el reglamento del impuesto, los trabajadores recibirán la subida retributiva desde el mes de enero"
+    },
+    {
+     "fuente": "CNBC Mundo (RSS, inglés)",
+     "titulo": "Putin says EU is losing industry, falling behind competition, ahead of meeting with Trump and Xi",
+     "fecha": "2026-11-18 05:29",
+     "url": "https://www.cnbc.com/2026/11/18/putin-apec-eu-trump-xi-meeting.html",
+     "resumen": "Putin used the speech to emphasize Russia's economic resilience despite U.S. sanctions, and played up opportunities for APEC members in the country."
+    },
+    {
+     "fuente": "Cinco Días portada (RSS)",
+     "titulo": "Enagás gana el arbitraje contra Perú sobre sus inversiones en TGP y COGA",
+     "fecha": "2026-11-18 05:24",
+     "url": "https://cincodias.elpais.com/companias/2026-11-18/enagas-gana-el-arbitraje-contra-peru-sobre-sus-inversiones-en-tgp-y-coga.html",
+     "resumen": "El CIADI da la razón a la compañía española, que recuperará una garantía de 65 millones de dólares"
+    },
+    {
+     "fuente": "BBC News · Business (RSS, inglés)",
+     "titulo": "Higher petrol and diesel prices push UK inflation to 3.6%",
+     "fecha": "2026-11-18 05:19",
+     "url": "https://www.bbc.co.uk/news/articles/cmy498kdkx3xo?at_medium=RSS&at_campaign=rss",
+     "resumen": "There are also signs inflation is impacting the wider economy, with the cost raw materials and goods leaving factories climbing."
+    },
+    {
+     "fuente": "El País · Economía (RSS)",
+     "titulo": "Cristine H. Legare, psicóloga: “Los niños aprenden observando e imitando mucho antes de que alguien les explique las cosas”",
+     "fecha": "2026-11-18 05:18",
+     "url": "https://elpais.com/economia/formacion/2026-11-18/cristine-h-legare-psicologa-los-ninos-aprenden-observando-e-imitando-mucho-antes-de-que-alguien-les-explique-las-cosas.html",
+     "resumen": "La profesora de la Universidad de Texas, participante en el Global Education Forum 2026, defiende una educación que dé más espacio a la curiosidad, la experiencia y el aprendizaje compartido dentro y fuera del aula"
+    },
+    {
+     "fuente": "Cinco Días portada (RSS)",
+     "titulo": "Nvidia no necesita a Jensen Huang: “Queremos nombrar al nuevo CEO lo antes posible, pero queremos a la persona idónea”",
+     "fecha": "2026-11-18 05:17",
+     "url": "https://elpais.com/economia/2026-11-18/nvidia-no-necesita-a-jensen-huang-queremos-nombrar-al-nuevo-ceo-lo-antes-posible-pero-queremos-a-la-persona-idonea.html",
+     "resumen": "Colette Kress asegura que la remuneración a los accionistas es “prioritaria”. El grupo, que ha lanzado unas previsiones récord, será mucho más selectivo en el apoyo financiero a terceras empresas"
+    },
+    {
      "fuente": "Cinco Días portada (RSS)",
      "titulo": "Las Bolsas europeas caen tras los resultados de Nvidia",
      "fecha": "2026-11-18 05:13",
      "url": "https://cincodias.elpais.com/mercados-financieros/2026-11-18/la-bolsa-y-el-ibex-35.html",
      "resumen": "El Ibex pierde un 0,4% y cotiza por debajo de los 19.600 puntos, mientras que los futuros estadounidenses rebotan; el petróleo baja ligeramente"
+    },
+    {
+     "fuente": "Al Jazeera · Economía (RSS, inglés)",
+     "titulo": "Ships risk Hormuz Strait due to limited US protection",
+     "fecha": "2026-11-18 05:12",
+     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/18/ships-risk-hormuz-strait-due-to-limited-us-protection?traffic_source=rss",
+     "resumen": "Elisabeth Braw with the Atlantic Council says US navy cannot protection to every vessel passing the Hormuz Strait."
     },
     {
      "fuente": "Expansión España Mercados (RSS)",
@@ -1692,6 +1631,13 @@
      "fecha": "2026-11-18 05:09",
      "url": "https://www.cnbc.com/2026/11/18/nvidia-us-ai-chip-export-controls-data-centers-.html",
      "resumen": "The rules require data centers in Southeast Asia to seek U.S. approval to buy advanced AI chips, threatening to slow a build-out fueled heavily on Chinese demand."
+    },
+    {
+     "fuente": "Al Jazeera · Economía (RSS, inglés)",
+     "titulo": "China’s Xi pitches free trade at APEC amid Trump’s global trade disruptions",
+     "fecha": "2026-11-18 05:05",
+     "url": "https://www.aljazeera.com/news/2026/11/18/xis-pitch-for-free-trade-amid-trumps-global-trade-disruptions?traffic_source=rss",
+     "resumen": "The president says Beijing seeks to provide a 'stable, predictable and beneficial environment for global enterprises'."
     },
     {
      "fuente": "Cinco Días portada (RSS)",
@@ -1715,13 +1661,6 @@
      "resumen": "Xi opened the APEC summit in Shenzhen by calling for lower trade and investment barriers, pledging broader access to China’s market and manufacturing sector."
     },
     {
-     "fuente": "Cinco Días portada (RSS)",
-     "titulo": "Hay que ver las cosas con perspectiva",
-     "fecha": "2026-11-18 04:57",
-     "url": "https://cincodias.elpais.com/mercados-financieros/caracter-independiente/2026-11-18/hay-que-ver-las-cosas-con-perspectiva.html",
-     "resumen": "La renta fija está de vuelta"
-    },
-    {
      "fuente": "CNBC Economía (RSS, inglés)",
      "titulo": "Record diesel prices drive UK inflation to 1-year high of 3.6%",
      "fecha": "2026-11-18 04:57",
@@ -1729,11 +1668,18 @@
      "resumen": "It put the U.K.'s annual inflation rate at a 1-year high."
     },
     {
-     "fuente": "BBC News · Business (RSS, inglés)",
-     "titulo": "Higher petrol and diesel prices push UK inflation to 3.6%",
-     "fecha": "2026-11-18 04:40",
-     "url": "https://www.bbc.co.uk/news/articles/cmy498kdkx3xo?at_medium=RSS&at_campaign=rss",
-     "resumen": "There are also signs inflation is impacting the wider economy, with the cost raw materials and goods leaving factories climbing."
+     "fuente": "Al Jazeera · Economía (RSS, inglés)",
+     "titulo": "Photos: India defeat Pakistan to win SAFF Championship in Bangladesh",
+     "fecha": "2026-11-18 04:54",
+     "url": "https://www.aljazeera.com/gallery/2026/11/18/photos-india-defeat-pakistan-to-win-saff-championship-in-bangladesh?traffic_source=rss",
+     "resumen": "Thousands of Bangladeshi fans turned up to watch India complete a three-peat of SAFF titles in Dhaka."
+    },
+    {
+     "fuente": "Al Jazeera · Economía (RSS, inglés)",
+     "titulo": "Russia, China should ‘lead’ push to multipolar world, Xi tells APEC summit",
+     "fecha": "2026-11-18 04:50",
+     "url": "https://www.aljazeera.com/news/2026/11/18/president-xi-says-russia-and-china-should-lead-push-to-multipolar-world?traffic_source=rss",
+     "resumen": "Putin says Western powers are 'former hegemons', with Europe in the midst of a 'humiliating decline'."
     },
     {
      "fuente": "Cinco Días portada (RSS)",
@@ -1769,13 +1715,6 @@
      "fecha": "2026-11-18 04:24",
      "url": "https://www.cnbc.com/2026/11/18/us-iran-navy-hormuz-war-cao.html",
      "resumen": "Acting Navy Secretary Hung Cao told senators the Navy recoded and used munitions he called expired as the Iran war strains weapons stocks and naval deployments."
-    },
-    {
-     "fuente": "CNBC Mundo (RSS, inglés)",
-     "titulo": "Putin says EU is losing industry, falling behind competition ahead of meeting with Trump, Xi",
-     "fecha": "2026-11-18 04:17",
-     "url": "https://www.cnbc.com/2026/11/18/putin-apec-eu-trump-xi-meeting.html",
-     "resumen": "Putin used the speech to emphasize Russia's economic resilience despite U.S. sanctions, and played up opportunities for APEC members in the country."
     },
     {
      "fuente": "CNBC Mundo (RSS, inglés)",
@@ -1996,13 +1935,6 @@
     },
     {
      "fuente": "Cinco Días portada (RSS)",
-     "titulo": "Así han cambiado las empresas que más emiten en España: desde 2008 Endesa redujo un 39% sus emisiones y Repsol las aumentó un 10%",
-     "fecha": "2026-11-18 01:30",
-     "url": "https://elpais.com/clima-y-medio-ambiente/2026-11-18/asi-han-cambiado-las-empresas-que-mas-emiten-en-espana-desde-2008-endesa-redujo-un-39-sus-emisiones-y-repsol-las-aumento-un-10.html",
-     "resumen": "El Observatorio para la Sostenibilidad estima que los gases de efecto invernadero del país son hoy similares a los de 1990, si bien el PIB se ha más que triplicado"
-    },
-    {
-     "fuente": "Cinco Días portada (RSS)",
      "titulo": "La electrificación busca convertir la energía renovable en consumo real",
      "fecha": "2026-11-18 01:30",
      "url": "https://cincodias.elpais.com/extras/2026-11-18/la-electrificacion-busca-convertir-la-energia-renovable-en-consumo-real.html",
@@ -2014,6 +1946,13 @@
      "fecha": "2026-11-18 01:30",
      "url": "https://elpais.com/espana/catalunya/2026-11-18/los-usuarios-que-resisten-en-rodalies-tras-11-dias-de-caos-y-huelgas-es-una-tortura-constante.html",
      "resumen": "El paro de ayer y el incumplimiento del 43% de los servicios mínimos agravan la desesperación de los viajeros que quedan sin alternativa ferroviaria"
+    },
+    {
+     "fuente": "Cinco Días portada (RSS)",
+     "titulo": "Así han cambiado las empresas que más emiten en España: desde 2008 Endesa redujo un 39% sus emisiones y Repsol las aumentó un 10%",
+     "fecha": "2026-11-18 01:30",
+     "url": "https://elpais.com/clima-y-medio-ambiente/2026-11-18/asi-han-cambiado-las-empresas-que-mas-emiten-en-espana-desde-2008-endesa-redujo-un-39-sus-emisiones-y-repsol-las-aumento-un-10.html",
+     "resumen": "El Observatorio para la Sostenibilidad estima que los gases de efecto invernadero del país son hoy similares a los de 1990, si bien el PIB se ha más que triplicado"
     },
     {
      "fuente": "Cinco Días portada (RSS)",
@@ -2252,55 +2191,6 @@
      "fecha": "2026-11-17 22:18",
      "url": "https://www.bbc.co.uk/news/articles/cm2kl50vkwkdo?at_medium=RSS&at_campaign=rss",
      "resumen": "The AI chip giant reported strong quarterly earnings on Tuesday after the dramatic exit of Jensen Huang."
-    },
-    {
-     "fuente": "CNBC Mundo (RSS, inglés)",
-     "titulo": "Nvidia takes positive step forward with stronger sales outlook. Here’s our thoughts on the stock",
-     "fecha": "2026-11-17 22:18",
-     "url": "https://www.cnbc.com/investingclub/2026/11/17/nvidia-takes-positive-step-forward-with-stronger-sales-outlook-heres-our-thoughts-on-the-stock.html",
-     "resumen": ""
-    },
-    {
-     "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "Board of Peace warns Gaza ceasefire faces imminent collapse without action",
-     "fecha": "2026-11-17 22:07",
-     "url": "https://www.aljazeera.com/news/2026/11/18/board-of-peace-warns-gaza-ceasefire-faces-imminent-collapse-without-action?traffic_source=rss",
-     "resumen": "The US-led board has decried continued fighting in Gaza and delays in implementing the terms of a 2025 ceasefire deal."
-    },
-    {
-     "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "Ecuadorian fishermen sue Trump administration over drone strike",
-     "fecha": "2026-11-17 22:04",
-     "url": "https://www.aljazeera.com/news/2026/11/18/ecuadorian-fishermen-sue-trump-administration-over-drone-strike?traffic_source=rss",
-     "resumen": "Crew say their boat was attacked by drones launched from US-operated vessel as part of 'manifestly unlawful' campaign."
-    },
-    {
-     "fuente": "OilPrice.com (RSS, inglés)",
-     "titulo": "5 Oil and Gas Stocks That Crushed Third-Quarter Earnings Estimates",
-     "fecha": "2026-11-17 22:00",
-     "url": "https://oilprice.com/Energy/Crude-Oil/5-Oil-and-Gas-Stocks-That-Crushed-Third-Quarter-Earnings-Estimates.html",
-     "resumen": "We are currently at the tail-end of the third quarter earnings season, with more than 90% of S&P 500 companies having reported, and it’s proven to be yet another bumper season. According to FactSet data, the index has reported 31.9% Y/Y average earnings growth, marking the third consecutive quarter that earnings…"
-    },
-    {
-     "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "DR Congo’s rival peace efforts fail to halt violence in the east",
-     "fecha": "2026-11-17 21:57",
-     "url": "https://www.aljazeera.com/news/2026/11/18/dr-congos-rival-peace-efforts-fail-to-halt-violence-in-the-east?traffic_source=rss",
-     "resumen": "Diplomatic efforts struggle to end fighting in eastern DRC as civilians continue to bear the cost of conflict."
-    },
-    {
-     "fuente": "BBC Mundo · Economía (RSS)",
-     "titulo": "Cómo fue el sofisticado ataque con el que Ucrania destruyó parte del preciado puente de Crimea de Putin (y qué consecuencias tendrá)",
-     "fecha": "2026-11-17 21:55",
-     "url": "https://www.bbc.com/mundo/articles/c6y498pd1q54o?at_medium=RSS&at_campaign=rss",
-     "resumen": "Uno de los símbolos de la ocupación rusa de Ucrania ha sufrido graves daños tras un ataque en siete fases perpetrado por Kyiv."
-    },
-    {
-     "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "Eisenkot ally elected Knesset speaker with Arab bloc’s backing",
-     "fecha": "2026-11-17 21:47",
-     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/18/eisenkot-ally-elected-knesset-speaker-with-arab-blocs-backing?traffic_source=rss",
-     "resumen": "Israel’s parliament has elected Matan Kahana as the new speaker with support from Arab parties."
     }
    ]
   },
@@ -3318,7 +3208,7 @@
      "fuente": "NYT Asia Pacífico (RSS, inglés)",
      "url": "https://rss.nytimes.com/services/xml/rss/nyt/AsiaPacific.xml",
      "ok": true,
-     "n": 21
+     "n": 22
     },
     {
      "fuente": "NYT Europa (RSS, inglés)",
@@ -3389,11 +3279,305 @@
    ],
    "notas": [
     {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Despliegue de la Armada, expulsiones y prioridad nacional: cómo ha cambiado el discurso migratorio del PP desde 2023 y en qué se ha acercado al de Vox",
+     "fecha": "2026-11-18 05:37",
+     "url": "https://www.infobae.com/espana/2026/11/18/despliegue-de-la-armada-expulsiones-y-prioridad-nacional-como-ha-cambiado-el-discurso-migratorio-del-pp-desde-2023-y-como-se-ha-acercado-al-de-vox/",
+     "resumen": "Desde la Fundación porCausa sostienen que la derecha y la ultraderecha utilizan la migración para relegar el debate sobre vivienda, sanidad y educación pública"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Camila Domínguez afirma que boda de su papá Christian Domínguez la tomó por sorpresa y lanza frase: “Alteró la línea de tiempo”",
+     "fecha": "2026-11-18 05:36",
+     "url": "https://www.infobae.com/peru/2026/11/18/camila-dominguez-afirma-que-boda-de-su-papa-christian-dominguez-la-tomo-por-sorpresa-y-lanza-frase-altero-la-linea-de-tiempo/",
+     "resumen": "La joven recordó en televisión que nunca imaginó que su padre llegaría nuevamente al altar, pero celebró con ironía que superara los cuatro años de la famosa referencia viral en redes"
+    },
+    {
+     "fuente": "NYT Asia Pacífico (RSS, inglés)",
+     "titulo": "Trump and Marcos Share a Moment Over Jollibee Fried Chicken",
+     "fecha": "2026-11-18 05:34",
+     "url": "https://www.nytimes.com/2026/11/18/world/asia/trump-marcos-philippines-fried-chicken-jollibee.html",
+     "resumen": "President Trump’s host in Manila put in a late-night order from the Filipino fast-food chain Jollibee for the American leader."
+    },
+    {
+     "fuente": "SCMP Mundo (RSS, inglés)",
+     "titulo": "China’s local officials feel financial stick long before seeing carrot",
+     "fecha": "2026-11-18 05:34",
+     "url": "https://www.scmp.com/opinion/china-opinion/article/3374572/chinas-local-officials-feel-financial-stick-long-seeing-carrot",
+     "resumen": "Every Chinese New Year, a finance official in an eastern Chinese county braces for visitors. They run businesses to which his county owes money. When the county lacks the money to pay, he sometimes stops answering his phone. He described those visits to The Economic Observer, a business weekly. Beijing has now taken…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "A prisión tras cometer 17 robos con fuerza en Valencia durante un permiso penitenciario",
+     "fecha": "2026-11-18 05:33",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/18/a-prision-tras-cometer-17-robos-con-fuerza-en-valencia-durante-un-permiso-penitenciario/",
+     "resumen": "València, 18 nov (EFE).- Un juez ha ordenado el ingreso en prisión de un hombre de 41 años detenido por la Guardia Civil acusado de cometer 17 robos con fuerza en localidades de la comarca de l'Horta Nord y pedanías de València cuando disfrutaba de un permiso penitenciario, tras el que no regresó a la cárcel. Según…"
+    },
+    {
+     "fuente": "BBC EE.UU. y Canadá (RSS, inglés)",
+     "titulo": "Democrats win Alaska after Trump says voters chose wrong Dan Sullivan. What does voting data show?",
+     "fecha": "2026-11-18 05:33",
+     "url": "https://www.bbc.co.uk/news/articles/cxnv4jlr269eo?at_medium=RSS&at_campaign=rss",
+     "resumen": "Votes are still being counted in the Alaska Senate race, with Democrat Mary Peltola ahead of Republican incumbent Senator Dan S Sullivan."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Feijóo asegura que Vox no le ha planteado hasta ahora ninguna línea \"incruzable\"",
+     "fecha": "2026-11-18 05:32",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/18/feijoo-asegura-que-vox-no-le-ha-planteado-hasta-ahora-ninguna-linea-incruzable/",
+     "resumen": "Madrid, 18 nov (EFE).- El líder del PP, Alberto Núñez Feijóo, ha prometido este miércoles que no va a ser presidente del Gobierno a cualquier precio y ha asegurado que Vox no le ha planteado hasta ahora ninguna línea \"incruzable\". En una entrevista en el pódcast 'El sentido de la birra', ha defendido sus pactos con…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El tirón electoral de Rufián revitaliza a una ERC con la mirada puesta en la Generalitat",
+     "fecha": "2026-11-18 05:32",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/18/el-tiron-electoral-de-rufian-revitaliza-a-una-erc-con-la-mirada-puesta-en-la-generalitat/",
+     "resumen": "Marc Corominas Planas Barcelona, 18 nov (EFE).- ERC afronta este 29N con el objetivo de revertir los malos resultados del anterior ciclo electoral y elevar su capacidad de \"someter\" al Gobierno de Pedro Sánchez, unas metas que persigue a rebufo de la popularidad de su cabeza de lista, Gabriel Rufián, cuyo papel…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Junts busca sobrevivir a la polarización del 29N a la espera del retorno de Puigdemont",
+     "fecha": "2026-11-18 05:32",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/18/junts-busca-sobrevivir-a-la-polarizacion-del-29n-a-la-espera-del-retorno-de-puigdemont/",
+     "resumen": "Martina Alcobendas Mauri Barcelona, 18 nov (EFE).- Tras haber formado parte de la mayoría que apoyó la investidura de Pedro Sánchez en 2023, Junts aspira a sobrevivir a la polarización del 29N y, con suerte, a volver a tener la llave de la gobernabilidad, con Miriam Nogueras como cabeza de cartel y a la espera del…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Xi expresa su apoyo al diálogo entre Pionyang y Washington, según Seúl",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/xi-expresa-su-apoyo-al-dialogo-entre-pionyang-y-washington-segun-seul/",
+     "resumen": "Shenzhen (China)/Seúl, 18 nov (EFE).- El presidente chino, Xi Jinping, expresó este miércoles al mandatario surcoreano, Lee Jae Myung, su apoyo a los esfuerzos para reanudar el diálogo entre Corea del Norte y Estados Unidos, informaron las autoridades de Corea del Sur. Xi realizó estas declaraciones durante un…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "¿Cuánto vale? Así es la obra de Frida Kahlo que Christie’s retiró de su subasta tras la petición de México",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/mexico/2026/11/18/cuanto-vale-asi-es-la-obra-de-frida-kahlo-que-christies-retiro-de-su-subasta-tras-la-peticion-de-mexico/",
+     "resumen": "El Gobierno mexicano pidió documentación sobre la procedencia de la pintura antes de su venta en Nueva York y la casa de subastas aceptó suspender la operación mientras avanza la investigación"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Matute (Bildu) afirma que ETA era un \"estorbo\" que \"generaba dolor\" pero evita catalogarla como banda terrorista",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/18/matute-bildu-afirma-que-eta-era-un-estorbo-que-generaba-dolor-pero-evita-catalogarla-como-banda-terrorista/",
+     "resumen": "El cabeza de lista de EH Bildu al Congreso por Vizcaya, Oskar Matute, ha asegurado que ETA era \"un estorbo\" que \"generaba dolor, cuya \"violencia distorsionaba los debates políticos que tenían que darse en la sociedad vasca\", pero ha evitado catalogar a la organización como banda terrorista. En una entrevista en la…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Las protestas contra Trump continúan en Filipinas tras culminar su visita",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/las-protestas-contra-trump-continuan-en-filipinas-tras-culminar-su-visita/",
+     "resumen": "Manila, 18 nov (EFE).- Las protestas contra la visita a Manila del presidente estadounidense, Donald Trump, con motivo de la cumbre de la Asociación de Naciones del Sudeste Asiático (ASEAN) continúan este miércoles en la capital filipina, de donde el mandatario ya salió rumbo a China, y la Policía ha reforzado la…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El IPC de Reino Unido repuntó al 3,6% en octubre, en máximos de un año",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/el-ipc-de-reino-unido-repunto-al-36-en-octubre-en-maximos-de-un-ano/",
+     "resumen": "La tasa de inflación de Reino Unido se situó en el 3,1% interanual en octubre, lo que supone un repunte de una décima respecto al 3,5% registrado en septiembre y la mayor subida de los precios en el país desde octubre del año anterior, según el dato publicado por la Oficina Nacional de Estadística (ONS). Por su…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Isco, sobre el Betis de Pellegrini: \"Es el más completo desde que estoy aquí\"",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/isco-sobre-el-betis-de-pellegrini-es-el-mas-completo-desde-que-estoy-aqui/",
+     "resumen": "Sevilla (España), 18 nov (EFE).- El capitán del Betis, Isco Alarcón, manifestó este miércoles en vísperas del derbi del sábado ante el Sevilla en el Ramón Sánchez Pizjuán que, \"en cuanto a jugadores\", es el equipo \"más completo\" desde que llegó al conjunto verdiblanco en la campaña 2023-2024. Isco reflexionó en los…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Enagás gana el laudo de TGP a Perú y deberá pagarle casi 63 millones por \"violar\" el acuerdo de inversiones",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/enagas-gana-el-laudo-de-tgp-a-peru-y-debera-pagarle-casi-63-millones-por-violar-el-acuerdo-de-inversiones/",
+     "resumen": "El Centro Internacional de Arreglo de Diferencias relativas a Inversiones (CIADI) ha dictado un laudo a favor de Enagás en el procedimiento arbitral en relación a las compañías Transportadora de Gas del Perú (TGP) y Compañía Operadora de Gas del Amazonas (COGA), según ha indicado la compañía española en un comunicado…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Comprueba los resultados del sorteo 5 la Triplex de la Once",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/espana/2026/11/18/comprueba-los-resultados-del-sorteo-5-la-triplex-de-la-once/",
+     "resumen": "Juegos Once publicó la combinación ganadora del Sorteo 5 de las 21:15 horas. Tenemos los números ganadores aquí mismo"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Japón registra un nuevo récord mensual de turistas pese a la caída de viajes desde China",
+     "fecha": "2026-11-18 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/japon-registra-un-nuevo-record-mensual-de-turistas-pese-a-la-caida-de-viajes-desde-china/",
+     "resumen": "Tokio, 18 nov (EFE).- Japón registró en octubre un nuevo récord mensual de turistas, a pesar de la caída de los viajes desde China en medio de la tensión bilateral, según el último informe mensual de la Organización Nacional de Turismo de Japón (JNTO), publicado este miércoles. En el décimo mes del año llegaron al…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Feijóo: \"Ábalos ha pagado por lo suyo, estoy convencido de que Sánchez no\"",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/feijoo-abalos-ha-pagado-por-lo-suyo-estoy-convencido-de-que-sanchez-no/",
+     "resumen": "El líder del PP y candidato a la Presidencia del Gobierno, Alberto Núñez Feijóo, ha afirmado que el exministro de Transportes José Luis Ábalos, en la cárcel por el 'caso mascarillas', \"ha pagado por lo suyo\", pero está seguro de que no lo ha hecho el jefe del Ejecutivo. Tras asegurar que no se cree que Pedro Sánchez…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Un jefe de la banda Dominican Don´t Play, herido grave tras ser apuñalado en Madrid",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/un-jefe-de-la-banda-dominican-dont-play-herido-grave-tras-ser-apunalado-en-madrid/",
+     "resumen": "Madrid, 18 nov (EFE).- Uno de los jefes de la banda Dominican Don´t Play (DDP) se encuentra herido muy grave tras haber sido apuñalado el martes en un parque de Madrid. Según adelantó el periódico El Mundo y han confirmado a EFE fuentes próximas a la investigación, el apuñalado, de 27 años, podría ser uno de los…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Bomberos de Cieza abandonan temporalmente la extinción de un incendio tras ser apedreados",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/bomberos-de-cieza-abandonan-temporalmente-la-extincion-de-un-incendio-tras-ser-apedreados/",
+     "resumen": "Un vehículo de bomberos del Consorcio de Extinción de Incendios y Salvamento de la Región de Murcia quedó fuera de servicio tras recibir pedradas mientras intervenían en un incendio en un descampado del paraje de Los Casones, en Cieza, lo que obligó a los efectivos a retirarse hasta la llegada de la Policía Local y…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Isco: \"Es el Betis más completo desde que estoy aquí\"",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/18/isco-es-el-betis-mas-completo-desde-que-estoy-aqui/",
+     "resumen": "Sevilla, 18 nov (EFE).- El capitán del Betis, Isco Alarcón, manifestó este miércoles en vísperas del derbi del sábado ante el Sevilla en el Ramón Sánchez Pizjuán que, \"en cuanto a jugadores\", es el equipo \"más completo\" desde que llegó al conjunto verdiblanco en la campaña 2023-2024. Isco reflexionó en los medios del…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El milagro también necesitó oficio",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://www.infobae.com/america/opinion/2026/11/18/el-milagro-tambien-necesito-oficio/",
+     "resumen": "El crecimiento de México entre 1940 y 1970 no fue espontáneo: confluyeron políticas, ingenieros, maestras y empresarios capaces de coordinarse. Esa seriedad colectiva sigue siendo la única ruta hacia una transformación duradera"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Vacunación contra el VPH cae hasta 47 % al cierre del año: hacen llamado a las familias",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://www.infobae.com/colombia/2026/11/18/vacunacion-contra-el-vph-cae-hasta-47-al-cierre-del-ano-hacen-llamado-a-las-familias/",
+     "resumen": "ACEMI reportó fuertes descensos entre octubre y diciembre. La vacuna es gratuita para niños, niñas y adolescentes de 9 a 17 años y hay más de 3.000 puntos habilitados"
+    },
+    {
+     "fuente": "Japan Times (RSS, inglés)",
+     "titulo": "Education minister may face censure motion over fundraiser",
+     "fecha": "2026-11-18 05:26",
+     "url": "https://www.japantimes.co.jp/news/2026/11/18/japan/politics/education-minister-censure-motion-possible/",
+     "resumen": "The June 2024 event was attended by participants who each paid a ¥90,000 fee, including officials from eight biopharmaceutical companies."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Atacaron con piedras a policías de Santiago del Estero y una subcomisario resultó herida: hay un detenido",
+     "fecha": "2026-11-18 05:24",
+     "url": "https://www.infobae.com/sociedad/policiales/2026/11/18/atacaron-con-piedras-a-policias-de-santiago-del-estero-y-una-subcomisario-resulto-herida-hay-un-detenido/",
+     "resumen": "El procedimiento comenzó tras denuncias de vecinos por amenazas en el barrio Cooperativa de Fernández. Detuvieron a un joven, demoraron a dos adolescentes, secuestraron cuatro bombas molotov y buscan a otro sospechoso que escapó"
+    },
+    {
+     "fuente": "Japan Times (RSS, inglés)",
+     "titulo": "Purple rabbit-like character wins Suica mascot contest",
+     "fecha": "2026-11-18 05:24",
+     "url": "https://www.japantimes.co.jp/business/2026/11/18/companies/suica-new-character-rabbit/",
+     "resumen": "The creature won more than half of the 1.6 million votes cast and will be named via a poll open through Dec. 15."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Elecciones generales 29-N, en directo: última hora de la campaña, los candidatos y los sondeos",
+     "fecha": "2026-11-18 05:22",
+     "url": "https://www.infobae.com/espana/2026/11/18/elecciones-generales-29-n-en-directo-ultima-hora-de-la-campana-los-candidatos-y-los-sondeos/",
+     "resumen": "Sexto día de campaña: entrevistas de Sánchez y Feijóo, un mitin de Colau en Gijón y un debate sobre Justicia en el ICAM. El PP lidera la mayoría de los sondeos, salvo el CIS y SW Demoscopia, que dan ventaja al PSOE"
+    },
+    {
+     "fuente": "ABC Australia Titulares (RSS, inglés)",
+     "titulo": "Mary Peltola wins Alaska Senate race to give Democrats 56 seats",
+     "fecha": "2026-11-18 05:19",
+     "url": "https://www.abc.net.au/news/2026-11-18/alaska-senate-race-won-by-mary-peltola-vs-dan-sullivan-democrats/107401002",
+     "resumen": "The victory caps off the Democratic Party's best US midterm performance since 1958, following legal battles over two candidates named Dan Sullivan."
+    },
+    {
      "fuente": "La Tercera · Mundo (RSS)",
      "titulo": "Trump asegura que Estados Unidos tiene “más energía que cualquier país” y describe a Venezuela como su “nueva adquisición”",
      "fecha": "2026-11-18 05:17",
      "url": "https://www.latercera.com/mundo/noticia/trump-asegura-que-estados-unidos-tiene-mas-energia-que-cualquier-pais-y-describe-a-venezuela-como-su-nueva-adquisicion/",
      "resumen": "“Tenemos más energía que cualquier país del mundo por el doble, incluso más que eso\", ha declarado Trump durante una reunión bilateral con el presidente de Filipinas en Manila."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Un bombero sufre un accidente de tráfico, la Seguridad Social le reconoce la incapacidad permanente, pero la Justicia le niega la indemnización",
+     "fecha": "2026-11-18 05:17",
+     "url": "https://www.infobae.com/espana/2026/11/18/un-bombero-sufre-un-accidente-de-trafico-la-seguridad-social-le-reconoce-la-incapacidad-permanente-pero-la-justicia-le-niega-la-indemnizacion/",
+     "resumen": "El demandante reclamaba 143.252,81 euros a la aseguradora del otro vehículo. El conductor aseguró que necesitó 590 días para recuperarse"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La Bolsa española abre con pérdidas del 0,10 % pendiente de la inflación europea y la Fed",
+     "fecha": "2026-11-18 05:17",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/18/la-bolsa-espanola-abre-con-perdidas-del-010-pendiente-de-la-inflacion-europea-y-la-fed/",
+     "resumen": "Madrid, 18 nov (EFE).- La Bolsa española ha abierto este miércoles con una caída del 0,10 %, en una jornada en la que se conocerá la lectura final de octubre de la inflación de la eurozona, mientras la Reserva Federal de Estados Unidos (Fed) publica las minutas de su reunión de política monetaria de octubre. En la…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Francia juzga a un grupo masculinista de Telegram por mensajes de odio y amenazas",
+     "fecha": "2026-11-18 05:17",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/francia-juzga-a-un-grupo-masculinista-de-telegram-por-mensajes-de-odio-y-amenazas/",
+     "resumen": "París, 18 nov (EFE).- Un total de 34 hombres vinculados al canal de Telegram 'Femmeblancherie', que difundía mensajes misóginos, pero también diatribas racistas y antisemitas, comparecen a partir de hoy ante un tribunal en París en tres tandas hasta enero, en uno de los procesos más relevantes contra comunidades…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cuando una solución a la deforestación en África pasa por la cocina",
+     "fecha": "2026-11-18 05:17",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/cuando-una-solucion-a-la-deforestacion-en-africa-pasa-por-la-cocina/",
+     "resumen": "Isaac J. Martín Antalya (Turquía), 18 nov (EFE).- En zonas remotas de Mali, al igual que en otros países africanos, el sol no solo forma parte del paisaje. Se ha convertido en una herramienta y alternativa para encender los fogones de la cocina y evitar así que los bosques desaparezcan por la tala de leña, una tarea…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Israel está dispuesto a ocupar más territorios si hay otra escalada regional, dice Defensa",
+     "fecha": "2026-11-18 05:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/israel-esta-dispuesto-a-ocupar-mas-territorios-si-hay-otra-escalada-regional-dice-defensa/",
+     "resumen": "Jerusalén, 18 nov (EFE).- El ministro de Defensa israelí, Israel Katz, aseguró este miércoles que el Ejército de Israel \"está preparado\" para ocupar más territorio de forma permanente en el norte, en referencia al Líbano o el sur sirio; y el sur, respecto a Gaza, en caso de que haya una nueva escalada bélica en la…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Un ataque contra un buque de la emiratí ADNOC en Ormuz deja un desaparecido y once heridos",
+     "fecha": "2026-11-18 05:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/un-ataque-contra-un-buque-de-la-emirati-adnoc-en-ormuz-deja-un-desaparecido-y-once-heridos/",
+     "resumen": "El Cairo, 18 nov (EFE).- Un buque perteneciente a la estatal Compañía Nacional de Petróleo de Abu Dabi (ADNOC) fue atacado anoche mientras transitaba por el estrecho de Ormuz, informó este miércoles la petrolera, que confirmó que un tripulante permanece desaparecido y otros once resultaron heridos. Según una nota de…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Miércoles, 18 de noviembre de 2026 (08.00 GMT)",
+     "fecha": "2026-11-18 05:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/miercoles-18-de-noviembre-de-2026-0800-gmt/",
+     "resumen": "Bangkok/Madrid, 18 nov (EFE).- Shenzhen (China).- La cumbre de líderes de la Asociación de Cooperación Económica de Asia-Pacífico (APEC) empieza en Shenzhen (China), donde coinciden los presidentes de Estados Unidos, Donald Trump, de China, Xi Jinping, y de Rusia, Vladímir Putin, una cita con repercusiones…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El Parlamento de Letonia respalda el nuevo Gobierno e inviste a Andris Kulbergs como primer ministro",
+     "fecha": "2026-11-18 05:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/el-parlamento-de-letonia-respalda-el-nuevo-gobierno-e-inviste-a-andris-kulbergs-como-primer-ministro/",
+     "resumen": "El Parlamento de Letonia ha aprobado la formación del nuevo Gobierno y ha investido a Andris Kulbergs como primer ministro, después del acuerdo alcanzado por su formación y la derechista Alianza Nacional tras las elecciones celebradas el 3 de octubre. La votación, celebrada el martes, se ha saldado con 57 votos a…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Sheinbaum busca cooperación con China para usar la IA en hospitales de México",
+     "fecha": "2026-11-18 05:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/sheinbaum-busca-cooperacion-con-china-para-usar-la-ia-en-hospitales-de-mexico/",
+     "resumen": "Shenzhen (China), 18 nov (EFE).- La presidenta de México, Claudia Sheinbaum, aseguró este miércoles que buscará cooperar con China para aplicar la inteligencia artificial (IA) en hospitales mexicanos, tras visitar un centro de Shenzhen (sureste) que utiliza esa tecnología para diagnosticar y tratar enfermedades…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La subida salarial de 2027 para los funcionarios del Estado tendrá un coste de 4.965 millones",
+     "fecha": "2026-11-18 05:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/la-subida-salarial-de-2027-para-los-funcionarios-del-estado-tendra-un-coste-de-4965-millones/",
+     "resumen": "La subida salarial del 4,5% para los empleados públicos aprobada por el Gobierno para 2027 tendrá un coste presupuestario de 4.965,2 millones de euros en el ámbito del sector público estatal, importe para el que el Ejecutivo ha concedido un crédito extraordinario en el presupuesto del Ministerio de Hacienda. Así…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Los refugiados rohinyás esperan fallo histórico de la CIJ sobre el genocidio en Birmania",
+     "fecha": "2026-11-18 05:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/los-refugiados-rohinyas-esperan-fallo-historico-de-la-cij-sobre-el-genocidio-en-birmania/",
+     "resumen": "Daca, 18 nov (EFE).- Nueve años después de su huida masiva de Birmania (Myanmar), refugiados y activistas rohinyás en Bangladés esperan que una sentencia histórica de la Corte Internacional de Justicia (CIJ) sobre las acusaciones de genocidio contra su país les proporcione justicia y abra una vía para regresar a sus…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Bertín Osborne, su emoción el dedicar unas preciosas palabras a Fabiola Martínez: \"Lo has hecho tú, gordita\"",
+     "fecha": "2026-11-18 05:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/bertin-osborne-su-emocion-el-dedicar-unas-preciosas-palabras-a-fabiola-martinez-lo-has-hecho-tu-gordita/",
+     "resumen": "Este martes 17 de noviembre se ha celebrado la IV edición de los Premios Dona2 de la Fundación Kike Osborne para reconocer valores como la solidaridad, la responsabilidad, el orgullo, la superación o la empatía, premiando en esta ocasión a rostros conocidos como Cruz Sanchez de Lara, Mari Carmen Maza -pareja de Álex…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Tom Cruise y Katie Holmes se casaron hace 20 años",
+     "fecha": "2026-11-18 05:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/18/tom-cruise-y-katie-holmes-se-casaron-hace-20-anos/",
+     "resumen": "Madrid, 18 nov (EFE).- Hace veinte años se casaron en el Castillo Odescalchi (Bracciano, Italia) los actores Tom Cruise y Katie Holes, en una ceremonia de cuento de hadas, aunque el matrimonio terminaría en 2012, solo seis años después."
     },
     {
      "fuente": "NYT Asia Pacífico (RSS, inglés)",
@@ -3410,11 +3594,11 @@
      "resumen": "El gobierno de la Ciudad de México confirmó la hora y sede para la entrega del apoyo económico para estudiantes de educación básica"
     },
     {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Elecciones generales 29-N, en directo: última hora de la campaña, los candidatos y los sondeos",
-     "fecha": "2026-11-18 05:11",
-     "url": "https://www.infobae.com/espana/2026/11/18/elecciones-generales-29-n-en-directo-ultima-hora-de-la-campana-los-candidatos-y-los-sondeos/",
-     "resumen": "Sexto día de campaña: entrevistas de Sánchez y Feijóo, un mitin de Colau en Gijón y un debate sobre Justicia en el ICAM. El PP lidera la mayoría de los sondeos, salvo el CIS y SW Demoscopia, que dan ventaja al PSOE"
+     "fuente": "Al Jazeera (RSS, inglés)",
+     "titulo": "Ships risk Hormuz Strait due to limited US protection",
+     "fecha": "2026-11-18 05:12",
+     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/18/ships-risk-hormuz-strait-due-to-limited-us-protection?traffic_source=rss",
+     "resumen": "Elisabeth Braw with the Atlantic Council says US navy cannot protection to every vessel passing the Hormuz Strait."
     },
     {
      "fuente": "ABC Australia Titulares (RSS, inglés)",
@@ -3443,6 +3627,13 @@
      "fecha": "2026-11-18 05:06",
      "url": "https://www.infobae.com/espana/2026/11/18/los-perros-y-gatos-asilvestrados-se-han-convertido-en-un-grave-problema-en-donana-los-guias-alertan-de-ataques-a-ciervos-linces-o-aves/",
      "resumen": "Estos animales abandonados o escapados, así como las mascotas que pasean con sus dueños, pueden perseguir, matar o alterar los comportamientos de la fauna del espacio natural"
+    },
+    {
+     "fuente": "Al Jazeera (RSS, inglés)",
+     "titulo": "China’s Xi pitches free trade at APEC amid Trump’s global trade disruptions",
+     "fecha": "2026-11-18 05:05",
+     "url": "https://www.aljazeera.com/news/2026/11/18/xis-pitch-for-free-trade-amid-trumps-global-trade-disruptions?traffic_source=rss",
+     "resumen": "The president says Beijing seeks to provide a 'stable, predictable and beneficial environment for global enterprises'."
     },
     {
      "fuente": "Times of India Mundo (RSS, inglés)",
@@ -3557,11 +3748,11 @@
      "resumen": "Summit in Chinese tech hub Shenzhen set to include highly anticipated meeting between Xi, Trump and Putin Shenzhen takes centre stage as Xi sends ‘Chinamaxxing’ message at Apec summit What is Apec? Explained in 30 seconds Yalta became a byword for betrayal. Will Trump, Xi and Putin enact another carve-up? That is the…"
     },
     {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Despliegue de la Armada, expulsiones y prioridad nacional: cómo ha cambiado el discurso migratorio del PP desde 2023 y en qué se ha acercado al de Vox",
-     "fecha": "2026-11-18 04:55",
-     "url": "https://www.infobae.com/espana/2026/11/18/despliegue-de-la-armada-expulsiones-y-prioridad-nacional-como-ha-cambiado-el-discurso-migratorio-del-pp-desde-2023-y-como-se-ha-acercado-al-de-vox/",
-     "resumen": "Desde la Fundación porCausa sostienen que la derecha y la ultraderecha utilizan la migración para relegar el debate sobre vivienda, sanidad y educación pública"
+     "fuente": "Al Jazeera (RSS, inglés)",
+     "titulo": "Photos: India defeat Pakistan to win SAFF Championship in Bangladesh",
+     "fecha": "2026-11-18 04:54",
+     "url": "https://www.aljazeera.com/gallery/2026/11/18/photos-india-defeat-pakistan-to-win-saff-championship-in-bangladesh?traffic_source=rss",
+     "resumen": "Thousands of Bangladeshi fans turned up to watch India complete a three-peat of SAFF titles in Dhaka."
     },
     {
      "fuente": "ABC Australia Titulares (RSS, inglés)",
@@ -3590,6 +3781,13 @@
      "fecha": "2026-11-18 04:51",
      "url": "https://www.scmp.com/news/china/diplomacy/article/3374871/flags-fists-and-extra-5-minutes-manila-reveals-confident-tired-trump",
      "resumen": "The fist came before the flags. As US President Donald Trump stepped off Air Force One in Manila on Tuesday evening, he raised a clenched fist towards the cameras, accepted miniature American and Philippine flags from a child and waved them down the red carpet. Roughly 20 hours later, as he departed Manila for…"
+    },
+    {
+     "fuente": "Al Jazeera (RSS, inglés)",
+     "titulo": "Russia, China should ‘lead’ push to multipolar world, Xi tells APEC summit",
+     "fecha": "2026-11-18 04:50",
+     "url": "https://www.aljazeera.com/news/2026/11/18/president-xi-says-russia-and-china-should-lead-push-to-multipolar-world?traffic_source=rss",
+     "resumen": "Putin says Western powers are 'former hegemons', with Europe in the midst of a 'humiliating decline'."
     },
     {
      "fuente": "Infobae (RSS)",
@@ -3709,314 +3907,6 @@
      "fecha": "2026-11-18 04:45",
      "url": "https://www.scmp.com/news/china/science/article/3374870/chinese-spaceplanes-global-reach-study-erectile-dysfunction-7-science-highlights",
      "resumen": "We have put together stories from our coverage on science from the past two weeks to help you stay informed. If you would like to see more of our reporting, please consider subscribing. 1. 40 Chinese spaceplanes could hit any target on Earth in minutes: study A newly released photograph in a US intelligence report…"
-    },
-    {
-     "fuente": "The Guardian Mundo (RSS, inglés)",
-     "titulo": "UK inflation rises to 3.6% after petrol and diesel prices hit record high",
-     "fecha": "2026-11-18 04:44",
-     "url": "https://www.theguardian.com/business/2026/nov/18/uk-inflation-rises-energy-prices-iran-war-oil",
-     "resumen": "Increase in October piles pressure on households as Iran war pushes up oil cost and rattles global economy Business live – latest updates Inflation in the UK rose to 3.6% in October after petrol prices rose and diesel hit a record high amid the fallout from the war in the Middle East. Figures from the Office for…"
-    },
-    {
-     "fuente": "NYT Política (RSS, inglés)",
-     "titulo": "Democrats Claim 56 Senate Seats After Mary Peltola Wins in Alaska",
-     "fecha": "2026-11-18 04:43",
-     "url": "https://www.nytimes.com/2026/11/17/us/politics/alaska-senate-sullivan-peltola.html",
-     "resumen": "Mary Peltola defeated Senator Dan S. Sullivan, a two-term incumbent, to become the first Democrat to represent the conservative state in the Senate since 2015."
-    },
-    {
-     "fuente": "SCMP Mundo (RSS, inglés)",
-     "titulo": "From war games to crisis planning: Manila’s bid for a ‘Squad’ command hub",
-     "fecha": "2026-11-18 04:43",
-     "url": "https://www.scmp.com/week-asia/politics/article/3374873/war-games-crisis-planning-manilas-bid-squad-command-hub",
-     "resumen": "As the Philippines eyes a coordination hub with defence partners to bolster its regional security shield, analysts say Manila stands to gain greater stability – even if closer military ties do not guarantee allied intervention in a crisis. The strategy hinges on a proposed Combined Coordination Centre (CCC) with…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Las colectoras, la casta y la tentación de cambiar las reglas",
-     "fecha": "2026-11-18 04:42",
-     "url": "https://www.infobae.com/opinion/2026/11/18/las-colectoras-la-casta-y-la-tentacion-de-cambiar-las-reglas/",
-     "resumen": "Mientras el Gobierno negocia la suspensión de las primarias para 2027 y la vuelta de las colectoras, el debate de fondo queda relegado: las reglas electorales no pueden depender de las necesidades de cada oficialismo"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "León XIV y el regreso de la mirada humana",
-     "fecha": "2026-11-18 04:42",
-     "url": "https://www.infobae.com/opinion/2026/11/18/leon-xiv-y-el-regreso-de-la-mirada-humana/",
-     "resumen": "El pontífice advirtió que la búsqueda de aprobación puede llevar a mentir, traicionar o humillar, y señaló el éxito, el dinero, la apariencia y el placer como nuevos ídolos"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Lo que el mundo se juega en la cumbre de Trump, Xi y Putin",
-     "fecha": "2026-11-18 04:42",
-     "url": "https://www.infobae.com/opinion/2026/11/18/lo-que-el-mundo-se-juega-en-la-cumbre-de-trump-xi-y-putin/",
-     "resumen": "Tres jefes de Estado se reunirán este jueves en Shenzhen, China, para discutir decisiones cuyas consecuencias alcanzan a todos"
-    },
-    {
-     "fuente": "Times of India Mundo (RSS, inglés)",
-     "titulo": "Roger Daltrey's cancer charity concerts reach 150 shows, raising over £36 million since 2000",
-     "fecha": "2026-11-18 04:39",
-     "url": "https://timesofindia.indiatimes.com/world/uk/in-2000-roger-daltrey-helped-launch-a-concert-series-for-teenagers-with-cancer-26-years-later-150-royal-albert-hall-shows-have-raised-more-than-36-million-to-support-their-care/articleshow/135952541.cms",
-     "resumen": "The Teenage Cancer Trust celebrated its 150th concert at London's Royal Albert Hall, raising over £36 million. Founded by Roger Daltrey in 2000, the series features numerous well-known musicians supporting young people with cancer. Performers such as Manic Street Preachers and Elbow participated in the recent program…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Pamela López lanza su marca de panetones y advierte diferencia con Pamela Franco: “Los míos son sin bromato artificial”",
-     "fecha": "2026-11-18 04:34",
-     "url": "https://www.infobae.com/peru/2026/11/18/pamela-lopez-lanza-su-marca-de-panetones-y-advierte-diferencia-con-pamela-franco-los-mios-son-sin-bromato-artificial/",
-     "resumen": "La aún esposa de Christian Cueva presentó su marca ‘Kitty Pam’ y aprovechó las cámaras para marcar diferencias con el emprendimiento navideño de la cantante. Además, confirmó que sus productos estarán a la venta"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Trece detenidos en una operación contra el narcotráfico en Cantabria y Asturias",
-     "fecha": "2026-11-18 04:31",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/18/trece-detenidos-en-una-operacion-contra-el-narcotrafico-en-cantabria-y-asturias/",
-     "resumen": "Santander, 18 nov (EFE).- La Guardia Civil ha detenido a trece personas en Cantabria y Asturias, tras llevar a cabo once registros en varios municipios de ambas comunidades, dentro de una operación contra el narcotráfico que sigue abierta, según ha informado la Delegación del Gobierno en Cantabria. La operación se…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Albanese defiende una IA segura y cooperativa ante su potencial económico en Asia-Pacífico",
-     "fecha": "2026-11-18 04:31",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/albanese-defiende-una-ia-segura-y-cooperativa-ante-su-potencial-economico-en-asia-pacifico/",
-     "resumen": "Shenzhen (China), 18 nov (EFE).- El primer ministro australiano, Anthony Albanese, defendió este miércoles desde la ciudad suroriental china de Shenzhen la necesidad de reforzar la cooperación regional para aprovechar el potencial económico de la inteligencia artificial (IA), al tiempo que reclamó gestionar…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Kast celebra en Shenzhen el aumento de las exportaciones de cerezas chilenas a China",
-     "fecha": "2026-11-18 04:30",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/kast-celebra-en-shenzhen-el-aumento-de-las-exportaciones-de-cerezas-chilenas-a-china/",
-     "resumen": "Shenzhen (China), 18 nov (EFE).- El presidente chileno, José Antonio Kast, celebró este miércoles que en la última temporada se enviasen a China casi 100 millones de cajas de cerezas, uno de los productos agroalimentarios estrella de su país. La cifra hace cinco años era de unos 70 millones de cajas, recordó Kast…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Bombardeos de Israel en Gaza matan a dos personas esta noche pese al alto el fuego",
-     "fecha": "2026-11-18 04:30",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/bombardeos-de-israel-en-gaza-matan-a-dos-personas-esta-noche-pese-al-alto-el-fuego/",
-     "resumen": "Jerusalén, 18 nov (EFE).- Dos palestinos de 35 y 32 años murieron en la noche del martes al miércoles en distintos ataques de Israel contra el centro y el norte del enclave, pese al alto el fuego en vigor, según los hospitales que recibieron sus cuerpos, mientras que un niño de 11 años sucumbió a las heridas…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Squirrel eleva un 29% sus ingresos hasta septiembre y mejora un 41% su Ebitda, pero rebaja objetivos",
-     "fecha": "2026-11-18 04:30",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/squirrel-eleva-un-29-sus-ingresos-hasta-septiembre-y-mejora-un-41-su-ebitda-pero-rebaja-objetivos/",
-     "resumen": "Squirrel Media registró unos ingresos consolidados de 205,6 millones de euros en los nueve primeros meses del año, lo que representa un incremento del 29% respecto al periodo de 2025, según ha informado este miércoles el grupo tecnológico de comunicación, que ha revisado a la baja sus previsiones para el cierre del…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Kuwait condena ataque iraní contra base aérea que \"socava\" esfuerzos para la desescalada",
-     "fecha": "2026-11-18 04:30",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/kuwait-condena-ataque-irani-contra-base-aerea-que-socava-esfuerzos-para-la-desescalada/",
-     "resumen": "Manama, 18 nov (EFE).- Kuwait condenó este miércoles los ataques con drones iraníes contra la base aérea Ali al Salem, en el oeste del país, y advirtió de que estos bombardeos \"socavan\" los esfuerzos para la desescalada en la región, en medio de creciente tensión entre Washington y Teherán. El Ministerio de…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Fabiola Martínez, Bertín Osborne y su hijo Kike, grandes protagonistas de los premios Dona2. Todas las imágenes",
-     "fecha": "2026-11-18 04:30",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/fabiola-martinez-bertin-osborne-y-su-hijo-kike-grandes-protagonistas-de-los-premios-dona2-todas-las-imagenes/",
-     "resumen": "Noche marcada en rojo en el calendario de Fabiola Martínez y Bertín Osborne que, presumiendo una vez más de su maravillosa relación tras su separación en 2021, han vuelto a unir fuerzas para arropar a su hijo Kike Osborne en la IV edición de los Premios Dona2 de la Fundación que lleva su nombre y que trabaja para dar…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Ataques del Eln y secuestro de oficial habrían influido en relevo militar en Arauca",
-     "fecha": "2026-11-18 04:30",
-     "url": "https://www.infobae.com/colombia/2026/11/18/ataques-del-eln-y-secuestro-de-oficial-habrian-influido-en-relevo-militar-en-arauca/",
-     "resumen": "La situación de seguridad en el departamento puso bajo evaluación a dos generales, mientras el Ejército ya designó un nuevo comandante para la Octava División"
-    },
-    {
-     "fuente": "SCMP Mundo (RSS, inglés)",
-     "titulo": "Bahrain and Kuwait repel drone attacks after US strikes Iranian island",
-     "fecha": "2026-11-18 04:27",
-     "url": "https://www.scmp.com/news/world/middle-east/article/3374869/bahrain-and-kuwait-repel-drone-attacks-after-us-strikes-iranian-island",
-     "resumen": "Bahrain and Kuwait said Wednesday that they had repelled air attacks launched against them following US strikes on an Iranian island, as Gulf nations face retaliatory bombardment in the Middle East war. The conflict – which began with US-Israeli strikes on Iran in late February – has spilled over to Gulf states that…"
-    },
-    {
-     "fuente": "Times of India Mundo (RSS, inglés)",
-     "titulo": "Teens who met on holiday in 1994 reunite 20 years later and marry",
-     "fecha": "2026-11-18 04:24",
-     "url": "https://timesofindia.indiatimes.com/world/us/in-1994-david-mcardle-and-jodie-swapped-addresses-at-a-pool-table-while-on-holiday-in-kos-and-wrote-to-each-other-monthly-for-three-years-before-losing-touch-two-decades-later-a-birthday-text-reunited-them-and-they-married/articleshow/135953578.cms",
-     "resumen": "It was in the sun-soaked summer of 1994 when David McArdle encountered Jodie while vacationing in Kos, Greece. Their brief encounter ignited a beautiful friendship carried through pen letters for three years. Life scattered them, but fate intervened after twenty years when Jodie reached out to David's mother. Their…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Niegan amparo contra orden de captura al “Rey Mago”, excomisario ligado al CJNG y sancionado por EEUU",
-     "fecha": "2026-11-18 04:23",
-     "url": "https://www.infobae.com/mexico/2026/11/18/niegan-amparo-contra-orden-de-captura-al-rey-mago-excomisario-ligado-al-cjng-y-sancionado-por-eeuu/",
-     "resumen": "Con esta decisión se mantiene vigente la orden de captura contra Severo Flores Mendoza, señalado por delincuencia organizada y secuestro"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Las criptomonedas no son un territorio sin ley: todo queda registrado y a disposición de la Crypto Forensics",
-     "fecha": "2026-11-18 04:20",
-     "url": "https://www.infobae.com/opinion/2026/11/18/las-criptomonedas-no-son-un-territorio-sin-ley-todo-queda-registrado-y-a-disposicion-de-la-crypto-forensics/",
-     "resumen": "Contra la idea de que el dinero puede ocultarse allí para siempre, seguir la huella del delito muchas veces es más sencillo que en el sistema financiero tradicional"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Tras la renuncia de Carlos Terrado, designaron al nuevo vicepresidente del directorio de la Autoridad Regulatoria Nuclear",
-     "fecha": "2026-11-18 04:20",
-     "url": "https://www.infobae.com/politica/2026/11/18/tras-la-renuncia-de-carlos-terrado-designaron-al-nuevo-vicepresidente-del-directorio-de-la-autoridad-regulatoria-nuclear/",
-     "resumen": "La nueva autoridad asumió las funciones ayer. Se trata de un bioingeniero con una amplia experiencia en formación en energía nuclear, seguridad radiológica y gestión de organizaciones"
-    },
-    {
-     "fuente": "ABC Australia Titulares (RSS, inglés)",
-     "titulo": "Sydney's Papley banned for three games after roadside drug test",
-     "fecha": "2026-11-18 04:18",
-     "url": "https://www.abc.net.au/news/2026-11-18/swan-papley-banned-for-three-games-after-roadside-drug-test/107400860",
-     "resumen": "Sydney's Tom Papley is banned for three matches by the AFL after a secondary sample from a roadside drug test confirmed the presence of cocaine and MDMA."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Las revistas del corazón esta semana: la entrevista más personal de Pedro Sánchez, las confesiones de Ana Boyer y el nuevo momento de Rosalía",
-     "fecha": "2026-11-18 04:17",
-     "url": "https://www.infobae.com/espana/2026/11/18/las-revistas-del-corazon-esta-semana-la-entrevista-mas-personal-de-pedro-sanchez-las-confesiones-de-ana-boyer-y-el-nuevo-momento-de-rosalia/",
-     "resumen": "Este miércoles, 18 de noviembre, las portadas también recogen los planes familiares de Sara Carbonero, el delicado momento de salud de Isabel Sartorius y el esperado regreso de Belén Esteban a ‘GH VIP’"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Fiyi declara el estado de desastre nacional por la sequía asociada a El Niño",
-     "fecha": "2026-11-18 04:16",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/fiyi-declara-el-estado-de-desastre-nacional-por-la-sequia-asociada-a-el-nino/",
-     "resumen": "Sídney (Australia), 18 nov (EFE).- Fiyi ha declarado el estado de desastre nacional en todo su territorio ante el agravamiento de la sequía asociada al fenómeno climático de El Niño, que \"ha alcanzado niveles de crisis\" y amenaza el abastecimiento de agua, la agricultura y los medios de vida de las comunidades del…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Mary Peltola hace historia como la primera indígena de Alaska que llega al Senado de EEUU",
-     "fecha": "2026-11-18 04:15",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/mary-peltola-hace-historia-como-la-primera-indigena-de-alaska-que-llega-al-senado-de-eeuu/",
-     "resumen": "Los Ángeles, 17 nov (EFE).- Mary Peltola hizo historia este miércoles al convertirse en la primera persona indígena de Alaska en llegar al Senado de Estados Unidos, donde además devolverá a los demócratas un escaño por ese estado que el partido no ocupaba desde hace casi dos décadas. Con el 99 % de los votos…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Trump sale de Filipinas rumbo a China mientras Xi y Putin avanzan sus reuniones",
-     "fecha": "2026-11-18 04:15",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/trump-sale-de-filipinas-rumbo-a-china-mientras-xi-y-putin-avanzan-sus-reuniones/",
-     "resumen": "Manila, 18 nov (EFE).- El presidente de Estados Unidos, Donald Trump, salió este miércoles de Manila, donde estuvo menos de 24 horas, rumbo a Shenzhen, ciudad meridional china en la que arrancó hoy la cumbre del Foro de Cooperación Económica de Asia-Pacífico (APEC), en cuyos márgenes ya se han reunido los presidentes…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Trump asegura haber alcanzado \"el mayor acuerdo comercial hasta ahora\" con Filipinas",
-     "fecha": "2026-11-18 04:15",
-     "url": "https://www.infobae.com/america/agencias/2026/11/18/trump-asegura-haber-alcanzado-el-mayor-acuerdo-comercial-hasta-ahora-con-filipinas/",
-     "resumen": "Manila, 18 nov (EFE).- El presidente de Estados Unidos, Donald Trump, aseguró este miércoles en Manila haber cerrado \"el mayor acuerdo comercial\" logrado hasta ahora con Filipinas, aunque evitó ofrecer detalles concretos antes de partir rumbo hacia Shenzhen, ciudad meridional china en la que arrancó hoy la cumbre del…"
-    },
-    {
-     "fuente": "Times of India Mundo (RSS, inglés)",
-     "titulo": "Journalist turns daughter's fentanyl death into a mission, funding $500,000 in addiction treatment",
-     "fecha": "2026-11-18 04:15",
-     "url": "https://timesofindia.indiatimes.com/world/us/after-losing-her-daughter-to-fentanyl-poisoning-south-dakota-journalist-angela-kennecke-founded-a-nonprofit-that-has-distributed-over-15700-naloxone-kits-funded-more-than-500000-in-addiction-treatment-and-reached-20000-students/articleshow/135953367.cms",
-     "resumen": ""
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "EN VIVO | Clima CDMX y resto de México hoy miércoles 18 de noviembre: dos frentes fríos provocarán lluvias y bajas temperaturas",
-     "fecha": "2026-11-18 04:14",
-     "url": "https://www.infobae.com/mexico/2026/11/18/en-vivo-clima-cdmx-y-resto-de-mexico-hoy-miercoles-18-de-noviembre-dos-frentes-frios-provocaran-lluvias-y-bajas-temperaturas/",
-     "resumen": "Consulta en tiempo real actualizaciones, alertas, noticias y reportes sobre las condiciones meteorológicas en el país"
-    },
-    {
-     "fuente": "Times of India Mundo (RSS, inglés)",
-     "titulo": "Hakeem Jeffries faces first test in bid to become first Black US House speaker",
-     "fecha": "2026-11-18 04:14",
-     "url": "https://timesofindia.indiatimes.com/world/us/hakeem-jeffries-faces-first-test-in-bid-to-become-first-black-us-house-speaker/articleshow/135951047.cms",
-     "resumen": "As Hakeem Jeffries gears up for a historic election, he prepares to potentially become the first black Speaker of the House, vying for the nomination from House Democrats. Acknowledging calls for change in leadership, Jeffries is proactively connecting with diverse caucuses to build support. His potential victory…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El Gobierno aumentó las prestaciones por discapacidad: cuáles son los nuevos montos",
-     "fecha": "2026-11-18 04:13",
-     "url": "https://www.infobae.com/sociedad/2026/11/18/el-gobierno-aumento-las-prestaciones-por-discapacidad-cuales-son-los-nuevos-montos/",
-     "resumen": "La Secretaría Nacional de Discapacidad dispuso un incremento sobre las tarifas vigentes y confirmó la continuidad del reconocimiento diferencial para los servicios brindados en la Patagonia"
-    },
-    {
-     "fuente": "SCMP Mundo (RSS, inglés)",
-     "titulo": "Thailand’s businesses fret over Trump’s zero tariff on US goods, farmers comment",
-     "fecha": "2026-11-18 04:11",
-     "url": "https://www.scmp.com/week-asia/economics/article/3374865/thailands-businesses-fret-over-trumps-zero-tariff-us-goods-farmers-comment",
-     "resumen": "Thai farmers and industries have been left pondering what the preliminary trade framework signed late on Tuesday by US President Donald Trump and Thai Prime Minister Anutin Charnvirakul means for them, especially regarding market access and the standards of American agricultural products. The two leaders signed a…"
-    },
-    {
-     "fuente": "SCMP Mundo (RSS, inglés)",
-     "titulo": "Pickleball enthusiast cheated out of HK$6 million in online investment scam",
-     "fecha": "2026-11-18 04:11",
-     "url": "https://www.scmp.com/news/hong-kong/law-and-crime/article/3374864/pickleball-enthusiast-cheated-out-hk6-million-online-investment-scam",
-     "resumen": "A pickleball enthusiast and former senior telecommunications executive has lost more than HK$6 million (US$764,688) in an online investment scam after fraudsters targeted him through a sports social networking platform, police have said. The case came to light as police revealed more than 40 reports of online…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Silvia Navarro celebra el cumpleaños de su novio Fabricio Mercado con románticas fotos",
-     "fecha": "2026-11-18 04:10",
-     "url": "https://www.infobae.com/mexico/2026/11/18/silvia-navarro-celebra-el-cumpleanos-de-su-novio-fabricio-mercado-con-romanticas-fotos/",
-     "resumen": "La publicación llega meses después de que ambos confirmaran su romance"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Exconsejeros del INE cierran filas ante crisis del instituto y confrontación con Morena",
-     "fecha": "2026-11-18 04:10",
-     "url": "https://www.infobae.com/mexico/2026/11/18/exconsejeros-del-ine-cierran-filas-ante-crisis-del-instituto-y-confrontacion-con-morena/",
-     "resumen": "José Woldenberg, Luis Carlos Ugalde, Leonardo Valdés y Lorenzo Córdova encabezarán un pronunciamiento en medio de nuevas renuncias en áreas estratégicas del organismo"
-    },
-    {
-     "fuente": "Al Jazeera (RSS, inglés)",
-     "titulo": "Hungry, unpaid and afraid: Africa’s journalists pushed to the brink",
-     "fecha": "2026-11-18 04:09",
-     "url": "https://www.aljazeera.com/opinions/2026/11/18/hungry-unpaid-and-afraid-africas-journalists-pushed-to-the-brink?traffic_source=rss",
-     "resumen": "The exploitation of journalists is undermining independent reporting and the public’s right to know."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Meta abrirá 5.000 cupos anuales de certificación digital en Colombia tras acuerdo con el Gobierno",
-     "fecha": "2026-11-18 04:08",
-     "url": "https://www.infobae.com/colombia/2026/11/18/meta-abrira-5000-cupos-anuales-de-certificacion-digital-en-colombia-tras-acuerdo-con-el-gobierno/",
-     "resumen": "El memorando tendrá una vigencia de cuatro años e incluye programas de formación en inteligencia artificial, emprendimiento y seguridad en Internet. También contempla capacitación para servidores públicos y estudiantes con buenos resultados en las pruebas Saber 11"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Ron Howard asegura que volvería a hacer ‘El Grinch’ junto a Jim Carrey con una condición: “Nos movemos cautelosamente”",
-     "fecha": "2026-11-18 04:08",
-     "url": "https://www.infobae.com/espana/cultura/2026/11/18/ron-howard-asegura-que-volveria-a-hacer-el-grinch-junto-a-jim-carrey-con-una-condicion-nos-movemos-cautelosamente/",
-     "resumen": "El director asegura que está en contacto con el actor para revisitar el universo del Dr. Seuss, aunque de momento no se han puesto manos a la obra con el guion"
-    },
-    {
-     "fuente": "ABC Australia Titulares (RSS, inglés)",
-     "titulo": "Albanese says Trump, Xi and Putin talks on Ukraine 'not up to Australia'",
-     "fecha": "2026-11-18 04:06",
-     "url": "https://www.abc.net.au/news/2026-11-18/pm-says-trump-xi-putin-talks-not-up-to-australia/107400230",
-     "resumen": "Anthony Albanese has called for an end to global conflicts ahead of talks between Donald Trump, Xi Jinping and Vladimir Putin, but insists Ukraine must have a say in its own future."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Las mejores novelas negras y thrillers que tienes que leer este invierno: de Jo Nesbø a Camilla Läckberg, pasando por Dolores Redondo y Freida McFadden",
-     "fecha": "2026-11-18 04:05",
-     "url": "https://www.infobae.com/espana/cultura/2026/11/18/las-mejores-novelas-negras-y-thrillers-que-tienes-que-leer-este-invierno-de-jo-nesbo-a-camilla-lackberg-pasando-por-dolores-redondo-y-freida-mcfadden/",
-     "resumen": "Repasamos algunos de los títulos más importantes dentro del género policíaco que se han publicado en los últimos meses"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Mariano Torre, el chef mexicano tras la taquería que nos lleva al Pacífico: “Las tortillas las hace Mary Luz, una mujer de Hermosillo que vive en Madrid”",
-     "fecha": "2026-11-18 04:05",
-     "url": "https://www.infobae.com/espana/2026/11/18/mariano-torre-el-chef-mexicano-tras-la-taqueria-que-nos-lleva-al-pacifico-las-tortillas-las-hace-mary-luz-una-mujer-de-hermosillo-que-vive-en-madrid/",
-     "resumen": "Tras inaugurar su primera taquería en Chamberí en 2025 y conquistar a los madrileños con sus tacos de carne, La Veintiocho abre un segundo establecimiento en Luchana, esta vez con el pescado como protagonista"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Llega la temporada de las mandarinas: los 5 beneficios de esta fruta cítrica para la salud",
-     "fecha": "2026-11-18 04:05",
-     "url": "https://www.infobae.com/espana/2026/11/18/llega-la-temporada-de-las-mandarinas-los-5-beneficios-de-esta-fruta-citrica-para-la-salud/",
-     "resumen": "Estas frutas son protagonistas del otoño y el invierno y destacan por sus propiedades nutricionales"
-    },
-    {
-     "fuente": "Japan Times (RSS, inglés)",
-     "titulo": "Xi and Putin blast Western ‘protectionism’ and sanctions before meeting Trump at APEC",
-     "fecha": "2026-11-18 04:05",
-     "url": "https://www.japantimes.co.jp/news/2026/11/18/asia-pacific/politics/putin-xi-china-russia-meeting-apec/",
-     "resumen": "The two leaders' speeches set the stage for a high-stakes trilateral meeting with U.S. President Donald Trump."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El culebrón del burka tendrá su segunda temporada después de las eleccciones generales: los diputados del nuevo hemiciclo deberán votar si prohíben su uso en Islas Baleares",
-     "fecha": "2026-11-18 04:02",
-     "url": "https://www.infobae.com/espana/2026/11/18/el-culebron-del-burka-tendra-su-segunda-temporada-despues-de-las-eleccciones-generales-los-diputados-del-nuevo-hemiciclo-deberan-votar-si-prohiben-su-uso-en-islas-baleares/",
-     "resumen": "El Parlamento balear aprobó esta semana la iniciativa, pero la modificación afecta al Código Penal y requiere el aval del Congreso de los Diputados. La Cámara Baja ya ha votado sobre esta cuestión en tres ocasiones durante la legislatura"
     }
    ]
   },
@@ -4462,6 +4352,13 @@
      "fecha": "2026-11-13 19:43",
      "url": "https://techcrunch.com/2026/11/13/jensen-huangs-departure-blasts-big-hole-in-ai-startup-funding-vcs-and-founders-say/",
      "resumen": "Nvidia poured tens of billions into AI startups under Huang. Without him at the helm, founders and VCs are bracing for smaller checks and lower valuations."
+    },
+    {
+     "fuente": "Rafaela 24 Noticias",
+     "titulo": "Las fintech argentinas buscan liderar América Latina mientras gigantes financieros desembarcan en el país",
+     "fecha": "2026-11-13 19:12",
+     "url": "https://r24n.com/contenido/303979/las-fintech-argentinas-buscan-liderar-america-latina-mientras-gigantes-financier",
+     "resumen": "Las fintech argentinas suman 1.108 empresas y casi la mitad ya opera en otros países. Chile, Colombia y México son los principales destinos de expansión regional. Paraguay podría registrar un crecimie..."
     },
     {
      "fuente": "Crunchbase News (RSS)",
@@ -5018,6 +4915,13 @@
      "resumen": "Ya vamos a acabar el año y hay cosas que muchos no pueden elegir todavía. Un ejemplo claro son los relojes inteligentes y es que, entre tantos que hay en el mercado, uno se puede perder entre la información, características, precios y todo tipo de detalles. Aunque hay una marca que ha resumido esto a la perfección en…"
     },
     {
+     "fuente": "El Vocero de Puerto Rico",
+     "titulo": "Puerto Rico ante el desafío de la inteligencia artificial",
+     "fecha": "2026-11-17 21:00",
+     "url": "https://www.elvocero.com/opinion/puerto-rico-ante-el-desaf-o-de-la-inteligencia-artificial/article_91c633c8-0037-47cb-bd4e-479895b5b802.html",
+     "resumen": "Los resultados del World Digital and AI Ranking 2026, publicado por el Institute for Management Development (IMD) de Suiza, ofrecen una importante advertencia sobre el futuro económico de Puerto Rico."
+    },
+    {
      "fuente": "Engadget (RSS, inglés)",
      "titulo": "You can now see and edit what Google Gemini remembers about you",
      "fecha": "2026-11-17 21:00",
@@ -5344,13 +5248,6 @@
      "titulo": "Java4Shell: RCE in OpenJDK when processing Base64",
      "fecha": "2026-11-17 18:11",
      "url": "https://calif.io/java4shell/",
-     "resumen": "Comments"
-    },
-    {
-     "fuente": "Hacker News portada (RSS oficial)",
-     "titulo": "Tencent Hy4 Flash",
-     "fecha": "2026-11-17 18:06",
-     "url": "https://hy.tencent.ai/research/hy4-flash",
      "resumen": "Comments"
     }
    ]
@@ -5914,7 +5811,7 @@
      "fuente": "Bing Noticias · Golf",
      "url": "https://www.bing.com/news/search?q=golf%20%28Niemann%20OR%20Pereira%20OR%20PGA%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 4
+     "n": 3
     },
     {
      "fuente": "Bing Noticias · Fútbol chileno",
@@ -5974,13 +5871,13 @@
      "fuente": "Bing Noticias · NBA figuras",
      "url": "https://www.bing.com/news/search?q=NBA%20%28LeBron%20OR%20Curry%20OR%20Doncic%20OR%20Jokic%20OR%20Antetokounmpo%20OR%20Wembanyama%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 6
+     "n": 5
     },
     {
      "fuente": "Bing Noticias · Rally y automovilismo Chile",
      "url": "https://www.bing.com/news/search?q=%28rally%20OR%20RallyMobil%20OR%20WRC%20OR%20automovilismo%29%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 3
+     "n": 2
     },
     {
      "fuente": "ANFP",
@@ -6243,6 +6140,62 @@
    ],
    "notas": [
     {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "El Athletic estrecha la vigilancia de Álvaro Marín",
+     "fecha": "2026-11-18 05:23",
+     "url": "https://as.com/futbol/primera/el-athletic-estrecha-la-vigilancia-de-alvaro-marin-f202611-n/",
+     "resumen": "El delantero navarro, de 23 años, suma 8 goles en Segunda con el Celta Fortuna. Pasó por Lezama. Ibaigane estudia la opción de recompra que ronda el millón de euros."
+    },
+    {
+     "fuente": "ESPN API Premier League",
+     "titulo": "Reranking the MVP for each of the top Premier League clubs",
+     "fecha": "2026-11-18 05:23",
+     "url": "https://www.espn.com/soccer/story/_/id/50461269/mvp-premier-league-arsenal-man-united-chelsea-man-city-liverpool",
+     "resumen": "Based on a simple combination of ability and tactical importance, we've reranked the best players in order at the top Premier League clubs."
+    },
+    {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "Mijatovic y Álvaro Benito se mojan con Vinicius y su estado de forma: madridistas, escuchen",
+     "fecha": "2026-11-18 05:21",
+     "url": "https://as.com/futbol/videos/mijatovic-y-alvaro-benito-se-mojan-con-vinicius-y-su-estado-de-forma-madridistas-escuchen-f202611-v/",
+     "resumen": "Los colaboradores de El Larguero dieron su opinión sobre la rueda de prensa del futbolista brasileño en la que habló sobre su estado de forma actual."
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "\"Después de esta desgracia, lo que no podemos es cargarnos a una segunda persona\"",
+     "fecha": "2026-11-18 05:21",
+     "url": "https://www.mundodeportivo.com/futbol/andorra/20261118/1004252460/desgracia-no-cargarnos-segunda-persona.html",
+     "resumen": "Tras conocerse la sanción a Jesús Owono, portero del FC Andorra, por su expulsión en la fatídica jugada que acabó con el peor de los desenlaces, lo sucedido vuelve a estar de actualidad tras las palabras de Gerard Piqué. El presidente publicó un vídeo en el que expresaba que le parecía excesiva la sanción de doce…"
+    },
+    {
+     "fuente": "ESPN API Premier League",
+     "titulo": "Transfer rumors, news: Liverpool, Bayern battle for Gladbach teen Wael Mohya",
+     "fecha": "2026-11-18 05:20",
+     "url": "https://www.espn.com/soccer/story/_/id/50518634/transfer-rumors-news-liverpool-bayern-gladbach-wael-mohya",
+     "resumen": "Liverpool and Bayern Munich are interested in Borussia Mönchengladbach attacking midfielder Wael Mohya. Transfer Talk has the latest."
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Lautaro Martínez podría ampliar su contrato con el Inter Milán",
+     "fecha": "2026-11-18 05:20",
+     "url": "https://www.mundodeportivo.com/futbol/serie-a/20261118/1004252464/lautaro-martinez-ampliar-contrato-inter-milan.html",
+     "resumen": "Lautaro Martínez podría ampliar su contrato en los próximos meses con el Inter de Milán después del intenso verano pasado donde el internacional argentino estuvo en el punto de mira del FC Barcelona. Hasta el punto que hubo contactos con el entorno del delantero para poder vestir de azulgrana, al no ser posible la…"
+    },
+    {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "Juan Iglesias, el anti-Abde",
+     "fecha": "2026-11-18 05:16",
+     "url": "https://as.com/futbol/primera/juan-iglesias-el-anti-abde-f202611-n/",
+     "resumen": "Al defensa, que realiza una notable campaña de estreno en el Sevilla, le tocará marcar al bético más desequilibrante: “El año pasado conseguí neutralizarlo”."
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Multa al Real Madrid por la pancarta contra Tebas",
+     "fecha": "2026-11-18 05:16",
+     "url": "https://www.mundodeportivo.com/futbol/real-madrid/20261118/1004252461/multa-real-madrid-pancarta-tebas.html",
+     "resumen": "La Comisión Antiviolencia ha planteado imponer una sanción de 3.001 euros contra el Real Madrid por \"permitir\" una pancarta con el mensaje \"no es fútbol, son T ebas y Negreira\", en contra del presidente de LaLiga."
+    },
+    {
      "fuente": "BBC Sport · Fútbol (RSS, inglés)",
      "titulo": "Rangers explore return for Cerny - gossip",
      "fecha": "2026-11-18 05:15",
@@ -6257,6 +6210,41 @@
      "resumen": "McLaren driver Oscar Piastri is set for a 10-place grid drop at Formula 1's Las Vegas GP for exceeding his engine allowance for the season. Piastri was already on the limit of four internal combustion engines for the year but will need a fifth Mercedes V6 engine to finish the 2026 campaign. As it is the first time he…"
     },
     {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "Nueve partidos en 28 días…, y el top-8 en juego",
+     "fecha": "2026-11-18 05:11",
+     "url": "https://as.com/futbol/primera/nueve-partidos-en-28-dias-y-el-top-8-en-juego-f202611-n/",
+     "resumen": "El Barça jugará un partido cada tres días el próximo mes y pondrá el juego el liderato en solitario de LaLiga ante el Atlético y el top-8 de la Champions contra el City."
+    },
+    {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "El partido que el fútbol olvidó",
+     "fecha": "2026-11-18 05:10",
+     "url": "https://as.com/futbol/primera/el-partido-que-el-futbol-olvido-f202611-n/",
+     "resumen": "Más de 20 años después de su desaparición, el fútbol español sigue sin recuperar el ‘Partido Contra la Droga’, una iniciativa que logró reunir a futbolistas de primer nivel, personalidades de distintos ámbitos e incluso a la Casa Real."
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "\"Me encanta Frenkie de Jong\"",
+     "fecha": "2026-11-18 05:09",
+     "url": "https://www.mundodeportivo.com/futbol/internacional/20261118/1004252458/me-encanta-frenkie-jong.html",
+     "resumen": "Frenkie de Jong ha vuelto a un muy buen nivel desde su larguísima lesión, tanto en el Barça como en la selección neerlandesa. Las últimas molestias musculares no le impedirán estar ante el Villarreal, en el camp Nou, el domingo. El azulgrana quedó desconvocado por Xavi Hernández del último partido de Países Bajos…"
+    },
+    {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "Papa Gaye, el diamante del Pontevedra que descubrió Pepe Mel",
+     "fecha": "2026-11-18 05:08",
+     "url": "https://as.com/futbol/primera-rfef/papa-gaye-el-diamante-del-pontevedra-que-descubrio-pepe-mel-f202611-n/",
+     "resumen": "En el Ittihad Tanger, de la Primera División marroquí, estuvo bajo las órdenes directas de Mel la temporada pasada. El radar de la dirección deportiva granate detectó algo especial en él."
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Insisten en el interés del Barça por una joya de Noruega",
+     "fecha": "2026-11-18 05:08",
+     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261118/1004252457/insisten-interes-barca-joya-noruega.html",
+     "resumen": "El FC Barcelona sigue rastreando el mercado en busca de jugadores jóvenes con potencial para jugar en el primer equipo. Así llegaron recientemente al club futbolistas como Roony Bardghji, Hamza Abdelkarim y Jesse Bisiwu, entre otros, unas operaciones que han permitido a los culés reclutar talento sin tener que pagar…"
+    },
+    {
      "fuente": "AS Motor F1 (RSS)",
      "titulo": "Honda se teme lo peor",
      "fecha": "2026-11-18 05:06",
@@ -6269,6 +6257,20 @@
      "fecha": "2026-11-18 05:03",
      "url": "https://www.espn.com/soccer/story/_/id/50518493/mauricio-pochettino-man-united-premier-league",
      "resumen": "Mauricio Pochettino will arrive at Manchester United for his first day as their head coach on Wednesday but said he requires \"time\" to turn their fortunes around."
+    },
+    {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "Utebo-Sabadell: a la tercera va la vencida",
+     "fecha": "2026-11-18 05:01",
+     "url": "https://as.com/futbol/copa_del_rey/utebo-sabadell-a-la-tercera-va-la-vencida-f202611-n/",
+     "resumen": "Tras dos aplazamientos, Santa Ana acoge este duelo de Copa del Rey. El Utebo hace 32 que no supera una eliminatoria copera. El Sabadell, en cuadro por las lesiones."
+    },
+    {
+     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
+     "titulo": "Listen: What needs to change for Pocognoli and Scotland?",
+     "fecha": "2026-11-18 05:00",
+     "url": "https://www.bbc.co.uk/sounds/play/p0pnkk9j?at_medium=RSS&at_campaign=rss",
+     "resumen": "What needs to change to turn Scotland’s fortunes around?"
     },
     {
      "fuente": "Sky Sports Fútbol (RSS)",
@@ -6318,13 +6320,6 @@
      "fecha": "2026-11-18 04:50",
      "url": "https://www.bbc.co.uk/sport/formula1/articles/c6d91xl13pggo?at_medium=RSS&at_campaign=rss",
      "resumen": "F1 struggled to establish itself in the United States, but now hosts three grands prix. We compare the merits of Austin, Miami and Las Vegas."
-    },
-    {
-     "fuente": "AS Fútbol (RSS)",
-     "titulo": "¿Por qué todos quieren a Scott: Real Madrid, Barça, Chelsea, Liverpool...?",
-     "fecha": "2026-11-18 04:44",
-     "url": "https://as.com/futbol/videos/por-que-todos-quieren-a-scott-real-madrid-barca-chelsea-liverpool-f202611-v/",
-     "resumen": "Es el nombre de moda y hoy Minuto 116 responde a por qué los grandes de Europa han echado sus redes en este centrocampista que, según las estimaciones, su venta se va a a ir por encima de los 100 millones de euros."
     },
     {
      "fuente": "Mundo Deportivo Fútbol (RSS)",
@@ -6425,6 +6420,13 @@
      "resumen": "Former Ajax academy player Elikia Mbinga tells BBC Sport how he swapped football for music after playing with some Premier League stars."
     },
     {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "Isco: “No pensaba que estaría a este nivel”",
+     "fecha": "2026-11-18 04:00",
+     "url": "https://as.com/futbol/primera/isco-no-pensaba-que-estaria-a-este-nivel-f202611-n/",
+     "resumen": "El malagueño cruza los dedos para seguir brillando en el Betis mientras analiza las claves del derbi: “Vamos a vivir un ambiente hostil”."
+    },
+    {
      "fuente": "Mundo Deportivo Fútbol (RSS)",
      "titulo": "“Su legado nos queda para siempre”",
      "fecha": "2026-11-18 04:00",
@@ -6493,6 +6495,13 @@
      "fecha": "2026-11-18 03:20",
      "url": "https://as.com/futbol/primera/mateu-alemany-a-veces-es-capaz-de-renunciar-a-su-propio-criterio-para-ayudar-a-la-armonia-f202611-n/",
      "resumen": "Se cumplió un año de la llegada del directivo al Atleti. AS perfila la figura, calado y métodos del directivo a través de diversos testimonios."
+    },
+    {
+     "fuente": "Sky Sports Fútbol (RSS)",
+     "titulo": "Khawaja and Warner question Cricket Australia’s new Sandpapergate forum",
+     "fecha": "2026-11-18 03:19",
+     "url": "https://www.skysports.com/cricket/news/12040/13613446/sandpapergate-usman-khawaja-and-david-warner-question-cricket-australias-new-forum-following-explosive-fallout",
+     "resumen": "Usman Khawaja and David Warner have questioned Cricket Australia's decision to set up an independent forum to explore the 'Sandpapergate' scandal."
     },
     {
      "fuente": "Mundo Deportivo Fútbol (RSS)",
@@ -6677,41 +6686,6 @@
      "resumen": "El día de ayer arrancó con una triste noticia. Ibaigane informaba del fallecimiento de Blas Ziarreta. En Lezama se guardó un respetuoso minuto de silencio en memoria de este hombre de fútbol, del fútbol de siempre amateur y profesional."
     },
     {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Aihen, que acaba contrato y juega menos que nunca, se está jugando seguir en la Real",
-     "fecha": "2026-11-18 02:55",
-     "url": "https://www.mundodeportivo.com/futbol/real-sociedad/20261118/1004252355/aihen-acaba-contrato-juega-nunca-jugando-seguir-real.html",
-     "resumen": "Aihen Muñoz está a escaso mes y medio de poder empezar a negociar con cualquier club para la próxima temporada, y a poco más de siete meses de quedar libre de su contrato con la Real Sociedad, el club de su vida. Se puede decir abiertamente que, en mayor o menor medida, se está jugando este curso la renovación y, por…"
-    },
-    {
-     "fuente": "Mundo Deportivo Tenis (RSS)",
-     "titulo": "Medvedev, sobre Alcaraz: \"Es el que mejor se mueve con Djokovic, pero esta es mi gran oportunidad\"",
-     "fecha": "2026-11-18 02:55",
-     "url": "https://www.mundodeportivo.com/tenis/20261118/1004252289/medvedev-sobre-ganar-alcaraz-atp-finals-mejor-mueve-djokovic-mi-gran-oportunidad.html",
-     "resumen": "Carlos Alcaraz ha ganado los últimos diez partidos disputados, todos los de la gira europea en indoor y pista rápida. \"No me siento imparable, pero sí que todo me sale bien. Y a cada partido que jugo mayor es la confianza. Nunca me había sentido así a estas alturas de temporada\", confiesa el murciano, 23 años y nº 3…"
-    },
-    {
-     "fuente": "AS Fútbol (RSS)",
-     "titulo": "Hay caso Endrick",
-     "fecha": "2026-11-18 02:53",
-     "url": "https://as.com/futbol/primera/hay-caso-endrick-f202611-n/",
-     "resumen": "El jugador está trabajando en su salida para invierno pero Mourinho no quiere perder ningún efectivo de la plantilla... y menos a él."
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "1-0: México, a un paso de la final de la Nations League",
-     "fecha": "2026-11-18 02:51",
-     "url": "https://www.mundodeportivo.com/futbol/america/20261118/1004252432/1-0-mexico-paso-final-nations-league.html",
-     "resumen": "La selección mexicana, que dirige Rafael Márquez, derrotó por 1-0 a Jamaica para detener una racha de tres derrotas seguidas y avanzó a la semifinal de la Liga de Naciones de la Concacaf. Además, se clasificó para la Copa Oro 2027. En Monterrey, norte del país, Jesús Corona convirtió un gol para darle la victoria al…"
-    },
-    {
-     "fuente": "Mundo Deportivo Tenis (RSS)",
-     "titulo": "Alcaraz presume de entrenador en las ATP Finals: \"Samu es un crack\"",
-     "fecha": "2026-11-18 02:50",
-     "url": "https://www.mundodeportivo.com/tenis/20261118/1004252240/alcaraz-presume-entrenador-atp-finals-samu-crack.html",
-     "resumen": "Carlos Alcaraz ha conquistado el único terreno que se resistía a su caudal de talento e inventiva. ¿Cómo? Con análisis y trabajo, empujado por su afán de mejora, la ambición de ser el mejor de siempre y la ayuda de su equipo. El español, 23 años, presume de su entrenador. “¿Qué pasa con mi saque que parece intocable?…"
-    },
-    {
      "fuente": "ESPN · NHL (noticias con fecha)",
      "titulo": "Most consecutive games played in MLB, NFL, NBA, NHL",
      "fecha": "2026-11-18 02:48",
@@ -6719,88 +6693,11 @@
      "resumen": "Brent Burns has 1,000+ consecutive games played. Find out who else has played the most games in a row across other major leagues."
     },
     {
-     "fuente": "MLB.com en español (RSS)",
-     "titulo": "José Tena pega hit decisivo en victoria de las Estrellas",
-     "fecha": "2026-11-18 02:40",
-     "url": "https://www.mlb.com/es/news/jose-tena-pega-hit-decisivo-en-victoria-de-las-estrellas",
-     "resumen": ""
-    },
-    {
-     "fuente": "Infobae Deportes (Arc)",
-     "titulo": "La última copa internacional de Boca: un campeón del mundo en Qatar, el doloroso momento de Palermo y el gol de Riquelme que selló el título",
-     "fecha": "2026-11-18 02:38",
-     "url": "https://www.infobae.com/deportes/2026/11/18/la-ultima-copa-internacional-de-boca-un-campeon-del-mundo-en-qatar-el-doloroso-momento-de-palermo-y-el-gol-de-riquelme-que-sello-el-titulo/",
-     "resumen": "El Xeneize derrotó 5-3 a Arsenal de Sarandí en el global y alzó en 2008 su último trofeo continental"
-    },
-    {
-     "fuente": "Infobae Deportes (Arc)",
-     "titulo": "Tiene apenas 11 años, viene de ser campeón y asoma como una promesa del ajedrez: “Quiero llegar a la élite”",
-     "fecha": "2026-11-18 02:38",
-     "url": "https://www.infobae.com/deportes/2026/11/18/tiene-apenas-11-anos-viene-de-ser-campeon-y-asoma-como-una-promesa-del-ajedrez-quiero-llegar-a-la-elite/",
-     "resumen": "En la senda de Faustino Oro, Fausto Schveide se consagró en el VII Campeonato Sudamericano en la modalidad de ajedrez rápido. Su historia"
-    },
-    {
-     "fuente": "MLB.com noticias (RSS)",
-     "titulo": "Top free-agent catcher accepts qualifying offer to remain with Twins",
-     "fecha": "2026-11-18 02:37",
-     "url": "https://www.mlb.com/news/ryan-jeffers-accepts-twins-qualifying-offer",
-     "resumen": ""
-    },
-    {
      "fuente": "ESPN · NHL (noticias con fecha)",
      "titulo": "Ducks' Cutter Gauthier makes NHL history, records fourth hat trick in month",
      "fecha": "2026-11-18 02:35",
      "url": "https://www.espn.com/nhl/story/_/id/50517677/ducks-cutter-gauthier-bags-record-4th-hat-trick-month",
      "resumen": "Cutter Gauthier became the first NHL player to have four hat tricks in a single month, netting a trio of tallies in a loss to the Blues on Tuesday night."
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "El mercadillo navideño se adelanta",
-     "fecha": "2026-11-18 02:35",
-     "url": "https://www.mundodeportivo.com/futbol/real-sociedad/20261118/1004252156/mercadillo-navideno-adelanta.html",
-     "resumen": "Se acerca el tiempo de Navidad y con él, una de las estampas más asociadas a esta época del año: los mercadillos de Navidad, tan habituales, especialmente en los países del centro y del norte de Europa pero que, con el tiempo, también han ido adquiriendo relevancia entre nosotros. Y el mundo del fútbol, que no es…"
-    },
-    {
-     "fuente": "MLB.com noticias (RSS)",
-     "titulo": "Palacios brothers host camp for Brooklyn kids -- with help from some big league friends",
-     "fecha": "2026-11-18 02:33",
-     "url": "https://www.mlb.com/news/richie-and-joshua-palacios-host-baseball-camp-in-brooklyn",
-     "resumen": ""
-    },
-    {
-     "fuente": "ESPN · NFL (noticias con fecha)",
-     "titulo": "Source: Cardinals' Gardner Minshew has surgery to repair right UCL",
-     "fecha": "2026-11-18 02:06",
-     "url": "https://www.espn.com/nfl/story/_/id/50517561/source-cardinals-qb-gardner-minshew-surgery-repair-right-ucl",
-     "resumen": "Cardinals quarterback Gardner Minshew II had surgery on his right ulnar collateral ligament on Monday, a source told ESPN."
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Belletti: \"He estudiado mucho psicoanálisis\"",
-     "fecha": "2026-11-18 02:05",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261118/1004252247/belletti-he-estudiado-psicoanalisis.html",
-     "resumen": "Juliano Belletti (Cascavel, Brasil, 1976) se convirtió en una leyenda azulgrana como futbolista y, desde hace tres años, se forma como entrenador en los banquillos de La Masia. En su segundo curso al frente del Barça Atlètic, tiene al filial líder. El técnico se sentó con MD para charlar sobre su crecimiento, su…"
-    },
-    {
-     "fuente": "AS · NBA en español (RSS)",
-     "titulo": "Raptors vuelven a caer ante los Knicks y suman cinco derrotas consecutivas",
-     "fecha": "2026-11-18 02:02",
-     "url": "https://as.com/us/baloncesto/raptors-vuelven-a-caer-ante-los-knicks-y-suman-cinco-derrotas-consecutivas-f202611-n/",
-     "resumen": "Los Toronto Raptors perdieron 111-102 ante los New York Knicks y llegaron a cinco derrotas consecutivas. Jalen Brunson brilló con 31 puntos."
-    },
-    {
-     "fuente": "ESPN · NBA (noticias con fecha)",
-     "titulo": "Spurs guard Dylan Harper limps off in pain after slip on court",
-     "fecha": "2026-11-18 02:02",
-     "url": "https://www.espn.com/nba/story/_/id/50517203/spurs-dylan-harper-limps-pain-slip-court",
-     "resumen": "Spurs second-year guard Dylan Harper limped off in pain after appearing to slip on the court late in Tuesday's loss to the Pistons."
-    },
-    {
-     "fuente": "ESPN · NHL (noticias con fecha)",
-     "titulo": "Islanders' Schaefer becomes 2nd-youngest defenseman with hat trick",
-     "fecha": "2026-11-18 02:02",
-     "url": "https://www.espn.com/nhl/story/_/id/50517556/islanders-schaefer-2nd-youngest-defenseman-hat-trick",
-     "resumen": "Matthew Schaefer became the second-youngest defenseman in NHL history to record a hat trick when he scored three goals in the Islanders' rout of Columbus."
     },
     {
      "fuente": "CBS Sports NBA (RSS)",
@@ -8437,8 +8334,9 @@
     {
      "fuente": "Aqua.cl (RSS)",
      "url": "https://www.aqua.cl/feed/",
-     "ok": true,
-     "n": 10
+     "ok": false,
+     "n": 0,
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "Cadem (RSS)",
@@ -8532,6 +8430,13 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "Kerch bridge collapse threatens Azov grain trade",
+     "fecha": "2026-11-18 05:35",
+     "url": "https://splash247.com/kerch-bridge-collapse-threatens-azov-grain-trade/",
+     "resumen": "The partial collapse of the Kerch Strait Bridge following Ukrainian strikes could delay the reopening of one of Russia’s most important grain export routes by months, as the war’s maritime infrastructure battle intensifies. Ukraine destroyed a central road span of the bridge linking Russia with occupied Crimea on…"
+    },
     {
      "fuente": "Splash247 (RSS)",
      "titulo": "Splash Crew latest: 50,000 records at risk, rest hour breaches and GPS chaos",
@@ -8643,13 +8548,6 @@
      "fecha": "2026-11-17 23:20",
      "url": "https://splash247.com/seagems-locks-in-410m-of-brazilian-pipelay-work/",
      "resumen": "Paratus Energy and Malaysia’s Vantris Energy have moved from tender success to a firm $410m contract with Petrobras for a new pipelay support vessel (PLSV) offshore Brazil. The agreement, signed in Rio de Janeiro, was secured through the companies’ 50:50 Seagems joint venture and covers four years of subsea…"
-    },
-    {
-     "fuente": "Splash247 (RSS)",
-     "titulo": "Adura brings North Sea gas project onstream after years of delays",
-     "fecha": "2026-11-17 23:10",
-     "url": "https://splash247.com/adura-brings-north-sea-gas-project-onstream-after-years-of-delays/",
-     "resumen": "UK offshore producer Adura has started production at its £2.1bn ($2.8bn) Jackdaw gas development in the North Sea, less than a month after receiving fresh regulatory approval. Gas is now flowing from the Jackdaw production platform through the existing Shearwater hub before being transported to the St Fergus gas…"
     },
     {
      "fuente": "PortalPortuario (RSS)",
@@ -8813,13 +8711,6 @@
      "resumen": "Iron Bear Resources Managing Director Paul Berend in conversation with The Northern Miner video host Devan Murugan. This sponsored video is PROMOTED CONTENT paid for... The post Sponsored Resource Review video: Iron Bear pitches a 44-year iron ore mine appeared first on The Northern Miner."
     },
     {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "Adoptan medidas para proteger la captación de semillas de choritos en Calbuco",
-     "fecha": "2026-11-17 12:00",
-     "url": "https://www.aqua.cl/adoptan-medidas-para-proteger-la-captacion-de-semillas-de-choritos-en-calbuco/",
-     "resumen": "La decisión de Subpesca, establecida mediante la Resolución Exenta N.º 2604 de 2026, recoge la preocupación planteada por mitilicultores de Calbuco, quienes alertaron sobre la proliferación de estos organismos y las dificultades para obtener semillas comercializables. The post Adoptan medidas para proteger la…"
-    },
-    {
      "fuente": "PV Magazine Latam (RSS)",
      "titulo": "La solar aporta el 28,3% de la generación eléctrica de Chile y el almacenamiento supera los 11,4 GW entre operación y desarrollo",
      "fecha": "2026-11-17 11:20",
@@ -8832,13 +8723,6 @@
      "fecha": "2026-11-17 11:17",
      "url": "https://www.northernminer.com/video/sponsored-resource-review-video-newfoundland-prospectors-seek-fresh-support/1003897907/",
      "resumen": "Newfoundland and Labrador Prospectors Association President Norm Mercer in conversation with The Northern Miner video host Devan Murugan. This sponsored video is PROMOTED CONTENT paid... The post Sponsored Resource Review video: Newfoundland prospectors seek fresh support appeared first on The Northern Miner."
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "Talento canadiense podría integrarse a empresas acuícolas chilenas durante 2027",
-     "fecha": "2026-11-17 11:00",
-     "url": "https://www.aqua.cl/talento-canadiense-podria-integrarse-a-empresas-acuicolas-chilenas-durante-2027/",
-     "resumen": "One Language Experience proyecta recibir profesionales desde Canadá para realizar prácticas en Chile, con foco en generar vínculos con el sector acuícola. The post Talento canadiense podría integrarse a empresas acuícolas chilenas durante 2027 appeared first on AQUA."
     },
     {
      "fuente": "PV Magazine Latam (RSS)",
@@ -8860,13 +8744,6 @@
      "fecha": "2026-11-17 10:10",
      "url": "https://theloadstar.com/gemini-carriers-target-complete-return-to-suez-transits-by-mid-january/",
      "resumen": "Gemini Cooperation partners Maersk and Hapag-Lloyd will have made a full resumption of Suez transits on their Asia-Europe services by mid-January. Yesterday, the partners outlined the schedule for the last three Asia-North Europe services still detouring via the Cape of Good Hope to return to the Red Sea routing. The…"
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "OMSA impulsa estrategia regional para fortalecer la sanidad de animales acuáticos",
-     "fecha": "2026-11-17 10:00",
-     "url": "https://www.aqua.cl/omsa-impulsa-estrategia-regional-para-fortalecer-la-sanidad-de-animales-acuaticos/",
-     "resumen": "La 28ª Conferencia Regional de la OMSA anunció un grupo de trabajo para elaborar una estrategia común de sanidad de animales acuáticos en las Américas. The post OMSA impulsa estrategia regional para fortalecer la sanidad de animales acuáticos appeared first on AQUA."
     },
     {
      "fuente": "PV Magazine Latam (RSS)",
@@ -8972,55 +8849,6 @@
      "fecha": "2026-11-17 07:00",
      "url": "https://www.odepa.gob.cl/publicaciones/boletines/boletin-diario-de-precios-y-volumenes-de-frutas-en-mercados-mayoristas",
      "resumen": "El presente boletín (pdf y xls) se actualiza todos los días hábiles. Los volúmenes registrados para cada producto corresponden a una estimación de las cantidades arribadas al mercado en cada jornada de comercialización, en base a cálculos sobre capacidades de carga de los camiones y cuantificación del movimiento…"
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "Tras siete años de restricción: El debate por el retorno de la pesca industrial de la jibia",
-     "fecha": "2026-11-17 06:50",
-     "url": "https://www.aqua.cl/tras-siete-anos-de-restriccion-el-debate-por-el-retorno-de-la-pesca-industrial-de-la-jibia/",
-     "resumen": "Desde el 2019, la ley 21.134 solo permite capturar la jibia con potera o línea de mano. Una moción busca modificar la normativa, pero el sector artesanal advierte riesgos para la calidad y los mercados. The post Tras siete años de restricción: El debate por el retorno de la pesca industrial de la jibia appeared first…"
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "Producción pesquera y acuícola de Los Lagos cayó 6,7% en septiembre",
-     "fecha": "2026-11-17 06:49",
-     "url": "https://www.aqua.cl/produccion-pesquera-y-acuicola-de-los-lagos-cayo-67-en-septiembre/",
-     "resumen": "La producción de salmón Atlántico disminuyó 15,5% interanual, mientras que el coho y la trucha arcoíris registraron aumentos de 4,8% y 56,9%, respectivamente. The post Producción pesquera y acuícola de Los Lagos cayó 6,7% en septiembre appeared first on AQUA."
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "Más de 500 estudiantes desarrollan soluciones junto a empresas salmonicultoras en Los Lagos",
-     "fecha": "2026-11-17 06:48",
-     "url": "https://www.aqua.cl/mas-de-500-estudiantes-desarrollan-soluciones-junto-a-empresas-salmonicultoras-en-los-lagos/",
-     "resumen": "Proyecto Micelio vinculó a 570 jóvenes con AquaChile, Camanchaca y Multi X para desarrollar soluciones frente a desafíos reales de la salmonicultura. The post Más de 500 estudiantes desarrollan soluciones junto a empresas salmonicultoras en Los Lagos appeared first on AQUA."
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "Estudiantes de Virginia Tech conocieron en Aysén la salmonicultura chilena",
-     "fecha": "2026-11-17 06:47",
-     "url": "https://www.aqua.cl/estudiantes-de-virginia-tech-conocieron-en-aysen-la-salmonicultura-chilena/",
-     "resumen": "La actividad se desarrolló en el marco de un programa de intercambio con la Universidad Austral de Chile (UACh). Los jóvenes conocieron procesos productivos y reproductivos en agua dulce y visitaron un centro de cultivo en el canal Puyuhuapi. The post Estudiantes de Virginia Tech conocieron en Aysén la salmonicultura…"
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "Acogen reclamaciones por centro salmonicultor ubicado en la Reserva Kawésqar",
-     "fecha": "2026-11-17 06:46",
-     "url": "https://www.aqua.cl/acogen-reclamaciones-por-centro-salmonicultor-ubicado-en-la-reserva-kawesqar/",
-     "resumen": "Se acogieron las reclamaciones que buscaban anular la resolución de la SMA que aprobó el Programa de Cumplimiento del Centro de Cultivo de Salmones Muñoz Gamero 1, ubicado al interior de la Reserva Nacional Kawésqar en Magallanes. The post Acogen reclamaciones por centro salmonicultor ubicado en la Reserva Kawésqar…"
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "SMA aprueba planes por $9.500 millones para centros de cultivo en Los Lagos y Magallanes",
-     "fecha": "2026-11-17 06:45",
-     "url": "https://www.aqua.cl/sma-aprueba-planes-por-9-500-millones-para-centros-de-cultivo-en-los-lagos-y-magallanes/",
-     "resumen": "Los Programas de Cumplimiento corresponden a centros de cultivo de Ventisqueros y AquaChile Magallanes y abordan casos de sobreproducción. The post SMA aprueba planes por $9.500 millones para centros de cultivo en Los Lagos y Magallanes appeared first on AQUA."
-    },
-    {
-     "fuente": "Aqua.cl (RSS)",
-     "titulo": "Convocan a empresas chilenas a participar en Seafood Expo Global 2027",
-     "fecha": "2026-11-17 06:44",
-     "url": "https://www.aqua.cl/convocan-a-empresas-chilenas-a-participar-en-seafood-expo-global-2027/",
-     "resumen": "La iniciativa busca promover la oferta exportable nacional en uno de los principales encuentros comerciales de la industria mundial de productos del mar. The post Convocan a empresas chilenas a participar en Seafood Expo Global 2027 appeared first on AQUA."
     },
     {
      "fuente": "Odepa (RSS)",
@@ -9161,6 +8989,76 @@
      "fecha": "2026-11-16 17:32",
      "url": "https://www.northernminer.com/exploration/canadian-copper-adds-9-8m-for-new-brunswick-plan/1003897863/",
      "resumen": "Canadian Copper (CSE: CCI) has raised $9.8 million (US$6.8 million) through warrant exercises, lifting its treasury above $24 million as it advances a plan to... The post Canadian Copper adds $9.8M for New Brunswick plan appeared first on The Northern Miner."
+    },
+    {
+     "fuente": "CONAF (RSS)",
+     "titulo": "Cerca de 300 nuevos árboles: CONAF y un centenar de voluntarios se unen para construir una Antofagasta más verde",
+     "fecha": "2026-11-16 14:36",
+     "url": "https://www.conaf.cl/cerca-de-300-nuevos-arboles-conaf-y-un-centenar-de-voluntarios-se-unen-para-construir-una-antofagasta-mas-verde/?utm_source=rss&utm_medium=rss&utm_campaign=cerca-de-300-nuevos-arboles-conaf-y-un-centenar-de-voluntarios-se-unen-para-construir-una-antofagasta-mas-verde",
+     "resumen": "La iniciativa, desarrollada en el Santuario de Schoenstatt, constituye el décimo proyecto comunitario de arborización impulsado en la región y reunió a estudiantes, empresas, organizaciones sociales y voluntarios en una jornada de plantación, capacitación y educación ambiental. La entrada Cerca de 300 nuevos árboles…"
+    },
+    {
+     "fuente": "Northern Miner (RSS)",
+     "titulo": "Giant diamonds lift Lucara’s revenue outlook",
+     "fecha": "2026-11-16 14:15",
+     "url": "https://www.northernminer.com/news/giant-diamonds-lift-lucaras-revenue-outlook/1003897855/",
+     "resumen": "Lucara Diamond (TSX: LUC) has raised its annual revenue forecast by 30% at the midpoint after sales of two giant diamonds from its Karowe mine... The post Giant diamonds lift Lucara’s revenue outlook appeared first on The Northern Miner."
+    },
+    {
+     "fuente": "Northern Miner (RSS)",
+     "titulo": "Scotia Metals targets hidden lithium in Brazil’s Bahia",
+     "fecha": "2026-11-16 14:14",
+     "url": "https://www.northernminer.com/news/scotia-metals-targets-hidden-lithium-in-brazils-bahia/1003897876/",
+     "resumen": "Scotia Metals (CSE: SMET) has signed an option to acquire the Nordestina lithium exploration project in northeastern Brazil for $2 million (C$2.85 million), expanding its... The post Scotia Metals targets hidden lithium in Brazil’s Bahia appeared first on The Northern Miner."
+    },
+    {
+     "fuente": "PV Magazine Latam (RSS)",
+     "titulo": "La planta solar Huatacondo sigue desconectada en Chile y el Congreso pide explicaciones sobre el ciberataque",
+     "fecha": "2026-11-16 13:40",
+     "url": "https://www.pv-magazine-latam.com/2026/11/16/la-planta-solar-huatacondo-sigue-desconectada-en-chile-y-el-congreso-pide-explicaciones-sobre-el-ciberataque/",
+     "resumen": "El Coordinador Eléctrico Nacional confirma que activó sus protocolos de seguridad tras el incidente. Un informe del 14 de noviembre mantiene sin disponibilidad los 103 MW fotovoltaicos y los 98 MW / 312 MWh de almacenamiento. Otros dos posibles ataques a centrales eléctricas fueron descartados posteriormente."
+    },
+    {
+     "fuente": "Northern Miner (RSS)",
+     "titulo": "CleanTech faces further Chile lithium contract delay",
+     "fecha": "2026-11-16 13:03",
+     "url": "https://www.northernminer.com/news/cleantech-faces-further-chile-lithium-contract-delay/1003897878/",
+     "resumen": "CleanTech Lithium (AIM: CTL) faces another delay in obtaining a lithium operating contract for its Laguna Verde project in Chile after the country’s Comptroller General... The post CleanTech faces further Chile lithium contract delay appeared first on The Northern Miner."
+    },
+    {
+     "fuente": "Northern Miner (RSS)",
+     "titulo": "China rare earth giants more than double profits",
+     "fecha": "2026-11-16 12:17",
+     "url": "https://www.northernminer.com/news/china-rare-earth-giants-more-than-double-profits/1003897870/",
+     "resumen": "Two of China’s leading rare earth producers more than doubled their profits in the first nine months of 2026 as tighter supply controls supported higher... The post China rare earth giants more than double profits appeared first on The Northern Miner."
+    },
+    {
+     "fuente": "CORMA (RSS)",
+     "titulo": "ExpoCorma 2026 reunirá a la industria forestal en torno a la innovación, tecnología y nuevos desafíos del sector",
+     "fecha": "2026-11-16 12:07",
+     "url": "https://www.corma.cl/blog/expocorma-2026-reunira-a-la-industria-forestal-en-torno-a-la-innovacion-tecnologia-y-nuevos-desafios-del-sector/",
+     "resumen": "Entre el 18 y el 20 de noviembre, la Región del Biobío será escenario de la vigesimotercera edición de la feria, que contemplará encuentros técnicos, seminarios, ruedas de negocios y espacios de vinculación para abordar el futuro de la actividad forestal y maderera."
+    },
+    {
+     "fuente": "Sociedad Nacional de Agricultura (RSS)",
+     "titulo": "La SNA lleva la voz de la agricultura chilena a los mercados de Asia",
+     "fecha": "2026-11-16 11:51",
+     "url": "https://www.sna.cl/2026/11/16/la-sna-lleva-la-voz-de-la-agricultura-chilena-a-los-mercados-de-asia/",
+     "resumen": "El secretario general de la Sociedad Nacional de Agricultura SNA, Juan Pablo Matte, integra la delegación público-privada que acompaña al […]"
+    },
+    {
+     "fuente": "CONAF (RSS)",
+     "titulo": "CONAF Biobío firma Acuerdo de Producción Limpia para fomentar el uso sustentable del bosque nativo",
+     "fecha": "2026-11-16 09:53",
+     "url": "https://www.conaf.cl/conaf-biobio-firma-acuerdo-de-produccion-limpia-para-fomentar-el-uso-sustentable-del-bosque-nativo/?utm_source=rss&utm_medium=rss&utm_campaign=conaf-biobio-firma-acuerdo-de-produccion-limpia-para-fomentar-el-uso-sustentable-del-bosque-nativo",
+     "resumen": "La iniciativa busca promover la ordenación forestal y el manejo responsable de los bosques nativos, mediante el trabajo coordinado entre instituciones públicas y actores privados. La entrada CONAF Biobío firma Acuerdo de Producción Limpia para fomentar el uso sustentable del bosque nativo se publicó primero en CONAF."
+    },
+    {
+     "fuente": "Mining Technology (RSS)",
+     "titulo": "Riverside Resources launches Phase 2B drilling at La Union in Sonora",
+     "fecha": "2026-11-16 09:53",
+     "url": "https://www.mining-technology.com/news/riverside-phase-2b-drilling-la-union-sonora/",
+     "resumen": "Riverside Resources has commenced its Phase 2B reverse circulation (RC) drilling campaign at its La Union project in Sonora, Mexico. The post Riverside Resources launches Phase 2B drilling at La Union in Sonora appeared first on Mining Technology."
     }
    ]
   },
@@ -9218,7 +9116,7 @@
      "fuente": "The New Arab (RSS, inglés)",
      "url": "https://www.newarab.com/rss",
      "ok": true,
-     "n": 93
+     "n": 94
     },
     {
      "fuente": "Ukrainska Pravda English (RSS)",
@@ -9240,6 +9138,34 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "War on the Rocks (RSS, inglés)",
+     "titulo": "The U.S.-Chinese-Russian Summit and the Future of Trilateral Nuclear Talks",
+     "fecha": "2026-11-18 05:30",
+     "url": "https://warontherocks.com/the-u-s-chinese-russian-summit-and-the-future-of-trilateral-nuclear-talks/",
+     "resumen": "U.S. President Donald Trump, who has sought nuclear arms control with Russia and China since his first term, may finally have his chance. The first-ever U.S.-Chinese-Russian leaders’ summit is set to take place in Shenzhen, with nuclear issues potentially on the agenda. Regardless of whether the summit yields…"
+    },
+    {
+     "fuente": "The New Arab (RSS, inglés)",
+     "titulo": "Meet some of Dearborn's newly elected Arab and Muslim officials",
+     "fecha": "2026-11-18 05:26",
+     "url": "https://www.newarab.com/news/meet-some-dearborns-newly-elected-arab-and-muslim-officials",
+     "resumen": "As people were celebrating the Senate election of Abdul El-Sayed, they were also welcoming the news of at least a dozen local and state-elected officials."
+    },
+    {
+     "fuente": "Ukrinform Inglés (RSS)",
+     "titulo": "More than 80 settlements without electricity in Rivne region following Russian attack",
+     "fecha": "2026-11-18 05:19",
+     "url": "https://www.ukrinform.net/rubric-ato/4185876-more-than-80-settlements-without-electricity-in-rivne-region-following-russian-attack.html",
+     "resumen": "More than 80 settlements in Ukraine’s Rivne region were left without electricity following a Russian attack on the morning of November 18."
+    },
+    {
+     "fuente": "Ukrainska Pravda English (RSS)",
+     "titulo": "Russian FPV drone kills woman and injures man in Zaporizhzhia Oblast",
+     "fecha": "2026-11-18 05:06",
+     "url": "https://www.pravda.com.ua/eng/news/2026/11/18/8063400/",
+     "resumen": "A woman has been killed and a man injured in a Russian FPV drone attack on Kushuhum in Zaporizhzhia Oblast on 18 November."
+    },
     {
      "fuente": "Middle East Eye (RSS, inglés)",
      "titulo": "Morning update",
@@ -9375,7 +9301,7 @@
     },
     {
      "fuente": "Ukrainska Pravda English (RSS)",
-     "titulo": "Four people killed in Russian attacks on Donetsk Oblast",
+     "titulo": "Four people killed in Russian attacks on Donetsk Oblast, including married couple",
      "fecha": "2026-11-18 03:42",
      "url": "https://www.pravda.com.ua/eng/news/2026/11/18/8063387/",
      "resumen": "Two people were killed in Sloviansk, with one death recorded in each of Shabelkivka and Yasnohirka. Donetsk Oblast authorities say their casualty figures exclude Mariupol and Volnovakha."
@@ -9841,34 +9767,6 @@
      "fecha": "2026-11-17 17:11",
      "url": "https://www.middleeasteye.net/live-blog/live-blog-update/israel-vows-retaliation-after-uk-sanctions-firms-west-bank-settlements",
      "resumen": "Israel vows retaliation after UK sanctions firms for West Bank settlements Israel slammed UK sanctions on eight Israeli companies involved in planning and building settlements in the occupied West Bank, and vowed to retaliate. \"Israel views the additional sanctions against it... with the utmost gravity,\" Israeli…"
-    },
-    {
-     "fuente": "Ukrainska Pravda English (RSS)",
-     "titulo": "Russians attack Dnipro in evening, injuring three and damaging Austrian consulate – photos",
-     "fecha": "2026-11-17 16:58",
-     "url": "https://www.pravda.com.ua/eng/news/2026/11/17/8063354/",
-     "resumen": "A 15-year-old boy is among three people injured in Russian attacks on Dnipro on 17 November. Hundreds of windows were shattered, residential buildings were damaged and the Austrian Honorary Consulate was hit."
-    },
-    {
-     "fuente": "Ukrinform Inglés (RSS)",
-     "titulo": "Zelensky calls on US to enable satellite communications to target ballistic missile launchers",
-     "fecha": "2026-11-17 16:52",
-     "url": "https://www.ukrinform.net/rubric-ato/4185790-zelensky-calls-on-us-to-enable-satellite-communications-to-target-ballistic-missile-launchers.html",
-     "resumen": "The United States could help strengthen Ukraine’s defense by enabling satellite communications to target enemy ballistic missile launchers located near Ukraine’s borders."
-    },
-    {
-     "fuente": "Breaking Defense (RSS, inglés)",
-     "titulo": "Army Aviation fleet facing more accidents, lower readiness rates: Obadal",
-     "fecha": "2026-11-17 16:42",
-     "url": "https://breakingdefense.com/2026/11/army-aviation-fleet-facing-more-accidents-lower-readiness-rates-obadal/",
-     "resumen": "“What we are doing is looking at the trends, and year over year, our trends of fully mission capable are going down. We have to change something,” Army Undersecretary Michael Obadal said."
-    },
-    {
-     "fuente": "Ukrinform Inglés (RSS)",
-     "titulo": "Russian drone strikes park in Dnipro, injuring two people",
-     "fecha": "2026-11-17 16:36",
-     "url": "https://www.ukrinform.net/rubric-ato/4185787-russian-drone-strikes-park-in-dnipro-injuring-two-people.html",
-     "resumen": "Russian forces struck a park in the city of Dnipro, leaving two people injured."
     }
    ]
   },
@@ -9985,6 +9883,20 @@
    ],
    "notas": [
     {
+     "fuente": "Billboard (RSS)",
+     "titulo": "Harry Styles, Sam Fender & Billie Eilish to Headline Glastonbury Festival 2027: See Lineup",
+     "fecha": "2026-11-18 05:24",
+     "url": "https://www.billboard.com/music/music-news/glastonbury-2027-headliners-lineup-1236384106/",
+     "resumen": "The festival will take place from June 23-27 in Somerset, England."
+    },
+    {
+     "fuente": "The Hollywood Reporter (RSS)",
+     "titulo": "‘Intimacy on Prescription’ Wins Main Prize at Tallinn’s TV Beats Co-Financing Market",
+     "fecha": "2026-11-18 05:23",
+     "url": "https://www.hollywoodreporter.com/tv/tv-news/intimacy-on-prescription-main-prize-tallinn-tv-beats-market-1236758301/",
+     "resumen": "\"Can good sex save every marriage?\" reads a synopsis of the show. \"In 1970s Czechoslovakia, two therapists try to prove it.\""
+    },
+    {
      "fuente": "Rolling Stone (RSS)",
      "titulo": "Watch Harry Shum Jr. Honor ‘Glee’ Costar Naya Rivera on ‘Dancing With the Stars’",
      "fecha": "2026-11-18 05:16",
@@ -10025,6 +9937,13 @@
      "fecha": "2026-11-18 04:51",
      "url": "https://www.rollingstone.com/tv-movies/tv-movie-news/john-mulaney-stepfather-in-law-band-kimmel-olivia-munn-1235660221/",
      "resumen": "The comedian produced the debut album from Sam and the Pink Notes, led by Olivia Munn's stepdad"
+    },
+    {
+     "fuente": "Sensacine noticias (RSS)",
+     "titulo": "Número 1 en 86 países: La trepidante serie de suspense que arrasa en las plataformas de ‘streaming’",
+     "fecha": "2026-11-18 04:45",
+     "url": "https://www.sensacine.com/noticias/series/noticia-1000232735/",
+     "resumen": "Una trepidante persecución de un agente del FBI a un ladrón que no está contada en orden cronológico"
     },
     {
      "fuente": "Espinof (RSS)",
@@ -10328,13 +10247,6 @@
      "resumen": "With several streaming options and more than 60 live TV channels, DIRECTV’s deals on the MyEntertainment Genre Pack make it a worthy choice for watching festive movies and musicals this year."
     },
     {
-     "fuente": "Billboard (RSS)",
-     "titulo": "Cody Johnson on Why He’s Skipping 2026 CMA Awards: ‘Going 100 MPH All the Time Isn’t Healthy’",
-     "fecha": "2026-11-17 21:18",
-     "url": "https://www.billboard.com/music/country/cody-johnson-not-attending-2026-cma-awards-exhaustion-1236384493/",
-     "resumen": "The 2026 entertainer of the year nominee says he's taking a step back due to \"mental and physical exhaustion.\""
-    },
-    {
      "fuente": "Rotten Tomatoes editorial (RSS)",
      "titulo": "30 Most Popular Movies Right Now: What to Watch In Theaters and Streaming",
      "fecha": "2026-11-17 21:15",
@@ -10424,13 +10336,6 @@
      "fecha": "2026-11-17 20:02",
      "url": "https://www.hollywoodreporter.com/movies/movie-news/2026-ida-documentary-awards-nominations-nominees-list-1236757888/",
      "resumen": "Other films up for multiple prizes include 'Rehearsals for a Revolution' and 'A Fox Under a Pink Moon.'"
-    },
-    {
-     "fuente": "The Hollywood Reporter (RSS)",
-     "titulo": "‘Dancing With the Stars’: All 34 Winners",
-     "fecha": "2026-11-17 19:44",
-     "url": "https://www.hollywoodreporter.com/lists/dancing-with-the-stars-winners-list/",
-     "resumen": "A Tony winner, several Olympians, Super Bowl champions, Bachelorettes and the Irwin siblings are just a few of the stars who have won the coveted mirrorball trophy throughout the show’s 20-year history."
     },
     {
      "fuente": "Rolling Stone (RSS)",
@@ -10606,13 +10511,6 @@
      "fecha": "2026-11-17 15:31",
      "url": "https://www.espinof.com/anime/3-dias-llega-a-netflix-mayores-secuelas-anime-historia-nueva-generacion-heroes-para-continuar-legado-big-three",
      "resumen": "Estos días Masashi Kishimoto tiene revolucionados a los fans ' Naruto ' porque trabaja en un manga secuela, 'Naruto: Shadow Rising '. Eso sí, no es para nada la primera secuela de su gran obra, porque hace diez años arrancó ' Boruto ', que nos presentaba a una nueva generación de ninjas de Konoha. Echando la vista…"
-    },
-    {
-     "fuente": "Pitchfork (RSS)",
-     "titulo": "Director of MGMT’s “Kids” and “Time to Pretend” Videos Dies at 43",
-     "fecha": "2026-11-17 15:28",
-     "url": "https://pitchfork.com/story/director-of-mgmts-kids-and-time-to-pretend-videos-dies-at-43/",
-     "resumen": "Filmmaker Ray Tintori also shot videos for Solange, Arcade Fire, and the Killers"
     }
    ]
   },
