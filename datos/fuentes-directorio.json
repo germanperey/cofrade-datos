@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-17T01:39:47-03:00",
- "total": 199,
+ "generado": "2026-11-18T01:32:54-03:00",
+ "total": 202,
  "secciones": {
   "politica/chile": [
    [
@@ -96,6 +96,11 @@
     "rss"
    ],
    [
+    "Libertad y Desarrollo · análisis económico (RSS)",
+    "https://lyd.org/feed/",
+    "rss"
+   ],
+   [
     "Ministerio de Economia (RSS)",
     "https://www.economia.gob.cl/feed",
     "rss"
@@ -115,6 +120,11 @@
    [
     "FIA Innovacion Agraria (RSS)",
     "https://www.fia.cl/feed/",
+    "rss"
+   ],
+   [
+    "Sercotec (RSS)",
+    "https://www.sercotec.cl/feed/",
     "rss"
    ]
   ],
@@ -137,11 +147,6 @@
    [
     "CONAF (RSS)",
     "https://www.conaf.cl/feed/",
-    "rss"
-   ],
-   [
-    "Consejo Minero (RSS)",
-    "https://consejominero.cl/feed/",
     "rss"
    ],
    [
@@ -689,6 +694,11 @@
   ],
   "deportes": [
    [
+    "ANFP",
+    "https://www.anfp.cl/feed/",
+    "rss"
+   ],
+   [
     "AS Chile portada (RSS)",
     "https://feeds.as.com/mrss-s/pages/as/site/chile.as.com/portada",
     "rss"
@@ -711,11 +721,6 @@
    [
     "Autosport F1 (RSS)",
     "https://www.autosport.com/rss/f1/news/",
-    "rss"
-   ],
-   [
-    "BBC Sport Ciclismo (RSS)",
-    "https://feeds.bbci.co.uk/sport/cycling/rss.xml",
     "rss"
    ],
    [
@@ -874,6 +879,11 @@
     "rss"
    ],
    [
+    "SwimSwam (RSS)",
+    "https://swimswam.com/feed/",
+    "rss"
+   ],
+   [
     "Tennis Majors (RSS)",
     "https://www.tennismajors.com/feed",
     "rss"
@@ -1015,6 +1025,11 @@
     "rss"
    ],
    [
+    "Minería en Línea · proyectos mineros (RSS)",
+    "https://mineriaenlinea.com/feed/",
+    "rss"
+   ],
+   [
     "Portal Minero · Noticias de proyectos (RSS)",
     "https://www.portalminero.com/wp/category/noticias/feed/",
     "rss"
@@ -1027,20 +1042,12 @@
   ]
  },
  "fallas": {
-  "https://www.atacamanoticias.cl/feed/": 1,
-  "https://www.diarioaysen.cl/feed/": 1,
-  "https://www.cpc.cl/feed/": 2,
-  "https://sonami.cl/v2/feed/": 1,
-  "https://consejominero.cl/feed/": 2,
-  "https://www.aqua.cl/feed/": 1,
-  "https://splash247.com/feed/": 1,
-  "https://cadem.cl/feed/": 1,
-  "https://deepmind.google/blog/rss.xml": 1,
-  "https://blogs.microsoft.com/feed/": 1,
-  "https://www.science.org/rss/news_current.xml": 1,
-  "https://feeds.bbci.co.uk/sport/cycling/rss.xml": 2,
-  "https://www.racefans.net/feed/": 1,
-  "https://www.revistaei.cl/feed/": 1
+  "https://www.diarioaysen.cl/feed/": 2,
+  "https://sonami.cl/v2/feed/": 2,
+  "https://www.fedefruta.cl/feed/": 1,
+  "https://cadem.cl/feed/": 2,
+  "https://research.google/blog/rss/": 1,
+  "https://deepmind.google/blog/rss.xml": 2
  },
  "nota": "Fuentes verificadas desde GitHub (robots.txt, RSS válido y notas recientes). Las lee bajar.py."
 }
