@@ -1295,12 +1295,15 @@ export default {
         // y un cambio del sitio tardaba en verse. Ahora la revisa en cada apertura con su etiqueta: edición + versión del sitio + librería
         // de gráficos. Si nada cambió responde «sin cambios» (304) sin volver a mandar la página, así que abre igual de rápido.
         const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}"`;
-        if (etiquetaIgual(req.headers.get("If-None-Match"), etiqueta)) {
+        // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
+        // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.
+        const ultima = new Date(Date.parse(m[1] + "T03:00:00Z") - (fnv1a(etiqueta) % 2592000) * 1000).toUTCString();
+        if (etiquetaIgual(req.headers.get("If-None-Match"), etiqueta) || req.headers.get("If-Modified-Since") === ultima) {
           if (r.body) r.body.cancel().catch(() => {});
-          return new Response(null, { status: 304, headers: { ETag: etiqueta, "Cache-Control": "no-cache", ...SEGURIDAD } });
+          return new Response(null, { status: 304, headers: { ETag: etiqueta, "Last-Modified": ultima, "Cache-Control": "no-cache", ...SEGURIDAD } });
         }
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
-          "Cache-Control": "no-cache", ETag: etiqueta, ...SEGURIDAD } });
+          "Cache-Control": "no-cache", ETag: etiqueta, "Last-Modified": ultima, ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
         const cp = compacto();   // 18-11-2026: títulos de bloque más grandes y gráficos del Congreso en barra compacta (modulos/compacto.js)
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
