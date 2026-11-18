@@ -891,6 +891,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__BUZON_PANEL__*/
 /*__SUSCRIPCIONES__*/
 /*__TABLERO__*/
+/*__COMPACTO__*/
 /*__ICONO__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
@@ -1288,10 +1289,12 @@ export default {
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
           "Cache-Control": pasada ? "public, max-age=3600, stale-while-revalidate=86400" : "public, max-age=600", ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
+        const cp = compacto();   // 18-11-2026: títulos de bloque más grandes y gráficos del Congreso en barra compacta (modulos/compacto.js)
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS, { html: true }); } })
+          .on("head", cp.cabeza).on("body", cp.cuerpo).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("script", scriptsEdicion(lib))
           .on("head", { element(e) { e.prepend(LENTO, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);
