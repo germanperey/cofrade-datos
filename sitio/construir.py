@@ -18,6 +18,7 @@ for k, v in {
     "/*__SUSCRIPCIONES__*/": leer("modulos", "suscripciones.js"),   # 14-11-2026: socios fundadores con Mercado Pago
     "/*__TABLERO__*/": leer("modulos", "tablero.js"),   # 16-11-2026: Panel con filtros, ayudas y gráficos + publicidad pagada
     "/*__COMPACTO__*/": leer("modulos", "compacto.js"),   # 18-11-2026: títulos de bloque más grandes y Congreso en barra compacta
+    "/*__HOROSCOPO_ANUAL__*/": leer("modulos", "horoscopo_anual.js"),   # 18-11-2026: horóscopo del año, chino y personalizado (contenido hasta 2031)
     "/*__ICONO__*/": leer("modulos", "icono.js"),   # 16-11-2026: ícono de Cofrade News (acceso directo, lectura sin señal)
 }.items():
     assert src.count(k) == 1, k
