@@ -2952,15 +2952,16 @@ PROY_VACIAS = {"para", "como", "tras", "desde", "entre", "sobre", "pero", "este"
 
 
 def proy_palabras(t):
-    """Palabras con contenido de un titular (sin tildes, de 4 letras o más, sin las de relleno) → conjunto."""
+    """Raíces de las palabras con contenido de un titular (sin tildes, de 4 letras o más, sin las de relleno, cortadas a 6 letras para
+    que «inversión» e «inversiones» cuenten igual) → conjunto."""
     t = unicodedata.normalize("NFD", str(t or "")).encode("ascii", "ignore").decode().lower()
-    return {w for w in re.split(r"[^a-z0-9]+", t) if len(w) >= 4 and w not in PROY_VACIAS}
+    return {w[:6] for w in re.split(r"[^a-z0-9]+", t) if len(w) >= 4 and w not in PROY_VACIAS}
 
 
 def proy_parecidas(a, b):
-    """Dos titulares que cuentan la misma noticia: 3 o más palabras en común y casi la mitad del más corto."""
+    """Dos titulares que cuentan la misma noticia: 3 o más raíces en común y al menos el 40 % de las del más corto."""
     c = len(a & b)
-    return c >= 3 and c / max(1, min(len(a), len(b))) >= 0.45
+    return c >= 3 and c / max(1, min(len(a), len(b))) >= 0.4
 
 
 PROY_CHILE = re.compile(r"\bChile\b|chilen|Banco Central|Hacienda|\bIPoM\b|Imacec|Codelco|Cochilco|Consejo Fiscal", re.I)

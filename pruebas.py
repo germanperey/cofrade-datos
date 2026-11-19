@@ -2028,6 +2028,7 @@ def proyecciones_de_crecimiento_a_4_anios():
     assert B.num_proy("") is None and B.num_proy(None) is None and B.num_proy("s/d") is None
     misma = B.proy_palabras("Cartera de inversión minera de Chile registra su mayor monto en 13 años")
     assert B.proy_parecidas(misma, B.proy_palabras("Chile eleva su cartera minera a récord: el mayor monto en 13 años"))
+    assert B.proy_parecidas(misma, B.proy_palabras("Chile eleva su cartera minera a récord de US$111.149 millones: litio duplica inversiones y cobre concentra el resto"))
     assert not B.proy_parecidas(B.proy_palabras("Banco Central mantiene la tasa en 4,5%"), B.proy_palabras("Banco Central publica su IPoM de diciembre"))
     cur = {"nota": "x", "instituciones": [
         {"clave": "fmi_weo", "api": "fmi", "fecha": "2026-10-13", "pib": {"2026": "9,9", "2027": "9,9"}, "inflacion": {"tipo": "promedio anual"}},
