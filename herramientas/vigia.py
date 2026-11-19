@@ -198,6 +198,15 @@ def revisar_navegador(inf, fecha):
                            f"{len(r['vacios'])} de {r['total']} sin dibujar: {', '.join(r['vacios'][:6])}" if r["total"] >= minimo
                            else f"solo {r['total']} gráfico(s) en la página")
                     inf.ok(f"Edición {fecha}: flecha para volver y botón para subir", r["volver"] and r["subir"], r)
+                    # 19-11-2026 (Germán, captura: «falta el gráfico de Golf»): el gráfico estaba DIBUJADO pero vacío (todos en E, torneo sin
+                    # empezar) y esta revisión solo miraba que hubiera dibujo. Ahora mira los DATOS de cada gráfico (graficos_vacios.py).
+                    try:
+                        from graficos_vacios import JS as JS_DATOS, MOTIVO as MOTIVO_DATOS
+                        malos = [x for x in pg.evaluate(JS_DATOS) if x.get("estado") in MOTIVO_DATOS]
+                        inf.ok(f"Edición {fecha}: gráficos con datos (ninguno vacío ni todo en cero; golf con torneo terminado)", not malos,
+                               "; ".join(f"{x['id']} ({x.get('titulo') or x.get('seccion')}): {MOTIVO_DATOS[x['estado']]}" for x in malos[:4]))
+                    except Exception as ex:   # noqa: BLE001
+                        inf.ok(f"Edición {fecha}: revisión de los datos de los gráficos", False, f"{type(ex).__name__}: {str(ex)[:160]}", grave=False)
                 inf.ok(f"{que}: sin errores de JavaScript", not errores, "; ".join(errores[:3]))
                 pg.close()
         except Exception as ex:   # noqa: BLE001 — una falla del navegador de prueba no es una falla del sitio
