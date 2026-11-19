@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-19T17:01-03:00",
+ "generado": "2026-11-19T17:32-03:00",
  "anio_base": 2026,
  "anios": [
   "2027",
@@ -103,7 +103,8 @@
     "2027": "540",
     "2028": "560"
    },
-   "revisar_desde": "2026-12-16"
+   "revisar_desde": "2026-12-16",
+   "activo": true
   },
   {
    "clave": "bcch_eee",
@@ -139,7 +140,8 @@
     "2026": "F089.PIB.V12.2026.M",
     "2027": "F089.PIB.V12.2027.M",
     "2028": "F089.PIB.V12.2028.M"
-   }
+   },
+   "activo": true
   },
   {
    "clave": "fmi_weo",
@@ -147,9 +149,9 @@
    "institucion_en": "International Monetary Fund",
    "corto": "FMI",
    "corto_en": "IMF",
-   "informe": "Perspectivas de la Economía Mundial (WEO) de octubre de 2026",
-   "informe_en": "World Economic Outlook, October 2026",
-   "fecha": "2026-10-13",
+   "informe": "Perspectivas de la Economía Mundial (WEO), última edición en su base de datos oficial",
+   "informe_en": "World Economic Outlook, latest edition in its official database",
+   "fecha": "2026-11-19",
    "url": "https://www.imf.org/en/publications/weo/issues/2026/10/13/world-economic-outlook-october-2026",
    "api": "fmi",
    "pib": {
@@ -177,7 +179,10 @@
     "2030": "3,0"
    },
    "revisar_desde": "2027-04-14",
-   "fuente_datos": "base de datos oficial del FMI"
+   "fuente_datos": "base de datos oficial del FMI",
+   "fecha_texto": "leída el 19 de noviembre de 2026",
+   "fecha_texto_en": "read on November 19, 2026",
+   "activo": true
   },
   {
    "clave": "bm_mpo",
@@ -213,7 +218,8 @@
     "2027": "43,4",
     "2028": "45,0"
    },
-   "revisar_desde": "2027-01-13"
+   "revisar_desde": "2027-01-13",
+   "activo": true
   },
   {
    "clave": "ocde_eo",
@@ -235,7 +241,8 @@
     "2026": "3,8",
     "2027": "3,2"
    },
-   "revisar_desde": "2026-12-02"
+   "revisar_desde": "2026-12-02",
+   "activo": true
   },
   {
    "clave": "cepal",
@@ -252,7 +259,8 @@
     "2026": "0,2",
     "2027": "2,2"
    },
-   "revisar_desde": "2026-12-15"
+   "revisar_desde": "2026-12-15",
+   "activo": true
   },
   {
    "clave": "hacienda_ifp",
@@ -277,7 +285,8 @@
     "texto": "PIB no minero tendencial: 2,6 % en 2027 y 2,3 % en promedio entre 2027 y 2031",
     "texto_en": "Trend non-mining GDP: 2.6% in 2027 and 2.3% on average in 2027-2031"
    },
-   "revisar_desde": "2027-01-15"
+   "revisar_desde": "2027-01-15",
+   "activo": true
   }
  ],
  "promedio": {
@@ -314,15 +323,9 @@
  },
  "noticias": [
   {
-   "titulo": "Hacienda logra acuerdo para destrabar el presupuesto de Educación: repondrá el programa \"Yo Elijo mi PC\" y analizará cambios pensando en 2028",
-   "fuente": "Diario Financiero",
-   "url": "http://www.df.cl/economia-y-politica/macro/hacienda-logra-acuerdo-para-destrabar-el-presupuesto-de-educacion-repondra",
-   "fecha": "2026-11-19"
-  },
-  {
-   "titulo": "Cochilco: cartera de inversión minera alcanza US$111.149 millones, el mayor monto en 13 años",
-   "fuente": "Electromineria",
-   "url": "https://electromineria.cl/cochilco-inversion-minera-111149-millones-record-13-anos/",
+   "titulo": "Cartera de inversión minera de Chile registra su mayor monto en 13 años",
+   "fuente": "Minería Chilena",
+   "url": "https://www.mch.cl/cartera-de-inversion-minera-de-chile-registra-su-mayor-monto-en-13-anos/",
    "fecha": "2026-11-19"
   },
   {
@@ -342,6 +345,12 @@
    "fuente": "Reporte Minero",
    "url": "https://www.reporteminero.cl/noticia/noticias/2026/11/cesco-inversion-record-cobre-produccion-cae-chile-ley-mineral",
    "fecha": "2026-11-17"
+  },
+  {
+   "titulo": "Ranking: los proyectos de cobre con mayor inversión en Chile",
+   "fuente": "Revista Digital Minera REDIMIN",
+   "url": "https://www.redimin.cl/ranking-los-proyectos-de-cobre-con-mayor-inversion-en-chile",
+   "fecha": "2026-11-15"
   }
  ],
  "revisar": [],
