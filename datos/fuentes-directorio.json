@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-19T01:27:44-03:00",
- "total": 203,
+ "generado": "2026-11-19T13:09:31-03:00",
+ "total": 202,
  "secciones": {
   "politica/chile": [
    [
@@ -121,6 +121,11 @@
     "FIA Innovacion Agraria (RSS)",
     "https://www.fia.cl/feed/",
     "rss"
+   ],
+   [
+    "Sercotec (RSS)",
+    "https://www.sercotec.cl/feed/",
+    "rss"
    ]
   ],
   "industrias": [
@@ -142,11 +147,6 @@
    [
     "CORMA (RSS)",
     "https://www.corma.cl/feed/",
-    "rss"
-   ],
-   [
-    "Fedefruta (RSS)",
-    "https://www.fedefruta.cl/feed/",
     "rss"
    ],
    [
@@ -460,11 +460,6 @@
    [
     "Google DeepMind (RSS, inglés)",
     "https://deepmind.google/blog/rss.xml",
-    "rss"
-   ],
-   [
-    "Google Research (RSS, inglés)",
-    "https://research.google/blog/rss/",
     "rss"
    ],
    [
@@ -1049,8 +1044,9 @@
   ]
  },
  "fallas": {
-  "https://www.fedefruta.cl/feed/": 2,
-  "https://research.google/blog/rss/": 2
+  "https://www.lacuarta.com/arc/outboundfeeds/rss/?outputType=xml": 1,
+  "https://feeds.marketwatch.com/marketwatch/topstories/": 1,
+  "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28concierto+OR+festival+OR+estreno+OR+teatro+OR+exposici%C3%B3n+OR+panorama%29&timespan=3d": 1
  },
  "nota": "Fuentes verificadas desde GitHub (robots.txt, RSS válido y notas recientes). Las lee bajar.py."
 }
