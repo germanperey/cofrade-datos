@@ -2945,7 +2945,7 @@ FMI_API = "https://www.imf.org/external/datamapper/api/v1"
 FMI_IND = (("pib", "NGDP_RPCH"), ("inflacion", "PCPIPCH"), ("desempleo", "LUR"), ("cuenta_corriente", "BCA_NGDPD"), ("deuda", "GGXWDG_NGDP"))
 PROY_TEMA = re.compile(r"proyecci[oó]n(es)?\b.{0,30}(crecimiento|PIB|econ|inflaci|desempleo|tasa)|crecimiento|crecer[aá]n?\b|\bPIB\b|IPoM|\bFMI\b|Banco Mundial|\bOCDE\b|\bCepal\b|expectativas|"
                        r"Finanzas P[uú]blicas|perspectivas econ|Imacec|recesi[oó]n|desaceleraci|inflaci[oó]n|Banco Central|\bTPM\b|"
-                       r"tasa de pol[ií]tica|econom[ií]a chilena|desempleo|Consejo Fiscal|presupuesto", re.I)
+                       r"tasa de pol[ií]tica|econom[ií]a chilena|desempleo|Consejo Fiscal", re.I)
 PROY_INVERSION = re.compile(r"inversi[oó]n|inversiones", re.I)   # segunda prioridad: la inversión empuja el crecimiento que viene
 PROY_VACIAS = {"para", "como", "tras", "desde", "entre", "sobre", "pero", "este", "esta", "estos", "estas", "segun", "hasta", "ante", "cual",
                "cuando", "donde", "porque", "durante", "mientras", "tiene", "tienen", "sera", "seria", "millones", "chile", "chilena", "chileno"}
