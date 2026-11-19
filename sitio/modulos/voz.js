@@ -29,7 +29,7 @@ var TX = {
     txt: 'Toca o haz clic en cualquier parte de la pantalla y una voz te leerá el boletín de hoy. Podrás elegir las secciones con tu voz.',
     btn: 'Escuchar el boletín',
     x: 'Cerrar y leer sin voz',
-    nota: 'Si prefieres leer, cierra con la X o con la tecla Esc. Para entender tu voz, el navegador usa su propio servicio (Google, Apple o Microsoft). Cofrade News no graba ni guarda tu voz.',
+    nota: 'Si prefieres leer, cierra con la X o con la tecla Esc. Para entender tu voz se usa el servicio del navegador (Google, Apple o Microsoft) o, si no lo tiene, la inteligencia artificial de Cloudflare, que solo transcribe tus órdenes. Cofrade News no guarda tu voz.',
     notaC: 'Mientras te leo, el micrófono queda abierto para que puedas interrumpirme. Se cierra al apagar la voz.',
     titDe: 'Toca en cualquier parte para seguir escuchando',
     txtDe: 'La lectura con voz está activada en este aparato.',
@@ -86,7 +86,7 @@ var TX = {
     txt: 'Tap or click anywhere on the screen and a voice will read today\'s newsletter. You can choose sections with your voice.',
     btn: 'Listen to the newsletter',
     x: 'Close and read without voice',
-    nota: 'If you prefer to read, close with the X or the Esc key. To understand your voice, the browser uses its own service (Google, Apple or Microsoft). Cofrade News does not record or keep your voice.',
+    nota: 'If you prefer to read, close with the X or the Esc key. To understand your voice, we use the browser\'s service (Google, Apple or Microsoft) or, if it has none, Cloudflare\'s artificial intelligence, which only transcribes your commands. Cofrade News does not keep your voice.',
     notaC: 'While I read, the microphone stays open so you can interrupt me. It closes when you turn the voice off.',
     titDe: 'Tap anywhere to keep listening',
     txtDe: 'Voice reading is on for this device.',
@@ -508,6 +508,123 @@ function deLaPersona(frase, t0, provisorio) {
   }
   return util ? { frase: q.join(' '), eco: eco } : null;
 }
+// ---------- oído en la nube (19-11-2026) ----------
+// Germán, 18:18: «NO escuchó mi voz (debes repararlo URGENTE!!!!!)... Es de vital importancia que reconozcas el micrófono para ayudar a las
+// personas "No videntes"». Microsoft Edge tiene caído su reconocimiento de voz desde abril de 2026 (responde «network» en varios países)
+// y Firefox no lo trae. NubeRec imita al reconocedor del navegador (start, stop, abort, onstart, onresult, onerror, onend) para que el
+// resto del oído no cambie: escucha el micrófono, detecta por volumen cuándo alguien habla, toma solo esa frase (0,3 a 7 s), la manda a
+// /oido en WAV de 16 kHz y Workers AI (Whisper) la transcribe. Ni el sitio ni Cloudflare guardan el audio ni el texto.
+var SR_NAVEGADOR = SR, NUBE = { st: null, soltar: 0, pedidos: 0, max: 400, motivo: '' };
+function nubePosible() { return !!(W.fetch && navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (W.AudioContext || W.webkitAudioContext)) && location.protocol !== 'file:'; }
+function nubeSoltarLuego() {   // apaga el micrófono 4 s después de la última escucha (si el oído vuelve a abrirse antes, sigue el mismo)
+  clearTimeout(NUBE.soltar);
+  NUBE.soltar = setTimeout(function () { var st = NUBE.st; NUBE.st = null; if (st) { try { st.getTracks().forEach(function (x) { x.stop(); }); } catch (e) { /* */ } } }, 4000);
+}
+function wav16k(pcm, sr) {   // PCM 16 bits, mono, 16 kHz, con su encabezado RIFF
+  var paso = sr / 16000, n = Math.floor(pcm.length / paso), out = new Int16Array(n);
+  for (var i = 0; i < n; i++) {
+    var a = Math.floor(i * paso), b = Math.max(a + 1, Math.floor((i + 1) * paso)), sum = 0;
+    for (var k = a; k < b && k < pcm.length; k++) sum += pcm[k];
+    var v = sum / (b - a); out[i] = Math.max(-32768, Math.min(32767, Math.round(v * 32767)));
+  }
+  var buf = new ArrayBuffer(44 + n * 2), dv = new DataView(buf);
+  function txt(o, t) { for (var j = 0; j < t.length; j++) dv.setUint8(o + j, t.charCodeAt(j)); }
+  txt(0, 'RIFF'); dv.setUint32(4, 36 + n * 2, true); txt(8, 'WAVE'); txt(12, 'fmt '); dv.setUint32(16, 16, true); dv.setUint16(20, 1, true); dv.setUint16(22, 1, true);
+  dv.setUint32(24, 16000, true); dv.setUint32(28, 32000, true); dv.setUint16(32, 2, true); dv.setUint16(34, 16, true); txt(36, 'data'); dv.setUint32(40, n * 2, true);
+  new Int16Array(buf, 44).set(out);
+  return new Blob([buf], { type: 'audio/wav' });
+}
+function NubeRec() { this.lang = 'es-CL'; this.continuous = false; this.interimResults = false; this.maxAlternatives = 1; this._on = false; this._lista = []; }
+NubeRec.prototype.start = function () {
+  var self = this;
+  if (self._on) throw new Error('InvalidStateError');
+  self._on = true; clearTimeout(NUBE.soltar);
+  var md = navigator.mediaDevices;
+  if (!md || !md.getUserMedia) { setTimeout(function () { self._err('audio-capture'); }, 0); return; }
+  var vivo = NUBE.st && NUBE.st.active !== false && NUBE.st.getAudioTracks().some(function (x) { return x.readyState === 'live'; });
+  (vivo ? Promise.resolve(NUBE.st) : md.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } })).then(function (st) {
+    NUBE.st = st;
+    if (!self._on) return nubeSoltarLuego();
+    try { self._graf(st); } catch (e) { return self._err('audio-capture'); }
+    if (self.onstart) self.onstart({});
+    if (self.onaudiostart) self.onaudiostart({});
+  }, function (e) { self._err(/NotAllowed|Security|Permission/i.test((e && e.name) || '') ? 'not-allowed' : 'audio-capture'); });
+};
+NubeRec.prototype._graf = function (st) {   // detector de voz por volumen: piso de ruido que se adapta y umbral más alto mientras la voz lee
+  var self = this, AC = W.AudioContext || W.webkitAudioContext, ctx;
+  try { ctx = new AC({ sampleRate: 16000 }); } catch (e) { ctx = new AC(); }
+  try { if (ctx.resume) ctx.resume(); } catch (e) { /* */ }
+  var sr = ctx.sampleRate, tam = sr <= 16000 ? 1024 : sr <= 24000 ? 2048 : 4096, dur = tam / sr;
+  var src = ctx.createMediaStreamSource(st), pr = ctx.createScriptProcessor(tam, 1, 1);
+  var piso = null, cal = 0, previo = [], seg = null, quieto = 0, arriba = 0, conVoz = 0;
+  pr.onaudioprocess = function (ev) {
+    if (!self._on) return;
+    var d = ev.inputBuffer.getChannelData(0), s = 0;
+    for (var i = 0; i < d.length; i++) s += d[i] * d[i];
+    var db = 10 * Math.log10(s / d.length + 1e-12), copia = new Float32Array(d), lee = !!(SS && SS.speaking);
+    if (piso === null) piso = db;
+    if (!seg) {
+      if (cal < 0.6 / dur) { cal++; piso = Math.min(piso, db); previo.push(copia); if (previo.length > 4) previo.shift(); return; }   // primeros 0,6 s: ruido de fondo
+      var umbral = Math.max(piso + (lee ? 20 : 12), lee ? -38 : -50);
+      if (db < umbral) { piso = db < piso ? db : piso + (db - piso) * 0.02; arriba = 0; previo.push(copia); if (previo.length > 4) previo.shift(); return; }
+      if (++arriba * dur < 0.12) { previo.push(copia); if (previo.length > 5) previo.shift(); return; }
+      seg = previo.slice(); seg.umbral = umbral; previo = []; quieto = 0; conVoz = arriba; seg.push(copia); return;
+    }
+    seg.push(copia);
+    if (db < seg.umbral - 3) quieto++; else { quieto = 0; conVoz++; }
+    if (quieto * dur >= 0.7 || seg.length * dur >= 7) {
+      var x = seg, voz = conVoz * dur; seg = null; quieto = 0; arriba = 0; conVoz = 0;
+      if (voz >= 0.3) self._enviar(x, sr);
+    }
+  };
+  src.connect(pr); pr.connect(ctx.destination);   // sale en silencio: el procesador no escribe nada, pero sin salida no corre
+  self._ctx = ctx; self._src = src; self._pr = pr;
+};
+NubeRec.prototype._enviar = function (frames, sr) {
+  var self = this;
+  if (NUBE.pedidos >= NUBE.max) return;
+  if (self._vuelo) { self._cola = [frames, sr]; return; }   // una a la vez: la frase que llega mientras espera reemplaza a la anterior
+  var n = 0; frames.forEach(function (f) { n += f.length; });
+  var pcm = new Float32Array(n), o = 0; frames.forEach(function (f) { pcm.set(f, o); o += f.length; });
+  self._vuelo = true; NUBE.pedidos++;
+  diag('☁ mando ' + (n / sr).toFixed(1) + ' s de voz');
+  fetch('/oido?l=' + (/^en/i.test(self.lang) ? 'en' : 'es'), { method: 'POST', headers: { 'Content-Type': 'audio/wav' }, body: wav16k(pcm, sr), credentials: 'same-origin' })
+    .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, s: r.status, j: j || {} }; }); })
+    .then(function (x) {
+      self._vuelo = false;
+      if (!self._on) return;
+      if (!x.ok) self._err(x.s === 403 || x.s === 415 || x.s === 413 ? 'aborted' : 'network', true);
+      else if (x.j.t) self._res(String(x.j.t));
+      var c = self._cola; self._cola = null; if (c && self._on) self._enviar(c[0], c[1]);
+    }, function () { self._vuelo = false; if (self._on) self._err('network', true); });
+};
+NubeRec.prototype._res = function (t) {
+  var res = [{ transcript: t, confidence: 0.9 }]; res.isFinal = true; res.item = function (i) { return this[i]; };
+  this._lista.push(res); this._lista.item = function (i) { return this[i]; };
+  diag('☁ entendí: «' + t + '»');
+  if (this.onresult) this.onresult({ resultIndex: this._lista.length - 1, results: this._lista });
+  if (!this.continuous) this.stop();
+};
+NubeRec.prototype._cerrar = function () {
+  var on = this._on; this._on = false;
+  try { if (this._pr) { this._pr.onaudioprocess = null; this._pr.disconnect(); } if (this._src) this._src.disconnect(); if (this._ctx && this._ctx.close) this._ctx.close(); } catch (e) { /* */ }
+  this._pr = this._src = this._ctx = null; nubeSoltarLuego();
+  return on;
+};
+NubeRec.prototype._err = function (codigo, sigue) {
+  if (this.onerror) this.onerror({ error: codigo });
+  if (!sigue && this._cerrar() && this.onend) { var self = this; setTimeout(function () { if (self.onend) self.onend({}); }, 0); }
+};
+NubeRec.prototype.stop = function () { var self = this; if (self._cerrar() && self.onend) setTimeout(function () { if (self.onend) self.onend({}); }, 0); };
+NubeRec.prototype.abort = NubeRec.prototype.stop;
+function usarNube(motivo) {   // desde aquí el oído usa la nube (también cuando el del navegador falla por su red)
+  if (SR === NubeRec || /[?&]voz=nativo\b/.test(location.search) || !nubePosible()) return false;
+  SR = NubeRec; NUBE.motivo = motivo; R.sinMic = false; R.fallasOido = 0; diag('☁ oído en la nube (' + motivo + ')');
+  return true;
+}
+// Sin reconocedor en el navegador (Firefox), o en Microsoft Edge (su reconocedor responde «network» desde abril de 2026): la nube desde el comienzo.
+if (!/[?&]voz=nativo\b/.test(location.search) && nubePosible() && (/[?&]voz=nube\b/.test(location.search) || !SR || EDGE)) { SR = NubeRec; NUBE.motivo = !SR_NAVEGADOR ? 'sin-reconocedor' : EDGE ? 'edge' : 'forzada'; }
+
 var OIDO = { rec: null, reinicios: [], tPausa: 0, eco: 0, dobles: [], ajenas: 0, redes: [], reposo: 0, avisoRed: false,
   turnos: '', arranco: false, oyo: false, cortas: 0, mudos: 0, denegadas: 0, cap: 0 };
 var DIAG = [];
@@ -568,12 +685,16 @@ function oidoPrender() {
   r.onerror = function (e) {
     var x = (e && e.error) || 'error', t = Date.now(); ses.error = x;
     if (x !== 'no-speech' && x !== 'aborted') diag('✖ error: ' + x);
+    if (x === 'service-not-allowed' && SR !== NubeRec && usarNube('servicio-del-navegador')) return;   // 19-11-2026: el servicio del navegador está bloqueado
     if (x === 'not-allowed' || x === 'service-not-allowed' || x === 'audio-capture') {
       if (!OIDO.arranco) { R.sinMic = true; R.aviso = 'sinMic'; oidoUI(); return; }   // nunca llegó a escuchar: no hay permiso o no hay micrófono
       if (++OIDO.denegadas >= 2) caerATurnos(x);   // ya había escuchado: se prueba por turnos
       return;
     }
     if (x === 'language-not-supported' || x === 'bad-grammar') return caerATurnos(x);
+    if (x === 'network' && SR !== NubeRec && OIDO.redes.filter(function (z) { return t - z < 60000; }).length >= 1 && usarNube('red-del-navegador')) {   // 19-11-2026
+      OIDO.redes = []; return;   // el reconocedor del navegador falló dos veces por su red: desde ahora, la nube (onend vuelve a abrir el oído)
+    }
     if (x === 'network') {   // tres fallas de red en un minuto: descansa 30 s y avisa una sola vez
       OIDO.redes = OIDO.redes.filter(function (z) { return t - z < 60000; }); OIDO.redes.push(t);
       if (OIDO.redes.length >= 3) { OIDO.reposo = t + 30000; OIDO.redes = []; if (!OIDO.avisoRed) { OIDO.avisoRed = true; R.aviso = 'sinRed'; } }
@@ -687,6 +808,7 @@ function oir(ms) {   // una frase del lector, o null
     rec.onresult = function (e) { R.fallasOido = 0; var r = e.results[e.results.length - 1], a = []; for (var k = 0; k < r.length; k++) a.push(r[k].transcript); diag('✓ oí: «' + (a[0] || '') + '»'); oiste(a[0]); fin(a.join(' | ')); };
     rec.onerror = function (e) {   // sin permiso, o el servicio del navegador falla dos veces seguidas: se deja de intentar y se sigue con barra y teclas
       var x = e && e.error; if (x && x !== 'no-speech' && x !== 'aborted') diag('✖ error (turno): ' + x);
+      if ((x === 'service-not-allowed' || (x === 'network' && R.fallasOido + 1 >= 2)) && SR !== NubeRec && usarNube('red-del-navegador')) return fin(null);   // 19-11-2026
       if (x === 'not-allowed' || x === 'service-not-allowed' || x === 'audio-capture' || (x === 'network' && ++R.fallasOido >= 2)) { R.sinMic = true; R.aviso = 'sinMic'; }
       fin(null);
     };
@@ -1606,7 +1728,7 @@ function inicio() {
   if (P.e === 'no' && !/[?&]voz=1\b/.test(location.search)) return;   // 19-11-2026: el botón de la portada lleva ?voz=1
   setTimeout(function () { abrirVentana(P.e === 'si'); }, 450);
 }
-W.__cnVozAPI = { encender: encender, apagar: apagar, ordenar: ordenar, estado: function () { return { on: R.on, modo: R.modo, i: R.i, j: R.j, rate: R.rate, voz: voz && voz.name, habla: R.habla, pausado: R.pausado, espera: R.espera && R.espera.ctx, oido: !!OIDO.rec, continuo: continuo(), turnos: OIDO.turnos, eco: OIDO.eco, ajenas: OIDO.ajenas, sps: R.spsBase || 0 }; },
+W.__cnVozAPI = { encender: encender, apagar: apagar, ordenar: ordenar, nube: function () { return { activa: SR === NubeRec, motivo: NUBE.motivo, pedidos: NUBE.pedidos }; }, estado: function () { return { on: R.on, modo: R.modo, i: R.i, j: R.j, rate: R.rate, voz: voz && voz.name, habla: R.habla, pausado: R.pausado, espera: R.espera && R.espera.ctx, oido: !!OIDO.rec, continuo: continuo(), turnos: OIDO.turnos, eco: OIDO.eco, ajenas: OIDO.ajenas, sps: R.spsBase || 0 }; },
   guion: function (id) { var s = leerSecciones(); for (var i = 0; i < s.length; i++) if (s[i].id === id) return guion(s[i]).map(function (u) { return hablable(u.t); }); return null; },
   secciones: function () { return leerSecciones().map(function (s) { return [s.n, s.id, s.t]; }); }, hablable: hablable, entender: function (t, c) { R.secs = R.secs.length ? R.secs : leerSecciones(); return entender(t, c); },
   auspiciadores: auspiciadores, prefs: function () { return P; } };

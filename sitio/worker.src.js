@@ -721,8 +721,8 @@ Object.assign(EN_FIJO, {
   "Di lo que quieras escuchar: «índice», el nombre o el número de una sección, «pausa», «más lento» o «salir». Con teclado, la barra espaciadora pausa, la I abre el índice, la N avanza y la P retrocede.":
     "Say what you want to hear: «index», the name or number of a section, «pause», «slower» or «exit». With a keyboard, the space bar pauses, I opens the index, N moves forward and P goes back.",
   "Escuchar la edición de hoy →": "Listen to today's edition →", "Escuchar la última edición →": "Listen to the latest edition →",
-  "Gratis y sin instalar nada. Funciona mejor en Chrome, Edge y Safari. Cofrade News no graba ni guarda tu voz; para entenderte, el navegador usa su propio servicio.":
-    "Free, with nothing to install. Works best in Chrome, Edge and Safari. Cofrade News does not record or store your voice; to understand you, your browser uses its own service.",
+  "Gratis y sin instalar nada. Funciona en Chrome, Edge y Safari. Cofrade News no guarda tu voz: tus órdenes las transcribe el servicio de voz del navegador o, si no lo tiene, la inteligencia artificial de Cloudflare.":
+    "Free, with nothing to install. Works in Chrome, Edge and Safari. Cofrade News does not keep your voice: your commands are transcribed by your browser's speech service or, if it has none, by Cloudflare's artificial intelligence.",
 });
 // 14-11-2026 (Germán: «muchos textos no se están traduciendo», con capturas): portada, galería, Dashboard Financiero, Mercados en vivo,
 // textos alternativos de las imágenes y el título de la pestaña. La prueba del arnés revisa que ningún texto fijo quede sin traducción.
@@ -1133,7 +1133,7 @@ function vozPortada(ultima, hoy) {
 <li>Di lo que quieras escuchar: «índice», el nombre o el número de una sección, «pausa», «más lento» o «salir». Con teclado, la barra espaciadora pausa, la I abre el índice, la N avanza y la P retrocede.</li>
 </ol>
 <div class="acciones"><a class="btn oro" href="${href}">${ultima && ultima === hoy ? "Escuchar la edición de hoy →" : "Escuchar la última edición →"}</a></div>
-<p class="vozp-nota">Gratis y sin instalar nada. Funciona mejor en Chrome, Edge y Safari. Cofrade News no graba ni guarda tu voz; para entenderte, el navegador usa su propio servicio.</p>
+<p class="vozp-nota">Gratis y sin instalar nada. Funciona en Chrome, Edge y Safari. Cofrade News no guarda tu voz: tus órdenes las transcribe el servicio de voz del navegador o, si no lo tiene, la inteligencia artificial de Cloudflare.</p>
 </div></div></section>`;
 }
 
@@ -1187,6 +1187,39 @@ ${lista.length ? `<div class="archivo" id="archivoLista">${lista.map((f, i) => `
 <div class="precio">UF 1 <small style="font-size:15px;color:var(--gris)">al mes</small></div><div class="acciones" style="margin-top:14px"><button type="button" class="btn oro pub-abrir" data-interes="Cofrade News" aria-haspopup="dialog">Quiero publicitar</button></div></div></div></section>
 ${INSTALAR_DLG}${INSTALAR_JS}`;
   return { cuerpo, p, hero };
+}
+
+// 19-11-2026 · «Oído en la nube» (Germán, 18:18: «NO escuchó mi voz (debes repararlo URGENTE!!!!!)... Es de vital importancia que
+// reconozcas el micrófono para ayudar a las personas "No videntes"»). Microsoft Edge tiene caído su reconocimiento de voz desde abril de
+// 2026 y Firefox no lo trae: el lector manda aquí solo la frase que dijo (WAV de 16 kHz, máximo ~11 s) y Workers AI (Whisper) la transcribe.
+// No se guarda nada: ni el audio ni el texto. Freno: 30 frases por minuto y por conexión (binding LIMITE).
+const OIDO_MAX = 360000;
+const OIDO_RUIDO = /subt[ií]tul|amara\.org|gracias por (ver|mirar)|suscr[ií]b|thanks? for watching|like and subscribe|^[\W_]*$/i;   // lo que Whisper «oye» en el silencio
+async function oidoNube(req, env) {
+  if (!ORIGEN_OK(req)) return jsonR({ t: "", e: "origen" }, 403);
+  if (!/^audio\/wav\b/i.test(req.headers.get("Content-Type") || "")) return jsonR({ t: "", e: "tipo" }, 415);
+  if (Number(req.headers.get("Content-Length") || 0) > OIDO_MAX) return jsonR({ t: "", e: "largo" }, 413);
+  if (!(await bajoLimite(env, "oido:" + (req.headers.get("CF-Connecting-IP") || "?")))) return jsonR({ t: "", e: "limite" }, 429);
+  const b = new Uint8Array(await req.arrayBuffer());
+  if (b.byteLength > OIDO_MAX || b.byteLength < 3200) return jsonR({ t: "", e: "largo" }, 413);
+  const tag = (i) => String.fromCharCode(b[i], b[i + 1], b[i + 2], b[i + 3]);
+  if (tag(0) !== "RIFF" || tag(8) !== "WAVE") return jsonR({ t: "", e: "tipo" }, 415);
+  const lang = /^en/i.test(new URL(req.url).searchParams.get("l") || "") ? "en" : "es";
+  let t = "";
+  try {
+    if (env.AI) {
+      let bin = "";
+      for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+      const r = await env.AI.run("@cf/openai/whisper-large-v3-turbo", { audio: btoa(bin), language: lang, task: "transcribe", vad_filter: true });
+      t = String((r && r.text) || "");
+    } else if (env.AI_PRUEBA) {   // solo en el arnés de pruebas (Miniflare)
+      const r = await env.AI_PRUEBA.fetch("https://ia.prueba/oido?l=" + lang, { method: "POST", body: b });
+      if (!r.ok) return jsonR({ t: "", e: "ia" }, 502);
+      t = await r.text();
+    } else return jsonR({ t: "", e: "sin-ia" }, 503);
+  } catch { return jsonR({ t: "", e: "ia" }, 502); }
+  t = t.replace(/\s+/g, " ").trim().slice(0, 240);
+  return jsonR({ t: OIDO_RUIDO.test(t) ? "" : t });
 }
 
 async function portada(env, ctx, req) {
@@ -1383,6 +1416,7 @@ export default {
           .transform(resp);
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
+      if (p === "/oido" && req.method === "POST") return await oidoNube(req, env).catch(() => jsonR({ t: "", e: "error" }, 500));   // 19-11-2026: oído en la nube
       if (p === "/salud") return await salud(env, ctx);   // 15-11-2026: para el vigía de GitHub y el auditor de Claude (cada 3 h)
       // 13-11-2026 · Buzón de sugerencias, medición de lectura y Panel de Control
       if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos guardar tu sugerencia en este momento. Intenta de nuevo en unos minutos." }, 503));
