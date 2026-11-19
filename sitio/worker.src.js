@@ -152,7 +152,10 @@ function pct(v) {
 const SEGURIDAD = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  // 19-11-2026 (Germán, 18:18: «Abrí el Newsletter desde la web y también desde el "acceso directo"... NO escuchó mi voz»): esta línea
+  // decía microphone=() y APAGABA el micrófono en todo el sitio (el navegador ni siquiera pregunta). La demo funcionaba porque se abría
+  // como archivo, sin esta cabecera. El micrófono queda permitido solo para el propio sitio (self); cámara y ubicación siguen apagadas.
+  "Permissions-Policy": "camera=(), microphone=(self), geolocation=()",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
 };
 // 13-11-2026: el captcha del Buzón (Cloudflare Turnstile) necesita su script y su recuadro desde challenges.cloudflare.com.

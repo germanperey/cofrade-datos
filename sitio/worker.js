@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "3b1a7094c1fd";
+const VERSION_SITIO = "03b86ca031fe";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -152,7 +152,10 @@ function pct(v) {
 const SEGURIDAD = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  // 19-11-2026 (Germán, 18:18: «Abrí el Newsletter desde la web y también desde el "acceso directo"... NO escuchó mi voz»): esta línea
+  // decía microphone=() y APAGABA el micrófono en todo el sitio (el navegador ni siquiera pregunta). La demo funcionaba porque se abría
+  // como archivo, sin esta cabecera. El micrófono queda permitido solo para el propio sitio (self); cámara y ubicación siguen apagadas.
+  "Permissions-Policy": "camera=(), microphone=(self), geolocation=()",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
 };
 // 13-11-2026: el captcha del Buzón (Cloudflare Turnstile) necesita su script y su recuadro desde challenges.cloudflare.com.
