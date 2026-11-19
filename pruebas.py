@@ -2028,7 +2028,9 @@ def proyecciones_de_crecimiento_a_4_anios():
     assert B.num_proy("") is None and B.num_proy(None) is None and B.num_proy("s/d") is None
     misma = B.proy_palabras("Cartera de inversión minera de Chile registra su mayor monto en 13 años")
     assert B.proy_parecidas(misma, B.proy_palabras("Chile eleva su cartera minera a récord: el mayor monto en 13 años"))
-    assert B.proy_parecidas(misma, B.proy_palabras("Chile eleva su cartera minera a récord de US$111.149 millones: litio duplica inversiones y cobre concentra el resto"))
+    assert B.proy_parecidas(B.proy_palabras("Inversión minera récord en Chile"), B.proy_palabras("Récord de inversiones mineras en Chile"))   # raíces
+    assert B.proy_parecidas(B.proy_palabras("Cochilco: cartera de inversión minera alcanza US$111.149 millones, el mayor monto en 13 años"),
+                            B.proy_palabras("Chile eleva su cartera minera a récord de US$111.149 millones: litio duplica inversiones y cobre concentra el 84,5%"))
     assert not B.proy_parecidas(B.proy_palabras("Banco Central mantiene la tasa en 4,5%"), B.proy_palabras("Banco Central publica su IPoM de diciembre"))
     cur = {"nota": "x", "instituciones": [
         {"clave": "fmi_weo", "api": "fmi", "fecha": "2026-10-13", "pib": {"2026": "9,9", "2027": "9,9"}, "inflacion": {"tipo": "promedio anual"}},
@@ -2047,7 +2049,11 @@ def proyecciones_de_crecimiento_a_4_anios():
         {"titulo": "Chile: cartera de inversión minera alcanza US$111.149 millones, el mayor monto en 13 años", "fuente": "Otro", "fecha": "2026-11-19 11:00", "url": "https://a.cl/6"},
         {"titulo": "Dos proyectos de cobre en el norte de Chile buscan proyección en la bolsa canadiense", "fuente": "DF", "fecha": "2026-11-19 11:00", "url": "https://a.cl/7"},
         {"titulo": "Imacec sube", "fuente": "DF", "fecha": "2026-11-19 12:00", "url": "https://a.cl/8"},
-        {"titulo": "Imacec sube", "fuente": "Otro", "fecha": "2026-11-19 12:30", "url": "https://a.cl/9"}]}}}
+        {"titulo": "Imacec sube", "fuente": "Otro", "fecha": "2026-11-19 12:30", "url": "https://a.cl/9"},
+        {"titulo": "Banco central de Brasil vende 1.000 millones de dólares para contener el real", "fuente": "Yahoo", "fecha": "2026-11-19 12:30", "url": "https://a.cl/10"},
+        {"titulo": "¿Qué pasa con la inversión de HIF Global en Uruguay?", "fuente": "Ámbito", "resumen": "La empresa chilena…", "fecha": "2026-11-19 12:30", "url": "https://a.cl/11"},
+        {"titulo": "Cochilco: cartera de inversión minera alcanza US$111.149 millones, el mayor monto en 13 años", "fuente": "Electromineria", "fecha": "2026-11-19 12:40", "url": "https://a.cl/12"},
+        {"titulo": "La economía mundial crecerá 3% en 2027, según el FMI", "fuente": "DF", "fecha": "2026-11-19 12:45", "url": "https://a.cl/13"}]}}}
     vistos = []
     serie = {"NGDP_RPCH": {"2025": 2.5, "2026": 0.6, "2027": 2.6, "2028": 2.4, "2029": 2.3, "2030": 2.3, "2031": 2.3, "1990": 3.7},
              "PCPIPCH": {"2026": 3.7, "2027": 3.5}, "LUR": {"2026": 9.5, "2030": 7.9}}

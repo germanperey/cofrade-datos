@@ -2955,7 +2955,7 @@ def proy_palabras(t):
     """Raíces de las palabras con contenido de un titular (sin tildes, de 4 letras o más, sin las de relleno, cortadas a 6 letras para
     que «inversión» e «inversiones» cuenten igual) → conjunto."""
     t = unicodedata.normalize("NFD", str(t or "")).encode("ascii", "ignore").decode().lower()
-    return {w[:6] for w in re.split(r"[^a-z0-9]+", t) if len(w) >= 4 and w not in PROY_VACIAS}
+    return {w[:6] for w in re.split(r"[^a-z0-9]+", t) if (len(w) >= 4 or (len(w) == 3 and w.isdigit())) and w not in PROY_VACIAS}   # montos: «111.149» cuenta
 
 
 def proy_parecidas(a, b):
@@ -2965,6 +2965,9 @@ def proy_parecidas(a, b):
 
 
 PROY_CHILE = re.compile(r"\bChile\b|chilen|Banco Central|Hacienda|\bIPoM\b|Imacec|Codelco|Cochilco|Consejo Fiscal", re.I)
+PROY_FUERA = re.compile(r"\b(Brasil|Argentina|Per[uú]|Uruguay|Paraguay|Bolivia|Colombia|M[eé]xico|Ecuador|Venezuela|Estados Unidos|EE\.? ?UU|"
+                        r"China|Europa|Reino Unido|Alemania|Espa[nñ]a|Francia|Jap[oó]n|India|Canad[aá]|Centroam[eé]rica|Rusia|Ucrania)\b|"
+                        r"Banco Central Europeo|Reserva Federal|\bFed\b", re.I)   # un titular de otro país no entra, salvo que nombre a Chile
 
 
 def num_proy(t):
@@ -3106,6 +3109,8 @@ def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tp
             clave_t = re.sub(r"\W+", " ", t.lower()).strip()[:80]
             nivel = 0 if PROY_TEMA.search(t) else 1 if PROY_INVERSION.search(t) else None
             pal = proy_palabras(t)
+            if PROY_FUERA.search(t) and not re.search(r"\bChile\b|chilen", t, re.I):
+                continue
             if nivel is not None and PROY_CHILE.search(t + " " + str(n.get("resumen") or "")) and u not in vistos and clave_t not in vistos \
                     and not any(proy_parecidas(pal, q) for q in parecidas):   # la misma noticia en otro medio: va una sola vez
                 vistos.update((u, clave_t))
