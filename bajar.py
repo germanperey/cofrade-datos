@@ -2831,6 +2831,161 @@ def nombre_fixture(url):
     return hashlib.sha256(url.encode()).hexdigest()[:16] + ".json"
 
 
+# ---------- GOLF: siempre el último torneo TERMINADO (19-11-2026) ----------
+# Germán, 19-11 18:00 (captura): «falta el gráfico de Golf». A las 07:30 el torneo de la semana (The RSM Classic) estaba programado,
+# todos en E, y `recolectar.py` tomó ese torneo: gráfico vacío y posiciones 1, 2, 3 que no existían. La regla de Germán (control de
+# calidad, 22-10 y 31-10) es el resultado FINAL del último torneo terminado y, desde la ronda 2, el marcador «tras la ronda N».
+# Si el torneo del marcador de ESPN no sirve así, el espejo deja en su lugar el último terminado del calendario de ESPN
+# (scoreboard?dates=AAAAMMDD de su primer día) y datos/golf.json con las posiciones con empate («T4»), como las publica el PGA Tour.
+GOLF_TOURS = {"pga": "PGA Tour", "eur": "DP World Tour", "liv": "LIV Golf", "lpga": "LPGA"}
+
+
+def _golf_ev(data):
+    evs = (data or {}).get("events") if isinstance(data, dict) else None
+    ev = evs[0] if isinstance(evs, list) and evs and isinstance(evs[0], dict) else {}
+    comp = (ev.get("competitions") or [{}])[0] if isinstance(ev.get("competitions"), list) and ev.get("competitions") else {}
+    comp = comp if isinstance(comp, dict) else {}
+    stat = comp.get("status") or ev.get("status") or {}
+    st = stat.get("type") if isinstance(stat, dict) else None
+    return ev, comp, st if isinstance(st, dict) else {}
+
+
+def golf_terminado(data):
+    ev, comp, st = _golf_ev(data)
+    return bool(ev) and bool(comp.get("competitors")) and (st.get("completed") is True or st.get("state") == "post")
+
+
+def golf_publicable(data):
+    """Terminado, o en pausa con una ronda 2 o posterior completa («Round 2 - Play Complete»). Nunca programado ni a medias."""
+    if golf_terminado(data):
+        return True
+    ev, comp, st = _golf_ev(data)
+    m = re.search(r"round\s*(\d)\s*-\s*play complete", str(st.get("description") or ""), re.I)
+    return bool(ev) and bool(comp.get("competitors")) and st.get("state") == "in" and bool(m) and int(m.group(1)) >= 2
+
+
+def _iso_utc(t):
+    try:
+        x = dt.datetime.fromisoformat(str(t).replace("Z", "+00:00"))
+        return x if x.tzinfo else x.replace(tzinfo=dt.timezone.utc)
+    except (TypeError, ValueError):
+        return None
+
+
+def golf_ultimo_terminado(data, pedir_json, momento):
+    """El último torneo del calendario de ESPN que ya terminó (el más reciente primero; si ese no terminó, por lluvia, el anterior).
+    pedir_json(fecha_inicio) → JSON del scoreboard de esa semana o None. → (json, None) o (None, motivo)."""
+    ev, _, _ = _golf_ev(data)
+    ligas = (data or {}).get("leagues") if isinstance(data, dict) else None
+    cal = (ligas[0] or {}).get("calendar") if isinstance(ligas, list) and ligas and isinstance(ligas[0], dict) else None
+    cands = []
+    for c in cal if isinstance(cal, list) else []:
+        if not isinstance(c, dict) or str(c.get("id")) == str(ev.get("id")):
+            continue
+        ini, fin = _iso_utc(c.get("startDate")), _iso_utc(c.get("endDate"))
+        if ini and fin and fin <= momento:
+            cands.append((fin, ini, str(c.get("id"))))
+    if not cands:
+        return None, "sin torneos terminados en el calendario de ESPN"
+    for fin, ini, cid in sorted(cands, reverse=True)[:3]:
+        j = pedir_json(ini)
+        if j and golf_terminado(j) and str(_golf_ev(j)[0].get("id")) == cid:
+            return j, None
+    return None, "el calendario no entregó un torneo terminado"
+
+
+def _a_par(s):
+    s = str(s or "").strip().upper()
+    if s in ("E", "PAR", "EVEN"):
+        return 0
+    m = re.fullmatch(r"([+-]?)(\d{1,3})", s)
+    return (-int(m.group(2)) if m.group(1) == "-" else int(m.group(2))) if m else None
+
+
+def golf_posiciones(competidores, terminado):
+    """Filas ordenadas con su posición como la publica el PGA Tour: empates «T4»; con el torneo terminado el ganador es 1 aunque
+    haya ganado en desempate (los que perdieron el desempate quedan 2 o «T2»). Solo cuentan los que jugaron todas las rondas, en
+    bloque desde el primero; los demás: «CUT» (2 rondas de 4) o «—» (retiro o descalificación)."""
+    filas = []
+    for c in competidores if isinstance(competidores, list) else []:
+        if not isinstance(c, dict):
+            continue
+        a = c.get("athlete") if isinstance(c.get("athlete"), dict) else {}
+        sc = c.get("score")
+        sc = sc.get("displayValue") if isinstance(sc, dict) else sc
+        rondas = sum(1 for l in (c.get("linescores") or []) if isinstance(l, dict) and (l.get("value") is not None or l.get("displayValue")))
+        orden = c.get("order") or c.get("sortOrder") or 999
+        pais = ((a.get("flag") or {}).get("alt") if isinstance(a.get("flag"), dict) else "") or ""
+        filas.append({"orden": int(orden) if str(orden).isdigit() else 999, "jugador": a.get("displayName") or a.get("fullName") or "?",
+                      "pais": "CHI" if pais.lower() == "chile" else pais, "score": str(sc if sc is not None else ""), "par": _a_par(sc), "rondas": rondas})
+    filas.sort(key=lambda x: x["orden"])
+    maxr = max((x["rondas"] for x in filas), default=0)
+    bloque = []
+    for x in filas:
+        if maxr and x["rondas"] == maxr and x["par"] is not None:
+            bloque.append(x)
+        else:
+            break
+    gan = bloque[0] if terminado and bloque else None
+    for x in filas:
+        if any(x is y for y in bloque):
+            if x is gan:
+                x["pos"] = "1"
+                continue
+            mejores = 1 if gan is not None and x["par"] == gan["par"] else sum(1 for y in bloque if y["par"] < x["par"])
+            iguales = sum(1 for y in bloque if y["par"] == x["par"] and y is not gan)
+            x["pos"] = f"T{mejores + 1}" if iguales > 1 else str(mejores + 1)
+        else:
+            x["pos"] = "CUT" if x["rondas"] == 2 and maxr >= 4 else "—"
+    return filas
+
+
+def golf_resumen(data, tour):
+    """Lo que la tarea necesita del torneo de un JSON de ESPN: nombre, fechas, estado y marcador (10 primeros con sus empates, más
+    los chilenos), sin pasar de 12 filas por empates largos."""
+    ev, comp, st = _golf_ev(data)
+    if not ev:
+        return None
+    term = golf_terminado(data)
+    filas = golf_posiciones(comp.get("competitors"), term)
+    num = lambda p: int(re.sub(r"\D", "", p) or 999)
+    top = [x for x in filas if x["pos"] not in ("CUT", "—") and num(x["pos"]) <= 10]
+    if len(top) > 12:
+        top = top[:10]
+    chilenos = [x for x in filas if x["pais"] == "CHI" and not any(x is y for y in top)]
+    fecha = lambda t: (_iso_utc(t).date().isoformat() if _iso_utc(t) else None)
+    url = next((l.get("href") for l in ev.get("links") or [] if isinstance(l, dict) and l.get("href")), "")
+    return {"torneo": ev.get("name") or "", "tour": GOLF_TOURS.get(tour, tour), "id": str(ev.get("id") or ""), "inicio": fecha(ev.get("date")),
+            "fin": fecha(ev.get("endDate")), "estado": st.get("description") or "", "terminado": term,
+            "campeon": (top[0]["jugador"] if term and top and top[0]["pos"] == "1" else None),
+            "leaderboard": [{k: x[k] for k in ("pos", "jugador", "pais", "score")} for x in top + chilenos],
+            "fuente": "ESPN", "url": url}
+
+
+def golf_fixture(url, txt, pedir_texto, momento):
+    """Para el scoreboard de golf de un circuito: si el torneo no es publicable, el fixture pasa a ser el del último terminado.
+    → (texto_para_el_fixture, resumen_para_golf.json)."""
+    tour = url.rstrip("/").split("/")[-2]
+    try:
+        data = json.loads(txt)
+    except ValueError:
+        return txt, None
+    semana = golf_resumen(data, tour)
+    if golf_publicable(data):
+        return txt, {"semana": semana, "ultimo_final": semana if golf_terminado(data) else None, "fixture": "el torneo de la semana"}
+
+    def pedir_json(ini):
+        t = pedir_texto(f"{url}?dates={ini:%Y%m%d}")
+        try:
+            return json.loads(t or "")
+        except ValueError:
+            return None
+    alt, motivo = golf_ultimo_terminado(data, pedir_json, momento)
+    if alt is None:
+        return txt, {"semana": semana, "ultimo_final": None, "fixture": "el torneo de la semana (sin reemplazo)", "motivo": motivo}
+    return json.dumps(alt, ensure_ascii=False), {"semana": semana, "ultimo_final": golf_resumen(alt, tour), "fixture": "el último torneo terminado"}
+
+
 ESPEJO = [   # (archivo, dirección, qué es) · las direcciones fijas que Germán autorizó y que web_fetch rechaza en la tarea
     ("armada-avisos", "https://meteoarmada.directemar.cl/", "Avisos de marejadas y temporales de la Armada"),
     ("bcentral-inicio", "https://www.bcentral.cl/inicio", "Banco Central: portada (TPM, indicadores, publicaciones)"),
@@ -3203,7 +3358,7 @@ def fixtures(estado, f, salida):
     if os.path.isdir(carpeta):
         for n in os.listdir(carpeta):
             os.remove(os.path.join(carpeta, n))
-    ok, mal, tmp = [], [], {}
+    ok, mal, tmp, golf = [], [], {}, {}
     for url in urls_recolectar(f):
         if not robots_permite(url, estado):
             mal.append({"url": url, "error": "robots.txt no lo permite"})
@@ -3214,10 +3369,18 @@ def fixtures(estado, f, salida):
         except ValueError:
             mal.append({"url": url, "error": tmp.get("x", {}).get("error") or "respuesta que no es JSON"})
             continue
+        if re.fullmatch(r"https://site\.api\.espn\.com/apis/site/v2/sports/golf/[a-z]+/scoreboard", url):   # 19-11-2026: golf terminado
+            def _texto(u, tmp=tmp):
+                return pedir(u, tmp, "g", como="text", espera=(0, 8), limite=40) if robots_permite(u, estado) else None
+            txt, info = golf_fixture(url, txt, _texto, ahora().astimezone(dt.timezone.utc))
+            if info:
+                golf[url.split("/")[-2]] = info
         _gz(os.path.join(carpeta, nombre_fixture(url) + ".gz"), txt)
         ok.append({"url": url, "archivo": nombre_fixture(url)})
     estado["fixtures"] = {"ok": bool(ok), "hora": ahora().isoformat(timespec="seconds"), "url": "recolectar.py --fixtures",
                           "n": len(ok), "error": f"{len(mal)} sin respuesta" if mal else ""}
+    if golf:
+        escribir(os.path.join(salida, "golf.json"), {"generado": ahora().isoformat(timespec="seconds"), "tours": golf})
     return {"fecha": f.isoformat(), "listas": ok, "fallidas": mal}
 
 

@@ -2182,6 +2182,126 @@ def encuesta_de_expectativas_sola_desde_el_banco_central():
     finally:
         B.pedir, B.robots_permite, B._bcch_auth = viejo
 
+
+@prueba
+def golf_siempre_el_ultimo_torneo_terminado():
+    """19-11-2026 (Germán, captura: «falta el gráfico de Golf»): el 19-11 a las 07:30 The RSM Classic estaba programado y todos en E;
+    el gráfico salió vacío y la tabla con posiciones 1, 2, 3 que no existían. El espejo entrega el último torneo TERMINADO (calendario
+    de ESPN → scoreboard?dates=AAAAMMDD) y datos/golf.json con los empates como los publica el PGA Tour."""
+    import gzip
+    import tempfile
+
+    def jug(o, nom, sc, rondas=4, pais="USA"):
+        return {"order": o, "score": sc, "athlete": {"displayName": nom, "flag": {"alt": pais}}, "linescores": [{"value": 70}] * rondas}
+
+    def torneo(eid, nombre, estado, desc, comps, cal=None, ini="2026-11-12T05:00Z", fin="2026-11-16T05:00Z"):
+        d = {"events": [{"id": eid, "name": nombre, "date": ini, "endDate": fin,
+                         "links": [{"href": f"https://www.espn.com/golf/leaderboard?tournamentId={eid}"}],
+                         "competitions": [{"status": {"type": {"state": estado, "description": desc, "completed": estado == "post"}},
+                                           "competitors": comps}]}]}
+        if cal is not None:
+            d["leagues"] = [{"calendar": cal}]
+        return d
+    final = torneo("401850980", "Austin Championship", "post", "Final",
+                   [jug(1, "Chad Ramey", "-20"), jug(2, "Ben Kohles", "-18"), jug(3, "Trace Crowe", "-17"), jug(4, "Hayden Springer", "-16"),
+                    jug(5, "Blades Brown", "-16"), jug(6, "Erik van Rooyen", "-16", pais="South Africa"), jug(7, "Jordan Smith", "-15", pais="England"),
+                    jug(8, "Austin Smotherman", "-15"), jug(9, "Sami Valimaki", "-15", pais="Finland"), jug(10, "Joel Dahmen", "-14"),
+                    jug(11, "Mac Meissner", "-14"), jug(12, "Kristoffer Ventura", "-14", pais="Norway"), jug(13, "Kevin Yu", "-14"),
+                    jug(14, "Joaquin Niemann", "-9", pais="Chile"), jug(15, "Ricky Castillo", "-3", 2), jug(16, "Nicholas Lindheim", "-6", 4),
+                    jug(17, "Karl Vilips", "-2", 3)])
+    cal = [{"id": "401850979", "label": "WWT", "startDate": "2026-11-05T08:00Z", "endDate": "2026-11-08T08:00Z"},
+           {"id": "401850980", "label": "Austin", "startDate": "2026-11-12T08:00Z", "endDate": "2026-11-16T08:00Z"},
+           {"id": "401850981", "label": "The RSM Classic", "startDate": "2026-11-19T08:00Z", "endDate": "2026-11-22T08:00Z"},
+           {"id": "401850982", "label": "Hero", "startDate": "2026-12-03T08:00Z", "endDate": "2026-12-06T08:00Z"}]
+    programado = torneo("401850981", "The RSM Classic", "pre", "Scheduled",
+                        [jug(i, n, "E", 0) for i, n in enumerate(["David Skinns", "John Parry", "Robert Streb"], 1)], cal,
+                        ini="2026-11-19T05:00Z", fin="2026-11-22T05:00Z")
+    momento = dt.datetime(2026, 11, 19, 10, 30, tzinfo=dt.timezone.utc)   # 07:30 de Santiago
+    url = "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard"
+    pedidos = []
+
+    def pedir_texto(u):
+        pedidos.append(u)
+        return json.dumps(final) if u == url + "?dates=20261112" else None
+
+    # 1) Posiciones: ganador 1, empates T4, T7 y T10; 13 filas con empate pasan de 12 → solo los 10 primeros; chileno aparte; corte y retiros
+    r = B.golf_resumen(final, "pga")
+    pos = [(x["pos"], x["jugador"]) for x in r["leaderboard"]]
+    assert pos[:10] == [("1", "Chad Ramey"), ("2", "Ben Kohles"), ("3", "Trace Crowe"), ("T4", "Hayden Springer"), ("T4", "Blades Brown"),
+                        ("T4", "Erik van Rooyen"), ("T7", "Jordan Smith"), ("T7", "Austin Smotherman"), ("T7", "Sami Valimaki"), ("T10", "Joel Dahmen")], pos
+    assert pos[10:] == [("14", "Joaquin Niemann")] and r["leaderboard"][10]["pais"] == "CHI", pos
+    assert r["campeon"] == "Chad Ramey" and r["terminado"] and r["fin"] == "2026-11-16" and r["inicio"] == "2026-11-12" and r["tour"] == "PGA Tour"
+    filas = {x["jugador"]: x["pos"] for x in B.golf_posiciones(final["events"][0]["competitions"][0]["competitors"], True)}
+    assert filas["Ricky Castillo"] == "CUT" and filas["Nicholas Lindheim"] == "—" and filas["Karl Vilips"] == "—" and filas["Mac Meissner"] == "T10"
+    # 2) Desempate: el ganador es 1 con el mismo score; los que perdieron quedan T2 (o 2 si es uno)
+    po = B.golf_posiciones([jug(1, "A", "-15"), jug(2, "B", "-15"), jug(3, "C", "-15"), jug(4, "D", "-12")], True)
+    assert [x["pos"] for x in po] == ["1", "T2", "T2", "4"], po
+    po = B.golf_posiciones([jug(1, "A", "-15"), jug(2, "B", "-15"), jug(3, "D", "E"), jug(4, "F", "+2")], True)
+    assert [x["pos"] for x in po] == ["1", "2", "3", "4"], po
+    # en juego (ronda 2 completa): sin ganador, empates desde el primero
+    po = B.golf_posiciones([jug(1, "A", "-9", 2), jug(2, "B", "-9", 2), jug(3, "C", "-7", 2)], False)
+    assert [x["pos"] for x in po] == ["T1", "T1", "3"], po
+    assert [B._a_par(x) for x in ("E", "-20", "+3", "", None, "CUT", "par")] == [0, -20, 3, None, None, None, 0]
+    # 3) Programado → el fixture pasa a ser el del último terminado; golf.json lo dice
+    txt, info = B.golf_fixture(url, json.dumps(programado), pedir_texto, momento)
+    assert json.loads(txt)["events"][0]["id"] == "401850980" and pedidos == [url + "?dates=20261112"], pedidos
+    assert info["fixture"] == "el último torneo terminado" and info["semana"]["torneo"] == "The RSM Classic" and not info["semana"]["terminado"]
+    assert info["ultimo_final"]["campeon"] == "Chad Ramey"
+    # 4) Ronda 1 en juego o completa → también el último terminado; ronda 2 completa o final → el de la semana tal cual
+    for desc, sirve in (("Round 1 - In Progress", False), ("Round 1 - Play Complete", False), ("Round 1 - Suspended", False),
+                        ("Round 2 - Play Complete", True), ("Round 3 - Play Complete", True), ("Round 3 - In Progress", False)):
+        d = torneo("401850981", "The RSM Classic", "in", desc, [jug(1, "A", "-8", 1)], cal)
+        assert B.golf_publicable(d) is sirve, desc
+    assert B.golf_publicable(final) and not B.golf_publicable(programado) and not B.golf_publicable({}) and not B.golf_publicable({"events": [{}]})
+    txt, info = B.golf_fixture(url, json.dumps(final), pedir_texto, momento)
+    assert txt == json.dumps(final) and info["ultimo_final"]["campeon"] == "Chad Ramey" and info["fixture"] == "el torneo de la semana"
+    # 5) El último del calendario no terminó (lluvia): se usa el anterior; uno que trae otro torneo no sirve
+    pedidos.clear()
+    ww = torneo("401850979", "World Wide Technology Championship", "post", "Final", [jug(1, "X", "-25"), jug(2, "Y", "-20")],
+                ini="2026-11-05T05:00Z", fin="2026-11-08T05:00Z")
+    def pedir_lluvia(u):
+        pedidos.append(u)
+        if u.endswith("20261112"):
+            return json.dumps(torneo("401850980", "Austin Championship", "in", "Round 4 - Suspended", [jug(1, "A", "-18", 3)]))
+        return json.dumps(ww) if u.endswith("20261105") else None
+    txt, info = B.golf_fixture(url, json.dumps(programado), pedir_lluvia, dt.datetime(2026, 11, 16, 12, tzinfo=dt.timezone.utc))
+    assert json.loads(txt)["events"][0]["id"] == "401850979" and pedidos == [url + "?dates=20261112", url + "?dates=20261105"], pedidos
+    txt, info = B.golf_fixture(url, json.dumps(programado), lambda u: json.dumps(ww), momento)   # pide Austin y llega otro: sigue al anterior
+    assert json.loads(txt)["events"][0]["id"] == "401850979" and info["ultimo_final"]["torneo"] == "World Wide Technology Championship"
+    solo_ww = torneo("401850981", "The RSM Classic", "pre", "Scheduled", [jug(1, "A", "E", 0)], [cal[0], cal[2]])
+    txt, info = B.golf_fixture(url, json.dumps(solo_ww), lambda u: json.dumps(final), momento)   # siempre llega uno que no es el pedido
+    assert json.loads(txt)["events"][0]["id"] == "401850981" and info["ultimo_final"] is None and info["motivo"]
+    # 6) Sin calendario, sin red o con basura: el fixture queda como estaba (nunca se cae) y queda el motivo
+    for mal in (torneo("401850981", "The RSM Classic", "pre", "Scheduled", [jug(1, "A", "E", 0)]),
+                torneo("401850981", "The RSM Classic", "pre", "Scheduled", [jug(1, "A", "E", 0)], [{"id": "x"}, "basura", None])):
+        txt, info = B.golf_fixture(url, json.dumps(mal), lambda u: None, momento)
+        assert json.loads(txt)["events"][0]["id"] == "401850981" and info["ultimo_final"] is None and info["motivo"]
+    txt, info = B.golf_fixture(url, json.dumps(programado), lambda u: "no es json", momento)
+    assert info["ultimo_final"] is None
+    assert B.golf_fixture(url, "no es json", pedir_texto, momento) == ("no es json", None)
+    # 7) Dentro de fixtures(): el fixture del PGA queda con el torneo terminado y datos/golf.json se escribe
+    viejos = B.pedir, B.robots_permite, B.ahora
+    def pedir(u, estado, clave, **k):
+        estado[clave] = {"ok": True}
+        if u == url:
+            return json.dumps(programado)
+        if u == url + "?dates=20261112":
+            return json.dumps(final)
+        if "espn" in u:
+            return json.dumps({"events": []})
+        return None
+    B.pedir, B.robots_permite = pedir, lambda u, e: True
+    B.ahora = lambda: dt.datetime(2026, 11, 19, 7, 30, tzinfo=B.TZ)
+    try:
+        with tempfile.TemporaryDirectory() as d:
+            B.fixtures({}, dt.date(2026, 11, 19), d)
+            fx = json.loads(gzip.open(os.path.join(d, "fixtures", B.nombre_fixture(url) + ".gz"), "rt", encoding="utf-8").read())
+            assert fx["events"][0]["name"] == "Austin Championship"
+            g = json.load(open(os.path.join(d, "golf.json"), encoding="utf-8"))
+            assert g["tours"]["pga"]["ultimo_final"]["leaderboard"][3]["pos"] == "T4" and g["tours"]["pga"]["semana"]["torneo"] == "The RSM Classic"
+    finally:
+        B.pedir, B.robots_permite, B.ahora = viejos
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:
