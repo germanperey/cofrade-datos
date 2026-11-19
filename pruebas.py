@@ -2016,6 +2016,136 @@ def radar_de_conflictos_nuevos():
     finally:
         B.ahora = viejo
 
+
+@prueba
+def proyecciones_de_crecimiento_a_4_anios():
+    """19-11-2026 (Germán: «Proyección de crecimiento en Chile durante los próximos 4 años»): el FMI sale de su base oficial y manda sobre
+    lo copiado a mano; el promedio solo usa proyecciones de los últimos ~6 meses y el centro de cada rango; las noticias son de Chile y del
+    tema, recientes y sin repetir; y si el FMI no responde, queda lo verificado del archivo."""
+    import tempfile
+    hoy = dt.date(2026, 11, 19)
+    assert B.num_proy("0,25 a 0,75") == 0.5 and B.num_proy("2,4") == 2.4 and B.num_proy("-1,8") == -1.8 and B.num_proy("0") == 0.0
+    assert B.num_proy("") is None and B.num_proy(None) is None and B.num_proy("s/d") is None
+    cur = {"nota": "x", "instituciones": [
+        {"clave": "fmi_weo", "api": "fmi", "fecha": "2026-10-13", "pib": {"2026": "9,9", "2027": "9,9"}, "inflacion": {"tipo": "promedio anual"}},
+        {"clave": "bcch_ipom", "fecha": "2026-09-09", "pib": {"2026": "0,25 a 0,75", "2027": "2 a 3", "2028": "2,25 a 3,25"}, "revisar_desde": "2026-12-16"},
+        {"clave": "vieja", "fecha": "2025-11-01", "pib": {"2027": "9,0"}},   # de hace más de 6 meses: no entra al promedio
+        {"clave": "ocde_eo", "fecha": "2026-06-03", "pib": {"2027": "2,5"}, "revisar_desde": "2026-11-01"}]}
+    tit = {"secciones": {"economia/chile": {"notas": [
+        {"titulo": "FMI recorta el crecimiento de Chile a 0,6% en 2026", "fuente": "CNN Chile (RSS)", "fecha": "2026-11-18 10:00", "url": "https://a.cl/1"},
+        {"titulo": "FMI recorta el crecimiento de Chile a 0,6% en 2026", "fuente": "Otro (RSS)", "fecha": "2026-11-18 11:00", "url": "https://b.cl/1"},
+        {"titulo": "Proyección de crecimiento del PIB de Chile para 2027", "fuente": "DF", "fecha": "2026-10-01 10:00", "url": "https://a.cl/vieja"},
+        {"titulo": "Crecimiento de Brasil se modera", "fuente": "DF", "fecha": "2026-11-18 10:00", "url": "https://a.cl/brasil"},
+        {"titulo": "Banco Central: Imacec de septiembre crece 0,2%", "fuente": "La Tercera (RSS)", "fecha": "2026-11-19 09:00", "url": "https://a.cl/2"},
+        {"titulo": "Superintendencia multa a una AFP", "fuente": "DF", "fecha": "2026-11-19 09:00", "url": "https://a.cl/3"}]}}}
+    vistos = []
+    serie = {"NGDP_RPCH": {"2025": 2.5, "2026": 0.6, "2027": 2.6, "2028": 2.4, "2029": 2.3, "2030": 2.3, "2031": 2.3, "1990": 3.7},
+             "PCPIPCH": {"2026": 3.7, "2027": 3.5}, "LUR": {"2026": 9.5, "2030": 7.9}}
+    viejo = B.pedir, B.robots_permite
+
+    def pedir(url, estado, clave, **k):
+        vistos.append(url)
+        ind = url.split("/")[-2]
+        estado[clave] = {"ok": ind in serie}
+        return {"values": {ind: {"CHL": serie[ind]}}} if ind in serie else None
+    B.pedir, B.robots_permite = pedir, (lambda u, e: True)
+    try:
+        with tempfile.TemporaryDirectory() as d:
+            json.dump(cur, open(os.path.join(d, "proyecciones-instituciones.json"), "w"))
+            e = {}
+            r = B.proyecciones_chile(e, hoy, base=d, titulares=tit)
+            assert all(u.startswith("https://www.imf.org/external/datamapper/api/v1/") and u.endswith("/CHL") for u in vistos) and len(vistos) == 5, vistos
+            assert r["anios"] == ["2027", "2028", "2029", "2030"] and r["anio_base"] == 2026
+            assert r["fmi"]["series"]["pib"]["2027"] == 2.6 and "1990" not in r["fmi"]["series"]["pib"] and r["fmi"]["series"]["desempleo"]["2030"] == 7.9
+            f = next(x for x in r["instituciones"] if x["clave"] == "fmi_weo")
+            assert f["pib"]["2027"] == "2,6" and f["pib"]["2030"] == "2,3" and f["inflacion"]["2027"] == "3,5" and f["inflacion"]["tipo"] == "promedio anual"
+            p = r["promedio"]
+            assert p["2027"] == {"valor": 2.5, "min": 2.5, "max": 2.6, "n": 3}, p["2027"]   # FMI 2,6 + IPoM 2,5 (centro de 2 a 3) + OCDE 2,5; la vieja no
+            assert p["2028"]["n"] == 2 and p["2028"]["valor"] == 2.6 and p["2030"] == {"valor": 2.3, "min": 2.3, "max": 2.3, "n": 1}
+            t = [n["titulo"] for n in r["noticias"]]
+            assert t == ["Banco Central: Imacec de septiembre crece 0,2%", "FMI recorta el crecimiento de Chile a 0,6% en 2026"], t
+            assert r["noticias"][1]["fuente"] == "CNN Chile"
+            assert r["revisar"] == ["ocde_eo"] and "ocde_eo" in e["proyecciones"]["error"]
+            serie.clear()   # el FMI no responde: quedan las cifras verificadas del archivo
+            r2 = B.proyecciones_chile({}, hoy, base=d, titulares=None)
+            assert r2["fmi"] is None and next(x for x in r2["instituciones"] if x["clave"] == "fmi_weo")["pib"]["2027"] == "9,9" and r2["noticias"] == []
+        with tempfile.TemporaryDirectory() as d:   # sin archivo ni FMI: nada (no se escribe un archivo vacío)
+            assert B.proyecciones_chile({}, hoy, base=d) is None
+        real = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "proyecciones-instituciones.json"), encoding="utf-8"))
+        for x in real["instituciones"]:   # el archivo verificado: cada institución con fecha, enlace, informe y al menos un PIB legible
+            assert B.re.match(r"^\d{4}-\d{2}-\d{2}$", x["fecha"]) and x["url"].startswith("https://") and x["informe"] and x["corto"] and x["corto_en"], x["clave"]
+            assert any(B.num_proy(v) is not None for k, v in x["pib"].items() if k.isdigit()), x["clave"]
+    finally:
+        B.pedir, B.robots_permite = viejo
+
+
+@prueba
+def encuesta_de_expectativas_sola_desde_el_banco_central():
+    """19-11-2026: la mediana de PIB de la Encuesta de Expectativas se lee sola cada mes del Banco Central. Solo series F089 de PIB anual
+    (nada de minero, trimestral ni promedio); un año con dos candidatas queda fuera; el 0 % y los negativos SÍ cuentan (cierres_bcch los
+    botaba); con menos de 2 años o sin cuenta, queda la cifra copiada a mano."""
+    import tempfile
+    hoy = dt.date(2026, 11, 19)
+    cat = [{"id": "F089.PIB.V12.2026.M", "titulo": "PIB (Variaciones 12 meses) - Año 2026 / Mediana"},
+           {"id": "F089.PIB.V12.2027.M", "titulo": "Expectativas PIB (Variaciones 12 meses) - Año 2027 / Mediana"},
+           {"id": "F089.PIB.V12.2028.M", "titulo": "PIB, año 2028 | Variación 12 meses, Mediana | BCCh"},
+           {"id": "F089.PIBM.V12.2027.M", "titulo": "PIB minero (Variaciones 12 meses) - Año 2027 / Mediana"},
+           {"id": "F089.PIB.TRI.2026.M", "titulo": "PIB trimestral - Año 2026"},
+           {"id": "F089.PIB.V12.2025.M", "titulo": "PIB (Variaciones 12 meses) - Año 2025 / Mediana"},
+           {"id": "F089.PIB.V12.2031.M", "titulo": "PIB (Variaciones 12 meses) - Año 2031 / Mediana"},
+           {"id": "F022.PIB.V12.2027.M", "titulo": "PIB 2027"},
+           {"id": "F089.CHOG.V12.2027.M", "titulo": "Consumo hogares e IPSFL - Año 2027 / Mediana"}]
+    assert B.eee_pib_series(cat, hoy) == {2026: "F089.PIB.V12.2026.M", 2027: "F089.PIB.V12.2027.M", 2028: "F089.PIB.V12.2028.M"}
+    dos = cat + [{"id": "F089.PIB.VAR.2028.M", "titulo": "PIB - Año 2028 / Mediana"}]
+    assert B.eee_pib_series(dos, hoy) == {2026: "F089.PIB.V12.2026.M", 2027: "F089.PIB.V12.2027.M"}   # 2028 ambiguo: fuera
+    assert B.coma(2.7) == "2,7" and B.coma(3.0) == "3" and B.coma(0.0) == "0" and B.coma(-0.5) == "-0,5" and B.coma(-0.001) == "0"
+    obs = lambda *xs: {"Series": {"Obs": [{"indexDateString": f, "value": v, "statusCode": "OK"} for f, v in xs]}}
+    assert B.obs_bcch(obs(("01-10-2026", "0.0"), ("01-11-2026", "-0,3"), ("01-12-2026", "1"), ("01-09-2026", "NaN")), hoy) == \
+        [("2026-10-01", 0.0), ("2026-11-01", -0.3)]
+    datos = {"F089.PIB.V12.2026.M": obs(("01-10-2026", "0.2"), ("01-11-2026", "0")),
+             "F089.PIB.V12.2027.M": obs(("01-10-2026", "2.8"), ("01-11-2026", "3")),
+             "F089.PIB.V12.2028.M": obs(("01-10-2026", "2.6"))}   # 2028 no salió en noviembre: no se mezcla con octubre
+    pedidos = []
+
+    def pedir(url, estado, clave, **k):
+        pedidos.append(url)
+        sid = url.split("timeseries=")[1].split("&")[0] if "timeseries=" in url else ""
+        return datos.get(sid)
+    viejo = B.pedir, B.robots_permite, B._bcch_auth
+    B.pedir, B.robots_permite, B._bcch_auth = pedir, (lambda u, e: True), (lambda: "token=x")
+    try:
+        r = B.eee_pib({}, hoy, cat)
+        assert r == {"mes": "2026-11", "pib": {"2026": "0", "2027": "3"}, "series": {"2026": "F089.PIB.V12.2026.M", "2027": "F089.PIB.V12.2027.M"}}, r
+        assert all("function=GetSeries" in u and "token=x" in u for u in pedidos) and len(pedidos) == 3
+        cur = {"instituciones": [{"clave": "bcch_eee", "fecha": "2026-11-10", "via": "Emol", "url": "https://www.emol.com/x",
+                                  "pib": {"2026": "9", "2027": "9", "2028": "2,7"}, "inflacion": {"tipo": "a diciembre", "mes": "2026-10", "2027": "3,2"}}]}
+        with tempfile.TemporaryDirectory() as d:
+            json.dump(cur, open(os.path.join(d, "proyecciones-instituciones.json"), "w"))
+            p = B.proyecciones_chile({}, hoy, base=d, catalogo=cat, tpm={"encuesta": "2026-11", "trayectoria": [["2026-11", 4.5]]})
+            x = p["instituciones"][0]
+            assert x["pib"] == {"2026": "0", "2027": "3"} and "via" not in x and x["url"] == B.EEE_URL and x["fecha"] == "2026-11-01", x
+            assert x["fecha_texto"] == "noviembre de 2026" and x["fecha_texto_en"] == "November 2026" and "noviembre de 2026" in x["informe"]
+            assert x["inflacion"]["nota"] == "de la encuesta publicada antes"   # la inflación copiada es de octubre: se avisa
+            assert p["promedio"]["2026"]["valor"] == 0.0 and p["tpm_esperada"]["trayectoria"] == [["2026-11", 4.5]]
+            cur["instituciones"][0]["inflacion"]["mes"] = "2026-11"
+            json.dump(cur, open(os.path.join(d, "proyecciones-instituciones.json"), "w"))
+            assert "nota" not in B.proyecciones_chile({}, hoy, base=d, catalogo=cat)["instituciones"][0]["inflacion"]
+            datos["F089.PIB.V12.2027.M"] = None   # un solo año leído: no alcanza, queda la cifra copiada
+            p2 = B.proyecciones_chile({}, hoy, base=d, catalogo=cat, tpm={"trayectoria": []})
+            assert p2["instituciones"][0]["pib"]["2027"] == "9" and p2["instituciones"][0]["via"] == "Emol" and p2["tpm_esperada"] is None
+            B._bcch_auth = lambda: ""   # sin cuenta del Banco Central: ni se intenta
+            n = len(pedidos)
+            B.proyecciones_chile({}, hoy, base=d, catalogo=cat)
+            assert not any("bcentral" in u or "timeseries" in u for u in pedidos[n:]), pedidos[n:]
+        with tempfile.TemporaryDirectory() as d:   # catálogo: se vuelve a pedir si es de antes de la Encuesta o no existe
+            assert B.catalogo_viejo(d)
+            json.dump({"fecha": "2026-11-16", "series": []}, open(os.path.join(d, "tasas-bcch-catalogo.json"), "w"))
+            assert B.catalogo_viejo(d)
+            json.dump({"fecha": "2026-11-19", "series": []}, open(os.path.join(d, "tasas-bcch-catalogo.json"), "w"))
+            assert not B.catalogo_viejo(d)
+    finally:
+        B.pedir, B.robots_permite, B._bcch_auth = viejo
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

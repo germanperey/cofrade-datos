@@ -2380,8 +2380,20 @@ def tasas_catalogo(estado):
     if not robots_permite(url, estado):
         return []
     infos = (pedir(url, estado, "bcch_catalogo_mensual", espera=(0, 30), limite=90) or {}).get("SeriesInfos") or []
-    return [{"id": x.get("seriesId"), "titulo": x.get("spanishTitle"), "ultima": x.get("lastObservation")}
-            for x in infos if isinstance(x, dict) and TASAS_DIAG.search(f"{x.get('spanishTitle')}")]
+    sale = [{"id": x.get("seriesId"), "titulo": x.get("spanishTitle"), "ultima": x.get("lastObservation")}
+            for x in infos if isinstance(x, dict) and (TASAS_DIAG.search(f"{x.get('spanishTitle')}") or str(x.get("seriesId") or "").startswith("F089."))]
+    return sorted(sale, key=lambda x: not str(x["id"] or "").startswith("F089."))   # 19-11-2026: la Encuesta de Expectativas primero (no la corta el tope)
+
+
+CATALOGO_DESDE = "2026-11-19"   # el catálogo de antes de esta fecha no traía las series de la Encuesta de Expectativas (PIB)
+
+
+def catalogo_viejo(salida):
+    try:
+        f = str((json.load(open(os.path.join(salida, "tasas-bcch-catalogo.json"), encoding="utf-8")) or {}).get("fecha") or "")
+    except (OSError, ValueError):
+        return True
+    return f < CATALOGO_DESDE
 
 
 def cierres_mindicador(j, hoy):
@@ -2924,6 +2936,171 @@ def paginas_sii(anio=None):
              f"SII: valor de la UF de cada día de {a} (para confirmar la UF de hoy)")]
 
 
+# ---------- 19-11-2026: «Proyección de crecimiento en Chile durante los próximos 4 años» (Germán: «basándote en el Banco Central de
+# Chile y junto con los principales Organismos internacionales… gráficos y noticias que detallen cuál es la tendencia y los indicadores
+# esperados»). El FMI se lee solo de su base de datos oficial (datamapper); las demás instituciones vienen de proyecciones-instituciones.json
+# (cada cifra con su fecha y enlace, verificadas); las noticias salen de los titulares que GitHub ya leyó. Lo dibuja el sitio.
+FMI_API = "https://www.imf.org/external/datamapper/api/v1"
+FMI_IND = (("pib", "NGDP_RPCH"), ("inflacion", "PCPIPCH"), ("desempleo", "LUR"), ("cuenta_corriente", "BCA_NGDPD"), ("deuda", "GGXWDG_NGDP"))
+PROY_TEMA = re.compile(r"proyecci|crecimiento|crecer[aá]n?\b|\bPIB\b|IPoM|\bFMI\b|Banco Mundial|\bOCDE\b|\bCepal\b|expectativas econ|"
+                       r"Finanzas P[uú]blicas|perspectivas econ|Imacec|recesi[oó]n|desaceleraci", re.I)
+PROY_CHILE = re.compile(r"\bChile\b|chilen|Banco Central|Hacienda|\bIPoM\b|Imacec", re.I)
+
+
+def num_proy(t):
+    """«0,25 a 0,75» → 0.5 (centro del rango); «2,4» → 2.4; «-1,8» → -1.8; otra cosa → None."""
+    xs = re.findall(r"-?\d+(?:,\d+)?", str(t if t is not None else ""))
+    try:
+        v = [float(x.replace(",", ".")) for x in xs[:2]]
+    except ValueError:
+        return None
+    return round(sum(v) / len(v), 3) if v else None
+
+
+MESES_ES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre")
+MESES_EN = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+EEE_URL = "https://www.bcentral.cl/web/banco-central/areas/encuestas-economicas/encuesta-expectativas-economicas"
+EEE_PIB_FUERA = re.compile(r"minero|trimestr|sector|resto|demanda|consumo|inversi|export|import|gasto|regi[oó]n|m[ií]nimo|m[aá]ximo|"
+                           r"promedio|percentil|desviaci|cuartil|dispersi", re.I)
+
+
+def coma(v):
+    """2.70 → «2,7»; 3.0 → «3»; 0.0 → «0»; -0.5 → «-0,5»."""
+    t = f"{float(v):.2f}".rstrip("0").rstrip(".")
+    return "0" if t in ("-0", "") else t.replace(".", ",")
+
+
+def obs_bcch(j, hoy):
+    """Como cierres_bcch, pero acepta ceros y negativos: una expectativa de crecimiento puede ser 0 % o menos."""
+    out = []
+    for o in (((j or {}).get("Series") or {}).get("Obs") or []):
+        m = re.match(r"(\d{2})-(\d{2})-(\d{4})$", str(o.get("indexDateString") or ""))
+        if not m or str(o.get("statusCode", "OK")).upper() != "OK":
+            continue
+        try:
+            v = float(str(o.get("value")).replace(",", "."))
+        except (TypeError, ValueError):
+            continue
+        f = f"{m.group(3)}-{m.group(2)}-{m.group(1)}"
+        if f < hoy.isoformat() and v == v and abs(v) < 50:
+            out.append((f, v))
+    return sorted(out)
+
+
+def eee_pib_series(catalogo, hoy):
+    """Catálogo mensual del Banco Central → {año: id} de la Encuesta de Expectativas Económicas (PIB, variación anual, mediana) para el año
+    en curso y los dos siguientes. Si un año tiene más de una candidata, queda fuera: mejor la cifra copiada a mano que una serie equivocada."""
+    por_anio = {}
+    for x in catalogo or []:
+        i, t = str((x or {}).get("id") or ""), str((x or {}).get("titulo") or "")
+        if not i.startswith("F089.") or not re.search(r"\bPIB\b", t) or EEE_PIB_FUERA.search(t):
+            continue
+        m = re.search(r"\.(20\d\d)\.M$", i) or re.search(r"\b(20\d\d)\b", t)
+        if m and hoy.year <= int(m.group(1)) <= hoy.year + 2:
+            por_anio.setdefault(int(m.group(1)), []).append(i)
+    return {a: L[0] for a, L in sorted(por_anio.items()) if len(L) == 1}
+
+
+def eee_pib(estado, hoy, catalogo):
+    """→ {mes «aaaa-mm», pib {año: «2,7»}, series} de la última Encuesta de Expectativas, o None (sin cuenta, sin series o con menos de 2 años)."""
+    auth = _bcch_auth()
+    ids = eee_pib_series(catalogo, hoy) if auth else {}
+    leidas = {}
+    for a, sid in ids.items():
+        url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={sid}&firstdate={hoy.year - 1}-01-01&lastdate={hoy.isoformat()}"
+        obs = obs_bcch(pedir(url, estado, f"proy_eee_{a}", espera=(0, 30), limite=60), hoy + dt.timedelta(days=1))
+        if obs:
+            leidas[str(a)] = obs[-1]
+    if not leidas:
+        return None
+    mes = max(f for f, _ in leidas.values())[:7]
+    pib = {a: coma(v) for a, (f, v) in sorted(leidas.items()) if f[:7] == mes}
+    return {"mes": mes, "pib": pib, "series": {a: ids[int(a)] for a in pib}} if len(pib) >= 2 else None
+
+
+def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tpm=None):
+    """→ {fmi, instituciones, promedio (año en curso y los 4 siguientes), noticias} para datos/proyecciones-chile.json, o None.
+    catalogo = series del catálogo mensual del Banco Central (datos/tasas-bcch-catalogo.json), para leer la Encuesta de Expectativas sola."""
+    base = base or os.path.dirname(os.path.abspath(__file__))
+    try:
+        cur = json.load(open(os.path.join(base, "proyecciones-instituciones.json"), encoding="utf-8"))
+    except (OSError, ValueError):
+        cur = {}
+    inst = [dict(x) for x in (cur.get("instituciones") or []) if isinstance(x, dict) and x.get("clave")]
+    fmi = {}
+    for clave, ind in FMI_IND:
+        url = f"{FMI_API}/{ind}/CHL"
+        if _no_permitido(url, estado, f"proy_fmi_{clave}"):
+            continue
+        j = pedir(url, estado, f"proy_fmi_{clave}", espera=(0, 10), limite=40)
+        v = ((((j or {}).get("values") or {}).get(ind) or {}).get("CHL")) if isinstance(j, dict) else None
+        serie = {}
+        for k, x in (v or {}).items():
+            if re.match(r"^\d{4}$", str(k)) and hoy.year - 3 <= int(k) <= hoy.year + 5 and isinstance(x, (int, float)):
+                serie[str(k)] = round(float(x), 1)
+        if serie:
+            fmi[clave] = serie
+    eee = eee_pib(estado, hoy, catalogo) if catalogo is not None else None
+    for x in inst:   # la Encuesta de Expectativas leída del Banco Central manda sobre lo copiado a mano (llega sola cada mes)
+        if x.get("clave") == "bcch_eee" and eee:
+            anio, mes = int(eee["mes"][:4]), int(eee["mes"][5:7])
+            x.update(pib=dict(eee["pib"]), fecha=eee["mes"] + "-01", fecha_texto=f"{MESES_ES[mes - 1]} de {anio}", fecha_texto_en=f"{MESES_EN[mes - 1]} {anio}",
+                     informe=f"Encuesta de Expectativas Económicas de {MESES_ES[mes - 1]} de {anio} (mediana)",
+                     informe_en=f"Economic Expectations Survey, {MESES_EN[mes - 1]} {anio} (median)", url=EEE_URL,
+                     fuente_datos="base de datos del Banco Central", series=eee["series"])
+            x.pop("via", None)
+            if x.get("inflacion") and str((x.get("inflacion") or {}).get("mes") or "") != eee["mes"]:
+                x["inflacion"] = dict(x["inflacion"], nota="de la encuesta publicada antes", nota_en="from the previous survey")
+    for x in inst:   # el FMI de la base oficial manda sobre lo copiado a mano (su edición nueva llega sola)
+        if x.get("api") == "fmi" and fmi.get("pib"):
+            x["pib"] = {k: str(v).replace(".", ",") for k, v in fmi["pib"].items()}
+            if fmi.get("inflacion"):
+                x["inflacion"] = dict(x.get("inflacion") or {}, **{k: str(v).replace(".", ",") for k, v in fmi["inflacion"].items()})
+            x["fuente_datos"] = "base de datos oficial del FMI"
+    anios = [str(a) for a in range(hoy.year + 1, hoy.year + 5)]
+    promedio = {}
+    for a in [str(hoy.year)] + anios:
+        vals = []
+        for x in inst:
+            try:
+                edad = (hoy - dt.date.fromisoformat(str(x.get("fecha"))[:10])).days
+            except ValueError:
+                continue
+            v = num_proy((x.get("pib") or {}).get(a))
+            if v is not None and 0 <= edad <= 200:   # solo proyecciones de los últimos ~6 meses
+                vals.append(v)
+        if vals:
+            promedio[a] = {"valor": round(sum(vals) / len(vals), 1), "min": round(min(vals), 2), "max": round(max(vals), 2), "n": len(vals)}
+    noticias, vistos = [], set()
+    secs = ((titulares or {}).get("secciones") or {}) if isinstance(titulares, dict) else {}
+    for sec in ("economia/chile", "perspectivas", "economia/mundo"):
+        for n in (secs.get(sec) or {}).get("notas") or []:
+            t, u, f = str(n.get("titulo") or "").strip(), str(n.get("url") or ""), str(n.get("fecha") or "")[:10]
+            if not t or not u.startswith("http") or not re.match(r"^\d{4}-\d{2}-\d{2}$", f):
+                continue
+            try:
+                if not 0 <= (hoy - dt.date.fromisoformat(f)).days <= 14:
+                    continue
+            except ValueError:
+                continue
+            clave_t = re.sub(r"\W+", " ", t.lower()).strip()[:80]
+            if PROY_TEMA.search(t) and PROY_CHILE.search(t + " " + str(n.get("resumen") or "")) and u not in vistos and clave_t not in vistos:
+                vistos.update((u, clave_t))
+                noticias.append({"titulo": t, "fuente": re.sub(r"\s*\((RSS|Atom)\)\s*$", "", str(n.get("fuente") or "")), "url": u, "fecha": f})
+    noticias.sort(key=lambda n: n["fecha"], reverse=True)
+    revisar = [x["clave"] for x in inst if str(x.get("revisar_desde") or "9999") <= hoy.isoformat()]
+    err = ([] if fmi else ["el FMI no respondió (quedan las cifras verificadas del archivo)"]) + (["revisar informe nuevo: " + ", ".join(revisar)] if revisar else [])
+    estado["proyecciones"] = {"ok": bool(fmi), "hora": ahora().isoformat(timespec="seconds"), "url": FMI_API, "n": len(inst),
+                              "fmi": sorted(fmi), "eee": bool(eee), "error": "; ".join(err)}
+    if not inst and not fmi:
+        return None
+    return {"generado": ahora().isoformat(timespec="minutes"), "anio_base": hoy.year, "anios": anios,
+            "fmi": {"series": fmi, "fuente": "Fondo Monetario Internacional, base de datos de Perspectivas de la Economía Mundial",
+                    "url": "https://www.imf.org/external/datamapper/profile/CHL"} if fmi else None,
+            "instituciones": inst, "promedio": promedio, "noticias": noticias[:6], "revisar": revisar, "nota": cur.get("nota") or "",
+            "tpm_esperada": tpm if isinstance(tpm, dict) and tpm.get("trayectoria") else None}
+
+
 class _SinEspejo(Exception):
     pass
 
@@ -3156,10 +3333,10 @@ def main(argv=None):
         escribir(os.path.join(a.salida, "tasas-bcch.json"), tasas_bcch(estado, hoy))
         escribir(os.path.join(a.salida, "historia.json"), historia_bcch(estado, hoy))
         escribir(os.path.join(a.salida, "gasto-funcional.json"), gasto_funcional(estado, a.salida, hoy))   # 14-11-2026: «7 pilares»
-        if hoy.weekday() == 0:
+        if hoy.weekday() == 0 or catalogo_viejo(a.salida):   # 19-11-2026: también si es de antes de sumar la Encuesta de Expectativas
             cat = tasas_catalogo(estado)
             if cat:
-                escribir(os.path.join(a.salida, "tasas-bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": cat[:1500]})
+                escribir(os.path.join(a.salida, "tasas-bcch-catalogo.json"), {"fecha": hoy.isoformat(), "series": cat[:2500]})
     except Exception as ex:   # noqa: BLE001
         estado["bcch_catalogo_mensual"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central",
                                            "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
@@ -3191,6 +3368,22 @@ def main(argv=None):
             escribir(os.path.join(a.salida, nombre), fn())
         except Exception as ex:   # noqa: BLE001
             estado[nombre.split(".")[0]] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": nombre, "error": type(ex).__name__}
+    try:   # 19-11-2026: proyección de crecimiento a 4 años (FMI oficial + instituciones verificadas + noticias del día); nunca detiene lo demás
+        try:
+            tit = json.load(open(os.path.join(a.salida, "titulares.json"), encoding="utf-8"))
+        except (OSError, ValueError):
+            tit = None
+        try:
+            cat = (json.load(open(os.path.join(a.salida, "tasas-bcch-catalogo.json"), encoding="utf-8")) or {}).get("series")
+        except (OSError, ValueError):
+            cat = None
+        try:
+            tpm = (json.load(open(os.path.join(a.salida, "tasas-bcch.json"), encoding="utf-8")) or {}).get("tpm_esperada")
+        except (OSError, ValueError):
+            tpm = None
+        escribir(os.path.join(a.salida, "proyecciones-chile.json"), proyecciones_chile(estado, hoy, titulares=tit, catalogo=cat, tpm=tpm))
+    except Exception as ex:   # noqa: BLE001
+        estado["proyecciones"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": FMI_API, "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
     escribir(os.path.join(a.salida, "estado.json"), resumen)
     for k, v in estado.items():
