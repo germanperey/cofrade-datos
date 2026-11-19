@@ -30,6 +30,10 @@ jobs:
       - name: Instalar librerías
         run: pip install --quiet requests==2.32.3 pandas==2.2.3 lxml==5.3.0 pdfplumber==0.11.4
       - name: Probar el programa
+        # 19-11-2026: una prueba con fecha fija caducó y, al fallar, frenó TODA la bajada de datos del día (15 corridas fallidas).
+        # Ahora las pruebas avisan, pero los datos del día se bajan y se guardan igual; al final la corrida se marca en rojo si alguna falló.
+        id: pruebas
+        continue-on-error: true
         run: python pruebas.py
       - name: Bajar datos oficiales
         env:   # 30-10-2026: cuenta GRATUITA de OpenSky (opcional). Sin estos dos secretos, OpenSky rechaza a GitHub (HTTP 403) y se sigue sin él
@@ -51,3 +55,8 @@ jobs:
           git diff --cached --quiet || git commit -m "Datos oficiales $(date -u +%Y-%m-%d)"
           # 01-11-2026: si otra corrida (o un archivo subido a mano) llegó antes, se junta y se reintenta (antes fallaba con error)
           for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 10; done
+      - name: Avisar si una prueba falló (los datos ya quedaron guardados)
+        if: steps.pruebas.outcome == 'failure'
+        run: |
+          echo "::error::Una prueba de pruebas.py falló. Los datos del día SÍ se bajaron y guardaron; revisar la prueba en el paso «Probar el programa»."
+          exit 1

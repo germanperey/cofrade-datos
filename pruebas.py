@@ -1888,7 +1888,7 @@ def vigia_revisa_que_en_vivo_tenga_todas_las_cifras():
 
         def json(self):
             return self._j
-    respuestas = {"/": P(txt='<div class="g-fila"></div>' + vieja), "/edicion": P(302, hdr={"Location": "/edicion/2026-11-17"}),
+    respuestas = {"/": P(txt='<div class="g-fila"></div>' + vieja), "/edicion": P(302, hdr={"Location": "/edicion/" + V.ahora().date().isoformat()}),   # 19-11-2026: con fecha fija la prueba caducó y trabó la bajada de datos
                   "/salud": P(j={"d1": True, "turnstile": True})}
     viejo_pedir = V.pedir
     try:
