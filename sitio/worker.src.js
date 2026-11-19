@@ -1291,6 +1291,7 @@ export default {
         // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde (la de hoy,
         // 10 minutos); en el navegador, ver la etiqueta más abajo (18-11). Los gráficos se dibujan cuando el lector llega a ellos (LENTO).
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
+        const pcP = proyeccionLeer(m[1], ctx);   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
         const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
@@ -1301,7 +1302,7 @@ export default {
         // de gráficos. Si nada cambió responde «sin cambios» (304) sin volver a mandar la página, así que abre igual de rápido.
         // 19-11-2026: «Proyección de crecimiento… próximos 4 años» (modulos/proyeccion.js). Sus cifras cambian sin que cambie la edición, así
         // que su versión también va en la etiqueta (si no, quien ya abrió la edición seguiría viendo las cifras de antes).
-        const pc = await proyeccionLeer(m[1], ctx);
+        const pc = await pcP;
         const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}"`;
         // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
         // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.

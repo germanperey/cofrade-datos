@@ -14,9 +14,9 @@ try { datos = JSON.parse(B.querySelector('.pc-datos').textContent); } catch (e) 
 if (!datos || !datos.anios || !datos.consenso) return;
 
 function pct(a) { return en ? a + '%' : String(a).replace('.', ',') + NB + '%'; }
-function fmt(v) {   // una cifra: 2.5 → «2,5 %» (inglés: «2.5%»)
+function fmt(v) {   // una cifra: 2.5 → «2,5 %» (inglés: «2.5%»); el redondeo es igual para positivos y negativos
   if (v == null || !isFinite(v)) return '';
-  var r = Math.round(v * 10) / 10;
+  var r = (v < 0 ? -1 : 1) * Math.round(Math.abs(v) * 10) / 10;
   return (r < 0 ? MENOS : '') + pct(Math.abs(r).toFixed(1));
 }
 function fmtL(v) {   // con la precisión publicada: 2,75 → «2,75 %»; 3 → «3 %»
@@ -118,7 +118,8 @@ function dibujarPib(cont) {
     var c = p[2];
     nodo('circle', { cx: p[0], cy: p[1], r: 6, fill: 'var(--pc-s1)', stroke: 'var(--card,#fff)', 'stroke-width': 2 }, svg);
     var det = c.n > 1 ? (en ? c.n + ' institutions · range ' : c.n + ' instituciones · rango ') + sinPct(fmtL(c.min)) + (en ? ' to ' : ' a ') + fmtL(c.max) : (en ? 'IMF only' : 'solo el FMI');
-    nodo('circle', { cx: p[0], cy: p[1], r: 13, fill: 'transparent', tabindex: 0, 'data-tt': '<b>' + p[3] + '</b> · ' + (en ? 'Average: ' : 'Promedio: ') + esc(fmt(c.v)) + '<br>' + esc(det) }, svg);
+    nodo('circle', { cx: p[0], cy: p[1], r: 13, fill: 'transparent', tabindex: 0, role: 'img', 'aria-label': p[3] + ': ' + (en ? 'average ' : 'promedio ') + fmt(c.v) + ', ' + det,
+      'data-tt': '<b>' + esc(p[3]) + '</b> · ' + (en ? 'Average: ' : 'Promedio: ') + esc(fmt(c.v)) + '<br>' + esc(det) }, svg);
   });
   cont.textContent = '';
   cont.appendChild(svg);
@@ -235,20 +236,27 @@ addEventListener('beforeprint', function () { visto = true; dibujar(true); });
 
 // ---------- noticias: sin repetir las que la edición ya trae ----------
 var VACIAS = ' para como tras desde entre sobre pero este esta estos estas segun hasta ante cual cuando donde porque durante mientras tiene tienen sera seria millones chile chilena chileno ';
-function palabras(s) {   // raíces de 6 letras de las palabras con contenido (y los montos de 3 cifras o más), como en GitHub
-  var o = {}, n = 0;
-  String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').split(' ').forEach(function (w) {
-    if (!(w.length >= 4 || (w.length === 3 && /^[0-9]+$/.test(w))) || VACIAS.indexOf(' ' + w + ' ') >= 0) return;
-    w = w.slice(0, 6);
-    if (!o[w]) { o[w] = 1; n++; }
+var SIGLAS = ' fmi pib ipc tpm bid cmf sii ine bce fed ';
+var MESES = { enero: '@ene', febrero: '@feb', marzo: '@mar', abril: '@abr', mayo: '@may', junio: '@jun', julio: '@jul', agosto: '@ago', septiembre: '@sep', setiembre: '@sep', octubre: '@oct', noviembre: '@nov', diciembre: '@dic' };
+function palabras(s) {   // la misma huella que usa GitHub: raíces de 6 letras, siglas (FMI, PIB…), cifras («#111149») y meses («@sep»)
+  var o = {};
+  s = String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  (s.match(/\d+(?:[.,]\d+)*/g) || []).forEach(function (n) { o['#' + n.replace(/[.](?=\d{3}(?!\d))/g, '').replace(',', '.')] = 1; });
+  s.split(/[^a-z0-9]+/).forEach(function (w) {
+    if (MESES[w]) { o[MESES[w]] = 1; return; }
+    if (!w || /^[0-9]+$/.test(w) || VACIAS.indexOf(' ' + w + ' ') >= 0) return;
+    if (w.length >= 4 || SIGLAS.indexOf(' ' + w + ' ') >= 0) o[w.slice(0, 6)] = 1;
   });
-  return { p: o, n: n };
+  return o;
 }
-function parecidas(a, b) {
-  if (a.n < 3 || b.n < 3) return false;
-  var c = 0;
-  for (var k in a.p) if (b.p[k]) c++;
-  return c >= 3 && c / Math.min(a.n, b.n) >= 0.5;
+function parecidas(a, b) {   // ¿la misma noticia? años o meses distintos: no; un mismo monto y 2 palabras: sí; o 3 palabras y el 40 % del más corto
+  var ya = [], yb = [], ma = [], mb = [], na = [], nb = [], pa = 0, pb = 0, c = 0, k;
+  for (k in a) { if (k[0] === '#') { na.push(k); if (/^#(19|20)\d\d$/.test(k)) ya.push(k); } else if (k[0] === '@') ma.push(k); else { pa++; if (b[k]) c++; } }
+  for (k in b) { if (k[0] === '#') { nb.push(k); if (/^#(19|20)\d\d$/.test(k)) yb.push(k); } else if (k[0] === '@') mb.push(k); else pb++; }
+  var comun = function (x, y) { return x.some(function (v) { return y.indexOf(v) >= 0; }); };
+  if ((ya.length && yb.length && !comun(ya, yb)) || (ma.length && mb.length && !comun(ma, mb))) return false;
+  if (c >= 2 && na.some(function (v) { return v.length >= 4 && ya.indexOf(v) < 0 && nb.indexOf(v) >= 0; })) return true;
+  return c >= 3 && c / Math.max(1, Math.min(pa, pb)) >= 0.4;
 }
 function sinRepetir() {
   var otras = [];

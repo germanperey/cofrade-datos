@@ -13,61 +13,77 @@ const PROY_MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "juli
 const PROY_MESES_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function pcEsc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]); }
-function pcNum(t) {   // «0,25 a 0,75» → 0,5 (centro del rango); «2,4» → 2,4; «−1,8» → −1,8
-  const xs = String(t == null ? "" : t).replace(/−/g, "-").match(/-?\d+(?:[.,]\d+)?/g);
+function pcLimpio(t) {   // menos tipográfico → «-»; «2-3» → «2 a 3» (un rango, no 2 y −3)
+  return String(t == null ? "" : t).replace(/[−–]/g, "-").replace(/(\d)\s*-\s*(?=\d)/g, "$1 a ");
+}
+function pcNum(t) {   // «0,25 a 0,75» → 0,5 (centro del rango); «2,4» o «2.4» → 2,4; «-1,8» → -1,8
+  const xs = pcLimpio(t).match(/-?\d+(?:[.,]\d+)?/g);
   if (!xs) return null;
   const v = xs.slice(0, 2).map((x) => Number(x.replace(",", ".")));
   return v.every(Number.isFinite) ? v.reduce((a, b) => a + b, 0) / v.length : null;
 }
 function pcRango(t) {   // «2 a 3» → [2, 3]; un solo número → null
-  const xs = String(t == null ? "" : t).replace(/−/g, "-").match(/-?\d+(?:[.,]\d+)?/g);
+  const xs = pcLimpio(t).match(/-?\d+(?:[.,]\d+)?/g);
   return xs && xs.length >= 2 ? [Number(xs[0].replace(",", ".")), Number(xs[1].replace(",", "."))] : null;
 }
-function pcFmt(v, en, dec = 1) {   // 2.5 → «2,5 %» / «2.5%»; −0.4 → «−0,4 %»
+function pcFmt(v, en, dec = 1) {   // 2.5 → «2,5 %» / «2.5%»; -0.4 → «−0,4 %» (redondeo igual para positivos y negativos)
   if (v == null || !Number.isFinite(v)) return "";
-  const r = Math.round(v * 10 ** dec) / 10 ** dec, a = Math.abs(r).toFixed(dec);
+  const r = Math.sign(v) * Math.round(Math.abs(v) * 10 ** dec) / 10 ** dec, a = Math.abs(r).toFixed(dec);
   return (r < 0 ? "−" : "") + (en ? a + "%" : a.replace(".", ",") + " %");
 }
 function pcFmtL(v, en) {   // con la precisión publicada: 4,25 → «4,25 %»; 4,5 → «4,5 %»
   if (v == null || !Number.isFinite(v)) return "";
   const a = String(Math.round(Math.abs(v) * 100) / 100);
-  return (v < 0 ? "\u2212" : "") + (en ? a + "%" : a.replace(".", ",") + "\u00a0%");
+  return (v < 0 ? "−" : "") + (en ? a + "%" : a.replace(".", ",") + " %");
 }
-function pcCelda(t, en) {   // como lo publicó la institución: «2 a 3» → «2–3»; «2,7» → «2,7» (inglés: «2.7»)
+function pcCelda(t, en) {   // como lo publicó la institución: «2 a 3» → «2–3»; «2,7» → «2,7» (inglés: «2.7»); lo que no es número, vacío
   const s = String(t == null ? "" : t).trim();
   if (!s) return "";
-  const r = pcRango(s);
+  const r = pcRango(s), n = pcNum(s);
+  if (!r && n == null) return "";
   const f = (x) => { const a = Math.abs(x).toString(); return (x < 0 ? "−" : "") + (en ? a : a.replace(".", ",")); };
-  return r ? f(r[0]) + "–" + f(r[1]) : f(pcNum(s));
+  return r ? f(r[0]) + "–" + f(r[1]) : f(n);
+}
+function pcMes(iso) {   // «2026-11-…» → 10 (índice del mes) o -1 si no es una fecha válida
+  const m = String(iso || "").match(/^\d{4}-(\d{2})/), k = m ? Number(m[1]) - 1 : -1;
+  return k >= 0 && k < 12 ? k : -1;
 }
 function pcFecha(iso, en) {   // «2026-11-19» → «19 de noviembre de 2026» / «November 19, 2026»
-  const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (!m) return "";
-  const d = Number(m[3]), mes = Number(m[2]) - 1;
-  return en ? `${PROY_MESES_EN[mes]} ${d}, ${m[1]}` : `${d} de ${PROY_MESES[mes]} de ${m[1]}`;
+  const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})/), k = pcMes(iso);
+  if (!m || k < 0) return "";
+  return en ? `${PROY_MESES_EN[k]} ${Number(m[3])}, ${m[1]}` : `${Number(m[3])} de ${PROY_MESES[k]} de ${m[1]}`;
 }
 function pcFechaCorta(iso, en) {   // «2026-11-18» → «18 nov» / «Nov 18»
-  const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (!m) return "";
-  return en ? `${PROY_MESES_EN[Number(m[2]) - 1].slice(0, 3)} ${Number(m[3])}` : `${Number(m[3])} ${PROY_MESES[Number(m[2]) - 1].slice(0, 3)}`;
+  const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})/), k = pcMes(iso);
+  if (!m || k < 0) return "";
+  return en ? `${PROY_MESES_EN[k].slice(0, 3)} ${Number(m[3])}` : `${Number(m[3])} ${PROY_MESES[k].slice(0, 3)}`;
 }
 function pcMesInforme(x, en) {   // fecha del informe para leer: «septiembre de 2026» / «September 2026»
-  if (en && x.fecha_texto_en) return x.fecha_texto_en;
-  if (!en && x.fecha_texto) return x.fecha_texto;
-  const m = String(x.fecha || "").match(/^(\d{4})-(\d{2})/);
-  return m ? (en ? `${PROY_MESES_EN[Number(m[2]) - 1]} ${m[1]}` : `${PROY_MESES[Number(m[2]) - 1]} de ${m[1]}`) : "";
+  if (en && x.fecha_texto_en) return String(x.fecha_texto_en);
+  if (!en && x.fecha_texto) return String(x.fecha_texto);
+  const m = String(x.fecha || "").match(/^(\d{4})-/), k = pcMes(x.fecha);
+  return m && k >= 0 ? (en ? `${PROY_MESES_EN[k]} ${m[1]}` : `${PROY_MESES[k]} de ${m[1]}`) : "";
 }
 
 function proyeccionValida(d) {
   if (!d || typeof d !== "object" || !Array.isArray(d.instituciones) || !Array.isArray(d.anios) || d.anios.length < 4) return false;
+  if (!Number.isInteger(d.anio_base) || !d.anios.slice(0, 4).every((a, i) => String(a) === String(d.anio_base + 1 + i))) return false;   // años de verdad, en orden
   const a1 = d.anios[0], p = d.promedio || {};
-  return d.instituciones.length >= 3 && !!p[a1] && Number.isFinite(p[a1].valor) && Number.isFinite(Number(d.anio_base));
+  return d.instituciones.filter((x) => x && x.activo !== false).length >= 3 && !!p[a1] && Number.isFinite(p[a1].valor) && Number.isFinite(p[a1].n);
 }
 
 async function proyeccionLeer(fecha, ctx) {
   if (!fecha || fecha < PROY_DESDE) return null;
   try {
-    const r = await desdeGitHub("datos/proyecciones-chile.json", 1800, ctx);
+    // Cada edición lee la foto de su fecha (datos/proyecciones/AAAA-MM-DD.json): una edición pasada no cambia nunca. La de hoy, si su
+    // foto aún no está, usa el archivo del día. Un «no está» se recuerda 2 minutos para no preguntarle a GitHub en cada visita.
+    const hoy = fechaChile(), neg = new Request("https://cache.cofrad.es/neg/proyecciones/" + fecha);
+    let r = null;
+    if (!(await caches.default.match(neg))) {
+      r = await desdeGitHub(`datos/proyecciones/${fecha}.json`, fecha < hoy ? 86400 : 1800, ctx);
+      if (!r) ctx.waitUntil(caches.default.put(neg, new Response("0", { headers: { "Cache-Control": "public, max-age=120" } })).catch(() => {}));
+    }
+    if (!r && fecha === hoy) r = await desdeGitHub("datos/proyecciones-chile.json", 1800, ctx);
     if (!r) return null;
     const ver = String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "").replace(/[^\w.-]/g, "").slice(0, 40);
     const d = await r.json();
@@ -80,7 +96,7 @@ async function proyeccionLeer(fecha, ctx) {
 // Las cifras que usan el bloque y los gráficos (una sola cuenta para los dos idiomas)
 function proyeccionCifras(d) {
   const base = Number(d.anio_base), anios = [String(base), ...d.anios.slice(0, 4).map(String)];
-  const inst = d.instituciones.filter((x) => x && x.clave && x.pib);
+  const inst = d.instituciones.filter((x) => x && x.clave && x.pib && x.activo !== false);   // las de hace más de ~6 meses no se muestran
   const prom = d.promedio || {};
   const puntos = [];
   for (const x of inst) for (const a of anios) {
@@ -102,12 +118,13 @@ function proyeccionKpis(c, en) {
   const [a0, a1, a2, a3, a4] = c.anios, P = c.prom, k = [];
   const kpi = (n, v, dd) => `<div class="kpi"><span class="kn">${pcEsc(n)}</span><span class="kv">${pcEsc(v)}</span><span class="kd">${pcEsc(dd)}</span></div>`;
   const rango = (p) => (p.n > 1 ? (en ? `range ${pcFmt(p.min, true)} to ${pcFmt(p.max, true)}` : `rango ${pcFmt(p.min, false).replace(" %", "")} a ${pcFmt(p.max, false)}`) : "");
-  const quien = (p) => (en ? `average of ${p.n} institutions` : `promedio de ${p.n} instituciones`);
+  const quien = (p) => (p.n === 1 ? (en ? "one institution" : "una institución") : en ? `average of ${p.n} institutions` : `promedio de ${p.n} instituciones`);
   for (const a of [a1, a2]) if (P[a]) k.push(kpi(en ? `GDP growth ${a}` : `Crecimiento del PIB ${a}`, pcFmt(P[a].valor, en), [quien(P[a]), rango(P[a])].filter(Boolean).join(" · ")));
   if (P[a1] && P[a2] && P[a3] && P[a4]) {   // cuánto más grande sería la economía en 4 años si se cumple el promedio de cada año
     const acum = ([a1, a2, a3, a4].reduce((x, a) => x * (1 + P[a].valor / 100), 1) - 1) * 100;
+    const solos = [a1, a2, a3, a4].filter((a) => P[a].n === 1), lista = solos.length > 1 ? solos.slice(0, -1).join(", ") + (en ? " and " : " y ") + solos[solos.length - 1] : solos.join("");
     k.push(kpi(en ? `Cumulative growth ${a1}–${a4}` : `Crecimiento acumulado ${a1}–${a4}`, (acum >= 0 ? "+" : "") + pcFmt(acum, en),
-      en ? `if each year's average holds${P[a3].n === 1 && P[a4].n === 1 ? ` (${a3} and ${a4}: IMF)` : ""}` : `si se cumple el promedio de cada año${P[a3].n === 1 && P[a4].n === 1 ? ` (${a3} y ${a4}: FMI)` : ""}`));
+      en ? `if each year's average holds${solos.length ? ` (${lista}: IMF only)` : ""}` : `si se cumple el promedio de cada año${solos.length ? ` (${lista}: solo FMI)` : ""}`));
   }
   const inf = c.infl[a1];
   if (inf && inf.n >= 2) k.push(kpi(en ? `Inflation ${a1}` : `Inflación ${a1}`, pcFmt(inf.v, en), en ? `average of ${inf.n} · Central Bank target: 3%` : `promedio de ${inf.n} · meta del Banco Central: 3 %`));
@@ -138,7 +155,7 @@ function proyeccionResumen(c, d, en) {
   const t = d.tpm_esperada && Array.isArray(d.tpm_esperada.trayectoria) ? d.tpm_esperada.trayectoria.filter((x) => Array.isArray(x) && Number.isFinite(x[1])) : [];
   if (t.length >= 2) {
     const ult = t[t.length - 1], m = String(ult[0]).match(/^(\d{4})-(\d{2})/);
-    if (m) {
+    if (m && pcMes(ult[0]) >= 0 && Number.isFinite(t[0][1])) {
       const cuando = en ? `${PROY_MESES_EN[Number(m[2]) - 1]} ${m[1]}` : `${PROY_MESES[Number(m[2]) - 1]} de ${m[1]}`;
       const g = (v) => pcFmtL(v, en), dif = ult[1] - t[0][1];
       o.push(Math.abs(dif) < 0.01
@@ -153,7 +170,7 @@ function proyeccionResumen(c, d, en) {
 
 function proyeccionTablaInst(c, en) {
   const filas = c.inst.map((x) => {
-    const inf = pcMesInforme(x, en), via = x.via ? (en ? ` (via ${x.via})` : ` (vía ${x.via})`) : "";
+    const inf = pcMesInforme(x, en) || "", via = x.via ? (en ? ` (via ${x.via})` : ` (vía ${x.via})`) : "";
     const celdas = c.anios.map((a) => { const t = pcCelda((x.pib || {})[a], en); return `<td class="pc-n"${t ? "" : ` aria-label="${en ? "no projection" : "sin proyección"}"`}>${t ? pcEsc(t) : "·"}</td>`; }).join("");
     return `<tr><th scope="row"><b>${pcEsc(en ? x.corto_en || x.corto : x.corto)}</b><br><span class="pc-inf">${pcEsc(inf)}${pcEsc(via)}</span></th>${celdas}</tr>`;
   }).join("");
@@ -181,8 +198,11 @@ function proyeccionNoticias(d, en) {
 }
 
 function proyeccionFuentes(c, d, en) {
-  const L = c.inst.map((x) => `<a href="${pcEsc(x.url)}" target="_blank" rel="noopener">${pcEsc((en ? x.institucion_en || x.corto_en || x.institucion : x.institucion) + ": " + (en ? x.informe_en || x.informe : x.informe) + (x.via ? (en ? ", via " : ", vía ") + x.via : ""))}</a>`);
-  if (d.fmi && d.fmi.url) L.push(`<a href="${pcEsc(d.fmi.url)}" target="_blank" rel="noopener">${en ? "IMF DataMapper (official database)" : "FMI, base de datos oficial (DataMapper)"}</a>`);
+  const L = c.inst.map((x) => {   // enlace solo si es https; sin «undefined» si falta un dato
+    const t = pcEsc([en ? x.institucion_en || x.corto_en || x.institucion : x.institucion, en ? x.informe_en || x.informe : x.informe].filter(Boolean).join(": ") + (x.via ? (en ? ", via " : ", vía ") + x.via : ""));
+    return /^https:\/\//.test(String(x.url || "")) ? `<a href="${pcEsc(x.url)}" target="_blank" rel="noopener">${t}</a>` : t;
+  });
+  if (d.fmi && /^https:\/\//.test(String(d.fmi.url || ""))) L.push(`<a href="${pcEsc(d.fmi.url)}" target="_blank" rel="noopener">${en ? "IMF DataMapper (official database)" : "FMI, base de datos oficial (DataMapper)"}</a>`);
   return `<p class="fuente">${en ? "Sources" : "Fuentes"}: ${L.join(" · ")}</p>`;
 }
 
@@ -271,8 +291,8 @@ html[data-theme="dark"] .pc-bloque{--pc-s1:#3987e5;--pc-s2:#B8892B;--pc-o:#a3abb
 </style>`;
 
 function proyeccionCrecimiento(fecha, pc) {   // los manejadores para HTMLRewriter; sin datos válidos no cambia nada
-  let puesto = false;
-  const html = pc && pc.d ? proyeccionHtml(pc.d) : "";
+  let puesto = false, html = "";
+  try { html = pc && pc.d ? proyeccionHtml(pc.d) : ""; } catch (e) { html = ""; }   // un dato raro nunca deja la edición sin cargar: sin bloque y listo
   return {
     cabeza: { element(e) { if (html) e.append(PROY_CSS, { html: true }); } },
     crec: { element(e) { if (!html || puesto) return; puesto = true; e.after(html, { html: true }); } },
