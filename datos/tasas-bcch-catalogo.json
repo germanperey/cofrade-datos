@@ -1,6 +1,1011 @@
 {
- "fecha": "2026-11-16",
+ "fecha": "2026-11-19",
  "series": [
+  {
+   "id": "F089.BP5.TAS.13.M",
+   "titulo": "Expectativas tasa BCP 5 años (%), dentro de 2 meses, mediana",
+   "ultima": "01-02-2023"
+  },
+  {
+   "id": "F089.BP5.TAS.14.M",
+   "titulo": "Expectativas tasa BCP 5 años (%), dentro de 11 meses, mediana",
+   "ultima": "01-02-2023"
+  },
+  {
+   "id": "F089.BP5.TAS.15.M",
+   "titulo": "Expectativas tasa BCP 5 años (%), Dentro de 23 meses, mediana",
+   "ultima": "01-02-2023"
+  },
+  {
+   "id": "F089.BU5.TAS.13.M",
+   "titulo": "Expectativas Tasa BCU 5 años (%), dentro de 2 meses, mediana",
+   "ultima": "01-02-2023"
+  },
+  {
+   "id": "F089.BU5.TAS.14.M",
+   "titulo": "Expectativas Tasa BCU 5 años (%), Dentro de 11 meses, mediana",
+   "ultima": "01-02-2023"
+  },
+  {
+   "id": "F089.BU5.TAS.15.M",
+   "titulo": "Expectativas Tasa BCU 5 años (%), Dentro de 23 meses, mediana",
+   "ultima": "01-02-2023"
+  },
+  {
+   "id": "F089.CHOG.V12.2019.M",
+   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2019 / Mediana",
+   "ultima": "01-01-2020"
+  },
+  {
+   "id": "F089.CHOG.V12.2020.M",
+   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2020 / Mediana",
+   "ultima": "01-12-2020"
+  },
+  {
+   "id": "F089.CHOG.V12.2021.M",
+   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2021 / Mediana",
+   "ultima": "01-12-2021"
+  },
+  {
+   "id": "F089.CHOG.V12.2022.M",
+   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2022 / Mediana",
+   "ultima": "01-12-2022"
+  },
+  {
+   "id": "F089.CHOG.V12.2023.M",
+   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2023 / Mediana",
+   "ultima": "01-12-2023"
+  },
+  {
+   "id": "F089.CHOG.V12.2024.M",
+   "titulo": "Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2024 / Mediana; Expectativas componentes de demanda; variación 12 meses; mensual; porcentaje; BCCh",
+   "ultima": "01-12-2024"
+  },
+  {
+   "id": "F089.CHOG.V12.2025.M",
+   "titulo": "Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2025 / Mediana",
+   "ultima": "01-12-2025"
+  },
+  {
+   "id": "F089.CHOG.V12.2026.M",
+   "titulo": "Consumo hogares e IPSFL, año 2026 | Componentes de demanda, Variación 12 meses, Mediana | BCCh | Mensual | Porcentaje | Índice",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.CHOG.V12.2027.M",
+   "titulo": "Expectativas Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2027 / Mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.84IFC.M",
+   "titulo": "Costos; influencia de factores de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.84IFDI.M",
+   "titulo": "Disponibilidad de insumos; influencia de factores de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.84IFMG.M",
+   "titulo": "Márgenes de ganancias; influencia de factores de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.84IFNV.M",
+   "titulo": "Niveles de venta; influencia de factores de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.84IFPD.M",
+   "titulo": "Precio del dólar; influencia de factores de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.87C.M",
+   "titulo": "Costos; evolución factores de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.87DI.M",
+   "titulo": "Disponibilidad de insumos; evolución factores de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.87MG.M",
+   "titulo": "Márgenes de ganancias; evolución factores de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.87NV.M",
+   "titulo": "Niveles de venta; evolución factores de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.87PV.M",
+   "titulo": "Precio de venta; evolución factores de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.88CF.M",
+   "titulo": "Costos fijos; evolución costos de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.88CL.M",
+   "titulo": "Costos laborales; evolución costos de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.88CMT.M",
+   "titulo": "Costo de maquinarias o técnología; evolución costos de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.88PI.M",
+   "titulo": "Precios de insumos; evolución costos de la empresas últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.89C.M",
+   "titulo": "Costos; evolución factores de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.89DI.M",
+   "titulo": "Disponibilidad de insumos; evolución factores de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.89MG.M",
+   "titulo": "Márgenes de ganancias; evolución factores de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.89NV.M",
+   "titulo": "Niveles de venta; evolución factores de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.89PV.M",
+   "titulo": "Precio de venta; evolución factores de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.90CF.M",
+   "titulo": "Costos fijos; evolución costos de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.90CL.M",
+   "titulo": "Costos laborales; evolución costos de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.90CMT.M",
+   "titulo": "Costo de maquinarias o técnología; evolución costos de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.90PI.M",
+   "titulo": "Precios de insumos; evolución costos de la empresas próximos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.91ICCF.M",
+   "titulo": "Costos fijos; influencia de costos de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.91ICCL.M",
+   "titulo": "Costos laborales; influencia de costos de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.91ICCMT.M",
+   "titulo": "Costo de maquinarias o tecnología; influencia de costos de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.IND.91ICPI.M",
+   "titulo": "Precios de insumos; influencia de costos de la empresa en el precio de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP); variación; índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.82A.M",
+   "titulo": "Aumentan; variaciones de costos de insumos últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.82D.M",
+   "titulo": "Disminuyen; variaciones de costos de insumos últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.82M.M",
+   "titulo": "Se mantienen; variaciones de costos de insumos últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.83A.M",
+   "titulo": "Aumentan; variaciones de precios de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.83D.M",
+   "titulo": "Disminuyen; variaciones de precios de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.83M.M",
+   "titulo": "Se mantienen; variaciones de precios de venta últimos 3 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.85A.M",
+   "titulo": "Aumentan; variaciones de costos de insumos próximos 12 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.85D.M",
+   "titulo": "Disminuyen; variaciones de costos de insumos próximos 12 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.85M.M",
+   "titulo": "Se mantienen; variaciones de costos de insumos próximos 12 meses, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.86A.M",
+   "titulo": "Aumentan; variaciones de precios de venta próximos 12 meses, datos trimestrales, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.86D.M",
+   "titulo": "Disminuyen; variaciones de precios de venta próximos 12 meses, datos trimestrales, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.86M.M",
+   "titulo": "Se mantienen; variaciones de precios de venta próximos 12 meses, datos trimestrales, Encuestas de expectativas y Determinantes de Precios (EDEP);  mensual;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.91EI12.M",
+   "titulo": "1 a 12 meses; expectativas de inflación de las empresas, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.EDEP.POR.91EI24.M",
+   "titulo": "13 a 24 meses; expectativas de inflación de las empresas, datos trimestre móvil, Encuestas de expectativas y Determinantes de Precios (EDEP);  índice;  BCCh",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F089.FBKF.V12.2019.M",
+   "titulo": "Evolución expectativas económicas -Formación bruta de capital fijo (Variaciones 12 meses) - Año 2019 / Mediana",
+   "ultima": "01-01-2020"
+  },
+  {
+   "id": "F089.FBKF.V12.2020.M",
+   "titulo": "Evolución expectativas económicas -Formación bruta de capital fijo (Variaciones 12 meses) - Año 2020 / Mediana",
+   "ultima": "01-12-2020"
+  },
+  {
+   "id": "F089.FBKF.V12.2021.M",
+   "titulo": "Evolución expectativas económicas -Formación bruta de capital fijo (Variaciones 12 meses) - Año 2021 / Mediana",
+   "ultima": "01-12-2021"
+  },
+  {
+   "id": "F089.FBKF.V12.2022.M",
+   "titulo": "Evolución expectativas económicas -Formación bruta de capital fijo (Variaciones 12 meses) - Año 2022 / Mediana",
+   "ultima": "01-12-2022"
+  },
+  {
+   "id": "F089.FBKF.V12.2023.M",
+   "titulo": "Evolución expectativas económicas -Formación bruta de capital fijo (Variaciones 12 meses) - Año 2023 / Mediana",
+   "ultima": "01-12-2023"
+  },
+  {
+   "id": "F089.FBKF.V12.2024.M",
+   "titulo": "Formación bruta de capital fijo (Variaciones 12 meses) - Año 2024 / Mediana; Expectativas componentes de demanda; variación 12 meses; mensual; porcentaje; BCCh",
+   "ultima": "01-12-2024"
+  },
+  {
+   "id": "F089.FBKF.V12.2025.M",
+   "titulo": "Formación bruta de capital fijo (Variaciones 12 meses) - Año 2025 / Mediana",
+   "ultima": "01-12-2025"
+  },
+  {
+   "id": "F089.FBKF.V12.2026.M",
+   "titulo": "Formación bruta de capital fijo, año 2026 | Componentes de demanda, Variación 12 meses, Mediana | BCCh | Mensual | Porcentaje | Índice",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.FBKF.V12.2027.M",
+   "titulo": "Expectativas Formación bruta de capital fijo (Variaciones 12 meses) - Año 2027 / Mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B1.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores, IPSOS ICC: Índice de confianza de los consumidores CHILE",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B1M.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores, IPSOS ICC: Índice de confianza de los consumidores, Chile, mensual",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B2.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores (IPSOS ICC), IPSOS ICC: Situación económica actual CHILE",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B2M.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores (IPSOS ICC), IPSOS ICC: Situación económica actual, Chile, Mensual",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B3.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores (IPSOS ICC), IPSOS ICC: Expectativas económicas CHILE",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B3M.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores (IPSOS ICC), IPSOS ICC: Expectativas económicas, Chile, Mensual",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B4.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores (IPSOS ICC), IPSOS ICC: Inversiones CHILE",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B4M.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores (IPSOS ICC), IPSOS ICC: Inversiones , Chile, Mensual",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B5.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores (IPSOS ICC), IPSOS ICC: Trabajo CHILE",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.ICC.IND.B5M.M",
+   "titulo": "Expectativas Económicas, Índice de Confianza de los Consumidores (IPSOS ICC), IPSOS ICC: Trabajo, Chile, Mensual",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.IMC.V12.10.M",
+   "titulo": "Expectativas IMACEC, un mes atrás, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IMCNM.V12.10.M",
+   "titulo": "Expectativas IMACEC No Minero, un mes atrás",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPC.V12.14.M",
+   "titulo": "Expectativas de inflación en 11 meses (variación 12 meses, mediana)",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPC.V12.15.M",
+   "titulo": "Expectativas de inflación en 23 meses (variación 12 meses, mediana)",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPC.V12.16.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2004 (12 meses)",
+   "ultima": "01-10-2004"
+  },
+  {
+   "id": "F089.IPC.V12.17.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2005 (12 meses)",
+   "ultima": "01-10-2005"
+  },
+  {
+   "id": "F089.IPC.V12.18.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2006 (12 meses)",
+   "ultima": "01-10-2006"
+  },
+  {
+   "id": "F089.IPC.V12.19.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2007 (12 meses)",
+   "ultima": "01-10-2007"
+  },
+  {
+   "id": "F089.IPC.V12.20.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2008 (12 meses)",
+   "ultima": "01-10-2008"
+  },
+  {
+   "id": "F089.IPC.V12.2017.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre 2017 (12 meses)",
+   "ultima": "01-10-2017"
+  },
+  {
+   "id": "F089.IPC.V12.2018.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre 2018 (12 meses)",
+   "ultima": "01-10-2018"
+  },
+  {
+   "id": "F089.IPC.V12.2019.M",
+   "titulo": "Expectativas inflación, variación IPC en %, diciembre 2019 (12 meses)",
+   "ultima": "01-10-2019"
+  },
+  {
+   "id": "F089.IPC.V12.2020.M",
+   "titulo": "Expectativas inflación, variación IPC en %, diciembre 2020 (12 meses)",
+   "ultima": "01-10-2020"
+  },
+  {
+   "id": "F089.IPC.V12.2021.M",
+   "titulo": "Expectativas de inflación, variación IPC en %, diciembre 2021 (12 meses)",
+   "ultima": "01-10-2021"
+  },
+  {
+   "id": "F089.IPC.V12.2022.M",
+   "titulo": "Expectativas de inflación, variación IPC en %, diciembre 2022 (12 meses)",
+   "ultima": "01-10-2022"
+  },
+  {
+   "id": "F089.IPC.V12.2023.M",
+   "titulo": "Expectativas de inflación, variación IPC en %, diciembre 2023 (12 meses)",
+   "ultima": "01-10-2023"
+  },
+  {
+   "id": "F089.IPC.V12.2024.M",
+   "titulo": "Expectativas de inflación, variación IPC en %, diciembre 2024 (12 meses)",
+   "ultima": "01-10-2024"
+  },
+  {
+   "id": "F089.IPC.V12.2025.M",
+   "titulo": "Expectativas de inflación, variación IPC en %, diciembre 2025 (12 meses)",
+   "ultima": "01-10-2025"
+  },
+  {
+   "id": "F089.IPC.V12.2026.M",
+   "titulo": "Inflación, diciembre 2026",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.IPC.V12.2027.M",
+   "titulo": "Inflación, diciembre 2027",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPC.V12.2028.M",
+   "titulo": "Inflación, diciembre 2028 | Encuesta de Expectativas Económica (EEE)",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPC.V12.21.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2009 (12 meses)",
+   "ultima": "01-10-2009"
+  },
+  {
+   "id": "F089.IPC.V12.22.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2010 (12 meses)",
+   "ultima": "01-12-2010"
+  },
+  {
+   "id": "F089.IPC.V12.23.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2011 (12 meses)",
+   "ultima": "01-10-2011"
+  },
+  {
+   "id": "F089.IPC.V12.25.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2012 (12 meses)",
+   "ultima": "01-10-2012"
+  },
+  {
+   "id": "F089.IPC.V12.34.M",
+   "titulo": "Evolución expectativas económicas -Inflación (Variaciones IPC en %)-Dic.2013(12 meses)",
+   "ultima": "01-10-2013"
+  },
+  {
+   "id": "F089.IPC.V12.35.M",
+   "titulo": "Evolución expectativas económicas / Inflación / En 35 meses / variación 12 meses / Mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPC.V12.37.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre2014 (12 meses)",
+   "ultima": "01-10-2014"
+  },
+  {
+   "id": "F089.IPC.V12.38.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre 2015 (12 meses)",
+   "ultima": "01-10-2015"
+  },
+  {
+   "id": "F089.IPC.V12.39.M",
+   "titulo": "Expectativas de inflación, variaciones IPC en %, diciembre 2016 (12 meses)",
+   "ultima": "01-10-2016"
+  },
+  {
+   "id": "F089.IPC.V12.LP.M",
+   "titulo": "Evolución expectativas económicas / Inflación / promedio a largo plazo / variación 12 meses / Mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPC.VAR.11.M",
+   "titulo": "Expectativas de inflación en el mes (variación mensual, mediana)",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPC.VAR.24.M",
+   "titulo": "Expectativas de inflación en el mes siguiente (variación mensual, mediana)",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPCSV.V12.14.M",
+   "titulo": "En 11 meses (variación 12 meses); Expectativas de inflación sin volátiles; índice; mensual; porcentaje; BCCh",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPCSV.V12.15.M",
+   "titulo": "En 23 meses (variación 12 meses); Expectativas de inflación sin volátiles; índice; mensual; porcentaje; BCCh",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPCSV.V12.2023.M",
+   "titulo": "Diciembre 2023 (12 meses); Expectativas de inflación sin volátiles; índice; mensual; porcentaje; BCCh",
+   "ultima": "01-10-2023"
+  },
+  {
+   "id": "F089.IPCSV.V12.2024.M",
+   "titulo": "Diciembre 2024 (12 meses); Expectativas de inflación sin volátiles; índice; mensual; porcentaje; BCCh",
+   "ultima": "01-10-2024"
+  },
+  {
+   "id": "F089.IPCSV.V12.2025.M",
+   "titulo": "Expectativas de inflación, variación IPC sin volátiles en %, diciembre 2025 (12 meses)",
+   "ultima": "01-10-2025"
+  },
+  {
+   "id": "F089.IPCSV.V12.2026.M",
+   "titulo": "Inflación sin vólatiles, diciembre 2026",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.IPCSV.V12.2027.M",
+   "titulo": "Inflación sin vólatiles, diciembre 2027",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPCSV.V12.2028.M",
+   "titulo": "Inflación sin vólatiles, diciembre 2028 | Encuesta de Expectativas Económica (EEE)",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPCSV.V12.35.M",
+   "titulo": "En 35 meses (variación 12 meses); Expectativas de inflación sin volátiles; índice; mensual; porcentaje; BCCh",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPCSV.VAR.11.M",
+   "titulo": "En el mes; Expectativas de inflación sin volátiles; índice; mensual; porcentaje; BCCh",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPCSV.VAR.24.M",
+   "titulo": "El mes siguiente; Expectativas de inflación sin volátiles; índice; mensual; porcentaje; BCCh",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.IPE.IND.70M2.M",
+   "titulo": "Índice de percepción de la economía (Ipec), personal actual, Adimark",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.IPE.IND.71M2.M",
+   "titulo": "Índice de percepción de la economía (Ipec), del país actual, Adimark",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.IPE.IND.72M2.M",
+   "titulo": "Índice de percepción de la economía (Ipec), del país a 12 meses, Adimark",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.IPE.IND.73M2.M",
+   "titulo": "Índice de percepción de la economía (Ipec) del país a 5 años, Adimark",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.IPE.IND.74M2.M",
+   "titulo": "Índice de percepción de la economía (Ipec), expectativas de consumo de artículos para el hogar, Adimark",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.IPE.IND.75M2.M",
+   "titulo": "Índice de percepción de la economía (Ipec), Adimark",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.PIB.V12.16.M",
+   "titulo": "Expectativas PIB, año 2004",
+   "ultima": "01-12-2004"
+  },
+  {
+   "id": "F089.PIB.V12.17.M",
+   "titulo": "Expectativas PIB, año 2005",
+   "ultima": "01-12-2005"
+  },
+  {
+   "id": "F089.PIB.V12.18.M",
+   "titulo": "Expectativas PIB, año 2006",
+   "ultima": "01-12-2006"
+  },
+  {
+   "id": "F089.PIB.V12.19.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2007",
+   "ultima": "01-12-2007"
+  },
+  {
+   "id": "F089.PIB.V12.20.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2008",
+   "ultima": "01-12-2008"
+  },
+  {
+   "id": "F089.PIB.V12.2019.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2019",
+   "ultima": "01-12-2019"
+  },
+  {
+   "id": "F089.PIB.V12.2020.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2020",
+   "ultima": "01-12-2020"
+  },
+  {
+   "id": "F089.PIB.V12.2021.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2021",
+   "ultima": "01-12-2021"
+  },
+  {
+   "id": "F089.PIB.V12.2022.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2022",
+   "ultima": "01-12-2022"
+  },
+  {
+   "id": "F089.PIB.V12.2023.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2023",
+   "ultima": "01-12-2023"
+  },
+  {
+   "id": "F089.PIB.V12.2024.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2024",
+   "ultima": "01-12-2024"
+  },
+  {
+   "id": "F089.PIB.V12.2025.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2025",
+   "ultima": "01-12-2025"
+  },
+  {
+   "id": "F089.PIB.V12.2026.M",
+   "titulo": "PIB, año 2026",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIB.V12.2027.M",
+   "titulo": "PIB, año 2027 | PIB e IMACEC | BCCh | Mensual | Porcentaje | Índice",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIB.V12.2028.M",
+   "titulo": "Expectativas PIB, año 2028",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIB.V12.21.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2009",
+   "ultima": "01-12-2009"
+  },
+  {
+   "id": "F089.PIB.V12.22.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2010",
+   "ultima": "01-02-2011"
+  },
+  {
+   "id": "F089.PIB.V12.23.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2011",
+   "ultima": "01-02-2012"
+  },
+  {
+   "id": "F089.PIB.V12.31.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2012",
+   "ultima": "01-12-2012"
+  },
+  {
+   "id": "F089.PIB.V12.33.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), en el trimestre calendario de la encuesta, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIB.V12.36.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2013",
+   "ultima": "01-12-2013"
+  },
+  {
+   "id": "F089.PIB.V12.37.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2014",
+   "ultima": "01-12-2014"
+  },
+  {
+   "id": "F089.PIB.V12.38.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2015",
+   "ultima": "01-12-2015"
+  },
+  {
+   "id": "F089.PIB.V12.39.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2016",
+   "ultima": "01-12-2016"
+  },
+  {
+   "id": "F089.PIB.V12.80.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2017",
+   "ultima": "01-12-2017"
+  },
+  {
+   "id": "F089.PIB.V12.81.M",
+   "titulo": "Expectativas PIB (variaciones 12 meses), año 2018",
+   "ultima": "01-12-2018"
+  },
+  {
+   "id": "F089.PIB.V12.LP.M",
+   "titulo": "Evolución expectativas económicas -PIB (Variaciones 12 meses) - promedio a largo plazo / Mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIBNM.V12.2019.M",
+   "titulo": "Expectativas PIB No Minero (variaciones 12 meses), año 2019",
+   "ultima": "01-12-2019"
+  },
+  {
+   "id": "F089.PIBNM.V12.2020.M",
+   "titulo": "Expectativas PIB No Minero (variaciones 12 meses), año 2020",
+   "ultima": "01-12-2020"
+  },
+  {
+   "id": "F089.PIBNM.V12.2021.M",
+   "titulo": "Expectativas PIB No Minero (variaciones 12 meses), año 2021",
+   "ultima": "01-12-2021"
+  },
+  {
+   "id": "F089.PIBNM.V12.2022.M",
+   "titulo": "Expectativas PIB No Minero (variaciones 12 meses), año 2022",
+   "ultima": "01-12-2022"
+  },
+  {
+   "id": "F089.PIBNM.V12.2023.M",
+   "titulo": "Expectativas PIB No Minero (variaciones 12 meses), año 2023",
+   "ultima": "01-12-2023"
+  },
+  {
+   "id": "F089.PIBNM.V12.2024.M",
+   "titulo": "Expectativas PIB No Minero (variaciones 12 meses), año 2024",
+   "ultima": "01-12-2024"
+  },
+  {
+   "id": "F089.PIBNM.V12.2025.M",
+   "titulo": "Expectativas PIB No Minero (variaciones 12 meses), año 2025",
+   "ultima": "01-12-2025"
+  },
+  {
+   "id": "F089.PIBNM.V12.2026.M",
+   "titulo": "PIB No Minero, año 2026",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIBNM.V12.2027.M",
+   "titulo": "PIB No Minero, año 2027 | PIB e IMACEC | BCCh | Mensual | Porcentaje | Índice",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIBNM.V12.2028.M",
+   "titulo": "Expectativas PIB No Minero, año 2028",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIBNM.V12.33.M",
+   "titulo": "Expectativas PIB No Minero, en el trimestre calendario de la encuesta",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.PIBNM.V12.81.M",
+   "titulo": "Expectativas PIB No Minero, año 2018",
+   "ultima": "01-12-2018"
+  },
+  {
+   "id": "F089.TCN.PRE.13.M",
+   "titulo": "Expectativas tipo de cambio (pesos por dólar), dentro de 2 meses, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TCN.PRE.14.M",
+   "titulo": "Expectativas tipo de cambio (pesos por dólar), dentro de 11 meses, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TCN.PRE.15.M",
+   "titulo": "Expectativas tipo de cambio (pesos por dólar), dentro de 23 meses, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TCN.V12.LP.M",
+   "titulo": "Evolución expectativas económicas / Tipo de Cambio ($ por US$1) / promedio a largo plazo / Mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.11.M",
+   "titulo": "Expectativas tasa de política monetaria , en el mes, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.13.M",
+   "titulo": "Expectativas tasa de política monetaria , dentro de 2 meses, mediana",
+   "ultima": "01-01-2010"
+  },
+  {
+   "id": "F089.TPM.TAS.14.M",
+   "titulo": "Expectativas tasa de política monetaria , dentro de 11 meses, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.15.M",
+   "titulo": "Expectativas tasa de política monetaria , dentro de 23 meses, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.16.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2004",
+   "ultima": "01-12-2004"
+  },
+  {
+   "id": "F089.TPM.TAS.17.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2005",
+   "ultima": "01-10-2005"
+  },
+  {
+   "id": "F089.TPM.TAS.18.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2006",
+   "ultima": "01-12-2006"
+  },
+  {
+   "id": "F089.TPM.TAS.19.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2007",
+   "ultima": "01-12-2007"
+  },
+  {
+   "id": "F089.TPM.TAS.20.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2008",
+   "ultima": "01-12-2008"
+  },
+  {
+   "id": "F089.TPM.TAS.2017.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2017",
+   "ultima": "01-10-2017"
+  },
+  {
+   "id": "F089.TPM.TAS.2018.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2018",
+   "ultima": "01-10-2018"
+  },
+  {
+   "id": "F089.TPM.TAS.2019.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2019",
+   "ultima": "01-10-2019"
+  },
+  {
+   "id": "F089.TPM.TAS.2020.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2020",
+   "ultima": "01-10-2020"
+  },
+  {
+   "id": "F089.TPM.TAS.2021.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2021",
+   "ultima": "01-10-2021"
+  },
+  {
+   "id": "F089.TPM.TAS.2022.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2022",
+   "ultima": "01-10-2022"
+  },
+  {
+   "id": "F089.TPM.TAS.2023.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2023",
+   "ultima": "01-10-2023"
+  },
+  {
+   "id": "F089.TPM.TAS.2024.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2024",
+   "ultima": "01-10-2024"
+  },
+  {
+   "id": "F089.TPM.TAS.2025.M",
+   "titulo": "Tasa de Política Monetaria, diciembre 2025",
+   "ultima": "01-10-2025"
+  },
+  {
+   "id": "F089.TPM.TAS.2026.M",
+   "titulo": "Tasa de Política Monetaria, diciembre 2026",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.2027.M",
+   "titulo": "Tasa de Política Monetaria, diciembre 2027 | Encuesta de Expectativas Económica (EEE)",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.21.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2009",
+   "ultima": "01-12-2009"
+  },
+  {
+   "id": "F089.TPM.TAS.22.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2010",
+   "ultima": "01-12-2010"
+  },
+  {
+   "id": "F089.TPM.TAS.23.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2011",
+   "ultima": "01-10-2011"
+  },
+  {
+   "id": "F089.TPM.TAS.24.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2012",
+   "ultima": "01-12-2012"
+  },
+  {
+   "id": "F089.TPM.TAS.26.M",
+   "titulo": "Expectativas tasa de política monetaria , dentro de 5 meses, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.30.M",
+   "titulo": "Expectativas tasa de política monetaria , dentro de 17 meses, mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.31.M",
+   "titulo": "Evolución expectativas económicas -Tasa de Política Monetaria (%)-En el mes siguiente",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.34.M",
+   "titulo": "Expectativas tasa de política monetaria , diciembre 2013",
+   "ultima": "01-12-2013"
+  },
+  {
+   "id": "F089.TPM.TAS.35.M",
+   "titulo": "Evolución expectativas económicas / Tasa de Política Monetaria (%) / Dentro de 35 meses / Mediana",
+   "ultima": "01-11-2026"
+  },
+  {
+   "id": "F089.TPM.TAS.37.M",
+   "titulo": "Evolución expectativas económicas, Tasa de Política Monetaria (%) , diciembre2014 (12 meses)",
+   "ultima": "01-12-2014"
+  },
+  {
+   "id": "F089.TPM.TAS.38.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2015",
+   "ultima": "01-10-2015"
+  },
+  {
+   "id": "F089.TPM.TAS.39.M",
+   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2016",
+   "ultima": "01-10-2016"
+  },
+  {
+   "id": "F089.TPM.TAS.LP.M",
+   "titulo": "Evolución expectativas económicas / Tasa de Política Monetaria (%) / promedio a largo plazo / Mediana",
+   "ultima": "01-11-2026"
+  },
   {
    "id": "F061.1AA0125.FLU.D.USD.C.M",
    "titulo": "Importaciones bienes de consumo, 1996-2011 (CIF)",
@@ -69,7 +1074,7 @@
   {
    "id": "F022.BCLP.TIS.AN10.NO.Z.M",
    "titulo": "Tasa de interés mercado secundario de los bonos licitados por el BCCh (BCP) a 10 años | Mensual",
-   "ultima": "01-09-2026"
+   "ultima": "01-10-2026"
   },
   {
    "id": "F022.BCP.TIN.AN02.NO.Z.M",
@@ -252,6 +1257,111 @@
    "ultima": "01-12-2025"
   },
   {
+   "id": "F022.CAPNP.FLU.DM30.NO.Z.M",
+   "titulo": "Menor 30 días - flujo | Tasas de captación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.DM30.US.Z.M",
+   "titulo": "Menor 30 días - flujo | Tasas de captación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.M3A1.NO.Z.M",
+   "titulo": "90 días a 1 año - flujo | Tasas de captación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.M3A1.UF.Z.M",
+   "titulo": "90 días a 1 año - flujo | Tasas de captación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.M3A1.US.Z.M",
+   "titulo": "90 días a 1 año - flujo | Tasas de captación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.MA01.NO.Z.M",
+   "titulo": "Mayor 1 año - flujo | Tasas de captación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.MA01.UF.Z.M",
+   "titulo": "Mayor 1 año - flujo | Tasas de captación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.MA01.US.Z.M",
+   "titulo": "Mayor 1 año - flujo | Tasas de captación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.P3089.NO.Z.M",
+   "titulo": "30 a 89 días - flujo | Tasas de captación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.FLU.P3089.US.Z.M",
+   "titulo": "30 a 89 días - flujo | Tasas de captación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.DM30.NO.Z.M",
+   "titulo": "Menor 30 días - tasa | Tasas de captación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.DM30.US.Z.M",
+   "titulo": "Menor 30 días - tasa | Tasas de captación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.M3A1.NO.Z.M",
+   "titulo": "90 días a 1 año - tasa | Tasas de captación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.M3A1.UF.Z.M",
+   "titulo": "90 días a 1 año - tasa | Tasas de captación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.M3A1.US.Z.M",
+   "titulo": "90 días a 1 año - tasa | Tasas de captación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.MA01.NO.Z.M",
+   "titulo": "Mayor 1 año - tasa | Tasas de captación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.MA01.UF.Z.M",
+   "titulo": "Mayor 1 año - tasa | Tasas de captación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.MA01.US.Z.M",
+   "titulo": "Mayor 1 año - tasa | Tasas de captación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.P3089.NO.Z.M",
+   "titulo": "30 a 89 días - tasa | Tasas de captación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CAPNP.TAS.P3089.US.Z.M",
+   "titulo": "30 a 89 días - tasa | Tasas de captación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CMX.FLU.N.US.Z.M",
+   "titulo": "Comercio exterior total \\Flujo de colocación promedio de comercio exterior, a nivel nacional, por tipo de producto (tasas anuales en dólares) \\ BCCh \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CMX.FLU.Z.US.Z.M",
    "titulo": "Flujo de tasa de interés promedio créditos de comercio exterior , total (en pesos)",
    "ultima": "01-10-2026"
@@ -282,8 +1392,18 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.CMX.TIP.N.US.Z.M",
+   "titulo": "Comercio exterior total \\Tasa de colocación promedio de comercio exterior, a nivel nacional, por tipo de producto (tasas anuales en dólares) \\ BCCh \\ Porcentaje",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CMX.TIP.Z.US.Z.M",
    "titulo": "Tasa de interés promedio créditos de comercio exterior , total (en pesos)",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CMXEXPT.FLU.N.US.Z.M",
+   "titulo": "Créditos de exportación \\Flujo de colocación promedio de comercio exterior, a nivel nacional, por tipo de producto (tasas anuales en dólares) \\ BCCh \\ Miles de millones de pesos",
    "ultima": "01-10-2026"
   },
   {
@@ -292,13 +1412,28 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.CMXEXPT.TIP.N.US.Z.M",
+   "titulo": "Créditos de exportación \\Tasa de colocación promedio de comercio exterior, a nivel nacional, por tipo de producto (tasas anuales en dólares) \\ BCCh \\ Porcentaje",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CMXEXPT.TIP.Z.US.Z.M",
    "titulo": "Tasas de interés promedio comercio exterior  por tipo de producto, créditos de exportación (dólares).",
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.CMXIMPT.FLU.N.US.Z.M",
+   "titulo": "Créditos de importación \\Flujo de colocación promedio de comercio exterior, a nivel nacional, por tipo de producto (tasas anuales en dólares) \\ BCCh \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CMXIMPT.FLU.Z.US.Z.M",
    "titulo": "Flujo de tasas de interés promedio comercio exterior  por tipo de producto, créditos de importación en dólares, expresados en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CMXIMPT.TIP.N.US.Z.M",
+   "titulo": "Créditos de importación \\Tasa de colocación promedio de comercio exterior, a nivel nacional, por tipo de producto (tasas anuales en dólares) \\ BCCh \\ Porcentaje",
    "ultima": "01-10-2026"
   },
   {
@@ -402,6 +1537,126 @@
    "ultima": "01-08-2026"
   },
   {
+   "id": "F022.COLNP.FLU.DM30.NO.Z.M",
+   "titulo": "Menor 30 días - flujo | Tasas de colocación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.DM30.UF.Z.M",
+   "titulo": "Menor 30 días - flujo | Tasas de colocación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.DM30.US.Z.M",
+   "titulo": "Menor 30 días - flujo | Tasas de colocación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.M3A1.NO.Z.M",
+   "titulo": "90 días a 1 año - flujo | Tasas de colocación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.M3A1.UF.Z.M",
+   "titulo": "90 días a 1 año - flujo | Tasas de colocación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.M3A1.US.Z.M",
+   "titulo": "90 días a 1 año - flujo | Tasas de colocación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.MA01.NO.Z.M",
+   "titulo": "Mayor 1 año - flujo | Tasas de colocación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.MA01.UF.Z.M",
+   "titulo": "Mayor 1 año - flujo | Tasas de colocación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.MA01.US.Z.M",
+   "titulo": "Mayor 1 año - flujo | Tasas de colocación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.P3089.NO.Z.M",
+   "titulo": "30 a 89 días - flujo | Tasas de colocación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.P3089.UF.Z.M",
+   "titulo": "30 a 89 días - flujo | Tasas de colocación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.FLU.P3089.US.Z.M",
+   "titulo": "30 a 89 días - flujo | Tasas de colocación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.DM30.NO.Z.M",
+   "titulo": "Menor 30 días - tasa | Tasas de colocación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.DM30.UF.Z.M",
+   "titulo": "Menor 30 días - tasa | Tasas de colocación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.DM30.US.Z.M",
+   "titulo": "Menor 30 días - tasa | Tasas de colocación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.M3A1.NO.Z.M",
+   "titulo": "90 días a 1 año - tasa | Tasas de colocación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.M3A1.UF.Z.M",
+   "titulo": "90 días a 1 año - tasa | Tasas de colocación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.M3A1.US.Z.M",
+   "titulo": "90 días a 1 año - tasa | Tasas de colocación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.MA01.NO.Z.M",
+   "titulo": "Mayor 1 año - tasa | Tasas de colocación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.MA01.UF.Z.M",
+   "titulo": "Mayor 1 año - tasa | Tasas de colocación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.MA01.US.Z.M",
+   "titulo": "Mayor 1 año - tasa | Tasas de colocación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.P3089.NO.Z.M",
+   "titulo": "30 a 89 días - tasa | Tasas de colocación, nivel país, operaciones en pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.P3089.UF.Z.M",
+   "titulo": "30 a 89 días - tasa | Tasas de colocación, nivel país, operaciones en UF",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COLNP.TAS.P3089.US.Z.M",
+   "titulo": "30 a 89 días - tasa | Tasas de colocación, nivel país, operaciones en dólares",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.COLVIVA.STO.Z.Z.CLP.M",
    "titulo": "Monto de deudas de vivienda (millones de pesos); Número de deudores y monto de las colocaciones segregadas por cartera y género, Número y monto de deudores por tipo; nominal; stock; mensual; millones de pesos; CMF",
    "ultima": "01-08-2026"
@@ -442,6 +1697,11 @@
    "ultima": "01-08-2026"
   },
   {
+   "id": "F022.COM.FLU.N.NO.Z.M",
+   "titulo": "Comerciales total \\Flujo de colocación promedio comerciales, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.COM.FLU.Z.NO.Z.M",
    "titulo": "Flujo de tasa de interés promedio créditos comerciales , total (en pesos)",
    "ultima": "01-10-2026"
@@ -472,8 +1732,28 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.COM.TIP.N.NO.Z.M",
+   "titulo": "Comerciales total \\Tasa de colocación promedio comerciales, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COM.TIP.N.UF.Z.M",
+   "titulo": "Comerciales total - tasa",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COM.TIP.N.US.Z.M",
+   "titulo": "Comerciales total - tasa",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.COM.TIP.Z.NO.Z.M",
    "titulo": "Tasa de interés promedio créditos comerciales , total (en pesos)",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COMCUOT.FLU.N.NO.Z.M",
+   "titulo": "Créditos en cuotas \\Flujo de colocación promedio comerciales, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
    "ultima": "01-10-2026"
   },
   {
@@ -482,8 +1762,18 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.COMCUOT.TIP.N.NO.Z.M",
+   "titulo": "Créditos en cuotas \\Tasa de colocación promedio comerciales, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.COMCUOT.TIP.Z.NO.Z.M",
    "titulo": "Tasas de interés promedio comerciales por tipo de producto, créditos en cuotas (en pesos).",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.COMSOBR.FLU.N.NO.Z.M",
+   "titulo": "Sobregiros \\Flujo de colocación promedio comerciales, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
    "ultima": "01-10-2026"
   },
   {
@@ -492,13 +1782,28 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.COMSOBR.TIP.N.NO.Z.M",
+   "titulo": "Sobregiros \\Tasa de colocación promedio comerciales, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.COMSOBR.TIP.Z.NO.Z.M",
    "titulo": "Tasas de interés promedio comerciales por tipo de producto, sobregiros (en pesos)",
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.COMTARJ.TIP.N.NO.Z.M",
+   "titulo": "Tarjeta y otros \\Tasa de colocación promedio comerciales, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.COMTARJ.TIP.Z.NO.Z.M",
    "titulo": "Tasas de interés promedio comerciales por tipo de producto, tarjetas y otros (en pesos)",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CON.FLU.N.NO.Z.M",
+   "titulo": "Consumo total \\Flujo de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
    "ultima": "01-10-2026"
   },
   {
@@ -514,6 +1819,11 @@
   {
    "id": "F022.CON.STO.TP.Z.P96R23.M",
    "titulo": "Colocaciones reales consumo (saldos), IPC ref. 2023",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CON.STO.TP.Z.PR23M1.M",
+   "titulo": "Consumo  \\ Colocaciones reales \\ BCCh \\ Miles de millones de pesos",
    "ultima": "01-10-2026"
   },
   {
@@ -549,6 +1859,11 @@
   {
    "id": "F022.CON.TIP.MA03.NO.Z.M",
    "titulo": "Tasa de interés promedio créditos de consumo , más de 3 años (en pesos)",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CON.TIP.N.NO.Z.M",
+   "titulo": "Consumo total \\Tasa de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
    "ultima": "01-10-2026"
   },
   {
@@ -702,8 +2017,23 @@
    "ultima": "01-02-2019"
   },
   {
+   "id": "F022.CONBI.STO.Z.M1.CLP.M",
+   "titulo": "Consumo \\ Colocaciones totales, colocaciones por tipo de deudor, balances individuales, saldos  \\ BCCh \\ Mensual \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CONBI.STO.Z.Z.CLP.M",
-   "titulo": "Consumo | Colocaciones por tipo de deudor, balances individuales, saldos  |  | Stock | Mensual | Miles de millones de pesos | Banco Central de Chile y Comisión para el Mercado Financiero (CMF) | ",
+   "titulo": "Consumo, Total | Colocaciones por tipo de deudor, balances individuales, saldos, series descontinuadas (Reemplazada por la serie de código:F022.CONBI.STO.Z.M1.CLP.M)",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CONCL.STO.Z.Z.CLP.M",
+   "titulo": "Consumo | Colocaciones de Consumo consolidado local | BCCh | Miles de millones de pesos",
+   "ultima": "01-09-2026"
+  },
+  {
+   "id": "F022.CONCUOT.FLU.N.NO.Z.M",
+   "titulo": "Créditos en cuotas -flujo \\Flujo de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
    "ultima": "01-10-2026"
   },
   {
@@ -712,8 +2042,18 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.CONCUOT.TIP.N.NO.Z.M",
+   "titulo": "Créditos en cuotas \\Tasa de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CONCUOT.TIP.Z.NO.Z.M",
    "titulo": "Tasas de interés promedio consumo por tipo de producto, créditos en cuotas (en pesos)",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CONSOBR.FLU.N.NO.Z.M",
+   "titulo": "Sobregiros \\Flujo de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
    "ultima": "01-10-2026"
   },
   {
@@ -722,8 +2062,18 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.CONSOBR.TIP.N.NO.Z.M",
+   "titulo": "Sobregiros \\Tasa de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CONSOBR.TIP.Z.NO.Z.M",
    "titulo": "Tasas de interés promedio consumo por tipo de producto, sobregiros (en pesos)",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CONTARJ.FLU.N.NO.Z.M",
+   "titulo": "Tarjeta y otros \\Flujo de colocación promedio comerciales, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
    "ultima": "01-10-2026"
   },
   {
@@ -732,8 +2082,18 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.CONTARJC.FLU.N.NO.Z.M",
+   "titulo": "Tarjeta de crédito  cuota \\Flujo de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CONTARJC.FLU.Z.NO.Z.M",
    "titulo": "Flujo de tasas de interés promedio consumo por tipo de producto, tarjetas de crédito  cuota",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CONTARJC.TIP.N.NO.Z.M",
+   "titulo": "Tarjeta de crédito  cuota \\Tasa de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
    "ultima": "01-10-2026"
   },
   {
@@ -742,8 +2102,18 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.CONTARJR.FLU.N.NO.Z.M",
+   "titulo": "Tarjeta de crédito  rotativo \\Flujo de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.CONTARJR.FLU.Z.NO.Z.M",
    "titulo": "Flujo de tasas de interés promedio consumo por tipo de producto, tarjetas de crédito  rotativo",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.CONTARJR.TIP.N.NO.Z.M",
+   "titulo": "Tarjeta de crédito  rotativo \\Tasa de colocación promedio de consumo, a nivel nacional, por tipo de producto  (tasas anuales en pesos) \\ BCCh \\ Porcentaje",
    "ultima": "01-10-2026"
   },
   {
@@ -962,6 +2332,26 @@
    "ultima": "01-08-2026"
   },
   {
+   "id": "F022.O12CON.STO.Z.Z.CLP.M",
+   "titulo": "Cuentas por cobrar consumo  \\ Cuentras por cobrar tarjeta de crédito , otras cuentas balance individual  \\ BCCh \\ Mensual \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.O16CON.STO.Z.Z.CLP.M",
+   "titulo": "Consumo a valor razonable \\ Colocaciones a valor razonable, otras cuentas balance individual  \\ BCCh \\ Mensual \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.O16VIV.STO.Z.Z.CLP.M",
+   "titulo": "Vivienda a valor razonable \\ Colocaciones a valor razonable, otras cuentas balance individual  \\ BCCh \\ Mensual \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.O18CON.STO.Z.Z.CLP.M",
+   "titulo": "Tarjeta de crédito consumo ",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.PDBC.TIN.AN01.NO.Z.M",
    "titulo": "Tasa de interés de los pagarés descontables del BCCh (PDBC) en pesos a 1 año",
    "ultima": "01-08-2023"
@@ -1137,6 +2527,11 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.VIV.FLU.MA03N.UF.Z.M",
+   "titulo": "Vivienda \\Flujo de colocación promedio de vivienda, a nivel nacional (tasas anuales reajustables en UF) \\ BCCh \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.VIV.STO.TP.Z.P96.M",
    "titulo": "Colocaciones reales vivienda (saldos)",
    "ultima": "01-12-2023"
@@ -1147,6 +2542,11 @@
    "ultima": "01-10-2026"
   },
   {
+   "id": "F022.VIV.STO.TP.Z.PR23M1.M",
+   "titulo": "Vivienda \\  Colocaciones reales \\ BCCh \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.VIV.STO.Z.Z.CLP.M",
    "titulo": "Colocaciones de vivienda consolidadas en moneda nacional, saldos",
    "ultima": "01-09-2026"
@@ -1154,6 +2554,11 @@
   {
    "id": "F022.VIV.TIP.MA03.UF.Z.M",
    "titulo": "Tasa de interés promedio créditos de vivienda , más de 3 años (UF)",
+   "ultima": "01-10-2026"
+  },
+  {
+   "id": "F022.VIV.TIP.MA03N.UF.Z.M",
+   "titulo": "Vivienda- tasa \\Tasa de colocación promedio de vivienda, a nivel nacional (tasas anuales reajustables en UF) \\ BCCh \\ Porcentaje",
    "ultima": "01-10-2026"
   },
   {
@@ -1302,254 +2707,14 @@
    "ultima": "01-02-2019"
   },
   {
+   "id": "F022.VIVBI.STO.Z.M1.CLP.M",
+   "titulo": "Vivienda \\ Colocaciones totales, colocaciones por tipo de deudor, balances individuales, saldos  \\ BCCh \\ Mensual \\ Miles de millones de pesos",
+   "ultima": "01-10-2026"
+  },
+  {
    "id": "F022.VIVBI.STO.Z.Z.CLP.M",
-   "titulo": "Vivienda | Colocaciones por tipo de deudor, balances individuales, saldos  |  | Stock | Mensual | Miles de millones de pesos | Banco Central de Chile y Comisión para el Mercado Financiero (CMF) | ",
+   "titulo": "Vivienda, Total | Colocaciones por tipo de deudor, balances individuales, saldos, series descontinuadas (Reemplazada por la serie de código:F022.VIVBI.STO.Z.M1.CLP.M)",
    "ultima": "01-10-2026"
-  },
-  {
-   "id": "F089.BP5.TAS.13.M",
-   "titulo": "Expectativas tasa BCP 5 años (%), dentro de 2 meses, mediana",
-   "ultima": "01-02-2023"
-  },
-  {
-   "id": "F089.BP5.TAS.14.M",
-   "titulo": "Expectativas tasa BCP 5 años (%), dentro de 11 meses, mediana",
-   "ultima": "01-02-2023"
-  },
-  {
-   "id": "F089.BP5.TAS.15.M",
-   "titulo": "Expectativas tasa BCP 5 años (%), Dentro de 23 meses, mediana",
-   "ultima": "01-02-2023"
-  },
-  {
-   "id": "F089.BU5.TAS.13.M",
-   "titulo": "Expectativas Tasa BCU 5 años (%), dentro de 2 meses, mediana",
-   "ultima": "01-02-2023"
-  },
-  {
-   "id": "F089.BU5.TAS.14.M",
-   "titulo": "Expectativas Tasa BCU 5 años (%), Dentro de 11 meses, mediana",
-   "ultima": "01-02-2023"
-  },
-  {
-   "id": "F089.BU5.TAS.15.M",
-   "titulo": "Expectativas Tasa BCU 5 años (%), Dentro de 23 meses, mediana",
-   "ultima": "01-02-2023"
-  },
-  {
-   "id": "F089.CHOG.V12.2019.M",
-   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2019 / Mediana",
-   "ultima": "01-01-2020"
-  },
-  {
-   "id": "F089.CHOG.V12.2020.M",
-   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2020 / Mediana",
-   "ultima": "01-12-2020"
-  },
-  {
-   "id": "F089.CHOG.V12.2021.M",
-   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2021 / Mediana",
-   "ultima": "01-12-2021"
-  },
-  {
-   "id": "F089.CHOG.V12.2022.M",
-   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2022 / Mediana",
-   "ultima": "01-12-2022"
-  },
-  {
-   "id": "F089.CHOG.V12.2023.M",
-   "titulo": "Evolución expectativas económicas -Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2023 / Mediana",
-   "ultima": "01-12-2023"
-  },
-  {
-   "id": "F089.CHOG.V12.2024.M",
-   "titulo": "Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2024 / Mediana; Expectativas componentes de demanda; variación 12 meses; mensual; porcentaje; BCCh",
-   "ultima": "01-12-2024"
-  },
-  {
-   "id": "F089.CHOG.V12.2025.M",
-   "titulo": "Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2025 / Mediana",
-   "ultima": "01-12-2025"
-  },
-  {
-   "id": "F089.CHOG.V12.2026.M",
-   "titulo": "Consumo hogares e IPSFL, año 2026 | Componentes de demanda, Variación 12 meses, Mediana | BCCh | Mensual | Porcentaje | Índice",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.CHOG.V12.2027.M",
-   "titulo": "Expectativas Consumo hogares e IPSFL (Variaciones 12 meses) - Año 2027 / Mediana",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.IPE.IND.74M2.M",
-   "titulo": "Índice de percepción de la economía (Ipec), expectativas de consumo de artículos para el hogar, Adimark",
-   "ultima": "01-10-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.11.M",
-   "titulo": "Expectativas tasa de política monetaria , en el mes, mediana",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.13.M",
-   "titulo": "Expectativas tasa de política monetaria , dentro de 2 meses, mediana",
-   "ultima": "01-01-2010"
-  },
-  {
-   "id": "F089.TPM.TAS.14.M",
-   "titulo": "Expectativas tasa de política monetaria , dentro de 11 meses, mediana",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.15.M",
-   "titulo": "Expectativas tasa de política monetaria , dentro de 23 meses, mediana",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.16.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2004",
-   "ultima": "01-12-2004"
-  },
-  {
-   "id": "F089.TPM.TAS.17.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2005",
-   "ultima": "01-10-2005"
-  },
-  {
-   "id": "F089.TPM.TAS.18.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2006",
-   "ultima": "01-12-2006"
-  },
-  {
-   "id": "F089.TPM.TAS.19.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2007",
-   "ultima": "01-12-2007"
-  },
-  {
-   "id": "F089.TPM.TAS.20.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2008",
-   "ultima": "01-12-2008"
-  },
-  {
-   "id": "F089.TPM.TAS.2017.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2017",
-   "ultima": "01-10-2017"
-  },
-  {
-   "id": "F089.TPM.TAS.2018.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2018",
-   "ultima": "01-10-2018"
-  },
-  {
-   "id": "F089.TPM.TAS.2019.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2019",
-   "ultima": "01-10-2019"
-  },
-  {
-   "id": "F089.TPM.TAS.2020.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2020",
-   "ultima": "01-10-2020"
-  },
-  {
-   "id": "F089.TPM.TAS.2021.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2021",
-   "ultima": "01-10-2021"
-  },
-  {
-   "id": "F089.TPM.TAS.2022.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2022",
-   "ultima": "01-10-2022"
-  },
-  {
-   "id": "F089.TPM.TAS.2023.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2023",
-   "ultima": "01-10-2023"
-  },
-  {
-   "id": "F089.TPM.TAS.2024.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2024",
-   "ultima": "01-10-2024"
-  },
-  {
-   "id": "F089.TPM.TAS.2025.M",
-   "titulo": "Tasa de Política Monetaria, diciembre 2025",
-   "ultima": "01-10-2025"
-  },
-  {
-   "id": "F089.TPM.TAS.2026.M",
-   "titulo": "Tasa de Política Monetaria, diciembre 2026",
-   "ultima": "01-10-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.2027.M",
-   "titulo": "Tasa de Política Monetaria, diciembre 2027 | Encuesta de Expectativas Económica (EEE)",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.21.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2009",
-   "ultima": "01-12-2009"
-  },
-  {
-   "id": "F089.TPM.TAS.22.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2010",
-   "ultima": "01-12-2010"
-  },
-  {
-   "id": "F089.TPM.TAS.23.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2011",
-   "ultima": "01-10-2011"
-  },
-  {
-   "id": "F089.TPM.TAS.24.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2012",
-   "ultima": "01-12-2012"
-  },
-  {
-   "id": "F089.TPM.TAS.26.M",
-   "titulo": "Expectativas tasa de política monetaria , dentro de 5 meses, mediana",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.30.M",
-   "titulo": "Expectativas tasa de política monetaria , dentro de 17 meses, mediana",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.31.M",
-   "titulo": "Evolución expectativas económicas -Tasa de Política Monetaria (%)-En el mes siguiente",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.34.M",
-   "titulo": "Expectativas tasa de política monetaria , diciembre 2013",
-   "ultima": "01-12-2013"
-  },
-  {
-   "id": "F089.TPM.TAS.35.M",
-   "titulo": "Evolución expectativas económicas / Tasa de Política Monetaria (%) / Dentro de 35 meses / Mediana",
-   "ultima": "01-11-2026"
-  },
-  {
-   "id": "F089.TPM.TAS.37.M",
-   "titulo": "Evolución expectativas económicas, Tasa de Política Monetaria (%) , diciembre2014 (12 meses)",
-   "ultima": "01-12-2014"
-  },
-  {
-   "id": "F089.TPM.TAS.38.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2015",
-   "ultima": "01-10-2015"
-  },
-  {
-   "id": "F089.TPM.TAS.39.M",
-   "titulo": "Expectativas Tasa de Política Monetaria, diciembre 2016",
-   "ultima": "01-10-2016"
-  },
-  {
-   "id": "F089.TPM.TAS.LP.M",
-   "titulo": "Evolución expectativas económicas / Tasa de Política Monetaria (%) / promedio a largo plazo / Mediana",
-   "ultima": "01-11-2026"
   },
   {
    "id": "F068.B1.FLU.C1F.0.M.N.D.Z.Z.Z.6.0.M",
@@ -2124,12 +3289,12 @@
   {
    "id": "F032.PIB.FLU.R.CLP.2018.10.Z.0.M",
    "titulo": "PIB Servicios de vivienda, volumen a precios año anterior encadenado, referencia 2018,  Mensual (miles de millones de pesos encadenados)",
-   "ultima": "01-06-2026"
+   "ultima": "01-09-2026"
   },
   {
    "id": "F032.PIB.FLU.R.CLP.2018.10.Z.1.M",
    "titulo": "PIB Servicios de vivienda, volumen a precios año anterior encadenado, desestacionalizada, referencia 2018,  Mensual (miles de millones de pesos encadenados)",
-   "ultima": "01-06-2026"
+   "ultima": "01-09-2026"
   },
   {
    "id": "F076.IPM.IND.1A01120101.200711.Z.M",
@@ -3809,22 +4974,22 @@
   {
    "id": "F013.TBG.STD.N.7.Z.CL.Z.BCCH.M",
    "titulo": "Volatilidad de tasas de interés soberanas, Chile, puntos base",
-   "ultima": "01-04-2026"
+   "ultima": "01-10-2026"
   },
   {
    "id": "F013.TBG.STD.N.IQR.EME.Z.Z.BCCH.M",
    "titulo": "Volatilidad de tasas de interés soberanas, Economías emergentes, rango intercuartil, puntos base",
-   "ultima": "01-04-2026"
+   "ultima": "01-10-2026"
   },
   {
    "id": "F013.TBG.STD.N.P25.EME.Z.Z.BCCH.M",
    "titulo": "Volatilidad de tasas de interés soberanas, Economías emergentes, percentil 25, puntos base",
-   "ultima": "01-04-2026"
+   "ultima": "01-10-2026"
   },
   {
    "id": "F019.DES.TAS.10.M",
    "titulo": "Tasa de desempleo, Estados Unidos",
-   "ultima": "01-09-2026"
+   "ultima": "01-10-2026"
   },
   {
    "id": "F019.DES.TAS.20.M",
@@ -3849,7 +5014,7 @@
   {
    "id": "F019.DES.TAS.CA.M",
    "titulo": "Tasa de desempleo, Canadá, frecuencia mensual",
-   "ultima": "01-09-2026"
+   "ultima": "01-10-2026"
   },
   {
    "id": "F019.DES.TAS.COL.M",
@@ -3889,7 +5054,7 @@
   {
    "id": "F019.DES.TAS.PH.M",
    "titulo": "Tasa de desempleo, Filipinas, frecuencia mensual",
-   "ultima": "01-08-2026"
+   "ultima": "01-09-2026"
   },
   {
    "id": "F019.DES.TAS.POL.M",
