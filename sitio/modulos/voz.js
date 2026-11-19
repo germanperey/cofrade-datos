@@ -1603,7 +1603,7 @@ function inicio() {
   D.addEventListener('cofrade-idioma', textosIdioma);
   var auto = !navigator.webdriver || CFG.forzar;   // los robots (vigía, capturas) no ven la ventana
   if (/[?&]voz=0\b/.test(location.search) || !auto) return;
-  if (P.e === 'no') return;
+  if (P.e === 'no' && !/[?&]voz=1\b/.test(location.search)) return;   // 19-11-2026: el botón de la portada lleva ?voz=1
   setTimeout(function () { abrirVentana(P.e === 'si'); }, 450);
 }
 W.__cnVozAPI = { encender: encender, apagar: apagar, ordenar: ordenar, estado: function () { return { on: R.on, modo: R.modo, i: R.i, j: R.j, rate: R.rate, voz: voz && voz.name, habla: R.habla, pausado: R.pausado, espera: R.espera && R.espera.ctx, oido: !!OIDO.rec, continuo: continuo(), turnos: OIDO.turnos, eco: OIDO.eco, ajenas: OIDO.ajenas, sps: R.spsBase || 0 }; },

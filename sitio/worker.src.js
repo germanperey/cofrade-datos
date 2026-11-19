@@ -481,6 +481,19 @@ button.btn{border:0;cursor:pointer;font:inherit;font-weight:600}
 .sec-card:hover{transform:translateY(-2px);border-color:var(--oro);box-shadow:0 14px 34px -22px rgba(11,31,58,.45)}
 .sec-card svg{width:44px;height:44px;color:var(--oro-t)}.sec-card b{display:block;font:600 19px/1.2 var(--display);margin-bottom:3px}.sec-card p{margin:0;font-size:13.5px;color:var(--gris);line-height:1.45}
 .titulo-lujo{font:600 clamp(28px,3.6vw,40px)/1.1 var(--display);margin:0 0 6px;letter-spacing:-.2px}
+/* 19-11-2026 · lectura por voz en la portada: tarjeta marfil con marco de oro (como la galería), ícono en la noche azul de la portada */
+.vozp{position:relative;display:grid;grid-template-columns:76px 1fr;gap:24px;align-items:start;background:var(--card);border:1px solid var(--linea);border-radius:22px;padding:32px 32px 26px;margin:36px 0 8px;box-shadow:0 18px 40px -30px rgba(11,31,58,.5)}
+.vozp::after{content:"";position:absolute;inset:7px;border:1px solid rgba(184,137,43,.28);border-radius:16px;pointer-events:none}
+.vozp-ico{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(160deg,var(--noche2),var(--noche));color:var(--oro-l);border:1px solid rgba(230,199,122,.5)}
+.vozp-ico svg{width:40px;height:40px;display:block}
+.vozp h2{font:600 clamp(28px,3.6vw,40px)/1.1 var(--display);margin:10px 0 10px;letter-spacing:-.2px;text-wrap:balance}
+.vozp .lede{max-width:46em;margin:0}
+.vozp-pasos{list-style:none;counter-reset:vp;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:22px 0 0;padding:0}
+.vozp-pasos li{counter-increment:vp;position:relative;border:1px solid var(--linea);border-radius:14px;padding:14px 14px 14px 52px;font-size:14.5px;line-height:1.5;color:var(--tinta2)}
+.vozp-pasos li::before{content:counter(vp);position:absolute;left:14px;top:13px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:700 14px/1 var(--sans);background:var(--oro);color:#1A1406}
+.vozp .acciones{margin-top:20px}
+.vozp-nota{font-size:13px;line-height:1.5;color:var(--gris);margin:12px 0 0;max-width:60em}
+@media (max-width:600px){.vozp{grid-template-columns:1fr;gap:14px;padding:24px 18px 20px;margin-top:26px}.vozp-ico{width:58px;height:58px}.vozp-ico svg{width:30px;height:30px}.vozp .lede{font-size:17px;line-height:1.55}.vozp .acciones .btn{width:100%}}
 /* 15-11-2026 (Germán: «que se vea más armónico y compacto, hay muchos espacios entremedio»): filas justificadas. Cada tarjeta crece
    en proporción al ancho/alto de su imagen (--r): en una fila todas las imágenes quedan de la MISMA altura y la fila llena el ancho,
    sin huecos. Bajo 900 px: dos columnas con marcos iguales; bajo 600 px: una columna. */
@@ -692,6 +705,22 @@ const EN_FIJO = {
   "Resumen del mundo": "World overview", "Dónde se movió el dinero hoy": "Where the money moved today", "Cripto": "Crypto", "Agenda económica": "Economic calendar",
   "USGS ↗": "USGS ↗", "fuente ↗": "source ↗", "Ver en español": "Ver en español", "Read in English": "Read in English",
 };
+// 19-11-2026 · lectura por voz en la portada
+Object.assign(EN_FIJO, {
+  "Nuevo · Lectura por voz": "New · Read aloud",
+  "El único medio de noticias inclusivo": "The only inclusive news outlet",
+  "Cofrade News ahora se puede escuchar completo, de la primera a la última sección. Una voz te lee la edición del día y tú decides qué sigue diciendo «índice», «deportes» o «siguiente», sin tocar la pantalla. Lo creamos para que las personas no videntes puedan informarse por su cuenta de un diario escrito, y para quienes van manejando, haciendo deporte o tienen las manos ocupadas.":
+    "Cofrade News can now be heard in full, from the first section to the last. A voice reads you the day's edition and you choose what comes next by saying «index», «sports» or «next», without touching the screen. We built it so that blind people can get their news from a written newspaper on their own, and for anyone who is driving, exercising or has their hands full.",
+  "Abre la edición y toca «Escuchar el boletín». Si usas lector de pantalla, encontrarás «Escuchar el boletín con voz» como primer enlace de la página.":
+    "Open the edition and tap «Listen to the newsletter». If you use a screen reader, you will find it as the first link on the page.",
+  "Cuando el navegador lo pida, permite el micrófono para darle órdenes con la voz. Si vas a manejar, enciéndelo antes de partir.":
+    "When your browser asks, allow the microphone so you can give voice commands. If you are going to drive, turn it on before you set off.",
+  "Di lo que quieras escuchar: «índice», el nombre o el número de una sección, «pausa», «más lento» o «salir». Con teclado, la barra espaciadora pausa, la I abre el índice, la N avanza y la P retrocede.":
+    "Say what you want to hear: «index», the name or number of a section, «pause», «slower» or «exit». With a keyboard, the space bar pauses, I opens the index, N moves forward and P goes back.",
+  "Escuchar la edición de hoy →": "Listen to today's edition →", "Escuchar la última edición →": "Listen to the latest edition →",
+  "Gratis y sin instalar nada. Funciona mejor en Chrome, Edge y Safari. Cofrade News no graba ni guarda tu voz; para entenderte, el navegador usa su propio servicio.":
+    "Free, with nothing to install. Works best in Chrome, Edge and Safari. Cofrade News does not record or store your voice; to understand you, your browser uses its own service.",
+});
 // 14-11-2026 (Germán: «muchos textos no se están traduciendo», con capturas): portada, galería, Dashboard Financiero, Mercados en vivo,
 // textos alternativos de las imágenes y el título de la pestaña. La prueba del arnés revisa que ningún texto fijo quede sin traducción.
 Object.assign(EN_FIJO, {
@@ -1084,6 +1113,27 @@ function estadoEdicion(ultima, hoy, hora) {
   return hora < HORA_EDICION ? "La edición de hoy se publica a las 9:00. Mientras, lee la última." : "La edición de hoy viene en camino. Mientras, lee la última.";
 }
 
+// 19-11-2026 (Germán: «agregues un párrafo destacando esta nueva funcionalidad… el único medio informativo de Noticias inclusivo… para
+// personas no videntes», y para quien maneja o hace deporte). Germán eligió «El único medio de noticias inclusivo» y «no videntes»
+// después de ver el riesgo (otros medios ya leen sus notas en voz alta; Ley 20.169, art. 4 e). El enlace lleva ?voz=1, que abre la
+// ventana de la voz aunque el lector haya marcado «No volver a mostrar». Cada texto es un solo nodo, para que EN_FIJO lo traduzca entero.
+const VOZ_ICONO = `<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M8 20v8M16 13v22M24 7v34M32 13v22M40 20v8" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>`;
+function vozPortada(ultima, hoy) {
+  const href = ultima ? `/edicion/${ultima}?voz=1` : "/edicion?voz=1";
+  return `<section id="voz" aria-labelledby="t-voz" style="border:0;padding:0"><div class="vozp"><div class="vozp-ico" aria-hidden="true">${VOZ_ICONO}</div><div class="vozp-txt">
+<span class="kicker">Nuevo · Lectura por voz</span>
+<h2 id="t-voz">El único medio de noticias inclusivo</h2>
+<p class="lede">Cofrade News ahora se puede escuchar completo, de la primera a la última sección. Una voz te lee la edición del día y tú decides qué sigue diciendo «índice», «deportes» o «siguiente», sin tocar la pantalla. Lo creamos para que las personas no videntes puedan informarse por su cuenta de un diario escrito, y para quienes van manejando, haciendo deporte o tienen las manos ocupadas.</p>
+<ol class="vozp-pasos">
+<li>Abre la edición y toca «Escuchar el boletín». Si usas lector de pantalla, encontrarás «Escuchar el boletín con voz» como primer enlace de la página.</li>
+<li>Cuando el navegador lo pida, permite el micrófono para darle órdenes con la voz. Si vas a manejar, enciéndelo antes de partir.</li>
+<li>Di lo que quieras escuchar: «índice», el nombre o el número de una sección, «pausa», «más lento» o «salir». Con teclado, la barra espaciadora pausa, la I abre el índice, la N avanza y la P retrocede.</li>
+</ol>
+<div class="acciones"><a class="btn oro" href="${href}">${ultima && ultima === hoy ? "Escuchar la edición de hoy →" : "Escuchar la última edición →"}</a></div>
+<p class="vozp-nota">Gratis y sin instalar nada. Funciona mejor en Chrome, Edge y Safari. Cofrade News no graba ni guarda tu voz; para entenderte, el navegador usa su propio servicio.</p>
+</div></div></section>`;
+}
+
 async function cuerpoPortada(ctx) {
   const [lista, p, h] = await Promise.all([indice(ctx), pulso(ctx), historia(ctx)]);   // 15-11-2026: los tres a la vez
   const ultima = lista[0];
@@ -1099,6 +1149,7 @@ async function cuerpoPortada(ctx) {
 <ul class="sellos"><li>${ultima ? (ultima === hoy ? "Edición de hoy publicada" : "Última edición: " + esc(fechaLarga(ultima))) : "Primera edición muy pronto"}</li><li>Cada dato con su fuente</li><li>Bienvenido a Chile, la joya del Pacífico, y el mejor país para invertir</li></ul></div>
 ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${hoy}">${esc(fechaLarga(hoy))}</span></div><p style="margin:6px 0 0;color:#D8D2C4">${esc(estado)}</p></aside>`}</div></section>`;
   const cuerpo = `${INSTALAR_HTML}
+${vozPortada(ultima, hoy)}
 <section aria-labelledby="t-secc" style="border:0;padding-top:40px"><span class="kicker">${ultima ? (ultima === hoy ? "Hoy · " : "Última edición · ") : ""}<span data-iso="${ultima || hoy}">${esc(fechaLarga(ultima || hoy))}</span></span>
 <h2 class="titulo-lujo" id="t-secc">${esc(estado)}</h2><p class="sub">Doce secciones, cada mañana, con la fuente de cada dato.</p>
 <div class="secc">${SECCIONES_LUJO.map(([ic, t, d]) => `<a class="sec-card" href="/edicion" style="text-decoration:none">${icono(ic)}<div><b>${esc(t)}</b><p>${esc(d)}</p></div></a>`).join("")}</div></section>
