@@ -24,6 +24,8 @@ const TOPE_ARCHIVO = 400;  // …y «Ver más» abre las anteriores de a 12 (Ger
 const MARCAS = __MARCAS__;
 const LENTO = __LENTO__;   // 13-11-2026: capa que dibuja cada gráfico de la edición recién cuando el lector llega a él
 const NAVEGAR = __NAVEGAR__;   // 18-11-2026: Índice, buscador y enlaces internos llegan exacto al tema aunque las secciones aún no se dibujen (modulos/navegar.js)
+const PROY_JS = __PROY_JS__;   // 19-11-2026: gráficos, idioma, Índice y noticias sin repetir de «Proyección de crecimiento… próximos 4 años» (modulos/proyeccion_cliente.js)
+const VOZ = __VOZ__;   // 19-11-2026: el boletín con voz (ventana una sola vez, lectura y órdenes por voz, auspicios cada 10 min; modulos/voz.js)
 // 15-11-2026 (Germán: «procura que la Landing Page y el Diario "Cofrade News" cargue mucho más rápido en la Web»): la librería de
 // gráficos (ECharts 6.1.0, 1,1 MB y 367 KB comprimida) es idéntica en todas las ediciones desde el 06-11. Medido con un celular
 // con 4G lento: servirla aparte en la PRIMERA visita era ~1 s más lento (el navegador se detiene en ella a mitad de la página), y en
@@ -899,6 +901,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__TABLERO__*/
 /*__COMPACTO__*/
 /*__HOROSCOPO_ANUAL__*/
+/*__PROYECCION__*/
 /*__ICONO__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
@@ -1296,7 +1299,10 @@ export default {
         // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): el navegador guardaba la edición 1 hora (la de hoy, 10 minutos)
         // y un cambio del sitio tardaba en verse. Ahora la revisa en cada apertura con su etiqueta: edición + versión del sitio + librería
         // de gráficos. Si nada cambió responde «sin cambios» (304) sin volver a mandar la página, así que abre igual de rápido.
-        const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}"`;
+        // 19-11-2026: «Proyección de crecimiento… próximos 4 años» (modulos/proyeccion.js). Sus cifras cambian sin que cambie la edición, así
+        // que su versión también va en la etiqueta (si no, quien ya abrió la edición seguiría viendo las cifras de antes).
+        const pc = await proyeccionLeer(m[1], ctx);
+        const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}"`;
         // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
         // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.
         const ultima = new Date(Date.parse(m[1] + "T03:00:00Z") - (fnv1a(etiqueta) % 2592000) * 1000).toUTCString();
@@ -1308,13 +1314,15 @@ export default {
           "Cache-Control": "no-cache", ETag: etiqueta, "Last-Modified": ultima, ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
         const cp = compacto();   // 18-11-2026: títulos de bloque más grandes y gráficos del Congreso en barra compacta (modulos/compacto.js)
+        const pv = proyeccionCrecimiento(m[1], pc);   // 19-11-2026: proyección de crecimiento a 4 años, después de «Crecimiento de Chile» (modulos/proyeccion.js)
         const ha = horoscopoAnual(m[1]);   // 18-11-2026: botones del horóscopo más grandes + horóscopo del año y chino, personalizado (modulos/horoscopo_anual.js)
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS, { html: true }); } })
+          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("head", cp.cabeza).on("body", cp.cuerpo).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
+          .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
           .on("script", scriptsEdicion(lib))
           .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);

@@ -12,16 +12,31 @@ lento = leer("modulos", "lento.js").strip()
 assert "</script" not in lento.lower()
 navegar = leer("modulos", "navegar.js").strip()   # 18-11-2026: el Índice llega exacto al tema
 assert "</script" not in navegar.lower()
+def compacto_js(codigo):
+    """19-11-2026: un script que va al navegador sale sin comentarios ni espacios (más liviano y más difícil de copiar).
+    Usa esbuild si está a mano; si no, queda tal cual (funciona igual)."""
+    import shutil, subprocess
+    esb = shutil.which("esbuild") or "/tmp/esb/node_modules/.bin/esbuild"
+    if not os.path.exists(esb): return codigo
+    r = subprocess.run([esb, "--minify", "--loader=js", "--log-level=error"], input=codigo.encode("utf-8"), capture_output=True)
+    return r.stdout.decode("utf-8").strip() if r.returncode == 0 and r.stdout.strip() else codigo
+voz = compacto_js(leer("modulos", "voz.js").strip())   # 19-11-2026: el boletín con voz
+assert "</script" not in voz.lower()
+proy_js = compacto_js(leer("modulos", "proyeccion_cliente.js").strip())   # 19-11-2026: gráficos de la proyección de crecimiento a 4 años
+assert "</script" not in proy_js.lower()
 for k, v in {
     "__FORMULARIO__": logos["formulario"],
     "__MARCAS__": json.dumps({"marcas": marcas["marcas"]}, ensure_ascii=False),
     "__LENTO__": json.dumps("<script>" + lento + "</script>", ensure_ascii=False),
     "__NAVEGAR__": json.dumps("<script>" + navegar + "</script>", ensure_ascii=False),
+    "__VOZ__": json.dumps("<script>" + voz + "</script>", ensure_ascii=False),
+    "__PROY_JS__": json.dumps("<script>" + proy_js + "</script>", ensure_ascii=False),
     "/*__BUZON_PANEL__*/": leer("modulos", "buzon_panel.js"),
     "/*__SUSCRIPCIONES__*/": leer("modulos", "suscripciones.js"),   # 14-11-2026: socios fundadores con Mercado Pago
     "/*__TABLERO__*/": leer("modulos", "tablero.js"),   # 16-11-2026: Panel con filtros, ayudas y gráficos + publicidad pagada
     "/*__COMPACTO__*/": leer("modulos", "compacto.js"),   # 18-11-2026: títulos de bloque más grandes y Congreso en barra compacta
-    "/*__HOROSCOPO_ANUAL__*/": leer("modulos", "horoscopo_anual.js"),   # 18-11-2026: horóscopo del año, chino y personalizado (contenido hasta 2031)
+    "/*__HOROSCOPO_ANUAL__*/": leer("modulos", "horoscopo_anual.js"),
+    "/*__PROYECCION__*/": leer("modulos", "proyeccion.js"),   # 19-11-2026: «Proyección de crecimiento en Chile durante los próximos 4 años»   # 18-11-2026: horóscopo del año, chino y personalizado (contenido hasta 2031)
     "/*__ICONO__*/": leer("modulos", "icono.js"),   # 16-11-2026: ícono de Cofrade News (acceso directo, lectura sin señal)
 }.items():
     assert src.count(k) == 1, k
