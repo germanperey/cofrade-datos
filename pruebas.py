@@ -2026,6 +2026,9 @@ def proyecciones_de_crecimiento_a_4_anios():
     hoy = dt.date(2026, 11, 19)
     assert B.num_proy("0,25 a 0,75") == 0.5 and B.num_proy("2,4") == 2.4 and B.num_proy("-1,8") == -1.8 and B.num_proy("0") == 0.0
     assert B.num_proy("") is None and B.num_proy(None) is None and B.num_proy("s/d") is None
+    misma = B.proy_palabras("Cartera de inversión minera de Chile registra su mayor monto en 13 años")
+    assert B.proy_parecidas(misma, B.proy_palabras("Chile eleva su cartera minera a récord: el mayor monto en 13 años"))
+    assert not B.proy_parecidas(B.proy_palabras("Banco Central mantiene la tasa en 4,5%"), B.proy_palabras("Banco Central publica su IPoM de diciembre"))
     cur = {"nota": "x", "instituciones": [
         {"clave": "fmi_weo", "api": "fmi", "fecha": "2026-10-13", "pib": {"2026": "9,9", "2027": "9,9"}, "inflacion": {"tipo": "promedio anual"}},
         {"clave": "bcch_ipom", "fecha": "2026-09-09", "pib": {"2026": "0,25 a 0,75", "2027": "2 a 3", "2028": "2,25 a 3,25"}, "revisar_desde": "2026-12-16"},
@@ -2039,7 +2042,11 @@ def proyecciones_de_crecimiento_a_4_anios():
         {"titulo": "Banco Central: Imacec de septiembre crece 0,2%", "fuente": "La Tercera (RSS)", "fecha": "2026-11-19 09:00", "url": "https://a.cl/2"},
         {"titulo": "Superintendencia multa a una AFP", "fuente": "DF", "fecha": "2026-11-19 09:00", "url": "https://a.cl/3"},
         {"titulo": "Cartera de inversión minera de Chile registra su mayor monto en 13 años", "fuente": "DF", "fecha": "2026-11-19 10:00", "url": "https://a.cl/4"},
-        {"titulo": "Inversión récord en Perú", "fuente": "DF", "fecha": "2026-11-19 10:00", "url": "https://a.cl/5"}]}}}
+        {"titulo": "Inversión récord en Perú", "fuente": "DF", "fecha": "2026-11-19 10:00", "url": "https://a.cl/5"},
+        {"titulo": "Chile: cartera de inversión minera alcanza US$111.149 millones, el mayor monto en 13 años", "fuente": "Otro", "fecha": "2026-11-19 11:00", "url": "https://a.cl/6"},
+        {"titulo": "Dos proyectos de cobre en el norte de Chile buscan proyección en la bolsa canadiense", "fuente": "DF", "fecha": "2026-11-19 11:00", "url": "https://a.cl/7"},
+        {"titulo": "Imacec sube", "fuente": "DF", "fecha": "2026-11-19 12:00", "url": "https://a.cl/8"},
+        {"titulo": "Imacec sube", "fuente": "Otro", "fecha": "2026-11-19 12:30", "url": "https://a.cl/9"}]}}}
     vistos = []
     serie = {"NGDP_RPCH": {"2025": 2.5, "2026": 0.6, "2027": 2.6, "2028": 2.4, "2029": 2.3, "2030": 2.3, "2031": 2.3, "1990": 3.7},
              "PCPIPCH": {"2026": 3.7, "2027": 3.5}, "LUR": {"2026": 9.5, "2030": 7.9}}
@@ -2065,10 +2072,10 @@ def proyecciones_de_crecimiento_a_4_anios():
             assert p["2027"] == {"valor": 2.5, "min": 2.5, "max": 2.6, "n": 3}, p["2027"]   # FMI 2,6 + IPoM 2,5 (centro de 2 a 3) + OCDE 2,5; la vieja no
             assert p["2028"]["n"] == 2 and p["2028"]["valor"] == 2.6 and p["2030"] == {"valor": 2.3, "min": 2.3, "max": 2.3, "n": 1}
             t = [n["titulo"] for n in r["noticias"]]
-            assert t == ["Banco Central: Imacec de septiembre crece 0,2%", "FMI recorta el crecimiento de Chile a 0,6% en 2026",
+            assert t == ["Banco Central: Imacec de septiembre crece 0,2%", "Imacec sube", "FMI recorta el crecimiento de Chile a 0,6% en 2026",
                          "Cartera de inversión minera de Chile registra su mayor monto en 13 años"], t   # la de inversión, aunque es nueva, va al final
             assert all(set(n) == {"titulo", "fuente", "url", "fecha"} for n in r["noticias"]), r["noticias"]
-            assert r["noticias"][1]["fuente"] == "CNN Chile"
+            assert next(n for n in r["noticias"] if n["titulo"].startswith("FMI"))["fuente"] == "CNN Chile"   # sin el «(RSS)» del nombre
             assert r["revisar"] == ["ocde_eo"] and "ocde_eo" in e["proyecciones"]["error"]
             serie.clear()   # el FMI no responde: quedan las cifras verificadas del archivo
             r2 = B.proyecciones_chile({}, hoy, base=d, titulares=None)

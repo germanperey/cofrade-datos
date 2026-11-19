@@ -35,6 +35,7 @@ import os
 import re
 import sys
 import time
+import unicodedata
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from email.utils import parsedate_to_datetime
@@ -2942,10 +2943,26 @@ def paginas_sii(anio=None):
 # (cada cifra con su fecha y enlace, verificadas); las noticias salen de los titulares que GitHub ya leyó. Lo dibuja el sitio.
 FMI_API = "https://www.imf.org/external/datamapper/api/v1"
 FMI_IND = (("pib", "NGDP_RPCH"), ("inflacion", "PCPIPCH"), ("desempleo", "LUR"), ("cuenta_corriente", "BCA_NGDPD"), ("deuda", "GGXWDG_NGDP"))
-PROY_TEMA = re.compile(r"proyecci|crecimiento|crecer[aá]n?\b|\bPIB\b|IPoM|\bFMI\b|Banco Mundial|\bOCDE\b|\bCepal\b|expectativas|"
+PROY_TEMA = re.compile(r"proyecci[oó]n(es)?\b.{0,30}(crecimiento|PIB|econ|inflaci|desempleo|tasa)|crecimiento|crecer[aá]n?\b|\bPIB\b|IPoM|\bFMI\b|Banco Mundial|\bOCDE\b|\bCepal\b|expectativas|"
                        r"Finanzas P[uú]blicas|perspectivas econ|Imacec|recesi[oó]n|desaceleraci|inflaci[oó]n|Banco Central|\bTPM\b|"
                        r"tasa de pol[ií]tica|econom[ií]a chilena|desempleo|Consejo Fiscal|presupuesto", re.I)
 PROY_INVERSION = re.compile(r"inversi[oó]n|inversiones", re.I)   # segunda prioridad: la inversión empuja el crecimiento que viene
+PROY_VACIAS = {"para", "como", "tras", "desde", "entre", "sobre", "pero", "este", "esta", "estos", "estas", "segun", "hasta", "ante", "cual",
+               "cuando", "donde", "porque", "durante", "mientras", "tiene", "tienen", "sera", "seria", "millones", "chile", "chilena", "chileno"}
+
+
+def proy_palabras(t):
+    """Palabras con contenido de un titular (sin tildes, de 4 letras o más, sin las de relleno) → conjunto."""
+    t = unicodedata.normalize("NFD", str(t or "")).encode("ascii", "ignore").decode().lower()
+    return {w for w in re.split(r"[^a-z0-9]+", t) if len(w) >= 4 and w not in PROY_VACIAS}
+
+
+def proy_parecidas(a, b):
+    """Dos titulares que cuentan la misma noticia: 3 o más palabras en común y casi la mitad del más corto."""
+    c = len(a & b)
+    return c >= 3 and c / max(1, min(len(a), len(b))) >= 0.45
+
+
 PROY_CHILE = re.compile(r"\bChile\b|chilen|Banco Central|Hacienda|\bIPoM\b|Imacec|Codelco|Cochilco|Consejo Fiscal", re.I)
 
 
@@ -3073,7 +3090,7 @@ def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tp
                 vals.append(v)
         if vals:
             promedio[a] = {"valor": round(sum(vals) / len(vals), 1), "min": round(min(vals), 2), "max": round(max(vals), 2), "n": len(vals)}
-    noticias, vistos = [], set()
+    noticias, vistos, parecidas = [], set(), []
     secs = ((titulares or {}).get("secciones") or {}) if isinstance(titulares, dict) else {}
     for sec in ("economia/chile", "perspectivas", "economia/mundo"):
         for n in (secs.get(sec) or {}).get("notas") or []:
@@ -3087,8 +3104,11 @@ def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tp
                 continue
             clave_t = re.sub(r"\W+", " ", t.lower()).strip()[:80]
             nivel = 0 if PROY_TEMA.search(t) else 1 if PROY_INVERSION.search(t) else None
-            if nivel is not None and PROY_CHILE.search(t + " " + str(n.get("resumen") or "")) and u not in vistos and clave_t not in vistos:
+            pal = proy_palabras(t)
+            if nivel is not None and PROY_CHILE.search(t + " " + str(n.get("resumen") or "")) and u not in vistos and clave_t not in vistos \
+                    and not any(proy_parecidas(pal, q) for q in parecidas):   # la misma noticia en otro medio: va una sola vez
                 vistos.update((u, clave_t))
+                parecidas.append(pal)
                 noticias.append({"titulo": t, "fuente": re.sub(r"\s*\((RSS|Atom)\)\s*$", "", str(n.get("fuente") or "")), "url": u, "fecha": f, "_n": nivel})
     noticias.sort(key=lambda n: n["fecha"], reverse=True)
     noticias.sort(key=lambda n: n.pop("_n"))   # primero las de proyecciones e indicadores; después, las de inversión (cada grupo, de la más nueva)
