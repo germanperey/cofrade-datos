@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-19T16:30-03:00",
+ "generado": "2026-11-19T17:01-03:00",
  "anio_base": 2026,
  "anios": [
   "2027",
@@ -72,6 +72,7 @@
   {
    "clave": "bcch_ipom",
    "institucion": "Banco Central de Chile",
+   "institucion_en": "Central Bank of Chile",
    "corto": "Banco Central (IPoM)",
    "corto_en": "Central Bank (IPoM)",
    "informe": "Informe de Política Monetaria (IPoM) de septiembre de 2026",
@@ -107,6 +108,7 @@
   {
    "clave": "bcch_eee",
    "institucion": "Banco Central de Chile",
+   "institucion_en": "Central Bank of Chile",
    "corto": "Economistas (Encuesta del Banco Central)",
    "corto_en": "Economists (Central Bank survey)",
    "informe": "Encuesta de Expectativas Económicas de noviembre de 2026 (mediana)",
@@ -142,6 +144,7 @@
   {
    "clave": "fmi_weo",
    "institucion": "Fondo Monetario Internacional",
+   "institucion_en": "International Monetary Fund",
    "corto": "FMI",
    "corto_en": "IMF",
    "informe": "Perspectivas de la Economía Mundial (WEO) de octubre de 2026",
@@ -179,6 +182,7 @@
   {
    "clave": "bm_mpo",
    "institucion": "Banco Mundial",
+   "institucion_en": "World Bank",
    "corto": "Banco Mundial",
    "corto_en": "World Bank",
    "informe": "Macro Poverty Outlook de octubre de 2026 (ficha de Chile)",
@@ -214,6 +218,7 @@
   {
    "clave": "ocde_eo",
    "institucion": "OCDE",
+   "institucion_en": "OECD",
    "corto": "OCDE",
    "corto_en": "OECD",
    "informe": "Perspectivas Económicas de la OCDE de junio de 2026",
@@ -235,6 +240,7 @@
   {
    "clave": "cepal",
    "institucion": "CEPAL",
+   "institucion_en": "ECLAC",
    "corto": "CEPAL",
    "corto_en": "ECLAC",
    "informe": "Proyecciones de crecimiento 2026 y 2027 (octubre de 2026)",
@@ -251,6 +257,7 @@
   {
    "clave": "hacienda_ifp",
    "institucion": "Ministerio de Hacienda",
+   "institucion_en": "Ministry of Finance of Chile",
    "corto": "Hacienda",
    "corto_en": "Finance Ministry",
    "informe": "Informe de Finanzas Públicas del tercer trimestre de 2026 (Presupuesto 2027)",
@@ -305,7 +312,38 @@
    "n": 1
   }
  },
- "noticias": [],
+ "noticias": [
+  {
+   "titulo": "Hacienda logra acuerdo para destrabar el presupuesto de Educación: repondrá el programa \"Yo Elijo mi PC\" y analizará cambios pensando en 2028",
+   "fuente": "Diario Financiero",
+   "url": "http://www.df.cl/economia-y-politica/macro/hacienda-logra-acuerdo-para-destrabar-el-presupuesto-de-educacion-repondra",
+   "fecha": "2026-11-19"
+  },
+  {
+   "titulo": "Cochilco: cartera de inversión minera alcanza US$111.149 millones, el mayor monto en 13 años",
+   "fuente": "Electromineria",
+   "url": "https://electromineria.cl/cochilco-inversion-minera-111149-millones-record-13-anos/",
+   "fecha": "2026-11-19"
+  },
+  {
+   "titulo": "Codelco proyecta continuidad de Gabriela Mistral hasta 2055 con inversión de US$868 millones",
+   "fuente": "Portal Minero · Noticias de proyectos",
+   "url": "https://www.portalminero.com/codelco-proyecta-continuidad-de-gabriela-mistral-hasta-2055-con-inversion-de-us868-millones",
+   "fecha": "2026-11-18"
+  },
+  {
+   "titulo": "El espejismo del hidrógeno verde: cae una inversión de US$16.000 millones y Chile enfrenta la realidad del mercado mundial",
+   "fuente": "El Clarín de Chile",
+   "url": "https://www.elclarin.cl/2026/11/18/el-espejismo-del-hidrogeno-verde-cae-una-inversion-de-us16-000-millones-y-chile-enfrenta-la-realidad-del-mercado-mundial/",
+   "fecha": "2026-11-17"
+  },
+  {
+   "titulo": "Inversión minera bate récord en Chile, pero producción cae por agotamiento y falta de nuevos proyectos",
+   "fuente": "Reporte Minero",
+   "url": "https://www.reporteminero.cl/noticia/noticias/2026/11/cesco-inversion-record-cobre-produccion-cae-chile-ley-mineral",
+   "fecha": "2026-11-17"
+  }
+ ],
  "revisar": [],
  "nota": "Cifras tal como las publicó cada institución, con su fecha y su enlace (verificadas el 19-11-2026). PIB e inflación en porcentaje. Se revisan cuando sale un informe nuevo: ver «revisar_desde». Las del FMI se renuevan solas desde su base de datos oficial.",
  "tpm_esperada": {
