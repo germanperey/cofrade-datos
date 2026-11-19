@@ -241,6 +241,8 @@ def main_sin_red_no_se_cae():
         import json
         e = json.load(open(os.path.join(d, "estado.json")))
         assert all(not v["ok"] for v in e["fuentes"].values()) and not os.path.exists(os.path.join(d, "uv.csv"))
+        foto = os.path.join(d, "proyecciones", B.ahora().date().isoformat() + ".json")   # 19-11-2026: la foto del día de la proyección
+        assert os.path.exists(foto) and json.load(open(foto))["instituciones"], foto
     finally:
         B.time.sleep, B.requests.Session.get = dormir, get
 
@@ -2026,6 +2028,11 @@ def proyecciones_de_crecimiento_a_4_anios():
     hoy = dt.date(2026, 11, 19)
     assert B.num_proy("0,25 a 0,75") == 0.5 and B.num_proy("2,4") == 2.4 and B.num_proy("-1,8") == -1.8 and B.num_proy("0") == 0.0
     assert B.num_proy("") is None and B.num_proy(None) is None and B.num_proy("s/d") is None
+    assert B.num_proy("2.5") == 2.5 and B.num_proy(2.7) == 2.7 and B.num_proy("2-3") == 2.5 and B.num_proy("\u22121,8") == -1.8 and B.num_proy("-1,8 a -0,5") == -1.15
+    hac = B.proy_palabras("Hacienda proyecta crecimiento de 3,3% para 2027")
+    assert not B.proy_parecidas(hac, B.proy_palabras("Hacienda proyecta crecimiento de 2,0% para 2026"))   # otro año: otra noticia
+    assert not B.proy_parecidas(B.proy_palabras("Imacec de septiembre crece 0,2% y supera lo esperado"), B.proy_palabras("Imacec de octubre crece 0,2% y supera lo esperado"))
+    assert B.proy_parecidas(B.proy_palabras("FMI proyecta que Chile crecerá 2,6% en 2027"), B.proy_palabras("Chile crecerá 2,6% el próximo año, según el FMI"))
     misma = B.proy_palabras("Cartera de inversión minera de Chile registra su mayor monto en 13 años")
     assert B.proy_parecidas(misma, B.proy_palabras("Chile eleva su cartera minera a récord: el mayor monto en 13 años"))
     assert B.proy_parecidas(B.proy_palabras("Inversión minera récord en Chile"), B.proy_palabras("Récord de inversiones mineras en Chile"))   # raíces
@@ -2053,7 +2060,10 @@ def proyecciones_de_crecimiento_a_4_anios():
         {"titulo": "Banco central de Brasil vende 1.000 millones de dólares para contener el real", "fuente": "Yahoo", "fecha": "2026-11-19 12:30", "url": "https://a.cl/10"},
         {"titulo": "¿Qué pasa con la inversión de HIF Global en Uruguay?", "fuente": "Ámbito", "resumen": "La empresa chilena…", "fecha": "2026-11-19 12:30", "url": "https://a.cl/11"},
         {"titulo": "Cochilco: cartera de inversión minera alcanza US$111.149 millones, el mayor monto en 13 años", "fuente": "Electromineria", "fecha": "2026-11-19 12:40", "url": "https://a.cl/12"},
-        {"titulo": "La economía mundial crecerá 3% en 2027, según el FMI", "fuente": "DF", "fecha": "2026-11-19 12:45", "url": "https://a.cl/13"}]}}}
+        {"titulo": "La economía mundial crecerá 3% en 2027, según el FMI", "fuente": "DF", "fecha": "2026-11-19 12:45", "url": "https://a.cl/13"},
+        {"titulo": "Banco Central de Turquía sube la tasa al 50%", "fuente": "DF", "fecha": "2026-11-19 12:46", "url": "https://a.cl/14"},
+        {"titulo": "Empresa X: crecimiento de ventas en Chile", "fuente": "DF", "fecha": "2026-11-19 12:47", "url": "https://a.cl/15"},
+        {"titulo": "Imacec de octubre sube 1% en Chile", "fuente": "DF", "fecha": "2026-11-19 12:48", "url": "http://a.cl/http"}]}}}
     vistos = []
     serie = {"NGDP_RPCH": {"2025": 2.5, "2026": 0.6, "2027": 2.6, "2028": 2.4, "2029": 2.3, "2030": 2.3, "2031": 2.3, "1990": 3.7},
              "PCPIPCH": {"2026": 3.7, "2027": 3.5}, "LUR": {"2026": 9.5, "2030": 7.9}}
@@ -2073,7 +2083,10 @@ def proyecciones_de_crecimiento_a_4_anios():
             assert all(u.startswith("https://www.imf.org/external/datamapper/api/v1/") and u.endswith("/CHL") for u in vistos) and len(vistos) == 5, vistos
             assert r["anios"] == ["2027", "2028", "2029", "2030"] and r["anio_base"] == 2026
             assert r["fmi"]["series"]["pib"]["2027"] == 2.6 and "1990" not in r["fmi"]["series"]["pib"] and r["fmi"]["series"]["desempleo"]["2030"] == 7.9
+            act = {x["clave"]: x["activo"] for x in r["instituciones"]}
+            assert act == {"fmi_weo": True, "bcch_ipom": True, "vieja": False, "ocde_eo": True}, act   # la vieja no se muestra ni promedia
             f = next(x for x in r["instituciones"] if x["clave"] == "fmi_weo")
+            assert f["fecha"] == "2026-11-19" and f["fecha_texto"] == "leída el 19 de noviembre de 2026" and "base de datos oficial" in f["informe"]
             assert f["pib"]["2027"] == "2,6" and f["pib"]["2030"] == "2,3" and f["inflacion"]["2027"] == "3,5" and f["inflacion"]["tipo"] == "promedio anual"
             p = r["promedio"]
             assert p["2027"] == {"valor": 2.5, "min": 2.5, "max": 2.6, "n": 3}, p["2027"]   # FMI 2,6 + IPoM 2,5 (centro de 2 a 3) + OCDE 2,5; la vieja no
@@ -2113,6 +2126,7 @@ def encuesta_de_expectativas_sola_desde_el_banco_central():
            {"id": "F089.PIB.V12.2031.M", "titulo": "PIB (Variaciones 12 meses) - Año 2031 / Mediana"},
            {"id": "F022.PIB.V12.2027.M", "titulo": "PIB 2027"},
            {"id": "F089.CHOG.V12.2027.M", "titulo": "Consumo hogares e IPSFL - Año 2027 / Mediana"}]
+    cat.append({"id": "F089.PIBT.V12.2027.M", "titulo": "PIB tendencial - Año 2027 / Mediana"})   # no es el crecimiento del año
     assert B.eee_pib_series(cat, hoy) == {2026: "F089.PIB.V12.2026.M", 2027: "F089.PIB.V12.2027.M", 2028: "F089.PIB.V12.2028.M"}
     dos = cat + [{"id": "F089.PIB.VAR.2028.M", "titulo": "PIB - Año 2028 / Mediana"}]
     assert B.eee_pib_series(dos, hoy) == {2026: "F089.PIB.V12.2026.M", 2027: "F089.PIB.V12.2027.M"}   # 2028 ambiguo: fuera
@@ -2135,6 +2149,10 @@ def encuesta_de_expectativas_sola_desde_el_banco_central():
         r = B.eee_pib({}, hoy, cat)
         assert r == {"mes": "2026-11", "pib": {"2026": "0", "2027": "3"}, "series": {"2026": "F089.PIB.V12.2026.M", "2027": "F089.PIB.V12.2027.M"}}, r
         assert all("function=GetSeries" in u and "token=x" in u for u in pedidos) and len(pedidos) == 3
+        bueno = datos["F089.PIB.V12.2026.M"]
+        datos["F089.PIB.V12.2026.M"] = obs(("01-11-2026", "45"))   # absurdo: no se usa, y con un solo año no alcanza
+        assert B.eee_pib({}, hoy, cat) is None
+        datos["F089.PIB.V12.2026.M"] = bueno
         cur = {"instituciones": [{"clave": "bcch_eee", "fecha": "2026-11-10", "via": "Emol", "url": "https://www.emol.com/x",
                                   "pib": {"2026": "9", "2027": "9", "2028": "2,7"}, "inflacion": {"tipo": "a diciembre", "mes": "2026-10", "2027": "3,2"}}]}
         with tempfile.TemporaryDirectory() as d:

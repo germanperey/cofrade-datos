@@ -2943,36 +2943,60 @@ def paginas_sii(anio=None):
 # (cada cifra con su fecha y enlace, verificadas); las noticias salen de los titulares que GitHub ya leyó. Lo dibuja el sitio.
 FMI_API = "https://www.imf.org/external/datamapper/api/v1"
 FMI_IND = (("pib", "NGDP_RPCH"), ("inflacion", "PCPIPCH"), ("desempleo", "LUR"), ("cuenta_corriente", "BCA_NGDPD"), ("deuda", "GGXWDG_NGDP"))
-PROY_TEMA = re.compile(r"proyecci[oó]n(es)?\b.{0,30}(crecimiento|PIB|econ|inflaci|desempleo|tasa)|crecimiento|crecer[aá]n?\b|\bPIB\b|IPoM|\bFMI\b|Banco Mundial|\bOCDE\b|\bCepal\b|expectativas|"
-                       r"Finanzas P[uú]blicas|perspectivas econ|Imacec|recesi[oó]n|desaceleraci|inflaci[oó]n|Banco Central|\bTPM\b|"
-                       r"tasa de pol[ií]tica|econom[ií]a chilena|desempleo|Consejo Fiscal", re.I)
+PROY_TEMA = re.compile(r"proyecci[oó]n(es)?\b.{0,30}(crecimiento|PIB|econ|inflaci|desempleo|tasa)|"
+                       r"crecimiento (econ[oó]mico|de la econom|del PIB|de Chile|del pa[ií]s|potencial|tendencial)|crecer[aá]n?\b|\bPIB\b|IPoM|\bFMI\b|"
+                       r"Banco Mundial|\bOCDE\b|\bCepal\b|expectativas|Finanzas P[uú]blicas|perspectivas econ|Imacec|recesi[oó]n|desaceleraci|inflaci[oó]n|"
+                       r"Banco Central|\bTPM\b|tasa de pol[ií]tica|econom[ií]a chilena|desempleo|Consejo Fiscal", re.I)
 PROY_INVERSION = re.compile(r"inversi[oó]n|inversiones", re.I)   # segunda prioridad: la inversión empuja el crecimiento que viene
 PROY_VACIAS = {"para", "como", "tras", "desde", "entre", "sobre", "pero", "este", "esta", "estos", "estas", "segun", "hasta", "ante", "cual",
                "cuando", "donde", "porque", "durante", "mientras", "tiene", "tienen", "sera", "seria", "millones", "chile", "chilena", "chileno"}
+PROY_SIGLAS = {"fmi", "pib", "ipc", "tpm", "bid", "cmf", "sii", "ine", "bce", "fed"}   # siglas de 3 letras que sí distinguen una noticia
+PROY_MESES = {"enero": "@ene", "febrero": "@feb", "marzo": "@mar", "abril": "@abr", "mayo": "@may", "junio": "@jun", "julio": "@jul",
+              "agosto": "@ago", "septiembre": "@sep", "setiembre": "@sep", "octubre": "@oct", "noviembre": "@nov", "diciembre": "@dic"}
 
 
 def proy_palabras(t):
-    """Raíces de las palabras con contenido de un titular (sin tildes, de 4 letras o más, sin las de relleno, cortadas a 6 letras para
-    que «inversión» e «inversiones» cuenten igual) → conjunto."""
+    """Huella de un titular: raíces de 6 letras de las palabras con contenido (más FMI, PIB, IPC…), las cifras («#111149» para
+    «111.149», «#84.5» para «84,5») y los meses («@sep»). Sin tildes. → conjunto."""
     t = unicodedata.normalize("NFD", str(t or "")).encode("ascii", "ignore").decode().lower()
-    return {w[:6] for w in re.split(r"[^a-z0-9]+", t) if (len(w) >= 4 or (len(w) == 3 and w.isdigit())) and w not in PROY_VACIAS}   # montos: «111.149» cuenta
+    o = set()
+    for n in re.findall(r"\d+(?:[.,]\d+)*", t):
+        o.add("#" + re.sub(r"[.](?=\d{3}(?!\d))", "", n).replace(",", "."))
+    for w in re.split(r"[^a-z0-9]+", t):
+        if w in PROY_MESES:
+            o.add(PROY_MESES[w])
+        elif w and not w.isdigit() and (len(w) >= 4 or w in PROY_SIGLAS) and w not in PROY_VACIAS:
+            o.add(w[:6])
+    return o
 
 
 def proy_parecidas(a, b):
-    """Dos titulares que cuentan la misma noticia: 3 o más raíces en común y al menos el 40 % de las del más corto."""
-    c = len(a & b)
-    return c >= 3 and c / max(1, min(len(a), len(b))) >= 0.4
+    """¿Dos titulares cuentan la misma noticia? Si nombran años distintos o meses distintos, no (2026 y 2027; septiembre y octubre).
+    Sí, si comparten un mismo monto (que no sea un año) y 2 palabras; o 3 palabras que sean al menos el 40 % de las del más corto."""
+    na, nb = {x for x in a if x[:1] == "#"}, {x for x in b if x[:1] == "#"}
+    ya, yb = {x for x in na if re.match(r"#(19|20)\d\d$", x)}, {x for x in nb if re.match(r"#(19|20)\d\d$", x)}
+    ma, mb = {x for x in a if x[:1] == "@"}, {x for x in b if x[:1] == "@"}
+    if (ya and yb and not ya & yb) or (ma and mb and not ma & mb):
+        return False
+    pa, pb = a - na - ma, b - nb - mb
+    c = len(pa & pb)
+    if c >= 2 and any(len(x) >= 4 and x not in ya for x in na & nb):
+        return True
+    return c >= 3 and c / max(1, min(len(pa), len(pb))) >= 0.4
 
 
-PROY_CHILE = re.compile(r"\bChile\b|chilen|Banco Central|Hacienda|\bIPoM\b|Imacec|Codelco|Cochilco|Consejo Fiscal", re.I)
+PROY_CHILE = re.compile(r"\bChile\b|chilen|Banco Central(?!\s+(de|del)\s+(?!Chile))(?!\s+Europeo)|Hacienda|\bIPoM\b|Imacec|Codelco|Cochilco|"
+                        r"Consejo Fiscal", re.I)   # «Banco Central de Brasil» no cuenta como Chile
 PROY_FUERA = re.compile(r"\b(Brasil|Argentina|Per[uú]|Uruguay|Paraguay|Bolivia|Colombia|M[eé]xico|Ecuador|Venezuela|Estados Unidos|EE\.? ?UU|"
                         r"China|Europa|Reino Unido|Alemania|Espa[nñ]a|Francia|Jap[oó]n|India|Canad[aá]|Centroam[eé]rica|Rusia|Ucrania)\b|"
                         r"Banco Central Europeo|Reserva Federal|\bFed\b", re.I)   # un titular de otro país no entra, salvo que nombre a Chile
 
 
 def num_proy(t):
-    """«0,25 a 0,75» → 0.5 (centro del rango); «2,4» → 2.4; «-1,8» → -1.8; otra cosa → None."""
-    xs = re.findall(r"-?\d+(?:,\d+)?", str(t if t is not None else ""))
+    """«0,25 a 0,75» → 0.5 (centro del rango); «2,4» o «2.4» → 2.4; «−1,8» → −1.8; «2-3» → 2.5 (rango); otra cosa → None."""
+    s = str(t if t is not None else "").replace("\u2212", "-").replace("\u2013", "-")
+    s = re.sub(r"(?<=\d)\s*-\s*(?=\d)", " a ", s)   # «2-3» es un rango, no 2 y −3
+    xs = re.findall(r"-?\d+(?:[.,]\d+)?", s)
     try:
         v = [float(x.replace(",", ".")) for x in xs[:2]]
     except ValueError:
@@ -2984,7 +3008,7 @@ MESES_ES = ("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "ago
 MESES_EN = ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
 EEE_URL = "https://www.bcentral.cl/web/banco-central/areas/encuestas-economicas/encuesta-expectativas-economicas"
 EEE_PIB_FUERA = re.compile(r"minero|trimestr|sector|resto|demanda|consumo|inversi|export|import|gasto|regi[oó]n|m[ií]nimo|m[aá]ximo|"
-                           r"promedio|percentil|desviaci|cuartil|dispersi", re.I)
+                           r"promedio|percentil|desviaci|cuartil|dispersi|tendencial|potencial|per c[aá]pita|brecha|horizonte", re.I)
 
 
 def coma(v):
@@ -3032,7 +3056,7 @@ def eee_pib(estado, hoy, catalogo):
     for a, sid in ids.items():
         url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={sid}&firstdate={hoy.year - 1}-01-01&lastdate={hoy.isoformat()}"
         obs = obs_bcch(pedir(url, estado, f"proy_eee_{a}", espera=(0, 30), limite=60), hoy + dt.timedelta(days=1))
-        if obs:
+        if obs and abs(obs[-1][1]) <= 10:   # una expectativa de crecimiento fuera de ±10 % es otra serie o un error: no se usa
             leidas[str(a)] = obs[-1]
     if not leidas:
         return None
@@ -3079,18 +3103,23 @@ def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tp
             x["pib"] = {k: str(v).replace(".", ",") for k, v in fmi["pib"].items()}
             if fmi.get("inflacion"):
                 x["inflacion"] = dict(x.get("inflacion") or {}, **{k: str(v).replace(".", ",") for k, v in fmi["inflacion"].items()})
-            x["fuente_datos"] = "base de datos oficial del FMI"
+            x.update(fuente_datos="base de datos oficial del FMI", fecha=hoy.isoformat(),   # sus cifras son de hoy: no envejece
+                     fecha_texto=f"leída el {hoy.day} de {MESES_ES[hoy.month - 1]} de {hoy.year}",
+                     fecha_texto_en=f"read on {MESES_EN[hoy.month - 1]} {hoy.day}, {hoy.year}",
+                     informe="Perspectivas de la Economía Mundial (WEO), última edición en su base de datos oficial",
+                     informe_en="World Economic Outlook, latest edition in its official database")
+    for x in inst:   # una proyección de hace más de ~6 meses ya no se muestra ni entra al promedio (el sitio usa esta misma marca)
+        try:
+            x["activo"] = 0 <= (hoy - dt.date.fromisoformat(str(x.get("fecha"))[:10])).days <= 200
+        except ValueError:
+            x["activo"] = False
     anios = [str(a) for a in range(hoy.year + 1, hoy.year + 5)]
     promedio = {}
     for a in [str(hoy.year)] + anios:
         vals = []
         for x in inst:
-            try:
-                edad = (hoy - dt.date.fromisoformat(str(x.get("fecha"))[:10])).days
-            except ValueError:
-                continue
             v = num_proy((x.get("pib") or {}).get(a))
-            if v is not None and 0 <= edad <= 200:   # solo proyecciones de los últimos ~6 meses
+            if v is not None and x["activo"]:   # solo proyecciones de los últimos ~6 meses
                 vals.append(v)
         if vals:
             promedio[a] = {"valor": round(sum(vals) / len(vals), 1), "min": round(min(vals), 2), "max": round(max(vals), 2), "n": len(vals)}
@@ -3099,7 +3128,7 @@ def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tp
     for sec in ("economia/chile", "perspectivas", "economia/mundo"):
         for n in (secs.get(sec) or {}).get("notas") or []:
             t, u, f = str(n.get("titulo") or "").strip(), str(n.get("url") or ""), str(n.get("fecha") or "")[:10]
-            if not t or not u.startswith("http") or not re.match(r"^\d{4}-\d{2}-\d{2}$", f):
+            if not t or not u.startswith("https://") or not re.match(r"^\d{4}-\d{2}-\d{2}$", f):   # el sitio solo enlaza https
                 continue
             try:
                 if not 0 <= (hoy - dt.date.fromisoformat(f)).days <= 14:
@@ -3411,7 +3440,11 @@ def main(argv=None):
             tpm = (json.load(open(os.path.join(a.salida, "tasas-bcch.json"), encoding="utf-8")) or {}).get("tpm_esperada")
         except (OSError, ValueError):
             tpm = None
-        escribir(os.path.join(a.salida, "proyecciones-chile.json"), proyecciones_chile(estado, hoy, titulares=tit, catalogo=cat, tpm=tpm))
+        pr = proyecciones_chile(estado, hoy, titulares=tit, catalogo=cat, tpm=tpm)
+        escribir(os.path.join(a.salida, "proyecciones-chile.json"), pr)
+        if pr:   # la foto del día: cada edición muestra las proyecciones de su fecha, no las de hoy (las ediciones pasadas no cambian)
+            os.makedirs(os.path.join(a.salida, "proyecciones"), exist_ok=True)
+            escribir(os.path.join(a.salida, "proyecciones", f"{hoy.isoformat()}.json"), pr)
     except Exception as ex:   # noqa: BLE001
         estado["proyecciones"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": FMI_API, "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     resumen = {"fecha": hoy.isoformat(), "generado": ahora().isoformat(timespec="seconds"), "fuentes": estado}
