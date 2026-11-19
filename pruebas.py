@@ -2037,7 +2037,9 @@ def proyecciones_de_crecimiento_a_4_anios():
         {"titulo": "Proyección de crecimiento del PIB de Chile para 2027", "fuente": "DF", "fecha": "2026-10-01 10:00", "url": "https://a.cl/vieja"},
         {"titulo": "Crecimiento de Brasil se modera", "fuente": "DF", "fecha": "2026-11-18 10:00", "url": "https://a.cl/brasil"},
         {"titulo": "Banco Central: Imacec de septiembre crece 0,2%", "fuente": "La Tercera (RSS)", "fecha": "2026-11-19 09:00", "url": "https://a.cl/2"},
-        {"titulo": "Superintendencia multa a una AFP", "fuente": "DF", "fecha": "2026-11-19 09:00", "url": "https://a.cl/3"}]}}}
+        {"titulo": "Superintendencia multa a una AFP", "fuente": "DF", "fecha": "2026-11-19 09:00", "url": "https://a.cl/3"},
+        {"titulo": "Cartera de inversión minera de Chile registra su mayor monto en 13 años", "fuente": "DF", "fecha": "2026-11-19 10:00", "url": "https://a.cl/4"},
+        {"titulo": "Inversión récord en Perú", "fuente": "DF", "fecha": "2026-11-19 10:00", "url": "https://a.cl/5"}]}}}
     vistos = []
     serie = {"NGDP_RPCH": {"2025": 2.5, "2026": 0.6, "2027": 2.6, "2028": 2.4, "2029": 2.3, "2030": 2.3, "2031": 2.3, "1990": 3.7},
              "PCPIPCH": {"2026": 3.7, "2027": 3.5}, "LUR": {"2026": 9.5, "2030": 7.9}}
@@ -2063,7 +2065,9 @@ def proyecciones_de_crecimiento_a_4_anios():
             assert p["2027"] == {"valor": 2.5, "min": 2.5, "max": 2.6, "n": 3}, p["2027"]   # FMI 2,6 + IPoM 2,5 (centro de 2 a 3) + OCDE 2,5; la vieja no
             assert p["2028"]["n"] == 2 and p["2028"]["valor"] == 2.6 and p["2030"] == {"valor": 2.3, "min": 2.3, "max": 2.3, "n": 1}
             t = [n["titulo"] for n in r["noticias"]]
-            assert t == ["Banco Central: Imacec de septiembre crece 0,2%", "FMI recorta el crecimiento de Chile a 0,6% en 2026"], t
+            assert t == ["Banco Central: Imacec de septiembre crece 0,2%", "FMI recorta el crecimiento de Chile a 0,6% en 2026",
+                         "Cartera de inversión minera de Chile registra su mayor monto en 13 años"], t   # la de inversión, aunque es nueva, va al final
+            assert all(set(n) == {"titulo", "fuente", "url", "fecha"} for n in r["noticias"]), r["noticias"]
             assert r["noticias"][1]["fuente"] == "CNN Chile"
             assert r["revisar"] == ["ocde_eo"] and "ocde_eo" in e["proyecciones"]["error"]
             serie.clear()   # el FMI no responde: quedan las cifras verificadas del archivo

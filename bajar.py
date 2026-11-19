@@ -2942,9 +2942,11 @@ def paginas_sii(anio=None):
 # (cada cifra con su fecha y enlace, verificadas); las noticias salen de los titulares que GitHub ya leyó. Lo dibuja el sitio.
 FMI_API = "https://www.imf.org/external/datamapper/api/v1"
 FMI_IND = (("pib", "NGDP_RPCH"), ("inflacion", "PCPIPCH"), ("desempleo", "LUR"), ("cuenta_corriente", "BCA_NGDPD"), ("deuda", "GGXWDG_NGDP"))
-PROY_TEMA = re.compile(r"proyecci|crecimiento|crecer[aá]n?\b|\bPIB\b|IPoM|\bFMI\b|Banco Mundial|\bOCDE\b|\bCepal\b|expectativas econ|"
-                       r"Finanzas P[uú]blicas|perspectivas econ|Imacec|recesi[oó]n|desaceleraci", re.I)
-PROY_CHILE = re.compile(r"\bChile\b|chilen|Banco Central|Hacienda|\bIPoM\b|Imacec", re.I)
+PROY_TEMA = re.compile(r"proyecci|crecimiento|crecer[aá]n?\b|\bPIB\b|IPoM|\bFMI\b|Banco Mundial|\bOCDE\b|\bCepal\b|expectativas|"
+                       r"Finanzas P[uú]blicas|perspectivas econ|Imacec|recesi[oó]n|desaceleraci|inflaci[oó]n|Banco Central|\bTPM\b|"
+                       r"tasa de pol[ií]tica|econom[ií]a chilena|desempleo|Consejo Fiscal|presupuesto", re.I)
+PROY_INVERSION = re.compile(r"inversi[oó]n|inversiones", re.I)   # segunda prioridad: la inversión empuja el crecimiento que viene
+PROY_CHILE = re.compile(r"\bChile\b|chilen|Banco Central|Hacienda|\bIPoM\b|Imacec|Codelco|Cochilco|Consejo Fiscal", re.I)
 
 
 def num_proy(t):
@@ -3084,10 +3086,12 @@ def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tp
             except ValueError:
                 continue
             clave_t = re.sub(r"\W+", " ", t.lower()).strip()[:80]
-            if PROY_TEMA.search(t) and PROY_CHILE.search(t + " " + str(n.get("resumen") or "")) and u not in vistos and clave_t not in vistos:
+            nivel = 0 if PROY_TEMA.search(t) else 1 if PROY_INVERSION.search(t) else None
+            if nivel is not None and PROY_CHILE.search(t + " " + str(n.get("resumen") or "")) and u not in vistos and clave_t not in vistos:
                 vistos.update((u, clave_t))
-                noticias.append({"titulo": t, "fuente": re.sub(r"\s*\((RSS|Atom)\)\s*$", "", str(n.get("fuente") or "")), "url": u, "fecha": f})
+                noticias.append({"titulo": t, "fuente": re.sub(r"\s*\((RSS|Atom)\)\s*$", "", str(n.get("fuente") or "")), "url": u, "fecha": f, "_n": nivel})
     noticias.sort(key=lambda n: n["fecha"], reverse=True)
+    noticias.sort(key=lambda n: n.pop("_n"))   # primero las de proyecciones e indicadores; después, las de inversión (cada grupo, de la más nueva)
     revisar = [x["clave"] for x in inst if str(x.get("revisar_desde") or "9999") <= hoy.isoformat()]
     err = ([] if fmi else ["el FMI no respondió (quedan las cifras verificadas del archivo)"]) + (["revisar informe nuevo: " + ", ".join(revisar)] if revisar else [])
     estado["proyecciones"] = {"ok": bool(fmi), "hora": ahora().isoformat(timespec="seconds"), "url": FMI_API, "n": len(inst),
