@@ -1,7 +1,7 @@
 {
- "generado": "2026-11-19T10:55:43-03:00",
+ "generado": "2026-11-19T14:43:21-03:00",
  "ok": false,
- "graves": 2,
+ "graves": 1,
  "revisiones": [
   {
    "nombre": "Portada responde",
@@ -113,8 +113,8 @@
   },
   {
    "nombre": "Datos del día al día (bajada de GitHub)",
-   "ok": false,
-   "detalle": "última bajada 2026-11-18T08:46-03:00",
+   "ok": true,
+   "detalle": "",
    "grave": true
   },
   {
@@ -136,11 +136,5 @@
    "grave": false
   }
  ],
- "reparaciones": [
-  {
-   "que": "Volver a bajar los datos del día",
-   "hecho": true,
-   "detalle": "HTTP 204"
-  }
- ]
+ "reparaciones": []
 }
