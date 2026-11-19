@@ -805,10 +805,11 @@ def espejo_respeta_el_429():
     """06-11-2026: IQAir respondió 429 a 9 lecturas seguidas y la corrida se alargó más de 20 minutos (tope: 30). Al primer 429
     de un sitio lento, no se le pide nada más en esa corrida."""
     import tempfile
-    viejos = B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval, B.paginas_oleaje, B.time.sleep
+    viejos = B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval, B.paginas_oleaje, B.time.sleep, B.paginas_sii
     B.efemeride_naval = lambda *a, **k: None
     B.time.sleep = lambda x: None
     B.paginas_oleaje = lambda: [(f"oleaje-p{i}", f"https://tablademareas.com/cl/x/p{i}/prevision/oleaje", "oleaje") for i in range(3)]
+    B.paginas_sii = lambda *a: []
     pedidas = []
 
     def pedir(url, est, cl, **k):
@@ -824,7 +825,40 @@ def espejo_respeta_el_429():
         assert pedidas == ["https://www.iqair.com/chile/a", "https://tablademareas.com/cl/x/p0/prevision/oleaje"], pedidas   # un 429 por sitio
         assert len(pag["fallidas"]) == 6 and "429" in pag["fallidas"][2]["error"] and "tablademareas" in pag["fallidas"][5]["error"]
     finally:
-        B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval, B.paginas_oleaje, B.time.sleep = viejos
+        B.pedir, B.robots_permite, B.LENTOS_PAUSA, B.ESPEJO, B.efemeride_naval, B.paginas_oleaje, B.time.sleep, B.paginas_sii = viejos
+
+
+@prueba
+def espejo_lee_el_sii():
+    """19-11-2026 (Germán: «no me sigan pidiendo los mismos permisos»): las tablas del dólar y la UF del SII del año en curso
+    las lee GitHub, así la tarea confirma los indicadores de hoy sin pedir permiso con web_fetch."""
+    import gzip
+    import tempfile
+    assert [u for _, u, _ in B.paginas_sii(2026)] == ["https://www.sii.cl/valores_y_fechas/dolar/dolar2026.htm",
+                                                      "https://www.sii.cl/valores_y_fechas/uf/uf2026.htm"]
+    assert "dolar2027.htm" in B.paginas_sii(2027)[0][1] and "uf2027.htm" in B.paginas_sii(2027)[1][1]   # cambia sola de año
+    viejos = B.pedir, B.robots_permite, B.ESPEJO, B.efemeride_naval, B.paginas_oleaje, B.time.sleep
+    B.efemeride_naval = lambda *a, **k: None
+    B.time.sleep = lambda x: None
+    B.paginas_oleaje = lambda: []
+    B.ESPEJO = []
+    tabla = "<html><body><table>" + "".join(f"<tr><td>{d}</td><td>1.002,07</td><td>41.364,17</td></tr>" for d in range(1, 32)) + "</table></body></html>"
+    B.pedir = lambda url, est, cl, **k: tabla if "sii.cl" in url else None
+    B.robots_permite = lambda url, est: True
+    try:
+        with tempfile.TemporaryDirectory() as d:
+            pag = B.espejo({}, d, [{"url": "https://www.sii.cl/valores_y_fechas/dolar/dolar%d.htm" % B.ahora().year, "que": "repetida"}])
+            arch = {x["url"]: x["archivo"] for x in pag["listas"]}
+            u = B.paginas_sii()[0][1]
+            assert arch[u] == "sii-dolar.txt" and arch[B.paginas_sii()[1][1]] == "sii-uf.txt", arch
+            assert len(pag["listas"]) == 2   # el pedido repetido de la tarea no se lee dos veces
+            assert "1.002,07" in gzip.open(os.path.join(d, "paginas", "sii-dolar.txt.gz"), "rt", encoding="utf-8").read()
+        B.robots_permite = lambda url, est: "sii.cl" not in url
+        with tempfile.TemporaryDirectory() as d:
+            pag = B.espejo({}, d, [])
+            assert not pag["listas"] and all(x["error"] == "robots.txt no lo permite" for x in pag["fallidas"])   # si el SII lo prohíbe, no se lee
+    finally:
+        B.pedir, B.robots_permite, B.ESPEJO, B.efemeride_naval, B.paginas_oleaje, B.time.sleep = viejos
 
 
 @prueba

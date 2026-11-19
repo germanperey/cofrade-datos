@@ -2913,6 +2913,17 @@ def paginas_oleaje():
             if isinstance(v, dict) and str(v.get("oleaje") or "").startswith("https://")]
 
 
+def paginas_sii(anio=None):
+    """19-11-2026 (Germán: «no me sigan pidiendo los mismos permisos»; corrección 30 de la tarea: confirmar el dólar y la UF del día
+    con el SII): las tablas del año del SII las lee GitHub (si su robots.txt lo permite), así la tarea no las pide con web_fetch.
+    → [(archivo, dirección, qué es)]."""
+    a = int(anio or ahora().year)
+    return [("sii-dolar", f"https://www.sii.cl/valores_y_fechas/dolar/dolar{a}.htm",
+             f"SII: dólar observado de cada día de {a} (para confirmar el dólar de hoy)"),
+            ("sii-uf", f"https://www.sii.cl/valores_y_fechas/uf/uf{a}.htm",
+             f"SII: valor de la UF de cada día de {a} (para confirmar la UF de hoy)")]
+
+
 class _SinEspejo(Exception):
     pass
 
@@ -2980,7 +2991,7 @@ def espejo(estado, salida, pedidos=()):
     if os.path.isdir(carpeta):
         for n in os.listdir(carpeta):
             os.remove(os.path.join(carpeta, n))
-    lista = list(ESPEJO) + paginas_oleaje()
+    lista = list(ESPEJO) + paginas_oleaje() + paginas_sii()
     vistos = {u for _, u, _ in lista}
     for p in list(pedidos)[:PEDIDOS_MAX]:
         u = str((p or {}).get("url") if isinstance(p, dict) else p or "").strip()
