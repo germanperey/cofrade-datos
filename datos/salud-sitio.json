@@ -1,7 +1,7 @@
 {
- "generado": "2026-11-19T03:43:56-03:00",
- "ok": true,
- "graves": 0,
+ "generado": "2026-11-19T07:22:04-03:00",
+ "ok": false,
+ "graves": 1,
  "revisiones": [
   {
    "nombre": "Portada responde",
@@ -113,8 +113,8 @@
   },
   {
    "nombre": "Datos del día al día (bajada de GitHub)",
-   "ok": true,
-   "detalle": "",
+   "ok": false,
+   "detalle": "última bajada 2026-11-18T08:46-03:00",
    "grave": true
   },
   {
@@ -130,11 +130,22 @@
    "grave": true
   },
   {
-   "nombre": "Corridas de GitHub de las últimas 24 h sin fallas",
-   "ok": true,
-   "detalle": "",
-   "grave": true
+   "nombre": "Corrida «Datos oficiales del día» sin fallas",
+   "ok": false,
+   "detalle": "falló el 2026-11-19T09:30:07Z",
+   "grave": false
   }
  ],
- "reparaciones": []
+ "reparaciones": [
+  {
+   "que": "Volver a bajar los datos del día",
+   "hecho": true,
+   "detalle": "HTTP 204"
+  },
+  {
+   "que": "Volver a correr «Datos oficiales del día»",
+   "hecho": true,
+   "detalle": "HTTP 201"
+  }
+ ]
 }
