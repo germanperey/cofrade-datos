@@ -48,8 +48,11 @@ def tablas(md):
 
 def main():
     try:
-        rp = urllib.robotparser.RobotFileParser("https://platform.claude.com/robots.txt")
-        rp.read()
+        # 19-11-2026: RobotFileParser.read() pide el robots.txt sin agente y el sitio le responde 403, lo que se lee como «prohibido
+        # todo». Se baja con requests y el mismo agente, y se interpreta igual (hoy dice solo «Disallow: /api/»).
+        rr = requests.get("https://platform.claude.com/robots.txt", headers={"User-Agent": AGENTE}, timeout=30)
+        rp = urllib.robotparser.RobotFileParser()
+        rp.parse(rr.text.splitlines() if rr.status_code == 200 else ([] if rr.status_code == 404 else ["User-agent: *", "Disallow: /"]))
         if not rp.can_fetch(AGENTE, URL):
             print("modelos-claude: el robots.txt no permite leer la tabla; se deja el archivo anterior")
             return 0
