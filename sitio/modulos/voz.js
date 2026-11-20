@@ -12,9 +12,10 @@ if (W.__cnVoz || !D.querySelector('.hoja')) return;
 W.__cnVoz = 1;
 var SS = W.speechSynthesis || null, SR = W.SpeechRecognition || W.webkitSpeechRecognition || null;
 var CFG = { espera: 8000, entre: 3500, auspicioMin: 10, grupo: 6, maxItems: 36, porLista: 5, forzar: false, ecoBase: 2000, ecoPorPalabra: 450, ecoEstricto: 4000, ecoVigente: 300000, pausaOidoMs: 180000, spsMin: 3, spsMax: 14,
-            tono: 0.95, tonoTit: 0.93, velTit: 0.95, pausaTit: 380, pausaItem: 300, conectores: true };   // 19-11-2026: voz más cálida (tono algo más grave, títulos más pausados, respiros)
+            tono: 0.95, tonoTit: 0.93, velTit: 0.95, pausaTit: 380, pausaItem: 300, conectores: true, margenEco: 7, bilingue: true };   // 19-11-2026: voz más cálida (tono algo más grave, títulos más pausados, respiros)
 try { var cf = W.__cnVozCfg; if (cf) for (var k in cf) CFG[k] = cf[k]; } catch (e) { /* sin ajustes */ }
 try { if (/[?&]voz=diag\b/.test(W.location.search)) CFG.diag = true; } catch (e) { /* */ }   // ?voz=diag muestra en pantalla lo que hace el micrófono
+try { if (/[?&]voz=monolingue\b/.test(W.location.search)) CFG.bilingue = false; } catch (e) { /* */ }   // ?voz=monolingue: sin voces de otros idiomas
 
 // ---------- preferencias (solo en este aparato) ----------
 var CLAVE = 'cn-voz', P = {};
@@ -49,26 +50,31 @@ var TX = {
     pregSin: 'Para elegir una sección, presiona la tecla I o toca el botón Índice de la barra de abajo. Si no eliges nada, te leo el boletín completo, como una radio.',
     sinResp: 'Como no escuché una respuesta, te leo el boletín completo. Entre una sección y otra vas a escuchar un sonido corto: en ese momento puedes decir «índice».',
     sinRespSin: 'Te leo el boletín completo. Cuando quieras, toca Índice para elegir otra sección.',
-    indIntro: 'El boletín de hoy tiene {n} secciones. Te las digo de {g} en {g}. Cuando escuches la que quieres, di su número o su nombre.',
+    indIntro: 'El boletín de hoy tiene {n} secciones, y algunas traen temas propios. Te las digo de {g} en {g}. Para elegir, di «índice» y el número o el nombre; por ejemplo, «índice cinco» o «índice {e}».',
     indIntroSin: 'El boletín de hoy tiene {n} secciones. Te las digo de {g} en {g}. Escribe su número y presiona Enter, o toca Siguiente para escucharla.',
-    indMas: '¿Sigo con las demás? Di «más», o di el número de la sección.',
-    indFin: 'Esas son todas. Di el número o el nombre de la sección que quieres escuchar.',
-    sec: 'Sección {n}: {t}.',
+    indMas: '¿Sigo con las demás? Di «más», o di «índice» y el número o el nombre.',
+    indFin: 'Esas son todas. Di «índice» y el número o el nombre de lo que quieres escuchar.',
+    sec: 'Sección {n}: {t}.', tema: '{p}: {t}.', incluye: 'Incluye: {l}.', nomTres: 'las tres noticias del día', nomSesenta: 'el resumen en sesenta segundos',
+    trasSec: 'Favor, permíteme terminar de informarte esta noticia y a continuación yo continuaré con {s}, la sección del Menú que me solicitas.',
+    trasInd: 'Favor, permíteme terminar de informarte esta noticia y a continuación te leo el índice, como me solicitas.',
+    trasOtro: 'Favor, permíteme terminar de informarte esta noticia y a continuación yo continuaré con {s}, como me solicitas.',
+    trasGen: 'Favor, permíteme terminar de informarte esta noticia y a continuación yo continuaré con la sección del Menú que me solicitas.',
+    otraVoz: 'Esta es otra voz. Si te gusta, sigo con ella; si no, di «otra voz» de nuevo.', unaVoz: 'Este aparato tiene una sola voz en español.',
     finSec: 'Hasta aquí {t}. Si quieres, di «siguiente», «índice» o «repite»; si no, sigo con {s}.',
     finTodo: 'Llegamos al final del boletín de hoy. Gracias por acompañarme en Cofrade News. Si quieres volver a una sección, di «índice».',
-    noEnt: 'No te entendí. Puedes decir «índice», «siguiente», el número de una sección o «ayuda».',
-    ayuda: 'Puedes decir: «índice», para escuchar las secciones; el número o el nombre de una sección; «siguiente» o «anterior»; «repite»; «pausa» y «sigue»; «más rápido» o «más lento»; y «salir», para apagar la voz.',
+    noEnt: 'No te entendí. Puedes decir «índice», «índice» y el número de una sección, «siguiente» o «ayuda».',
+    ayuda: 'Puedes decir: «índice», para escuchar las secciones; «índice» y el número o el nombre de una sección o de uno de sus temas, como «índice cinco» o «índice golf»; «siguiente» o «anterior»; «repite»; «pausa» y «sigue»; «más rápido» o «más lento»; «otra voz», para probar otra voz del aparato; y «salir», para apagar la voz.',
     rapido: 'Más rápido.', lento: 'Más lento.', yaRapido: 'Esa es la velocidad máxima.', yaLento: 'Esa es la velocidad mínima.',
     salir: 'Listo, apagué la voz. La puedes volver a encender desde el Índice.',
     noSec: 'No encontré esa sección.',
     mas: 'El resto de esta sección está en la edición escrita.', masLista: 'Quedan {n} más en la edición escrita.', masUna: 'Queda una más en la edición escrita.',
-    pregC: '¿Quieres que te lea los temas del índice, para que elijas qué escuchar? Di «índice». O di «todo», y te leo el boletín completo, como una radio. Y puedes interrumpirme cuando quieras: di «índice», o el nombre o el número de otra sección.',
-    sinRespC: 'Como no escuché una respuesta, te leo el boletín completo. Cuando quieras, dime «índice» o el nombre de una sección, aunque yo esté hablando.',
-    indIntroC: 'El boletín de hoy tiene {n} secciones. Te las digo de {g} en {g}. Cuando escuches la que quieres, dímela, aunque yo esté hablando: el número o el nombre.',
+    pregC: '¿Quieres que te lea los temas del índice, para que elijas qué escuchar? Di «índice». O di «todo», y te leo el boletín completo, como una radio. Y puedes interrumpirme cuando quieras: di «índice» y el número o el nombre de otra sección.',
+    sinRespC: 'Como no escuché una respuesta, te leo el boletín completo. Cuando quieras, dime «índice» y el nombre o el número de una sección, aunque yo esté hablando.',
+    indIntroC: 'El boletín de hoy tiene {n} secciones, y algunas traen temas propios. Te las digo de {g} en {g}. Cuando escuches la que quieres, dime «índice» y el número o el nombre, aunque yo esté hablando; por ejemplo, «índice cinco» o «índice {e}».',
     tocaMic: 'Si quieres interrumpirme, toca el micrófono dorado de abajo.',
-    pregE: '¿Quieres que te lea los temas del índice, para que elijas qué escuchar? Di «índice». O di «todo», y te leo el boletín completo, como una radio. Si quieres interrumpirme mientras hablo, empieza con «quiero»; por ejemplo, «quiero deportes».',
-    sinRespE: 'Como no escuché una respuesta, te leo el boletín completo. Cuando quieras, dime «quiero» y el nombre de una sección, aunque yo esté hablando.',
-    indIntroE: 'El boletín de hoy tiene {n} secciones. Te las digo de {g} en {g}. Cuando escuches la que quieres, dime «quiero» y el número o el nombre; por ejemplo, «quiero la cinco».',
+    pregE: '¿Quieres que te lea los temas del índice, para que elijas qué escuchar? Di «índice». O di «todo», y te leo el boletín completo, como una radio. Si quieres interrumpirme mientras hablo, di «índice» y el nombre o el número; por ejemplo, «índice deportes».',
+    sinRespE: 'Como no escuché una respuesta, te leo el boletín completo. Cuando quieras, dime «índice» y el nombre o el número de una sección, aunque yo esté hablando.',
+    indIntroE: 'El boletín de hoy tiene {n} secciones, y algunas traen temas propios. Te las digo de {g} en {g}. Cuando escuches la que quieres, dime «índice» y el número o el nombre, aunque yo esté hablando; por ejemplo, «índice cinco».',
     oiste: 'Te escuché: «{f}»',
     vozUsada: 'Voz: {v}',
     sinRed: 'Por ahora no logro escucharte, porque falla la conexión. Sigo leyendo y vuelvo a intentarlo en un rato. También puedes usar la barra de abajo o las teclas.',
@@ -106,26 +112,31 @@ var TX = {
     pregSin: 'To choose a section, press the I key or tap the Index button below. If you choose nothing, I will read the whole newsletter, like a radio show.',
     sinResp: 'I heard no answer, so I will read the whole newsletter. Between sections you will hear a short sound: that is when you can say «index».',
     sinRespSin: 'I will read the whole newsletter. Tap Index whenever you want another section.',
-    indIntro: 'Today\'s newsletter has {n} sections. I will read them {g} at a time. When you hear the one you want, say its number or its name.',
+    indIntro: 'Today\'s newsletter has {n} sections, and some have topics of their own. I will read them {g} at a time. To choose, say «index» and the number or the name; for example, «index five» or «index {e}».',
     indIntroSin: 'Today\'s newsletter has {n} sections. I will read them {g} at a time. Type its number and press Enter, or tap Next to hear it.',
-    indMas: 'Shall I go on? Say «more», or say the number of the section.',
-    indFin: 'That is all of them. Say the number or the name of the section you want.',
-    sec: 'Section {n}: {t}.',
+    indMas: 'Shall I go on? Say «more», or say «index» and the number or the name.',
+    indFin: 'That is all of them. Say «index» and the number or the name of what you want to hear.',
+    sec: 'Section {n}: {t}.', tema: '{p}: {t}.', incluye: 'It includes: {l}.', nomTres: 'today\'s top three stories', nomSesenta: 'the sixty-second summary',
+    trasSec: 'Please let me finish this news story, and then I will continue with {s}, the menu section you asked for.',
+    trasInd: 'Please let me finish this news story, and then I will read you the index, as you asked.',
+    trasOtro: 'Please let me finish this news story, and then I will continue with {s}, as you asked.',
+    trasGen: 'Please let me finish this news story, and then I will continue with the menu section you asked for.',
+    otraVoz: 'This is another voice. If you like it, I will keep it; if not, say «another voice» again.', unaVoz: 'This device has only one English voice.',
     finSec: 'That was {t}. If you like, say «next», «index» or «repeat»; otherwise, I will go on with {s}.',
     finTodo: 'That is the end of today\'s newsletter. Thank you for listening to Cofrade News. Say «index» to go back to a section.',
-    noEnt: 'Sorry, I did not get that. You can say «index», «next», a section number or «help».',
-    ayuda: 'You can say: «index», to hear the sections; the number or name of a section; «next» or «previous»; «repeat»; «pause» and «resume»; «faster» or «slower»; and «exit», to turn the voice off.',
+    noEnt: 'Sorry, I did not get that. You can say «index», «index» and a section number, «next» or «help».',
+    ayuda: 'You can say: «index», to hear the sections; «index» and the number or name of a section or one of its topics, like «index five» or «index golf»; «next» or «previous»; «repeat»; «pause» and «resume»; «faster» or «slower»; «another voice», to try another voice on this device; and «exit», to turn the voice off.',
     rapido: 'Faster.', lento: 'Slower.', yaRapido: 'That is the top speed.', yaLento: 'That is the lowest speed.',
     salir: 'Done, the voice is off. You can turn it on again from the Index.',
     noSec: 'I could not find that section.',
     mas: 'The rest of this section is in the written edition.', masLista: '{n} more in the written edition.', masUna: 'One more in the written edition.',
-    pregC: 'Would you like me to read the index, so you can choose what to hear? Say «index». Or say «all», and I will read the whole newsletter, like a radio show. And you can interrupt me anytime.',
-    sinRespC: 'I heard no answer, so I will read the whole newsletter. Whenever you want, say «index» or the name of a section, even while I am talking.',
-    indIntroC: 'Today\'s newsletter has {n} sections. I will read them {g} at a time. When you hear the one you want, just say it, even while I am talking: its number or its name.',
+    pregC: 'Would you like me to read the index, so you can choose what to hear? Say «index». Or say «all», and I will read the whole newsletter, like a radio show. And you can interrupt me anytime: say «index» and the number or the name of another section.',
+    sinRespC: 'I heard no answer, so I will read the whole newsletter. Whenever you want, say «index» and the name or the number of a section, even while I am talking.',
+    indIntroC: 'Today\'s newsletter has {n} sections, and some have topics of their own. I will read them {g} at a time. When you hear the one you want, say «index» and its number or name, even while I am talking; for example, «index five» or «index {e}».',
     tocaMic: 'To interrupt me, tap the golden microphone below.',
-    pregE: 'Would you like me to read the index, so you can choose what to hear? Say «index». Or say «all», and I will read the whole newsletter, like a radio show. To interrupt me while I am talking, start with «go to»; for example, «go to sports».',
-    sinRespE: 'I heard no answer, so I will read the whole newsletter. Whenever you want, say «go to» and the name of a section, even while I am talking.',
-    indIntroE: 'Today\'s newsletter has {n} sections. I will read them {g} at a time. When you hear the one you want, say «go to» and its number or its name; for example, «go to five».',
+    pregE: 'Would you like me to read the index, so you can choose what to hear? Say «index». Or say «all», and I will read the whole newsletter, like a radio show. To interrupt me while I am talking, say «index» and the name or the number; for example, «index sports».',
+    sinRespE: 'I heard no answer, so I will read the whole newsletter. Whenever you want, say «index» and the name or the number of a section, even while I am talking.',
+    indIntroE: 'Today\'s newsletter has {n} sections, and some have topics of their own. I will read them {g} at a time. When you hear the one you want, say «index» and its number or name, even while I am talking; for example, «index five».',
     oiste: 'I heard: «{f}»',
     vozUsada: 'Voice: {v}',
     sinRed: 'I cannot hear you right now, because the connection is failing. I will keep reading and try again in a while. You can also use the bar below or the keys.',
@@ -281,6 +292,11 @@ function puntaje(v, idioma) {
   if (v.localService === false) p += 3;
   return p;
 }
+function vocesIdioma() {   // las voces del idioma de la página, de la mejor a la peor
+  var idioma = en() ? 'en' : 'es';
+  if (SS) { try { voces = SS.getVoices() || voces; } catch (e) { /* */ } }
+  return voces.filter(function (v) { return puntaje(v, idioma) >= 0; }).sort(function (a, b) { return puntaje(b, idioma) - puntaje(a, idioma); });
+}
 function elegirVoz() {
   var idioma = en() ? 'en' : 'es', mejor = null, pm = -1;
   voces = SS ? SS.getVoices() || [] : [];
@@ -305,33 +321,212 @@ var CROMO = /Chrome\/|Edg\//.test(UA) && !/OPR\/|SamsungBrowser|CriOS|FxiOS/.tes
 function continuo() { return !(OIDO && OIDO.turnos) && (typeof CFG.continuo === 'boolean' ? CFG.continuo && !!SR : !!SR && !MOVIL && CROMO); }
 if (SS) { elegirVoz(); try { SS.addEventListener('voiceschanged', elegirVoz); } catch (e) { SS.onvoiceschanged = elegirVoz; } }
 
+// ---------- pronunciación bilingüe (19-11-2026) ----------
+// Germán, 18:14 y 18:57: «las palabras cuyo origen son en idioma inglés la "Voz" las pronunciará con el acento correcto, como si fuese una
+// persona bilingüe… y asimismo, para otros idiomas». Cada tramo se parte donde aparece un término o un nombre de otro idioma, y ese pedazo
+// lo dice una voz nativa de ese idioma, si el aparato la tiene (si no, la de siempre). Los apellidos chilenos de origen extranjero
+// (O'Higgins, Matthei, Walker, Kast) se quedan en castellano, como los dice cualquier chileno; y los términos breves que el castellano ya
+// dice bien (app, web, show) no cambian de voz, porque cada cambio agrega una pausa corta. ?voz=monolingue lo apaga.
+// Diccionario: términos separados por «|»; «^» delante, solo con mayúscula («Meta» no es «la meta»); «=», cómo se dice.
+var LX = {"en": "Wall Street|Goldman Sachs|JP Morgan|J.P. Morgan|JPMorgan|Morgan Stanley|BlackRock|Bank of America|Citigroup|Citibank|Wells Fargo|Moody's|Standard & Poor's|S&P|S&P Global|Fitch Ratings|^Fitch|Federal Reserve|^Nasdaq|Dow Jones|New York Stock Exchange|^Bloomberg|^Reuters|Financial Times|The Economist|Wall Street Journal|New York Times|Washington Post|Oxford Economics|Capital Economics|^Barclays|^Scotiabank|^Morningstar|Berkshire Hathaway|Warren Buffett|^Mastercard|^PayPal|American Express|Western Union|West Texas Intermediate|private equity|venture capital|hedge fund|hedge funds|joint venture|crowdfunding|commodities|commodity|outsourcing|offshore|trading|trader|startup|fintech|proptech|insurtech|factoring|leasing|holding|royalty|lobby|rating|spread|swaps|dumping|stock|CEO|CFO|CTO|COO|MBA|IPO|KPI|SaaS|^Apple|^Google|^Alphabet|^Microsoft|^Amazon|^Meta|^Facebook|^Instagram|^WhatsApp|^YouTube|^TikTok|^Netflix|^Spotify|^Twitter|^LinkedIn|^Snapchat|^Pinterest|^Uber|^Airbnb|^SpaceX|^Starlink|^OpenAI|^ChatGPT|^Gemini|^Claude|^Anthropic|^Nvidia|^Qualcomm|^Oracle|^Salesforce|^Adobe|^Cisco|^iPhone|^iPad|^iOS|^Android|^Windows|^Copilot|^Kindle|^PlayStation|^Xbox|^Fortnite|^Minecraft|^Roblox|^Twitch|^Discord|^GitHub|^Walmart|^Starbucks|^McDonald's|^Cornershop|Black Friday|Cyber Monday|CyberDay|Cyber Day|software|hardware|online|offline|streaming|e-commerce|ecommerce|smartphone|smartwatch|wifi|wi-fi|bluetooth|router|gamer|gaming|esports|e-sports|podcast|influencer|youtuber|streamer|hashtag|selfie|feedback|e-mail|newsletter|password|login|backup|update|upgrade|big data|cloud|machine learning|deep learning|data center|chatbot|hacker|phishing|ransomware|malware|marketing|branding|retail|outlet|shopping|delivery|rider|food truck|fast food|brunch|coworking|home office|networking|freelance|freelancer|coaching|manager|meeting|deadline|target|ranking|reality|fashion|outfit|glamour|premium|bestseller|best seller|ticket|voucher|parking|living|hobby|sweater|Grand Slam|^Masters|US Open|Australian Open|Davis Cup|Billie Jean King Cup|ATP Finals|WTA Finals|tie-break|tiebreak|match point|break point|Premier League|Champions League|Europa League|Conference League|Super Bowl|playoff|playoffs|PGA Tour|PGA Championship|^PGA|LPGA|LIV Golf=Liv Golf|DP World Tour|Korn Ferry Tour|Ryder Cup|Presidents Cup|The Open|birdie|bogey|double bogey|eagle|albatross|putter|green|fairway|rough|bunker|driver|swing|caddie|handicap|hole in one|match play|stroke play|leaderboard|Caddie Golf|^Ironman|crossfit|fitness|running|trail running|spinning|training|skate|snowboard|rugby|hockey|pole position|Red Bull|McLaren|Aston Martin|New York|Silicon Valley|^Hollywood|^Washington|^Houston|^Boston|^Dallas|^Seattle|^Detroit|^Pittsburgh|^Philadelphia|^Denver|^Phoenix|Pebble Beach|^Augusta|^Wimbledon|^London|^Manchester|^Liverpool|^Chelsea|^Tottenham|^Newcastle|^Brighton|Aston Villa|West Ham|^Everton|^Fulham|^Wolverhampton|Nottingham Forest|^Leicester|Crystal Palace|^Bournemouth|^Brentford|^Southampton|^Edinburgh|^Glasgow|^Oxford|^Cambridge|^Harvard|^Stanford|^Yale|^Princeton|^Berkeley|^Vancouver|^Sydney|^Melbourne|^Auckland|Hong Kong|^Wellington|Cape Town|^Johannesburg|^Brooklyn|^Manhattan|Donald Trump|^Trump|Joe Biden|^Biden|Kamala Harris|Elon Musk|^Musk|Jerome Powell|^Powell|Janet Yellen|Mark Zuckerberg|Bill Gates|Jeff Bezos|Tim Cook|Sam Altman|Jensen Huang|Taylor Swift|Beyoncé|Bruce Springsteen|Paul McCartney|Mick Jagger|Michael Jackson|Rolling Stones|The Beatles|^Coldplay|^Metallica|Bad Bunny|Tiger Woods|Scottie Scheffler|Rory McIlroy|Xander Schauffele|Bryson DeChambeau|Collin Morikawa|Jordan Spieth|Justin Thomas|Brooks Koepka|Dustin Johnson|Phil Mickelson|Taylor Fritz|Ben Shelton|Frances Tiafoe|Tommy Paul|Coco Gauff|Serena Williams|Venus Williams|Jessica Pegula|Madison Keys|Andy Murray|LeBron James|Stephen Curry|Michael Jordan|Tom Brady|Lewis Hamilton|Lando Norris|George Russell|Harry Kane|Jude Bellingham", "fr": "Roland Garros|Tour de France|Grand Prix|Paris Saint-Germain|Saint-Germain|Le Monde|Le Figaro|L'Équipe|Champs-Élysées|Élysée|Emmanuel Macron|^Macron|Marine Le Pen|Le Pen|Louis Vuitton|^Chanel|^Dior|Hermès|^Cartier|^Carrefour|^Renault|^Peugeot|Citroën|^Michelin|L'Oréal|^Danone|^TotalEnergies|^Airbus|BNP Paribas|Société Générale|Crédit Agricole|gourmet|boutique|croissant|champagne|ballet|bouquet|souvenir|déjà vu|rendez-vous|savoir-faire|foie gras|à la carte|avant-garde|haute couture|prêt-à-porter|^Cannes|^Montpellier|^Marseille|^Bordeaux|^Toulouse|^Nantes|^Strasbourg|^Versailles|^Louvre|Notre-Dame|^Montmartre|^Ligue", "pt": "São Paulo|Rio Grande do Sul|Grêmio|^Palmeiras|^Corinthians|^Flamengo|^Fluminense|^Botafogo|Vasco da Gama|^Petrobras|Itaú|^Bradesco|^Embraer|^Ambev|Folha de S.Paulo|O Globo|^Globo|Brasília|Belo Horizonte|Porto Alegre|^Lula|Lula da Silva|Luiz Inácio Lula da Silva|Jair Bolsonaro|^Bolsonaro|Geraldo Alckmin|^Alckmin|Fernando Haddad|^Haddad|Vinícius Júnior|Vini Jr.|^Benfica|^Itamaraty|^Planalto|reais", "de": "^Bundesliga|^Bayern|Borussia Dortmund|^Dortmund|^Bundestag|^Bundesbank|Deutsche Bank|Deutsche Telekom|^Volkswagen|^Siemens|^Lufthansa|^Allianz|^Bosch|^Porsche|Friedrich Merz|^Merz|Olaf Scholz|^Scholz|Angela Merkel|^Merkel|^Leipzig|^Schalke|^Wolfsburg|Bayer Leverkusen|^Leverkusen|^Oktoberfest|Toni Kroos|^Kroos|Ursula von der Leyen|von der Leyen", "it": "^Juventus|^Napoli|^Fiorentina|Giorgia Meloni|^Meloni|Sergio Mattarella|^Mattarella|^Maserati|^Lamborghini|^Gucci|^Versace|^Ferragamo|^Bulgari|^Pirelli|^Lavazza|^Barilla|espresso|cappuccino|Giro d'Italia|^Monza|^Imola"};
+function conjunto(s) { var o = {}; s.split(' ').forEach(function (w) { if (w) o[w] = 1; }); return o; }
+var EN_NOMBRES = conjunto("aaron adam alan andrew andy anthony arthur austin barry ben bill billy blades bob bobby brad brandon brian brooks bruce bryson carl chad charles charlie chris christopher cody colin collin connor corey craig dale dan danny darren dave dean dennis derek don donald doug douglas dustin dylan ed eddie edward eric erik ethan frank fred gary gavin george gordon graham greg gregory harold harry hayden henry howard jack jacob jake james jamie jared jason jeff jeffrey jeremy jerome jerry jim jimmy joe joel john johnny jonathan jordan joseph josh joshua justin keegan keith ken kenneth kevin kyle larry lawrence lewis logan luke mark matt matthew michael mike mitchell nathan neil nicholas nick noah oliver owen patrick paul pete peter phil philip ralph randy ray raymond richard rick rickie rob robert robbie roger ron ronald rory ross roy russell ryan sam scott scottie sean seth shane stephen steve steven stewart ted terry thomas tim timothy todd tom tommy tony travis trace trevor troy tyler vince wayne will william wyndham xander zach zachary elon jensen kamala abigail alice alison amanda amber amy ann ashley betty beverly brenda brittany carol catherine charlotte cheryl christina christine cindy claire coco courtney crystal cynthia danielle debbie deborah denise diane donna doris dorothy elizabeth ellen emily emma frances gail grace hailey hannah heather helen hillary holly jacqueline jane janet janice jean jennifer jenny jessica jill joan joanne joyce judith judy julie karen kate katherine kathleen kathryn katie kayla kelly kim kimberly kristen lauren leslie lily linda lisa lori madison margaret marilyn martha mary megan melanie melissa michelle nancy natalie nicole olivia pamela rachel rebecca rose ruth sally samantha sarah serena sharon shirley sophia stephanie susan taylor theresa tiffany tracy venus wendy whitney"), ES_NOMBRES = conjunto("jose juan luis carlos jorge manuel francisco pedro miguel sergio ricardo rodrigo gonzalo felipe cristian cristobal joaquin matias ignacio andres sebastian diego pablo alejandro fernando eduardo alberto marcelo mauricio claudio patricio hernan raul rafael roberto mario hector oscar tomas vicente benjamin agustin martin nicolas javier enrique arturo alvaro jaime guillermo rene osvaldo gustavo cesar ivan victor hugo marco antonio jon thiago matheus maria ana carmen isabel camila valentina francisca catalina constanza fernanda javiera carolina daniela paula macarena josefa antonia sofia florencia ignacia trinidad consuelo soledad pilar veronica paulina alejandra claudia marcela monica lorena ximena cecilia gloria rosa teresa patricia beatriz evelyn karina natalia andrea angela lucia elena silvia adriana viviana susana raquel margarita ines irene laura julia diana victoria virginia sara sandra barbara"), ES_APELLIDOS = conjunto("soto rojas silva contreras sepulveda morales reyes fuentes castillo espinoza torres araya flores valenzuela castro tapia vargas pizarro cortes rivera nunez herrera medina vega campos vera munoz jara cardenas caceres riquelme aravena carrasco sandoval figueroa salazar molina cisternas orellana toro alarcon garrido gallardo olivares bravo guzman parra saavedra pena romero navarro aguilera cabrera leiva troncoso poblete vidal acevedo cornejo ortiz ramos quezada maldonado miranda zuniga mora salinas palma donoso lagos allende alessandri montt prat lavin pinera toha vodanovic chahuan ossandon coloma macaya moreira desbordes sichel briones marcel grau crispi vallejo cariola mirosevic goic letelier pinochet insulza ominami velasco provoste rincon elizalde montes uriarte orrego larrain errazuriz matte luksic paulmann solari saieh yarur angelini ponce said hasbun alcaraz garin jarry tabilo niemann pereira"),
+  CL = conjunto("ohiggins matthei walker edwards kast kaiser schalper bachelet frei boric jadue chadwick hirsch winter jackson aylwin abbott mackenna cochrane williams simpson wilson lynch thomson obrien wooster cofrade lyon"), ES_TOPE = conjunto("chile chilena chileno chilenas chilenos santiago latinoamerica latam america latina peru argentina mexico brasil colombia espana europa estados unidos china rusia ucrania francia alemania italia inglaterra japon india canada australia banco central ministerio gobierno presidente presidenta senado camara congreso region ciudad universidad ley sur norte grupo fundacion corporacion compania empresa sociedad nacional internacional mundial copa liga torneo campeonato abierto serie juegos olimpicos panamericanos lunes martes miercoles jueves viernes sabado domingo enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre linea instituto centro museo escuela colegio departamento servicio oficina consejo tribunal corte agencia club estadio parque plaza avenida calle puerto aeropuerto isla islas lago monte cerro golfo mar bahia cabo estrecho canal provincia comuna pueblo villa playa laboratorio clinica hospital fondo programa proyecto plan premio festival feria cumbre foro encuentro campana operacion mision telescopio observatorio nave armada ejercito fuerza aerea policia carabineros estado republica reino imperio rey reina papa san santa santo"), ES_COMUN = conjunto("hoy ayer manana el la los las lo un una unos unas en con por para segun tras durante desde hasta este esta estos estas ese esa eso tambien ademas pero sin sobre entre cuando mientras como que quien donde aunque si ya mas menos muy otro otra otros otras cada todo toda todos todas nuevo nueva nuevos nuevas primer primera primero segundo segunda gran mejor peor sus su al del y o e ni a ante bajo contra hacia mediante salvo hay fue es son era sera seran tiene tienen"), PARTICULA = conjunto("van von der den da di du le st mc mac"),
+  EN_FUNCION = conjunto("by of the and for presented pres at to with from on in"), ABREV = conjunto("pres jr sr st mr mrs ms dr co inc ltd corp"), LUGARES_CL = conjunto("santiago valparaiso concepcion antofagasta iquique arica temuco rancagua talca chillan osorno valdivia coquimbo serena montt arenas calama copiapo atacama biobio maule nuble araucania aysen magallanes tarapaca chiloe quilpue talcahuano curico linares providencia condes nunoa maipu vitacura florida quilicura pudahuel renca recoleta independencia vina"), EN_COMUNES = conjunto("championship championships solutions services open tour cup league news times post journal bank capital partners holdings technologies technology systems energy global street valley beach city united classic invitational masters series finals media studios pictures records music foods airlines airways motors labs lab games sports review therapeutics institute college school center centre store camera island world americas monthly weekly daily net report magazine press network channel park square hall house tower bridge road avenue company corporation foundation trust fund management asset assets investment investments securities insurance health care pharma tech software data cloud mobile digital communications entertainment productions books publishing challenge trophy grand prix arena stadium garden gardens");
+var RX_PAL = /[0-9A-Za-zÀ-ÖØ-öø-ɏḀ-ỿ&]+(?:['’][A-Za-zÀ-ÖØ-öø-ɏ]+)*/g;
+function clavePal(w) { return w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/['’]/g, '').replace(/[^a-z0-9&]/g, ''); }
+function palabras(t) {
+  var L = [], m; RX_PAL.lastIndex = 0;
+  while ((m = RX_PAL.exec(t))) L.push({ s: m.index, e: m.index + m[0].length, w: m[0], k: clavePal(m[0]), l: '' });
+  return L;
+}
+var BL = null;
+function prepBL() {   // el diccionario, con las mismas claves que deja hablable() (en castellano, «PGA» se dice «P G A»)
+  var base = en() ? 'en' : 'es';
+  if (BL && BL.base === base) return BL;
+  BL = { base: base, d: {} };
+  for (var l in LX) {
+    if (l === base) continue;
+    LX[l].split('|').forEach(function (e) {
+      if (!e) return;
+      var cs = e.charAt(0) === '^'; if (cs) e = e.slice(1);
+      var q = e.indexOf('='), forma = q > 0 ? e.slice(0, q) : e, dicho = q > 0 ? e.slice(q + 1) : '';
+      var pw = palabras(hablable(forma)).filter(function (x) { return x.k; }), k = pw.map(function (x) { return x.k; });
+      var ac = /[^\x00-\x7f]/.test(forma) ? pw.map(function (x) { return x.w.toLowerCase(); }) : null;   // «Grêmio» no es «gremio»: con tildes, tal cual
+      if (k.length) (BL.d[k[0]] = BL.d[k[0]] || []).push({ k: k, l: l, cs: cs ? forma.charAt(0) : '', dicho: dicho, ac: ac });
+    });
+  }
+  for (var c in BL.d) BL.d[c].sort(function (a, b) { return b.k.length - a.k.length; });
+  return BL;
+}
+var PREF_L = { en: 'en-us', es: 'es-cl', fr: 'fr-fr', pt: 'pt-br', de: 'de-de', it: 'it-it', pl: 'pl-pl', fi: 'fi-fi', sv: 'sv-se', da: 'da-dk', cs: 'cs-cz' };
+var VOZ_L = {};
+function vozPara(l) {   // la mejor voz de ese idioma en el aparato (natural y femenina, como la de siempre), o null
+  if (!SS || !l) return null;
+  if (!voces.length) { try { voces = SS.getVoices() || []; } catch (e) { voces = []; } }
+  if (VOZ_L.n !== voces.length) VOZ_L = { n: voces.length };
+  if (l in VOZ_L) return VOZ_L[l];
+  var mejor = null, pm = -1;
+  for (var i = 0; i < voces.length; i++) {
+    var v = voces[i], lg = (v.lang || '').toLowerCase().replace('_', '-'), n = v.name || '', p;
+    if (lg.slice(0, 2) !== l || /undefined/i.test(n + ' ' + lg)) continue;
+    if (l === 'es' || l === 'en') p = puntaje(v, l);
+    else {
+      p = 10; if (/natural|neural|online|premium|enhanced|wavenet|studio/i.test(n)) p += 30;
+      if (lg === PREF_L[l]) p += 8; if (FEM.test(n)) p += 15; else if (MAS.test(n)) p -= 10; if (v.localService === false) p += 3;
+    }
+    if (/multilingual/i.test(n)) p -= 5;
+    if (p > pm) { pm = p; mejor = v; }
+  }
+  return (VOZ_L[l] = mejor);
+}
+function mayus(w) { return /^[A-ZÀ-ÖØ-ÞĀ-Ž]/.test(w) && /[a-zß-öø-ÿ]/.test(w); }
+function blando(g) { return /^[\s\-.'’&]{0,3}$/.test(g); }
+function espa(w) { return /[áéíóúñ]/i.test(w) || /g[üu]/i.test(w) && /ü/i.test(w); }
+function lenguaLetras(w, base) {   // letras que el castellano no usa: ã, ç, ß, ł, å…
+  if (base === 'en' && /[áéíóúñ]/i.test(w) && !/[àèìòùâêîôûäëïöãõçœ]/i.test(w)) return 'es';
+  if (/[ãõ]/i.test(w)) return 'pt';
+  if (/[ąęłśźżćń]/i.test(w)) return 'pl';
+  if (/ß/.test(w)) return 'de';
+  if (/å/i.test(w)) return 'sv';
+  if (/[øæ]/i.test(w)) return 'da';
+  if (/[äöü]/i.test(w) && !/gü/i.test(w)) return /ü|sch|tz|ei|mann|berg|burg|stadt|dorf|heim|bach/i.test(w) ? 'de' : /(aa|ää|ii|kk|tt|nen|ki|la|lä)$|ää|kk/i.test(w) ? 'fi' : 'de';
+  if (/[àâèêëîïôûùœç]/i.test(w)) return /ção|ções|[ãõ]/i.test(w) ? 'pt' : 'fr';
+  if (/[ìò]/i.test(w)) return 'it';
+  if (/[čšžřěů]/i.test(w)) return 'cs';
+  return '';
+}
+function inglesa(k) {   // rasgos de la ortografía inglesa que el castellano no tiene
+  if (k.length < 4 || CL[k] || ES_COMUN[k] || ES_TOPE[k]) return false;
+  return /sh|th|ck|ght|ph|gh|w/.test(k) || /[^aeiouyr]y$/.test(k) || (k.length >= 5 && /[^r]ey$/.test(k)) ||
+    (k.length >= 6 && /(son|ton|ley|ford|field|wood|worth|land|ridge|well|shire|ville|berg|stein)$/.test(k));
+}
+function lenguaNombre(G, base, inicio) {   // un nombre propio de una o más palabras: ¿en qué idioma lo diría una persona bilingüe?
+  var ks = G.map(function (t) { return t.k; });
+  if (ks.indexOf('cofrade') >= 0) return '';   // la marca «Cofrade News» va entera con la voz de la página, en castellano y en inglés
+  if (base === 'en') return ks.some(function (k) { return CL[k] || ES_APELLIDOS[k] || LUGARES_CL[k] || (k.length > 4 && /[aeiou]z$/.test(k)); }) ? 'es' : '';
+  if (G.length === 1 && inicio) return '';   // una palabra sola al comienzo de una frase puede ser cualquier palabra
+  if (ks.some(function (k) { return CL[k] || ES_APELLIDOS[k] || ES_TOPE[k] || (k.length > 4 && /[aeiou]z$/.test(k)); })) return '';
+  if (G.some(function (t) { return espa(t.w); })) return '';
+  if (G.length === 1) return inglesa(ks[0]) ? 'en' : '';
+  if (ks.some(function (k) { return ES_NOMBRES[k]; })) return '';   // «Thiago Agustín Tirante»
+  return EN_NOMBRES[ks[0]] || ks.some(inglesa) ? 'en' : '';
+}
+function sigueIngles(t, suelto) {   // ¿sigue el nombre en inglés? pegado, solo palabras inglesas («Solutions»); tras «by» u «of», cualquier nombre que no sea castellano
+  if (!mayus(t.w) || t.k.length < 2 || espa(t.w) || ES_TOPE[t.k] || ES_COMUN[t.k] || ES_NOMBRES[t.k] || ES_APELLIDOS[t.k] || CL[t.k]) return false;
+  return suelto || EN_COMUNES[t.k] || EN_NOMBRES[t.k] || inglesa(t.k);
+}
+function idiomas(texto) {   // [{t, l, v, s}] los pedazos del tramo y la voz de cada uno; null si todo va en el idioma de la página
+  if (!CFG.bilingue || !SS || !texto) return null;
+  var B = prepBL(), base = B.base, T = palabras(texto), n = T.length, i, j, z;
+  if (!n) return null;
+  for (i = 0; i < n; i++) {   // 1) términos y nombres del diccionario: la frase más larga que calce
+    var c = B.d[T[i].k];
+    if (!c && T[i].k.length > 5 && /s$/.test(T[i].k) && !espa(T[i].w)) c = (B.d[T[i].k.slice(0, -1)] || []).filter(function (x) { return x.k.length === 1 && !x.cs && !x.ac; });   // startups, influencers
+    if (!c || !c.length) continue;
+    for (var q = 0; q < c.length; q++) {
+      var e = c[q], L = e.k.length, ok = i + L <= n && (!e.cs || T[i].w.charAt(0) === e.cs);
+      for (j = 1; ok && j < L; j++) ok = T[i + j].k === e.k[j] && blando(texto.slice(T[i + j - 1].e, T[i + j].s));
+      for (j = 0; ok && e.ac && j < L; j++) ok = T[i + j].w.toLowerCase() === e.ac[j];
+      if (!ok) continue;
+      for (j = 0; j < L; j++) T[i + j].l = e.l;
+      if (e.dicho) { T[i].dicho = e.dicho; T[i].hasta = i + L - 1; }
+      i += L - 1; break;
+    }
+  }
+  for (i = 0; i < n; i++) if (!T[i].l) T[i].ll = lenguaLetras(T[i].w, base);   // 2) letras de otros idiomas (ã, ç, ß, ł…)
+  for (i = 0; i < n; i++) {   // 3) nombres propios: palabras con mayúscula seguidas («Chad Ramey», «Erik van Rooyen»)
+    if (T[i].l || !mayus(T[i].w) || T[i].k.length < 2) continue;
+    var g = [i]; j = i + 1;
+    while (j < n && /^[\s-]{1,2}$/.test(texto.slice(T[j - 1].e, T[j].s)) && !T[j].l) {
+      if (mayus(T[j].w) && T[j].k.length >= 2) { g.push(j); j++; continue; }
+      if (PARTICULA[T[j].k] && j + 1 < n && mayus(T[j + 1].w) && !T[j + 1].l && /^[\s-]{1,2}$/.test(texto.slice(T[j].e, T[j + 1].s))) { g.push(j); j++; continue; }
+      break;
+    }
+    var gi = g.slice();
+    while (gi.length && (ES_COMUN[T[gi[0]].k] || ES_TOPE[T[gi[0]].k] || PARTICULA[T[gi[0]].k])) gi.shift();   // «Hoy», «Según», «La»: no son parte del nombre
+    while (gi.length && (ES_TOPE[T[gi[gi.length - 1]].k] || PARTICULA[T[gi[gi.length - 1]].k])) gi.pop();
+    if (gi.length) {
+      var a0 = gi[0], ini = a0 === 0 || /[.!?¿¡:;]/.test(texto.slice(T[a0 - 1].e, T[a0].s));
+      var lg = ''; for (z = 0; z < gi.length && !lg; z++) lg = T[gi[z]].ll || '';   // «Iga Świątek»: todo el nombre en el idioma de sus letras
+      if (!lg) lg = lenguaNombre(gi.map(function (x) { return T[x]; }), base, ini);
+      if (lg) for (z = 0; z < gi.length; z++) T[gi[z]].l = lg;
+    }
+    i = j - 1;
+  }
+  for (i = 0; i < n; i++) if (!T[i].l && T[i].ll) T[i].l = T[i].ll;
+  if (base === 'es') for (i = 0; i < n; i++) {   // 4) lo que sigue pegado a un nombre en inglés («Austin Championship pres. by Compliance Solutions»)
+    if (T[i].l !== 'en' || (i + 1 < n && T[i + 1].l)) continue;
+    j = i + 1;
+    while (j < n && !T[j].l) {
+      var gp = texto.slice(T[j - 1].e, T[j].s);
+      if (!(/^[\s-]{1,2}$/.test(gp) || (ABREV[T[j - 1].k] && /^\.\s?$/.test(gp)))) break;
+      if (sigueIngles(T[j])) { T[j].l = 'en'; j++; continue; }
+      var f = j; while (f < n && f - j < 2 && EN_FUNCION[T[f].k] && !T[f].l) f++;
+      if (f > j && f < n && !T[f].l && sigueIngles(T[f], true)) { for (z = j; z <= f; z++) T[z].l = 'en'; j = f + 1; continue; }
+      break;
+    }
+    i = j - 1;
+  }
+  for (i = 0; i < n; i++) if (T[i].l && (T[i].l === base || !vozPara(T[i].l))) T[i].l = '';   // sin voz de ese idioma: la de siempre
+  var P = [], cur = null;
+  for (i = 0; i < n; i++) { if (!cur || cur.l !== T[i].l) { cur = { l: T[i].l, a: i, b: i }; P.push(cur); } else cur.b = i; }
+  if (P.length === 1 && !P[0].l) return null;
+  var out = [], desde = 0;
+  for (var p = 0; p < P.length; p++) {
+    var hasta = texto.length;
+    if (p + 1 < P.length) { var b = T[P[p + 1].a].s, ab = /[^\s]*$/.exec(texto.slice(T[P[p].b].e, b))[0]; hasta = b - ab.length; }   // lo que va entre dos pedazos («, », « %; ») se queda con el anterior; «¿» o «(», con el siguiente
+    var t = texto.slice(desde, hasta);
+    for (z = P[p].b; z >= P[p].a; z--) if (T[z].dicho) t = t.slice(0, T[z].s - desde) + T[z].dicho + t.slice(T[T[z].hasta].e - desde);
+    if (/[0-9A-Za-zÀ-ÿ]/.test(t)) out.push({ t: t.trim(), l: P[p].l, v: P[p].l ? vozPara(P[p].l) : null, s: desde });
+    else if (out.length) out[out.length - 1].t += t.trim();
+    desde = hasta;
+  }
+  return out.length > 1 || (out.length === 1 && out[0].l) ? out : null;
+}
+
 // ---------- estado ----------
 var R = { rate: Math.min(1.6, Math.max(0.7, +P.r || 0.92)), on: false, modo: '', secs: [], i: -1, items: [], j: 0, grupo: 0,
           habla: 0, ultAusp: 0, inicioUtt: 0, pausado: false, sinMic: false, fallasOido: 0, espera: null, rec: null, ctx: null, ctaDicho: false };
 var gen = 0, ultimoCorte = 0;   // cada orden nueva deja sin efecto lo que estaba en curso
 
 var ECO = [];   // lo que la voz dijo hace poco: {t0, t1, w}
-function decir(texto, op) {
+function decir(texto, op) {   // 19-11-2026: si el tramo trae palabras de otro idioma, cada pedazo con la voz de su idioma
+  texto = hablable(texto);
+  if (!texto) return Promise.resolve('fin');
+  if (!SS) return Promise.resolve('error');
+  var partes = null; try { partes = op && op.mono ? null : idiomas(texto); } catch (e) { partes = null; }
+  if (!partes) return decirUno(texto, op, null, 0, texto, false);
+  var g0 = gen;
+  return partes.reduce(function (pr, x, i) {
+    return pr.then(function (r) { if (r !== 'fin') return r; if (g0 !== gen) return 'cortado'; return decirUno(x.t, op, x.v, x.s, texto, i < partes.length - 1); });
+  }, Promise.resolve('fin'));
+}
+// 19-11-2026 (Germán, 22:40, desde un Android con Chrome: «la voz ahora no se escucha natural como humana»; suena «como llamada telefónica»
+// y «otra voz, más robótica»): el tono más grave de la voz cálida (0,95; 0,93 en los títulos) suena bien en las voces naturales de
+// Microsoft, que lo aplican como entonación, pero las voces de Google y de los teléfonos lo hacen con un filtro que las vuelve metálicas.
+// Con ellas va el tono propio de la voz (1).
+function tonoPara(v, t) { return v && /microsoft/i.test(v.name || '') && /natural|online|neural/i.test(v.name || '') ? t : 1; }
+function decirUno(texto, op, vv, off, base, sigue) {
   return new Promise(function (res) {
-    texto = hablable(texto);
     if (!texto) return res('fin');
-    if (!SS) return res('error');
-    if (!/[.!?…:;]$/.test(texto)) texto += '.';   // cierre de frase: la voz baja el tono como una persona
+    if (!sigue && !/[.!?…:;]$/.test(texto)) texto += '.';   // cierre de frase: la voz baja el tono como una persona
     if (!vozNatural(voz)) elegirVoz();
     if (texto.normalize) texto = texto.normalize('NFC');
     var f = fichas(texto), sil = f.w.map(silabas), u = new SpeechSynthesisUtterance(texto), listo = false, t0 = 0,
-      eco = { t0: Date.now(), ts: 0, t1: 0, tb: 0, ci: 0, w: f.w, pos: f.pos, sil: sil, silTot: sil.reduce(function (x, y) { return x + y; }, 0), cortada: false };
+      eco = { t0: Date.now(), ts: 0, t1: 0, tb: 0, ci: 0, w: f.w, pos: f.pos, sil: sil, silTot: sil.reduce(function (x, y) { return x + y; }, 0), cortada: false,
+        base: base, off: off || 0, item: !!(op && op.item), tg: R.trozosG, ti: R.trozoI };
     ECO.push(eco); if (ECO.length > 24) ECO.shift();
-    if (voz) { u.voice = voz; u.lang = voz.lang; } else u.lang = en() ? 'en-US' : 'es-CL';
+    var vz = vv || voz; if (vz) { u.voice = vz; u.lang = vz.lang; } else u.lang = en() ? 'en-US' : 'es-CL';
     var vel = Math.max(0.5, Math.min(2, R.rate * ((op && op.vel) || 1)));
-    u.rate = vel; u.pitch = (op && op.tono) || CFG.tono || 1; u.volume = 1;
+    u.rate = vel; u.pitch = tonoPara(vz, (op && op.tono) || CFG.tono || 1); u.volume = 1;
     var g0 = gen;
     function fin(r) { if (listo) return; listo = true; clearTimeout(tope); eco.t1 = Date.now(); eco.cortada = r !== 'fin' || !t0; if (t0) R.habla += Date.now() - t0; res(r); }
     u.onstart = function () { t0 = eco.ts = Date.now(); };
     u.onboundary = function (e) { if (e && e.name !== 'sentence' && typeof e.charIndex === 'number') { eco.ci = e.charIndex; eco.tb = Date.now(); } };
     u.onend = function () {
       var dur = Date.now() - t0;
-      if (t0 && !listo && eco.silTot >= 10 && dur >= 400) {   // calibra cuántas sílabas por segundo dice esta voz
+      if (!vv && t0 && !listo && eco.silTot >= 10 && dur >= 400) {   // calibra cuántas sílabas por segundo dice esta voz
         var sps = eco.silTot / (dur / 1000) / vel;
         if (sps >= CFG.spsMin && sps <= CFG.spsMax) R.spsBase = R.spsBase ? 0.7 * R.spsBase + 0.3 * sps : sps;
       }
@@ -339,13 +534,14 @@ function decir(texto, op) {
     };
     u.onerror = function (e) { fin(e && (e.error === 'interrupted' || e.error === 'canceled') ? 'cortado' : 'error'); };
     var tope = setTimeout(function () { if (!t0) { try { SS.cancel(); } catch (e) { /* */ } } fin('fin'); }, 4000 + texto.length * 110 / R.rate);   // por si el motor no avisa el fin (o se trabó)
-    var resp = ultimoCorte + 120 - Date.now();
+    var resp = Math.max(ultimoCorte + 120, MOVIL ? Math.max(NUBE.solto || 0, OIDO.cerro || 0) + 350 : 0) - Date.now();   // en el teléfono, un instante tras cerrar el micrófono
     if (resp > 0) setTimeout(function () { if (listo) return; if (g0 !== gen) return fin('cortado'); SS.speak(u); }, resp); else SS.speak(u);   // una orden nueva en esos 120 ms la deja sin efecto
   });
 }
 async function decirTodo(texto, g, op) {
-  var f = trozos(hablable(texto));
-  for (var i = 0; i < f.length; i++) { if (g !== gen) return false; await decir(f[i], op); }
+  var f = trozos(hablable(texto)), it = op && op.item;
+  if (it) { R.trozos = f; R.trozosG = (R.trozosG || 0) + 1; }   // una noticia: se recuerda en qué tramo va, por si hay que retomarla
+  for (var i = 0; i < f.length; i++) { if (g !== gen) return false; if (it) R.trozoI = i; await decir(f[i], op); }
   return g === gen;
 }
 function respiro(ms, g) {   // un silencio corto entre una noticia y otra, como respira una persona al leer
@@ -449,7 +645,7 @@ function sinEco(frase, t0) {
 var RELLENO = { a: 1, la: 1, el: 1, lo: 1, los: 1, las: 1, de: 1, del: 1, al: 1, y: 1, e: 1, o: 1, que: 1, en: 1, un: 1, una: 1, eh: 1, em: 1, mm: 1, este: 1, esta: 1,
   por: 1, favor: 1, me: 1, ya: 1, ok: 1, okay: 1, bueno: 1, the: 1, to: 1, uh: 1, um: 1, please: 1 };
 var PREVIA = { numero: 1, seccion: 1, punto: 1, item: 1, tema: 1, capitulo: 1, ir: 1, ve: 1, vamos: 1, lee: 1, leeme: 1, quiero: 1, escuchar: 1, pon: 1, abre: 1,
-  number: 1, section: 1, go: 1, read: 1 };
+  number: 1, section: 1, go: 1, read: 1, indice: 1, indices: 1, menu: 1, index: 1 };   // 19-11-2026: «Índice» + número o título (Germán)
 // 19-11-2026 (Germán: «que me permita interrumpir por voz en cualquier momento si deseo continuar con otra sección del Índice»): verbos para
 // cambiar de sección. Solo cuentan junto a una sección (nombre o número); no entran al rescate del filtro de eco.
 var NAVEGA = { pasa: 1, pasar: 1, pasate: 1, pasemos: 1, cambia: 1, cambiar: 1, cambiemos: 1, salta: 1, saltar: 1, saltate: 1, sigue: 1, seguir: 1, sigamos: 1,
@@ -542,7 +738,7 @@ NubeRec.prototype.start = function () {
   var md = navigator.mediaDevices;
   if (!md || !md.getUserMedia) { setTimeout(function () { self._err('audio-capture'); }, 0); return; }
   var vivo = NUBE.st && NUBE.st.active !== false && NUBE.st.getAudioTracks().some(function (x) { return x.readyState === 'live'; });
-  (vivo ? Promise.resolve(NUBE.st) : md.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } })).then(function (st) {
+  (vivo ? Promise.resolve(NUBE.st) : md.getUserMedia({ audio: MOVIL ? { echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 } : { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } })).then(function (st) {
     NUBE.st = st;
     if (!self._on) return nubeSoltarLuego();
     try { self._graf(st); } catch (e) { return self._err('audio-capture'); }
@@ -556,34 +752,48 @@ NubeRec.prototype._graf = function (st) {   // detector de voz por volumen: piso
   try { if (ctx.resume) ctx.resume(); } catch (e) { /* */ }
   var sr = ctx.sampleRate, tam = sr <= 16000 ? 1024 : sr <= 24000 ? 2048 : 4096, dur = tam / sr;
   var src = ctx.createMediaStreamSource(st), pr = ctx.createScriptProcessor(tam, 1, 1);
-  var piso = null, cal = 0, previo = [], seg = null, quieto = 0, arriba = 0, conVoz = 0;
+  var piso = null, cal = 0, previo = [], seg = null, quieto = 0, arriba = 0, conVoz = 0, ecoN = [], refEco = null, tLee = 0;
   pr.onaudioprocess = function (ev) {
     if (!self._on) return;
     var d = ev.inputBuffer.getChannelData(0), s = 0;
     for (var i = 0; i < d.length; i++) s += d[i] * d[i];
-    var db = 10 * Math.log10(s / d.length + 1e-12), copia = new Float32Array(d), lee = !!(SS && SS.speaking);
+    var db = 10 * Math.log10(s / d.length + 1e-12), copia = new Float32Array(d), lee = !!(SS && SS.speaking), ahora = Date.now();
     if (piso === null) piso = db;
+    // 19-11-2026 (Germán: «cuando la voz comienza a leer ya no me permite interrumpirla»): el eco de la voz ya no sube el piso de ruido.
+    // Antes el umbral terminaba 20 dB sobre la propia voz y, con parlantes, nadie podía interrumpirla. El eco se mide aparte (el nivel que
+    // alcanzan 8 de cada 10 trozos de los últimos 3 s) y basta hablar algo más fuerte que él.
+    if (lee) { tLee = ahora; if (!seg) { ecoN.push(db); if (ecoN.length > Math.round(3 / dur)) ecoN.shift(); if (ecoN.length >= 6) refEco = pct(ecoN, 0.8); } }
+    else if (ahora - tLee > 2500) { ecoN = []; refEco = null; }
     if (!seg) {
       if (cal < 0.6 / dur) { cal++; piso = Math.min(piso, db); previo.push(copia); if (previo.length > 4) previo.shift(); return; }   // primeros 0,6 s: ruido de fondo
-      var umbral = Math.max(piso + (lee ? 20 : 12), lee ? -38 : -50);
-      if (db < umbral) { piso = db < piso ? db : piso + (db - piso) * 0.02; arriba = 0; previo.push(copia); if (previo.length > 4) previo.shift(); return; }
-      if (++arriba * dur < 0.12) { previo.push(copia); if (previo.length > 5) previo.shift(); return; }
-      seg = previo.slice(); seg.umbral = umbral; previo = []; quieto = 0; conVoz = arriba; seg.push(copia); return;
+      var umbral = lee ? Math.max(piso + 12, refEco == null ? piso + 20 : refEco + CFG.margenEco, -50) : Math.max(piso + 12, -50);
+      if (db < umbral) { if (!lee && ahora - tLee > 400) piso = db < piso ? db : piso + (db - piso) * 0.02; arriba = 0; previo.push(copia); if (previo.length > 4) previo.shift(); return; }
+      if (++arriba * dur < (lee ? 0.18 : 0.12)) { previo.push(copia); if (previo.length > 5) previo.shift(); return; }
+      seg = previo.slice(); seg.umbral = umbral; seg.idx = self._prov(); previo = []; quieto = 0; conVoz = arriba; seg.push(copia); return;
     }
     seg.push(copia);
     if (db < seg.umbral - 3) quieto++; else { quieto = 0; conVoz++; }
     if (quieto * dur >= 0.7 || seg.length * dur >= 7) {
       var x = seg, voz = conVoz * dur; seg = null; quieto = 0; arriba = 0; conVoz = 0;
-      if (voz >= 0.3) self._enviar(x, sr);
+      if (voz >= 0.3) self._enviar(x, sr, x.idx);
     }
   };
   src.connect(pr); pr.connect(ctx.destination);   // sale en silencio: el procesador no escribe nada, pero sin salida no corre
   self._ctx = ctx; self._src = src; self._pr = pr;
 };
-NubeRec.prototype._enviar = function (frames, sr) {
+function pct(a, p) { var b = a.slice().sort(function (x, y) { return x - y; }); return b[Math.min(b.length - 1, Math.floor(p * (b.length - 1)))]; }
+NubeRec.prototype._prov = function () {   // como el reconocedor del navegador: un provisorio vacío marca cuándo empezó a hablar la persona
+  if (!this.continuous || !this.onresult) return null;
+  var res = [{ transcript: '', confidence: 0 }]; res.isFinal = false; res.item = function (i) { return this[i]; };
+  this._lista.push(res); this._lista.item = function (i) { return this[i]; };
+  var i = this._lista.length - 1;
+  try { this.onresult({ resultIndex: i, results: this._lista }); } catch (e) { /* */ }
+  return i;
+};
+NubeRec.prototype._enviar = function (frames, sr, idx) {
   var self = this;
   if (NUBE.pedidos >= NUBE.max) return;
-  if (self._vuelo) { self._cola = [frames, sr]; return; }   // una a la vez: la frase que llega mientras espera reemplaza a la anterior
+  if (self._vuelo) { self._cola = [frames, sr, idx]; return; }   // una a la vez: la frase que llega mientras espera reemplaza a la anterior
   var n = 0; frames.forEach(function (f) { n += f.length; });
   var pcm = new Float32Array(n), o = 0; frames.forEach(function (f) { pcm.set(f, o); o += f.length; });
   self._vuelo = true; NUBE.pedidos++;
@@ -594,21 +804,24 @@ NubeRec.prototype._enviar = function (frames, sr) {
       self._vuelo = false;
       if (!self._on) return;
       if (!x.ok) self._err(x.s === 403 || x.s === 415 || x.s === 413 ? 'aborted' : 'network', true);
-      else if (x.j.t) self._res(String(x.j.t));
-      var c = self._cola; self._cola = null; if (c && self._on) self._enviar(c[0], c[1]);
+      else if (x.j.t) self._res(String(x.j.t), idx);
+      var c = self._cola; self._cola = null; if (c && self._on) self._enviar(c[0], c[1], c[2]);
     }, function () { self._vuelo = false; if (self._on) self._err('network', true); });
 };
-NubeRec.prototype._res = function (t) {
+NubeRec.prototype._res = function (t, idx) {
   var res = [{ transcript: t, confidence: 0.9 }]; res.isFinal = true; res.item = function (i) { return this[i]; };
-  this._lista.push(res); this._lista.item = function (i) { return this[i]; };
+  if (idx != null && this._lista[idx] && this._lista[idx].isFinal === false) this._lista[idx] = res; else { this._lista.push(res); idx = this._lista.length - 1; }
+  this._lista.item = function (i) { return this[i]; };
   diag('☁ entendí: «' + t + '»');
-  if (this.onresult) this.onresult({ resultIndex: this._lista.length - 1, results: this._lista });
+  if (this.onresult) this.onresult({ resultIndex: idx, results: this._lista });
   if (!this.continuous) this.stop();
 };
 NubeRec.prototype._cerrar = function () {
   var on = this._on; this._on = false;
   try { if (this._pr) { this._pr.onaudioprocess = null; this._pr.disconnect(); } if (this._src) this._src.disconnect(); if (this._ctx && this._ctx.close) this._ctx.close(); } catch (e) { /* */ }
-  this._pr = this._src = this._ctx = null; nubeSoltarLuego();
+  this._pr = this._src = this._ctx = null;
+  if (MOVIL) { clearTimeout(NUBE.soltar); var st = NUBE.st; NUBE.st = null; NUBE.solto = Date.now(); if (st) { try { st.getTracks().forEach(function (x) { x.stop(); }); } catch (e) { /* */ } } }
+  else nubeSoltarLuego();
   return on;
 };
 NubeRec.prototype._err = function (codigo, sigue) {
@@ -748,11 +961,12 @@ function permisoMic() {
 }
 function oidoApagar() { var r = OIDO.rec; OIDO.rec = null; if (r) { try { r.abort(); } catch (e) { /* */ } } oidoUI(); }
 function oidoUI() { if (barra) barra.classList.toggle('cn-voz-oido', !!OIDO.rec); }
-var EN_INTERRUPCION = { sec: 1, indice: 1, sig: 1, ant: 1, repite: 1, pausa: 1, salir: 1, rapido: 1, lento: 1, ayuda: 1, tres: 1, sesenta: 1, signo: 1 };
+var EN_INTERRUPCION = { sec: 1, indice: 1, sig: 1, ant: 1, repite: 1, pausa: 1, salir: 1, rapido: 1, lento: 1, ayuda: 1, tres: 1, sesenta: 1, signo: 1, yaMismo: 1, voz: 1 };
 function corregir(alts, t0, previa) {
   var p = deLaPersona(alts[0], t0); if (!p || !R.on || R.espera) return;
   var o = orden(norm(p.frase), 'lectura');
-  if (!o || !esOrden(o, p.frase) || (previa.tipo === o.tipo && previa.k === o.k)) return;
+  if (!o || !esOrden(o, p.frase) || (previa.tipo === o.tipo && previa.k === o.k && previa.s === o.s)) return;
+  if (R.tras && R.tras.o === previa) { R.tras.o = o; diag('↻ corrijo el pedido: «' + alts[0] + '»'); return; }   // seguía terminando la noticia: cambia a dónde va después
   diag('↻ corrijo: «' + alts[0] + '»'); oiste(alts[0]); interrumpir(o, true);
 }
 function recibir(alts, t0, provisorio) {   // algo que oyó el oído continuo; devuelve lo que hizo (o false)
@@ -783,19 +997,55 @@ function esOrden(o, frase) {
   if (o.tipo === 'sigue') return R.pausado && (breve || pide);
   if (o.tipo === 'mas') return R.modo === 'indice' && breve;
   if (!EN_INTERRUPCION[o.tipo]) return false;
+  if (o.tipo === 'yaMismo') return pal.length <= 3;
   if (o.tipo === 'salir') return pal.length <= 3 && pal.every(function (w) { return SALIDA[w]; });   // un «chao» o «cierra la puerta» no apagan la voz
   if (o.tipo === 'sec') {
     if (pide || pal.length === 1) return true;
-    var cl = R.secs[o.k].clave.split(' ');
+    var cl = (o.s != null ? (subs()[o.s] || { clave: '' }).clave : R.secs[o.k].clave).split(' ');
     return pal.every(function (w, i) { return ACOMPANA[w] || (w.length > 3 && cl.indexOf(w) >= 0) || (esNum(w) && (pal.length <= 2 || PREVIA[pal[i - 1]])); });
   }
   return breve || pide;
 }
+// 19-11-2026 (Germán, 18:48: «Al menos, que en forma educada me diga "Favor, permíteme terminar de informarte esta noticia y a continuación
+// yo continuaré con la sección del Menú que me solicitas"»): a media noticia, la voz se detiene, dice esa frase con el nombre de lo pedido,
+// termina la noticia desde la frase que cortó y después cambia. Si la persona insiste (lo pide otra vez, pide otra sección o dice «ahora»),
+// cambia de inmediato. «Pausa», «salir», «más rápido» y «repite» siguen siendo instantáneos.
+var TRAS_NOTICIA = { sec: 1, sig: 1, ant: 1, indice: 1, tres: 1, sesenta: 1 };
 function interrumpir(o, forzar) {   // la persona habló mientras la voz leía
   var t = Date.now(); if (!forzar && t - (R.tInterr || 0) < 1500) return; R.tInterr = t;
   if (o.tipo === 'pausa') return pausar();
   if (o.tipo === 'sigue') return reanudar(nuevaVuelta());
+  if (o.tipo === 'yaMismo') { var p = R.tras; R.tras = null; if (p) ejecutar(p.o, nuevaVuelta()); return; }
+  if (TRAS_NOTICIA[o.tipo] && !R.tras && enNoticia()) return terminarYSeguir(o);
   ejecutar(o, nuevaVuelta());
+}
+function enNoticia() { return R.modo === 'seccion' && !R.pausado && R.enItem === gen && R.j < R.items.length; }
+function restoNoticia() {   // lo que falta de la noticia, desde la frase que se estaba diciendo
+  var f = R.trozos, i = R.trozoI; if (!f || i == null || i >= f.length) return '';
+  var e = null; for (var z = ECO.length - 1; z >= 0; z--) if (ECO[z].item && ECO[z].tg === R.trozosG && ECO[z].ti === i) { e = ECO[z]; break; }
+  var r = f[i];
+  if (e && e.base) {
+    var x = e.base.slice(0, Math.max(0, (e.off || 0) + (e.ts ? e.ci || 0 : 0))), c = Math.max(x.lastIndexOf('. '), x.lastIndexOf('? '), x.lastIndexOf('! '), x.lastIndexOf('; '));
+    r = e.base.slice(c >= 0 ? c + 2 : 0);
+  }
+  return [r].concat(f.slice(i + 1)).join(' ').trim();
+}
+function nombreDestino(o) {
+  var x = o.tipo === 'sec' ? (o.s != null ? subs()[o.s] : R.secs[o.k]) : o.tipo === 'sig' ? R.secs[Math.min(R.i + 1, R.secs.length - 1)] : o.tipo === 'ant' ? R.secs[Math.max(R.i - 1, 0)] : null;
+  if (x) return x.t;
+  return o.tipo === 'tres' ? tx('nomTres') : o.tipo === 'sesenta' ? tx('nomSesenta') : '';
+}
+function terminarYSeguir(o) {
+  var resto = restoNoticia(), g = nuevaVuelta(), j = R.j, nom = nombreDestino(o);
+  R.tras = { o: o, j: j }; diag('⏳ termino la noticia y después: ' + o.tipo);
+  (async function () {
+    estado('eHabla');
+    if (!(await decirTodo(tx(o.tipo === 'indice' ? 'trasInd' : o.tipo === 'sesenta' ? 'trasOtro' : nom ? 'trasSec' : 'trasGen', { s: nom }), g))) return;
+    if (resto) { R.enItem = g; var ok = await decirTodo(resto, g, { item: true }); if (R.enItem === g) R.enItem = 0; if (!ok) return; }
+    if (g !== gen || !R.tras) return;
+    var p = R.tras.o; R.tras = null; R.j = j + 1;
+    ejecutar(p, g);
+  })();
 }
 function oir(ms) {   // una frase del lector, o null
   return new Promise(function (res) {
@@ -803,7 +1053,7 @@ function oir(ms) {   // una frase del lector, o null
     var rec, listo = false;
     try { rec = new SR(); } catch (e) { return res(null); }
     rec.lang = en() ? 'en-US' : 'es-CL'; rec.continuous = false; rec.interimResults = false; rec.maxAlternatives = 4;
-    function fin(v) { if (listo) return; listo = true; clearTimeout(t); try { rec.abort(); } catch (e) { /* ya cerrado */ } if (R.rec === rec) R.rec = null; res(v); }
+    function fin(v) { if (listo) return; listo = true; OIDO.cerro = Date.now(); clearTimeout(t); try { rec.abort(); } catch (e) { /* ya cerrado */ } if (R.rec === rec) R.rec = null; res(v); }
     rec.onstart = function () { diag('▶ escucho (turno)'); };
     rec.onresult = function (e) { R.fallasOido = 0; var r = e.results[e.results.length - 1], a = []; for (var k = 0; k < r.length; k++) a.push(r[k].transcript); diag('✓ oí: «' + (a[0] || '') + '»'); oiste(a[0]); fin(a.join(' | ')); };
     rec.onerror = function (e) {   // sin permiso, o el servicio del navegador falla dos veces seguidas: se deja de intentar y se sigue con barra y teclas
@@ -840,6 +1090,52 @@ function leerSecciones() {
     L.push({ el: s[i], id: s[i].id, n: m ? +m[1] : L.length + 1, t: (m ? m[2] : tt).replace(/\s*·\s*/g, ', '), clave: norm((SIN[s[i].id] || '') + ' ' + (m ? m[2] : tt)) });
   }
   return L;
+}
+// 19-11-2026 (Germán, 18:45: «debería tener como estructura decir la palabra "Índice" + Número (o el título de la sección) debido a que
+// algunas secciones son submenus y no tienen un número que los anteceda»): los temas de cada sección, tal como los muestra el índice.
+var SUBS_FIJOS = [['crecw', 'Crecimiento de Chile: proyección del año'], ['proyw', 'Proyección de crecimiento: próximos 4 años'], ['pjw', 'Perspectivas de Desarrollo para Chile 2050'],
+  ['cgw', 'Congreso: votaciones de la semana'], ['gobiernos', 'Avances logrados a igual período'], ['fondos', 'Fondos concursables'], ['tasw', 'Proyección de tasas a 12 meses'],
+  ['subsidios', 'Subsidios habitacionales'], ['dep-futbol', 'Fútbol: tabla y proyección'], ['dep-golf', 'Golf'], ['dep-tenis', 'Tenis']];
+var SUBSIN = { crecw: 'pib producto', proyw: 'cuatro anos 2027 2028 2029 2030 mediano plazo', pjw: 'largo plazo', cgw: 'votaciones leyes votadas senado diputados',
+  gobiernos: 'avances gobiernos presidentes', fondos: 'concursables postular corfo sercotec', tasw: 'tasas hipotecarias hipotecario', subsidios: 'subsidio serviu',
+  'dep-futbol': 'futbol tabla campeonato', 'dep-golf': 'golf', 'dep-tenis': 'tenis atp wta' };
+function subs() {
+  var n = D.querySelectorAll('#cnIdx li.cn-sub').length + '/' + R.secs.length;
+  if (R.subs && R.subsN === n) return R.subs;
+  R.subsN = n; return (R.subs = leerSubs());
+}
+function leerSubs() {
+  var L = [], vistos = {}, A = [], a = D.querySelectorAll('#cnIdx li.cn-sub a[data-id]');
+  for (var i = 0; i < a.length; i++) A.push([a[i].getAttribute('data-id'), limpio(a[i]), a[i]]);
+  if (!A.length) A = SUBS_FIJOS;
+  for (var j = 0; j < A.length; j++) {
+    var id = A[j][0], el = id && D.getElementById(id), t = (A[j][1] || '').replace(/\s*·\s*/g, ', ');
+    if (!el || !t || vistos[id]) continue;
+    var sec = el.closest ? el.closest('section.sec[id]') : null, padre = -1, k;
+    for (k = 0; k < R.secs.length; k++) if (R.secs[k].el === sec) { padre = k; break; }
+    if (padre < 0 && A[j][2]) {   // fuera de toda sección: el de la fila principal anterior del índice
+      var p = A[j][2].closest('li'); p = p && p.previousElementSibling;
+      while (p && p.classList.contains('cn-sub')) p = p.previousElementSibling;
+      var pa = p && p.querySelector('a[data-id]'), pid = pa && pa.getAttribute('data-id');
+      for (k = 0; k < R.secs.length; k++) if (R.secs[k].id === pid) { padre = k; break; }
+    }
+    if (padre < 0) continue;
+    vistos[id] = 1;
+    L.push({ el: el, id: id, t: t, padre: padre, sub: true, n: R.secs[padre].n, clave: norm((SUBSIN[id] || '') + ' ' + t) });
+  }
+  return L;
+}
+function temasDe(s) {   // «Incluye: Fondos concursables.», al leer el índice
+  var L = subs().filter(function (x) { return R.secs[x.padre] === s; }).map(function (x) { return x.t; });
+  if (!L.length) return '';
+  var ult = L[L.length - 1], y = !en() && /^h?i(?!e)/i.test(ult) ? 'e' : tx('y');
+  return ' ' + tx('incluye', { l: L.length > 1 ? L.slice(0, -1).join('; ') + '; ' + y + ' ' + ult : ult });
+}
+function ejemplo() {   // un tema corto de hoy para el ejemplo («índice golf»)
+  var S = subs(), c = '';
+  for (var i = 0; i < S.length && !c; i++) if (S[i].t.split(' ').length <= 2) c = S[i].t;
+  if (!c) { for (var k = 0; k < R.secs.length && !c; k++) if (R.secs[k].id === 'deportes') c = R.secs[k].t; }
+  return (c || (R.secs[0] || {}).t || '').toLowerCase();
 }
 
 // ---------- el guion de cada sección ----------
@@ -1205,7 +1501,7 @@ function numero(t) {
   var p = t.split(' ');
   for (var i = 0; i < p.length; i++) { if (p[i] === 'veinte' && (p[i + 1] === 'y' || p[i + 1] === 'and') && NUM[p[i + 2]] < 10) return 20 + NUM[p[i + 2]]; if (p[i] === 'twenty' && NUM[p[i + 1]] < 10) return 20 + NUM[p[i + 1]]; }
   for (var j = 0; j < p.length; j++) {
-    var x = p[j]; if (!NUM[x]) continue;
+    var x = p[j]; if (!NUM[x] || p[j + 1] === 'mil') continue;   // «dos mil cincuenta» es un año
     if ((x === 'un' || x === 'una') && p.length > 1 && !/^(la|el|numero|seccion|number|section)$/.test(p[j - 1] || '')) continue;   // «un momento», «una noticia»: artículo, no número
     if (/^(primero|primera|segundo|segunda|tercero|tercera|cuarta|quinta|sexta|septima|octava|novena|decima)$/.test(x) && /^(un|una)$/.test(p[j - 1] || '')) continue;   // «un segundo»
     return NUM[x];
@@ -1223,6 +1519,19 @@ function orden(t, ctx) {
   var w = ' ' + t + ' ';
   if (/ (salir|apaga|apagar|termina|terminar|cierra|cerrar|chao|adios|exit|quit|stop|turn off) /.test(w)) return { tipo: 'salir' };
   if (/ (pausa|pausar|detente|deten|silencio|alto|espera|calla|pause|wait) /.test(w) || t === 'para') return { tipo: 'pausa' };
+  var mi = RX_INDICE.exec(t);   // 19-11-2026 (Germán): «Índice» + número o título lleva a esa sección o tema, también mientras la voz lee
+  if (mi) {
+    var dudoso = / dice$/.test(mi[1]), resto = ' ' + (mi[2] || '') + ' ', antes = '';
+    while (antes !== resto) { antes = resto; resto = resto.replace(RELL_INDICE, ' '); }
+    resto = resto.replace(/\s+/g, ' ').trim();
+    if (!resto || /^(completo|entero|de nuevo|otra vez|todo|todos|again|full|whole|all)$/.test(resto)) return dudoso ? null : { tipo: 'indice' };
+    if (ctx === 'indice' && /^(mas|siguiente|siguientes|sigue|more|next)$/.test(resto)) return { tipo: 'mas' };
+    var di = destino(resto, ' ' + resto + ' ');
+    if (di && di.tipo === 'sec') { di.indice = true; return di; }
+    if (dudoso || ctx === 'lectura') return null;   // «el índice de precios», mientras lee, no es una orden
+    return { tipo: 'indice' };
+  }
+  if (R.tras && /^(ahora|ahora mismo|ahora ya|ya ahora|altiro|al tiro|de inmediato|inmediatamente|ya mismo|no esperes|now|right now|immediately)$/.test(t)) return { tipo: 'yaMismo' };
   var nv = / (pasa|pasar|pasate|pasemos|cambia|cambiar|cambiemos|salta|saltar|saltate|sigue|seguir|sigamos|continua|continuar|continuemos|llevame|lleva|vamos|vayamos|ve|ir|anda|go|skip|jump|switch|move|continue|take) /.test(w);
   if (nv) { var dst = destino(t, w); if (dst) return dst; }   // «sigue con deportes», «pasa a la 5»: manda la sección, no «sigue» ni «siguiente»
   if (/ (otra seccion|otro tema|otras secciones|cambia de seccion|cambiar de seccion|cambiemos de seccion|cambia de tema|another section|other section|change section) /.test(w)) return { tipo: 'indice' };
@@ -1230,6 +1539,7 @@ function orden(t, ctx) {
   if (/ (sigue|seguir|continua|continuar|reanuda|reanudar|dale|resume|continue|go on) /.test(w)) return { tipo: 'sigue' };
   if (/ (mas rapido|rapido|acelera|faster) /.test(w)) return { tipo: 'rapido' };
   if (/ (mas lento|lento|despacio|slower|slow) /.test(w)) return { tipo: 'lento' };
+  if (/ (otra voz|cambia la voz|cambiar la voz|cambia de voz|cambiar de voz|cambia voz|another voice|other voice|change voice|change the voice) /.test(w)) return { tipo: 'voz' };   // 19-11-2026
   if (/ (ayuda|comandos|que puedo decir|opciones|help) /.test(w)) return { tipo: 'ayuda' };
   if (/ (indice|menu|secciones|temas|lista|index|sections) /.test(w)) return { tipo: 'indice' };
   if (/ (repite|repetir|otra vez|de nuevo|repeat|again) /.test(w)) return { tipo: 'repite' };
@@ -1249,18 +1559,27 @@ function orden(t, ctx) {
   if (ctx === 'signo') for (var s2 = 0; s2 < SIGNOS.length; s2++) if (w.indexOf(SIGNOS[s2][0]) >= 0) return { tipo: 'signo', n: s2 };
   return null;
 }
-function destino(t, w) {   // la sección que nombra la frase (por nombre o por número), o null
-  var n = numero(t), mejor = -1, pm = 0;
-  for (var j = 0; j < R.secs.length; j++) {
-    var c = R.secs[j].clave.split(' '), p = 0;
-    for (var q = 0; q < c.length; q++) if (c[q].length > 3 && w.indexOf(' ' + c[q] + ' ') >= 0) p++;
-    if (p > pm) { pm = p; mejor = j; }
-  }
-  var k = -1, por = '';
-  if (mejor >= 0 && (!n || t.split(' ').length > 2)) { k = mejor; por = 'nombre'; }   // «léeme 5 noticias de deportes»: manda el nombre
-  else if (n) { for (var i = 0; i < R.secs.length; i++) if (R.secs[i].n === n) { k = i; por = 'num'; } }
-  if (k < 0 && mejor >= 0) { k = mejor; por = 'nombre'; }
-  if (k < 0) return null;
+var RX_INDICE = /^(?:(?:ve|ir|vamos|anda|pasa|pasate|quiero|dame|lee|leeme|abre|abreme|pon|ponme|llevame|al|a|el|la|en|y|ok|bueno|ya|ahora|go|to|the|please)\s+)*(indice|indices|menu|menus|index|en dice|y dice)(?:\s+(.*))?$/;
+var RELL_INDICE = / (numero|el|la|los|las|lo|de|del|al|a|en|seccion|tema|temas|punto|opcion|item|capitulo|por favor|porfa|favor|number|section|topic|the|of|please) /g;
+function parecido(c, w) {   // cuánto calza la frase con una sección o un tema: palabras del nombre, y un poco más si van en el mismo orden
+  var cl = c.clave.split(' '), p = 0;
+  for (var q = 0; q < cl.length; q++) if (cl[q].length > 3 && w.indexOf(' ' + cl[q] + ' ') >= 0) p++;
+  if (!p) return 0;
+  var tt = norm(c.t).split(' ').filter(function (x) { return x.length > 3; }), ww = w.trim().split(' ').filter(function (x) { return x.length > 3; });
+  if (tt.length && ww.length && tt[0] === ww[0]) p += 0.5;
+  for (var i = 0; i + 1 < ww.length; i++) { var a = tt.indexOf(ww[i]); if (a >= 0 && tt[a + 1] === ww[i + 1]) p += 0.3; }
+  return c.sub ? p + 0.25 : p;   // el tema es más preciso que la sección que lo contiene
+}
+function destino(t, w) {   // la sección o el tema que nombra la frase (por nombre o por número), o null
+  var n = numero(t), S = subs(), C = R.secs.concat(S), mejor = -1, pm = 0;
+  for (var j = 0; j < C.length; j++) { var p = parecido(C[j], w); if (p > pm + 0.001) { pm = p; mejor = j; } }
+  var c = null, por = '';
+  if (mejor >= 0 && (!n || t.split(' ').length > 2)) { c = C[mejor]; por = 'nombre'; }   // «léeme 5 noticias de deportes»: manda el nombre
+  else if (n) { for (var i = 0; i < R.secs.length; i++) if (R.secs[i].n === n) { c = R.secs[i]; por = 'num'; } }
+  if (!c && mejor >= 0) { c = C[mejor]; por = 'nombre'; }
+  if (!c) return null;
+  if (c.sub) return { tipo: 'sec', k: c.padre, s: S.indexOf(c), por: por };
+  var k = R.secs.indexOf(c);
   if (k === R.i && R.modo === 'seccion' && / (salta|saltar|saltate|skip) /.test(w)) return { tipo: 'sig' };   // «sáltate deportes» mientras lee Deportes
   return { tipo: 'sec', k: k, por: por };
 }
@@ -1368,8 +1687,8 @@ async function leerIndice(g, grupo) {
   var G = CFG.grupo, desde = grupo * G, parte = R.secs.slice(desde, desde + G);
   if (!parte.length) { grupo = 0; desde = 0; parte = R.secs.slice(0, G); R.grupo = 0; }
   if (!(await avisoPendiente(g))) return;
-  if (grupo === 0 && !(await decirTodo(tx(!puedeOir() ? 'indIntroSin' : continuo() ? (enEstricto() ? 'indIntroE' : 'indIntroC') : 'indIntro', { n: R.secs.length, g: G }), g))) return;
-  for (var i = 0; i < parte.length; i++) if (!(await decirTodo(parte[i].n + ', ' + parte[i].t + '.', g))) return;
+  if (grupo === 0 && !(await decirTodo(tx(!puedeOir() ? 'indIntroSin' : continuo() ? (enEstricto() ? 'indIntroE' : 'indIntroC') : 'indIntro', { n: R.secs.length, g: G, e: ejemplo() }), g))) return;
+  for (var i = 0; i < parte.length; i++) if (!(await decirTodo(parte[i].n + ', ' + parte[i].t + '.' + temasDe(parte[i]), g))) return;
   var ultimo = desde + G >= R.secs.length;
   R.pregunta = 'indice'; var dicha = await decirTodo(tx(ultimo ? 'indFin' : 'indMas'), g); R.pregunta = ''; if (!dicha) return;
   var o = await esperarOrden(g, 'indice', CFG.espera);
@@ -1383,7 +1702,11 @@ async function leerItems(g) {
     if (!(await avisoPendiente(g))) return false;
     var it = R.items[R.j]; marcar(it.el); estado('eHabla');
     if (R.j > 0 && !(await respiro(CFG.pausaItem, g))) return false;
-    if (!(await decirTodo(conector(R.items, R.j) + it.t, g))) return false;
+    R.enItem = g;
+    var ok = await decirTodo(conector(R.items, R.j) + it.t, g, { item: true });
+    if (R.enItem === g) R.enItem = 0;
+    if (!ok) return false;
+    if (R.tras) { var p = R.tras.o; R.tras = null; R.j++; ejecutar(p, g); return false; }   // pidió otra sección a media noticia: terminada, se cambia
     if (!(await auspicioSiToca(g))) return false;
   }
   return g === gen;
@@ -1391,13 +1714,25 @@ async function leerItems(g) {
 async function leerSeccion(k, g, continuo) {
   var s = R.secs[k];
   if (!s) { if (!(await decirTodo(tx('noSec'), g))) return; return esperarYSeguir(g, 'fin'); }
-  R.i = k; R.modo = 'seccion'; R.continuo = !!continuo; R.items = guion(s); R.j = 0; barraTitulo(s.n + '. ' + s.t);
+  R.i = k; R.sub = -1; R.titulo = s.t; R.modo = 'seccion'; R.continuo = !!continuo; R.items = guion(s); R.j = 0; barraTitulo(s.n + '. ' + s.t);
   marcar(s.el.querySelector('h2') || s.el);
   if (!(await decirTodo(tx('sec', { n: s.n, t: s.t }), g, { tono: CFG.tonoTit, vel: CFG.velTit }))) return;
   if (!(await respiro(CFG.pausaTit, g))) return;
   if (s.id === 'horoscopo') return leerHoroscopo(g, continuo);
   if (!(await leerItems(g))) return;
   return finSeccion(g, continuo);
+}
+async function leerSub(s, g) {   // un tema de una sección («índice fondos concursables»)
+  var x = subs()[s];
+  if (!x) { if (!(await decirTodo(tx('noSec'), g))) return; return esperarYSeguir(g, 'fin'); }
+  R.i = x.padre; R.sub = s; R.titulo = x.t; R.modo = 'seccion'; R.continuo = false; R.items = guion(x); R.j = 0; barraTitulo(x.t);
+  if (R.items.length && R.items[0].t.length <= x.t.length + 20 && norm(R.items[0].t).indexOf(norm(x.t)) === 0) R.items.shift();   // su título ya se dijo
+  marcar(x.el.querySelector('h2,h3,h4') || x.el);
+  if (!(await decirTodo(tx('tema', { p: R.secs[x.padre].t, t: x.t }), g, { tono: CFG.tonoTit, vel: CFG.velTit }))) return;
+  if (!(await respiro(CFG.pausaTit, g))) return;
+  if (!R.items.length) { if (!(await decirTodo(tx('mas'), g))) return; }
+  else if (!(await leerItems(g))) return;
+  return finSeccion(g, false);
 }
 async function finSeccion(g, continuo) {
   var sig = R.secs[R.i + 1];
@@ -1408,7 +1743,7 @@ async function finSeccion(g, continuo) {
     if (g !== gen) return;
     return o ? ejecutar(o, g) : leerSeccion(R.i + 1, g, true);
   }
-  R.pregunta = 'fin'; var dicha = await decirTodo(tx('finSec', { t: R.secs[R.i].t, s: sig.t }), g); R.pregunta = ''; if (!dicha) return;
+  R.pregunta = 'fin'; var dicha = await decirTodo(tx('finSec', { t: R.titulo || R.secs[R.i].t, s: sig.t }), g); R.pregunta = ''; if (!dicha) return;
   var o2 = await esperarOrden(g, 'fin', CFG.espera);
   if (g !== gen) return;
   return o2 ? ejecutar(o2, g) : leerSeccion(R.i + 1, g, false);
@@ -1458,13 +1793,14 @@ async function leerHoroscopo(g, continuo) {
 async function ejecutar(o, g) {
   if (!o || g !== gen) return;
   R.pausado = false; estado('eHabla'); botonPausa(); if (o.tipo !== 'salir') oidoPrender();
+  if (TRAS_NOTICIA[o.tipo] || o.tipo === 'salir' || o.tipo === 'todo' || o.tipo === 'signo') R.tras = null;   // una orden nueva reemplaza lo pedido a media noticia
   switch (o.tipo) {
     case 'indice': return leerIndice(g, 0);
     case 'mas':
       if (R.modo === 'indice') return leerIndice(g, R.grupo + 1);
       if (R.modo === 'seccion' && R.j < R.items.length) { if (await leerItems(g)) return finSeccion(g, R.continuo); return; }
       return leerSeccion(R.i + 1, g, R.continuo);
-    case 'sec': return leerSeccion(o.k, g, false);
+    case 'sec': return o.s != null ? leerSub(o.s, g) : leerSeccion(o.k, g, false);
     case 'sig': return leerSeccion(Math.min(R.i + 1, R.secs.length - 1), g, R.continuo);
     case 'ant': return leerSeccion(Math.max(R.i - 1, 0), g, R.continuo);
     case 'todo': return leerSeccion(R.i >= 0 && R.modo === 'seccion' ? R.i : 0, g, true);
@@ -1472,13 +1808,19 @@ async function ejecutar(o, g) {
     case 'sesenta': if (await leer60(g)) return preguntar(g); return;
     case 'repite':
       if (R.modo === 'indice') return leerIndice(g, R.grupo);
-      if (R.modo === 'seccion' && R.j >= R.items.length) return leerSeccion(R.i, g, R.continuo);   // terminada: la sección otra vez
+      if (R.modo === 'seccion' && R.j >= R.items.length) return R.sub >= 0 ? leerSub(R.sub, g) : leerSeccion(R.i, g, R.continuo);   // terminada: la sección (o el tema) otra vez
       if (R.modo === 'seccion') { R.j = Math.max(0, R.j); if (await leerItems(g)) return finSeccion(g, R.continuo); return; }   // a medias: lo último que estaba diciendo
       return preguntar(g);
     case 'rapido': case 'lento': {
       var v = Math.round((R.rate + (o.tipo === 'rapido' ? 0.15 : -0.15)) * 100) / 100, tope = v > 1.6 || v < 0.7;
       if (!tope) { R.rate = v; P.r = v; guardar(); velocidadUI(); }
       if (!(await decirTodo(tx(tope ? (o.tipo === 'rapido' ? 'yaRapido' : 'yaLento') : o.tipo), g))) return;
+      return reanudar(g);
+    }
+    case 'voz': {   // 19-11-2026: la siguiente voz del aparato, de la mejor a la peor; queda guardada en este aparato
+      var vs = vocesIdioma(), kv = vs.indexOf(voz), nv = vs.length ? vs[(kv + 1) % vs.length] : null;
+      if (nv && nv !== voz) { voz = nv; P.v = nv.name; guardar(); VOZ_L = {}; }
+      if (!(await decirTodo(tx(vs.length > 1 ? 'otraVoz' : 'unaVoz'), g))) return;
       return reanudar(g);
     }
     case 'ayuda': if (!(await decirTodo(tx('ayuda'), g))) return; return esperarYSeguir(g, R.modo === 'indice' ? 'indice' : 'fin');
@@ -1687,6 +2029,7 @@ D.addEventListener('keydown', function (e) {
   else if (k === 'n' || k === 'pagedown') o = { tipo: 'sig' };
   else if (k === 'p' || k === 'pageup') o = { tipo: 'ant' };
   else if (k === 'r') o = { tipo: 'repite' };
+  else if (k === 'v') o = { tipo: 'voz' };
   else if (k === '+' || k === '=') o = { tipo: 'rapido' };
   else if (k === '-') o = { tipo: 'lento' };
   else if (k === 'h' || k === 'm') { e.preventDefault(); return escucharAhora(); }
@@ -1728,7 +2071,10 @@ function inicio() {
   if (P.e === 'no' && !/[?&]voz=1\b/.test(location.search)) return;   // 19-11-2026: el botón de la portada lleva ?voz=1
   setTimeout(function () { abrirVentana(P.e === 'si'); }, 450);
 }
-W.__cnVozAPI = { encender: encender, apagar: apagar, ordenar: ordenar, nube: function () { return { activa: SR === NubeRec, motivo: NUBE.motivo, pedidos: NUBE.pedidos }; }, estado: function () { return { on: R.on, modo: R.modo, i: R.i, j: R.j, rate: R.rate, voz: voz && voz.name, habla: R.habla, pausado: R.pausado, espera: R.espera && R.espera.ctx, oido: !!OIDO.rec, continuo: continuo(), turnos: OIDO.turnos, eco: OIDO.eco, ajenas: OIDO.ajenas, sps: R.spsBase || 0 }; },
+W.__cnVozAPI = { encender: encender, apagar: apagar, ordenar: ordenar, nube: function () { return { activa: SR === NubeRec, motivo: NUBE.motivo, pedidos: NUBE.pedidos }; },
+  idiomas: function (t) { var p = idiomas(hablable(t)); return p && p.map(function (x) { return { t: x.t, l: x.l, v: x.v && x.v.name }; }); },
+  subs: function () { return subs().map(function (x) { return { id: x.id, t: x.t, padre: R.secs[x.padre] && R.secs[x.padre].id }; }); },
+  estado: function () { return { on: R.on, modo: R.modo, i: R.i, j: R.j, sub: R.sub, tras: R.tras ? R.tras.o.tipo : '', rate: R.rate, voz: voz && voz.name, habla: R.habla, pausado: R.pausado, espera: R.espera && R.espera.ctx, oido: !!OIDO.rec, continuo: continuo(), turnos: OIDO.turnos, eco: OIDO.eco, ajenas: OIDO.ajenas, sps: R.spsBase || 0 }; },
   guion: function (id) { var s = leerSecciones(); for (var i = 0; i < s.length; i++) if (s[i].id === id) return guion(s[i]).map(function (u) { return hablable(u.t); }); return null; },
   secciones: function () { return leerSecciones().map(function (s) { return [s.n, s.id, s.t]; }); }, hablable: hablable, entender: function (t, c) { R.secs = R.secs.length ? R.secs : leerSecciones(); return entender(t, c); },
   auspiciadores: auspiciadores, prefs: function () { return P; } };

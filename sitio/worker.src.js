@@ -718,8 +718,8 @@ Object.assign(EN_FIJO, {
     "Open the edition and tap «Listen to the newsletter». If you use a screen reader, you will find it as the first link on the page.",
   "Cuando el navegador lo pida, permite el micrófono para darle órdenes con la voz. Si vas a manejar, enciéndelo antes de partir.":
     "When your browser asks, allow the microphone so you can give voice commands. If you are going to drive, turn it on before you set off.",
-  "Di lo que quieras escuchar: «índice», el nombre o el número de una sección, «pausa», «más lento» o «salir». Con teclado, la barra espaciadora pausa, la I abre el índice, la N avanza y la P retrocede.":
-    "Say what you want to hear: «index», the name or number of a section, «pause», «slower» or «exit». With a keyboard, the space bar pauses, I opens the index, N moves forward and P goes back.",
+  "Di «índice» y el número o el nombre de lo que quieres escuchar (por ejemplo, «índice cinco» o «índice golf»), o «pausa», «más lento» y «salir». Los nombres en inglés y otros idiomas los dice una voz nativa. Con teclado, la barra espaciadora pausa, la I abre el índice, la N avanza y la P retrocede.":
+    "Say «index» and the number or name of what you want to hear (for example, «index five» or «index golf»), or «pause», «slower» and «exit». Names in other languages are read by a native voice. With a keyboard, the space bar pauses, I opens the index, N moves forward and P goes back.",
   "Escuchar la edición de hoy →": "Listen to today's edition →", "Escuchar la última edición →": "Listen to the latest edition →",
   "Gratis y sin instalar nada. Funciona en Chrome, Edge y Safari. Cofrade News no guarda tu voz: tus órdenes las transcribe el servicio de voz del navegador o, si no lo tiene, la inteligencia artificial de Cloudflare.":
     "Free, with nothing to install. Works in Chrome, Edge and Safari. Cofrade News does not keep your voice: your commands are transcribed by your browser's speech service or, if it has none, by Cloudflare's artificial intelligence.",
@@ -1130,7 +1130,7 @@ function vozPortada(ultima, hoy) {
 <ol class="vozp-pasos">
 <li>Abre la edición y toca «Escuchar el boletín». Si usas lector de pantalla, encontrarás «Escuchar el boletín con voz» como primer enlace de la página.</li>
 <li>Cuando el navegador lo pida, permite el micrófono para darle órdenes con la voz. Si vas a manejar, enciéndelo antes de partir.</li>
-<li>Di lo que quieras escuchar: «índice», el nombre o el número de una sección, «pausa», «más lento» o «salir». Con teclado, la barra espaciadora pausa, la I abre el índice, la N avanza y la P retrocede.</li>
+<li>Di «índice» y el número o el nombre de lo que quieres escuchar (por ejemplo, «índice cinco» o «índice golf»), o «pausa», «más lento» y «salir». Los nombres en inglés y otros idiomas los dice una voz nativa. Con teclado, la barra espaciadora pausa, la I abre el índice, la N avanza y la P retrocede.</li>
 </ol>
 <div class="acciones"><a class="btn oro" href="${href}">${ultima && ultima === hoy ? "Escuchar la edición de hoy →" : "Escuchar la última edición →"}</a></div>
 <p class="vozp-nota">Gratis y sin instalar nada. Funciona en Chrome, Edge y Safari. Cofrade News no guarda tu voz: tus órdenes las transcribe el servicio de voz del navegador o, si no lo tiene, la inteligencia artificial de Cloudflare.</p>
