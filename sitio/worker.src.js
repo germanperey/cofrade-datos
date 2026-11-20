@@ -940,6 +940,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__SESENTA__*/
 /*__INDICADOR_GRAF__*/
 /*__SENADO_BANCADAS__*/
+/*__PILARES_DESGLOSE__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -1433,12 +1434,16 @@ export default {
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
           .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
-          .on("head", { element(e) { e.append(INDG_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
+          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
           .on("script", scriptsEdicion(lib))
           .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS + COMPARTIR_ESTILO, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);
+      }
+      if (p === "/api/gasto-pilares") {   // 20-11-2026: desglose de Familia y Conectividad (modulos/pilares_desglose.js)
+        const d = await apiGastoPilares(ctx).catch(() => ({ error: "fuente" }));
+        return new Response(JSON.stringify(d), { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": d.error ? "no-store" : "public, max-age=3600", ...SEGURIDAD } });
       }
       // 20-11-2026: datos del gráfico emergente de cada indicador de la sección 9 (modulos/indicador_graf.js)
       const ind = p.match(/^\/api\/indicador\/([a-z0-9]{2,12})$/);
