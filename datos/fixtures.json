@@ -38,26 +38,6 @@
    "archivo": "5fe34bb9854368bc.json"
   },
   {
-   "url": "https://mindicador.cl/api/dolar/2026",
-   "archivo": "423178c9f01ca1f1.json"
-  },
-  {
-   "url": "https://mindicador.cl/api/euro/2026",
-   "archivo": "00a5c4ef1f041f45.json"
-  },
-  {
-   "url": "https://mindicador.cl/api/uf/2026",
-   "archivo": "5b7e0e403b61d5f4.json"
-  },
-  {
-   "url": "https://mindicador.cl/api/utm/2026",
-   "archivo": "c7240dfcbf7268ac.json"
-  },
-  {
-   "url": "https://mindicador.cl/api",
-   "archivo": "c9f79b13ed9b1428.json"
-  },
-  {
    "url": "https://api.frankfurter.dev/v1/2026-09-24..2026-11-20?base=USD&symbols=CNY",
    "archivo": "8f5c91676cf18325.json"
   },
@@ -115,6 +95,26 @@
   }
  ],
  "fallidas": [
+  {
+   "url": "https://mindicador.cl/api/dolar/2026",
+   "error": "robots.txt no lo permite"
+  },
+  {
+   "url": "https://mindicador.cl/api/euro/2026",
+   "error": "robots.txt no lo permite"
+  },
+  {
+   "url": "https://mindicador.cl/api/uf/2026",
+   "error": "robots.txt no lo permite"
+  },
+  {
+   "url": "https://mindicador.cl/api/utm/2026",
+   "error": "robots.txt no lo permite"
+  },
+  {
+   "url": "https://mindicador.cl/api",
+   "error": "robots.txt no lo permite"
+  },
   {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIPSA?range=5d&interval=1d",
    "error": "robots.txt no lo permite"
