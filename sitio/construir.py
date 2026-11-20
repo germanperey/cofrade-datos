@@ -52,6 +52,7 @@ for k, v in {
     "/*__PODCAST__*/": leer("modulos", "podcast.js"),   # 20-11-2026: podcast diario (fuente, episodios, /podcast y Panel)
     "/*__SESENTA__*/": leer("modulos", "sesenta.js"),   # 20-11-2026: fichas de «Hoy en 60 segundos» resumidas
     "/*__INDICADOR_GRAF__*/": leer("modulos", "indicador_graf.js"),   # 20-11-2026: gráfico emergente de cada indicador (sección 9)
+    "/*__SENADO_BANCADAS__*/": leer("modulos", "senado_bancadas.js"),   # 20-11-2026: «Cómo votan las bancadas» del Senado
     "__PODCAST_JS__": json.dumps("<script>" + podcast_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k

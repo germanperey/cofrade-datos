@@ -939,6 +939,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__PODCAST__*/
 /*__SESENTA__*/
 /*__INDICADOR_GRAF__*/
+/*__SENADO_BANCADAS__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -1395,7 +1396,8 @@ export default {
         // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde (la de hoy,
         // 10 minutos); en el navegador, ver la etiqueta más abajo (18-11). Los gráficos se dibujan cuando el lector llega a ellos (LENTO).
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
-        const pcP = proyeccionLeer(m[1], ctx);   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
+        const pcP = proyeccionLeer(m[1], ctx);
+        const sbP = senadoBancadasLeer(ctx);   // 20-11-2026: bancadas del Senado (modulos/senado_bancadas.js), en paralelo   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
         const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
@@ -1408,6 +1410,7 @@ export default {
         // 19-11-2026: «Proyección de crecimiento… próximos 4 años» (modulos/proyeccion.js). Sus cifras cambian sin que cambie la edición, así
         // que su versión también va en la etiqueta (si no, quien ya abrió la edición seguiría viendo las cifras de antes).
         const pc = await pcP;
+        const sb = await sbP;
         const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}"`;
         // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
         // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.
@@ -1419,6 +1422,7 @@ export default {
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
           "Cache-Control": "no-cache", ETag: etiqueta, "Last-Modified": ultima, ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
+        const sbx = senadoBancadas(sb);
         const s60 = sesenta();   // 20-11-2026: fichas de «Hoy en 60 segundos» resumidas (modulos/sesenta.js)
         const cp = compacto();   // 18-11-2026: títulos de bloque más grandes y gráficos del Congreso en barra compacta (modulos/compacto.js)
         const pv = proyeccionCrecimiento(m[1], pc);   // 19-11-2026: proyección de crecimiento a 4 años, después de «Crecimiento de Chile» (modulos/proyeccion.js)
@@ -1428,7 +1432,7 @@ export default {
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
-          .on("head", cp.cabeza).on("body", cp.cuerpo).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
+          .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
           .on("head", { element(e) { e.append(INDG_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)

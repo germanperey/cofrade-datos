@@ -2314,7 +2314,8 @@ def historia_bcch(estado, hoy, dias=400):
                 if not cand:
                     break
                 intento = cand[0]["seriesId"]
-            url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={quote(intento)}&firstdate={desde}&lastdate={hoy.isoformat()}"
+            desde_k = (hoy - dt.timedelta(days=760)).isoformat() if clave in HISTORIA_MENSUAL else desde   # 25 meses: el IPC a 12 meses se calcula con 24
+            url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={quote(intento)}&firstdate={desde_k}&lastdate={hoy.isoformat()}"
             datos = cierres_bcch(pedir(url, estado, f"historia_{clave}", espera=(0, 30), limite=45), hoy + dt.timedelta(days=1), clave in HISTORIA_MENSUAL)
             if datos:
                 sid = intento

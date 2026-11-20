@@ -46,6 +46,16 @@ async function apiIndicador(k, h) {
   const S = (h && h.series) || {};
   if (c.h && S[c.h] && Array.isArray(S[c.h].datos) && S[c.h].datos.length > 1) {
     p = S[c.h].datos.map((x) => [diaIso(x[0]), Number(x[1])]).filter((x) => isFinite(x[1]));
+  } else if (k === "ipc12" && S.ipc && Array.isArray(S.ipc.datos) && S.ipc.datos.length >= 13) {
+    // Sin la serie a 12 meses del Banco Central: se encadenan sus 12 variaciones mensuales del IPC, mes a mes (solo con 12 meses seguidos).
+    const m = S.ipc.datos.map((x) => [diaIso(x[0]), Number(x[1])]).filter((x) => isFinite(x[1])).sort((a, b) => (a[0] < b[0] ? -1 : 1));
+    const mesN = (f) => Number(f.slice(0, 4)) * 12 + Number(f.slice(5, 7));
+    for (let i = 11; i < m.length; i++) {
+      if (mesN(m[i][0]) - mesN(m[i - 11][0]) !== 11) continue;
+      let f = 1; for (let j = i - 11; j <= i; j++) f *= 1 + m[j][1] / 100;
+      p.push([m[i][0], Math.round((f - 1) * 1000) / 10]);
+    }
+    fuente = "Banco Central de Chile (12 variaciones mensuales del IPC encadenadas por Cofrade News)";
   } else if (c.md) {
     const j = await traerJson(`https://mindicador.cl/api/${c.md}`, 3600).catch(() => null);
     p = ((j && j.serie) || []).map((x) => [diaIso(x.fecha), Number(x.valor)]).filter((x) => x[0] && isFinite(x[1]));

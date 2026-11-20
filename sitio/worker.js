@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "c1b6fab852c6";
+const VERSION_SITIO = "789cc0f7bcac";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -5604,6 +5604,16 @@ async function apiIndicador(k, h) {
   const S = (h && h.series) || {};
   if (c.h && S[c.h] && Array.isArray(S[c.h].datos) && S[c.h].datos.length > 1) {
     p = S[c.h].datos.map((x) => [diaIso(x[0]), Number(x[1])]).filter((x) => isFinite(x[1]));
+  } else if (k === "ipc12" && S.ipc && Array.isArray(S.ipc.datos) && S.ipc.datos.length >= 13) {
+    // Sin la serie a 12 meses del Banco Central: se encadenan sus 12 variaciones mensuales del IPC, mes a mes (solo con 12 meses seguidos).
+    const m = S.ipc.datos.map((x) => [diaIso(x[0]), Number(x[1])]).filter((x) => isFinite(x[1])).sort((a, b) => (a[0] < b[0] ? -1 : 1));
+    const mesN = (f) => Number(f.slice(0, 4)) * 12 + Number(f.slice(5, 7));
+    for (let i = 11; i < m.length; i++) {
+      if (mesN(m[i][0]) - mesN(m[i - 11][0]) !== 11) continue;
+      let f = 1; for (let j = i - 11; j <= i; j++) f *= 1 + m[j][1] / 100;
+      p.push([m[i][0], Math.round((f - 1) * 1000) / 10]);
+    }
+    fuente = "Banco Central de Chile (12 variaciones mensuales del IPC encadenadas por Cofrade News)";
   } else if (c.md) {
     const j = await traerJson(`https://mindicador.cl/api/${c.md}`, 3600).catch(() => null);
     p = ((j && j.serie) || []).map((x) => [diaIso(x.fecha), Number(x.valor)]).filter((x) => x[0] && isFinite(x[1]));
@@ -5702,6 +5712,35 @@ kpi.classList.add('cn-ig');kpi.setAttribute('role','button');kpi.setAttribute('t
 kpi.setAttribute('title',en()?'See the chart':'Ver el gráfico');
 kpi.addEventListener('click',function(){abrir(kpi,k)});kpi.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();abrir(kpi,k)}})});
 })();<\/script>`;
+
+// 20-11-2026 19:46 · Germán: «Estos gráficos aparecen para la configuración de la "Cámara de Diputados", pero falta agregar los mismos
+// gráficos de esta sección para el "Senado" (para tener todo el panorama de cómo están configuradas las bancadas políticas, sus
+// votaciones, etc.)». Del Senado casi no llegan votaciones del mes con el voto de cada senador, y con menos de 3 la edición no arma
+// «Cómo votan las bancadas». El robot de datos lo calcula con el mismo método y código de la Skill sobre las últimas votaciones de
+// Sala del Senado con voto nominal oficial (herramientas/senado_bancadas.py → datos/senado-bancadas.json, con su rango de fechas a
+// la vista) y aquí se pone en cada panel del Senado que no lo traiga, en el mismo lugar que el de la Cámara (antes del botón de
+// las votaciones). Si la edición ya lo trae, no se toca. Las barras, la composición y sus ventanas usan el CSS y el script que la
+// edición ya tiene para la Cámara (escuchan en todo el documento).
+function senadoBancadas(sb) {
+  const html = sb && typeof sb.html === "string" && sb.html.startsWith('<div class="cga">') ? sb.html : "";
+  let tiene = false, puesto = false;
+  return {
+    panel: { element(e) {
+      tiene = false; puesto = false;
+      if (!html) return;
+      e.onEndTag((fin) => { if (!tiene && !puesto) { fin.before(html, { html: true }); puesto = true; } });
+    } },
+    cga: { element() { tiene = true; } },
+    tog: { element(e) { if (html && !tiene && !puesto) { e.before(html, { html: true }); puesto = true; } } },
+  };
+}
+
+async function senadoBancadasLeer(ctx) {
+  try {
+    const r = await desdeGitHub("datos/senado-bancadas.json", 3600, ctx);
+    return r ? await r.json() : null;
+  } catch { return null; }
+}
 
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
@@ -6159,7 +6198,8 @@ export default {
         // 13-11-2026 (Germán: «demora mucho en cargar»): una edición pasada ya no cambia, así que se guarda 1 día en el borde (la de hoy,
         // 10 minutos); en el navegador, ver la etiqueta más abajo (18-11). Los gráficos se dibujan cuando el lector llega a ellos (LENTO).
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
-        const pcP = proyeccionLeer(m[1], ctx);   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
+        const pcP = proyeccionLeer(m[1], ctx);
+        const sbP = senadoBancadasLeer(ctx);   // 20-11-2026: bancadas del Senado (modulos/senado_bancadas.js), en paralelo   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
         const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
@@ -6172,6 +6212,7 @@ export default {
         // 19-11-2026: «Proyección de crecimiento… próximos 4 años» (modulos/proyeccion.js). Sus cifras cambian sin que cambie la edición, así
         // que su versión también va en la etiqueta (si no, quien ya abrió la edición seguiría viendo las cifras de antes).
         const pc = await pcP;
+        const sb = await sbP;
         const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}"`;
         // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
         // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.
@@ -6183,6 +6224,7 @@ export default {
         const resp = new Response(r.body, { headers: { "Content-Type": "text/html; charset=utf-8", "Content-Disposition": "inline", "X-Robots-Tag": "noarchive",
           "Cache-Control": "no-cache", ETag: etiqueta, "Last-Modified": ultima, ...SEGURIDAD } });
         if (typeof HTMLRewriter === "undefined") return resp;
+        const sbx = senadoBancadas(sb);
         const s60 = sesenta();   // 20-11-2026: fichas de «Hoy en 60 segundos» resumidas (modulos/sesenta.js)
         const cp = compacto();   // 18-11-2026: títulos de bloque más grandes y gráficos del Congreso en barra compacta (modulos/compacto.js)
         const pv = proyeccionCrecimiento(m[1], pc);   // 19-11-2026: proyección de crecimiento a 4 años, después de «Crecimiento de Chile» (modulos/proyeccion.js)
@@ -6192,7 +6234,7 @@ export default {
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
-          .on("head", cp.cabeza).on("body", cp.cuerpo).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
+          .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
           .on("head", { element(e) { e.append(INDG_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
