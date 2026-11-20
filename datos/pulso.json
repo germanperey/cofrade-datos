@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-19T19:07-03:00",
- "proxima": "20:17",
+ "generado": "2026-11-19T21:07-03:00",
+ "proxima": "22:17",
  "indicadores": [
   {
    "clave": "dolar",
@@ -10,7 +10,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-19",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "euro",
@@ -20,7 +20,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-19",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "uf",
@@ -30,17 +30,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-19",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440.0,
+   "valor": 72440,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "tpm",
@@ -50,17 +50,17 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-19",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 6.0022,
+   "valor": 6,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-19",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   }
  ],
  "ipsa": {
@@ -68,7 +68,7 @@
   "valor": 10333.77,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-19T19:09-03:00",
+  "hora": "2026-11-19T21:07-03:00",
   "variacion_pct": -0.28
  },
  "sismos": {
@@ -89,34 +89,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "Filtran episodio que habría desatado crisis entre Camila Andrade y Jorge Yunge: errática actitud en CHV fue clave",
+     "titulo": "Leonardo Battaglia y denuncia ante la CIDH: “Sabaj se convirtió en un sacrificio que derivó en una remoción injusta y mal hecha”",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/leonardo-battaglia-y-denuncia-ante-la-cidh-sabaj-se-convirtio-en-un-sacrificio-que-derivo-en-una-remocion-injusta-y-mal-hecha/",
+     "hora": "21:00"
+    },
+    {
+     "titulo": "A 40 días del aluvión, Las Condes registra operativos el 100% de los espacios públicos afectados",
+     "medio": "La Tercera · Nacional",
+     "url": "https://www.latercera.com/nacional/noticia/a-40-dias-del-aluvion-las-condes-registra-operativos-el-100-de-los-espacios-publicos-afectados/",
+     "hora": "20:59"
+    },
+    {
+     "titulo": "Kast en Asia, pero preocupado de los problemas “domésticos”: defiende a Quiroz y Campos ante cuestionamientos",
+     "medio": "La Tercera · Política",
+     "url": "https://www.latercera.com/politica/noticia/kast-en-asia-pero-preocupado-de-los-problemas-domesticos-defiende-a-quiroz-y-campos-ante-cuestionamientos/",
+     "hora": "20:57"
+    },
+    {
+     "titulo": "Kast concluye su paso por China y aterriza en Japón, última parada de su gira por Asia",
+     "medio": "La Tercera · Política",
+     "url": "https://www.latercera.com/politica/noticia/kast-concluye-su-paso-por-china-y-aterriza-en-japon-ultima-parada-de-su-gira-por-asia/",
+     "hora": "20:57"
+    },
+    {
+     "titulo": "Tesorería llama a deudores del CAE a aprovechar convenios especiales: “No es la intención terminar en embargos”",
      "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/19/filtran-episodio-que-habria-desatado-crisis-entre-camila-andrade-y-jorge-yunge-erratica-actitud-en-chv-fue-clave/",
-     "hora": "19:08"
-    },
-    {
-     "titulo": "Premios Ramsay reconocerán a leyendas del deporte chileno y referentes del ámbito paralímpico",
-     "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/19/premios-ramsay-reconoceran-a-leyendas-del-deporte-chileno-y-referentes-del-ambito-paralimpico/",
-     "hora": "19:07"
-    },
-    {
-     "titulo": "Nadie sabe para quién trabaja",
-     "medio": "La Tercera Opinion",
-     "url": "https://www.latercera.com/opinion/noticia/nadie-sabe-para-quien-trabaja/",
-     "hora": "19:04"
-    },
-    {
-     "titulo": "La billetera del ministro de Hacienda",
-     "medio": "La Tercera Opinion",
-     "url": "https://www.latercera.com/opinion/noticia/la-billetera-del-ministro-de-hacienda/",
-     "hora": "19:02"
-    },
-    {
-     "titulo": "Anuncian cortes de luz en Talca, Curicó y otras 6 comunas del Maule: revisa horarios y sectores",
-     "medio": "Diario El Centro Talca",
-     "url": "https://www.diarioelcentro.cl/2026/11/19/anuncian-cortes-de-luz-en-talca-curico-y-otras-6-comunas-del-maule-revisa-horarios-y-sectores/",
-     "hora": "19:01"
+     "url": "https://www.adnradio.cl/2026/11/19/tesoreria-llama-a-deudores-del-cae-a-aprovechar-convenios-especiales-no-es-la-intencion-terminar-en-embargos/",
+     "hora": "20:48"
     }
    ]
   },
@@ -124,34 +124,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "El dólar volvió a subir, las acciones argentinas se hundieron hasta 10% en Wall Street y el riesgo país escaló 80 puntos",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/19/las-acciones-argentinas-se-hundieron-hasta-10-en-wall-street-y-el-riesgo-pais-escalo-80-puntos/",
-     "hora": "19:05"
+     "titulo": "Personas entre 25 y 34 años y sin educación superior sufren la mayor diferencia en empleo respecto de la tendencia histórica",
+     "medio": "La Tercera · Pulso",
+     "url": "https://www.latercera.com/pulso/noticia/personas-entre-25-y-34-anos-y-sin-educacion-superior-sufren-la-mayor-diferencia-en-empleo-respecto-de-la-tendencia-historica/",
+     "hora": "21:01"
     },
     {
-     "titulo": "Fiscal de la Superintendencia de Pensiones aborda posible compensación a las cuentas individuales por caída del fondo E",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/pensiones/fondo-e-fiscal-de-la-superintendencia-de-pensiones-aborda-posible",
-     "hora": "19:04"
+     "titulo": "CCS refuerza su apoyo al emprendimiento y la innovación en una nueva edición de ETM",
+     "medio": "Portal Innova · noticias",
+     "url": "https://portalinnova.cl/ccs-refuerza-su-apoyo-al-emprendimiento-y-la-innovacion-en-una-nueva-edicion-de-etm/",
+     "hora": "20:45"
     },
     {
-     "titulo": "Afiliados fuera del fondo correspondiente a su edad superan los cuatro millones y alcanzan el mayor nivel desde que hay registros",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/pensiones/afiliados-fuera-del-fondo-correspondiente-a-su-edad-superan-los-cuatro",
-     "hora": "19:03"
-    },
-    {
-     "titulo": "El riesgo país se disparó casi 10%: qué factores explican la nueva escalada",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/19/el-riesgo-pais-se-disparo-casi-10-que-factores-explican-la-nueva-escalada/",
-     "hora": "19:03"
-    },
-    {
-     "titulo": "Panamá dominó a Catar, pero dos goles en el descuento sentenciaron su debut en el Mundial Sub-17",
+     "titulo": "Médicos en Panamá se capacitan en nuevas técnicas quirúrgicas de ortopedia y ginecología",
      "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/panama/2026/11/19/panama-domino-a-catar-pero-dos-goles-en-el-descuento-sentenciaron-su-debut-en-el-mundial-sub-17/",
-     "hora": "18:52"
+     "url": "https://www.infobae.com/panama/2026/11/19/medicos-en-panama-se-capacitan-en-nuevas-tecnicas-quirurgicas-de-ortopedia-y-ginecologia/",
+     "hora": "20:41"
+    },
+    {
+     "titulo": "Anthropic salta 17% en su primer día y se convierte en la mayor apertura a bolsa de la historia",
+     "medio": "La Tercera · Pulso",
+     "url": "https://www.latercera.com/pulso/noticia/anthropic-salta-17-en-su-primer-dia-y-se-convierte-en-la-mayor-apertura-a-bolsa-de-la-historia/",
+     "hora": "20:40"
+    },
+    {
+     "titulo": "Hacienda logra acuerdo para destrabar el presupuesto de Educación: repondrá el programa \"Yo Elijo mi PC\" y analizará cambios pensando en 2028",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/economia-y-politica/macro/hacienda-logra-acuerdo-para-destrabar-el-presupuesto-de-educacion-repondra",
+     "hora": "20:37"
     }
    ]
   },
@@ -159,34 +159,28 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Adrián Quiroz aguarda por volver a sumar minutos en la recta final de Universitario: “En cualquier momento nos puede tocar“",
+     "titulo": "¿Puedes demandar al gobierno de CDMX si sufres un accidente o mueres por un bache?",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/peru/2026/11/19/adrian-quiroz-aguarda-por-volver-a-sumar-minutos-en-la-recta-final-de-universitario-en-cualquier-momento-nos-puede-tocar/",
-     "hora": "19:06"
+     "url": "https://www.infobae.com/mexico/2026/11/20/puedes-demandar-al-gobierno-de-cdmx-si-sufres-un-accidente-o-mueres-por-un-bache/",
+     "hora": "21:05"
     },
     {
-     "titulo": "Tensión en el cara a cara entre Sánchez y Feijóo por el accidente de trenes de Urda: “Si se hubiese muerto un familiar directo suyo, ¿también se pondría a bailar en un mitin a las 48 horas?”",
+     "titulo": "Temblor hoy en México: noticias actividad sísmica 19 de noviembre de 2026",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/espana/2026/11/19/tension-en-el-cara-a-cara-entre-sanchez-y-feijoo-por-el-accidente-de-trenes-de-urda-si-se-hubiese-muerto-un-familiar-directo-suyo-tambien-se-pondria-a-bailar-en-un-mitin-a-las-48-horas/",
-     "hora": "19:06"
+     "url": "https://www.infobae.com/mexico/2026/11/19/temblor-hoy-en-mexico-noticias-actividad-sismica-19-de-noviembre-de-2026/",
+     "hora": "21:04"
     },
     {
-     "titulo": "GTA VI, “un reflejo de los defectos de Estados Unidos”: ‘La Croix’",
-     "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/programas/revista-de-prensa/20261119-gta-vi-un-reflejo-de-los-defectos-de-estados-unidos-la-croix",
-     "hora": "18:46"
+     "titulo": "Crisis de la vivienda, casos de corrupción y migrantes marcan único debate entre Pedro Sánchez y Feijóo de cara al 29-N",
+     "medio": "La Tercera · Mundo",
+     "url": "https://www.latercera.com/mundo/noticia/crisis-de-la-vivienda-casos-de-corrupcion-y-migrantes-marcan-unico-debate-entre-pedro-sanchez-y-feijoo-de-cara-al-29-n/",
+     "hora": "20:55"
     },
     {
-     "titulo": "Cómo una mujer fue drogada por su marido y violada por desconocidos durante 13 años",
+     "titulo": "Quiénes son los rohinyás, la \"minoría más perseguida del mundo\" por la que Myanmar fue condenado por genocidio",
      "medio": "BBC Mundo",
-     "url": "https://www.bbc.com/mundo/articles/c6pw4ddp2glpo?at_medium=RSS&at_campaign=rss",
-     "hora": "18:38"
-    },
-    {
-     "titulo": "Combates en Martissant: ¿qué se sabe de la operación que dejó al menos 34 pandilleros muertos en Haití?",
-     "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/am%C3%A9rica-latina/20261119-combates-en-martissant-qu%C3%A9-se-sabe-de-la-operaci%C3%B3n-que-dej%C3%B3-al-menos-34-pandilleros-muertos-en-hait%C3%AD",
-     "hora": "18:37"
+     "url": "https://www.bbc.com/mundo/articles/cm9w9pp7w9x9o?at_medium=RSS&at_campaign=rss",
+     "hora": "20:52"
     }
    ]
   },
@@ -194,34 +188,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "Debate electoral 29-N, en directo | Sánchez ofrece a Feijóo blindar las pensiones en la Constitución y el líder del PP le replica: “No tiene votos ni para aprobar los Presupuestos”",
+     "titulo": "Anthropic: un valor destinado para amantes del riesgo",
+     "medio": "Expansión España Mercados",
+     "url": "https://www.expansion.com/inversion/2026/11/20/anthropic-valor-destinado-amantes-riesgo.html",
+     "hora": "20:58"
+    },
+    {
+     "titulo": "Debate electoral 29-N, en directo | Rufián, tras el cara a cara: “Si Feijóo te come así en un debate es que o no te lo has preparado o es que estás mal asesorado”",
      "medio": "Cinco Días portada",
      "url": "https://elpais.com/espana/elecciones-generales/2026-11-19/debate-electoral-entre-pedro-sanchez-y-alberto-nunez-feijoo-en-directo.html",
-     "hora": "19:06"
+     "hora": "20:56"
     },
     {
-     "titulo": "Países de la UE y legisladores alcanzan acuerdo para reformar normativa sobre finanzas sostenibles",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/pa%C3%ADses-ue-legisladores-alcanzan-acuerdo-215124221.html",
-     "hora": "18:51"
-    },
-    {
-     "titulo": "La foto de Shenzhen: Xi junta a Trump y Putin en una cita histórica",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/la-foto-de-shenzhen-xi-junta-a-trump-y-putin-en-una-cita-histórica/a-79997135?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "18:43"
-    },
-    {
-     "titulo": "Coalición de los Voluntarios en Berlín: \"Apoyamos a Ucrania\"",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/coalición-de-los-voluntarios-en-berlín-apoyamos-a-ucrania/a-79997715?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "18:43"
-    },
-    {
-     "titulo": "Cómo una mujer fue drogada por su marido y violada por desconocidos durante 13 años",
+     "titulo": "Quiénes son los rohinyás, la \"minoría más perseguida del mundo\" por la que Myanmar fue condenado por genocidio",
      "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/c6pw4ddp2glpo?at_medium=RSS&at_campaign=rss",
-     "hora": "18:38"
+     "url": "https://www.bbc.com/mundo/articles/cm9w9pp7w9x9o?at_medium=RSS&at_campaign=rss",
+     "hora": "20:52"
+    },
+    {
+     "titulo": "Citi rebaja el doble su pronóstico sobre bitcoin que sobre ethereum",
+     "medio": "Expansión España Mercados",
+     "url": "https://www.expansion.com/mercados/criptomonedas/2026/11/20/citi-rebaja-doble-pronostico-sobre-bitcoin-sobre-ethereum.html",
+     "hora": "20:49"
+    },
+    {
+     "titulo": "Pasarela al RETA: los mutualistas deberán esperar al nuevo Gobierno para trasladarse a la Seguridad Social",
+     "medio": "Expansión España Economía",
+     "url": "https://www.expansion.com/economia/2026/11/20/pasarela-reta-mutualistas-deberan-esperar-nuevo-gobierno-trasladarse-seguridad-social.html",
+     "hora": "20:33"
     }
    ]
   },
@@ -229,16 +223,16 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "La IA de Google podrá reservar citas por ti en salones de belleza, clínicas y spas: la nueva función que llega a México",
+     "titulo": "CDMX podría volver a escuchar menos aviones sobre algunas zonas: evalúan modificar las rutas del AICM",
      "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/robotica-e-ia/ia-google-podra-reservar-citas-ti-salones-belleza-clinicas-spas-nueva-funcion-que-llega-a-mexico",
-     "hora": "19:04"
+     "url": "https://www.xataka.com.mx/otros-1/cdmx-podria-volver-a-escuchar-aviones-algunas-zonas-evaluan-modificar-rutas-aicm",
+     "hora": "21:02"
     },
     {
-     "titulo": "\"Esto es increíble\": esta leyenda de Hollywood en realidad era la elegida para el papel de Kevin Costner en Yellowstone",
+     "titulo": "Anthropic cierra su primer día de cotización tras la mayor salida a bolsa de la historia. Su verdadero desafío empieza ahora",
      "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/cine-y-tv/esto-increible-esta-leyenda-hollywood-realidad-era-elegida-para-papel-kevin-costner-yellowstone",
-     "hora": "18:32"
+     "url": "https://www.xataka.com.mx/empresas-y-economia/anthropic-cierra-su-primer-dia-cotizacion-mayor-salida-a-bolsa-historia-su-verdadero-desafio-empieza-ahora",
+     "hora": "20:37"
     },
     {
      "titulo": "Trucos de GTA 6: códigos, dinero, armas, vehículos y munición",
@@ -264,34 +258,34 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "Franco Colapinto afrontará las primeras prácticas del Gran Premio de Las Vegas nocturno de Fórmula 1: hora, TV y todo lo que hay que saber",
+     "titulo": "Alpine anunció la salida de un compañero de Franco Colapinto antes del Gran Premio de Las Vegas de F1: las razones",
      "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/19/franco-colapinto-afrontara-las-primeras-practicas-del-gran-premio-de-las-vegas-nocturno-de-formula-1-hora-tv-y-todo-lo-que-hay-que-saber/",
-     "hora": "19:00"
+     "url": "https://www.infobae.com/deportes/2026/11/19/alpine-anuncio-la-salida-de-un-companero-de-franco-colapinto-antes-del-gran-premio-de-las-vegas-de-f1-las-razones/",
+     "hora": "20:57"
     },
     {
-     "titulo": "JJ Gabriel: en manos de FIFA",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/internacional/jj-gabriel-entra-la-fifa-f202611-n/",
-     "hora": "18:57"
-    },
-    {
-     "titulo": "6-0: Goleada del Barça y billete a cuartos para olvidar el bache",
-     "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261119/1004253158/6-0-goleada-barca-billete-cuartos-olvidar-bache.html",
-     "hora": "18:55"
-    },
-    {
-     "titulo": "River aprobó oficialmente la millonaria venta de Freitas al Flamengo",
+     "titulo": "Las chances de titularidad de Aranda para la final de la Sudamericana",
      "medio": "Olé",
-     "url": "https://www.ole.com.ar/river-plate/river-freitas-venta-cd-flamengo_0_KjUzYwfnpc.html",
-     "hora": "18:55"
+     "url": "https://www.ole.com.ar/boca-juniors/tomasaranda-copasudamericana-alanvelasco-boca-atleticomineiro-vascoarruabarrena-sanlorenzo_0_BHPN77RsIS.html",
+     "hora": "20:50"
     },
     {
-     "titulo": "Así quedan la clasificación de la Champions femenina y las opciones de Barça y Madrid",
+     "titulo": "El concluyente comunicado de una de las dos mujeres que esperan una hija con un famoso arquero: “Prefiero preservar mi salud mental”",
+     "medio": "Infobae Deportes",
+     "url": "https://www.infobae.com/deportes/2026/11/19/el-concluyente-comunicado-de-una-de-las-dos-mujeres-que-esperan-una-hija-con-un-famoso-arquero-prefiero-preservar-mi-salud-mental/",
+     "hora": "20:35"
+    },
+    {
+     "titulo": "'Fichajes' de otoño para Flick",
      "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261119/1004253150/asi-quedan-clasificacion-champions-femenina-opciones-barca-madrid.html",
-     "hora": "18:53"
+     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261120/1004253123/fichajes-otono-flick.html",
+     "hora": "20:30"
+    },
+    {
+     "titulo": "Las variantes tácticas que practica Viera de cara al choque con Argentinos",
+     "medio": "Olé",
+     "url": "https://www.ole.com.ar/futbol-primera/viera-independiente-argentinos-variantes-tacticas-montiel_0_0rgwdGXszu.html",
+     "hora": "20:30"
     }
    ]
   },
@@ -315,12 +309,6 @@
      "medio": "The Conversation España",
      "url": "https://theconversation.com/como-acabamos-plastificados-todo-empezo-con-la-promesa-de-vivir-mejor-con-menos-esfuerzo-295205",
      "hora": "14:40"
-    },
-    {
-     "titulo": "El smartphone POCO F8 Ultra cae de precio con una rebaja brutal de Xiaomi por el Black Friday",
-     "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/bazar/el-smartphone-poco-f8-ultra-cae-de-precio-con-una-rebaja-brutal-de-xiaomi-por-el-black-friday.html",
-     "hora": "14:00"
     }
    ]
   },
@@ -328,33 +316,115 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "EU-LAC: hasta 10.500 euros para startups de Bogotá",
+     "titulo": "EtMday 2026: España llega al mayor evento startup de LATAM",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/eu-lac-hasta-10-500-euros-para-startups-de-bogota/",
-     "hora": "18:24"
+     "url": "https://ecosistemastartup.com/etmday-2026-espana-llega-al-mayor-evento-startup-de-latam/",
+     "hora": "21:03"
     },
     {
-     "titulo": "Pivotar una startup sin romper al equipo: marco You.com",
+     "titulo": "EtMday 2026: Chile recibe a España con 100 empresas",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/pivotar-una-startup-sin-romper-al-equipo-marco-you-com/",
-     "hora": "18:21"
+     "url": "https://ecosistemastartup.com/etmday-2026-chile-recibe-a-espana-con-100-empresas/",
+     "hora": "20:51"
+    },
+    {
+     "titulo": "CCS refuerza su apoyo al emprendimiento y la innovación en una nueva edición de ETM",
+     "medio": "Portal Innova",
+     "url": "https://portalinnova.cl/ccs-refuerza-su-apoyo-al-emprendimiento-y-la-innovacion-en-una-nueva-edicion-de-etm/",
+     "hora": "12:45"
+    },
+    {
+     "titulo": "Chile inaugura el mayor evento regional de emprendimiento, con España como país invitado",
+     "medio": "unitel",
+     "url": "https://unitel.bo/noticias/agencias/chile-inaugura-el-mayor-evento-regional-de-emprendimiento-con-espana-como-pais-invitado-DN24926603",
+     "hora": "11:20"
     },
     {
      "titulo": "Sostenibilidad en EtMDay: debuta vitrina para unir a 20 startups verdes con industrias e inversionistas",
      "medio": "El Desconcierto",
      "url": "https://eldesconcierto.cl/hoja-ruta/sostenibilidad-etmday-debuta-vitrina-unir-20-startups-verdes-industrias-e-inversionistas-n5464234",
      "hora": "09:44"
-    },
-    {
-     "titulo": "EtMday: el hub europeo conecta a startups chilenas con fondos globales",
-     "medio": "Cooperativa.cl on MSN",
-     "url": "https://www.msn.com/es-cl/noticias/chile/etmday-el-hub-europeo-conecta-a-startups-chilenas-con-fondos-globales/ar-AA2hO38p",
-     "hora": "09:02"
     }
    ]
   }
  ],
- "aire": null,
+ "aire": {
+  "ciudades": [
+   {
+    "ciudad": "Arica",
+    "aqi": 87,
+    "estado": "Moderada",
+    "estacion": "Arica, Chile",
+    "hora": "17:00",
+    "url": "https://aqicn.org/city/chile/arica"
+   },
+   {
+    "ciudad": "Antofagasta",
+    "aqi": 34,
+    "estado": "Buena",
+    "estacion": "Antofagasta, Chile",
+    "hora": "19:00",
+    "url": "https://aqicn.org/city/chile/antofagasta"
+   },
+   {
+    "ciudad": "La Serena",
+    "aqi": 17,
+    "estado": "Buena",
+    "estacion": "La Serena, Chile",
+    "hora": "19:00",
+    "url": "https://aqicn.org/city/chile/la-serena"
+   },
+   {
+    "ciudad": "Valparaíso",
+    "aqi": 30,
+    "estado": "Buena",
+    "estacion": "Viña del Mar, Chile",
+    "hora": "18:00",
+    "url": "https://aqicn.org/city/chile/vina-del-mar"
+   },
+   {
+    "ciudad": "Santiago",
+    "aqi": 30,
+    "estado": "Buena",
+    "estacion": "Parque O'Higgins, Chile",
+    "hora": "19:00",
+    "url": "https://aqicn.org/city/chile/parque-ohiggins"
+   },
+   {
+    "ciudad": "Concepción",
+    "aqi": 9,
+    "estado": "Buena",
+    "estacion": "Kingston College, Chile",
+    "hora": "19:00",
+    "url": "https://aqicn.org/city/chile/kingston-college"
+   },
+   {
+    "ciudad": "Temuco",
+    "aqi": 25,
+    "estado": "Buena",
+    "estacion": "Ñielol, Chile",
+    "hora": "19:00",
+    "url": "https://aqicn.org/city/chile/nielol"
+   },
+   {
+    "ciudad": "Puerto Montt",
+    "aqi": 5,
+    "estado": "Buena",
+    "estacion": "Mirasol, Chile",
+    "hora": "18:00",
+    "url": "https://aqicn.org/city/chile/mirasol"
+   },
+   {
+    "ciudad": "Punta Arenas",
+    "aqi": 30,
+    "estado": "Buena",
+    "estacion": "Punta Arenas, Chile",
+    "hora": "19:00",
+    "url": "https://aqicn.org/city/chile/punta-arenas"
+   }
+  ],
+  "fuente": "SINCA (Ministerio del Medio Ambiente) vía Índice Mundial de Calidad del Aire (aqicn.org)"
+ },
  "mercados": [
   {
    "nombre": "S&P 500",
@@ -393,17 +463,17 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 61733.97,
+  "bitcoin_usd": 61934.97,
   "bitcoin_fecha": "2026-11-19",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 356,
+ "fuentes_ok": 326,
  "indicadores_origen": {
-  "dolar": "banco_central",
-  "euro": "banco_central",
-  "uf": "banco_central",
-  "utm": "banco_central",
-  "tpm": "banco_central",
-  "libra_cobre": "banco_central"
+  "dolar": "mindicador",
+  "euro": "mindicador",
+  "uf": "mindicador",
+  "utm": "mindicador",
+  "tpm": "mindicador",
+  "libra_cobre": "mindicador"
  }
 }
