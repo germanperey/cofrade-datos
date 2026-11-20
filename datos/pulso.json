@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-20T11:07-03:00",
- "proxima": "12:17",
+ "generado": "2026-11-20T13:07-03:00",
+ "proxima": "14:17",
  "indicadores": [
   {
    "clave": "dolar",
@@ -10,7 +10,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-20",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "euro",
@@ -20,7 +20,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-20",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "uf",
@@ -30,17 +30,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-20",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440,
+   "valor": 72440.0,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "tpm",
@@ -50,29 +50,29 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-20",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 5.65,
+   "valor": 5.6471,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-20",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   }
  ],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10259.68,
+  "valor": 10275.4,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-20T11:08-03:00",
-  "variacion_pct": -0.72
+  "hora": "2026-11-20T13:09-03:00",
+  "variacion_pct": -0.56
  },
  "sismos": {
-  "n": 2,
+  "n": 3,
   "mayores": [
    {
     "hora": "2026-11-19T15:09-03:00",
@@ -85,6 +85,12 @@
     "magnitud": 4.8,
     "profundidad_km": 113.9,
     "referencia": "213 km al SE de Ovalle"
+   },
+   {
+    "hora": "2026-11-20T11:16-03:00",
+    "magnitud": 4.7,
+    "profundidad_km": 10.0,
+    "referencia": "150 km al N de Valparaíso"
    }
   ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
@@ -95,34 +101,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "GTA 6 fue censurado en Japón: eliminaron las decapitaciones y obligaron a sus protagonistas a ducharse con ropa",
-     "medio": "La Cuarta",
-     "url": "https://www.lacuarta.com/tendencias/noticia/gta-6-fue-censurado-en-japon-eliminaron-las-decapitaciones-y-obligaron-a-sus-protagonistas-a-ducharse-con-ropa/",
-     "hora": "11:00"
-    },
-    {
-     "titulo": "Denuncian ante Contraloría a diputados republicanos por entregar bebidas energéticas a Carabineros",
-     "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/20/denuncian-ante-contraloria-a-diputados-republicanos-por-entregar-bebidas-energeticas-a-carabineros/",
-     "hora": "10:59"
-    },
-    {
-     "titulo": "“Florencia, te voy a pedir mil disculpas por lo que te diré”: Martina Araneda Vacarezza criticó a su hermana y ventiló íntima dinámica familiar",
-     "medio": "La Cuarta",
-     "url": "https://www.lacuarta.com/espectaculos/noticia/florencia-te-voy-a-pedir-mil-disculpas-por-lo-que-te-dire-martina-araneda-vacarezza-critico-a-su-hermana-y-ventilo-intima-dinamica-familiar/",
-     "hora": "10:58"
-    },
-    {
-     "titulo": "Anuncian corte de ruta en Autopista General Velásquez: se extenderá durante todo el fin de semana",
-     "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/anuncian-corte-de-ruta-en-autopista-general-velazquez-se-extendera-durante-todo-el-fin-de-semana/",
-     "hora": "10:54"
-    },
-    {
-     "titulo": "Senado aprueba el Presupuesto 2027 con acuerdos en Salud, Educación, Pensiones y Vivienda, pero rechaza partida de Agricultura",
+     "titulo": "Los efectos colaterales de las firmas de Juan Luis Castro: el incierto futuro como jefe de bancada, el quiebre con el PPD y sus complejas aspiraciones a presidir el PS",
      "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/20/senado-aprueba-el-presupuesto-2027-con-acuerdos-en-salud-educacion-pensiones-y-vivienda-pero-rechaza-partida-de-agricultura/",
-     "hora": "10:47"
+     "url": "https://www.theclinic.cl/2026/11/20/los-efectos-colaterales-de-las-firmas-de-juan-luis-castro-el-incierto-futuro-como-jefe-de-bancada-el-quiebre-con-el-ppd-y-sus-complejas-aspiraciones-a-presidir-el-ps/",
+     "hora": "13:06"
+    },
+    {
+     "titulo": "Jueza recurre al Tribunal Constitucional contra obligación de dirigir audiencias desde las salas de tribunales",
+     "medio": "Diario Constitucional",
+     "url": "https://www.diarioconstitucional.cl/judicial/jueza-recurre-al-tribunal-constitucional-contra-obligacion-de-dirigir-audiencias-desde-las-salas-de",
+     "hora": "13:05"
+    },
+    {
+     "titulo": "El azar: lo que la matemática dice sobre la suerte y los juegos de mesa",
+     "medio": "El Ciudadano",
+     "url": "https://www.elciudadano.com/tendencias/el-azar-lo-que-la-matematica-dice-sobre-la-suerte-y-los-juegos-de-mesa/11/20/",
+     "hora": "13:05"
+    },
+    {
+     "titulo": "“Planteé algunas cosas...”: Gago y su primera reunión con el nuevo presidente de Azul Azul",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/20/plantee-algunas-cosas-gago-y-su-primera-reunion-con-el-nuevo-presidente-de-azul-azul/",
+     "hora": "13:02"
+    },
+    {
+     "titulo": "Pichidegua renovará iluminación de cuatro estadios y mejorará el recinto de Pataguas Orilla",
+     "medio": "El Rancaguino",
+     "url": "https://www.elrancaguino.cl/2026/11/20/pichidegua-renovacion-canchas-futbol-luminarias-led-pataguas-orilla/",
+     "hora": "13:02"
     }
    ]
   },
@@ -130,34 +136,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "El duro diagnóstico de un ex funcionario de Caputo: mantener sin cambios la política monetaria condena al país a una \"lenta agonía\"",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/20/el-duro-diagnostico-de-un-ex-funcionario-de-caputo-mantener-sin-cambios-la-politica-monetaria-condena-al-pais-a-una-lenta-agonia/",
-     "hora": "11:06"
-    },
-    {
-     "titulo": "En plena crisis de Los Grobo, Gustavo Grobocopatel reveló por qué decidió vender la empresa familiar",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/20/en-plena-crisis-de-los-grobo-gustavo-grobocopatel-revelo-por-que-decidio-vender-la-empresa-familiar/",
-     "hora": "11:01"
-    },
-    {
-     "titulo": "Qué leer esta semana: “Yo digo paralítica”, la ley de la selva y qué aprendió (o no) el peronismo",
-     "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/cultura/2026/11/20/que-leer-esta-semana-quiero-vivir-la-ley-de-la-selva-y-que-aprendio-o-no-el-peronismo/",
-     "hora": "11:01"
-    },
-    {
-     "titulo": "Apple desarrolla su propio agente de IA para competir con OpenAI y Anthropic",
+     "titulo": "José De Gregorio entra a la Academia Chilena de Ciencias",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/df-lab/mundo/apple-desarrolla-su-propio-agente-de-ia-para-competir-con-openai-y",
-     "hora": "10:58"
+     "url": "http://www.df.cl/df-mas/coffee-break/jose-de-gregorio-entra-a-la-academia-chilena-de-ciencias",
+     "hora": "13:08"
     },
     {
-     "titulo": "La AIE achica la brecha del cobre: pero advierte que el déficit llegará hacia 2030",
+     "titulo": "Aplica para primer periodo de entrega: Subpesca llama a beneficiarios de la pesca artesanal a cobrar cupón de combustibles antes del 30 de noviembre",
+     "medio": "Ministerio de Economia",
+     "url": "https://www.economia.gob.cl/2026/11/20/aplica-para-primer-periodo-de-entrega-subpesca-llama-a-beneficiarios-de-la-pesca-artesanal-a-cobrar-cupon-de-combustibles-antes-del-30-de-noviembre.htm",
+     "hora": "13:08"
+    },
+    {
+     "titulo": "Más de 2,3 millones de números cambiaron de compañía entre enero y septiembre",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/mas-de-23-millones-de-numeros-cambiaron-de-compania-entre-enero-y-septiembre/",
+     "hora": "13:06"
+    },
+    {
+     "titulo": "EtMday 2026 cerró una exitosa primera jornada y continúa hoy en el Parque Bicentenario",
+     "medio": "Portal Innova · noticias",
+     "url": "https://portalinnova.cl/etmday-2026-cerro-una-exitosa-primera-jornada-y-continua-hoy-en-el-parque-bicentenario/",
+     "hora": "13:06"
+    },
+    {
+     "titulo": "Los chilenos en los créditos del GTA VI",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/senal-df/senales-financieras/la-aie-achica-la-brecha-del-cobre-pero-advierte-que-el-deficit-llegara",
-     "hora": "10:56"
+     "url": "http://www.df.cl/df-mas/coffee-break/los-chilenos-en-los-creditos-del-gta-vi",
+     "hora": "13:05"
     }
    ]
   },
@@ -165,22 +171,28 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Bucaramanga vs. América de Cali - EN VIVO Liga BetPlay: siga el minuto a minuto desde el Américo Montanini",
-     "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/2026/11/20/bucaramanga-vs-america-de-cali-en-vivo-liga-betplay-siga-el-minuto-a-minuto-desde-el-americo-montanini/",
-     "hora": "11:05"
-    },
-    {
-     "titulo": "El New York Times despidió a Griselda Gambaro definiéndola como la escritora\"cuyos textos confrontaron el terrorismo de Estado\"",
-     "medio": "Infobae",
-     "url": "https://www.infobae.com/cultura/2026/11/20/el-new-york-times-despidio-a-griselda-gambaro-definiendola-como-la-escritoracuyos-textos-confrontaron-el-terrorismo-de-estado/",
-     "hora": "11:05"
-    },
-    {
-     "titulo": "Malasia retira el comunicado en el que anunciaba el traslado de 10.000 rohinyás a Turquía",
+     "titulo": "El Reino Unido y la UE cierran un acuerdo post-Brexit tras superar el escollo de la movilidad juvenil",
      "medio": "El País · Internacional",
-     "url": "https://elpais.com/internacional/2026-11-20/turquia-acogera-a-10000-rohinyas-reubicados-desde-malasia.html",
-     "hora": "10:53"
+     "url": "https://elpais.com/internacional/2026-11-20/el-reino-unido-y-la-ue-se-disponen-a-cerrar-un-acuerdo-limitado-de-movilidad-juvenil-que-supere-el-bloqueo-del-brexit.html",
+     "hora": "13:09"
+    },
+    {
+     "titulo": "Dominique de Villepin anuncia su candidatura a las elecciones presidenciales en Francia",
+     "medio": "El País · Internacional",
+     "url": "https://elpais.com/internacional/2026-11-20/dominique-de-villepin-anuncia-su-candidatura-a-las-elecciones-presidenciales-en-francia.html",
+     "hora": "13:06"
+    },
+    {
+     "titulo": "Vadhir Derbez reaparece y habla sobre denuncias por presunta violación: “Mi vida está frenada”",
+     "medio": "Infobae",
+     "url": "https://www.infobae.com/mexico/2026/11/20/vadhir-derbez-reaparece-y-habla-sobre-denuncias-por-presunta-violacion-mi-vida-esta-frenada/",
+     "hora": "13:04"
+    },
+    {
+     "titulo": "Josh Hutcherson cuenta cómo vivió su regreso a ‘Los juegos del hambre’: “Esperé 15 años por este día”",
+     "medio": "Infobae",
+     "url": "https://www.infobae.com/entretenimiento/2026/11/20/josh-hutcherson-cuenta-como-vivio-su-regreso-a-los-juegos-del-hambre-espere-15-anos-por-este-dia/",
+     "hora": "13:03"
     }
    ]
   },
@@ -188,34 +200,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "El Ibex pierde los 19.000 puntos en plena huida de la inteligencia artificial",
+     "titulo": "Cómo hacer que Gemini trabaje por ti en tu Mac mientras tú te dedicas a otras cosas",
      "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/mercados-financieros/2026-11-20/la-bolsa-y-el-ibex-35.html",
-     "hora": "11:06"
+     "url": "https://cincodias.elpais.com/smartlife/lifestyle/2026-11-20/como-hacer-que-gemini-trabaje-por-ti-en-tu-mac-mientras-tu-te-dedicas-a-otras-cosas.html",
+     "hora": "13:00"
     },
     {
-     "titulo": "Los fondos cotizados en bolsa y los futuros de acciones caen antes de la apertura del mercado el viernes en medio de la continua venta masiva de acciones de IA.",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/fondos-cotizados-bolsa-futuros-acciones-140012654.html",
-     "hora": "11:00"
-    },
-    {
-     "titulo": "Actualización: Los futuros de las acciones estadounidenses caen antes de la apertura, mientras que las acciones de Anthropic disminuyen un día después de su debut.",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/actualizaci%C3%B3n-futuros-acciones-estadounidenses-caen-135320207.html",
-     "hora": "10:53"
-    },
-    {
-     "titulo": "Anthropic avanza una caída del 10% en Bolsa ante el castigo a las empresas de IA",
+     "titulo": "Anthropic corrige con fuerza en su segunda jornada en Bolsa en pleno castigo a las empresas de IA",
      "medio": "Cinco Días portada",
      "url": "https://elpais.com/economia/2026-11-20/la-segunda-jornada-en-bolsa-de-anthropic.html",
-     "hora": "10:39"
+     "hora": "12:46"
     },
     {
-     "titulo": "Lufthansa reducirá 1.000 empleos y recortará rutas por pérdidas",
+     "titulo": "¿Y ahora qué? Reino Unido busca su encaje en la UE con una población arrepentida del Brexit",
+     "medio": "Expansión España Economía",
+     "url": "https://www.expansion.com/economia/politica/2026/11/20/reino-unido-busca-encaje-ue-poblacion-arrepentida-brexit.html",
+     "hora": "12:37"
+    },
+    {
+     "titulo": "Retiran libro de la persona más longeva de Dinamarca por pasado nazi",
      "medio": "DW en español",
-     "url": "https://www.dw.com/es/lufthansa-reducirá-1-000-empleos-y-recortará-rutas-por-pérdidas/a-80003537?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "10:24"
+     "url": "https://www.dw.com/es/retiran-libro-de-la-persona-más-longeva-de-dinamarca-por-pasado-nazi/a-80005170?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "12:28"
+    },
+    {
+     "titulo": "La cumbre Xi-Trump-Putin en Shenzhen deja más dudas que acuerdos",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/la-cumbre-xi-trump-putin-en-shenzhen-deja-más-dudas-que-acuerdos/a-80004824?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "12:06"
     }
    ]
   },
@@ -223,34 +235,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "La hija de Félix Rodríguez de la Fuente libera en Extremadura un águila imperial que lleva el nombre de su padre y un GPS",
-     "medio": "Genbeta",
-     "url": "https://www.genbeta.com/actualidad/hija-felix-rodriguez-fuente-libera-extremadura-aguila-imperial-que-lleva-nombre-su-padre-gps",
-     "hora": "11:00"
-    },
-    {
-     "titulo": "El final de ‘Los Juegos del Hambre: Amanecer en la cosecha’, explicado: ¿quién vive y quién muere en la nueva película de la saga?",
-     "medio": "Hipertextual",
-     "url": "https://hipertextual.com/cine-television/los-juegos-del-hambre-amanecer-en-la-cosecha-final-explicado-quien-vive-quien-muere/",
-     "hora": "11:00"
-    },
-    {
-     "titulo": "California citó a Nvidia para investigar chips y engaño",
-     "medio": "FayerWayer",
-     "url": "https://www.fayerwayer.com/internet/2026/11/20/california-cito-a-nvidia-para-investigar-chips-y-engano/",
-     "hora": "10:46"
-    },
-    {
-     "titulo": "Ha tenido que llegar el Black Friday para que el Galaxy Watch Ultra2 baje de precio. Y lo ha hecho más que nunca",
+     "titulo": "Dinamarca celebró a una mujer de 112 años por ser su ciudadana más longeva. Luego descubrió su pasado nazi",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/seleccion/ha-tenido-que-llegar-black-friday-galaxy-watch-ultra2-baje-precio-ha-hecho-que-nunca",
-     "hora": "10:16"
+     "url": "https://www.xataka.com/magnet/dinamarca-celebro-a-mujer-112-anos-ser-su-ciudadana-longeva-luego-descubrio-su-pasado-nazi",
+     "hora": "13:00"
     },
     {
-     "titulo": "Nissan tiene dos años antes de que los coches chinos se fabriquen en México y va a usar el país como campo de pruebas para abaratar los suyos",
+     "titulo": "En 2008, España llenó de agua una mina de carbón de 300 metros de profundidad. Cuatro años después se convirtió en el lago artificial más grande del país",
+     "medio": "Genbeta",
+     "url": "https://www.genbeta.com/espana/2008-espana-lleno-agua-mina-carbon-300-metros-profundidad-cuatro-anos-despues-se-convirtio-lago-artificial-grande-pais",
+     "hora": "13:00"
+    },
+    {
+     "titulo": "Un estudio con más de 7.000 personas apunta a que la hora a la que comes importa más de lo que pensábamos",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/medicina-y-salud/estudio-7-000-personas-apunta-a-que-hora-a-que-comes-importa-que-pensabamos",
+     "hora": "12:56"
+    },
+    {
+     "titulo": "Prepárate para un fin de semana helado: frentes fríos 6 y 8 provocarán temperaturas de hasta -10°C en México",
      "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/automovil/nissan-tiene-dos-anos-coches-chinos-se-fabriquen-mexico-va-a-usar-pais-como-campo-pruebas-para-abaratar-suyos",
-     "hora": "10:16"
+     "url": "https://www.xataka.com.mx/ecologia-y-naturaleza/preparate-para-fin-semana-helado-frentes-frios-6-ocho-provocaran-temperaturas-10-c-mexico",
+     "hora": "12:50"
+    },
+    {
+     "titulo": "Tu Samsung puede tener un teclado con orejas de gato y estas son las opciones para conseguirlo",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/territorio-samsung-mexico/tu-samsung-puede-tener-teclado-orejas-gato-estas-opciones-para-conseguirlo",
+     "hora": "12:16"
     }
    ]
   },
@@ -258,34 +270,34 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "España Sub-17 - China Sub-17, en directo: Mundial Sub-17, hoy en vivo",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/seleccion/espana-sub-17-china-sub-17-en-directo-mundial-sub-17-hoy-en-vivo-f202611-d/",
-     "hora": "11:06"
-    },
-    {
-     "titulo": "Con 34 semanas de embarazo, Deirdre Keane completó las World Marathon Majors en Nueva York",
-     "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/estados-unidos/2026/11/20/con-34-semanas-de-embarazo-deirdre-keane-completo-las-world-marathon-majors-en-nueva-york/",
-     "hora": "11:04"
-    },
-    {
      "titulo": "Antes de la clasificación, Franco Colapinto afrontará la última práctica del Gran Premio de Las Vegas de Fórmula 1: hora, TV y todo lo que hay que saber",
      "medio": "Infobae Deportes",
      "url": "https://www.infobae.com/deportes/2026/11/20/antes-de-la-clasificacion-franco-colapinto-afrontara-la-ultima-practica-del-gran-premio-de-las-vegas-de-formula-1-hora-tv-y-todo-lo-que-hay-que-saber/",
-     "hora": "11:00"
+     "hora": "13:00"
     },
     {
-     "titulo": "La ‘bienvenida’ del alcalde de Peñalolén a Jorge Uauy: “Las puertas de la municipalidad están abiertas para que paguen”",
-     "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/la-bienvenida-del-alcalde-de-penalolen-a-jorge-uauy-las-puertas-de-la-municipalidad-estan-abiertas-para-que-paguen/",
-     "hora": "10:56"
+     "titulo": "Los últimos rumores y noticias del receso de temporada 2026-27",
+     "medio": "MLB.com en español",
+     "url": "https://www.mlb.com/es/news/los-ultimos-rumores-y-noticias-del-receso-de-temporada-2026-27",
+     "hora": "13:00"
     },
     {
-     "titulo": "Aguirre: “Uno se juega el turrón cada semana”",
-     "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/valencia/20261120/1004253424/aguirre-juega-turron-semana.html",
-     "hora": "10:56"
+     "titulo": "A Mourinho le preguntan por la ausencia de Cristiano en Portugal y su reacción pasa a la historia: “No...”",
+     "medio": "AS Chile portada",
+     "url": "https://chile.as.com/videos/a-mourinho-le-preguntan-por-la-ausencia-de-cristiano-en-portugal-y-su-reaccion-pasa-a-la-historia-no-f202611-n/",
+     "hora": "12:57"
+    },
+    {
+     "titulo": "Pese a sus problemas físicos, Carlos Alcaraz le ganó a Flavio Cobolli y está listo para las semifinales de las ATP Finals",
+     "medio": "Olé",
+     "url": "https://www.ole.com.ar/tenis/carlos-alcaraz-gano-flavio-cobolli-listo-semifinales-atp-finals_0_pWsmy4h01f.html",
+     "hora": "12:56"
+    },
+    {
+     "titulo": "A ‘Diablo’ Etcheverry le preguntan por el ’11 ideal’ de su carrera y sorprende con 4 chilenos",
+     "medio": "AS Chile portada",
+     "url": "https://chile.as.com/videos/a-diablo-etcheverry-le-preguntan-por-el-11-ideal-de-su-carrera-y-sorprende-con-4-chilenos-f202611-v/",
+     "hora": "12:54"
     }
    ]
   },
@@ -322,22 +334,16 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "ICEYE, startup de satélites, busca comprar Avio",
+     "titulo": "EtMday 2026: miles de asistentes y España como invitado",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/iceye-startup-de-satelites-busca-comprar-avio/",
-     "hora": "10:58"
+     "url": "https://ecosistemastartup.com/etmday-2026-miles-de-asistentes-y-espana-como-invitado/",
+     "hora": "12:57"
     },
     {
-     "titulo": "Nido Contech, la chilena de biomateriales, gana en Slush",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/nido-contech-la-chilena-de-biomateriales-gana-en-slush/",
-     "hora": "10:55"
-    },
-    {
-     "titulo": "EtMday 2026 reúne a miles de personas en Vitacura con foco en emprendimiento, innovación e IA",
-     "medio": "Radio Agricultura",
-     "url": "https://www.radioagricultura.cl/noticias/nacional/etmday-2026-reune-a-miles-de-personas-en-vitacura-con-foco-en-emprendimiento-innovacion-e-ia_20261120/",
-     "hora": "00:01"
+     "titulo": "EtMDay debuta pabellón para 20 startups verdes",
+     "medio": "ecosistemastartup",
+     "url": "https://ecosistemastartup.com/etmday-debuta-pabellon-para-20-startups-verdes/",
+     "hora": "04:18"
     }
    ]
   }
@@ -354,26 +360,34 @@
    },
    {
     "ciudad": "Antofagasta",
-    "aqi": 40,
+    "aqi": 34,
     "estado": "Buena",
     "estacion": "Antofagasta, Chile",
-    "hora": "22:00",
+    "hora": "09:00",
     "url": "https://aqicn.org/city/chile/antofagasta"
+   },
+   {
+    "ciudad": "La Serena",
+    "aqi": 38,
+    "estado": "Buena",
+    "estacion": "La Serena, Chile",
+    "hora": "09:00",
+    "url": "https://aqicn.org/city/chile/la-serena"
    },
    {
     "ciudad": "Valparaíso",
     "aqi": 25,
     "estado": "Buena",
     "estacion": "Viña del Mar, Chile",
-    "hora": "08:00",
+    "hora": "09:00",
     "url": "https://aqicn.org/city/chile/vina-del-mar"
    },
    {
     "ciudad": "Santiago",
-    "aqi": 49,
-    "estado": "Buena",
+    "aqi": 59,
+    "estado": "Moderada",
     "estacion": "Parque O'Higgins, Chile",
-    "hora": "08:00",
+    "hora": "09:00",
     "url": "https://aqicn.org/city/chile/parque-ohiggins"
    },
    {
@@ -394,11 +408,11 @@
    },
    {
     "ciudad": "Puerto Montt",
-    "aqi": 30,
+    "aqi": 5,
     "estado": "Buena",
-    "estacion": "Alerce, Chile",
+    "estacion": "Mirasol, Chile",
     "hora": "08:00",
-    "url": "https://aqicn.org/city/chile/alerce"
+    "url": "https://aqicn.org/city/chile/mirasol"
    },
    {
     "ciudad": "Punta Arenas",
@@ -449,17 +463,17 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 61861.61,
+  "bitcoin_usd": 59300.12,
   "bitcoin_fecha": "2026-11-20",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 341,
+ "fuentes_ok": 336,
  "indicadores_origen": {
-  "dolar": "mindicador",
-  "euro": "mindicador",
-  "uf": "mindicador",
-  "utm": "mindicador",
-  "tpm": "mindicador",
-  "libra_cobre": "mindicador"
+  "dolar": "banco_central",
+  "euro": "banco_central",
+  "uf": "banco_central",
+  "utm": "banco_central",
+  "tpm": "banco_central",
+  "libra_cobre": "banco_central"
  }
 }
