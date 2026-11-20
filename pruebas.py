@@ -2391,6 +2391,40 @@ def reglas_de_redes_validadas_y_solo_ese_archivo_sube():
         finally:
             RR.ORIGEN_RE = viejo_re
 
+
+@prueba
+def avisos_de_marejadas_de_la_armada():
+    """20-11-2026 05:34 (Germán: un lector, marino, avisó que DIRECTEMAR publicaba un aviso de marejadas «que en nuestro Newsletter no
+    aparece»; «agrega esta fuente de datos»): el espejo lee también https://www.directemar.cl/aviso-de-marejadas-0 y marejadas.json trae
+    cada aviso con sector, emisión, número, días y estado; un aviso que empieza mañana se publica («por empezar») y uno viejo no."""
+    assert ("directemar-marejadas", "https://www.directemar.cl/aviso-de-marejadas-0") in [(n, u) for n, u, _ in B.ESPEJO]
+    armada = ("AVISOS Y ALERTAS METEOROLÓGICAS\n Arica hasta Golfo de Arauco y Arch. Juan Fernández.\n Aviso de marejadas anormales\n 18/11/2026 10:30\n"
+              " Ver todo [https://meteoarmada.directemar.cl/meteo/arica-hasta-golfo-de-arauco-y-arch-juan-fernandez]\n Pronóstico Gral Marítimo\n"
+              " Avisos Meteorológicos\n Arica hasta Golfo de Arauco y Arch. Juan Fernández.\n 18/11/2026 10:26\n AVISO DE MAREJADAS ANORMALES\n Ver detalle\n"
+              " Avisos Meteorológicos\n Puerto Montt hasta Golfo de Penas.\n 01/11/2026 09:00\n AVISO DE MAREJADAS\n Ver detalle\n"
+              " Noticias\n Miércoles 18 de noviembre de 2026\n Probables Tormentas Eléctricas\n")
+    dire = ("Aviso de marejadas anormales desde Arica hasta Golfo de Arauco y Arch. Juan Fernández. 1. Se informa un tren de olas del noroeste. "
+            "Área | Inicio | Término | Arica hasta Golfo de Arauco | Viernes 20 de noviembre AM | Lunes 23 | Mayor intensidad 20:30 a 22:30. MET104SM 48/2026")
+    estados = {}
+    for hoy in ("2026-11-19", "2026-11-20", "2026-11-24"):
+        r = B.marejadas_de_texto(armada, dire, dt.date.fromisoformat(hoy), "x")
+        assert len(r["avisos"]) == 1, r["avisos"]   # el de la portada aparece 2 veces (es el mismo) y el del 01-11 tiene más de 10 días
+        a = r["avisos"][0]
+        assert a["sector"] == "Arica hasta Golfo de Arauco y Arch. Juan Fernández" and a["emitido"] == "2026-11-18T10:30" and a["numero"] == "48/2026", a
+        assert (a["desde"], a["hasta"]) == ("2026-11-20", "2026-11-23") and a["url"].startswith("https://meteoarmada.directemar.cl/meteo/"), a
+        estados[hoy] = a["estado"]
+    assert estados == {"2026-11-19": "por empezar", "2026-11-20": "vigente", "2026-11-24": "terminado"}, estados
+    solo = B.marejadas_de_texto(None, dire, dt.date(2026, 11, 20))["avisos"]
+    assert len(solo) == 1 and solo[0]["sector"] == "Arica hasta Golfo de Arauco y Arch. Juan Fernández" and solo[0]["estado"] == "vigente", solo
+    assert B.marejadas_de_texto(armada, None, dt.date(2026, 11, 20))["avisos"][0]["estado"] == "emitido, sin fechas en el texto"
+    assert B.marejadas_de_texto("Sin avisos vigentes\n Pronóstico Gral Marítimo", "", dt.date(2026, 11, 20))["avisos"] == []
+    with tempfile.TemporaryDirectory() as d:
+        estado = {}
+        assert B.marejadas_desde_espejo(estado, d, dt.date(2026, 11, 20)) is None and estado["marejadas"]["ok"] is False
+        B._gz(os.path.join(d, "paginas", "armada-avisos.txt.gz"), armada)
+        r = B.marejadas_desde_espejo(estado, d, dt.date(2026, 11, 20))
+        assert r["avisos"][0]["estado"] == "emitido, sin fechas en el texto" and estado["marejadas"]["nota"] == "falta la página de DIRECTEMAR", (r, estado)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

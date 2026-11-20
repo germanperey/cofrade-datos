@@ -2988,6 +2988,7 @@ def golf_fixture(url, txt, pedir_texto, momento):
 
 ESPEJO = [   # (archivo, dirección, qué es) · las direcciones fijas que Germán autorizó y que web_fetch rechaza en la tarea
     ("armada-avisos", "https://meteoarmada.directemar.cl/", "Avisos de marejadas y temporales de la Armada"),
+    ("directemar-marejadas", "https://www.directemar.cl/aviso-de-marejadas-0", "Aviso de marejadas vigente: vigencia, horas de mayor intensidad y recomendaciones (DIRECTEMAR)"),
     ("bcentral-inicio", "https://www.bcentral.cl/inicio", "Banco Central: portada (TPM, indicadores, publicaciones)"),
     ("larrainvial-mercados", "https://mercados.larrainvial.com/", "IPSA y mercados (LarrainVial)"),
     ("fmi-pib-chile", "https://www.imf.org/external/datamapper/api/v1/NGDP_RPCH/CHL", "FMI: crecimiento del PIB de Chile"),
@@ -3067,6 +3068,123 @@ def oleaje_desde_espejo(estado, salida, hoy):
                         "n": len(out), "nota": "modelo marino no permitido por robots.txt: se usan las páginas de tablademareas"}
     return {"fuente": "tablademareas.com (pronóstico de oleaje, leído por GitHub)", "url": "https://tablademareas.com/cl",
             "generado": ahora().isoformat(timespec="minutes"), "puertos": out}
+
+
+# 20-11-2026 05:34 · Germán: un lector, marino, avisó que DIRECTEMAR publicaba un aviso de marejadas (https://www.directemar.cl/aviso-de-marejadas-0)
+# y la edición del 19-11 decía «Sin avisos de marejadas vigentes»: el aviso salió el 18-11 a las 10:30 para el 20 al 23-11 y la tarea solo mostraba
+# los que ya estaban en curso. Desde hoy GitHub deja en datos/marejadas.json cada aviso de la portada de meteoarmada (sector, tipo, emisión y enlace)
+# con el texto del aviso de DIRECTEMAR (número, días, horas de mayor intensidad y recomendaciones), y la tarea publica todo aviso que no haya terminado.
+MAREJADA_RX = re.compile(r"marejada|bravez|temporal|oleaje", re.I)
+FECHA_AVISO_RX = re.compile(r"^(\d{2})/(\d{2})/(\d{4})\s+(\d{1,2}):(\d{2})$")
+DIA_MES_RX = re.compile(r"\b(\d{1,2})\s+de\s+(" + "|".join(MESES_ES) + r")\b", re.I)
+DIA_SEMANA_RX = re.compile(r"\b(lunes|martes|mi[eé]rcoles|jueves|viernes|s[aá]bado|domingo)\s+(\d{1,2})\b", re.I)
+
+
+def _norm_aviso(t):
+    t = unicodedata.normalize("NFD", (t or "").lower())
+    return re.sub(r"[^a-z0-9 ]", " ", "".join(c for c in t if unicodedata.category(c) != "Mn")).split()
+
+
+def _fecha_cercana(dia, mes, hoy):
+    """El día «dia» del mes «mes» (1 a 12) más cercano a hoy (un aviso de fines de diciembre puede seguir en enero)."""
+    mejor = None
+    for anio in (hoy.year - 1, hoy.year, hoy.year + 1):
+        try:
+            f = dt.date(anio, mes, dia)
+        except ValueError:
+            continue
+        if mejor is None or abs((f - hoy).days) < abs((mejor - hoy).days):
+            mejor = f
+    return mejor
+
+
+def _dias_del_aviso(texto, hoy):
+    """Días que nombra el texto del aviso («viernes 20 de noviembre», «lunes 23»): → (desde, hasta) o (None, None)."""
+    dias = []
+    for m in DIA_MES_RX.finditer(texto):
+        f = _fecha_cercana(int(m.group(1)), MESES_ES.index(m.group(2).lower()) + 1, hoy)
+        if f:
+            dias.append(f)
+    meses = [f.month for f in dias] or [hoy.month]
+    for m in DIA_SEMANA_RX.finditer(texto):   # «lunes 23» sin mes: el mes de los otros días del aviso (o el siguiente si el día es menor)
+        d = int(m.group(2))
+        cands = [_fecha_cercana(d, mm, hoy) for mm in set(meses + [meses[-1] % 12 + 1])]
+        cands = [c for c in cands if c and (not dias or abs((c - min(dias)).days) <= 15)]
+        if cands:
+            dias.append(min(cands, key=lambda c: abs((c - (min(dias) if dias else hoy)).days)))
+    dias = sorted(set(d for d in dias if abs((d - hoy).days) <= 40))
+    return (dias[0], dias[-1]) if dias else (None, None)
+
+
+def marejadas_de_texto(armada, directemar, hoy, ahora_iso=None):
+    """Avisos de marejadas desde el texto de la portada de meteoarmada y de la página de DIRECTEMAR. → dict para datos/marejadas.json."""
+    avisos = []
+    lineas = [x.strip() for x in (armada or "").splitlines()]
+    for i, l in enumerate(lineas):
+        m = FECHA_AVISO_RX.match(l)
+        if not m:
+            continue
+        try:
+            emitido = dt.datetime(int(m.group(3)), int(m.group(2)), int(m.group(1)), int(m.group(4)), int(m.group(5)))
+        except ValueError:
+            continue
+        if not 0 <= (hoy - emitido.date()).days <= 10:   # solo avisos de los últimos 10 días (uno viejo no se publica como vigente)
+            continue
+        cerca = [lineas[k] for k in range(max(0, i - 2), min(len(lineas), i + 3)) if k != i and lineas[k]]
+        tipo = next((x for x in cerca if MAREJADA_RX.search(x) and len(x) < 90 and not x.startswith("Ver ")), None)
+        if not tipo:
+            continue
+        sector = next((x for x in cerca if x != tipo and not MAREJADA_RX.search(x) and not x.lower().startswith(("ver ", "avisos ")) and 4 < len(x) < 140), "")
+        url = next((u for x in lineas[i + 1:i + 4] for u in re.findall(r"\[(https?://[^\]\s]+)\]", x)), None)
+        tipo_l = tipo[:1].upper() + tipo[1:].lower()
+        clave = (" ".join(_norm_aviso(tipo_l)), " ".join(_norm_aviso(sector)))
+        previo = next((a for a in avisos if (a["_k"][0], a["_k"][1]) == clave), None)
+        if previo:   # el mismo aviso aparece dos veces en la portada (avisos y alertas, y avisos meteorológicos)
+            previo["url"] = previo["url"] or url
+            continue
+        avisos.append({"_k": clave, "tipo": tipo_l, "sector": sector.rstrip("."), "emitido": emitido.isoformat(timespec="minutes"),
+                       "url": url, "fuente": "Servicio Meteorológico de la Armada (meteoarmada.directemar.cl)"})
+    det = re.sub(r"\s+", " ", directemar or "").strip()
+    k = det.lower().find("aviso de marejadas")
+    if k >= 0:
+        cuerpo = det[k:k + 1600]
+        tit = re.split(r"\s(?:1\.|1\)|Área|Inicio|Término)\s", cuerpo)[0][:200]   # «Arch. Juan Fernández.»: el punto de una abreviatura no corta el título
+        num = re.search(r"\bMET\w*\s+(\d{1,3}/\d{4})\b", det)
+        desde, hasta = _dias_del_aviso(cuerpo, hoy)
+        pal = set(_norm_aviso(tit)) - {"aviso", "de", "marejadas", "marejada", "anormales", "desde", "hasta", "y", "arch"}
+        par = max(avisos, key=lambda a: len(pal & set(a["_k"][1].split())), default=None) if avisos else None
+        if par is None or not pal & set(par["_k"][1].split()):
+            par = {"_k": ("", ""), "tipo": "Aviso de marejadas", "sector": re.sub(r"(?i)^aviso de marejadas(?: anormales)?\s*(desde\s*)?", "", tit).rstrip("."),
+                   "emitido": None, "url": None, "fuente": "DIRECTEMAR"}
+            avisos.append(par)
+        par.update({"titulo": tit.rstrip("."), "numero": num.group(1) if num else None, "url_directemar": "https://www.directemar.cl/aviso-de-marejadas-0",
+                    "detalle": cuerpo[:1200], "desde": desde.isoformat() if desde else None, "hasta": hasta.isoformat() if hasta else None})
+    for a in avisos:
+        a.pop("_k", None)
+        h = a.get("hasta")
+        a["estado"] = ("terminado" if h and h < hoy.isoformat() else "por empezar" if a.get("desde") and a["desde"] > hoy.isoformat()
+                       else "vigente" if h else "emitido, sin fechas en el texto")
+    return {"fecha": hoy.isoformat(), "generado": ahora_iso, "revisadas": ["https://meteoarmada.directemar.cl/", "https://www.directemar.cl/aviso-de-marejadas-0"],
+            "avisos": avisos, "nota": "Se publican todos los avisos que no han terminado, también los que empiezan en los próximos días."}
+
+
+def marejadas_desde_espejo(estado, salida, hoy):
+    """Lee del espejo la portada de meteoarmada y el aviso de DIRECTEMAR y arma datos/marejadas.json (None si no hay ninguna de las dos)."""
+    carpeta = os.path.join(salida, "paginas")
+
+    def leer(n):
+        try:
+            return gzip.open(os.path.join(carpeta, n + ".txt.gz"), "rt", encoding="utf-8").read()
+        except OSError:
+            return None
+    armada, dire = leer("armada-avisos"), leer("directemar-marejadas")
+    if armada is None and dire is None:
+        estado["marejadas"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "meteoarmada y DIRECTEMAR", "error": "ninguna de las dos páginas se pudo leer"}
+        return None
+    out = marejadas_de_texto(armada, dire, hoy, ahora().isoformat(timespec="minutes"))
+    estado["marejadas"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": "meteoarmada y DIRECTEMAR", "n": len(out["avisos"]),
+                           "nota": "" if armada and dire else ("falta la página de DIRECTEMAR" if armada else "falta la portada de meteoarmada")}
+    return out
 
 
 def paginas_oleaje():
@@ -3575,6 +3693,10 @@ def main(argv=None):
         escribir(os.path.join(a.salida, "paginas.json"), espejo(estado, a.salida, ped if isinstance(ped, list) else []))
         if not (estado.get("oleaje") or {}).get("ok"):   # 08-11-2026: oleaje de los 30 puertos desde las páginas recién leídas
             escribir(os.path.join(a.salida, "oleaje.json"), oleaje_desde_espejo(estado, a.salida, hoy))
+        try:   # 20-11-2026: avisos de marejadas de la Armada, ordenados (nunca detiene lo demás)
+            escribir(os.path.join(a.salida, "marejadas.json"), marejadas_desde_espejo(estado, a.salida, hoy))
+        except Exception as ex:   # noqa: BLE001
+            estado["marejadas"] = {"ok": False, "hora": ahora().isoformat(timespec="seconds"), "url": "marejadas", "error": f"{type(ex).__name__}: {str(ex)[:120]}"}
     except _SinEspejo:
         estado["espejo"] = {"ok": True, "hora": ahora().isoformat(timespec="seconds"), "url": "espejo",
                             "nota": "ya hecho hoy; se refresca entre las 05:00 y las 08:00 de Santiago"}
