@@ -156,7 +156,10 @@ box-shadow:0 18px 48px -12px rgba(11,31,58,.35),0 2px 8px rgba(11,31,58,.12);fon
 :root:not([data-theme=light]) .cmp-sistema .cmp-i,:root:not([data-theme=light]) .cmp-sistema .cmp-campo{border-color:#3A4A63}:root:not([data-theme=light]) .cmp-sistema .cmp-copiar{background:#D9AE52;border-color:#D9AE52}
 :root:not([data-theme=light]) .cmp-sistema .cmp-ok{color:#4CC38A}:root:not([data-theme=light]) .cmp-sistema .cmp-cc a{color:#D9AE52}}
 @media (prefers-reduced-motion:no-preference){.cmp-p{animation:cmpEntra .16s ease-out}}@keyframes cmpEntra{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-@media print{.cmp,.cmp-p{display:none!important}}`;
+@media print{.cmp,.cmp-p{display:none!important}}
+@media (max-width:400px){.cab .hoja:has(.herr .cmp){column-gap:6px}.cab .hoja:has(.herr .cmp) .marca img{width:44px;height:44px}.cab .hoja:has(.herr .cmp) .marca b{font-size:23px}.cab .hoja:has(.herr .cmp) .herr{column-gap:0}}
+@media (max-width:380px){.cab .hoja:has(.herr .cmp){padding-left:12px;padding-right:12px}.cab .hoja:has(.herr .cmp) .marca b{font-size:21px}.cab .hoja:has(.herr .cmp) .marca img{width:40px;height:40px}}
+@media (max-width:350px){.cab .hoja:has(.herr .cmp){padding-left:8px;padding-right:8px;column-gap:4px}.cab .hoja:has(.herr .cmp) .marca{gap:8px}.cab .hoja:has(.herr .cmp) .marca b{font-size:18px}.cab .hoja:has(.herr .cmp) .marca img{width:36px;height:36px}}`;
 const COMPARTIR_ESTILO = `<style id="cnCmp">${COMPARTIR_CSS}</style>`;
 
 // Visita que llega con ?r=<código>: suma 1 por código y día, y 1 persona distinta por huella del día. Nunca rompe ni atrasa la página.
