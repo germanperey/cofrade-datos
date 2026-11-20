@@ -936,6 +936,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__PROYECCION__*/
 /*__ICONO__*/
 /*__DIFUSION__*/
+/*__PODCAST__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -962,7 +963,7 @@ function marco({ titulo, descripcion, cuerpo, canonica, hero = "", compartir = f
 <title>${esc(titulo)}</title><meta name="description" content="${esc(descripcion)}"><link rel="canonical" href="https://${DOMINIO}${canonica || "/"}">
 <meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descripcion)}"><meta property="og:type" content="website">
 <meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL"><meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">${ICONO_HEAD}<link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}${ICONO_CSS}${DIFUSION_CSS}</style></head><body>
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">${ICONO_HEAD}<link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}${ICONO_CSS}${DIFUSION_CSS}${PODCAST_CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha" data-iso="${fechaChile()}">${esc(fechaLarga(fechaChile()))}</span>
 <nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><button type="button" class="nav-b buzon-abrir" aria-haspopup="dialog"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></svg>Buzón</button><a href="/mercados">Mercados</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a></nav>
@@ -1155,6 +1156,7 @@ ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${h
   const cuerpo = `${INSTALAR_HTML}
 ${vozPortada(ultima, hoy)}
 ${cintaConcurso()}
+<!--PODCAST-->
 <section aria-labelledby="t-secc" style="border:0;padding-top:40px"><span class="kicker">${ultima ? (ultima === hoy ? "Hoy · " : "Última edición · ") : ""}<span data-iso="${ultima || hoy}">${esc(fechaLarga(ultima || hoy))}</span></span>
 <h2 class="titulo-lujo" id="t-secc">${esc(estado)}</h2><p class="sub">Doce secciones, cada mañana, con la fuente de cada dato.</p>
 <div class="secc">${SECCIONES_LUJO.map(([ic, t, d]) => `<a class="sec-card" href="/edicion" style="text-decoration:none">${icono(ic)}<div><b>${esc(t)}</b><p>${esc(d)}</p></div></a>`).join("")}</div></section>
@@ -1225,13 +1227,15 @@ async function oidoNube(req, env) {
 }
 
 async function portada(env, ctx, req) {
-  const [{ cuerpo, hero, p }] = await Promise.all([cuerpoPortada(ctx), prepararAnuncios(env)]);
+  const [{ cuerpo: c0, hero, p }, , pod] = await Promise.all([cuerpoPortada(ctx), prepararAnuncios(env), podcastPortada(env).catch(() => "")]);
+  const cuerpo = c0.replace("<!--PODCAST-->", pod);   // 20-11-2026: podcast diario, los 3 episodios más nuevos (modulos/podcast.js)
   ctx.waitUntil(revisarRenovaciones(env, ctx));   // 16-11-2026: correos de renovación de los anunciantes (como mucho 1 revisión por hora)
   ctx.waitUntil(revivirPulso(env, p));
   // 15-11-2026: el vigía corre cada 3 horas; su propia visita reinicia el reloj y la de un lector lo despierta si GitHub se atrasó
   ctx.waitUntil(/CofradeNews-Vigia/.test((req && req.headers.get("User-Agent")) || "") ? marcarVigia(env) : revivirVigia(env));
   ctx.waitUntil(revisarMenciones(env));   // 20-11-2026: menciones en medios, un paso (una descarga como mucho) en segundo plano (modulos/difusion.js)
   ctx.waitUntil(revisarConcurso(env));    // 20-11-2026: borrados de las bases del concurso (cada 12 h) y sorteo de respaldo el 26-12 (modulos/difusion.js)
+  ctx.waitUntil(revisarPodcast(env));     // 20-11-2026: episodios nuevos de la lista del podcast en YouTube, cada 2 h (modulos/podcast.js)
   return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero, compartir: true }), 200,
     { "Cache-Control": "public, max-age=120" });
 }
@@ -1438,6 +1442,11 @@ export default {
       if (p === "/concurso") return Response.redirect(`https://${u.host}/#concurso`, 302);
       if (p === "/concurso/verificar") return await verificarConcurso(req, u, env);
       if (p === "/bases-concurso") return await paginaBases(env);
+      // 20-11-2026 · podcast diario (modulos/podcast.js)
+      if (p === "/podcast") { ctx.waitUntil(contarVisita(req, env, "/podcast")); return await paginaPodcast(env); }
+      const podf = p.match(/^\/podcast\/fuente\/(\d{4}-\d{2}-\d{2})(\.txt)?$/);
+      if (podf) return await fuentePodcast(podf[1], !!podf[2], ctx);
+      if (p === "/panel/podcast" && req.method === "POST") return await accionPodcast(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel?pod=error#podcast" } }));
       if (p === "/panel/menciones" && req.method === "POST") return await accionMenciones(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel?men=error#difusion" } }));
       if (p === "/panel/concurso" && req.method === "POST") return await accionConcurso(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel?cc=error#concurso" } }));
       const capc = p.match(/^\/panel\/concurso\/captura\/(\d{1,9})$/);

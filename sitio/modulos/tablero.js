@@ -528,9 +528,10 @@ async function panel(req, env) {
   if (!env.DB) return html(marco({ titulo: "Panel", descripcion: "", cuerpo: `<section style="border:0"><h1>Falta la base de datos.</h1></section>` }), 503);
   const u = new URL(req.url), P = periodoPanel(u);
   await revisarConcurso(env).catch(() => null);   // 20-11-2026: borrados de las bases y sorteo de respaldo también desde el Panel
-  const [R, fundadores, cont, difusion, concurso] = await Promise.all([datosTablero(env, P), panelSocios(env, u).catch(() => ""), contadorVisitas(env, masDias(P.hoy, -29)),
+  const [R, fundadores, cont, difusion, concurso, podcast] = await Promise.all([datosTablero(env, P), panelSocios(env, u).catch(() => ""), contadorVisitas(env, masDias(P.hoy, -29)),
     seccionDifusion(env, u).catch(() => `<section id="difusion"><h3>Difusión y menciones</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`),   // 20-11-2026
-    seccionConcurso(env, u).catch(() => `<section id="concurso"><h3>Concurso «Comparte Cofrade News»</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`)]);
+    seccionConcurso(env, u).catch(() => `<section id="concurso"><h3>Concurso «Comparte Cofrade News»</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`),
+    seccionPodcast(env, u).catch(() => `<section id="podcast"><h3>Podcast diario</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`)]);   // 20-11-2026
   const ini = R.inicios[0] || {}, sec = P.seccion, nomSec = sec ? NOMBRE_SECCION[sec] : "";
   // --- series por día ---
   const dias = [], primero = [ini.visitas, ini.vistas].filter(Boolean).sort()[0] || P.hoy;
@@ -673,11 +674,11 @@ ${r.texto ? `<p style="margin:6px 0 0;white-space:pre-wrap">${esc(r.texto)}</p>`
   const cuerpo = `<style>${TABLERO_CSS}</style><section style="border:0;padding-top:30px"><span class="kicker">Panel de Control · solo administración</span><h1 class="titulo-lujo">Cómo va Cofrade News</h1>
 <p class="sub">Medición propia, sin cookies ni datos personales. Pasa el cursor (o toca) cualquier cifra o título con una <i>i</i> para ver qué significa.</p>
 ${filtros}<p class="tab-periodo">Mostrando: <b>${esc(P.etiqueta)}</b> (del ${ddmm(P.desde)} al ${ddmm(P.hasta)})${sec ? ` · sección <b>${esc(nomSec)}</b>` : ""}${P.futuro ? " · ese mes todavía no empieza" : ""}${R.parcial ? ' · <span style="color:var(--rojo)">algunas cifras no se pudieron leer</span>' : ""}</p>
-<p class="tab-ir"><a href="#graficos">Gráficos</a><a href="#lectura">Mapa de calor</a><a href="#publicidad">Publicidad</a><a href="#socios">Socios</a><a href="#contador">Contador diario</a><a href="#buzon">Buzón</a><a href="#difusion">Difusión</a><a href="#concurso">Concurso</a><a href="/panel/salir">Salir del panel</a></p>
+<p class="tab-ir"><a href="#graficos">Gráficos</a><a href="#lectura">Mapa de calor</a><a href="#publicidad">Publicidad</a><a href="#socios">Socios</a><a href="#contador">Contador diario</a><a href="#buzon">Buzón</a><a href="#difusion">Difusión</a><a href="#concurso">Concurso</a><a href="#podcast">Podcast</a><a href="/panel/salir">Salir del panel</a></p>
 <h2 class="grupo-k">Audiencia</h2><div class="cifras k5">${kAud}</div>
 <h2 class="grupo-k">Comunidad</h2><div class="cifras k5">${kCom}</div></section>
 <section id="graficos"><h3>Gráficos del período</h3>${graficos}</section>
-${lectura}${publicidad}${fundadores}${seccionVisitas(cont)}${buzon}${difusion}${concurso}
+${lectura}${publicidad}${fundadores}${seccionVisitas(cont)}${buzon}${difusion}${concurso}${podcast}
 <script type="application/json" id="tablero-datos">${datosJson}</script><script src="/a/${ECHARTS_ARCHIVO}" defer></script><script>${TABLERO_JS}</script>`;
   return html(marco({ titulo: "Panel de Control · Cofrade News", descripcion: "", cuerpo }), 200, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
 }

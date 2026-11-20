@@ -29,6 +29,9 @@ compartir_js = compacto_js(leer("modulos", "compartir_cliente.js").strip())   # 
 assert "</script" not in compartir_js.lower()
 concurso_js = compacto_js(leer("modulos", "concurso_cliente.js").strip())   # 20-11-2026: inscripción al concurso desde el Buzón
 assert "</script" not in concurso_js.lower()
+# 20-11-2026: Panel «Podcast»: copiar, portada fija y conversor de audio a video (con webm-muxer, licencia MIT, en sitio/vendor/)
+podcast_js = compacto_js(leer("vendor", "webm-muxer.js").strip() + "\n" + leer("modulos", "podcast_cliente.js").strip())
+assert "</script" not in podcast_js.lower() and "Vanilagy" in podcast_js
 for k, v in {
     "__FORMULARIO__": logos["formulario"],
     "__MARCAS__": json.dumps({"marcas": marcas["marcas"]}, ensure_ascii=False),
@@ -46,6 +49,8 @@ for k, v in {
     "/*__DIFUSION__*/": leer("modulos", "difusion.js"),   # 20-11-2026: botón Compartir, concurso y menciones en medios
     "__COMPARTIR_JS__": json.dumps("<script>" + compartir_js + "</script>", ensure_ascii=False),   # van después del módulo que los nombra
     "__CONCURSO_JS__": json.dumps("<script>" + concurso_js + "</script>", ensure_ascii=False),
+    "/*__PODCAST__*/": leer("modulos", "podcast.js"),   # 20-11-2026: podcast diario (fuente, episodios, /podcast y Panel)
+    "__PODCAST_JS__": json.dumps("<script>" + podcast_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k
     src = src.replace(k, v)

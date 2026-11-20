@@ -57,6 +57,10 @@ CREATE INDEX IF NOT EXISTS concurso_envios_email ON concurso_envios (email);
 CREATE TABLE IF NOT EXISTS concurso_sorteos (id INTEGER PRIMARY KEY AUTOINCREMENT, creado TEXT NOT NULL, tipo TEXT NOT NULL, semilla TEXT NOT NULL, huella TEXT NOT NULL, total INTEGER NOT NULL, participantes INTEGER NOT NULL, ganadores TEXT NOT NULL, lista TEXT NOT NULL, avisos INTEGER NOT NULL DEFAULT 0);
 CREATE UNIQUE INDEX IF NOT EXISTS concurso_sorteo_oficial ON concurso_sorteos (tipo) WHERE tipo = 'oficial';
 CREATE TABLE IF NOT EXISTS cupones (codigo TEXT PRIMARY KEY, email TEXT NOT NULL, origen TEXT NOT NULL, pct INTEGER NOT NULL, plan TEXT NOT NULL, vence TEXT NOT NULL, creado TEXT NOT NULL, usado TEXT, ref TEXT, reclamado TEXT);
+-- 20-11-2026 · podcast diario (modulos/podcast.js): episodios de la lista de YouTube o agregados a mano en el Panel. El Worker también
+-- la crea sola si falta. Sin punto y coma en estos comentarios: el arnés corta el archivo por punto y coma.
+CREATE TABLE IF NOT EXISTS podcast_episodios (video TEXT PRIMARY KEY, titulo TEXT NOT NULL, publicado TEXT NOT NULL, fecha TEXT, miniatura TEXT, origen TEXT NOT NULL, oculto INTEGER NOT NULL DEFAULT 0, creado TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS podcast_episodios_orden ON podcast_episodios (oculto, fecha, publicado);
 -- Migraciones ya aplicadas en producción (no volver a correrlas: SQLite no tiene «ADD COLUMN IF NOT EXISTS» y fallarían)
 --   14-11-2026  ALTER TABLE pagos ADD COLUMN ref TEXT
 --   14-11-2026  ALTER TABLE suscripciones ADD COLUMN pausada_por TEXT
