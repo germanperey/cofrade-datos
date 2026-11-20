@@ -1,8 +1,30 @@
 {
- "generado": "2026-11-20T06:18:29-03:00",
+ "generado": "2026-11-20T06:40:38-03:00",
  "ventana_h": 72,
  "excluidos": "Rusia–Ucrania, Gaza, Irán y frente regional y Sudán (ya salen todos los días)",
  "candidatos": [
+  {
+   "iso2": "MM",
+   "pais": "Myanmar",
+   "titulares_72h": 2,
+   "medios": 2,
+   "prom_7d": 2.0,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "Sudáfrica pide a Birmania \"cumplir plenamente\" el fallo de la CIJ por el genocidio rohinyá",
+     "fuente": "Infobae",
+     "url": "https://www.infobae.com/america/agencias/2026/11/20/sudafrica-pide-a-birmania-cumplir-plenamente-el-fallo-de-la-cij-por-el-genocidio-rohinya/",
+     "fecha": "2026-11-20 06:32"
+    },
+    {
+     "titulo": "The Rohingya Crisis Over the Years",
+     "fuente": "NYT Asia Pacífico",
+     "url": "https://www.nytimes.com/2026/11/19/world/asia/rohingya-camps-photos-bangladesh.html",
+     "fecha": "2026-11-19 13:27"
+    }
+   ]
+  },
   {
    "iso2": "BD",
    "pais": "Bangladés",
@@ -80,6 +102,22 @@
    ]
   },
   {
+   "iso2": "ZA",
+   "pais": "Sudáfrica",
+   "titulares_72h": 1,
+   "medios": 1,
+   "prom_7d": 0.0,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "Sudáfrica pide a Birmania \"cumplir plenamente\" el fallo de la CIJ por el genocidio rohinyá",
+     "fuente": "Infobae",
+     "url": "https://www.infobae.com/america/agencias/2026/11/20/sudafrica-pide-a-birmania-cumplir-plenamente-el-fallo-de-la-cij-por-el-genocidio-rohinya/",
+     "fecha": "2026-11-20 06:32"
+    }
+   ]
+  },
+  {
    "iso2": "IQ",
    "pais": "Irak",
    "titulares_72h": 1,
@@ -96,18 +134,34 @@
    ]
   },
   {
-   "iso2": "MM",
-   "pais": "Myanmar",
+   "iso2": "IN",
+   "pais": "India",
    "titulares_72h": 1,
    "medios": 1,
-   "prom_7d": 2.0,
+   "prom_7d": 0.0,
    "revisar": false,
    "ejemplos": [
     {
-     "titulo": "The Rohingya Crisis Over the Years",
-     "fuente": "NYT Asia Pacífico",
-     "url": "https://www.nytimes.com/2026/11/19/world/asia/rohingya-camps-photos-bangladesh.html",
-     "fecha": "2026-11-19 13:27"
+     "titulo": "Pakistan minister visits India for first time since 2025 war",
+     "fuente": "Al Jazeera",
+     "url": "https://www.aljazeera.com/news-analysis/2026/11/20/pakistan-minister-visits-india-for-first-time-since-2025-war?traffic_source=rss",
+     "fecha": "2026-11-20 06:11"
+    }
+   ]
+  },
+  {
+   "iso2": "PK",
+   "pais": "Pakistán",
+   "titulares_72h": 1,
+   "medios": 1,
+   "prom_7d": 0.0,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "Pakistan minister visits India for first time since 2025 war",
+     "fuente": "Al Jazeera",
+     "url": "https://www.aljazeera.com/news-analysis/2026/11/20/pakistan-minister-visits-india-for-first-time-since-2025-war?traffic_source=rss",
+     "fecha": "2026-11-20 06:11"
     }
    ]
   },
@@ -144,8 +198,8 @@
    ]
   },
   {
-   "iso2": "AE",
-   "pais": "Emiratos",
+   "iso2": "SO",
+   "pais": "Somalia",
    "titulares_72h": 1,
    "medios": 1,
    "prom_7d": 1.5,
@@ -160,8 +214,8 @@
    ]
   },
   {
-   "iso2": "SO",
-   "pais": "Somalia",
+   "iso2": "AE",
+   "pais": "Emiratos",
    "titulares_72h": 1,
    "medios": 1,
    "prom_7d": 1.5,
@@ -242,13 +296,16 @@
   "2026-11-20": {
    "HT": 1,
    "CD": 1,
+   "ZA": 1,
+   "MM": 2,
    "IQ": 1,
+   "IN": 1,
+   "PK": 1,
    "BD": 2,
-   "MM": 1,
    "BR": 1,
    "PE": 1,
-   "AE": 1,
    "SO": 1,
+   "AE": 1,
    "SY": 2,
    "CN": 1,
    "TW": 1
