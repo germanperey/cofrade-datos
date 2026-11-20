@@ -1,0 +1,137 @@
+OK    portada: el enlace recibido se limpia de la barra (r y utm_source=compartir) http://127.0.0.1:8891/
+OK    portada: botón Compartir visible en la cabecera, 44x44 o más [44, 44, 'flex']
+OK    portada: nombre accesible del botón 
+OK    portada: sin navigator.share 
+OK    menú propio se abre (sin navigator.share) 
+OK    código de 8 letras/números guardado en cn-ref 1rjb1ynb
+OK    el código sale del secreto del navegador (igual al cálculo del servidor) ('lms43zil12fzwmidyp5zjues', '1rjb1ynb')
+OK    WhatsApp: wa.me con el texto pedido y el enlace https://wa.me/?text=Te%20comparto%20Cofrade%20News%2C%20el%20bolet%C3%ADn%20diario%20con%20las%20noticias%20de%20Chile%20y%20el%20mundo%2C%20cada%20dato%20con%2
+OK    Telegram, LinkedIn, Facebook y X con el enlace personal ['https://wa.me/?text=Te%20comparto%20Cofrade%20News%2C%20el%2', 'https://t.me/share/url?url=https%3A%2F%2Fwww.cofrad.es%2F%3F', 'mailto:?subject=Te%20comparto%20Cofrade%20News&body=Te%20com', 'https://www.linkedin.com/sharing/share-offsite/?url=https%3A', 'ht
+OK    Correo: mailto con asunto y cuerpo 
+OK    7 opciones: WhatsApp, Telegram, Correo, LinkedIn, Facebook, X y Copiar enlace 
+OK    el menú enlaza a las bases del concurso 
+OK    el foco entra al menú 
+OK    Copiar enlace: aviso visible ¡Enlace copiado!
+OK    Copiar enlace: el portapapeles tiene el enlace personal 
+OK    Escape cierra y devuelve el foco al botón 
+OK    el código persiste al recargar 
+OK    clic fuera cierra el menú 
+OK    se cuentan las formas de compartir (copiar, whatsapp) {'copiar': 1, 'whatsapp': 1}
+OK    EN: botón en inglés 
+OK    EN: menú en inglés (título, Email, Copy link) 
+OK    EN: el texto compartido va en inglés 
+OK    ES de nuevo: botón en español 
+OK    portada sin errores de JavaScript 
+OK    celular: sin desborde horizontal con el botón nuevo 
+OK    celular: botón 44x44 o más [44, 44, 'flex']
+OK    navigator.share recibe el enlace personal y el texto {'title': 'Cofrade News', 'text': 'Te comparto Cofrade News, el boletín diario con las noticias de Chile y el mundo, cada dato con su fuente:', 'url': 'https://www.cofrad.es/?r=269dxlts&utm_source=compartir'}
+OK    con navigator.share no se abre el menú propio 
+OK    si la persona cancela el menú del teléfono, no pasa nada 
+OK    si el menú del teléfono falla, se abre el menú propio 
+OK    se cuenta el uso del menú del teléfono 
+OK    modo oscuro del sistema: menú oscuro 
+OK    modo oscuro: botón 44x44 o más [44, 44, 'flex']
+OK    modo claro elegido a mano: menú claro 
+OK    edición: botón en la cabecera (.acciones), 44x44 o más [125.34375, 44, 'flex']
+OK    edición: texto visible «Compartir» 
+OK    edición: el enlace recibido se limpia de la barra 
+OK    edición: el enlace lleva la fecha de la edición y el código 
+OK    edición EN: botón «Share» y nombre accesible en inglés Share
+OK    edición en modo oscuro: menú oscuro 
+OK    edición sin errores de JavaScript nuevos 
+OK    visita por enlace compartido: suma 1 visita y 1 persona (1, 1)
+OK    la misma persona el mismo día: 2 visitas, 1 persona (2, 1)
+OK    otra conexión: 2 personas (3, 2)
+OK    vistas previas de WhatsApp y Telegram no cuentan (3, 2)
+OK    precargas del navegador no cuentan (3, 2)
+OK    códigos inválidos no se cuentan [{'codigo': 'ab12cd34'}, {'codigo': 'zzzz9999'}]
+OK    en una edición también se cuenta (4, 3)
+OK    sin IP guardada: solo fecha, código y huella HMAC de 24 caracteres (['fecha', 'codigo', 'visitante'], ['4debbc39abccbd6ac6267a30', 'f20fd3656b82d18b9910b912', '69bf771dadc23c3aa395d877'])
+OK    ninguna tabla nueva guarda IP en claro 
+OK    origen de la visita: «compartido» en el panel de orígenes 
+OK    Panel sin clave: pide la clave y no muestra las secciones 
+OK    Panel sin clave: POST /panel/menciones rechazado (403) 403
+OK    Panel sin clave: POST /panel/concurso rechazado (403) 403
+OK    Panel sin clave: GET /panel/concurso/captura/1 rechazado (403) 
+OK    Panel sin clave: GET /panel/concurso/vista.json rechazado (403) 
+OK    Panel sin clave: GET /panel/concurso/sorteo.json rechazado (403) 
+OK    Panel sin clave: GET /panel/cupon?codigo=CN25-AAAA-BBBB rechazado (403) 
+OK    entrar al Panel con la clave 303
+OK    Panel: secciones «Difusión y menciones» y «Concurso» con sus anclas 
+OK    Panel: KPIs de compartidos, visitas por enlace y menciones 
+OK    Panel: el código con visitas aparece en «Enlaces personales» 
+OK    mención manual: se guarda confirmada, con enlace limpio y alcance ('/panel?men=agregada#difusion', [{'id': 6, 'fecha': '2026-11-18', 'medio': 'Radio', 'programa': 'Mañaneros', 'persona': 'Juan Pérez', 'enlace': 'https://www.radio.cl/programa/123', 'alcance': 25000, 'origen': 'manual', 'estado': 'confirmada', 'nota': 'entrevi
+OK    mención repetida (mismo enlace): rechazada /panel?men=error:repetida#difusion
+OK    validaciones del formulario manual ['/panel?men=error:fecha#difusion', '/panel?men=error:medio#difusion', '/panel?men=error:enlace#difusion', '/panel?men=error:propio#difusion', '/panel?men=error:quien#difusion', '/panel?men=error:alcance#difusion']
+OK    recolector: Google Noticias, Apple Podcasts y GDELT simulados ('/panel?men=barrido:5#difusion', ['https://news.google.com/rss/articles/CBMiAAA111', 'https://news.google.com/rss/articles/CBMiCCC333', 'https://podcasts.apple.com/cl/podcast/cafe-con-datos/id100?i=1000', 'https://podcasts.apple.com/cl/podcast/mananas/id300?i
+OK    recolector: excluye lo publicado por cofrad.es 
+OK    recolector: Apple Podcasts filtra lo que no nos nombra y limpia utm 
+OK    recolector: título repetido entre fuentes se guarda una sola vez 
+OK    recolector: todas quedan «por confirmar» y con medio 
+OK    recolector: revisa el robots.txt de Google Noticias antes de leerlo ['GET raw.githubusercontent.com/germanperey/cofrade-datos/main/datos/reglas-redes.json', 'GET news.google.com/robots.txt', 'GET news.google.com/rss/search', 'GET itunes.apple.com/search', 'GET api.gdeltproject.org/api/v2/doc/doc']
+OK    recolector: segunda búsqueda no repite (mismo enlace) /panel?men=barrido:0#difusion
+OK    confirmar y descartar desde el Panel {6: 'confirmada', 7: 'confirmada', 8: 'descartada', 10: 'por confirmar', 9: 'por confirmar', 11: 'por confirmar'}
+OK    reabrir una descartada 
+OK    Panel: tabla de menciones con fecha, medio, programa, persona, enlace, alcance, origen, estado y nota 
+OK    Panel: contadores por medio y por mes 
+OK    Panel: estado de YouTube sin el secreto 
+OK    alertas RSS: rechaza http, claves en la dirección y más de 5 
+OK    alertas RSS: guarda 2 direcciones /panel?men=rss:2#difusion
+OK    alertas RSS: la que su robots.txt prohíbe queda «bloqueado» y no se lee {'google': 2, 'itunes': 2, 'gdelt': 2, 'alerta1': 'bloqueado', 'alerta2': 1}
+OK    alertas RSS: la de Google Alertas (Atom) se lee y el enlace real sale de google.com/url [{'enlace': 'https://www.cooperativa.cl/noticias/cofrade-news-radio/', 'medio': 'Prensa digital'}]
+OK    Panel: muestra «bloqueado por sus reglas» para la alerta prohibida 
+OK    cada visita a la portada hace como mucho 1 descarga del recolector [['GET raw.githubusercontent.com/germanperey/cofrade-datos/main/datos/reglas-redes.json'], ['GET news.google.com/robots.txt'], ['GET news.google.com/rss/search'], ['GET itunes.apple.com/search'], ['GET api.gdeltproject.org/api/v2/doc/doc'], ['GET alerts.talkwa
+OK    el orden de los pasos: reglas, robots de Google, Google, Apple, GDELT [['GET raw.githubusercontent.com/germanperey/cofrade-datos/main/datos/reglas-redes.json'], ['GET news.google.com/robots.txt'], ['GET news.google.com/rss/search'], ['GET itunes.apple.com/search'], ['GET api.gdeltproject.org/api/v2/doc/doc']]
+OK    portada: cinta del concurso con Compartir, Participar y bases 
+OK    Buzón: opción «Participar en el concurso» y enlace a las bases 
+OK    desde el Buzón se abre el concurso en el paso 1 (y se cierra el Buzón) 
+OK    paso 1 exige 18+ en Chile y aceptar las bases 
+OK    paso 1 enlaza las bases 
+OK    paso 2: captura opcional con el aviso de tapar datos de otras personas 
+OK    un archivo que no es imagen se rechaza en el navegador 
+OK    la captura se achica a 1280 px y bajo 400 KB en el navegador 253 KB · 1280×853
+OK    paso 3 con el recuadro de seguridad 
+OK    inscripción por la interfaz: mensaje de confirmación por correo y captura recibida Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Desde ese momento cuentan tus participaciones. Si no lo ves, revisa spam o promociones. Recibimos tu captura: la revisaremos y, si cumple las bases, suma 1 participación.
+OK    muestra el enlace personal del mismo navegador 
+OK    participante sin confirmar, unido al código del navegador [{'email': 'lectora.concurso@gmail.com', 'codigo': '5nijujdu', 'creado': '2026-11-20T08:27:44.408Z', 'verificado': 0, 'confirmado': None, 'token': '6c788ad511d92eb24b39d3bfbe224258ae3df4ac', 'enviado': '2026-11-20T08:27:44.408Z', 'mayor': 1, 'bases': 1, 'ip': 
+OK    captura guardada privada en D1 (BLOB) con su SHA-256, por revisar [{'id': 1, 'email': 'lectora.concurso@gmail.com', 'bytes': 258735, 'ancho': 1280, 'alto': 853, 'sha': 'e925bc4552979894d17b9efcb474c8328c2a55b2b2343bddc1614c7f45b25fcf', 'estado': 'por revisar', 'fecha': '2026-11-20', 'largo': 258735}]
+OK    correo de confirmación con el enlace y el enlace personal ['Confirma tu participación en el Concurso Comparte Cofrade News']
+OK    copiar mi enlace (portapapeles) 
+OK    el enlace del correo muestra un botón (no confirma solo) 
+OK    el botón confirma y muestra el enlace personal 
+OK    el enlace ya usado vence (410) 
+OK    concurso sin errores de JavaScript 
+OK    API rechaza: 18 años (400, {'ok': False, 'error': 'Para participar debes tener 18 años o más y vivir en Chile.', 'error_en': 'To take part you must be 18 or older and live in Chile.'})
+OK    API rechaza: bases (400, {'ok': False, 'error': 'Debes aceptar las bases del concurso.', 'error_en': 'You must accept the contest rules.'})
+OK    API rechaza: Recarga (400, {'ok': False, 'error': 'Recarga la página e intenta de nuevo.', 'error_en': 'Please reload the page and try again.'})
+OK    API rechaza: no parece válido (400, {'ok': False, 'error': 'Ese email no parece válido. Revisa que esté bien escrito.', 'error_en': 'That email does not look valid. Please check it.'})
+OK    API rechaza: persona (400, {'ok': False, 'error': 'No pudimos confirmar que eres una persona. Vuelve a marcar el recuadro de seguridad.', 'error_en': 'We could not confirm you are a person. Please tick the security box again.'})
+OK    API rechaza: desechables (400, {'ok': False, 'error': 'No aceptamos correos temporales o desechables. Usa tu email de siempre.', 'error_en': 'Temporary or disposable emails are not accepted.'})
+OK    trampa de robots: finge éxito y no guarda 
+OK    API rechaza una captura que no es JPEG (400, {'ok': False, 'error': 'La captura debe ser una imagen. Elige una captura de pantalla.', 'error_en': 'The screenshot must be an image.'})
+OK    API inscribe con captura (200, {'ok': True, 'mensaje': 'Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Desde ese momento cuentan tus participaciones. Si no lo ves, revisa spam o promociones. Recibimos tu captura: la revisaremos y, si cumple las
+OK    imagen idéntica (mismo SHA-256) se rechaza aunque sea otra persona (409, {'ok': False, 'error': 'Esa captura ya fue enviada. Sube una distinta.', 'error_en': 'That screenshot was already sent. Please upload a different one.'})
+OK    tope de 1 captura por persona y día (429, {'ok': False, 'error': 'Ya recibimos tu captura de hoy. Puedes subir otra mañana.', 'error_en': 'We already received your screenshot today. You can upload another one tomorrow.'})
+OK    el mismo navegador no inscribe un segundo email (409, {'ok': False, 'error': 'Este navegador ya está inscrito en el concurso con otro email. Cada persona participa una sola vez.', 'error_en': 'This browser is already signed up with another email. Each person can enter only once.'})
+OK    el mismo email desde otro navegador no recibe el código ajeno {'ok': True, 'mensaje': 'Ya te enviamos el correo de confirmación hace unos minutos: revisa tu bandeja, spam o promociones.', 'mensaje_en': 'We already sent you the confirmation email a few minutes ago: check your inbox, spam or promotions.'}
+OK    captura sobre 600 KB rechazada 413
+OK    enlace: tope de 10 por día y solo dentro de las fechas (10 + 3) ('13', '1', '14')
+OK    captura: solo las aceptadas y dentro de las fechas (1); total 14 ('13', '1', '14')
+OK    sin email confirmado no suma 
+OK    Panel: la captura por revisar aparece con su miniatura 
+OK    Panel: la captura se ve (JPEG privado, sin caché) (200, 'image/jpeg', 258735)
+OK    aceptar captura /panel?cc=aceptar#concurso
+OK    rechazar captura /panel?cc=rechazar#concurso
+OK    sortear exige marcar la confirmación /panel?cc=error:confirmar#concurso
+OK    sortear antes del 26-12-2026: rechazado y sin registro /panel?cc=antes#concurso
+OK    vista previa: semilla fija → mismos ganadores que el cálculo independiente (['6506e1cc2539079b', '6a28ec8fc62a610d', '04258f74ef67461e', 'cfb73329db80137e', 'b255ba72400ffffb'], ['6506e1cc2539079b', '6a28ec8fc62a610d', '04258f74ef67461e', 'cfb73329db80137e', 'b255ba72400ffffb'])
+OK    vista previa: 5 ganadores distintos 
+OK    vista previa: huella = SHA-256 de la lista ordenada 
+OK    vista previa: lista con los pesos esperados [1, 1, 4, 7, 10, 13, 14, 16, 17, 18, 19, 20]
+OK    vista previa: repetible y coincide con el cálculo independiente en 4 semillas más [True, True, True, True]
+OK    ponderado: quien tiene más participaciones gana más seguido (20, 987, 1, 66)
+OK    cupón inexistente: no válido {'ok': False, 'motivo': 'no existe'}
+OK    cupón con formato malo: no válido 
+OK    esquema-d1.sql tiene exactamente las mismas tablas que crea el Worker 13
+
+135/135 pruebas OK (principal)

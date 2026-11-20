@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Arma worker.js desde worker.src.js: logos, dirección del formulario de publicidad, marcas auspiciadoras,
 la capa rápida de gráficos de la edición (modulos/lento.js), el Buzón + Panel de Control (modulos/buzon_panel.js) y los
-socios fundadores con Mercado Pago (modulos/suscripciones.js) y el tablero con la publicidad pagada (modulos/tablero.js)."""
+socios fundadores con Mercado Pago (modulos/suscripciones.js), el tablero con la publicidad pagada (modulos/tablero.js) y la difusión
+(botón Compartir, concurso «Comparte Cofrade News» y menciones en medios, modulos/difusion.js)."""
 import hashlib, json, os
 aqui = os.path.dirname(os.path.abspath(__file__))
 leer = lambda *r: open(os.path.join(aqui, *r), encoding="utf-8").read()
@@ -24,6 +25,10 @@ voz = compacto_js(leer("modulos", "voz.js").strip())   # 19-11-2026: el boletín
 assert "</script" not in voz.lower()
 proy_js = compacto_js(leer("modulos", "proyeccion_cliente.js").strip())   # 19-11-2026: gráficos de la proyección de crecimiento a 4 años
 assert "</script" not in proy_js.lower()
+compartir_js = compacto_js(leer("modulos", "compartir_cliente.js").strip())   # 20-11-2026: botón Compartir (portada y ediciones)
+assert "</script" not in compartir_js.lower()
+concurso_js = compacto_js(leer("modulos", "concurso_cliente.js").strip())   # 20-11-2026: inscripción al concurso desde el Buzón
+assert "</script" not in concurso_js.lower()
 for k, v in {
     "__FORMULARIO__": logos["formulario"],
     "__MARCAS__": json.dumps({"marcas": marcas["marcas"]}, ensure_ascii=False),
@@ -38,6 +43,9 @@ for k, v in {
     "/*__HOROSCOPO_ANUAL__*/": leer("modulos", "horoscopo_anual.js"),
     "/*__PROYECCION__*/": leer("modulos", "proyeccion.js"),   # 19-11-2026: «Proyección de crecimiento en Chile durante los próximos 4 años»   # 18-11-2026: horóscopo del año, chino y personalizado (contenido hasta 2031)
     "/*__ICONO__*/": leer("modulos", "icono.js"),   # 16-11-2026: ícono de Cofrade News (acceso directo, lectura sin señal)
+    "/*__DIFUSION__*/": leer("modulos", "difusion.js"),   # 20-11-2026: botón Compartir, concurso y menciones en medios
+    "__COMPARTIR_JS__": json.dumps("<script>" + compartir_js + "</script>", ensure_ascii=False),   # van después del módulo que los nombra
+    "__CONCURSO_JS__": json.dumps("<script>" + concurso_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k
     src = src.replace(k, v)

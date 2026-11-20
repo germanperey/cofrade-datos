@@ -935,6 +935,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__HOROSCOPO_ANUAL__*/
 /*__PROYECCION__*/
 /*__ICONO__*/
+/*__DIFUSION__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -956,21 +957,21 @@ function bloqueMarcas() {
   return `<div class="hoja marcas" aria-label="Marcas que nos auspician"><h4>Marcas que nos auspician</h4><div class="cinta"><div class="pista">${lista.map((m, i) => uno(m, i >= ms.length)).join("")}${lista.map((m) => uno(m, true)).join("")}</div></div></div>`;
 }
 
-function marco({ titulo, descripcion, cuerpo, canonica, hero = "" }) {
+function marco({ titulo, descripcion, cuerpo, canonica, hero = "", compartir = false }) {
   return `<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(titulo)}</title><meta name="description" content="${esc(descripcion)}"><link rel="canonical" href="https://${DOMINIO}${canonica || "/"}">
 <meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descripcion)}"><meta property="og:type" content="website">
 <meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL"><meta name="theme-color" content="#0B1F3A">
-<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">${ICONO_HEAD}<link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}${ICONO_CSS}</style></head><body>
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">${ICONO_HEAD}<link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}${ICONO_CSS}${DIFUSION_CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha" data-iso="${fechaChile()}">${esc(fechaLarga(fechaChile()))}</span>
 <nav aria-label="Secciones"><a href="/edicion">Edición de hoy</a><button type="button" class="nav-b buzon-abrir" aria-haspopup="dialog"><svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></svg>Buzón</button><a href="/mercados">Mercados</a><a href="/#archivo">Archivo</a><a href="/socios">Socios</a><a href="/#publicite">Publicite</a></nav>
-<div class="herr"><button class="tema idioma" id="idioma" type="button" lang="en" aria-pressed="false" aria-label="Read in English" title="English">EN</button><button class="tema" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></div></div></header>
+<div class="herr">${compartir ? compartirHtml("portada", `https://${DOMINIO}/`) : ""}<button class="tema idioma" id="idioma" type="button" lang="en" aria-pressed="false" aria-label="Read in English" title="English">EN</button><button class="tema" id="tema" type="button" aria-label="Cambiar entre modo claro y oscuro"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg></button></div></div></header>
 ${hero}<main class="hoja">${cuerpo}</main>
-${bloqueMarcas()}${DIALOGO}${BUZON}
+${bloqueMarcas()}${DIALOGO}${buzonHtml()}${concursoDialogo()}
 <footer class="hoja pie"><img class="pie-agua" src="/marca-agua.webp" alt="" aria-hidden="true">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
 Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar? <button type="button" class="enlace buzon-abrir">Escríbenos al Buzón</button>.<br>
-© ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}${BUZON_JS}${CABECERA_JS}</script>
+© ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}${BUZON_JS}${CABECERA_JS}</script>${concursoScript()}${compartir ? COMPARTIR_JS : ""}
 <script type="speculationrules">{"prerender":[{"where":{"or":[{"href_matches":"/edicion"},{"href_matches":"/edicion/*"}]},"eagerness":"moderate"}]}</script>${ICONO_JS}</body></html>`;
 }
 
@@ -1153,6 +1154,7 @@ async function cuerpoPortada(ctx) {
 ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${hoy}">${esc(fechaLarga(hoy))}</span></div><p style="margin:6px 0 0;color:#D8D2C4">${esc(estado)}</p></aside>`}</div></section>`;
   const cuerpo = `${INSTALAR_HTML}
 ${vozPortada(ultima, hoy)}
+${cintaConcurso()}
 <section aria-labelledby="t-secc" style="border:0;padding-top:40px"><span class="kicker">${ultima ? (ultima === hoy ? "Hoy · " : "Última edición · ") : ""}<span data-iso="${ultima || hoy}">${esc(fechaLarga(ultima || hoy))}</span></span>
 <h2 class="titulo-lujo" id="t-secc">${esc(estado)}</h2><p class="sub">Doce secciones, cada mañana, con la fuente de cada dato.</p>
 <div class="secc">${SECCIONES_LUJO.map(([ic, t, d]) => `<a class="sec-card" href="/edicion" style="text-decoration:none">${icono(ic)}<div><b>${esc(t)}</b><p>${esc(d)}</p></div></a>`).join("")}</div></section>
@@ -1228,7 +1230,8 @@ async function portada(env, ctx, req) {
   ctx.waitUntil(revivirPulso(env, p));
   // 15-11-2026: el vigía corre cada 3 horas; su propia visita reinicia el reloj y la de un lector lo despierta si GitHub se atrasó
   ctx.waitUntil(/CofradeNews-Vigia/.test((req && req.headers.get("User-Agent")) || "") ? marcarVigia(env) : revivirVigia(env));
-  return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero }), 200,
+  ctx.waitUntil(revisarMenciones(env));   // 20-11-2026: menciones en medios, un paso (una descarga como mucho) en segundo plano (modulos/difusion.js)
+  return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero, compartir: true }), 200,
     { "Cache-Control": "public, max-age=120" });
 }
 
@@ -1355,10 +1358,13 @@ async function revivirVigia(env) {
 
 export default {
   async scheduled(event, env, ctx) {
+    _hoyPrueba = String(env.CONCURSO_HOY_PRUEBA || "");
     ctx.waitUntil(pedirPulso(env).catch(() => "error"));
+    ctx.waitUntil(pasoMenciones(env, { completa: true }).catch(() => "error"));   // 20-11-2026: menciones en medios (modulos/difusion.js)
   },
   async fetch(req, env, ctx) {
     const u = new URL(req.url);
+    _hoyPrueba = String(env.CONCURSO_HOY_PRUEBA || "");   // solo existe en el arnés de pruebas
     if (u.hostname === "cofrad.es") return Response.redirect(`https://${DOMINIO}${u.pathname}${u.search}`, 301);
     const p = u.pathname.replace(/\/+$/, "") || "/";
     try {
@@ -1368,7 +1374,11 @@ export default {
       if (p === "/manifest.webmanifest") return new Response(MANIFEST, { headers: { "Content-Type": "application/manifest+json; charset=utf-8", "Cache-Control": "public, max-age=3600", ...SEGURIDAD } });
       if (p === "/sw.js") return new Response(SW_JS, { headers: { "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "no-cache", ...SEGURIDAD } });
       if (p === "/instalacion") return await registrarIcono(req, env);
-      if (p === "/" && req.method === "GET") { if (!/CofradeNews-Vigia/.test(req.headers.get("User-Agent") || "")) ctx.waitUntil(contarVisita(req, env, "/")); return await portada(env, ctx, req); }
+      if (p === "/" && req.method === "GET") {
+        if (!/CofradeNews-Vigia/.test(req.headers.get("User-Agent") || "")) ctx.waitUntil(contarVisita(req, env, "/"));
+        if (u.searchParams.has("r")) ctx.waitUntil(contarReferido(req, env));   // 20-11-2026: visita que llega por un enlace compartido
+        return await portada(env, ctx, req);
+      }
       if (p === "/edicion") {
         const l = await indice(ctx);
         return l.length ? Response.redirect(`https://${u.host}/edicion/${l[0]}${u.search}`, 302) : Response.redirect(`https://${u.host}/`, 302);
@@ -1383,6 +1393,7 @@ export default {
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
         ctx.waitUntil(contarVisita(req, env, p));
+        if (u.searchParams.has("r")) ctx.waitUntil(contarReferido(req, env));   // 20-11-2026: visita que llega por un enlace compartido
         ctx.waitUntil(revisarRenovaciones(env, ctx));
         // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): el navegador guardaba la edición 1 hora (la de hoy, 10 minutos)
         // y un cambio del sitio tardaba en verse. Ahora la revisa en cada apertura con su etiqueta: edición + versión del sitio + librería
@@ -1407,18 +1418,32 @@ export default {
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
+          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
+          .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
           .on("head", cp.cabeza).on("body", cp.cuerpo).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
           .on("script", scriptsEdicion(lib))
-          .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
+          .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS + COMPARTIR_ESTILO, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);
       }
       if (p === "/mercados") { ctx.waitUntil(contarVisita(req, env, "/mercados")); return paginaMercados(); }
       if (p === "/oido" && req.method === "POST") return await oidoNube(req, env).catch(() => jsonR({ t: "", e: "error" }, 500));   // 19-11-2026: oído en la nube
       if (p === "/salud") return await salud(env, ctx);   // 15-11-2026: para el vigía de GitHub y el auditor de Claude (cada 3 h)
       // 13-11-2026 · Buzón de sugerencias, medición de lectura y Panel de Control
+      // 20-11-2026 · difusión: botón Compartir, concurso «Comparte Cofrade News» y menciones en medios (modulos/difusion.js)
+      if (p === "/compartir" && req.method === "POST") return await recibirCompartido(req, env);
+      if (p === "/concurso" && req.method === "POST") return await recibirConcurso(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos guardar tu participación. Intenta de nuevo en unos minutos.", error_en: "We could not save your entry. Please try again in a few minutes." }, 503));
+      if (p === "/concurso") return Response.redirect(`https://${u.host}/#concurso`, 302);
+      if (p === "/concurso/verificar") return await verificarConcurso(req, u, env);
+      if (p === "/bases-concurso") return await paginaBases(env);
+      if (p === "/panel/menciones" && req.method === "POST") return await accionMenciones(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel?men=error#difusion" } }));
+      if (p === "/panel/concurso" && req.method === "POST") return await accionConcurso(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel?cc=error#concurso" } }));
+      const capc = p.match(/^\/panel\/concurso\/captura\/(\d{1,9})$/);
+      if (capc) return await capturaConcurso(req, env, Number(capc[1]));
+      if (p === "/panel/concurso/vista.json") return await concursoJson(req, env, u, "vista");
+      if (p === "/panel/concurso/sorteo.json") return await concursoJson(req, env, u, "sorteo");
+      if (p === "/panel/cupon") return await concursoJson(req, env, u, "cupon");
       if (p === "/buzon" && req.method === "POST") return await recibirBuzon(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos guardar tu sugerencia en este momento. Intenta de nuevo en unos minutos." }, 503));
       if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
       if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
@@ -1508,10 +1533,10 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return Response.redirect(`https://${u.host}/favicon-64.png`, 301);   // 13-11-2026: ícono = escudo de la Cofradía
-      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nDisallow: /ir/\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
+      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nDisallow: /concurso\nDisallow: /ir/\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
       if (p === "/sitemap.xml") {
         const l = await indice(ctx);
-        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
+        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, `https://${DOMINIO}/bases-concurso`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
         return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${x}</urlset>`, { headers: { "Content-Type": "application/xml" } });
       }
       return html(marco({ titulo: "Página no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esta página no existe.</h1><p class="lede">Vuelve a la <a href="/">portada</a>.</p></section>` }), 404);

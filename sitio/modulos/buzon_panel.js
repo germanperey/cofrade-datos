@@ -45,7 +45,8 @@ const BUZON_JS = `
 pasos=d.querySelectorAll('.paso'),barra=d.querySelectorAll('.pasos i'),pn=d.querySelector('.paso-n'),atras=d.querySelector('.buzon-atras'),sig=d.querySelector('.buzon-sig'),env=d.querySelector('.buzon-enviar'),
 ok=d.querySelector('.buzon-ok'),nav=d.querySelector('.buzon-nav');
 function en(){return document.documentElement.lang==='en'}
-function script(){if(pedido)return;pedido=true;window.__tsListo=function(){if(paso===3)dibujar()};var s=document.createElement('script');
+function script(){if(pedido)return;pedido=true;window.__tsListo=function(){if(paso===3)dibujar()};
+if(document.querySelector('script[src*="/turnstile/v0/api.js"]')){var n0=0,i0=setInterval(function(){if(window.turnstile||++n0>75){clearInterval(i0);if(window.turnstile&&paso===3)dibujar()}},200);return}var s=document.createElement('script');
 s.src='https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__tsListo&render=explicit';s.async=true;s.onerror=function(){st.textContent=en()?'The security check could not load. Check your connection or ad blocker.':'No cargó la verificación de seguridad. Revisa tu conexión o el bloqueador de anuncios.'};document.head.appendChild(s)}
 function dibujar(){if(!window.turnstile)return;if(wid!==null){return}try{wid=turnstile.render('#tsBuzon',{sitekey:'${TURNSTILE_SITEKEY}',language:en()?'en':'es',theme:'auto',
 callback:function(t){tk=t;if(st.textContent.indexOf('verificaci')>=0||st.textContent.indexOf('security')>=0)st.textContent=''},'expired-callback':function(){tk=''},'error-callback':function(){tk=''}})}catch(e){}}
