@@ -2425,6 +2425,58 @@ def avisos_de_marejadas_de_la_armada():
         r = B.marejadas_desde_espejo(estado, d, dt.date(2026, 11, 20))
         assert r["avisos"][0]["estado"] == "emitido, sin fechas en el texto" and estado["marejadas"]["nota"] == "falta la página de DIRECTEMAR", (r, estado)
 
+
+@prueba
+def fuente_del_podcast_con_las_7_secciones():
+    """20-11-2026 05:39 (Germán: «diariamente pueda crear un mini Podcast con las noticias del día, basándose en los principales temas
+    del índice del Newsletter»): podcast_fuente.py arma, desde la edición completa, un documento con las 7 secciones en el orden de
+    Germán, cada noticia con su medio y su fecha, Chile antes que el mundo, sin el Congreso ni los gráficos; con menos de 4 secciones
+    con contenido no escribe nada; el índice datos/podcast.json lista las fuentes por fecha."""
+    import re
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import podcast_fuente as PF
+    nota = lambda t, r, m, d: (f'<li><strong>{t}</strong> <span>{r}</span> <em class="fuente"><time class="fnota">{d}</time> '
+                               f'<a href="https://x.cl/{d}" target="_blank" rel="noopener">{m}</a></em></li>')
+    doc = ('<html><body><section class="sec" id="economia"><h2>1. Economía, Negocios e Inversión</h2><div class="dos"><div><h3>Chile</h3><ul class="notas">'
+           + "".join(nota(f"Noticia Chile {i}", f"Resumen {i} con $1.000", "La Tercera", "19-11") for i in range(6)) + '</ul></div><div><h3>Mundo</h3><ul class="notas">'
+           + "".join(nota(f"Noticia Mundo {i}", "Resumen", "Reuters", "18-11") for i in range(4)) + '</ul></div></div><img src="data:image/png;base64,AAAA"></section>'
+           '<section id="politica"><h2>2. Política y Actualidad</h2><h3>Chile</h3><ul class="notas">' + nota("Ley &amp; orden", "El Senado votó", "Emol", "19-11")
+           + '</ul><h3>Congreso: leyes votadas en el Mes</h3><ul class="notas">' + nota("NO DEBE SALIR", "x", "x", "01-11") + '</ul></section>'
+           '<section id="emprendimiento"><h2>3. Emprendimiento</h2><ul class="notas">' + nota("Pyme gana premio", "Detalle", "DF", "17-11") + '</ul></section>'
+           '<section id="tecnologia"><h2>4. Tecnología</h2><ul class="notas"></ul></section>'
+           '<section id="conflictos"><h2>5. Conflictos</h2><svg><text>dibujo</text></svg><div class="panel-ciudad conflicto activa" data-k="a"><h3 class="ciudad-tit">Guerra A–B</h3>'
+           '<p class="sub">Región · estado: <b>Activo</b></p><p class="resumen">Hubo ataques el 18 de noviembre.</p><h4>Últimas noticias</h4><ul class="notas">'
+           + nota("Ataque en C", "x", "BBC", "18-11") + '</ul></div></section>'
+           '<section id="indicadores"><h2>9. Indicadores</h2><div class="kpis"><div class="kpi"><span class="kn">UF</span><span class="kv">$ 41.364,17</span>'
+           '<span class="kd sube">+0,02%</span><span class="kf">19-11-2026</span><span class="kf">Fuente: Banco Central</span></div></div></section>'
+           '<section id="inmobiliario"><h2>15. Inmobiliario</h2><ul class="notas">' + nota("CChC prevé repunte", "En 2027", "Pauta", "17-11") + '</ul></section></body></html>')
+    md, llenas = PF.armar(doc, "2026-11-20")
+    assert llenas == 6 and md.startswith("# Cofrade News · Noticias del viernes 20 de noviembre de 2026"), (llenas, md[:120])
+    titulos = re.findall(r"^## (.+)$", md, flags=re.M)
+    assert titulos == ["1. Economía, Negocios e Inversión", "2. Política y Actualidad", "3. Emprendimiento", "4. Tecnología, Tendencias e Innovación",
+                       "5. Conflictos bélicos vigentes", "6. Indicadores económicos", "7. Crecimiento inmobiliario en Chile"], titulos
+    eco = md.split("## 2.")[0]
+    assert eco.count("- Noticia Chile") == 4 and eco.count("- Noticia Mundo") == 2 and eco.index("### Chile") < eco.index("### Mundo"), eco
+    assert "- Noticia Chile 0. Resumen 0 con $1.000. (La Tercera, 19-11)" in md, md
+    assert "Ley & orden" in md and "NO DEBE SALIR" not in md and "data:image" not in md and "dibujo" not in md
+    assert "- Hoy la edición no trae noticias en esta sección." in md.split("## 4.")[1].split("## 5.")[0]
+    assert "- Guerra A–B (Región · estado: Activo). Hubo ataques el 18 de noviembre. Última noticia: Ataque en C. (BBC, 18-11)" in md, md
+    assert "- UF: $ 41.364,17 (+0,02% respecto del dato anterior), al 19-11-2026. Fuente: Banco Central." in md, md
+    largo = PF.armar(doc.replace("Resumen", "Resumen " + "palabra " * 600), "2026-11-20")[0]
+    assert len(largo.split()) <= PF.TOPE_PALABRAS and "## 7." in largo and "- UF:" in largo, len(largo.split())
+    pobre = '<section id="economia"><ul class="notas">' + nota("Una", "x", "y", "19-11") + "</ul></section>"
+    assert PF.armar(pobre, "2026-11-20")[1] == 1
+    with tempfile.TemporaryDirectory() as d:
+        ed = os.path.join(d, "Cofrade-News-2026-11-20.html")
+        open(ed, "w", encoding="utf-8").write(doc)
+        sal, ind = os.path.join(d, "fuentes"), os.path.join(d, "podcast.json")
+        assert PF.main(["--archivo", ed, "--salida", sal, "--indice", ind]) == 1
+        assert PF.main(["--archivo", ed, "--salida", sal, "--indice", ind]) == 0   # sin cambios: no reescribe
+        open(ed, "w", encoding="utf-8").write(pobre)
+        assert PF.main(["--archivo", ed, "--fecha", "2026-11-21", "--salida", sal, "--indice", ind]) == 0 and not os.path.exists(os.path.join(sal, "2026-11-21.md"))
+        j = json.load(open(ind, encoding="utf-8"))
+        assert [x["fecha"] for x in j["fuentes"]] == ["2026-11-20"] and j["fuentes"][0]["secciones"] == 7, j
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:
