@@ -56,7 +56,7 @@ function saldosPremios(en) {
     : `Con descuento, el ganador paga el resto del primer año sobre el precio actual del plan anual (${fmt(base)}): ${lista}.`;
 }
 const N_PREMIOS = CONCURSO.premios.length;
-const RE_CUPON = new RegExp(`^CN(?:${[...new Set(CONCURSO.premios)].join("|")})-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}$`);
+const RE_CUPON = new RegExp(`^CN(?:${[...new Set(CONCURSO.premios)].join("|")})(?:-[0-9A-HJKMNP-TV-Z]{5}){3}$`);
 const TXT_PLAN_ES = "en el plan anual del Dashboard Financiero (válidos el primer año)", TXT_PLAN_EN = "on the annual plan of the Financial Dashboard (valid for the first year)";
 const TXT_PREMIOS_ES = `El 26 de diciembre sorteamos ${N_PREMIOS} premios ${TXT_PLAN_ES}: ${PREMIOS_ES}.`;
 const TXT_PREMIOS_EN = `On December 26 we draw ${N_PREMIOS} prizes ${TXT_PLAN_EN}: ${PREMIOS_EN}.`;
@@ -92,6 +92,8 @@ const TABLAS_CONCURSO = [
   "CREATE INDEX IF NOT EXISTS concurso_envios_email ON concurso_envios (email)",
   "CREATE TABLE IF NOT EXISTS concurso_sorteos (id INTEGER PRIMARY KEY AUTOINCREMENT, creado TEXT NOT NULL, tipo TEXT NOT NULL, semilla TEXT NOT NULL, huella TEXT NOT NULL, total INTEGER NOT NULL, participantes INTEGER NOT NULL, ganadores TEXT NOT NULL, lista TEXT NOT NULL, avisos INTEGER NOT NULL DEFAULT 0)",
   "CREATE UNIQUE INDEX IF NOT EXISTS concurso_sorteo_oficial ON concurso_sorteos (tipo) WHERE tipo = 'oficial'",
+  "CREATE TABLE IF NOT EXISTS canjes (token TEXT PRIMARY KEY, codigo TEXT NOT NULL, email TEXT NOT NULL, creado TEXT NOT NULL, usado TEXT)",
+  "CREATE INDEX IF NOT EXISTS canjes_codigo ON canjes (codigo, creado)",
   "CREATE TABLE IF NOT EXISTS cupones (codigo TEXT PRIMARY KEY, email TEXT NOT NULL, origen TEXT NOT NULL, pct INTEGER NOT NULL, plan TEXT NOT NULL, vence TEXT NOT NULL, creado TEXT NOT NULL, usado TEXT, ref TEXT, reclamado TEXT)",
 ];
 const URL_GOOGLE_NEWS = "https://news.google.com/rss/search?q=%22Cofrade%20News%22%20OR%20%22cofrad.es%22&hl=es-419&gl=CL&ceid=CL:es-419";
@@ -524,7 +526,8 @@ function revisarMenciones(env) {
 async function mantenerDifusion(env) {
   const hoy = hoyConcurso(), ops = [env.DB.prepare("DELETE FROM referidos_unicos WHERE fecha < ?").bind(masDias(fechaChile(), -120))];
   await asegurarTablas(env, "concurso");
-  ops.push(env.DB.prepare("DELETE FROM concurso_envios WHERE fecha < ?").bind(masDias(fechaChile(), -30)),
+  ops.push(env.DB.prepare("DELETE FROM canjes WHERE creado < ?").bind(new Date(Date.now() - 7 * 86400000).toISOString()),
+    env.DB.prepare("DELETE FROM concurso_envios WHERE fecha < ?").bind(masDias(fechaChile(), -30)),
     env.DB.prepare("DELETE FROM concurso_participantes WHERE email IN (SELECT email FROM cupones WHERE origen = 'concurso' AND usado IS NOT NULL)"));
   if (hoy >= CONCURSO.borrarCapturas) ops.push(env.DB.prepare("UPDATE concurso_capturas SET datos = NULL WHERE datos IS NOT NULL"));
   if (hoy > CONCURSO.reclamo) ops.push(env.DB.prepare("DELETE FROM cupones WHERE origen = 'concurso' AND reclamado IS NULL AND usado IS NULL"));
@@ -884,11 +887,26 @@ async function prepararSorteo(lista, semilla) {
   return { audit, huella, total: audit.reduce((a, x) => a + x[1], 0), participantes: audit.length, ganadores: elegidos.map((i) => conChances[i]) };
 }
 const CROCKFORD = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+// Germán, 20-11-2026 09:01: «Hazlo como tú consideres que sea viable y 100% seguro, para que nadie pueda compartir o descifrar el código de
+// otro ganador». El código no lleva datos del email (los dejaría a la vista): son 15 caracteres al azar (75 bits, imposibles de adivinar),
+// solo valen junto con el email ganador, se usan una vez y el año gratis se activa con un enlace que llega a la bandeja del ganador.
 function codigoCupon(pct) {   // el prefijo dice el descuento: CN100 (año gratis), CN75, CN50, CN25
-  const b = crypto.getRandomValues(new Uint8Array(8));
+  const b = crypto.getRandomValues(new Uint8Array(15));
   let s = "";
   for (const x of b) s += CROCKFORD[x & 31];
-  return `CN${pct}-${s.slice(0, 4)}-${s.slice(4)}`;
+  return `CN${pct}-${s.slice(0, 5)}-${s.slice(5, 10)}-${s.slice(10)}`;
+}
+// Lo que escribe la persona: mayúsculas, sin espacios, y las letras que se confunden (I, L → 1; O → 0) como en el alfabeto de Crockford
+// Se rearma por posición: se quita todo lo que no es letra o número (espacios, guiones de cualquier tipo) y las letras que se confunden
+// pasan a su número (I y L → 1; O → 0), como en el alfabeto de Crockford. «cn1oo abcde…» queda «CN100-ABCDE-…».
+function normalizarCodigo(t) {
+  const x = String(t || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 40);
+  if (!x.startsWith("CN")) return x;
+  const r = x.slice(2).replace(/[IL]/g, "1").replace(/O/g, "0");
+  const n = r.length - 15;
+  if (n < 2 || n > 3) return "CN" + r;
+  const a = r.slice(n);
+  return `CN${r.slice(0, n)}-${a.slice(0, 5)}-${a.slice(5, 10)}-${a.slice(10)}`;
 }
 async function sortearOficial(env) {
   if (hoyConcurso() < CONCURSO.sorteo) return "antes";
@@ -919,15 +937,22 @@ function correoGanador(cupon, lugar, pct) {
   const premio = pct >= 100 ? "el primer año del plan anual del Dashboard Financiero, gratis (100 % de descuento)" : `${pct} % de descuento en el primer año del plan anual del Dashboard Financiero`;
   const condiciones = "Vale solo para el primer año del plan anual (desde el segundo año rige el precio normal), es personal (vale para este email), no se cambia por dinero, no se suma a otros descuentos (tampoco al 20 % de los socios de la Cofradía) y vence el 31 de marzo de 2027.";
   const subject = `¡Ganaste el ${L} lugar en el Concurso Comparte Cofrade News!`;
-  const text = `Hola:\n\n¡Felicitaciones! Saliste sorteado en el ${L} lugar del Concurso «Comparte Cofrade News».\n\nTu premio: ${premio}. Tu cupón de un solo uso:\n${cupon}\n\n`
-    + `${condiciones}\nPara reclamarlo, responde este correo antes del 31 de enero de 2027 y te indicamos cómo usarlo.\n\nBases: https://${DOMINIO}/bases-concurso\n\nUn cordial saludo,\nEquipo Cofrade News\nwww.cofrad.es · ${CORREO_HOLA}`;
+  const como = pct >= 100
+    ? `Para activarlo, entra antes del 31 de enero de 2027 a https://${DOMINIO}/socios/canjear, escribe este email y tu código, y confirma con el enlace que te llegará aquí mismo: tu plan anual queda activo por un año, sin pagar nada.`
+    : "Para usarlo, responde este correo antes del 31 de enero de 2027 y te indicamos cómo aplicarlo a tu pago.";
+  const comoHtml = pct >= 100
+    ? `Para activarlo, entra <b>antes del 31 de enero de 2027</b> a <a href="https://${DOMINIO}/socios/canjear" style="color:#0B1F3A">www.cofrad.es/socios/canjear</a>, escribe este email y tu código, y confirma con el enlace que te llegará aquí mismo: tu plan anual queda activo por un año, sin pagar nada.`
+    : "Para usarlo, <b>responde este correo antes del 31 de enero de 2027</b> y te indicamos cómo aplicarlo a tu pago.";
+  const reserva = "Tu código es personal: solo funciona con este email. No lo compartas.";
+  const text = `Hola:\n\n¡Felicitaciones! Saliste sorteado en el ${L} lugar del Concurso «Comparte Cofrade News».\n\nTu premio: ${premio}. Tu código de un solo uso:\n${cupon}\n\n`
+    + `${condiciones}\n${reserva}\n${como}\n\nBases: https://${DOMINIO}/bases-concurso\n\nUn cordial saludo,\nEquipo Cofrade News\nwww.cofrad.es · ${CORREO_HOLA}`;
   const html = `<div style="font:16px/1.6 Georgia,'Times New Roman',serif;color:#0B1F3A;max-width:560px;margin:0 auto;padding:8px 4px">`
     + `<p style="margin:0 0 18px;font:700 13px/1 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9A7B2F">Cofrade News · Concurso</p>`
     + `<p style="margin:0 0 14px">Hola:</p><p style="margin:0 0 14px">¡Felicitaciones! Saliste sorteado en el <b>${L} lugar</b> del <b>Concurso «Comparte Cofrade News»</b>.</p>`
-    + `<p style="margin:0 0 8px">Tu premio: <b>${premio}</b>. Tu cupón de un solo uso:</p>`
+    + `<p style="margin:0 0 8px">Tu premio: <b>${premio}</b>. Tu código de un solo uso:</p>`
     + `<p style="margin:0 0 16px;font:700 22px/1.2 'Courier New',monospace;letter-spacing:.08em">${cupon}</p>`
     + `<p style="margin:0 0 14px">${condiciones}</p>`
-    + `<p style="margin:0 0 14px">Para reclamarlo, <b>responde este correo antes del 31 de enero de 2027</b> y te indicamos cómo usarlo.</p>`
+    + `<p style="margin:0 0 14px">${reserva}</p><p style="margin:0 0 14px">${comoHtml}</p>`
     + `<p style="margin:22px 0 0">Un cordial saludo,<br><b>Equipo Cofrade News</b><br><a href="https://${DOMINIO}/bases-concurso" style="color:#0B1F3A">Bases del concurso</a> · <a href="mailto:${CORREO_HOLA}" style="color:#0B1F3A">${CORREO_HOLA}</a></p></div>`;
   return { subject, text, html };
 }
@@ -938,21 +963,117 @@ function correoGanador(cupon, lugar, pct) {
 // o se cobra el primer año con un pago único y la suscripción parte al año siguiente); 3) sin el 20 % de la Cofradía si hay cupón;
 // 4) canjearCupon con la referencia de la suscripción cuando Mercado Pago confirme el primer cobro. Hoy el Panel valida y marca usados.
 async function validarCupon(env, codigo, email, plan) {
-  const c = String(codigo || "").trim().toUpperCase();
+  const c = normalizarCodigo(codigo);
   if (!RE_CUPON.test(c)) return { ok: false, motivo: "formato" };
   await asegurarTablas(env, "concurso");
   const f = await env.DB.prepare("SELECT codigo, email, pct, plan, vence, usado, reclamado FROM cupones WHERE codigo = ?").bind(c).first();
   if (!f || !c.startsWith(`CN${f.pct}-`)) return { ok: false, motivo: "no existe" };
+  const em = String(email || "").trim().toLowerCase();
+  if (!em.includes("@") || (em !== f.email && emailCanonico(em) !== f.email)) return { ok: false, motivo: "otro email" };
   if (f.usado) return { ok: false, motivo: "ya usado" };
   if (!f.reclamado && hoyConcurso() > CONCURSO.reclamo) return { ok: false, motivo: "no reclamado a tiempo" };
   if (hoyConcurso() > f.vence) return { ok: false, motivo: "vencido" };
-  if (String(email || "").trim().toLowerCase() !== f.email) return { ok: false, motivo: "otro email" };
   if (plan !== f.plan) return { ok: false, motivo: "solo plan " + f.plan };
   return { ok: true, codigo: c, pct: f.pct, plan: f.plan, vence: f.vence, combinable: false, monto: Math.round(PLANES_SOCIO[f.plan].monto * (1 - f.pct / 100) / 10) * 10 };
 }
 async function canjearCupon(env, codigo, ref) {
   const r = await env.DB.prepare("UPDATE cupones SET usado = ?, ref = ? WHERE codigo = ? AND usado IS NULL").bind(new Date().toISOString(), String(ref || "panel").slice(0, 80), codigo).run();
   return !!(r.meta && r.meta.changes);
+}
+// ---------- canje del 1.er lugar: /socios/canjear (email + código → enlace a la bandeja del ganador → activación) ----------
+// Seguro aunque alguien vea el código: sin el email exacto no vale, y sin abrir el correo del ganador no se activa. El enlace
+// lleva un token de 32 bytes que se guarda solo como huella SHA-256, vence en 24 horas y sirve una vez.
+const CANJE_TOKEN_H = 24, CANJE_ENVIOS_DIA = 3;
+// ¿Tiene un plan con Mercado Pago (con el email escrito o su forma canónica)? Entonces el año gratis se aplica a mano al siguiente período
+async function socioPagado(env, email) {
+  const r = await env.DB.prepare("SELECT email, mp_id FROM usuarios WHERE mp_id IS NOT NULL AND (email = ? OR email = ?)").bind(email, emailCanonico(email)).all().catch(() => ({ results: [] }));
+  if ((r.results || []).length) return true;
+  const s = await env.DB.prepare("SELECT 1 FROM suscripciones WHERE estado IN ('pendiente', 'activa', 'pausada') AND (email = ? OR email = ?) LIMIT 1").bind(email, emailCanonico(email)).first().catch(() => null);
+  return !!s;
+}
+function paginaCanjeHtml(msg, mal, forma = true, extra = "") {
+  const aviso = msg ? `<p class="aviso" role="status" style="color:${mal ? "var(--rojo)" : "var(--verde)"};font-weight:600">${esc(msg)}</p>` : "";
+  const form = forma ? `<form class="form-anun" method="post" action="/socios/canjear" style="max-width:34em"><fieldset><legend>Activa tu premio</legend>
+<label class="ancho">Email ganador *<input name="email" type="email" required maxlength="120" autocomplete="email" inputmode="email"></label>
+<label class="ancho">Código *<input name="codigo" required maxlength="40" autocomplete="off" spellcheck="false" placeholder="CN100-XXXXX-XXXXX-XXXXX" style="text-transform:uppercase"></label>
+<label class="pub-hp" aria-hidden="true">Página web<input name="pagina_web" tabindex="-1" autocomplete="off"></label></fieldset>
+<button class="btn oro" type="submit">Continuar</button></form>` : "";
+  const cuerpo = `<section style="border:0;padding-top:30px"><span class="kicker">Concurso Comparte Cofrade News</span><h1 class="titulo-lujo">Activa tu plan anual gratis</h1>
+<p class="lede">Para el 1.er lugar del concurso. Escribe tu email ganador y tu código: te enviaremos un enlace a ese email para confirmar que eres tú.</p>${aviso}${extra}${form}
+<p class="sub">Tu código es personal: solo funciona con tu email y se usa una vez. ¿Ganaste un descuento? Responde el correo del premio o escríbenos a ${CORREO_HOLA}. <a href="/bases-concurso">Bases del concurso</a>.</p></section>`;
+  return html(marco({ titulo: "Activa tu premio · Cofrade News", descripcion: "Activación del premio del Concurso Comparte Cofrade News.", cuerpo, canonica: "/socios/canjear" }), 200,
+    { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
+}
+async function paginaCanje(req, env, u) {
+  if (!env.DB) return paginaCanjeHtml("El canje no está disponible en este momento. Escríbenos a " + CORREO_HOLA + ".", true, false);
+  await asegurarTablas(env, "concurso");
+  const ip = req.headers.get("CF-Connecting-IP") || "x";
+  if (req.method === "GET") {
+    const t = String(u.searchParams.get("t") || "");
+    if (!/^[a-f0-9]{64}$/.test(t)) return paginaCanjeHtml("", false);
+    // Dos pasos (como el Buzón): abrir el enlace solo muestra el botón; así el antivirus del correo no activa nada solo
+    const fila = await env.DB.prepare("SELECT codigo, creado, usado FROM canjes WHERE token = ?").bind(await sha256hex(t)).first();
+    if (!fila || fila.usado || Date.now() - Date.parse(fila.creado) > CANJE_TOKEN_H * 3600000) return paginaCanjeHtml("Ese enlace ya se usó o venció. Vuelve a escribir tu email y tu código para recibir uno nuevo.", true);
+    return paginaCanjeHtml("", false, false, `<form method="post" action="/socios/canjear"><input type="hidden" name="t" value="${t}"><button class="btn oro" type="submit">Activar mi plan anual</button></form>`);
+  }
+  if (!ORIGEN_OK(req)) return new Response("No autorizado.", { status: 403 });
+  if (!(await bajoLimite(env, "canje:" + ip))) return paginaCanjeHtml("Demasiados intentos. Espera un minuto.", true);
+  const cuerpo = await leerCuerpo(req, 2000);
+  if (cuerpo === null) return paginaCanjeHtml("Envío demasiado grande.", true);
+  const f = new URLSearchParams(cuerpo);
+  if (f.get("pagina_web")) return paginaCanjeHtml("Revisa tu email y tu código.", true);
+  const ahora = new Date().toISOString(), t = String(f.get("t") || "");
+  if (t) {   // paso 2: el enlace del correo
+    if (!/^[a-f0-9]{64}$/.test(t)) return paginaCanjeHtml("Ese enlace no es válido.", true);
+    const h = await sha256hex(t);
+    const fila = await env.DB.prepare("SELECT codigo, email, creado, usado FROM canjes WHERE token = ?").bind(h).first();
+    if (!fila || fila.usado || Date.now() - Date.parse(fila.creado) > CANJE_TOKEN_H * 3600000) return paginaCanjeHtml("Ese enlace ya se usó o venció. Vuelve a escribir tu email y tu código para recibir uno nuevo.", true);
+    const v = await validarCupon(env, fila.codigo, fila.email, CONCURSO.plan);
+    if (!v.ok || v.pct < 100) return paginaCanjeHtml(v.motivo === "ya usado" ? "Este premio ya está activado." : "Este código ya no es válido. Escríbenos a " + CORREO_HOLA + ".", true, false);
+    const vence = new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10);
+    if (await socioPagado(env, fila.email)) return paginaCanjeHtml(`Ya eres socio con un plan de Mercado Pago: escríbenos a ${CORREO_HOLA} desde este email y aplicamos tu año gratis a tu siguiente período anual.`, false, false);
+    // Un solo lote (todo o nada): marca el código, crea el plan solo si este pedido lo marcó y si la fila no es de un socio pagado, y anula los enlaces
+    let res;
+    try {
+      res = await env.DB.batch([
+        env.DB.prepare("UPDATE cupones SET usado = ?, ref = 'activacion', reclamado = COALESCE(reclamado, ?) WHERE codigo = ? AND usado IS NULL").bind(ahora, ahora, v.codigo),
+        env.DB.prepare(`INSERT INTO usuarios (email, creado, ultimo, estado, plan, vence) SELECT ?, ?, ?, 'activo', ?, ? WHERE EXISTS (SELECT 1 FROM cupones WHERE codigo = ? AND usado = ? AND ref = 'activacion')
+          ON CONFLICT(email) DO UPDATE SET ultimo = excluded.ultimo, estado = 'activo', plan = excluded.plan, vence = excluded.vence WHERE usuarios.mp_id IS NULL`)
+          .bind(fila.email, ahora, ahora, CONCURSO.plan, vence, v.codigo, ahora),
+        env.DB.prepare("UPDATE canjes SET usado = COALESCE(usado, ?) WHERE codigo = ?").bind(ahora, v.codigo),
+      ]);
+    } catch { return paginaCanjeHtml("No pudimos activar tu plan. Intenta de nuevo en unos minutos.", true, false); }
+    if (!(res[0].meta && res[0].meta.changes)) return paginaCanjeHtml("Este premio ya está activado.", true, false);
+    return paginaCanjeHtml(`¡Listo! Tu plan anual del Dashboard Financiero quedó activo hasta el ${vence.split("-").reverse().join("-")}, sin pagar nada. Terminado ese año, el plan sigue solo si tú lo contratas.`, false, false);
+  }
+  // paso 1: email + código → enlace a la bandeja del ganador (el mismo mensaje si no calzan: no revela qué falló)
+  const email = String(f.get("email") || "").trim().toLowerCase().slice(0, 120);
+  const v = await validarCupon(env, f.get("codigo"), email, CONCURSO.plan);
+  if (!v.ok) {
+    if (v.motivo === "ya usado") return paginaCanjeHtml("Ese premio ya está activado.", true);
+    if (v.motivo === "vencido" || v.motivo === "no reclamado a tiempo") return paginaCanjeHtml("El plazo para activar este premio terminó.", true);
+    return paginaCanjeHtml("El email y el código no coinciden con ningún premio. Revisa que sea el email con que participaste.", true);
+  }
+  if (v.pct < 100) return paginaCanjeHtml(`Tu premio es un ${v.pct} % de descuento en el primer año del plan anual: responde el correo del premio o escríbenos a ${CORREO_HOLA} desde tu email ganador y lo aplicamos a tu pago.`, false, false);
+  if (await socioPagado(env, email))
+    return paginaCanjeHtml(`Ya eres socio con un plan pagado: escríbenos a ${CORREO_HOLA} desde este email y aplicamos tu año gratis a tu siguiente período anual.`, false, false);
+  const hoy = new Date(Date.now() - 86400000).toISOString();
+  const n = await env.DB.prepare("SELECT COUNT(*) AS n FROM canjes WHERE codigo = ? AND creado > ?").bind(v.codigo, hoy).first();
+  if (n && n.n >= CANJE_ENVIOS_DIA) return paginaCanjeHtml("Ya te enviamos el enlace varias veces hoy: revisa tu bandeja, spam o promociones.", true, false);
+  if (!hayCorreo(env)) return paginaCanjeHtml(`No podemos enviar el correo en este momento. Escríbenos a ${CORREO_HOLA}.`, true, false);
+  const tok = hexDif(crypto.getRandomValues(new Uint8Array(32)));
+  await env.DB.batch([env.DB.prepare("INSERT INTO canjes (token, codigo, email, creado) VALUES (?, ?, ?, ?)").bind(await sha256hex(tok), v.codigo, email, ahora),
+    env.DB.prepare("UPDATE cupones SET reclamado = COALESCE(reclamado, ?) WHERE codigo = ?").bind(ahora, v.codigo)]);   // pedir el enlace a tiempo cuenta como reclamo
+  const enlace = `https://${DOMINIO}/socios/canjear?t=${tok}`;
+  const text = `Hola:\n\nPara activar tu plan anual gratis del Dashboard Financiero (1.er lugar del Concurso «Comparte Cofrade News»), abre este enlace y toca «Activar mi plan anual»:\n${enlace}\n\nEl enlace vence en ${CANJE_TOKEN_H} horas y sirve una vez. Si no fuiste tú, ignora este correo: sin este enlace nadie puede activar tu premio.\n\nUn cordial saludo,\nEquipo Cofrade News\nwww.cofrad.es · ${CORREO_HOLA}`;
+  const htmlC = `<div style="font:16px/1.6 Georgia,'Times New Roman',serif;color:#0B1F3A;max-width:560px;margin:0 auto;padding:8px 4px"><p style="margin:0 0 18px;font:700 13px/1 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9A7B2F">Cofrade News · Concurso</p>`
+    + `<p style="margin:0 0 14px">Hola:</p><p style="margin:0 0 14px">Para activar tu <b>plan anual gratis</b> del Dashboard Financiero (1.er lugar del Concurso «Comparte Cofrade News»), toca el botón:</p>`
+    + `<p style="margin:0 0 18px"><a href="${enlace}" style="display:inline-block;background:#C9A227;color:#0B1F3A;font:700 16px/1 Arial,sans-serif;text-decoration:none;padding:14px 26px;border-radius:999px">Activar mi plan anual</a></p>`
+    + `<p style="margin:0 0 14px;font:13px/1.5 Arial,sans-serif;color:#5A6577">El enlace vence en ${CANJE_TOKEN_H} horas y sirve una vez. Si no fuiste tú, ignora este correo: sin este enlace nadie puede activar tu premio.</p>`
+    + `<p style="margin:22px 0 0">Un cordial saludo,<br><b>Equipo Cofrade News</b></p></div>`;
+  const ok = await enviarCorreo(env, { to: email, subject: "Activa tu plan anual gratis · Cofrade News", text, html: htmlC }).catch(() => false);
+  if (!ok) return paginaCanjeHtml(`No pudimos enviar el correo. Intenta de nuevo en unos minutos o escríbenos a ${CORREO_HOLA}.`, true);
+  return paginaCanjeHtml("Te enviamos un enlace a tu email ganador. Ábrelo y toca «Activar mi plan anual» (revisa también spam o promociones).", false, false);
 }
 // D1 entrega un BLOB como ArrayBuffer o como lista de números según la versión: aquí se aceptan las dos
 function bytesDe(x) {
@@ -1035,10 +1156,10 @@ const BASES = {
     ["Quiénes pueden participar", "Personas naturales de 18 años o más que vivan en Chile. Una sola inscripción por persona y por email. No se necesita comprar ni pagar nada para participar. No pueden participar los trabajadores del Organizador ni sus familiares directos."],
     ["Cómo participar", "1) Abre el Buzón de www.cofrad.es y elige «Participar en el concurso». 2) Marca que tienes 18 años o más, que vives en Chile y que aceptas estas bases. 3) Escribe tu email y confírmalo con el enlace que te enviamos desde hola@cofrad.es: las participaciones cuentan solo con el email confirmado. 4) Al inscribirte, tu email queda unido a tu enlace personal para compartir, el que crea en tu navegador el botón «Compartir» de www.cofrad.es (lleva tu código personal, por ejemplo www.cofrad.es/?r=abcd1234). Inscríbete desde el mismo navegador con el que compartes. Si cambias de navegador o borras sus datos, escríbenos a hola@cofrad.es."],
     ["Participaciones", "a) Por enlace: cada persona distinta que abre tu enlace personal en su navegador en un día suma 1 participación, con un máximo de 10 por día y de 2 por conexión a internet. Cuentan las aperturas entre el 20 de noviembre y el 24 de diciembre de 2026, también las de antes de confirmar tu email. No cuentan los robots, las vistas previas automáticas de las aplicaciones de mensajería ni los enlaces escondidos en imágenes o marcos de otras páginas. b) Por captura: después de confirmar tu email, puedes subir en el Buzón, desde el mismo navegador, una captura de pantalla que muestre que compartiste Cofrade News. Cada captura aceptada suma 1 participación, con un máximo de 1 por día. Se rechazan las imágenes idénticas a otra ya enviada. El equipo del Organizador revisa cada captura. c) Antes de subir una captura, tapa los nombres, números de teléfono y fotos de otras personas."],
-    ["Premios", `${N_PREMIOS} ganadores, con un premio cada uno en el plan anual del Dashboard Financiero de Cofrade News: ${PREMIOS_ES}. Los premios valen solo para el primer año del plan anual. {SALDOS} Cada premio se entrega como un cupón de un solo uso, que se canjea coordinando con hola@cofrad.es a más tardar el 31 de marzo de 2027. Si ya eres socio del plan mensual, se aplica al pasarte al plan anual; si ya pagaste tu plan anual, se aplica a tu siguiente período anual, aunque empiece después de esa fecha. Terminado el año del premio, el plan sigue solo si tú lo contratas, al precio normal vigente. El cupón es personal (vale para el email ganador), no se cambia por dinero y no se suma a otros descuentos, incluido el 20 % de los socios de la Cofradía.`],
+    ["Premios", `${N_PREMIOS} ganadores, con un premio cada uno en el plan anual del Dashboard Financiero de Cofrade News: ${PREMIOS_ES}. Los premios valen solo para el primer año del plan anual. {SALDOS} Cada premio se entrega como un código personal de un solo uso, que solo vale junto con el email ganador: aunque otra persona lo vea, no puede usarlo. El 1.er lugar activa su premio en www.cofrad.es/socios/canjear, escribiendo su email y su código y confirmando con el enlace que le enviamos a ese email; su plan anual queda activo por un año, sin pagar nada. Los demás lugares canjean su descuento coordinando con hola@cofrad.es desde el email ganador, a más tardar el 31 de marzo de 2027. Si ya eres socio del plan mensual, se aplica al pasarte al plan anual; si ya pagaste tu plan anual, se aplica a tu siguiente período anual, aunque empiece después de esa fecha. Terminado el año del premio, el plan sigue solo si tú lo contratas, al precio normal vigente. El código es personal (vale solo para el email ganador), no se transfiere, no se cambia por dinero y no se suma a otros descuentos, incluido el 20 % de los socios de la Cofradía.`],
     ["Sorteo", "El 26 de diciembre de 2026, a más tardar a las 18:00 (hora de Santiago de Chile), el sistema de www.cofrad.es sortea a los 5 ganadores entre las personas con email confirmado y al menos 1 participación. Antes del sorteo, el Organizador revisa las capturas y puede excluir participaciones según la cláusula de exclusiones. Cada participación es una chance: quien tiene más participaciones tiene más probabilidades de ganar. Cada persona gana como máximo un premio (5 ganadores distintos). El orden en que salen sorteados define el lugar: el primero que sale gana el 1.er lugar, el segundo el 2.º lugar, y así hasta el 5.º. Si hay menos personas con participaciones que premios, los premios se asignan desde el 1.er lugar y los que sobran quedan desiertos. El sistema guarda un registro de auditoría con la huella digital (SHA-256) de la lista ordenada de participaciones, la semilla aleatoria y los ganadores."],
-    ["Aviso y resultados", "Avisamos a los ganadores por email y publicamos los resultados en esta página, con el lugar de cada ganador y su email parcialmente oculto. Los ganadores pueden reclamar su premio hasta el 31 de enero de 2027 respondiendo el correo o escribiendo a hola@cofrad.es. Si un premio no se reclama en ese plazo, queda desierto y el cupón se anula. El Organizador puede pedir a los ganadores que acrediten su edad y su residencia en Chile antes de entregar el premio."],
-    ["Datos personales", "Responsable: Destak. Finalidad: administrar el concurso (inscripción, conteo de participaciones, sorteo, aviso a los ganadores y entrega de premios). Datos que tratamos: tu email, tu código de enlace, la cantidad de personas que abren tu enlace (guardadas como huellas seudónimas que cambian cada día, sin guardar direcciones IP), una huella diaria de tu conexión para frenar abusos y las capturas que subas. Las capturas son privadas: nunca se publican, solo las ve el equipo que las revisa y se borran 30 días después del sorteo. Los datos de los participantes se borran una vez entregados los premios (los de quienes no ganaron, el 1 de febrero de 2027; los de los ganadores, cuando usen su cupón o este venza), salvo que la persona se suscriba a nuestros servicios. Cloudflare (sitio y base de datos) y Resend (envío de correos) tratan estos datos por encargo del Organizador, con servidores fuera de Chile. Puedes pedir acceso, rectificación, supresión, oposición, portabilidad o bloqueo escribiendo a hola@cofrad.es. Tratamos los datos conforme a la Ley 19.628 y a la Ley 21.719 sobre protección de datos personales."],
+    ["Aviso y resultados", "Avisamos a los ganadores por email y publicamos los resultados en esta página, con el lugar de cada ganador y su email parcialmente oculto. Los ganadores pueden reclamar su premio hasta el 31 de enero de 2027: el 1.er lugar, activándolo en www.cofrad.es/socios/canjear; los demás, respondiendo el correo o escribiendo a hola@cofrad.es. Si un premio no se reclama en ese plazo, queda desierto y el código se anula. El Organizador puede pedir a los ganadores que acrediten su edad y su residencia en Chile antes de entregar el premio."],
+    ["Datos personales", "Responsable: Destak EIRL. Finalidad: administrar el concurso (inscripción, conteo de participaciones, sorteo, aviso a los ganadores y entrega de premios). Datos que tratamos: tu email, tu código de enlace, la cantidad de personas que abren tu enlace (guardadas como huellas seudónimas que cambian cada día, sin guardar direcciones IP), una huella diaria de tu conexión para frenar abusos y las capturas que subas. Las capturas son privadas: nunca se publican, solo las ve el equipo que las revisa y se borran 30 días después del sorteo. Los datos de los participantes se borran una vez entregados los premios (los de quienes no ganaron, el 1 de febrero de 2027; los de los ganadores, cuando usen su cupón o este venza), salvo que la persona se suscriba a nuestros servicios. Cloudflare (sitio y base de datos) y Resend (envío de correos) tratan estos datos por encargo del Organizador, con servidores fuera de Chile. Puedes pedir acceso, rectificación, supresión, oposición, portabilidad o bloqueo escribiendo a hola@cofrad.es. Tratamos los datos conforme a la Ley 19.628 y a la Ley 21.719 sobre protección de datos personales."],
     ["Exclusiones", "El Organizador puede anular las participaciones obtenidas con métodos automatizados, visitas falsas, capturas ajenas o adulteradas, o datos falsos."],
     ["Información legal", "Estas bases se informan aquí conforme a los artículos 35 y 36 de la Ley 19.496 sobre Protección de los Derechos de los Consumidores: duración del concurso, número de premios, plazo para reclamarlos y publicación de los resultados. Participar implica aceptar estas bases. Cambio del 20 de noviembre de 2026: se mejoraron los premios (antes, 5 cupones de 25 % de descuento); el cambio no perjudica a nadie que ya participe."],
   ],
@@ -1048,10 +1169,10 @@ const BASES = {
     ["Who can enter", "Individuals aged 18 or older who live in Chile. One sign-up per person and per email. No purchase or payment of any kind is needed to take part. Employees of the Organizer and their immediate family cannot take part."],
     ["How to enter", "1) Open the Suggestions box at www.cofrad.es and choose “Enter the contest”. 2) Confirm that you are 18 or older, that you live in Chile and that you accept these rules. 3) Enter your email and confirm it with the link we send you from hola@cofrad.es: entries only count once your email is confirmed. 4) When you sign up, your email is linked to your personal sharing link, the one the “Share” button on www.cofrad.es creates in your browser (it carries your personal code, for example www.cofrad.es/?r=abcd1234). Sign up from the same browser you share from. If you change browsers or clear its data, write to hola@cofrad.es."],
     ["Entries", "a) Link: each different person who opens your personal link in their browser on a given day adds 1 entry, up to 10 per day and 2 per internet connection. Visits between November 20 and December 24, 2026 count, including those before you confirm your email. Robots, automatic link previews from messaging apps and links hidden in images or frames of other pages do not count. b) Screenshot: after confirming your email, you can upload in the Suggestions box, from the same browser, a screenshot showing that you shared Cofrade News. Each accepted screenshot adds 1 entry, up to 1 per day. Images identical to one already sent are rejected. The Organizer's team reviews every screenshot. c) Before uploading a screenshot, cover other people's names, phone numbers and photos."],
-    ["Prizes", `${N_PREMIOS} winners, each with one prize on the annual plan of the Cofrade News Financial Dashboard: ${PREMIOS_EN}. The prizes are valid only for the first year of the annual plan. {SALDOS} Each prize is delivered as a single-use coupon, redeemed by arranging it with hola@cofrad.es no later than March 31, 2027. If you are already on the monthly plan, it applies when you switch to the annual plan; if you already paid your annual plan, it applies to your next annual period, even if it starts after that date. When the prize year ends, the plan continues only if you choose to subscribe, at the regular price in force. The coupon is personal (valid for the winning email), cannot be exchanged for cash or combined with other discounts, including the 20% discount for members of the Cofradía.`],
+    ["Prizes", `${N_PREMIOS} winners, each with one prize on the annual plan of the Cofrade News Financial Dashboard: ${PREMIOS_EN}. The prizes are valid only for the first year of the annual plan. {SALDOS} Each prize is delivered as a personal single-use code that only works together with the winning email: even if someone else sees it, they cannot use it. The 1st place winner activates the prize at www.cofrad.es/socios/canjear by entering their email and code and confirming with the link we send to that email; the annual plan becomes active for one year, at no cost. The other places redeem their discount by arranging it with hola@cofrad.es from the winning email, no later than March 31, 2027. If you are already on the monthly plan, it applies when you switch to the annual plan; if you already paid your annual plan, it applies to your next annual period, even if it starts after that date. When the prize year ends, the plan continues only if you choose to subscribe, at the regular price in force. The code is personal (valid only for the winning email), cannot be transferred, exchanged for cash or combined with other discounts, including the 20% discount for members of the Cofradía.`],
     ["Draw", "On December 26, 2026, no later than 18:00 (Santiago, Chile time), the www.cofrad.es system draws the 5 winners among the people with a confirmed email and at least 1 entry. Before the draw, the Organizer reviews the screenshots and may cancel entries under the exclusions clause. Each entry is one chance: the more entries, the higher the probability of winning. Each person can win only one prize (5 different winners). The order of the draw sets the place: the first person drawn wins 1st place, the second wins 2nd place, and so on up to 5th. If fewer people have entries than there are prizes, prizes are assigned from 1st place down and the rest are void. The system keeps an audit record with the digital fingerprint (SHA-256) of the ordered list of entries, the random seed and the winners."],
-    ["Notice and results", "We notify the winners by email and publish the results on this page, with each winner's place and their email partly hidden. Winners can claim their prize until January 31, 2027 by replying to the email or writing to hola@cofrad.es. Prizes not claimed within that period are void and the coupon is cancelled. The Organizer may ask the winners to prove their age and residence in Chile before delivering the prize."],
-    ["Personal data", "Controller: Destak. Purpose: running the contest (sign-up, counting entries, the draw, notifying the winners and delivering the prizes). Data we process: your email, your link code, the number of people who open your link (stored as pseudonymous daily fingerprints, without storing IP addresses), a daily fingerprint of your connection to curb abuse and the screenshots you upload. Screenshots are private: they are never published, only the reviewing team sees them, and they are deleted 30 days after the draw. Participants' data is deleted once the prizes are delivered (non-winners' data on February 1, 2027; winners' data when they use their coupon or it expires), unless the person subscribes to our services. Cloudflare (website and database) and Resend (email delivery) process this data on behalf of the Organizer, on servers outside Chile. You can request access, correction, deletion, objection, portability or blocking by writing to hola@cofrad.es. We process data under Chilean Law 19,628 and Law 21,719 on personal data protection."],
+    ["Notice and results", "We notify the winners by email and publish the results on this page, with each winner's place and their email partly hidden. Winners can claim their prize until January 31, 2027: 1st place by activating it at www.cofrad.es/socios/canjear; the others by replying to the email or writing to hola@cofrad.es. Prizes not claimed within that period are void and the code is cancelled. The Organizer may ask the winners to prove their age and residence in Chile before delivering the prize."],
+    ["Personal data", "Controller: Destak EIRL. Purpose: running the contest (sign-up, counting entries, the draw, notifying the winners and delivering the prizes). Data we process: your email, your link code, the number of people who open your link (stored as pseudonymous daily fingerprints, without storing IP addresses), a daily fingerprint of your connection to curb abuse and the screenshots you upload. Screenshots are private: they are never published, only the reviewing team sees them, and they are deleted 30 days after the draw. Participants' data is deleted once the prizes are delivered (non-winners' data on February 1, 2027; winners' data when they use their coupon or it expires), unless the person subscribes to our services. Cloudflare (website and database) and Resend (email delivery) process this data on behalf of the Organizer, on servers outside Chile. You can request access, correction, deletion, objection, portability or blocking by writing to hola@cofrad.es. We process data under Chilean Law 19,628 and Law 21,719 on personal data protection."],
     ["Exclusions", "The Organizer may cancel entries obtained through automated methods, fake visits, someone else's or altered screenshots, or false data."],
     ["Legal information", "These rules are published here in accordance with articles 35 and 36 of Chilean Law 19,496 on Consumer Protection: duration of the contest, number of prizes, period to claim them and publication of the results. Taking part implies accepting these rules. Change of November 20, 2026: the prizes were improved (previously, 5 coupons for 25% off); the change does not harm anyone already taking part."],
   ],
@@ -1235,11 +1356,12 @@ async function seccionConcurso(env, u) {
     let g = [];
     try { g = JSON.parse(s.ganadores); } catch { g = []; }
     const fc = (a, c, t) => `<form method="post" action="/panel/concurso" style="display:inline"><input type="hidden" name="accion" value="${a}"><input type="hidden" name="codigo" value="${esc(c.codigo)}"><button class="btn linea chico" type="submit">${t}</button></form>`;
-    const cup = (R.cupones || []).map((c) => `<tr><td><code>${esc(c.codigo)}</code></td><td>${esc(c.email)}</td><td>${c.pct >= 100 ? "100 % (año gratis)" : c.pct + " %"}</td><td>${ddmm(c.vence)}</td><td>${c.reclamado ? "reclamado " + esc(String(c.reclamado).slice(0, 10)) : fc("cupon-reclamado", c, "Marcar como reclamado")}</td><td>${c.usado ? "usado " + esc(String(c.usado).slice(0, 10)) : fc("cupon-usado", c, "Marcar como usado")}</td></tr>`).join("");
+    const cup = (R.cupones || []).map((c) => `<tr><td><code>${esc(c.codigo)}</code></td><td>${esc(c.email)}</td><td>${c.pct >= 100 ? "100 % (año gratis)" : c.pct + " %"}</td><td>${ddmm(c.vence)}</td><td>${c.reclamado ? "reclamado " + esc(String(c.reclamado).slice(0, 10)) : fc("cupon-reclamado", c, "Marcar como reclamado")}</td><td>${c.usado ? (c.pct >= 100 ? "activado " : "usado ") + esc(String(c.usado).slice(0, 10)) : c.pct >= 100 ? "se activa en /socios/canjear" : fc("cupon-usado", c, "Marcar como usado")}</td></tr>`).join("");
+    const sinReclamo = (R.cupones || []).filter((c) => !c.reclamado && !c.usado).length;
     sorteo = `<div class="tarjeta"><h4 class="kicker">Sorteo oficial · registro de auditoría</h4><p>Realizado el ${esc(horaCL(s.creado))} · ${num(s.participantes, 0)} personas · ${num(s.total, 0)} participaciones · ${num(s.avisos, 0)} correos enviados.</p>
 <p class="sub">Huella SHA-256 de la lista ordenada: <code>${esc(s.huella)}</code><br>Semilla: <code>${esc(s.semilla)}</code><br>Ganadores en orden de lugar (huella del email): ${g.map((x, i) => `${esc(LUGAR_ES[(x.lugar || i + 1) - 1] || "")} <code>${esc(x.id)}</code> ${esc(x.mascara)} (${num(x.entradas, 0)})${x.pct ? ` · ${esc(premioDe(x.pct, false))}` : ""}`).join(" · ")}</p>
 <p><a class="btn linea chico" href="/panel/concurso/sorteo.json" target="_blank" rel="noopener">Descargar el registro completo (JSON)</a></p>
-<div style="overflow-x:auto"><table class="tabla-vis"><thead><tr><th>Cupón</th><th>Ganador</th><th>Descuento</th><th>Vence</th><th>Reclamo (hasta el 31-01-2027)</th><th>Uso</th></tr></thead><tbody>${cup}</tbody></table></div></div>`;
+${sinReclamo && hoy <= CONCURSO.reclamo ? `<p class="aviso" style="color:var(--rojo);font-weight:600">${sinReclamo} ${sinReclamo === 1 ? "premio sin reclamar" : "premios sin reclamar"}: cuando un ganador responda, toca «Marcar como reclamado». Lo que no esté reclamado el ${ddmm(CONCURSO.reclamo)} se anula solo.</p>` : ""}<div style="overflow-x:auto"><table class="tabla-vis"><thead><tr><th>Cupón</th><th>Ganador</th><th>Descuento</th><th>Vence</th><th>Reclamo (hasta el 31-01-2027)</th><th>Uso</th></tr></thead><tbody>${cup}</tbody></table></div></div>`;
   } else {
     const listo = hoy >= CONCURSO.sorteo;
     sorteo = `<div class="tarjeta"><h4 class="kicker">Sorteo</h4><p>${listo ? "Ya se puede hacer el sorteo oficial. Antes, revisa las capturas pendientes: las que queden sin revisar no suman." : `El botón se habilita el ${ddmm(CONCURSO.sorteo)}. Mientras, puedes ver una vista previa (no vale).`}</p>

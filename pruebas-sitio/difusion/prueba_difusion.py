@@ -234,7 +234,7 @@ if MODO == 'principal':
             for ruta in ['/panel/menciones', '/panel/concurso']:
                 s, h, b = pedir(ruta, 'POST', b'accion=barrer', {'Content-Type': 'application/x-www-form-urlencoded'})
                 ok(f'Panel sin clave: POST {ruta} rechazado (403)', s == 403, s)
-            for ruta in ['/panel/concurso/captura/1', '/panel/concurso/vista.json', '/panel/concurso/sorteo.json', '/panel/cupon?codigo=CN25-AAAA-BBBB']:
+            for ruta in ['/panel/concurso/captura/1', '/panel/concurso/vista.json', '/panel/concurso/sorteo.json', '/panel/cupon?codigo=CN25-AAAAA-BBBBB-CCCCC']:
                 ok(f'Panel sin clave: GET {ruta} rechazado (403)', pedir(ruta)[0] == 403)
             s, okc = entrar(); ok('entrar al Panel con la clave', s == 303 and okc, s)
             hp = panel_html()
@@ -470,22 +470,22 @@ if MODO == 'principal':
                 for i in elegir(pesos, f'sim{k}'): gana[i] += 1
             orden_p = sorted(range(len(pesos)), key=lambda i: pesos[i]); top, bajo = orden_p[-1], orden_p[0]
             ok('ponderado: quien tiene más participaciones gana más seguido', gana[top] > gana[bajo] * 3, (pesos[top], gana[top], pesos[bajo], gana[bajo]))
-            s, j = jget('/panel/cupon?codigo=CN25-AAAA-BBBB&email=x@gmail.com&plan=anual')
+            s, j = jget('/panel/cupon?codigo=CN25-AAAAA-BBBBB-CCCCC&email=x@gmail.com&plan=anual')
             ok('cupón inexistente: no válido', j == {'ok': False, 'motivo': 'no existe'}, j)
-            ok('cupón con formato malo: no válido', jget('/panel/cupon?codigo=CN25-ILOU-0000')[1]['motivo'] == 'formato')
+            ok('cupón con formato malo: no válido', jget('/panel/cupon?codigo=CN25-AAAA-BBBB')[1]['motivo'] == 'formato' and jget('/panel/cupon?codigo=CN99-AAAAA-BBBBB-CCCCC')[1]['motivo'] == 'formato')
         if corre('bases'):
             s, h, b = pedir('/bases-concurso'); t = b.decode()
             es = ['Destak', 'Concurso «Comparte Cofrade News»', 'Desde el 20 de noviembre de 2026 hasta el 24 de diciembre de 2026 a las 23:59 (hora de Santiago de Chile)', '18 años o más que vivan en Chile',
-                  'Una sola inscripción por persona y por email', 'No se necesita comprar ni pagar nada', 'máximo de 10 por día', 'máximo de 1 por día', 'idénticas', '5 ganadores', '1.er lugar, plan anual gratis; 2.º lugar, 75 % de descuento; 3.er lugar, 50 % de descuento; 4.º y 5.º lugares, 25 % de descuento', 'valen solo para el primer año del plan anual', '($55.000): $13.750 (2.º lugar), $27.500 (3.er lugar) o $41.250 (4.º y 5.º lugares)', 'los que sobran quedan desiertos', 'el plan sigue solo si tú lo contratas', 'se aplica a tu siguiente período anual', 'cupón de un solo uso', 'el primero que sale gana el 1.er lugar', 'lo organiza Destak (el «Organizador»)', 'Responsable: Destak.', 'y de 2 por conexión a internet',
-                  'a más tardar a las 18:00', 'acrediten su edad y su residencia', 'el cupón se anula', 'portabilidad o bloqueo', 'Resend', 'huellas seudónimas',
-                  'incluido el 20 % de los socios de la Cofradía', 'se canjea coordinando con hola@cofrad.es a más tardar el 31 de marzo de 2027', 'El 26 de diciembre de 2026', '5 ganadores distintos', 'SHA-256', 'la semilla aleatoria',
+                  'Una sola inscripción por persona y por email', 'No se necesita comprar ni pagar nada', 'máximo de 10 por día', 'máximo de 1 por día', 'idénticas', '5 ganadores', '1.er lugar, plan anual gratis; 2.º lugar, 75 % de descuento; 3.er lugar, 50 % de descuento; 4.º y 5.º lugares, 25 % de descuento', 'valen solo para el primer año del plan anual', '($55.000): $13.750 (2.º lugar), $27.500 (3.er lugar) o $41.250 (4.º y 5.º lugares)', 'los que sobran quedan desiertos', 'el plan sigue solo si tú lo contratas', 'se aplica a tu siguiente período anual', 'código personal de un solo uso, que solo vale junto con el email ganador', 'www.cofrad.es/socios/canjear', 'el primero que sale gana el 1.er lugar', 'lo organiza Destak (el «Organizador»)', 'Responsable: Destak EIRL.', 'y de 2 por conexión a internet',
+                  'a más tardar a las 18:00', 'acrediten su edad y su residencia', 'el código se anula', 'portabilidad o bloqueo', 'Resend', 'huellas seudónimas',
+                  'incluido el 20 % de los socios de la Cofradía', 'coordinando con hola@cofrad.es desde el email ganador, a más tardar el 31 de marzo de 2027', 'El 26 de diciembre de 2026', '5 ganadores distintos', 'SHA-256', 'la semilla aleatoria',
                   'Avisamos a los ganadores por email', 'hasta el 31 de enero de 2027', 'se borran 30 días después del sorteo', 'hola@cofrad.es', 'Ley 19.628', 'Ley 21.719', 'artículos 35 y 36 de la Ley 19.496', 'tapa los nombres']
             en = ['Organized by Destak'.split(' by ')[1], 'From November 20, 2026 until December 24, 2026 at 23:59 (Santiago, Chile time)', '18 or older who live in Chile', 'No purchase or payment',
-                  'up to 10 per day', 'up to 1 per day', '1st place, free annual plan; 2nd place, 75% off; 3rd place, 50% off; 4th and 5th places, 25% off', 'valid only for the first year of the annual plan', '(CLP 55,000): CLP 13,750 (2nd place), CLP 27,500 (3rd place) or CLP 41,250 (4th and 5th places)', 'the rest are void', 'continues only if you choose to subscribe', 'single-use coupon', 'the first person drawn wins 1st place', 'is organized by Destak (the “Organizer”)', 'Controller: Destak.', 'no later than 18:00', 'portability or blocking', 'pseudonymous daily fingerprints', 'redeemed by arranging it with hola@cofrad.es no later than March 31, 2027', 'On December 26, 2026', 'until January 31, 2027',
+                  'up to 10 per day', 'up to 1 per day', '1st place, free annual plan; 2nd place, 75% off; 3rd place, 50% off; 4th and 5th places, 25% off', 'valid only for the first year of the annual plan', '(CLP 55,000): CLP 13,750 (2nd place), CLP 27,500 (3rd place) or CLP 41,250 (4th and 5th places)', 'the rest are void', 'continues only if you choose to subscribe', 'personal single-use code that only works together with the winning email', 'the first person drawn wins 1st place', 'is organized by Destak (the “Organizer”)', 'Controller: Destak EIRL.', 'no later than 18:00', 'portability or blocking', 'pseudonymous daily fingerprints', 'by arranging it with hola@cofrad.es from the winning email, no later than March 31, 2027', 'On December 26, 2026', 'until January 31, 2027',
                   'deleted 30 days after the draw', 'Law 19,628 and Law 21,719', 'articles 35 and 36 of Chilean Law 19,496', "cover other people's names"]
             ok('bases en español: organizador, fechas, requisitos, participaciones, premio, sorteo, reclamo y datos personales', s == 200 and all(x in t for x in es), [x for x in es if x not in t])
             ok('bases en inglés: el mismo contenido', all(x in t for x in en), [x for x in en if x not in t])
-            ok('bases: el organizador es «Destak» (sin E.I.R.L.) y el cambio de premios queda informado', 'E.I.R.L' not in t and 'Cambio del 20 de noviembre de 2026: se mejoraron los premios' in t and 'Change of November 20, 2026' in t)
+            ok('bases: el organizador es «Destak»; «Destak EIRL» solo en Datos personales (ES y EN); el cambio de premios queda informado', 'E.I.R.L' not in t and t.count('EIRL') == 2 and 'Cambio del 20 de noviembre de 2026: se mejoraron los premios' in t and 'Change of November 20, 2026' in t)
             ok('bases: botón para participar mientras está abierto', 'class="btn oro concurso-abrir"' in t and 'id="dlgConcurso"' in t)
             cx = contexto(br, viewport={'width': 320, 'height': 760}); pg = cx.new_page(); pg.goto(B + '/bases-concurso'); pg.wait_for_timeout(500)
             ok('bases: abre en español (inglés oculto)', pg.is_visible('.b-es h1') and not pg.is_visible('.b-en h1'))
@@ -528,7 +528,7 @@ if MODO == 'sorteo':
     ok('el orden del sorteo define el lugar: 1.º gratis, 2.º 75 %, 3.º 50 %, 4.º y 5.º 25 %', [g['id'] for g in vj['ganadores']] == gan and [(g.get('lugar'), g.get('pct')) for g in so['ganadores']] == [(1, 100), (2, 75), (3, 50), (4, 25), (5, 25)], so['ganadores'])
     pct_de = {c['email']: c['pct'] for c in cup}
     ok('cada ganador recibe el cupón de su lugar', [pct_de.get(e) for e in orden] == [100, 75, 50, 25, 25], [pct_de.get(e) for e in orden])
-    ok('5 cupones de un solo uso, plan anual, vencen el 31-03-2027, con el descuento en el código (CN100, CN75, CN50, CN25)', len(cup) == 5 and all(re.fullmatch(r'CN%d-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}' % c['pct'], c['codigo']) and c['plan'] == 'anual' and c['vence'] == '2027-03-31' and not c['usado'] for c in cup) and len({c['email'] for c in cup}) == 5 and [c['pct'] for c in cup] == [100, 75, 50, 25, 25], cup)
+    ok('5 cupones de un solo uso, plan anual, vencen el 31-03-2027, con el descuento en el código (CN100, CN75, CN50, CN25)', len(cup) == 5 and all(re.fullmatch(r'CN%d(?:-[0-9A-HJKMNP-TV-Z]{5}){3}' % c['pct'], c['codigo']) and c['plan'] == 'anual' and c['vence'] == '2027-03-31' and not c['usado'] for c in cup) and len({c['email'] for c in cup}) == 5 and [c['pct'] for c in cup] == [100, 75, 50, 25, 25], cup)
     ok('los ganadores tienen chances y están confirmados', all(c['email'] in pesos for c in cup))
     mails = [m for m in correos() if 'Ganaste' in m.get('subject', '')]
     ok('correo a cada ganador con su cupón', len(mails) == 5 and all(any(c['codigo'] in m['text'] for m in mails if m['to'] == [c['email']]) for c in cup), len(mails))
@@ -553,8 +553,34 @@ if MODO == 'sorteo':
     ok('cupones del 2.º, 3.º y 4.º lugar: $13.750, $27.500 y $41.250', [jget(f"/panel/cupon?codigo={c['codigo']}&email={c['email']}&plan=anual")[1].get('monto') for c in cup[1:4]] == [13750, 27500, 41250])
     ok('cupón: otro email no sirve', jget(f"/panel/cupon?codigo={c0['codigo']}&email=otro@gmail.com&plan=anual")[1]['motivo'] == 'otro email')
     ok('cupón: plan mensual no sirve', jget(f"/panel/cupon?codigo={c0['codigo']}&email={c0['email']}&plan=mensual")[1]['motivo'] == 'solo plan anual')
-    s, loc = panel_post('/panel/concurso', {'accion': 'cupon-usado', 'codigo': c0['codigo']})
-    ok('marcar cupón como usado; después ya no vale', 'cc=cupon-usado' in loc and jget(f"/panel/cupon?codigo={c0['codigo']}&email={c0['email']}&plan=anual")[1]['motivo'] == 'ya usado', loc)
+    # --- canje del 1.er lugar en /socios/canjear (código + email + enlace a la bandeja del ganador) ---
+    def canje(campos, origen='https://www.cofrad.es', ip='192.0.2.77'):
+        s, h, b = pedir('/socios/canjear', 'POST', urllib.parse.urlencode(campos).encode(), {'Content-Type': 'application/x-www-form-urlencoded', 'Origin': origen, 'x-ip-prueba': ip}); return s, b.decode()
+    c75 = cup[1]
+    ok('canje: la página abre con el formulario', pedir('/socios/canjear')[0] == 200 and 'Activa tu plan anual gratis' in pedir('/socios/canjear')[2].decode())
+    # (el cliente HTTP del arnés no envía la cabecera Origin; el bloqueo de otras webs lo cubre ORIGEN_OK, igual que en el Panel)
+    ok('canje: el código del 1.er lugar con otro email no sirve', 'no coinciden' in canje({'email': c75['email'], 'codigo': c0['codigo']})[1])
+    t75 = canje({'email': c75['email'], 'codigo': c75['codigo']})[1]
+    ok('canje: un código de descuento no activa nada y explica qué hacer', 'Tu premio es un 75 % de descuento' in t75 and not sql("SELECT 1 FROM canjes"), re.findall(r'class="aviso"[^<]*', t75))
+    ok('canje: el código se acepta escrito sin guiones y con O en vez de 0', 'no coinciden' not in canje({'email': c75['email'], 'codigo': c75['codigo'].replace('-', '').replace('0', 'o')})[1])
+    antes = len(correos())
+    s, t = canje({'email': c0['email'].upper(), 'codigo': ' ' + c0['codigo'].lower().replace('-', ' - ') + ' '})
+    act = [m for m in correos()[antes:] if 'Activa tu plan anual gratis' in m.get('subject', '')]
+    lk = re.search(r'https://www\.cofrad\.es/socios/canjear\?t=([a-f0-9]{64})', act[0]['text']).group(1) if act else ''
+    ok('canje: email y código correctos (con mayúsculas y espacios) → enlace solo al email ganador', 'Te enviamos un enlace' in t and len(act) == 1 and act[0]['to'] == [c0['email']] and lk, (t[-300:], [m.get('subject') for m in correos()[antes:]]))
+    ok('canje: la base guarda solo la huella del enlace, nunca el enlace', lk and not sql(f"SELECT 1 FROM canjes WHERE token = '{lk}'") and sql(f"SELECT 1 FROM canjes WHERE token = '{hashlib.sha256(lk.encode()).hexdigest()}'"))
+    g = pedir('/socios/canjear?t=' + lk)[2].decode()
+    ok('canje: abrir el enlace solo muestra el botón (no activa)', 'Activar mi plan anual' in g and not sql(f"SELECT usado FROM cupones WHERE codigo = '{c0['codigo']}'")[0]['usado'])
+    ok('canje: un enlace inventado no sirve', 'ya se usó o venció' in canje({'t': 'a' * 64})[1])
+    s, t = canje({'t': lk})
+    us = sql(f"SELECT estado, plan, vence FROM usuarios WHERE email = '{c0['email']}'")
+    cu = sql(f"SELECT usado, ref, reclamado FROM cupones WHERE codigo = '{c0['codigo']}'")[0]
+    ok('canje: el botón activa el plan anual por un año, sin pago', 'quedó activo hasta' in t and us and us[0]['estado'] == 'activo' and us[0]['plan'] == 'anual' and us[0]['vence'] > '2027-11-01' and cu['usado'] and cu['ref'] == 'activacion' and cu['reclamado'], (t[-200:], us, cu))
+    ok('canje: el mismo enlace no sirve dos veces', 'ya se usó o venció' in canje({'t': lk})[1])
+    ok('canje: el mismo código no se activa dos veces', 'ya está activado' in canje({'email': c0['email'], 'codigo': c0['codigo']})[1])
+    c2 = cup[2]
+    s, loc = panel_post('/panel/concurso', {'accion': 'cupon-usado', 'codigo': c2['codigo']})
+    ok('marcar cupón como usado; después ya no vale', 'cc=cupon-usado' in loc and jget(f"/panel/cupon?codigo={c2['codigo']}&email={c2['email']}&plan=anual")[1]['motivo'] == 'ya usado', loc)
     s, loc = panel_post('/panel/concurso', {'accion': 'cupon-reclamado', 'codigo': cup[1]['codigo']})
     ok('marcar cupón como reclamado', 'cc=cupon-reclamado' in loc and sql(f"SELECT reclamado FROM cupones WHERE codigo='{cup[1]['codigo']}'")[0]['reclamado'], loc)
     hp = panel_html()
@@ -584,19 +610,24 @@ if MODO == 'pocos':   # 20-11-2026: 2 personas con chances y 5 premios → 1.er 
     ok('pocos: 2 personas → 2 premios (100 % y 75 %), en el orden del sorteo', 'cc=ok:2:2' in loc and [c[0] for c in cup] == [75, 100] and [(g['lugar'], g['pct']) for g in so] == [(1, 100), (2, 75)], (loc, cup, so))
     b = pedir('/bases-concurso')[2].decode()
     ok('pocos: los resultados muestran 2 ganadores', len(re.findall(r'<li>[^<]*· primer año gratis</li>', b)) == 1 and len(re.findall(r'<li>[^<]*· 75 % de descuento en el primer año</li>', b)) == 1 and '50 % de descuento en el primer año</li>' not in b)
+    g1 = sql("SELECT codigo, email FROM cupones WHERE pct = 100")[0]
+    sql(f"INSERT INTO usuarios (email, estado, plan, mp_id) VALUES ('{g1['email']}', 'cancelado', 'mensual', 'mp-123')")
+    s2, h2, b2 = pedir('/socios/canjear', 'POST', urllib.parse.urlencode({'email': g1['email'], 'codigo': g1['codigo']}).encode(), {'Content-Type': 'application/x-www-form-urlencoded', 'Origin': 'https://www.cofrad.es'})
+    u1 = sql(f"SELECT estado, plan FROM usuarios WHERE email = '{g1['email']}'")[0]
+    ok('pocos: a un socio con plan de Mercado Pago el canje no le pisa nada (se aplica a mano)', 'Ya eres socio' in b2.decode() and u1 == {'estado': 'cancelado', 'plan': 'mensual'} and not sql("SELECT 1 FROM canjes"), u1)
     ok('pocos: un código con prefijo que no calza con su porcentaje no vale', jget('/panel/cupon?codigo=CN50-' + sql("SELECT codigo FROM cupones WHERE pct = 100")[0]['codigo'][6:] + '&email=x@gmail.com&plan=anual')[1]['motivo'] in ('no existe', 'formato'))
 
 # ============================================================== BORRADOS (02-02-2027) ================================================
 if MODO == 'vencido':
     for em, cod in [('nogano@gmail.com', 'nog00001'), ('gano.reclama@gmail.com', 'gre00001'), ('gano.olvida@gmail.com', 'gol00001')]:
         sql(f"INSERT INTO concurso_participantes (email, codigo, creado, verificado, mayor, bases) VALUES ('{em}', '{cod}', '2026-11-20T10:00:00Z', 1, 1, 1)")
-    sql("INSERT INTO cupones (codigo, email, origen, pct, plan, vence, creado, reclamado) VALUES ('CN25-AAAA-AAAA','gano.reclama@gmail.com','concurso',25,'anual','2027-03-31','2026-12-26T21:00:00Z','2027-01-10T10:00:00Z')")
-    sql("INSERT INTO cupones (codigo, email, origen, pct, plan, vence, creado) VALUES ('CN25-BBBB-BBBB','gano.olvida@gmail.com','concurso',25,'anual','2027-03-31','2026-12-26T21:00:00Z')")
+    sql("INSERT INTO cupones (codigo, email, origen, pct, plan, vence, creado, reclamado) VALUES ('CN25-AAAAA-AAAAA-AAAAA','gano.reclama@gmail.com','concurso',25,'anual','2027-03-31','2026-12-26T21:00:00Z','2027-01-10T10:00:00Z')")
+    sql("INSERT INTO cupones (codigo, email, origen, pct, plan, vence, creado) VALUES ('CN25-BBBBB-BBBBB-BBBBB','gano.olvida@gmail.com','concurso',25,'anual','2027-03-31','2026-12-26T21:00:00Z')")
     sql("INSERT INTO concurso_capturas (email, fecha, creado, sha, bytes, datos, estado) VALUES ('nogano@gmail.com','2026-12-01','2026-12-01T10:00:00Z','" + 'd' * 64 + "',3,'/9j/','aceptada')")
     entrar(); hp = panel_html()
     ok('desde el 01-02-2027: se borran las capturas y los datos de quienes no ganaron', not sql("SELECT 1 FROM concurso_capturas") and not sql("SELECT 1 FROM concurso_participantes WHERE email='nogano@gmail.com'"))
-    ok('desde el 01-02-2027: el cupón no reclamado se anula y el reclamado sigue', [x['codigo'] for x in sql("SELECT codigo FROM cupones ORDER BY codigo")] == ['CN25-AAAA-AAAA'] and not sql("SELECT 1 FROM concurso_participantes WHERE email='gano.olvida@gmail.com'"))
-    ok('cupón reclamado: sigue válido hasta su vencimiento', jget("/panel/cupon?codigo=CN25-AAAA-AAAA&email=gano.reclama@gmail.com&plan=anual")[1].get('ok') is True)
+    ok('desde el 01-02-2027: el cupón no reclamado se anula y el reclamado sigue', [x['codigo'] for x in sql("SELECT codigo FROM cupones ORDER BY codigo")] == ['CN25-AAAAA-AAAAA-AAAAA'] and not sql("SELECT 1 FROM concurso_participantes WHERE email='gano.olvida@gmail.com'"))
+    ok('cupón reclamado: sigue válido hasta su vencimiento', jget("/panel/cupon?codigo=CN25-AAAAA-AAAAA-AAAAA&email=gano.reclama@gmail.com&plan=anual")[1].get('ok') is True)
     ok('Panel: último mantenimiento con fecha', re.search(r'último mantenimiento \d{2}[-/]\d{2}', hp) is not None, re.findall(r'último mantenimiento [^<]{0,40}', hp))
 
 # ============================================================== CERRADO / ANTES ======================================================

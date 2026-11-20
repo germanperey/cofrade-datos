@@ -1520,6 +1520,7 @@ export default {
         return paginaFundador(env, env.DB ? await pctCofradia(env) : 20, await modoInscripcion(req, env));
       }
       if (p === "/socios/gracias") return await paginaGracias(req, u, env);
+      if (p === "/socios/canjear") return await paginaCanje(req, env, u).catch(() => new Response("No pudimos procesar el canje. Intenta de nuevo en unos minutos.", { status: 503 }));   // 20-11-2026: premio del 1.er lugar del concurso
       if (p === "/socios/condiciones") return paginaCondiciones(env.DB ? await pctCofradia(env) : 20);
       if (p === "/panel/probar") return await probarInscripcion(req, env);
       if (p === "/panel/suscripciones" && req.method === "POST") return await accionSuscripciones(req, env).catch(() => new Response(null, { status: 303, headers: { Location: "/panel" } }));
