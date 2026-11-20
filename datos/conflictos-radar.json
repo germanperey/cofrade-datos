@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-20T05:20:31-03:00",
+ "generado": "2026-11-20T05:40:36-03:00",
  "ventana_h": 72,
  "excluidos": "Rusia–Ucrania, Gaza, Irán y frente regional y Sudán (ya salen todos los días)",
  "candidatos": [
@@ -150,22 +150,6 @@
    ]
   },
   {
-   "iso2": "SO",
-   "pais": "Somalia",
-   "titulares_72h": 1,
-   "medios": 1,
-   "prom_7d": 1.5,
-   "revisar": false,
-   "ejemplos": [
-    {
-     "titulo": "Somalia orders UAE ambassador to leave, citing 'invasion'",
-     "fuente": "Al-Monitor",
-     "url": "https://www.al-monitor.com/originals/2026/11/somalia-orders-uae-ambassador-leave-citing-invasion",
-     "fecha": "2026-11-19 17:46"
-    }
-   ]
-  },
-  {
    "iso2": "AE",
    "pais": "Emiratos",
    "titulares_72h": 1,
@@ -182,11 +166,27 @@
    ]
   },
   {
-   "iso2": "TW",
-   "pais": "Taiwán",
+   "iso2": "SO",
+   "pais": "Somalia",
    "titulares_72h": 1,
    "medios": 1,
-   "prom_7d": 1.0,
+   "prom_7d": 1.5,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "Somalia orders UAE ambassador to leave, citing 'invasion'",
+     "fuente": "Al-Monitor",
+     "url": "https://www.al-monitor.com/originals/2026/11/somalia-orders-uae-ambassador-leave-citing-invasion",
+     "fecha": "2026-11-19 17:46"
+    }
+   ]
+  },
+  {
+   "iso2": "CN",
+   "pais": "China",
+   "titulares_72h": 1,
+   "medios": 1,
+   "prom_7d": 1.5,
    "revisar": false,
    "ejemplos": [
     {
@@ -198,11 +198,11 @@
    ]
   },
   {
-   "iso2": "CN",
-   "pais": "China",
+   "iso2": "TW",
+   "pais": "Taiwán",
    "titulares_72h": 1,
    "medios": 1,
-   "prom_7d": 1.5,
+   "prom_7d": 1.0,
    "revisar": false,
    "ejemplos": [
     {
@@ -253,11 +253,11 @@
    "MM": 1,
    "BR": 1,
    "PE": 1,
-   "SO": 1,
    "AE": 1,
+   "SO": 1,
    "SY": 2,
-   "TW": 1,
-   "CN": 1
+   "CN": 1,
+   "TW": 1
   }
  }
 }
