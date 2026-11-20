@@ -48,7 +48,7 @@ details.cn-cmp>.dos{margin-top:14px}
 const AIRE_CSS = `<style id="cnAire">@media screen{
 #crecw .dos+.dos{margin-top:16px}#crecw p.leer{margin-top:16px}.sec p.leer+.tabla{margin-top:20px}
 #cgw .cga{margin-top:30px}
-#cgw .botones-amb{margin-bottom:24px!important}#cgw .cg-panel>.kpis{margin-top:16px!important}
+#cgw .cg-mes>.cg-panel{padding-top:12px}
 #pjw>.sub+.kpis,#pjw>p.sub~.kpis{margin-top:24px!important}#pjw>.kpis+.dos{margin-top:32px!important}
 .gob-cab+.gob-servel,.gob-servel{margin-top:26px!important}.gob-servel+.gob-grid,.gob-grid{margin-top:28px!important}
 #gobiernos .gob-kpis{margin-top:22px}#gobiernos .gob-kpis+.pg-wrap{margin-top:24px}#gobiernos .gob-panel{margin-top:26px}#gobiernos .gob-servel{margin-top:18px}#gobiernos .gob-grid+.tabla{margin-top:22px}
