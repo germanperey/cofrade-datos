@@ -173,7 +173,7 @@ if MODO == 'principal':
             pg = cx.new_page(); errs = []; pg.on('pageerror', lambda e: errs.append(str(e)))
             pg.goto(B + '/edicion/2026-11-19?r=zzzz9999&utm_source=compartir'); pg.wait_for_timeout(1500)
             ok('edición: botón en la cabecera (.acciones), 44x44 o más', pg.locator('header.cabecera .acciones #cnCompartir').count() == 1 and (lambda c: c and c[0] >= 44 and c[1] >= 44)(caja(pg, '#cnCompartir')), caja(pg, '#cnCompartir'))
-            ok('edición: texto visible «Compartir»', pg.inner_text('#cnCompartir').strip() == 'Compartir')
+            ok('edición: botón circular solo con el ícono y nombre accesible «Compartir esta edición»', pg.inner_text('#cnCompartir').strip() == '' and pg.locator('#cnCompartir svg').count() == 1 and pg.get_attribute('#cnCompartir', 'aria-label') == 'Compartir esta edición' and pg.evaluate("getComputedStyle(document.getElementById('cnCompartir')).borderRadius") == '50%')
             ok('edición: el enlace recibido se limpia de la barra', pg.evaluate('location.search') == '')
             pg.click('#cnCompartir'); pg.wait_for_timeout(300)
             r3 = pg.evaluate("localStorage.getItem('cn-ref')")
@@ -181,7 +181,7 @@ if MODO == 'principal':
             pg.keyboard.press('Escape'); pg.wait_for_timeout(150)
             if pg.locator('#btnIdioma').count():
                 pg.click('#btnIdioma'); pg.wait_for_timeout(1200)
-                ok('edición EN: botón «Share» y nombre accesible en inglés', pg.inner_text('#cnCompartir').strip() == 'Share' and pg.get_attribute('#cnCompartir', 'aria-label') == 'Share this edition', pg.inner_text('#cnCompartir'))
+                ok('edición EN: botón «Share» y nombre accesible en inglés', pg.get_attribute('#cnCompartir', 'aria-label') == 'Share this edition', pg.inner_text('#cnCompartir'))
                 pg.click('#btnIdioma'); pg.wait_for_timeout(800)
             pg.click('#btnTema'); pg.wait_for_timeout(300); pg.click('#cnCompartir'); pg.wait_for_timeout(250)
             ok('edición en modo oscuro: menú oscuro', pg.evaluate("getComputedStyle(document.getElementById('cmpEd')).backgroundColor") == 'rgb(21, 32, 51)')

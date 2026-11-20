@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "29798c9161a4";
+const VERSION_SITIO = "8eef0bc09972";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -3892,7 +3892,7 @@ const ICONO_COMPARTIR = `<svg width="20" height="20" viewBox="0 0 24 24" aria-hi
 function compartirHtml(contexto, url) {
   const ed = contexto === "edicion", id = ed ? "cmpEd" : "cmpPo";
   const boton = ed
-    ? `<button type="button" class="cmp-b cn-cmp-b" id="cnCompartir" hidden aria-expanded="false" aria-controls="${id}" data-ta="ed" aria-label="Compartir esta edición" title="Compartir esta edición">${ICONO_COMPARTIR}<span data-t="boton">Compartir</span></button>`
+    ? `<button type="button" class="cmp-b cn-cmp-b" id="cnCompartir" hidden aria-expanded="false" aria-controls="${id}" data-ta="ed" aria-label="Compartir esta edición" title="Compartir esta edición">${ICONO_COMPARTIR}</button>`
     : `<button type="button" class="tema cmp-b" id="cmpBoton" hidden aria-expanded="false" aria-controls="${id}" data-ta="abrir" aria-label="Compartir Cofrade News" title="Compartir Cofrade News">${ICONO_COMPARTIR}</button>`;
   const red = (k, t, ext = true) => `<a class="cmp-i" data-canal="${k}" href="${esc(url)}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ""}><span${k === "correo" ? ' data-t="correo"' : ""}>${t}</span></a>`;
   const cc = etapaConcurso() === "abierto" ? `<p class="cmp-cc"><a href="/bases-concurso" data-t="concurso">Concurso «Comparte Cofrade News»: bases</a></p>` : "";
@@ -3904,7 +3904,8 @@ function compartirHtml(contexto, url) {
 }
 const COMPARTIR_CSS = `.cmp{display:inline-flex;align-items:center;position:relative}.cmp-b{min-width:44px;min-height:44px;justify-content:center}.cmp-b[hidden]{display:none!important}
 .tema.cmp-b{border:1.5px solid var(--linea);border-radius:999px;color:var(--oro-t)}.tema.cmp-b:hover{border-color:var(--oro)}.cmp-b svg{display:block;flex:none}
-.cn-cmp-b{display:inline-flex!important;align-items:center;gap:7px;min-height:44px;min-width:44px;cursor:pointer}
+.cn-cmp-b{display:inline-grid!important;place-items:center;flex:none;box-sizing:border-box;width:44px!important;height:44px!important;min-width:44px;min-height:44px;padding:0!important;border-radius:50%!important;gap:0;cursor:pointer}
+.cn-cmp-b svg{width:21px;height:21px}
 .cmp-p{position:fixed;z-index:2147483000;left:8px;top:8px;width:320px;max-width:calc(100vw - 16px);box-sizing:border-box;display:block;background:#fff;color:#0B1F3A;border:1px solid #DDD3BF;border-radius:16px;padding:12px 14px 14px;
 box-shadow:0 18px 48px -12px rgba(11,31,58,.35),0 2px 8px rgba(11,31,58,.12);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;text-align:left;letter-spacing:0;text-transform:none}
 .cmp-p[hidden]{display:none!important}.cmp-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px}.cmp-tit{font-weight:700;font-size:15px}
