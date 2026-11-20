@@ -175,7 +175,8 @@ function proyeccionTablaInst(c, en) {
     return `<tr><th scope="row"><b>${pcEsc(en ? x.corto_en || x.corto : x.corto)}</b><br><span class="pc-inf">${pcEsc(inf)}${pcEsc(via)}</span></th>${celdas}</tr>`;
   }).join("");
   const prom = c.anios.map((a) => `<td class="pc-n"><b>${c.prom[a] ? pcEsc(pcFmt(c.prom[a].valor, en).replace(/ ?%$/, "")) : "·"}</b></td>`).join("");
-  return `<div class="tabla pc-tabla" data-voz="no"><table><caption>${en ? "GDP growth projections by institution (% per year)" : "Proyecciones de crecimiento del PIB por institución (% anual)"}</caption>`
+  const tit = en ? "GDP growth projections by institution (% per year)" : "Proyecciones de crecimiento del PIB por institución (% anual)";
+  return `<p class="pc-st" data-voz="no" aria-hidden="true">${tit}</p><div class="tabla pc-tabla" data-voz="no"><table><caption class="pc-sr">${tit}</caption>`
     + `<thead><tr><th scope="col">${en ? "Institution and report" : "Institución e informe"}</th>${c.anios.map((a) => `<th scope="col" class="pc-n">${a}</th>`).join("")}</tr></thead>`
     + `<tbody>${filas}</tbody><tfoot><tr><th scope="row">${en ? "Average (reports from the last 6 months)" : "Promedio (informes de los últimos 6 meses)"}</th>${prom}</tr></tfoot></table></div>`;
 }
@@ -186,7 +187,8 @@ function proyeccionTablaFmi(c, en) {
     ["deuda", "Deuda pública bruta (% del PIB)", "Gross public debt (% of GDP)"]].filter((f) => S[f[0]] && c.anios.some((a) => Number.isFinite(S[f[0]][a])));
   if (filas.length < 3) return "";
   const cuerpo = filas.map((f) => `<tr><td>${pcEsc(en ? f[2] : f[1])}</td>${c.anios.map((a) => { const v = S[f[0]][a]; return `<td class="pc-n">${Number.isFinite(v) ? pcEsc(pcFmt(v, en).replace(/ ?%$/, "")) : "·"}</td>`; }).join("")}</tr>`).join("");
-  return `<div class="tabla pc-tabla" data-voz="no"><table><caption>${en ? "Indicators expected by the IMF for Chile" : "Indicadores esperados por el FMI para Chile"}</caption>`
+  const tit = en ? "Indicators expected by the IMF for Chile" : "Indicadores esperados por el FMI para Chile";
+  return `<p class="pc-st" data-voz="no" aria-hidden="true">${tit}</p><div class="tabla pc-tabla" data-voz="no"><table><caption class="pc-sr">${tit}</caption>`
     + `<thead><tr><th scope="col">${en ? "Indicator" : "Indicador"}</th>${c.anios.map((a) => `<th scope="col" class="pc-n">${a}</th>`).join("")}</tr></thead><tbody>${cuerpo}</tbody></table></div>`;
 }
 
@@ -253,6 +255,9 @@ function proyeccionHtml(d) {
     + `<script type="application/json" class="pc-datos">${datos}</script></div>`;
 }
 
+// 20-11-2026 05:19 y 05:22 · Germán (capturas con «=» en rojo): los subtítulos «Proyecciones de crecimiento del PIB por institución (% anual)»,
+// «Indicadores esperados por el FMI para Chile» y «Noticias de estos días» con el mismo dorado, tamaño y negrita de «En resumen:»; más aire
+// antes de cada tabla y de las noticias, y al final de la sección, para que no quede pegada a «Perspectivas de Desarrollo para Chile 2050».
 const PROY_CSS = `<style id="cnProy">
 .pc-bloque{--pc-s1:#2a78d6;--pc-s2:#B8892B;--pc-o:#7a808a;--pc-banda:rgba(11,31,58,.05);--pc-rej:rgba(11,31,58,.10)}
 html[data-theme="dark"] .pc-bloque{--pc-s1:#3987e5;--pc-s2:#B8892B;--pc-o:#a3abb8;--pc-banda:rgba(255,255,255,.06);--pc-rej:rgba(255,255,255,.12)}
@@ -272,14 +277,14 @@ html[data-theme="dark"] .pc-bloque{--pc-s1:#3987e5;--pc-s2:#B8892B;--pc-o:#a3abb
 .pc-bloque .pc-graf .pc-rej{stroke:var(--pc-rej);stroke-width:1}.pc-bloque .pc-graf .pc-cero{stroke:var(--gris,#5f6670);stroke-width:1;opacity:.6}
 .pc-bloque .pc-tt{position:absolute;z-index:6;pointer-events:none;max-width:240px;padding:7px 10px;border-radius:8px;background:var(--card,#fff);color:var(--tinta,#0B1F3A);border:1px solid var(--linea,#DDD3BF);box-shadow:0 6px 18px rgba(0,0,0,.14);font:13px/1.4 var(--sans,system-ui,sans-serif);opacity:0;transition:opacity .12s}
 .pc-bloque .pc-tt.pc-ver{opacity:1}
-.pc-bloque .pc-tabla{margin-top:22px;overflow-x:auto;-webkit-overflow-scrolling:touch}.pc-bloque .pc-tabla table{width:100%;min-width:540px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.pc-bloque .pc-tabla{margin-top:0;overflow-x:auto;-webkit-overflow-scrolling:touch}.pc-bloque .pc-tabla table{width:100%;min-width:540px;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .pc-bloque .pc-tabla tbody th,.pc-bloque .pc-tabla tfoot th,.pc-bloque .pc-tabla thead th:first-child{position:sticky;left:0;z-index:1;background:var(--papel,#FBF8F1);font-weight:400;min-width:150px}
 .pc-bloque .pc-tabla th.pc-n,.pc-bloque .pc-tabla td.pc-n{width:11%}
 @media (max-width:600px){.pc-bloque .pc-tabla table{min-width:0;width:max-content}.pc-bloque .pc-tabla th.pc-n,.pc-bloque .pc-tabla td.pc-n{width:auto;min-width:52px}
 .pc-bloque .pc-tabla tbody th,.pc-bloque .pc-tabla tfoot th,.pc-bloque .pc-tabla thead th:first-child{width:9.5em;min-width:9.5em;max-width:9.5em}
-.pc-bloque .pc-tabla caption::after{content:" · desliza para ver todos los años";font-weight:400;color:var(--gris,#5f6670)}
-.pc-bloque .pc-l[lang="en"] .pc-tabla caption::after{content:" · swipe to see every year"}}
-.pc-bloque .pc-tabla caption{caption-side:top;text-align:left;font:600 14px/1.4 var(--sans,system-ui,sans-serif);color:var(--tinta);padding:0 0 8px}
+.pc-bloque .pc-st::after{content:" · desliza para ver todos los años";font-weight:400;font-size:14px;color:var(--gris,#5f6670)}
+.pc-bloque .pc-l[lang="en"] .pc-st::after{content:" · swipe to see every year"}}
+.pc-bloque .pc-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .pc-bloque .pc-tabla th,.pc-bloque .pc-tabla td{padding:8px 6px;border-bottom:1px solid var(--linea,#DDD3BF);text-align:left;vertical-align:top}
 .pc-bloque .pc-tabla .pc-n{text-align:right;white-space:nowrap}.pc-bloque .pc-tabla tfoot th,.pc-bloque .pc-tabla tfoot td{border-bottom:0;border-top:2px solid var(--linea,#DDD3BF)}
 .pc-bloque .pc-inf{font-size:13px;color:var(--gris,#5f6670)}
@@ -288,6 +293,9 @@ html[data-theme="dark"] .pc-bloque{--pc-s1:#3987e5;--pc-s2:#B8892B;--pc-o:#a3abb
 .pc-bloque .pc-n-t{color:var(--tinta);font-weight:600;text-decoration:none}.pc-bloque .pc-n-t:hover,.pc-bloque .pc-n-t:focus-visible{text-decoration:underline}
 .pc-bloque .pc-notas .fuente{display:inline;white-space:nowrap}
 @media print{.pc-bloque .pc-tt{display:none}}
+.pc-bloque .pc-st,.pc-bloque .pc-h4{font:700 clamp(16px,1.9vw,18px)/1.35 var(--sans,system-ui,sans-serif);color:var(--oro-texto,#8A6416);margin:22px 0 8px}
+.pc-bloque .pc-noticias .pc-h4{margin-top:0}
+@media screen{.pc-bloque .pc-st,.pc-bloque .pc-noticias{margin-top:clamp(30px,3.5vw,40px)}.pc-bloque{padding-bottom:clamp(8px,1.2vw,14px)}}
 </style>`;
 
 function proyeccionCrecimiento(fecha, pc) {   // los manejadores para HTMLRewriter; sin datos válidos no cambia nada
