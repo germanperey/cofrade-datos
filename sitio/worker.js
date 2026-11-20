@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "4e4d997df01b";
+const VERSION_SITIO = "d1691db8391e";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -5160,7 +5160,7 @@ async function fuentePodcast(f, txt, ctx) {
   if (!fechaPodOk(f)) return new Response("Fecha no válida.", { status: 400 });
   let md = null;
   try {
-    const r = await fetch(RAW + `podcast/fuentes/${f}.md`, { cf: { cacheTtl: 600, cacheEverything: true } });
+    const r = await fetch(RAW + `podcast/fuentes/${f}.md`, { cf: { cacheTtlByStatus: { "200-299": 600, "404": 30 }, cacheEverything: true } });   // un 404 se guarda solo 30 s
     if (r.ok) md = await r.text();
   } catch { md = null; }
   if (!md) {
@@ -5233,7 +5233,7 @@ async function seccionPodcast(env, u) {
   const [cfg, eps, fuente] = await Promise.all([
     env.DB.prepare("SELECT clave, valor FROM config WHERE clave IN ('podcast_lista', 'podcast_estado')").all().then((r) => Object.fromEntries((r.results || []).map((x) => [x.clave, x.valor]))),
     env.DB.prepare("SELECT video, titulo, publicado, fecha, origen, oculto FROM podcast_episodios ORDER BY COALESCE(fecha, substr(publicado, 1, 10)) DESC, publicado DESC LIMIT 400").all().then((r) => r.results || []),
-    fetch(RAW + `podcast/fuentes/${hoy}.md`, { method: "HEAD", cf: { cacheTtl: 120 } }).then((r) => r.ok, () => false),
+    fetch(RAW + `podcast/fuentes/${hoy}.md`, { method: "HEAD", cf: { cacheTtlByStatus: { "200-299": 120, "404": 30 } } }).then((r) => r.ok, () => false),
   ]);
   const lista = idLista(cfg.podcast_lista), est = jsonDe(cfg.podcast_estado, {});
   const c = u.searchParams.get("pod"), msg = c ? (MENSAJES_POD[c] || (/^ok:\d+$/.test(c) ? `Lista leída: ${c.slice(3)} episodios públicos.` : "")) : "";
