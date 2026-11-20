@@ -66,6 +66,7 @@ const mf = new Miniflare({
       const c = new URL(u); c.searchParams.set("_clave", req.headers.get("x-goog-api-key") ? "cabecera" : u.searchParams.get("key") ? "url" : "no"); youtube.push(c.toString());
       if ((req.headers.get("x-goog-api-key") || u.searchParams.get("key")) !== "yt-clave-prueba") return Response.json({ error: { code: 400 } }, { status: 400 });
       if (process.env.FALLA_LISTA) return new Response("caída simulada", { status: 503 });
+      if ((u.searchParams.get("playlistId") || "").includes("NoExiste")) return Response.json({ error: { code: 404, message: "playlistNotFound" } }, { status: 404 });
       return new Response(fs.readFileSync(FX + "youtube_lista.json"), { status: 200, headers: { "Content-Type": "application/json" } });
     }
     const fx = { "news.google.com": "google_news.xml", "itunes.apple.com": "itunes.json", "api.gdeltproject.org": "gdelt.json", "www.googleapis.com": "youtube.json", "alerts.talkwalker.com": "talkwalker.xml", "www.google.com": "google_alertas.xml" }[u.hostname];

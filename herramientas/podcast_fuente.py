@@ -29,6 +29,7 @@ SECCIONES = [   # (id en la edición, título de Germán, máximo de noticias)
 ]
 DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+RX_MENSUAL = re.compile(r"imacec|\bipc\b|\butm\b|desempleo|desocupaci|inflaci", re.I)   # indicadores que se publican por mes
 RX_ED = re.compile(r"^Cofrade-News-(\d{4}-\d{2}-\d{2})\.html$")
 TOPE_PALABRAS = 2400   # unos 5 a 8 minutos de audio salen de una fuente de este largo
 
@@ -99,6 +100,7 @@ def bloque_noticias(h, tope):
         return []
     if len(listas) == 1 or not any(t for t, _ in listas):
         return [linea_nota(n) for n in [n for _, ns in listas for n in ns][:tope]]
+    listas.sort(key=lambda x: 0 if re.search(r"chile", x[0], re.I) else 1)   # Chile antes que el mundo (orden estable)
     cupo_chile = max(1, round(tope * 2 / 3))
     out = []
     for t, ns in listas:
@@ -147,8 +149,10 @@ def bloque_indicadores(h, tope):
         fuente = next((x[len("Fuente:"):].strip() for x in kf if x.startswith("Fuente:")), "")
         linea = f"- {texto(n.group(1))}: {texto(v.group(1))}"
         if d and texto(d.group(1)):
-            linea += f" ({texto(d.group(1))} respecto del dato anterior)"
-        if fecha:
+            linea += f" (variación: {texto(d.group(1))})"   # tal como sale en la edición, sin agregarle a qué se compara
+        if fecha and fecha.startswith("01-") and RX_MENSUAL.search(texto(n.group(1))):
+            linea += f", dato de {MESES[int(fecha[3:5]) - 1]} de {fecha[6:]}"   # los datos mensuales no se leen «al 1 de septiembre»
+        elif fecha:
             linea += f", al {fecha}"
         linea += "." + (f" Fuente: {frase(fuente)}" if fuente else "")
         out.append(linea)
@@ -177,7 +181,7 @@ def armar(doc, fecha):
             llenas += 1
             partes += lineas
         else:
-            partes.append("- Hoy la edición no trae noticias en esta sección.")
+            partes.append("- Sin noticias de esta sección en la fuente de hoy.")   # cierto aunque el lector no haya entendido la sección
         partes.append("")
     md = "\n".join(partes).rstrip() + "\n"
     palabras = len(md.split())
@@ -212,8 +216,14 @@ def actualizar_indice(salida, indice):
             fuentes.append({"fecha": m.group(1), "palabras": len(t.split()), "secciones": len(re.findall(r"^## ", t, flags=re.M))})
     fuentes.sort(key=lambda x: x["fecha"], reverse=True)
     os.makedirs(os.path.dirname(indice), exist_ok=True)
+    try:   # sin cambios en las fuentes no se reescribe (si no, cada corrida dejaría un commit nuevo solo por la hora)
+        if json.load(open(indice, encoding="utf-8")).get("fuentes") == fuentes[:120]:
+            return False
+    except (OSError, ValueError):
+        pass
     json.dump({"actualizado": datetime.now(timezone(timedelta(hours=-3))).strftime("%Y-%m-%dT%H:%M-03:00"), "fuentes": fuentes[:120]},
               open(indice, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    return True
 
 
 def main(argv=None):

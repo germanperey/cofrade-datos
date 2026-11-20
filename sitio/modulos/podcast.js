@@ -7,10 +7,10 @@
 // Respuestas: canal https://www.youtube.com/@cofradia_networking; «Audio con portada fija»; «Corto, 5 a 8 minutos».
 // La fuente del día la arma GitHub (herramientas/podcast_fuente.py → podcast/fuentes/AAAA-MM-DD.md). Los episodios se leen de la
 // lista de reproducción del podcast con la API oficial de YouTube (clave gratuita YOUTUBE_API_KEY, 1 unidad por consulta, cada 2 h)
-// o se agregan a mano en el Panel. Sin la clave ni la lista, la portada muestra «muy pronto».
+// o se agregan a mano en el Panel. Sin episodios (o si la base falla) la portada no muestra la sección: nada se promete antes de existir.
 // =====================================================================================================================
 const PODCAST = {
-  canal: "https://www.youtube.com/@cofradia_networking", cadaMin: 120, maxPaginas: 4,
+  canal: "https://www.youtube.com/@cofradia_networking", cadaMin: 120, maxPaginas: 10,
   secciones: ["Economía, Negocios e Inversión", "Política y Actualidad", "Emprendimiento", "Tecnología, Tendencias e Innovación",
     "Conflictos bélicos vigentes", "Indicadores económicos", "Crecimiento inmobiliario en Chile"],
   notebook: "https://notebooklm.google.com/", studio: "https://studio.youtube.com/",
@@ -45,21 +45,24 @@ function idLista(t) {
   if (/^(PL|UU|OL|FL|LL)[\w-]{10,60}$/.test(s)) return s;
   try { const l = new URL(s).searchParams.get("list"); return l && /^(PL|UU|OL|FL)[\w-]{10,60}$/.test(l) ? l : null; } catch { return null; }
 }
-// Fecha de la edición que cubre un episodio, leída del título («20 de noviembre de 2026», «20-11-2026» o «2026-11-20»)
-function fechaDeTitulo(t) {
-  const s = String(t || "").toLowerCase();
-  let m = s.match(/(\d{4})-(\d{2})-(\d{2})/);
-  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
-  m = s.match(/\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/);
-  if (m) return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
-  m = s.match(/\b(\d{1,2}) de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)(?: de(?:l)? (\d{4}))?/);
-  if (m) {
-    const mes = m[2] === "setiembre" ? 9 : MESES_POD.indexOf(m[2]) + 1;
-    return `${m[3] || "2026"}-${String(mes).padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+// Fecha de la edición que cubre un episodio, leída del título («20 de noviembre de 2026», «20-11-2026» o «2026-11-20»).
+// Solo vale si es una fecha real y cae entre 3 días antes y 1 después de la publicación (el año que falta sale de la publicación);
+// si no, manda la fecha de publicación. Así «elecciones del 14 de diciembre de 2027» o «45-13-2026» no reordenan la lista.
+function fechaDeTitulo(t, pub) {
+  const s = String(t || "").toLowerCase(), anio = /^\d{4}-\d{2}-\d{2}$/.test(pub || "") ? pub.slice(0, 4) : fechaChile().slice(0, 4);
+  const cand = [];
+  let m = s.match(/\b(\d{1,2}) de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)(?: de(?:l)? (\d{4}))?/);
+  if (m) cand.push(`${m[3] || anio}-${String(m[2] === "setiembre" ? 9 : MESES_POD.indexOf(m[2]) + 1).padStart(2, "0")}-${m[1].padStart(2, "0")}`);
+  if ((m = s.match(/\b(\d{4})-(\d{2})-(\d{2})\b/))) cand.push(`${m[1]}-${m[2]}-${m[3]}`);
+  if ((m = s.match(/\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/))) cand.push(`${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`);
+  for (const f of cand) {
+    if (!fechaPodOk(f)) continue;
+    if (!pub || (f >= masDias(pub, -3) && f <= masDias(pub, 1))) return f;
   }
   return null;
 }
-const fechaPodOk = (f) => /^\d{4}-\d{2}-\d{2}$/.test(f || "") && !Number.isNaN(Date.parse(f + "T12:00:00Z"));
+// Fecha real (rechaza 2026-13-45 y 2026-02-30: el calendario debe devolver el mismo día)
+const fechaPodOk = (f) => { if (!/^\d{4}-\d{2}-\d{2}$/.test(f || "")) return false; const d = new Date(f + "T12:00:00Z"); return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === f; };
 const miniaturaDe = (id) => `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
 const verEnYoutube = (id) => `https://www.youtube.com/watch?v=${id}`;
 const fechaPod = (f) => fechaLarga(f).replace(",", "");   // «Viernes 20 de noviembre de 2026»
@@ -84,8 +87,11 @@ async function episodiosPodcast(env, limite = 6, fresco = false) {
     return l.slice(0, limite);
   } catch { return []; }
 }
-// Sincroniza con la lista de reproducción del podcast (API oficial de YouTube, 1 unidad por página, hasta 4 páginas cada 2 horas).
-// Los episodios que salieron de la lista se borran (los agregados a mano, nunca). Desde la portada, como mucho una vez cada 10 min.
+// Sincroniza con la lista de reproducción del podcast (API oficial de YouTube, 1 unidad por página, hasta 10 páginas = 500 videos,
+// cada 2 horas). Los episodios que salieron de la lista se borran (los agregados a mano, nunca). Desde la portada, como mucho
+// una vez cada 10 min. Revisión independiente del 20-11: un solo parámetro en el borrado (D1 acepta hasta 100 por consulta),
+// nada se borra ante una respuesta vacía anómala, solo videos del dueño de la lista, fechas validadas video por video y
+// el error de la base también queda en el estado.
 let _proximoPod = 0;
 function revisarPodcast(env) {
   const cada = Math.max(0, Number(env.PODCAST_SEG ?? 600)) * 1000;   // PODCAST_SEG solo existe en el arnés de pruebas
@@ -102,20 +108,26 @@ async function sincronizarPodcast(env, { forzar = false, turnoMin = PODCAST.cada
   if (!env.YOUTUBE_API_KEY) return "sin-clave";
   if (forzar) await cfgDif(env, "podcast_turno", new Date().toISOString());   // la lectura pedida desde el Panel también cuenta como turno
   else if (!(await tomarTurno(env, "podcast_turno", turnoMin))) return "espera";
-  const items = [];
-  let pagina = "", paginas = 0, error = "";
+  const items = [], vistos = new Set();
+  let pagina = "", paginas = 0, crudos = 0, total = null, error = "";
   try {
     do {
       const u = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails,status&maxResults=50&playlistId=${encodeURIComponent(lista)}${pagina ? "&pageToken=" + encodeURIComponent(pagina) : ""}`;
       const j = await traerFuente(u, "json", { "X-Goog-Api-Key": String(env.YOUTUBE_API_KEY) });   // la clave va en la cabecera, nunca en la dirección
+      if (total === null) total = Number((j.pageInfo || {}).totalResults);
       for (const it of j.items || []) {
+        crudos++;
         const sn = it.snippet || {}, id = idVideo((it.contentDetails || {}).videoId || (sn.resourceId || {}).videoId);
-        if (!id || ((it.status || {}).privacyStatus && it.status.privacyStatus !== "public")) continue;   // privados y no listados no van
-        const pub = (it.contentDetails || {}).videoPublishedAt || sn.publishedAt || new Date().toISOString();
+        if (!id || vistos.has(id) || ((it.status || {}).privacyStatus && it.status.privacyStatus !== "public")) continue;   // privados y no listados no van
+        if (sn.videoOwnerChannelId && sn.channelId && sn.videoOwnerChannelId !== sn.channelId) continue;   // solo videos del dueño de la lista
         const titulo = recorte(sn.title, 200);
         if (!titulo || /^(private|deleted) video$/i.test(titulo)) continue;
+        let d = new Date((it.contentDetails || {}).videoPublishedAt || sn.publishedAt || Date.now());
+        if (Number.isNaN(d.getTime())) d = new Date();   // una fecha defectuosa no aborta la lectura entera
+        const pub = d.toISOString(), fPub = fechaChile(d);
         const th = sn.thumbnails || {}, mini = ((th.medium || th.high || th.default || {}).url || "");
-        items.push({ id, titulo, pub, fecha: fechaDeTitulo(titulo) || fechaChile(new Date(pub)), mini: /^https:\/\/i\d?\.ytimg\.com\//.test(mini) ? mini : miniaturaDe(id) });
+        vistos.add(id);
+        items.push({ id, titulo, pub, fecha: fechaDeTitulo(titulo, fPub) || fPub, mini: /^https:\/\/i\d?\.ytimg\.com\//.test(mini) ? mini : miniaturaDe(id) });
       }
       pagina = j.nextPageToken || "";
       paginas++;
@@ -123,20 +135,24 @@ async function sincronizarPodcast(env, { forzar = false, turnoMin = PODCAST.cada
   } catch (e) { error = recorte((e && e.message) || e, 80); }   // el error no lleva la clave: va en la cabecera
   const ahora = new Date().toISOString();
   if (!error) {
-    const ops = items.map((x) => env.DB.prepare(`INSERT INTO podcast_episodios (video, titulo, publicado, fecha, miniatura, origen, creado) VALUES (?, ?, ?, ?, ?, 'lista', ?)
-      ON CONFLICT(video) DO UPDATE SET titulo = CASE WHEN podcast_episodios.origen = 'manual' THEN podcast_episodios.titulo ELSE excluded.titulo END,
-      publicado = excluded.publicado, miniatura = excluded.miniatura, fecha = CASE WHEN podcast_episodios.origen = 'manual' THEN podcast_episodios.fecha ELSE excluded.fecha END`)
-      .bind(x.id, x.titulo, x.pub, x.fecha, x.mini, ahora));
-    if (!pagina) {   // la lista completa cupo en las páginas leídas: lo que ya no está en la lista sale (lo manual se queda)
-      const ids = items.map((x) => x.id);
-      ops.push(ids.length ? env.DB.prepare(`DELETE FROM podcast_episodios WHERE origen = 'lista' AND video NOT IN (${ids.map(() => "?").join(", ")})`).bind(...ids)
-        : env.DB.prepare("DELETE FROM podcast_episodios WHERE origen = 'lista'"));
-    }
-    for (let i = 0; i < ops.length; i += 40) await env.DB.batch(ops.slice(i, i + 40));
+    try {
+      const ops = items.map((x) => env.DB.prepare(`INSERT INTO podcast_episodios (video, titulo, publicado, fecha, miniatura, origen, creado) VALUES (?, ?, ?, ?, ?, 'lista', ?)
+        ON CONFLICT(video) DO UPDATE SET titulo = CASE WHEN podcast_episodios.origen = 'manual' THEN podcast_episodios.titulo ELSE excluded.titulo END,
+        publicado = excluded.publicado, miniatura = excluded.miniatura, fecha = CASE WHEN podcast_episodios.origen = 'manual' THEN podcast_episodios.fecha ELSE excluded.fecha END
+        WHERE podcast_episodios.publicado IS NOT excluded.publicado OR podcast_episodios.miniatura IS NOT excluded.miniatura
+          OR (podcast_episodios.origen = 'lista' AND (podcast_episodios.titulo IS NOT excluded.titulo OR podcast_episodios.fecha IS NOT excluded.fecha))`)
+        .bind(x.id, x.titulo, x.pub, x.fecha, x.mini, ahora));   // solo se reescribe lo que cambió
+      // La lista completa cupo en las páginas leídas: lo que ya no está en ella sale (lo manual se queda). Una respuesta sin
+      // ningún video mientras YouTube dice que la lista tiene videos es una anomalía: entonces no se borra nada.
+      if (!pagina && (crudos > 0 || total === 0)) {
+        ops.push(env.DB.prepare("DELETE FROM podcast_episodios WHERE origen = 'lista' AND video NOT IN (SELECT value FROM json_each(?))").bind(JSON.stringify(items.map((x) => x.id))));
+      }
+      for (let i = 0; i < ops.length; i += 40) await env.DB.batch(ops.slice(i, i + 40));
+    } catch (e) { error = "base: " + recorte((e && e.message) || e, 70); }
     _epCache = { t: 0, l: null };
   }
-  await cfgDif(env, "podcast_estado", JSON.stringify({ hora: ahora, n: items.length, error })).catch(() => null);
-  return error ? "error" : `ok:${items.length}`;
+  await cfgDif(env, "podcast_estado", JSON.stringify({ hora: ahora, n: items.length, total: Number.isFinite(total) ? total : null, cortada: !!pagina, error })).catch(() => null);
+  return error ? "error:" + (/^HTTP (403|404|400)\b/.test(error) ? error.slice(5, 8) : error.startsWith("base") ? "base" : "red") : `ok:${items.length}`;
 }
 
 // ---------- portada ----------
@@ -153,13 +169,11 @@ function tarjetaEpisodio(e, i) {
 }
 async function podcastPortada(env) {
   const l = await episodiosPodcast(env, 3);
-  const cab = `<span class="kicker">${l.length ? "Podcast diario · gratis" : "Podcast diario · muy pronto"}</span><h2 class="titulo-lujo" id="t-pod">Escucha el boletín en 5 minutos</h2>
-<p class="sub">${l.length ? "Las 7 secciones principales de cada edición, en audio: economía, política, emprendimiento, tecnología, conflictos, indicadores e inmobiliario."
-    : "Muy pronto, cada mañana, las 7 secciones principales de la edición en un audio de 5 a 8 minutos. Mientras tanto, puedes escuchar la edición con la voz del boletín."}</p>`;
-  const acc = l.length ? `<a class="btn linea" href="/podcast">Ver todos los episodios</a><a class="btn linea" href="${PODCAST.canal}" target="_blank" rel="noopener">Canal de YouTube</a>`
-    : `<a class="btn linea" href="/edicion?voz=1">Escuchar la edición con voz</a>`;
-  return `<section class="pod-sec" id="podcast" aria-labelledby="t-pod"><div class="pod-caja"><div class="pod-ico" aria-hidden="true">${POD_ICONO}</div><div class="pod-cab">${cab}</div></div>
-${l.length ? `<ol class="pod-lista">${l.map(tarjetaEpisodio).join("")}</ol>` : ""}<div class="acciones">${acc}</div></section>`;
+  if (!l.length) return "";   // sin episodios (o si la base falla) no hay sección: nada se promete antes de que exista
+  return `<section class="pod-sec" id="podcast" aria-labelledby="t-pod"><div class="pod-caja"><div class="pod-ico" aria-hidden="true">${POD_ICONO}</div><div class="pod-cab">
+<span class="kicker">Podcast diario · gratis</span><h2 class="titulo-lujo" id="t-pod">Escucha el boletín de 5 a 8 minutos</h2>
+<p class="sub">Las 7 secciones principales de cada edición, en audio: economía, política, emprendimiento, tecnología, conflictos, indicadores e inmobiliario.</p></div></div>
+<ol class="pod-lista">${l.map(tarjetaEpisodio).join("")}</ol><div class="acciones"><a class="btn linea" href="/podcast">Ver todos los episodios</a><a class="btn linea" href="${PODCAST.canal}" target="_blank" rel="noopener">Canal de YouTube</a></div></section>`;
 }
 // ---------- página /podcast (todos los episodios, del más nuevo al más antiguo) ----------
 const CSP_PODCAST = csp({ frame: " https://www.youtube-nocookie.com" });
@@ -172,10 +186,10 @@ async function paginaPodcast(env) {
   }).join("");
   const cuerpo = `<section style="border:0;padding-top:30px"><span class="kicker">Podcast diario</span><h1 class="titulo-lujo">Podcast Cofrade News</h1>
 <p class="lede">Las 7 secciones principales de cada edición en un audio de 5 a 8 minutos: economía, política, emprendimiento, tecnología, conflictos, indicadores e inmobiliario. Del más nuevo al más antiguo.</p>
-${items ? `<ol class="pod-todas">${items}</ol>` : `<p class="aviso">El primer episodio llega muy pronto.</p>`}
+${items ? `<ol class="pod-todas">${items}</ol>${l.length >= 400 ? `<p class="sub">Aquí están los 400 más nuevos; todos los episodios están en el canal de YouTube.</p>` : ""}` : `<p class="aviso">Todavía no hay episodios publicados.</p>`}
 <div class="acciones"><a class="btn linea" href="${PODCAST.canal}" target="_blank" rel="noopener">Canal de YouTube</a><a class="btn oro" href="/edicion">Leer la edición de hoy</a></div>
 <p class="sub">Audio generado con inteligencia artificial (Gemini Notebook de Google) a partir de la edición de Cofrade News. Cada dato tiene su fuente en la edición escrita.</p></section>
-<script>document.querySelectorAll('.pod-lite').forEach(function(b){b.addEventListener('click',function(){var f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(b.dataset.v)+'?autoplay=1&rel=0';f.title=b.getAttribute('aria-label')||'Podcast';f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;f.className='pod-frame';b.replaceWith(f)})})</script>`;
+<script>document.querySelectorAll('.pod-lite').forEach(function(b){b.addEventListener('click',function(){var f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(b.dataset.v)+'?autoplay=1&rel=0';f.title=b.getAttribute('aria-label')||'Podcast';f.allow='autoplay; encrypted-media; picture-in-picture';f.allowFullscreen=true;f.className='pod-frame';f.tabIndex=0;b.replaceWith(f);f.focus()})})</script>`;
   return html(marco({ titulo: "Podcast · Cofrade News", descripcion: "Podcast diario de Cofrade News: las noticias del día en 5 a 8 minutos.", cuerpo, canonica: "/podcast" }), 200, { "Cache-Control": "public, max-age=300" }, CSP_PODCAST);
 }
 // ---------- fuente del día para Gemini Notebook (/podcast/fuente/AAAA-MM-DD y .txt) ----------
@@ -183,7 +197,7 @@ async function fuentePodcast(f, txt, ctx) {
   if (!fechaPodOk(f)) return new Response("Fecha no válida.", { status: 400 });
   let md = null;
   try {
-    const r = await fetch(RAW + `podcast/fuentes/${f}.md`, { cf: { cacheTtl: 600, cacheEverything: true } });
+    const r = await fetch(RAW + `podcast/fuentes/${f}.md`, { cf: { cacheTtlByStatus: { "200-299": 600, "404": 30 }, cacheEverything: true } });   // un 404 se guarda solo 30 s
     if (r.ok) md = await r.text();
   } catch { md = null; }
   if (!md) {
@@ -212,10 +226,12 @@ async function fuentePodcast(f, txt, ctx) {
 // ---------- Panel: sección «Podcast» y acciones ----------
 const PODCAST_JS = __PODCAST_JS__;
 const MENSAJES_POD = {
-  lista: "Lista de reproducción guardada. Los episodios se leen solos cada 2 horas.", "error:lista": "Ese enlace no es de una lista de reproducción de YouTube (debe llevar «list=»).",
+  lista: "Lista de reproducción guardada. Para que se lea sola falta el secreto YOUTUBE_API_KEY en Cloudflare (ver la guía); mientras tanto, agrega los episodios a mano.", "error:lista": "Ese enlace no es de una lista de reproducción de YouTube (debe llevar «list=»).",
   agregado: "Episodio agregado: ya aparece en la portada.", "error:video": "Ese enlace no es de un video de YouTube.", "error:fecha": "Revisa la fecha de la edición.",
   oculto: "Episodio oculto: ya no aparece en la portada.", visible: "Episodio visible otra vez.", "error:no-existe": "Ese episodio ya no existe.",
   "sin-lista": "Primero guarda el enlace de la lista de reproducción del podcast.", "sin-clave": "Falta el secreto YOUTUBE_API_KEY en Cloudflare (ver la guía).", error: "YouTube no respondió. Intenta de nuevo en unos minutos.",
+  "error:404": "YouTube no encuentra esa lista: revisa que sea Pública y que el enlace sea el de la lista.", "error:403": "YouTube rechazó la clave o se agotó la cuota del día: revisa la clave en Google Cloud (restricción a «YouTube Data API v3»).",
+  "error:400": "YouTube no aceptó la consulta: revisa el enlace de la lista.", "error:red": "YouTube no respondió. Intenta de nuevo en unos minutos.", "error:base": "La base de datos no respondió. Intenta de nuevo en unos minutos.",
 };
 async function accionPodcast(req, env) {
   if (!ORIGEN_OK(req) || !(await esAdmin(req, env))) return new Response("No autorizado.", { status: 403 });
@@ -223,7 +239,7 @@ async function accionPodcast(req, env) {
   if (!env.DB) return volver("error");
   const cuerpo = await leerCuerpo(req, 4000);
   if (cuerpo === null) return volver("error");
-  const f = new URLSearchParams(cuerpo), accion = String(f.get("accion") || "");
+  const f = new URLSearchParams(cuerpo), accion = String(f.getAll("accion").at(-1) || "");   // el botón pulsado va después del campo oculto
   await asegurarPodcast(env);
   if (accion === "lista") {
     const id = idLista(f.get("lista"));
@@ -253,15 +269,15 @@ async function seccionPodcast(env, u) {
   const hoy = fechaChile();
   const [cfg, eps, fuente] = await Promise.all([
     env.DB.prepare("SELECT clave, valor FROM config WHERE clave IN ('podcast_lista', 'podcast_estado')").all().then((r) => Object.fromEntries((r.results || []).map((x) => [x.clave, x.valor]))),
-    env.DB.prepare("SELECT video, titulo, publicado, fecha, origen, oculto FROM podcast_episodios ORDER BY COALESCE(fecha, substr(publicado, 1, 10)) DESC, publicado DESC LIMIT 60").all().then((r) => r.results || []),
-    fetch(RAW + `podcast/fuentes/${hoy}.md`, { method: "HEAD", cf: { cacheTtl: 120 } }).then((r) => r.ok, () => false),
+    env.DB.prepare("SELECT video, titulo, publicado, fecha, origen, oculto FROM podcast_episodios ORDER BY COALESCE(fecha, substr(publicado, 1, 10)) DESC, publicado DESC LIMIT 400").all().then((r) => r.results || []),
+    fetch(RAW + `podcast/fuentes/${hoy}.md`, { method: "HEAD", cf: { cacheTtlByStatus: { "200-299": 120, "404": 30 } } }).then((r) => r.ok, () => false),
   ]);
   const lista = idLista(cfg.podcast_lista), est = jsonDe(cfg.podcast_estado, {});
   const c = u.searchParams.get("pod"), msg = c ? (MENSAJES_POD[c] || (/^ok:\d+$/.test(c) ? `Lista leída: ${c.slice(3)} episodios públicos.` : "")) : "";
   const estado = [
     `Clave de YouTube: ${env.YOUTUBE_API_KEY ? "lista" : "<b>falta el secreto YOUTUBE_API_KEY</b> (sin ella, los episodios se agregan a mano)"}`,
     `Lista de reproducción: ${lista ? `<code>${esc(lista)}</code>` : "<b>falta</b> (pega su enlace abajo)"}`,
-    est.hora ? `Última lectura: ${esc(horaCL(est.hora))}${est.error ? ` · <span style="color:var(--rojo)">sin respuesta</span>` : ` · ${num(est.n || 0, 0)} episodios`}` : "Todavía no se lee la lista",
+    est.hora ? `Última lectura: ${esc(horaCL(est.hora))}${est.error ? ` · <span style="color:var(--rojo)">falló (${esc(recorte(est.error, 60))})</span>` : ` · ${num(est.n || 0, 0)} episodios públicos`}${est.cortada ? ` · <b>la lista pasa de 500 videos: se leen los primeros 500 en el orden de la lista</b>` : ""}` : "Todavía no se lee la lista",
   ].join(" · ");
   const fila = (e) => `<tr${e.oculto ? ' class="men-desc"' : ""}><td>${esc(e.fecha ? ddmm(e.fecha) : "")}</td><td><a href="${verEnYoutube(e.video)}" target="_blank" rel="noopener">${esc(e.titulo)}</a></td><td>${e.origen === "manual" ? "a mano" : "lista"}</td>`
     + `<td><form method="post" action="/panel/podcast" style="display:inline"><input type="hidden" name="accion" value="${e.oculto ? "mostrar" : "ocultar"}"><input type="hidden" name="video" value="${esc(e.video)}"><button class="btn linea chico" type="submit">${e.oculto ? "Mostrar" : "Ocultar"}</button></form></td></tr>`;
@@ -277,8 +293,8 @@ ${fuente ? `<p>Lista la fuente del ${esc(fechaLarga(hoy))} con las 7 secciones.<
 <p>Elige el audio que descargaste de Gemini Notebook. El video se arma aquí mismo, en tu navegador (Chrome o Edge en el computador); nada se sube a ningún servidor.</p>
 <label class="pod-archivo"><span class="btn oro chico">Elegir el audio</span><input type="file" id="podAudio" accept="audio/*,.m4a,.mp3,.wav,.ogg,.webm"></label>
 <label class="pod-fecha">Fecha de la edición <input type="date" id="podFecha" value="${hoy}" max="${masDias(hoy, 1)}"></label>
-<canvas id="podPortada" width="1280" height="720" aria-label="Portada del video" style="width:100%;height:auto;border-radius:10px;margin:10px 0;background:#0B1F3A"></canvas>
-<p class="pod-bot"><button type="button" class="btn oro chico" id="podCrear" disabled>Crear el video</button><a class="btn linea chico" id="podBajarPortada" download="Portada-Podcast-Cofrade-News.png" href="#">Descargar la portada (PNG)</a></p>
+<canvas id="podPortada" width="1280" height="720" role="img" aria-label="Portada del video" style="width:100%;height:auto;border-radius:10px;margin:10px 0;background:#0B1F3A"></canvas>
+<p class="pod-bot"><button type="button" class="btn oro chico" id="podCrear" disabled>Crear el video</button><a class="btn linea chico" id="podBajarPortada" download="Portada-Podcast-Cofrade-News.png" aria-disabled="true">Descargar la portada (PNG)</a></p>
 <p class="pod-estado" id="podEstado" role="status" aria-live="polite"></p><p class="pod-bot"><a class="btn oro chico" id="podBajar" hidden download>Descargar el video</a></p></div></div>
 <div class="tarjeta pod-paso" style="margin-top:14px"><h4 class="kicker">3 · Subir a YouTube</h4>
 <p class="pod-bot"><a class="btn oro chico" href="${PODCAST.studio}" target="_blank" rel="noopener">Abrir YouTube Studio</a><button type="button" class="btn linea chico" data-copiar-id="podTitulo">Copiar el título</button><button type="button" class="btn linea chico" data-copiar-id="podDesc">Copiar la descripción</button></p>
@@ -308,20 +324,19 @@ const PODCAST_CSS = `.pod-sec{border:0!important;padding:34px 0 0!important}.pod
 .pod-fuente h1{font:600 clamp(26px,3.4vw,34px)/1.2 var(--serif)}.pod-fuente h2{margin-top:26px}.pod-fuente li{margin:0 0 10px;line-height:1.55}
 .pod-paso p{margin:8px 0}.pod-bot{display:flex;flex-wrap:wrap;gap:8px}.pod-archivo input{position:absolute;width:1px;height:1px;opacity:0}.pod-archivo{position:relative;display:inline-block;cursor:pointer}
 .pod-fecha{display:inline-flex;gap:8px;align-items:center;margin-left:10px;font-size:14px}.pod-desc{white-space:pre-wrap;font:14px/1.5 var(--sans,system-ui,sans-serif);background:var(--papel);border:1px solid var(--linea);border-radius:10px;padding:10px 12px;margin:6px 0 0}
-.pod-estado{min-height:1.3em;font-weight:600}
+.pod-estado{min-height:1.3em;font-weight:600}.pod-archivo:focus-within .btn{outline:3px solid var(--oro);outline-offset:2px}#podBajarPortada[aria-disabled="true"]{opacity:.5;pointer-events:none}
 @media print{.pod-sec{display:none!important}}`;
 
 // ---------- textos fijos en inglés (botón EN de la portada y de /podcast) ----------
 Object.assign(EN_FIJO, {
-  "Podcast diario · gratis": "Daily podcast · free", "Podcast diario · muy pronto": "Daily podcast · coming soon", "Podcast diario": "Daily podcast",
-  "Escucha el boletín en 5 minutos": "Listen to the newsletter in 5 minutes",
+  "Podcast diario · gratis": "Daily podcast · free", "Podcast diario": "Daily podcast",
+  "Escucha el boletín de 5 a 8 minutos": "Listen to the 5 to 8 minute newsletter",
   "Las 7 secciones principales de cada edición, en audio: economía, política, emprendimiento, tecnología, conflictos, indicadores e inmobiliario.":
     "The 7 main sections of every edition, as audio: economy, politics, entrepreneurship, technology, conflicts, indicators and real estate.",
-  "Muy pronto, cada mañana, las 7 secciones principales de la edición en un audio de 5 a 8 minutos. Mientras tanto, puedes escuchar la edición con la voz del boletín.":
-    "Coming soon: every morning, the 7 main sections of the edition in a 5 to 8 minute audio. Meanwhile, you can listen to the edition with the newsletter's voice.",
-  "Ver todos los episodios": "See all episodes", "Canal de YouTube": "YouTube channel", "Escuchar la edición con voz": "Listen to the edition by voice", "Último episodio": "Latest episode",
+  "Ver todos los episodios": "See all episodes", "Canal de YouTube": "YouTube channel", "Último episodio": "Latest episode",
   "Podcast Cofrade News": "Cofrade News podcast", "Abrir en YouTube": "Open on YouTube", "Leer la edición": "Read the edition", "Leer la edición de hoy": "Read today's edition",
-  "El primer episodio llega muy pronto.": "The first episode is coming very soon.",
+  "Todavía no hay episodios publicados.": "No episodes published yet.",
+  "Aquí están los 400 más nuevos; todos los episodios están en el canal de YouTube.": "These are the 400 newest; every episode is on the YouTube channel.",
   "Las 7 secciones principales de cada edición en un audio de 5 a 8 minutos: economía, política, emprendimiento, tecnología, conflictos, indicadores e inmobiliario. Del más nuevo al más antiguo.":
     "The 7 main sections of every edition in a 5 to 8 minute audio: economy, politics, entrepreneurship, technology, conflicts, indicators and real estate. Newest first.",
   "Audio generado con inteligencia artificial (Gemini Notebook de Google) a partir de la edición de Cofrade News. Cada dato tiene su fuente en la edición escrita.":

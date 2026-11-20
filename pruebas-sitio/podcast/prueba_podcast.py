@@ -37,8 +37,7 @@ INDIC = "Podcast breve de 5 a 8 minutos, en español de Chile"
 entrar()
 if MODO == 'sinclave':
     t = portada()
-    ok('portada: sección del podcast «muy pronto» sin episodios', 'id="podcast"' in t and 'Podcast diario · muy pronto' in t and 'href="/edicion?voz=1"' in t)
-    ok('portada: el podcast va después de la cinta del concurso y antes de «Doce secciones»', 0 < t.index('class="cc-cinta"') < t.index('id="podcast"') < t.index('id="t-secc"'))
+    ok('portada: sin episodios no hay sección del podcast (nada se promete antes de existir)', 'id="podcast"' not in t and 'muy pronto' not in t.split('id="t-secc"')[0].split('cc-cinta')[-1])
     s, h, b = pedir('/podcast/fuente/2026-11-19'); f = b.decode()
     ok('fuente del día: página con las 7 secciones y sin indexar', s == 200 and len(re.findall(r'<h2>\d\. ', f)) == 7 and 'noindex' in h.get('x-robots-tag', '') and 'La Tercera, 18-11' in f, (s, len(re.findall(r'<h2>', f))))
     s, h, b = pedir('/podcast/fuente/2026-11-19.txt'); tx = b.decode()
@@ -63,6 +62,11 @@ if MODO == 'sinclave':
     t = portada()
     ok('portada: episodios en orden por fecha (el de hoy primero) con «Último episodio»', t.index('watch?v=manual00002') < t.index('watch?v=manual00001') and 'Último episodio' in t and 'Podcast diario · gratis' in t, t.count('pod-ep'))
     ok('portada: el título se escapa (sin código)', '<script>alert(1)' not in t and 'Episodio &lt;script&gt;' in t)
+    ok('portada: el podcast va después de la cinta del concurso y antes de «Doce secciones»', 0 < t.index('class="cc-cinta"') < t.index('id="podcast"') < t.index('id="t-secc"'))
+    s, loc = panel_post({'accion': 'agregar', 'video': 'https://youtu.be/manual00003', 'fecha': '2026-11-18', 'titulo': "Precio $& y $` y $' final"})
+    t = portada()
+    ok("portada: un título con «$&», «$`» y «$'» sale tal cual (el reemplazo no los interpreta)", ("Precio $&amp; y $` y $&#39; final" in t or "Precio $&amp; y $` y $' final" in t) and t.count('id="t-pod"') == 1 and t.count('class="cc-cinta"') == 1, re.findall(r'Precio[^<]{0,40}', t))
+    panel_post({'accion': 'ocultar', 'video': 'manual00003'})
     s, h, b = pedir('/podcast'); pg = b.decode()
     ok('/podcast: lista completa con reproductor liviano y su política de seguridad', s == 200 and pg.count('class="pod-lite"') == 2 and 'https://www.youtube-nocookie.com' in h.get('content-security-policy', ''), h.get('content-security-policy', '')[:120])
     s, loc = panel_post({'accion': 'ocultar', 'video': 'manual00002'})
@@ -81,6 +85,7 @@ if MODO == 'sinclave':
         pg.goto(B + '/podcast'); pg.click('.pod-lite >> nth=0'); pg.wait_for_timeout(500)
         src = pg.evaluate("(document.querySelector('iframe.pod-frame')||{}).src || ''")
         ok('/podcast: al tocar, aparece el reproductor de youtube-nocookie', src.startswith('https://www.youtube-nocookie.com/embed/manual00002'), src)
+        ok('/podcast: el foco pasa al reproductor', pg.evaluate("document.activeElement && document.activeElement.tagName") == 'IFRAME')
         pg.goto(B + '/panel#podcast'); pg.wait_for_timeout(1200)
         pg.click('#podcast [data-copiar-id="podIndicaciones"]'); pg.wait_for_timeout(300)
         cb = pg.evaluate('navigator.clipboard.readText()')
@@ -91,7 +96,7 @@ if MODO == 'sinclave':
         ok('portada fija dibujada (texto claro sobre azul)', pix > 50, pix)
         pg.locator('#podPortada').screenshot(path='/tmp/mf/prueba_wt3/portada_podcast.png')
         href = pg.get_attribute('#podBajarPortada', 'href') or ''
-        ok('portada descargable en PNG', href.startswith('blob:') and pg.get_attribute('#podBajarPortada', 'download') == 'Portada-Podcast-Cofrade-News-2026-11-20.png', href[:30])
+        ok('portada descargable en PNG (y el botón se habilita recién con el archivo listo)', href.startswith('blob:') and pg.get_attribute('#podBajarPortada', 'download') == 'Portada-Podcast-Cofrade-News-2026-11-20.png' and pg.get_attribute('#podBajarPortada', 'aria-disabled') == 'false', href[:30])
         pg.fill('#podFecha', '2026-11-19'); pg.dispatch_event('#podFecha', 'change'); pg.wait_for_timeout(300)
         ok('al cambiar la fecha cambian el título y la descripción', pg.inner_text('#podTitulo') == 'Podcast Cofrade News · Jueves 19 de noviembre de 2026' and 'https://www.cofrad.es/edicion/2026-11-19' in pg.inner_text('#podDesc'))
         ok('«Crear el video» espera un audio', pg.is_disabled('#podCrear'))
@@ -114,6 +119,17 @@ if MODO == 'sinclave':
             const ac = new OfflineAudioContext(1, 48000, 48000); const a = await ac.decodeAudioData(bin.buffer.slice(0));
             return { dur, w: v.videoWidth, h: v.videoHeight, audio: a.duration }; }""", base64.b64encode(datos).decode())
         ok('conversor: el video dura lo mismo que el audio, 1280×720, con pista de audio Opus', abs(info['dur'] - 12) < 1.6 and info['w'] == 1280 and info['h'] == 720 and abs(info['audio'] - 12) < 1.6, info)
+        # Audio de 21 minutos: se rechaza ANTES de decodificarlo (leer la duración no carga el audio en memoria)
+        largo = '/tmp/mf/prueba_wt3/audio21min.wav'
+        if not os.path.exists(largo):
+            n = 21 * 60 * 8000
+            open(largo, 'wb').write(b'RIFF' + struct.pack('<I', 36 + n) + b'WAVEfmt ' + struct.pack('<IHHIIHH', 16, 1, 1, 8000, 8000, 1, 8) + b'data' + struct.pack('<I', n) + b'\x80' * n)
+        pg.set_input_files('#podAudio', largo); pg.wait_for_timeout(300); pg.click('#podCrear')
+        for _ in range(60):
+            st_ = pg.evaluate("() => [document.getElementById('podEstado').textContent, document.getElementById('podEstado').style.color]")
+            if st_[1]: break
+            pg.wait_for_timeout(250)
+        ok('conversor: un audio de más de 20 minutos se rechaza con un aviso claro', 'más de 20 minutos' in st_[0] and 'Más corto' in st_[0], st_)
         ok('Panel del podcast sin errores de JavaScript', not errs, errs[:3])
         cx.close(); br.close()
 
@@ -139,6 +155,43 @@ if MODO == 'conclave':
         s, loc = panel_post({'accion': 'sincronizar'})
         e2 = sorted(x['video'] for x in sql("SELECT video FROM podcast_episodios"))
         ok('lo que sale de la lista sale del sitio; lo agregado a mano se queda', 'pod=ok:1' in loc and e2 == ['manual00009', 'podAAAAAAA1'], (loc, e2))
+    finally:
+        open('/tmp/mf/prueba_wt3/fx/youtube_lista.json', 'w').write(respaldo)
+    # «Leer la lista ahora»: el botón manda accion=sincronizar después del campo oculto accion=lista
+    s, h, b = pedir('/panel/podcast', 'POST', urllib.parse.urlencode([('accion', 'lista'), ('accion', 'sincronizar')]).encode(), {'Content-Type': 'application/x-www-form-urlencoded', 'Origin': 'https://www.cofrad.es', **ADM})
+    ok('«Leer la lista ahora» lee la lista (no la confunde con «Guardar la lista»)', 'pod=ok:3' in urllib.parse.unquote(h.get('location', '')), h.get('location'))
+    base = json.loads(respaldo)
+    def con_lista(items, **extra):
+        d = dict(base); d['items'] = items; d.update(extra)
+        json.dump(d, open('/tmp/mf/prueba_wt3/fx/youtube_lista.json', 'w'))
+        s, loc = panel_post({'accion': 'sincronizar'}); return loc
+    def it(v, titulo, pub='2026-11-18T12:00:00Z', dueno='UCcofradia', canal='UCcofradia'):
+        return {'snippet': {'title': titulo, 'publishedAt': pub, 'channelId': canal, 'videoOwnerChannelId': dueno, 'resourceId': {'videoId': v}, 'thumbnails': {}},
+                'contentDetails': {'videoId': v, 'videoPublishedAt': pub}, 'status': {'privacyStatus': 'public'}}
+    try:
+        # 120 videos: el borrado de lo que salió usa un solo parámetro (D1 acepta hasta 100 por consulta)
+        muchos = [it('cien%07d' % i, 'Podcast Cofrade News · episodio %d' % i) for i in range(120)]
+        loc = con_lista(muchos, pageInfo={'totalResults': 120})
+        n = sql("SELECT COUNT(*) AS n FROM podcast_episodios WHERE origen='lista'")[0]['n']
+        ok('lista de 120 videos: se guardan todos y el borrado no choca con el tope de parámetros', 'pod=ok:120' in loc and n == 120, (loc, n))
+        loc = con_lista(muchos[:110], pageInfo={'totalResults': 110})
+        n = sql("SELECT COUNT(*) AS n FROM podcast_episodios WHERE origen='lista'")[0]['n']
+        ok('…y si salen 10, salen 10', 'pod=ok:110' in loc and n == 110, (loc, n))
+        loc = con_lista([], pageInfo={'totalResults': 110})
+        n = sql("SELECT COUNT(*) AS n FROM podcast_episodios WHERE origen='lista'")[0]['n']
+        ok('respuesta vacía mientras YouTube dice que hay videos: no se borra nada', n == 110, (loc, n))
+        loc = con_lista([it('propioAAAA1', 'Podcast · 19 de noviembre de 2026'), it('ajenoBBBBB2', 'Video de otro canal', dueno='UCotro'),
+                         it('futuroCCCC3', 'Rumbo a las elecciones del 14 de diciembre de 2027', pub='2026-11-18T12:00:00Z'),
+                         it('raraDDDDDD4', 'Edición 45-13-2026', pub='2026-11-17T12:00:00Z'), it('malaEEEEEE5', 'Sin fecha', pub='no-es-fecha')], pageInfo={'totalResults': 5})
+        e = {x['video']: x for x in sql("SELECT video, fecha, publicado FROM podcast_episodios WHERE origen='lista'")}
+        ok('solo videos del dueño de la lista (uno de otro canal no entra)', set(e) == {'propioAAAA1', 'futuroCCCC3', 'raraDDDDDD4', 'malaEEEEEE5'}, sorted(e))
+        ok('fecha del título solo si es real y cercana a la publicación', e['propioAAAA1']['fecha'] == '2026-11-19' and e['futuroCCCC3']['fecha'] == '2026-11-18' and e['raraDDDDDD4']['fecha'] == '2026-11-17', {k: v['fecha'] for k, v in e.items()})
+        ok('una fecha de publicación defectuosa no aborta la lectura', 'malaEEEEEE5' in e and e['malaEEEEEE5']['publicado'][:2] == '20', e.get('malaEEEEEE5'))
+        sql("UPDATE config SET valor='PLlistaNoExiste123' WHERE clave='podcast_lista'")
+        s, loc = panel_post({'accion': 'sincronizar'})
+        ok('lista que YouTube no encuentra: aviso claro (404) y queda en el estado', 'pod=error:404' in loc and 'YouTube no encuentra esa lista' in pedir('/panel?pod=error%3A404', cab=ADM)[2].decode() and 'falló (HTTP 404)' in panel_html(), loc)
+        sql("UPDATE config SET valor='PLcofradePodcast123' WHERE clave='podcast_lista'")
+        con_lista(base['items'][:1])
     finally:
         open('/tmp/mf/prueba_wt3/fx/youtube_lista.json', 'w').write(respaldo)
     n0 = len(json.loads(pedir('/__youtube')[2]))

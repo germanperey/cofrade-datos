@@ -2459,9 +2459,20 @@ def fuente_del_podcast_con_las_7_secciones():
     assert eco.count("- Noticia Chile") == 4 and eco.count("- Noticia Mundo") == 2 and eco.index("### Chile") < eco.index("### Mundo"), eco
     assert "- Noticia Chile 0. Resumen 0 con $1.000. (La Tercera, 19-11)" in md, md
     assert "Ley & orden" in md and "NO DEBE SALIR" not in md and "data:image" not in md and "dibujo" not in md
-    assert "- Hoy la edición no trae noticias en esta sección." in md.split("## 4.")[1].split("## 5.")[0]
+    assert "- Sin noticias de esta sección en la fuente de hoy." in md.split("## 4.")[1].split("## 5.")[0]
     assert "- Guerra A–B (Región · estado: Activo). Hubo ataques el 18 de noviembre. Última noticia: Ataque en C. (BBC, 18-11)" in md, md
-    assert "- UF: $ 41.364,17 (+0,02% respecto del dato anterior), al 19-11-2026. Fuente: Banco Central." in md, md
+    assert "- UF: $ 41.364,17 (variación: +0,02%), al 19-11-2026. Fuente: Banco Central." in md, md
+    # Revisión del 20-11: los datos mensuales no se leen «al 1 de septiembre», y Chile va antes aunque la edición ponga el mundo primero
+    men = PF.armar(doc.replace('<div class="kpis">', '<div class="kpis"><div class="kpi"><span class="kn">IMACEC (último)</span><span class="kv">0,2%</span>'
+                               '<span class="kf">01-09-2026</span></div>'), "2026-11-20")[0]
+    assert "- IMACEC (último): 0,2%, dato de septiembre de 2026." in men, men
+    inv = doc.replace('<h3>Chile</h3><ul class="notas">' + "".join(nota(f"Noticia Chile {i}", f"Resumen {i} con $1.000", "La Tercera", "19-11") for i in range(6)) + '</ul></div><div><h3>Mundo</h3><ul class="notas">'
+                      + "".join(nota(f"Noticia Mundo {i}", "Resumen", "Reuters", "18-11") for i in range(4)) + '</ul>',
+                      '<h3>Mundo</h3><ul class="notas">' + "".join(nota(f"Noticia Mundo {i}", "Resumen", "Reuters", "18-11") for i in range(4)) + '</ul></div><div><h3>Chile</h3><ul class="notas">'
+                      + "".join(nota(f"Noticia Chile {i}", f"Resumen {i} con $1.000", "La Tercera", "19-11") for i in range(6)) + '</ul>')
+    assert inv != doc
+    e2 = PF.armar(inv, "2026-11-20")[0].split("## 2.")[0]
+    assert e2.index("### Chile") < e2.index("### Mundo") and e2.count("- Noticia Chile") == 4, e2
     largo = PF.armar(doc.replace("Resumen", "Resumen " + "palabra " * 600), "2026-11-20")[0]
     assert len(largo.split()) <= PF.TOPE_PALABRAS and "## 7." in largo and "- UF:" in largo, len(largo.split())
     pobre = '<section id="economia"><ul class="notas">' + nota("Una", "x", "y", "19-11") + "</ul></section>"
@@ -2471,7 +2482,9 @@ def fuente_del_podcast_con_las_7_secciones():
         open(ed, "w", encoding="utf-8").write(doc)
         sal, ind = os.path.join(d, "fuentes"), os.path.join(d, "podcast.json")
         assert PF.main(["--archivo", ed, "--salida", sal, "--indice", ind]) == 1
+        t0 = open(ind, encoding="utf-8").read()
         assert PF.main(["--archivo", ed, "--salida", sal, "--indice", ind]) == 0   # sin cambios: no reescribe
+        assert open(ind, encoding="utf-8").read() == t0   # ni el índice: sin esto, cada corrida dejaba un commit solo por la hora
         open(ed, "w", encoding="utf-8").write(pobre)
         assert PF.main(["--archivo", ed, "--fecha", "2026-11-21", "--salida", sal, "--indice", ind]) == 0 and not os.path.exists(os.path.join(sal, "2026-11-21.md"))
         j = json.load(open(ind, encoding="utf-8"))

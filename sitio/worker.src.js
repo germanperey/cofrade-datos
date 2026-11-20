@@ -1228,7 +1228,7 @@ async function oidoNube(req, env) {
 
 async function portada(env, ctx, req) {
   const [{ cuerpo: c0, hero, p }, , pod] = await Promise.all([cuerpoPortada(ctx), prepararAnuncios(env), podcastPortada(env).catch(() => "")]);
-  const cuerpo = c0.replace("<!--PODCAST-->", pod);   // 20-11-2026: podcast diario, los 3 episodios más nuevos (modulos/podcast.js)
+  const cuerpo = c0.replace("<!--PODCAST-->", () => pod);   // 20-11-2026: podcast diario, los 3 episodios más nuevos (modulos/podcast.js); con función, un «$&» del título no altera nada
   ctx.waitUntil(revisarRenovaciones(env, ctx));   // 16-11-2026: correos de renovación de los anunciantes (como mucho 1 revisión por hora)
   ctx.waitUntil(revivirPulso(env, p));
   // 15-11-2026: el vigía corre cada 3 horas; su propia visita reinicia el reloj y la de un lector lo despierta si GitHub se atrasó
