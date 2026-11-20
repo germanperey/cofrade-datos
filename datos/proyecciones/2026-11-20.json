@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-20T08:23-03:00",
+ "generado": "2026-11-20T19:45-03:00",
  "anio_base": 2026,
  "anios": [
   "2027",
@@ -65,9 +65,9 @@
     "2031": 49.0
    }
   },
+  "leido": "2026-11-19",
   "fuente": "Fondo Monetario Internacional, base de datos de Perspectivas de la Economía Mundial",
-  "url": "https://www.imf.org/external/datamapper/profile/CHL",
-  "leido": "2026-11-19"
+  "url": "https://www.imf.org/external/datamapper/profile/CHL"
  },
  "instituciones": [
   {
@@ -150,12 +150,15 @@
    "institucion_en": "International Monetary Fund",
    "corto": "FMI",
    "corto_en": "IMF",
-   "informe": "Perspectivas de la Economía Mundial (WEO) de octubre de 2026",
-   "informe_en": "World Economic Outlook, October 2026",
-   "fecha": "2026-10-13",
+   "informe": "Perspectivas de la Economía Mundial (WEO), última edición en su base de datos oficial",
+   "informe_en": "World Economic Outlook, latest edition in its official database",
+   "fecha": "2026-11-20",
    "url": "https://www.imf.org/en/publications/weo/issues/2026/10/13/world-economic-outlook-october-2026",
    "api": "fmi",
    "pib": {
+    "2023": "0,7",
+    "2024": "2,8",
+    "2025": "2,5",
     "2026": "0,6",
     "2027": "2,6",
     "2028": "2,4",
@@ -168,9 +171,18 @@
     "tipo_en": "annual average",
     "2026": "3,7",
     "2027": "3,5",
-    "2031": "3,0"
+    "2031": "3,0",
+    "2023": "7,6",
+    "2024": "3,9",
+    "2025": "4,2",
+    "2028": "3,0",
+    "2029": "3,0",
+    "2030": "3,0"
    },
    "revisar_desde": "2027-04-14",
+   "fuente_datos": "base de datos oficial del FMI",
+   "fecha_texto": "leída el 20 de noviembre de 2026",
+   "fecha_texto_en": "read on November 20, 2026",
    "activo": true
   },
   {
@@ -312,21 +324,15 @@
  },
  "noticias": [
   {
+   "titulo": "Chile proyecta $111 mil millones en inversión minera liderada por litio hasta 2035",
+   "fuente": "Reporte Minero",
+   "url": "https://www.reporteminero.cl/noticia/noticias/2026/11/chile-inversion-minera-111-mil-millones-litio-2026-2035",
+   "fecha": "2026-11-20"
+  },
+  {
    "titulo": "Cartera de inversión minera de Chile registra su mayor monto en 13 años",
    "fuente": "Minería Chilena",
    "url": "https://www.mch.cl/cartera-de-inversion-minera-de-chile-registra-su-mayor-monto-en-13-anos/",
-   "fecha": "2026-11-19"
-  },
-  {
-   "titulo": "El desplome de la minería y el débil compás de inversión determinaron el resultado: La economía cae 1,1% al tercer trimestre y pone presión a los planes de Hacienda para reactivar la actividad",
-   "fuente": "Consejo de Políticas de Infraestructura",
-   "url": "https://cpichile.org/el-desplome-de-la-mineria-y-el-debil-compas-de-inversion-determinaron-el-resultado-la-economia-cae-11-al-tercer-trimestre-y-pone-presion-a-los-planes-de-hacienda-para-reactivar-la-actividad/?utm_source=rss&utm_medium=rss&utm_campaign=el-desplome-de-la-mineria-y-el-debil-compas-de-inversion-determinaron-el-resultado-la-economia-cae-11-al-tercer-trimestre-y-pone-presion-a-los-planes-de-hacienda-para-reactivar-la-actividad",
-   "fecha": "2026-11-19"
-  },
-  {
-   "titulo": "Tras dudas del gobierno por caída de inversión en Chile, HIF reafirma compromiso con el proyecto en Paysandú",
-   "fuente": "El País",
-   "url": "https://www.elpais.com.uy/informacion/politica/tras-dudas-del-gobierno-por-caida-de-inversion-en-chile-hif-reafirma-compromiso-con-el-proyecto-en-paysandu",
    "fecha": "2026-11-19"
   },
   {
@@ -339,12 +345,6 @@
    "titulo": "El espejismo del hidrógeno verde: cae una inversión de US$16.000 millones y Chile enfrenta la realidad del mercado mundial",
    "fuente": "El Clarín de Chile",
    "url": "https://www.elclarin.cl/2026/11/18/el-espejismo-del-hidrogeno-verde-cae-una-inversion-de-us16-000-millones-y-chile-enfrenta-la-realidad-del-mercado-mundial/",
-   "fecha": "2026-11-17"
-  },
-  {
-   "titulo": "Inversión minera bate récord en Chile, pero producción cae por agotamiento y falta de nuevos proyectos",
-   "fuente": "Reporte Minero",
-   "url": "https://www.reporteminero.cl/noticia/noticias/2026/11/cesco-inversion-record-cobre-produccion-cae-chile-ley-mineral",
    "fecha": "2026-11-17"
   }
  ],
