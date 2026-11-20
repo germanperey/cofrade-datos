@@ -208,6 +208,30 @@ var TILDES = { valparaiso: 'valparaíso', concepcion: 'concepción', nunoa: 'ñu
 var RX_TILDES = new RegExp('(^|[^A-Za-zÀ-ÿ])(' + Object.keys(TILDES).join('|') + ')(?![A-Za-zÀ-ÿ])', 'gi');
 var MAY_PALABRA = { LA: 1, EL: 1, LOS: 1, LAS: 1, DE: 1, DEL: 1, EN: 1, UN: 1, UNA: 1, Y: 1, O: 1, SU: 1, SUS: 1, AL: 1, CON: 1, POR: 1, QUE: 1, NO: 1, SE: 1, ES: 1, MAS: 1, HOY: 1, SIN: 1, LE: 1, LO: 1, MI: 1, YA: 1, HAY: 1, SON: 1, FUE: 1, VER: 1, VEZ: 1 };
 var SIGLA_PALABRA = { ONU: 1, OTAN: 1, NASA: 1, FIFA: 1, UEFA: 1, OPEP: 1, IVA: 1, APEC: 1, UNAM: 1, INE: 1, BID: 1, UDI: 1, SAG: 1, ENAP: 1, ENEL: 1, PYME: 1, SIDA: 1, OVNI: 1, OIT: 0 };
+// 20-11-2026 (Germán: en el teléfono «en vez de decir "diecinueve mil" dice 19, 0, 0, 0»): las cifras con punto de miles se escriben en
+// palabras antes de dárselas a la voz; así todas las voces (las de Google del teléfono también) las dicen igual que una persona
+var NUM_U = ['cero', 'uno', 'dos', 'tres', 'cuatro', 'cinco', 'seis', 'siete', 'ocho', 'nueve', 'diez', 'once', 'doce', 'trece', 'catorce', 'quince', 'dieciséis',
+  'diecisiete', 'dieciocho', 'diecinueve', 'veinte', 'veintiuno', 'veintidós', 'veintitrés', 'veinticuatro', 'veinticinco', 'veintiséis', 'veintisiete', 'veintiocho', 'veintinueve'];
+var NUM_D = ['', '', '', 'treinta', 'cuarenta', 'cincuenta', 'sesenta', 'setenta', 'ochenta', 'noventa'];
+var NUM_C = ['', 'ciento', 'doscientos', 'trescientos', 'cuatrocientos', 'quinientos', 'seiscientos', 'setecientos', 'ochocientos', 'novecientos'];
+function numCien(n) {   // 0 a 999
+  if (n === 100) return 'cien';
+  var c = Math.floor(n / 100), r = n % 100, d = r < 30 ? (r ? NUM_U[r] : '') : NUM_D[Math.floor(r / 10)] + (r % 10 ? ' y ' + NUM_U[r % 10] : '');
+  return (NUM_C[c] + (c && d ? ' ' : '') + d) || 'cero';
+}
+var apocope = function (t) { return t.replace(/veintiuno$/, 'veintiún').replace(/\buno$/, 'un'); };
+function numLetras(n) {   // enteros hasta 999.999.999.999
+  if (n >= 1e6) { var m = Math.floor(n / 1e6), r = n % 1e6; return (m === 1 ? 'un millón' : apocope(numLetras(m)) + ' millones') + (r ? ' ' + numLetras(r) : ''); }
+  if (n >= 1000) { var k = Math.floor(n / 1000), r3 = n % 1000; return (k === 1 ? 'mil' : apocope(numCien(k)) + ' mil') + (r3 ? ' ' + numCien(r3) : ''); }
+  return numCien(n);
+}
+function cifrasEnPalabras(t) {
+  return t.replace(/(^|[^\d.,])(\d{1,3}(?:\.\d{3})+)(?:,(\d{1,2}))?(?![\d.,]\d)/g, function (x, a, n, dec) {
+    var v = +n.replace(/\./g, '');
+    if (!(v < 1e12)) return x;
+    return a + numLetras(v) + (dec ? ' coma ' + (dec.charAt(0) === '0' && dec.length > 1 ? 'cero ' + NUM_U[+dec.charAt(1)] : numCien(+dec)) : '');
+  });
+}
 function hablable(t) {
   if (!t) return '';
   var es = !en(), RX = es ? RX_ES : RX_EN;
@@ -229,6 +253,7 @@ function hablable(t) {
          .replace(/\b(\d{1,3})\.000\.000\b(?![.,]\d)/g, function (x, n) { return n === '1' ? '1 millón' : n + ' millones'; })
          .replace(/\b(\d{1,3})\.(\d{3})\.000\b(?![.,]\d)/g, function (x, n, m) { return (n === '1' ? '1 millón ' : n + ' millones ') + (+m) + ' mil'; })
          .replace(/\by\/o\b/g, 'o');
+    t = cifrasEnPalabras(t);
     // 20-11-2026 (Germán: «respeta las pausas de la lectura, conforme a la puntuación y la ortografía»): una abreviatura no es fin de frase
     t = t.replace(/\bcofrad\.es\b/gi, 'cofrad punto es').replace(/\b[a-z0-9-]{2,}(?:\.[a-z0-9-]{2,})*\.(?:cl|com|org|net|gob|gov|io|ai|app)\b/g, function (m) { return m.replace(/\./g, ' punto '); })
          .replace(/\bS\.\s?p\.\s?A\.(?=\s+[A-ZÁÉÍÓÚÑ¿¡])/g, 'S P A.').replace(/\bS\.\s?p\.\s?A\./g, 'S P A').replace(/\bS\.\s?A\.(?=\s+[A-ZÁÉÍÓÚÑ¿¡])/g, 'S A.').replace(/\bS\.\s?A\./g, 'S A')
@@ -615,7 +640,9 @@ function decirUno(texto, op, vv, off, base, sigue) {
         base: base, off: off || 0, item: !!(op && op.item), tg: R.trozosG, ti: R.trozoI };
     ECO.push(eco); if (ECO.length > 24) ECO.shift();
     var vz = vv || voz; if (vz) { u.voice = vz; u.lang = vz.lang; } else u.lang = en() ? 'en-US' : 'es-CL';
-    var vel = Math.max(0.5, Math.min(2, R.rate * ((op && op.vel) || 1)));
+    // 20-11-2026 (Germán: en el teléfono «se escucha más lenta la voz»): las voces de Google del teléfono suenan lentas a la velocidad de
+    // Catalina (0,92); fuera de las voces naturales de Microsoft se acelera un 10 % (sigue el control «más rápido / más lento»)
+    var vel = Math.max(0.5, Math.min(2, R.rate * ((op && op.vel) || 1) * (tonoPara(vz, 0) === 0 ? 1 : 1.1)));
     u.rate = vel; u.pitch = tonoPara(vz, (op && op.tono) || CFG.tono || 1); u.volume = 1;
     var g0 = gen;
     function fin(r) { if (listo) return; listo = true; clearTimeout(tope); eco.t1 = Date.now(); eco.cortada = r !== 'fin' || !t0; if (t0) R.habla += Date.now() - t0; res(r); }
