@@ -1,0 +1,183 @@
+{
+ "revisado": "2026-11-20",
+ "proxima": "2026-12-02",
+ "nota": "Primera versión, armada el 20-11-2026 con las páginas oficiales de cada red. La tarea mensual la revisa el día 2 de cada mes.",
+ "redes": {
+  "youtube": {
+   "lectura_gratis": "si",
+   "metodo": "API de datos de YouTube (v3) con una clave gratuita de Google: busca videos que nombran a Cofrade News o cofrad.es (search.list) y lee sus datos (videos.list).",
+   "cupo": "100 búsquedas al día (search.list tiene su propio cupo) y 10.000 unidades al día para lo demás. Se renueva a medianoche de California, entre las 03:00 y las 05:00 de Chile según la época del año.",
+   "requisitos": "Una cuenta de Google, un proyecto en Google Cloud con «YouTube Data API v3» habilitada y una clave de API restringida a esa API. La clave vive solo como secreto YOUTUBE_API_KEY del Worker de Cloudflare.",
+   "prohibido": "Pedir más cupo exige pasar una auditoría de cumplimiento de las condiciones de la API de YouTube. La clave nunca va en el código, en una página ni en un chat.",
+   "cambios": [
+    {
+     "fecha": "2026-11-12",
+     "que": "La página oficial de cupos dice que search.list y videos.insert tienen cupos propios de 100 llamadas al día, aparte de las 10.000 unidades."
+    }
+   ],
+   "anuncios": [],
+   "fuentes": [
+    {
+     "url": "https://developers.google.com/youtube/v3/determine_quota_cost",
+     "visto": "2026-11-20",
+     "dice": "Cupo por defecto: 100 llamadas a search.list, 100 a videos.insert y 10.000 unidades al día para lo demás; se renueva a medianoche, hora del Pacífico. Actualizada el 12-11-2026."
+    },
+    {
+     "url": "https://developers.google.com/youtube/v3/guides/quota_and_compliance_audits",
+     "visto": "2026-11-20",
+     "dice": "Para pedir más cupo que el de por defecto se exige una auditoría que muestre cumplimiento de las condiciones de servicio de la API de YouTube."
+    },
+    {
+     "url": "https://developers.google.com/youtube/registering_an_application",
+     "visto": "2026-11-20",
+     "dice": "Para datos públicos basta una clave de API: Credentials, Create credentials, API key, y restringirla antes de usarla."
+    }
+   ],
+   "ajustes": {
+    "activo": true,
+    "busquedas_dia": 16,
+    "nota": "Se usa solo si existe el secreto YOUTUBE_API_KEY; 2 búsquedas cada 3 horas."
+   }
+  },
+  "instagram": {
+   "lectura_gratis": "si",
+   "metodo": "Instagram Platform para la cuenta profesional propia: aviso automático (webhook «mentions») cuando alguien nombra a la cuenta en un pie de foto o comentario, y la lista de publicaciones donde la etiquetan (GET /tags).",
+   "cupo": "Sin costo. Meta pone límites de llamadas por cuenta; el recolector hace muy pocas.",
+   "requisitos": "Cuenta de Instagram profesional (empresa o creador) y una app en developers.facebook.com. Para una cuenta propia basta el acceso estándar, sin revisión de Meta. Los avisos automáticos solo llegan con la app en modo Live (con ícono, categoría y dirección de la política de privacidad).",
+   "prohibido": "Las menciones en historias no llegan por esta vía y no hay aviso si la publicación es de una cuenta privada. Nada de robots que entren con usuario y clave.",
+   "cambios": [],
+   "anuncios": [],
+   "fuentes": [
+    {
+     "url": "https://developers.facebook.com/documentation/instagram-platform/instagram-api-with-instagram-login/mentions",
+     "visto": "2026-11-20",
+     "dice": "Identifica pies de foto, comentarios y publicaciones donde se etiqueta o @menciona a una cuenta Business o Creator; no admite menciones en historias. Actualizada el 18-03-2026."
+    },
+    {
+     "url": "https://developers.facebook.com/documentation/instagram-platform/webhooks.md",
+     "visto": "2026-11-20",
+     "dice": "La app debe estar en modo Live para que Meta envíe avisos (webhooks)."
+    },
+    {
+     "url": "https://developers.facebook.com/docs/instagram-platform/app-review",
+     "visto": "2026-11-20",
+     "dice": "Si la app es solo para un negocio propio o que uno administra, basta el acceso estándar y no se requiere revisión de la app."
+    }
+   ],
+   "ajustes": {
+    "activo": false,
+    "busquedas_dia": 8,
+    "nota": "Se enciende cuando Germán cree la app de Meta y guarde sus secretos."
+   }
+  },
+  "facebook": {
+   "lectura_gratis": "si",
+   "metodo": "API de Páginas de Facebook: aviso automático (webhook «mention») cuando alguien menciona la Página en una publicación o un comentario.",
+   "cupo": "Sin costo. Meta pone límites de llamadas por Página; el recolector hace muy pocas.",
+   "requisitos": "Una Página de Facebook propia y la misma app de Meta. Un administrador de la Página con permiso de moderar debe darle a la app el permiso pages_manage_metadata.",
+   "prohibido": "Algunas publicaciones o comentarios que mencionan la Página no se pueden leer por la privacidad de quien publicó. Nada de robots que entren con usuario y clave.",
+   "cambios": [],
+   "anuncios": [],
+   "fuentes": [
+    {
+     "url": "https://developers.facebook.com/docs/graph-api/webhooks/reference/page/",
+     "visto": "2026-11-20",
+     "dice": "El campo «mention» describe las menciones nuevas de una Página, en comentarios, publicaciones, etc.; un administrador con privilegio de moderar debe dar el permiso pages_manage_metadata."
+    },
+    {
+     "url": "https://developers.facebook.com/documentation/pages-api",
+     "visto": "2026-11-20",
+     "dice": "Permisos: pages_show_list, pages_read_engagement, pages_read_user_content y pages_manage_metadata, entre otros. Actualizada el 07-05-2026."
+    }
+   ],
+   "ajustes": {
+    "activo": false,
+    "busquedas_dia": 8,
+    "nota": "Se enciende junto con Instagram."
+   }
+  },
+  "x": {
+   "lectura_gratis": "no",
+   "metodo": "La API de X cobra por uso: no hay plan gratis. La vía gratuita es una alerta de Talkwalker Alerts, que también cubre X, leída por RSS.",
+   "cupo": "Pago por uso con créditos comprados por adelantado; la lectura de publicaciones tiene un tope mensual.",
+   "requisitos": "Para la API oficial: cuenta de desarrollador y créditos pagados. Para la vía gratuita: una alerta en talkwalker.com/alerts con entrega por RSS.",
+   "prohibido": "Nada de copias de X hechas por terceros ni robots que entren con usuario y clave.",
+   "cambios": [
+    {
+     "fecha": "2026-02-06",
+     "que": "X reemplazó sus planes mensuales por el pago por uso."
+    }
+   ],
+   "anuncios": [],
+   "fuentes": [
+    {
+     "url": "https://docs.x.com/x-api/getting-started/pricing",
+     "visto": "2026-11-20",
+     "dice": "La API de X usa precios de pago por uso, sin suscripciones: se compran créditos por adelantado y se descuentan con cada llamada."
+    },
+    {
+     "url": "https://docs.x.com/x-api/fundamentals/post-cap",
+     "visto": "2026-11-20",
+     "dice": "La búsqueda reciente y la de archivo completo cuentan para el consumo; los planes de pago por uso tienen un tope mensual de lecturas."
+    }
+   ],
+   "ajustes": {
+    "activo": false,
+    "busquedas_dia": 0,
+    "nota": "Apagado: no hay lectura gratuita. Las menciones en X llegan por Talkwalker Alerts."
+   }
+  },
+  "tiktok": {
+   "lectura_gratis": "con_aprobacion",
+   "metodo": "TikTok API for Business, «Mentions API» (parte de la Organic API): menciones de la marca en videos orgánicos en tendencia, para una cuenta TikTok Business.",
+   "cupo": "Lo fija TikTok al aprobar la app.",
+   "requisitos": "Una cuenta TikTok Business y registrarse como desarrollador en la página de TikTok API for Business; TikTok decide si aprueba la app.",
+   "prohibido": "Nada de robots que lean TikTok sin permiso ni servicios que lo copian con proxies.",
+   "cambios": [],
+   "anuncios": [],
+   "fuentes": [
+    {
+     "url": "https://ads.tiktok.com/help/article/marketing-api",
+     "visto": "2026-11-20",
+     "dice": "La Organic API incluye las API Accounts, Mentions, TikTok One, Discovery y Spark Ads Recommendation; la Mentions API sigue menciones de la marca en videos orgánicos en tendencia. Para usarla hay que registrarse como desarrollador. Actualizada en septiembre de 2025."
+    }
+   ],
+   "ajustes": {
+    "activo": false,
+    "busquedas_dia": 0,
+    "nota": "Apagado hasta que TikTok apruebe la app."
+   }
+  },
+  "linkedin": {
+   "lectura_gratis": "con_aprobacion",
+   "metodo": "Community Management API de LinkedIn: avisos de la actividad en la Página de empresa, incluidas las menciones (Organization Social Action Notifications).",
+   "cupo": "Nivel de desarrollo: 500 llamadas por app cada 24 horas y sin avisos automáticos; el nivel estándar no tiene esas restricciones.",
+   "requisitos": "Una Página de LinkedIn de la organización, sitio web y dominio verificados, y pedir el nivel de desarrollo; para el estándar, enviar un video de la app funcionando.",
+   "prohibido": "Nada de robots que lean LinkedIn con usuario y clave.",
+   "cambios": [],
+   "anuncios": [],
+   "fuentes": [
+    {
+     "url": "https://learn.microsoft.com/en-us/linkedin/marketing/increasing-access",
+     "visto": "2026-11-20",
+     "dice": "Nivel de desarrollo de Community Management: 500 llamadas por app cada 24 horas y avisos automáticos desactivados; el nivel estándar es para producción, sin restricciones."
+    },
+    {
+     "url": "https://learn.microsoft.com/en-us/linkedin/marketing/community-management/community-management-api-migration-guide",
+     "visto": "2026-11-20",
+     "dice": "Para el nivel de desarrollo se exige sitio web y dominio verificados de la organización y una app verificada por su Página de LinkedIn."
+    },
+    {
+     "url": "https://developer.linkedin.com/product-catalog/marketing/community-management-api",
+     "visto": "2026-11-20",
+     "dice": "Permite seguir las @menciones de la marca y responder comentarios con la Social Actions Notifications API."
+    }
+   ],
+   "ajustes": {
+    "activo": false,
+    "busquedas_dia": 0,
+    "nota": "Apagado hasta que LinkedIn apruebe el acceso."
+   }
+  }
+ }
+}

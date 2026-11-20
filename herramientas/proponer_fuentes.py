@@ -12,6 +12,10 @@ ordena, filtra y guarda.
   python3 herramientas/proponer_fuentes.py agregar propuestas.json  valida y suma (máx. 12 al día y 2 por sitio); nunca toca lo que había
   python3 herramientas/proponer_fuentes.py subir                    sube a GitHub SOLO herramientas/fuentes-candidatas.json
 
+20-11-2026 (Germán, 04:50: «la "Tarea Programada" ... debe realizar en conjunto con esa tarea la búsqueda de más y nuevas fuentes de
+datos, para ir ampliando y robusteciendo las fuentes de conocimiento y verificación de cada noticia e información»): la tarea del
+boletín también propone fuentes, con «--origen boletin» y su propio tope (8 al día), sin gastar el cupo de la ronda del Auditor.
+
 «subir» termina con 0 (subido, o nada que subir), 3 (sin permiso para subir) o 4 (el resguardo encontró otro cambio: no sube nada).
 """
 import argparse
@@ -33,6 +37,7 @@ SECCIONES = ("politica/chile", "politica/mundo", "economia/chile", "economia/mun
              "perspectivas", "conflictos", "tecnologia", "ciencia", "astronomia", "deportes", "entretenimiento", "chilenos-mundo")
 META, META_SECCION = 12, {"deportes": 30, "politica/chile": 20}   # fuentes sanas que se buscan por sección
 MAX_DIA, MAX_SITIO = 12, 2
+ORIGENES = {"auditor": MAX_DIA, "boletin": 8}   # quién propone y cuántas fuentes nuevas al día puede sumar cada uno
 IDIOMAS = ("es", "en", "pt", "fr", "de", "it")
 # Nunca: buscadores y portales que prohíben la lectura automática, redes sociales, archivos y cachés de páginas ajenas, y generadores
 # de RSS de sitios que no publican RSS (saltarían la decisión de ese sitio).
@@ -120,13 +125,14 @@ def _existentes(raiz):
     return cand, urls
 
 
-def faltan(raiz=RAIZ, fecha=None):
-    """Texto para el Auditor: secciones ordenadas de la más débil a la más fuerte y los sitios que ya están en las más débiles."""
+def faltan(raiz=RAIZ, fecha=None, origen="auditor"):
+    """Texto para el Auditor (o el boletín): secciones de la más débil a la más fuerte y los sitios que ya están en las más débiles."""
     fecha = fecha or dt.date.today().isoformat()
     salud = _cargar(os.path.join(raiz, "datos", "fuentes-salud.json"), {})
     res = salud.get("resumen") or {}
     cand, _ = _existentes(raiz)
     hoy = sum(1 for c in cand if str(c.get("origen", "")).startswith(f"auditor {fecha}"))
+    hoy_b = sum(1 for c in cand if str(c.get("origen", "")).startswith(f"boletin {fecha}"))
     filas = []
     for s in SECCIONES:
         sanas = int((res.get(s) or {}).get("sana", 0))
@@ -134,7 +140,7 @@ def faltan(raiz=RAIZ, fecha=None):
         filas.append((sanas / meta, s, sanas, meta, sum(1 for c in cand if c.get("seccion") == s)))
     filas.sort()
     out = [f"Directorio revisado: {salud.get('generado', 'sin informe')} · candidatas: {len(cand)} · sumadas hoy por el Auditor: {hoy} "
-           f"(tope {MAX_DIA} al día, {MAX_SITIO} por sitio)"]
+           f"(tope {MAX_DIA} al día, {MAX_SITIO} por sitio) · sumadas hoy por el boletín: {hoy_b} (tope {ORIGENES['boletin']} al día)"]
     for _, s, sanas, meta, n in filas:
         out.append(f"- {s}: {sanas} {'sana' if sanas == 1 else 'sanas'} de {meta} buscadas · {n} {'candidata' if n == 1 else 'candidatas'}" + (" · DÉBIL" if sanas < meta / 2 else ""))
     for _, s, sanas, meta, _ in [f for f in filas if f[2] < f[3] / 2][:5] or filas[:3]:
@@ -142,7 +148,8 @@ def faltan(raiz=RAIZ, fecha=None):
         out.append(f"Ya están en {s} (no repetir): " + (", ".join(sitios) if sitios else "ninguno"))
     # Lo que GitHub dijo de lo que el Auditor propuso los últimos 7 días: para aprender qué clase de fuente sirve y no repetir errores
     desde = (dt.date.fromisoformat(fecha) - dt.timedelta(days=7)).isoformat()
-    suyas = {normalizar(c["url"]): c for c in cand if str(c.get("origen", "")).startswith("auditor ") and str(c.get("origen", ""))[8:18] >= desde}
+    pre = origen + " "
+    suyas = {normalizar(c["url"]): c for c in cand if str(c.get("origen", "")).startswith(pre) and str(c.get("origen", ""))[len(pre):len(pre) + 10] >= desde}
     if suyas:
         vistos = {normalizar(r["url"]): r for r in salud.get("detalle") or [] if isinstance(r, dict) and r.get("url")}
         res7 = {}
@@ -153,22 +160,26 @@ def faltan(raiz=RAIZ, fecha=None):
         for k, v in sorted(res7.items()):
             if k not in ("sana", "sin revisar todavía"):
                 out.extend(f"  descartada ({k}): {c['fuente']} · {c['url'][:90]} · {(r or {}).get('motivo', '')[:80]}" for c, r in v[:8])
-    out.append("Agrega con: python3 herramientas/proponer_fuentes.py agregar /tmp/propuestas.json  (y luego «subir»)")
+    out.append("Agrega con: python3 herramientas/proponer_fuentes.py agregar /tmp/propuestas.json" + ("" if origen == "auditor" else f" --origen {origen}") + "  (y luego «subir»)")
     return "\n".join(out)
 
 
-def agregar(propuestas, raiz=RAIZ, fecha=None):
+def agregar(propuestas, raiz=RAIZ, fecha=None, origen="auditor"):
     """→ (sumadas, rechazadas[(url, motivo)]). Escribe solo si sumó algo; las candidatas que ya estaban quedan tal cual, en su orden."""
     fecha = fecha or dt.date.today().isoformat()
+    if origen not in ORIGENES:
+        raise SystemExit(f"origen desconocido: {origen} (usa {' o '.join(ORIGENES)})")
     ruta = os.path.join(raiz, REL)
     doc = _cargar(ruta, None)
     if not isinstance(doc, dict) or not isinstance(doc.get("candidatas"), list):
         raise SystemExit(f"no pude leer {REL}")
     cand, vistas = _existentes(raiz)
-    hoy = [c for c in cand if str(c.get("origen", "")).startswith(f"auditor {fecha}")]
-    cupo = MAX_DIA - len(hoy)
+    del_dia = [c for c in cand if any(str(c.get("origen", "")).startswith(f"{o} {fecha}") for o in ORIGENES)]
+    hoy = [c for c in del_dia if str(c.get("origen", "")).startswith(f"{origen} {fecha}")]
+    tope = ORIGENES[origen]
+    cupo = tope - len(hoy)
     por_sitio = {}
-    for c in hoy:
+    for c in del_dia:
         por_sitio[_sitio(c["url"])] = por_sitio.get(_sitio(c["url"]), 0) + 1
     sumadas, rechazadas = [], []
     for p in propuestas if isinstance(propuestas, list) else []:
@@ -181,11 +192,11 @@ def agregar(propuestas, raiz=RAIZ, fecha=None):
         if clave in vistas:
             rechazadas.append((url, "ya está entre las candidatas o en el directorio"))
         elif len(sumadas) >= cupo:
-            rechazadas.append((url, f"tope de {MAX_DIA} fuentes nuevas al día"))
+            rechazadas.append((url, f"tope de {tope} fuentes nuevas al día"))
         elif por_sitio.get(sitio, 0) >= MAX_SITIO:
             rechazadas.append((url, f"tope de {MAX_SITIO} fuentes nuevas por sitio al día"))
         else:
-            ficha["origen"] = f"auditor {fecha}"
+            ficha["origen"] = f"{origen} {fecha}"
             sumadas.append(ficha)
             vistas.add(clave)
             por_sitio[sitio] = por_sitio.get(sitio, 0) + 1
@@ -235,7 +246,7 @@ def resguardo(raiz=RAIZ):
         return f"más de {MAX_DIA} candidatas nuevas de una vez"
     for x in agregadas:
         ficha, motivo = revisar(x)
-        if motivo or not str(x.get("origen", "")).startswith("auditor ") or {k: v for k, v in x.items() if k != "origen"} != ficha:
+        if motivo or not any(str(x.get("origen", "")).startswith(o + " ") for o in ORIGENES) or {k: v for k, v in x.items() if k != "origen"} != ficha:
             return "una candidata nueva no pasa la revisión: " + str(x.get("url"))[:120]
     return None
 
@@ -273,6 +284,7 @@ def main(argv=None):
     a.add_argument("accion", choices=("faltan", "agregar", "subir"))
     a.add_argument("archivo", nargs="?")
     a.add_argument("--fecha")
+    a.add_argument("--origen", choices=tuple(ORIGENES), default="auditor", help="quién propone: la ronda del Auditor o la tarea del boletín")
     a.add_argument("--raiz", default=RAIZ)
     a = a.parse_args(argv)
     try:   # la fecha de Chile (el Auditor la pasa con --fecha; esto es solo el respaldo)
@@ -282,13 +294,13 @@ def main(argv=None):
         hoy = dt.datetime.now(dt.timezone(dt.timedelta(hours=-3))).date().isoformat()
     fecha = a.fecha or hoy
     if a.accion == "faltan":
-        print(faltan(a.raiz, fecha))
+        print(faltan(a.raiz, fecha, a.origen))
         return 0
     if a.accion == "agregar":
         if not a.archivo:
             print("falta el archivo de propuestas")
             return 2
-        sumadas, rechazadas = agregar(_cargar(a.archivo, []), a.raiz, fecha)
+        sumadas, rechazadas = agregar(_cargar(a.archivo, []), a.raiz, fecha, a.origen)
         print(f"SUMADAS {len(sumadas)}: " + ("; ".join(f"{x['seccion']} · {x['fuente']}" for x in sumadas) or "ninguna"))
         for url, motivo in rechazadas:
             print(f"RECHAZADA {url} → {motivo}")

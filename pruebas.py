@@ -1683,6 +1683,22 @@ def auditor_suma_fuentes_nuevas_con_resguardos():
         json.dump(sal, open(os.path.join(t, "datos", "fuentes-salud.json"), "w"))
         f2 = PF.faltan(t, "2026-11-17")
         assert "Lo que propusiste los últimos 7 días: 1 robots, 1 sana, 11 sin revisar todavía" in f2 and "descartada (robots): Medio www.fox.com/ (RSS) · https://www.fox.com/rss · robots.txt lo prohíbe" in f2, f2
+        # 20-11-2026 (Germán, 04:50: la tarea del boletín también busca fuentes nuevas): su propio tope de 8 al día, sin gastar el del Auditor,
+        # y el tope por sitio vale para el día entero (Auditor y boletín juntos)
+        sb, rb = PF.agregar([ok(f"https://boletin{i}.cl/feed") for i in range(10)] + [ok("https://manana.cl/otro")], t, "2026-11-17", "boletin")
+        assert len(sb) == PF.ORIGENES["boletin"] and all(x["origen"] == "boletin 2026-11-17" for x in sb), sb
+        assert sum("tope de 8" in m for _, m in rb) == 3, rb
+        sa, _ = PF.agregar([ok("https://otroaud.cl/feed")], t, "2026-11-17")
+        assert len(sa) == 1 and sa[0]["origen"] == "auditor 2026-11-17", sa
+        assert "sumadas hoy por el boletín: 8" in PF.faltan(t, "2026-11-17", "boletin") and "--origen boletin" in PF.faltan(t, "2026-11-17", "boletin")
+        sa2, _ = PF.agregar([ok("https://mismo.cl/a"), ok("https://mismo.cl/b")], t, "2026-11-18")
+        sb2, rb2 = PF.agregar([ok("https://mismo.cl/c")], t, "2026-11-18", "boletin")
+        assert len(sa2) == 2 and sb2 == [] and "por sitio" in dict(rb2)["https://mismo.cl/c"], (sa2, sb2, rb2)
+        try:
+            PF.agregar([ok("https://x9.cl/feed")], t, "2026-11-17", "otro")
+            raise AssertionError("un origen desconocido debía rechazarse")
+        except SystemExit:
+            pass
 
     # «subir»: solo ese archivo, solo fichas nuevas al final y válidas, y solo hacia el repositorio de Cofrade News
     def g(*args, cwd):
@@ -2301,6 +2317,79 @@ def golf_siempre_el_ultimo_torneo_terminado():
             assert g["tours"]["pga"]["ultimo_final"]["leaderboard"][3]["pos"] == "T4" and g["tours"]["pga"]["semana"]["torneo"] == "The RSM Classic"
     finally:
         B.pedir, B.robots_permite, B.ahora = viejos
+
+
+@prueba
+def reglas_de_redes_validadas_y_solo_ese_archivo_sube():
+    """20-11-2026 (Germán, 04:51: «las reglas de cada Red Social y de Youtube las revises cada mes en forma automática, para verificar
+    cuando hayan cambiado y anticiparnos de manera automática para realizar esos ajustes y mejoras»): la tarea mensual escribe
+    datos/reglas-redes.json con reglas_redes.py, que exige las 6 redes, fuentes oficiales con fecha, sin claves, con topes de
+    búsqueda dentro del cupo gratuito y sin encender una red sin lectura gratis; «subir» sube solo ese archivo y su copia del mes."""
+    import copy
+    import re
+    import subprocess
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import reglas_redes as RR
+    base = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "datos", "reglas-redes.json"), encoding="utf-8"))
+    assert RR.revisar(base, "2026-11-20") == [], RR.revisar(base, "2026-11-20")
+
+    def mal(cambio, esperado):
+        d = copy.deepcopy(base)
+        cambio(d)
+        prob = " | ".join(RR.revisar(d, "2026-11-20"))
+        assert esperado in prob, (esperado, prob)
+    mal(lambda d: d["redes"].pop("tiktok"), "exactamente")
+    mal(lambda d: d["redes"]["youtube"]["fuentes"].append({"url": "https://blog-cualquiera.com/youtube", "visto": "2026-11-20", "dice": "x"}), "no es una página oficial")
+    mal(lambda d: d["redes"]["x"]["fuentes"].append({"url": "http://docs.x.com/a", "visto": "2026-11-20", "dice": "x"}), "no es una página oficial")
+    mal(lambda d: d["redes"]["youtube"].update(requisitos="la clave es AIzaSyA1234567890abcdefghijklmnop"), "falta «requisitos»")
+    mal(lambda d: d["redes"]["youtube"]["ajustes"].update(busquedas_dia=95), "entre 0 y 40")
+    mal(lambda d: d["redes"]["x"]["ajustes"].update(activo=True), "no puede quedar activo")
+    mal(lambda d: d["redes"]["linkedin"]["ajustes"].update(busquedas_dia="5"), "número entero")
+    mal(lambda d: d["redes"]["linkedin"]["ajustes"].update(codigo="x"), "solo admite")
+    mal(lambda d: d.update(revisado="2026-12-25"), "en el futuro")
+    mal(lambda d: d.update(proxima="2026-11-01"), "posterior")
+    mal(lambda d: d["redes"]["facebook"]["cambios"].append({"fecha": "ayer", "que": "x"}), "lleva fecha")
+    mal(lambda d: d["redes"]["instagram"].update(lectura_gratis="quizas"), "lectura_gratis")
+    with tempfile.TemporaryDirectory() as t:
+        assert "SIN ARCHIVO DE REGLAS" in RR.ver(t, "2026-11-20")
+        c, m = RR.guardar(dict(base, revisado="2026-12-02", proxima="2027-01-02"), t, "2026-12-02")
+        assert c == 0 and os.path.exists(os.path.join(t, RR.REL)) and os.path.exists(os.path.join(t, RR.HIST, "2026-12.json")), m
+        d = copy.deepcopy(base)
+        d["redes"]["youtube"]["anuncios"] = [{"fecha": "2026-12-20", "que": "Cambia el cupo de búsquedas"}]
+        c, m = RR.guardar(dict(d, revisado="2026-12-02", proxima="2027-01-02"), t, "2026-12-02")
+        assert c == 0 and "ANUNCIO PRÓXIMO 2026-12-20: Cambia el cupo de búsquedas" in RR.ver(t, "2026-12-02"), RR.ver(t, "2026-12-02")
+        c, m = RR.guardar(dict(base, revisado="2026-12-03", proxima="2026-12-01"), t, "2026-12-03")
+        assert c == 4 and "NO GUARDÉ NADA" in m and json.load(open(os.path.join(t, RR.REL)))["revisado"] == "2026-12-02", m
+
+    def g(*args, cwd):
+        r = subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", *args], cwd=cwd, capture_output=True, text=True)
+        assert r.returncode == 0, r.stderr
+        return r.stdout.strip()
+    viejo_re = RR.ORIGEN_RE
+    with tempfile.TemporaryDirectory() as t:
+        remoto, w = os.path.join(t, "remoto.git"), os.path.join(t, "w")
+        g("init", "-q", "--bare", "-b", "main", remoto, cwd=t)
+        os.makedirs(os.path.join(w, "datos"))
+        open(os.path.join(w, "README.md"), "w").write("x")
+        g("init", "-q", "-b", "main", cwd=w)
+        g("add", "-A", cwd=w)
+        g("commit", "-q", "-m", "base", cwd=w)
+        g("remote", "add", "origin", remoto, cwd=w)
+        g("push", "-q", "origin", "main", cwd=w)
+        RR.ORIGEN_RE = re.compile(re.escape(remoto) + "$")
+        try:
+            assert RR.subir(w, "2026-11-20") == (0, "nada que subir (las reglas no cambiaron)")
+            assert RR.guardar(base, w, "2026-11-20")[0] == 0
+            open(os.path.join(w, "README.md"), "w").write("otro cambio")
+            c, m = RR.subir(w, "2026-11-20")
+            assert c == 4 and "otros archivos" in m, m
+            g("checkout", "--", "README.md", cwd=w)
+            c, m = RR.subir(w, "2026-11-20")
+            assert c == 0 and "SUBIDAS" in m, m
+            hechos = [x for x in g("log", "-1", "--name-only", "--format=%s", cwd=remoto).splitlines() if x]
+            assert hechos == ["Reglas de redes y YouTube revisadas el 2026-11-20", "datos/reglas-redes.json", "datos/reglas-redes/2026-11.json"], hechos
+        finally:
+            RR.ORIGEN_RE = viejo_re
 
 if __name__ == "__main__":
     malas = 0
