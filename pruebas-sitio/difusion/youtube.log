@@ -1,0 +1,10 @@
+OK    YouTube: una sola búsqueda con q="Cofrade News"|cofrad.es ['https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=date&maxResults=20&q=%22Cofrade+News%22%7Ccofrad.es&_clave=cabecera']
+OK    YouTube: la clave va en la cabecera X-Goog-Api-Key, no en la dirección ['https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=date&maxResults=20&q=%22Cofrade+News%22%7Ccofrad.es&_clave=cabecera']
+OK    YouTube: guarda solo los videos que nos nombran en título o descripción [{'enlace': 'https://www.youtube.com/watch?v=abcDEF12345', 'medio': 'YouTube', 'programa': 'Canal Economía Simple'}]
+OK    Google Noticias bloqueado por su robots.txt: no se lee {'google': 'bloqueado', 'itunes': 2, 'gdelt': 2}
+OK    YouTube: respeta su turno (16 al día = cada 90 min): no repite enseguida 
+OK    YouTube: cuenta las búsquedas del día 
+OK    la clave de YouTube no queda guardada en la base 
+OK    Panel: YouTube activo con 16 búsquedas al día (reglas-redes.json) 
+
+8/8 pruebas OK (youtube)

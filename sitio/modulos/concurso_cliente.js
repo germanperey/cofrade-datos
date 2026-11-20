@@ -65,7 +65,7 @@
   sig.addEventListener('click', avanzar);
   atras.addEventListener('click', function () { ir(Math.max(1, paso - 1)) });
   f.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' && paso < 3 && ev.target.tagName !== 'TEXTAREA') { ev.preventDefault(); avanzar() } });
-  // ---- captura: se achica en el navegador (máximo 1280 px por lado, JPEG ~0,7, idealmente bajo 400 KB) ----
+  // ---- captura: se achica en el navegador (máximo 1280 px por lado, o 960 si no alcanza; JPEG ~0,7, idealmente bajo 250 KB y nunca sobre 300 KB) ----
   function porLector(a) {
     return new Promise(function (bien, mal) {
       var r = new FileReader();
@@ -78,16 +78,17 @@
     return new Promise(function (bien, mal) {
       c.toBlob(function (b) {
         if (!b) return mal();
-        if (b.size > 400000 && q > 0.45) bien(comprimir(c, Math.round((q - 0.1) * 100) / 100));
-        else if (b.size > 600000) mal(); else bien(b)
+        if (b.size > 250000 && q > 0.45) bien(comprimir(c, Math.round((q - 0.1) * 100) / 100));
+        else if (b.size > 300000) mal(); else bien(b)
       }, 'image/jpeg', q)
     })
   }
-  function achicar(a) {
+  function achicar(a, lado) {
+    lado = lado || 1280;
     return decodificar(a).then(function (im) {
       var w0 = im.width || im.naturalWidth, h0 = im.height || im.naturalHeight;
       if (!w0 || !h0) throw new Error('vacía');
-      var e = Math.min(1, 1280 / Math.max(w0, h0)), w = Math.max(1, Math.round(w0 * e)), h = Math.max(1, Math.round(h0 * e)), c = document.createElement('canvas');
+      var e = Math.min(1, lado / Math.max(w0, h0)), w = Math.max(1, Math.round(w0 * e)), h = Math.max(1, Math.round(h0 * e)), c = document.createElement('canvas');
       c.width = w; c.height = h;
       var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, w, h); x.drawImage(im, 0, 0, w, h);
       if (im.close) { try { im.close() } catch (er) {} }
@@ -104,7 +105,7 @@
     if (!/^image\//i.test(a.type || '')) { arch.value = ''; st.textContent = tx('Ese archivo no es una imagen. Sube una captura de pantalla (JPG o PNG).', 'That file is not an image. Upload a screenshot (JPG or PNG).'); return }
     if (a.size > 25e6) { arch.value = ''; st.textContent = tx('La imagen es demasiado grande (máximo 25 MB).', 'The image is too large (25 MB max).'); return }
     procesando = true; st.textContent = tx('Preparando tu captura…', 'Preparing your screenshot…');
-    achicar(a).then(function (r) {
+    achicar(a).catch(function () { return achicar(a, 960) }).then(function (r) {
       img = r; procesando = false; st.textContent = '';
       vista.querySelector('img').src = r.prev; peso.textContent = Math.round(r.blob.size / 1024) + ' KB · ' + r.w + '×' + r.h; vista.hidden = false
     }, function () { procesando = false; quitar(); st.textContent = tx('No pudimos leer esa imagen. Prueba con otra captura.', 'We could not read that image. Try another screenshot.') })

@@ -1,10 +1,10 @@
-OK    portada: el enlace recibido se limpia de la barra (r y utm_source=compartir) http://127.0.0.1:8891/
+OK    portada: el enlace recibido se limpia de la barra (r y utm_source=compartir) http://127.0.0.1:8894/
 OK    portada: botón Compartir visible en la cabecera, 44x44 o más [44, 44, 'flex']
 OK    portada: nombre accesible del botón 
 OK    portada: sin navigator.share 
 OK    menú propio se abre (sin navigator.share) 
-OK    código de 8 letras/números guardado en cn-ref 1rjb1ynb
-OK    el código sale del secreto del navegador (igual al cálculo del servidor) ('lms43zil12fzwmidyp5zjues', '1rjb1ynb')
+OK    código de 8 letras/números guardado en cn-ref 75pnao0n
+OK    el código sale del secreto del navegador (igual al cálculo del servidor) ('2qvwbhzsqqvrin3prtb5hxnd', '75pnao0n')
 OK    WhatsApp: wa.me con el texto pedido y el enlace https://wa.me/?text=Te%20comparto%20Cofrade%20News%2C%20el%20bolet%C3%ADn%20diario%20con%20las%20noticias%20de%20Chile%20y%20el%20mundo%2C%20cada%20dato%20con%2
 OK    Telegram, LinkedIn, Facebook y X con el enlace personal ['https://wa.me/?text=Te%20comparto%20Cofrade%20News%2C%20el%2', 'https://t.me/share/url?url=https%3A%2F%2Fwww.cofrad.es%2F%3F', 'mailto:?subject=Te%20comparto%20Cofrade%20News&body=Te%20com', 'https://www.linkedin.com/sharing/share-offsite/?url=https%3A', 'ht
 OK    Correo: mailto con asunto y cuerpo 
@@ -24,7 +24,7 @@ OK    ES de nuevo: botón en español
 OK    portada sin errores de JavaScript 
 OK    celular: sin desborde horizontal con el botón nuevo 
 OK    celular: botón 44x44 o más [44, 44, 'flex']
-OK    navigator.share recibe el enlace personal y el texto {'title': 'Cofrade News', 'text': 'Te comparto Cofrade News, el boletín diario con las noticias de Chile y el mundo, cada dato con su fuente:', 'url': 'https://www.cofrad.es/?r=269dxlts&utm_source=compartir'}
+OK    navigator.share recibe el enlace personal y el texto {'title': 'Cofrade News', 'text': 'Te comparto Cofrade News, el boletín diario con las noticias de Chile y el mundo, cada dato con su fuente:', 'url': 'https://www.cofrad.es/?r=82pn6kxh&utm_source=compartir'}
 OK    con navigator.share no se abre el menú propio 
 OK    si la persona cancela el menú del teléfono, no pasa nada 
 OK    si el menú del teléfono falla, se abre el menú propio 
@@ -44,9 +44,13 @@ OK    la misma persona el mismo día: 2 visitas, 1 persona (2, 1)
 OK    otra conexión: 2 personas (3, 2)
 OK    vistas previas de WhatsApp y Telegram no cuentan (3, 2)
 OK    precargas del navegador no cuentan (3, 2)
+OK    imagen o marco escondidos en otra web y pedidos sin cabeceras de navegación (curl) no cuentan (3, 2)
 OK    códigos inválidos no se cuentan [{'codigo': 'ab12cd34'}, {'codigo': 'zzzz9999'}]
 OK    en una edición también se cuenta (4, 3)
-OK    sin IP guardada: solo fecha, código y huella HMAC de 24 caracteres (['fecha', 'codigo', 'visitante'], ['4debbc39abccbd6ac6267a30', 'f20fd3656b82d18b9910b912', '69bf771dadc23c3aa395d877'])
+OK    la misma conexión con 4 navegadores distintos: 4 visitas y solo 2 personas (4, 2)
+OK    IPv6: direcciones del mismo /64 son una sola red (2 personas como máximo) (7, 4)
+OK    IPv6: otro /64 es otra red (8, 5)
+OK    sin IP guardada: solo fecha, código, huella HMAC de 24 caracteres y huella de la red (['fecha', 'codigo', 'visitante', 'red'], [{'visitante': '4debbc39abccbd6ac6267a30', 'red': '26ff91bcedc537c7d7b38ed7'}, {'visitante': 'f20fd3656b82d18b9910b912', 'red': '3a9ad6d530caafccb4d9df6a'}])
 OK    ninguna tabla nueva guarda IP en claro 
 OK    origen de la visita: «compartido» en el panel de orígenes 
 OK    Panel sin clave: pide la clave y no muestra las secciones 
@@ -89,17 +93,18 @@ OK    paso 1 exige 18+ en Chile y aceptar las bases
 OK    paso 1 enlaza las bases 
 OK    paso 2: captura opcional con el aviso de tapar datos de otras personas 
 OK    un archivo que no es imagen se rechaza en el navegador 
-OK    la captura se achica a 1280 px y bajo 400 KB en el navegador 253 KB · 1280×853
+OK    la captura se achica a 1280 px y bajo 300 KB en el navegador 211 KB · 1280×853
 OK    paso 3 con el recuadro de seguridad 
-OK    inscripción por la interfaz: mensaje de confirmación por correo y captura recibida Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Desde ese momento cuentan tus participaciones. Si no lo ves, revisa spam o promociones. Recibimos tu captura: la revisaremos y, si cumple las bases, suma 1 participación.
+OK    inscripción por la interfaz: correo de confirmación; la captura espera a que confirme su email Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Tus participaciones cuentan cuando confirmes (también las visitas que tu enlace ya trajo). Si no lo ves, revisa spam o promociones. La captura no se guardó: súbela de nuevo
 OK    muestra el enlace personal del mismo navegador 
-OK    participante sin confirmar, unido al código del navegador [{'email': 'lectora.concurso@gmail.com', 'codigo': '5nijujdu', 'creado': '2026-11-20T08:27:44.408Z', 'verificado': 0, 'confirmado': None, 'token': '6c788ad511d92eb24b39d3bfbe224258ae3df4ac', 'enviado': '2026-11-20T08:27:44.408Z', 'mayor': 1, 'bases': 1, 'ip': 
-OK    captura guardada privada en D1 (BLOB) con su SHA-256, por revisar [{'id': 1, 'email': 'lectora.concurso@gmail.com', 'bytes': 258735, 'ancho': 1280, 'alto': 853, 'sha': 'e925bc4552979894d17b9efcb474c8328c2a55b2b2343bddc1614c7f45b25fcf', 'estado': 'por revisar', 'fecha': '2026-11-20', 'largo': 258735}]
+OK    participante sin confirmar, unido al código del navegador [{'email': 'lectoraconcurso@example.com', 'codigo': '2uaw8be8', 'creado': '2026-11-20T09:34:39.652Z', 'verificado': 0, 'confirmado': None, 'token': '79d37fc96790113c3544636bce27b1c95a5041a4', 'enviado': '2026-11-20T09:34:39.652Z', 'mayor': 1, 'bases': 1, 'ip': '
 OK    correo de confirmación con el enlace y el enlace personal ['Confirma tu participación en el Concurso Comparte Cofrade News']
 OK    copiar mi enlace (portapapeles) 
 OK    el enlace del correo muestra un botón (no confirma solo) 
 OK    el botón confirma y muestra el enlace personal 
 OK    el enlace ya usado vence (410) 
+OK    ya confirmada, desde su navegador: la captura se recibe Ya estás participando con este email. Recibimos tu captura: la revisaremos y, si cumple las bases, suma 1 participación.
+OK    captura privada en D1 en texto base64 (no BLOB) con su SHA-256, por revisar [{'id': 1, 'email': 'lectoraconcurso@example.com', 'bytes': 216476, 'ancho': 1280, 'alto': 853, 'sha': '14ef46a06666d163f8aefbdd67b73bc12744d9cf81d0f212a423c819ca45a4de', 'estado': 'por revisar', 'fecha': '2026-11-20', 'largo': 288636, 'tipo': 'text'}]
 OK    concurso sin errores de JavaScript 
 OK    API rechaza: 18 años (400, {'ok': False, 'error': 'Para participar debes tener 18 años o más y vivir en Chile.', 'error_en': 'To take part you must be 18 or older and live in Chile.'})
 OK    API rechaza: bases (400, {'ok': False, 'error': 'Debes aceptar las bases del concurso.', 'error_en': 'You must accept the contest rules.'})
@@ -109,19 +114,32 @@ OK    API rechaza: persona (400, {'ok': False, 'error': 'No pudimos confirmar qu
 OK    API rechaza: desechables (400, {'ok': False, 'error': 'No aceptamos correos temporales o desechables. Usa tu email de siempre.', 'error_en': 'Temporary or disposable emails are not accepted.'})
 OK    trampa de robots: finge éxito y no guarda 
 OK    API rechaza una captura que no es JPEG (400, {'ok': False, 'error': 'La captura debe ser una imagen. Elige una captura de pantalla.', 'error_en': 'The screenshot must be an image.'})
-OK    API inscribe con captura (200, {'ok': True, 'mensaje': 'Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Desde ese momento cuentan tus participaciones. Si no lo ves, revisa spam o promociones. Recibimos tu captura: la revisaremos y, si cumple las
+OK    API inscribe; la captura de quien no confirmó su email no se guarda (200, {'ok': True, 'mensaje': 'Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Tus participaciones cuentan cuando confirmes (también las visitas que tu enlace ya trajo). Si no lo ves, revisa spam o promociones. La captur
+OK    API: ya confirmada, desde su navegador, la captura se recibe (200, {'ok': True, 'mensaje': 'Ya estás participando con este email. Recibimos tu captura: la revisaremos y, si cumple las bases, suma 1 participación.', 'mensaje_en': 'You are already taking part with this email. We received your screenshot: we will review it
 OK    imagen idéntica (mismo SHA-256) se rechaza aunque sea otra persona (409, {'ok': False, 'error': 'Esa captura ya fue enviada. Sube una distinta.', 'error_en': 'That screenshot was already sent. Please upload a different one.'})
 OK    tope de 1 captura por persona y día (429, {'ok': False, 'error': 'Ya recibimos tu captura de hoy. Puedes subir otra mañana.', 'error_en': 'We already received your screenshot today. You can upload another one tomorrow.'})
 OK    el mismo navegador no inscribe un segundo email (409, {'ok': False, 'error': 'Este navegador ya está inscrito en el concurso con otro email. Cada persona participa una sola vez.', 'error_en': 'This browser is already signed up with another email. Each person can enter only once.'})
-OK    el mismo email desde otro navegador no recibe el código ajeno {'ok': True, 'mensaje': 'Ya te enviamos el correo de confirmación hace unos minutos: revisa tu bandeja, spam o promociones.', 'mensaje_en': 'We already sent you the confirmation email a few minutes ago: check your inbox, spam or promotions.'}
+OK    el mismo email desde otro navegador: respuesta neutra, sin código, sin captura y sin correo {'ok': True, 'mensaje': 'Si ese email está bien escrito, revisa tu bandeja: ahí llega (o ya llegó) nuestro correo con tu enlace personal. Para subir capturas, usa el mismo navegador con el que te inscribiste.', 'mensaje_en': 'If that email is spelled correctly
 OK    captura sobre 600 KB rechazada 413
+OK    captura sobre 300 KB rechazada (413, {'ok': False, 'error': 'La captura es demasiado pesada (máximo 300 KB).', 'error_en': 'The screenshot is too large (300 KB max).'})
+OK    email mal escrito: el mismo navegador lo corrige mientras no confirma (200, {'ok': True, 'mensaje': 'Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Tus participaciones cuentan cuando confirmes (también las visitas que tu enlace ya trajo). Si no lo ves, revisa spam o promociones.', 'mensaj
+OK    alias de Gmail: se guarda la casilla canónica (sin puntos ni +etiqueta) (200, {'ok': True, 'mensaje': 'Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Tus participaciones cuentan cuando confirmes (también las visitas que tu enlace ya trajo). Si no lo ves, revisa spam o promociones.', 'mensaj
+OK    alias de Gmail: la misma casilla desde otro navegador recibe la respuesta neutra {'ok': True, 'mensaje': 'Si ese email está bien escrito, revisa tu bandeja: ahí llega (o ya llegó) nuestro correo con tu enlace personal. Para subir capturas, usa el mismo navegador con el que te inscribiste.', 'mensaje_en': 'If that email is spelled correctly
+OK    tope de 5 correos de confirmación por conexión y día [(200, ''), (200, ''), (200, ''), (200, ''), (200, ''), (429, 'Por hoy no podemos enviar más correos de confirmac')]
+OK    tope de 3 capturas por conexión y día [(200, 'Ya estás participando con este email. Re'), (200, 'Ya estás participando con este email. Re'), (200, 'Ya estás participando con este email. Re'), (429, 'Hoy no podemos recibir más capturas. Int')]
+OK    tope de 60 capturas al día en todo el sitio (la base no se llena) (429, {'ok': False, 'error': 'Hoy no podemos recibir más capturas. Inténtalo mañana.', 'error_en': 'We cannot receive more screenshots today. Please try again tomorrow.'})
 OK    enlace: tope de 10 por día y solo dentro de las fechas (10 + 3) ('13', '1', '14')
 OK    captura: solo las aceptadas y dentro de las fechas (1); total 14 ('13', '1', '14')
 OK    sin email confirmado no suma 
 OK    Panel: la captura por revisar aparece con su miniatura 
-OK    Panel: la captura se ve (JPEG privado, sin caché) (200, 'image/jpeg', 258735)
+OK    Panel: la captura se ve (JPEG privado, sin caché) (200, 'image/jpeg', 216476)
 OK    aceptar captura /panel?cc=aceptar#concurso
 OK    rechazar captura /panel?cc=rechazar#concurso
+OK    excluir: queda fuera del sorteo (0 participaciones) y marcado /panel?cc=excluir#concurso
+OK    reincorporar: vuelve con sus 14 participaciones /panel?cc=reincorporar#concurso
+OK    Panel: muestra el último mantenimiento de los borrados de las bases ['último mantenimiento 20/11, 06:34.']
+OK    borrar los datos de un participante exige confirmar /panel?cc=error:confirmar-borrado#concurso
+OK    borrar datos: inscripción y visitas de su enlace eliminadas /panel?cc=borrado#concurso
 OK    sortear exige marcar la confirmación /panel?cc=error:confirmar#concurso
 OK    sortear antes del 26-12-2026: rechazado y sin registro /panel?cc=antes#concurso
 OK    vista previa: semilla fija → mismos ganadores que el cálculo independiente (['6506e1cc2539079b', '6a28ec8fc62a610d', '04258f74ef67461e', 'cfb73329db80137e', 'b255ba72400ffffb'], ['6506e1cc2539079b', '6a28ec8fc62a610d', '04258f74ef67461e', 'cfb73329db80137e', 'b255ba72400ffffb'])
@@ -129,9 +147,17 @@ OK    vista previa: 5 ganadores distintos
 OK    vista previa: huella = SHA-256 de la lista ordenada 
 OK    vista previa: lista con los pesos esperados [1, 1, 4, 7, 10, 13, 14, 16, 17, 18, 19, 20]
 OK    vista previa: repetible y coincide con el cálculo independiente en 4 semillas más [True, True, True, True]
-OK    ponderado: quien tiene más participaciones gana más seguido (20, 987, 1, 66)
+OK    ponderado: quien tiene más participaciones gana más seguido (20, 990, 1, 78)
 OK    cupón inexistente: no válido {'ok': False, 'motivo': 'no existe'}
 OK    cupón con formato malo: no válido 
-OK    esquema-d1.sql tiene exactamente las mismas tablas que crea el Worker 13
+OK    bases en español: organizador, fechas, requisitos, participaciones, premio, sorteo, reclamo y datos personales 
+OK    bases en inglés: el mismo contenido 
+OK    bases: botón para participar mientras está abierto 
+OK    bases: abre en español (inglés oculto) 
+OK    bases: el botón EN muestra el bloque en inglés “Share Cofrade News” contest rules · Cofrade News
+OK    bases a 320 px: sin desborde horizontal 
+OK    bases: «Participar en el concurso» abre la inscripción 
+OK    portada a 320 px: sin desborde con el botón y la cinta 
+OK    esquema-d1.sql tiene exactamente las mismas tablas que crea el Worker 18
 
-135/135 pruebas OK (principal)
+161/161 pruebas OK (principal)

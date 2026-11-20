@@ -5,14 +5,19 @@
 // icono de "compartir" para que nuestros lectores y usuarios compartan nuestro Newsletter con sus amistades y contactos».
 // Germán, 04:43 (concurso): cuenta el enlace personal Y la captura subida en el Buzón; del 20-11-2026 al 24-12-2026 a las 23:59 de
 // Santiago; el premio no se suma al 20 % de la Cofradía; organiza solo «Destak».
-// Sin datos personales en claro: cada visita por un enlace compartido se guarda como una huella HMAC del día (IP + navegador + fecha,
-// con una sal derivada de un secreto que ya existe), que cambia cada día. Nunca se guarda la IP.
+// Sin datos personales en claro: cada visita por un enlace compartido se guarda como una huella seudónima HMAC del día (IP + navegador
+// + fecha, con una sal derivada de un secreto que ya existe), que cambia cada día, más una huella de la red (la IPv4 o el /64 de la IPv6)
+// para el tope de 2 personas por red, enlace y día. Nunca se guarda la IP.
 // Las tablas nuevas están en esquema-d1.sql (el dueño del esquema) y aquí se crean solas la primera vez si aún no existen.
 // =====================================================================================================================
 const CONCURSO = {
   nombre: "Concurso Comparte Cofrade News", organizador: "Destak", desde: "2026-11-20", hasta: "2026-12-24", sorteo: "2026-12-26",
   reclamo: "2027-01-31", vence: "2027-03-31", borrarCapturas: "2027-01-25", borrarDatos: "2027-02-01", ganadores: 5, pct: 25, plan: "anual",
   topeEnlace: 10, topeCaptura: 1,
+  // Topes contra abusos (revisión independiente del 20-11-2026): personas por red y día en cada enlace, capturas (tamaño, por conexión,
+  // por día, por persona y espacio total en la base) y correos de confirmación (por conexión y día, por email y por día en todo el sitio)
+  redesPorCodigo: 2, capturaMaxBytes: 300000, capturasIpDia: 3, capturasDia: 60, capturasPorPersona: 40, capturasMaxTotal: 120000000,
+  correosIpDia: 5, correosPorEmail: 4, correosDia: 60, sorteoAutoHora: 18,
 };
 const RE_CODIGO_REF = /^[a-z0-9]{6,10}$/;
 const CANALES_COMPARTIR = ["nativo", "whatsapp", "telegram", "correo", "linkedin", "facebook", "x", "copiar"];
@@ -22,19 +27,24 @@ const ESTADOS_MENCION = ["por confirmar", "confirmada", "descartada"];
 const TABLAS_DIFUSION = [
   "CREATE TABLE IF NOT EXISTS compartidos (fecha TEXT NOT NULL, canal TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (fecha, canal))",
   "CREATE TABLE IF NOT EXISTS referidos (fecha TEXT NOT NULL, codigo TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (fecha, codigo))",
-  "CREATE TABLE IF NOT EXISTS referidos_unicos (fecha TEXT NOT NULL, codigo TEXT NOT NULL, visitante TEXT NOT NULL, PRIMARY KEY (fecha, codigo, visitante))",
+  "CREATE TABLE IF NOT EXISTS referidos_unicos (fecha TEXT NOT NULL, codigo TEXT NOT NULL, visitante TEXT NOT NULL, red TEXT, PRIMARY KEY (fecha, codigo, visitante))",
   "CREATE INDEX IF NOT EXISTS referidos_unicos_codigo ON referidos_unicos (codigo, fecha)",
+  "CREATE INDEX IF NOT EXISTS referidos_unicos_red ON referidos_unicos (fecha, codigo, red)",
   "CREATE TABLE IF NOT EXISTS menciones (id INTEGER PRIMARY KEY AUTOINCREMENT, fecha TEXT, medio TEXT NOT NULL, programa TEXT, persona TEXT, enlace TEXT UNIQUE, alcance INTEGER, origen TEXT NOT NULL, estado TEXT NOT NULL DEFAULT 'por confirmar', nota TEXT, titulo TEXT, fuente TEXT, creado TEXT NOT NULL, actualizado TEXT)",
   "CREATE INDEX IF NOT EXISTS menciones_estado ON menciones (estado, fecha)",
 ];
 const TABLAS_CONCURSO = [
   "CREATE TABLE IF NOT EXISTS concurso_participantes (email TEXT PRIMARY KEY, codigo TEXT UNIQUE NOT NULL, creado TEXT NOT NULL, verificado INTEGER NOT NULL DEFAULT 0, confirmado TEXT, token TEXT, enviado TEXT, mayor INTEGER NOT NULL DEFAULT 0, bases INTEGER NOT NULL DEFAULT 0, ip TEXT, estado TEXT NOT NULL DEFAULT 'activo')",
   "CREATE INDEX IF NOT EXISTS concurso_participantes_token ON concurso_participantes (token)",
-  "CREATE TABLE IF NOT EXISTS concurso_capturas (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL, fecha TEXT NOT NULL, creado TEXT NOT NULL, sha TEXT UNIQUE NOT NULL, bytes INTEGER NOT NULL, ancho INTEGER, alto INTEGER, datos BLOB, estado TEXT NOT NULL DEFAULT 'por revisar', revisado TEXT)",
+  "CREATE TABLE IF NOT EXISTS concurso_capturas (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL, fecha TEXT NOT NULL, creado TEXT NOT NULL, sha TEXT UNIQUE NOT NULL, bytes INTEGER NOT NULL, ancho INTEGER, alto INTEGER, datos TEXT, estado TEXT NOT NULL DEFAULT 'por revisar', revisado TEXT, ip TEXT)",
   "CREATE INDEX IF NOT EXISTS concurso_capturas_email ON concurso_capturas (email, fecha)",
+  "CREATE INDEX IF NOT EXISTS concurso_capturas_fecha ON concurso_capturas (fecha, ip)",
+  "CREATE TABLE IF NOT EXISTS concurso_envios (id INTEGER PRIMARY KEY AUTOINCREMENT, fecha TEXT NOT NULL, ip TEXT, email TEXT NOT NULL, creado TEXT NOT NULL)",
+  "CREATE INDEX IF NOT EXISTS concurso_envios_fecha ON concurso_envios (fecha, ip)",
+  "CREATE INDEX IF NOT EXISTS concurso_envios_email ON concurso_envios (email)",
   "CREATE TABLE IF NOT EXISTS concurso_sorteos (id INTEGER PRIMARY KEY AUTOINCREMENT, creado TEXT NOT NULL, tipo TEXT NOT NULL, semilla TEXT NOT NULL, huella TEXT NOT NULL, total INTEGER NOT NULL, participantes INTEGER NOT NULL, ganadores TEXT NOT NULL, lista TEXT NOT NULL, avisos INTEGER NOT NULL DEFAULT 0)",
   "CREATE UNIQUE INDEX IF NOT EXISTS concurso_sorteo_oficial ON concurso_sorteos (tipo) WHERE tipo = 'oficial'",
-  "CREATE TABLE IF NOT EXISTS cupones (codigo TEXT PRIMARY KEY, email TEXT NOT NULL, origen TEXT NOT NULL, pct INTEGER NOT NULL, plan TEXT NOT NULL, vence TEXT NOT NULL, creado TEXT NOT NULL, usado TEXT, ref TEXT)",
+  "CREATE TABLE IF NOT EXISTS cupones (codigo TEXT PRIMARY KEY, email TEXT NOT NULL, origen TEXT NOT NULL, pct INTEGER NOT NULL, plan TEXT NOT NULL, vence TEXT NOT NULL, creado TEXT NOT NULL, usado TEXT, ref TEXT, reclamado TEXT)",
 ];
 const URL_GOOGLE_NEWS = "https://news.google.com/rss/search?q=%22Cofrade%20News%22%20OR%20%22cofrad.es%22&hl=es-419&gl=CL&ceid=CL:es-419";
 const URL_ITUNES = "https://itunes.apple.com/search?term=Cofrade%20News&media=podcast&entity=podcastEpisode&country=CL";
@@ -76,7 +86,7 @@ function asegurarTablas(env, grupo) {
   return _tablasDif[grupo];
 }
 // «Hoy» del concurso: la fecha de Santiago. Solo el arnés de pruebas la cambia (binding CONCURSO_HOY_PRUEBA; en producción no existe)
-let _hoyPrueba = "";
+let _hoyPrueba = "", _horaPrueba = "";   // _horaPrueba: binding CONCURSO_HORA_PRUEBA, solo en el arnés (hora del sorteo de respaldo)
 const hoyConcurso = () => (/^\d{4}-\d{2}-\d{2}$/.test(_hoyPrueba) ? _hoyPrueba : fechaChile());
 function etapaConcurso(h = hoyConcurso()) {
   return h < CONCURSO.desde ? "antes" : h <= CONCURSO.hasta ? "abierto" : h <= CONCURSO.reclamo ? "cerrado" : "fin";
@@ -162,21 +172,37 @@ box-shadow:0 18px 48px -12px rgba(11,31,58,.35),0 2px 8px rgba(11,31,58,.12);fon
 @media (max-width:350px){.cab .hoja:has(.herr .cmp){padding-left:8px;padding-right:8px;column-gap:4px}.cab .hoja:has(.herr .cmp) .marca{gap:8px}.cab .hoja:has(.herr .cmp) .marca b{font-size:18px}.cab .hoja:has(.herr .cmp) .marca img{width:36px;height:36px}}`;
 const COMPARTIR_ESTILO = `<style id="cnCmp">${COMPARTIR_CSS}</style>`;
 
-// Visita que llega con ?r=<código>: suma 1 por código y día, y 1 persona distinta por huella del día. Nunca rompe ni atrasa la página.
+// Red de la conexión: la IPv4 completa o los primeros 64 bits de la IPv6 (un hogar o un teléfono cambia de dirección dentro de su /64)
+function redDe(ip) {
+  let s0 = String(ip || "").trim().toLowerCase();
+  if (s0.includes(".") && s0.includes(":")) s0 = s0.slice(s0.lastIndexOf(":") + 1);   // IPv4 escrita como IPv6 (::ffff:1.2.3.4)
+  if (!s0.includes(":")) return s0;
+  const [a, b] = s0.split("::"), ia = a ? a.split(":") : [], ib = b ? b.split(":") : [];
+  const g = s0.includes("::") ? [...ia, ...Array(Math.max(0, 8 - ia.length - ib.length)).fill("0"), ...ib] : ia;
+  return g.slice(0, 4).map((x) => x.replace(/^0+(?=.)/, "") || "0").join(":") + "::/64";
+}
+// Visita que llega con ?r=<código>: suma 1 por código y día, y 1 persona distinta por huella del día, con un máximo de 2 personas por red,
+// código y día. Solo cuenta una página abierta de verdad en el navegador (Sec-Fetch-Mode «navigate» y Sec-Fetch-Dest «document»): una
+// imagen, un marco o un fetch escondidos en otra web no suman. Nunca rompe ni atrasa la página.
 async function contarReferido(req, env) {
   try {
     if (req.method !== "GET" || !env.DB) return;
     const r = String(new URL(req.url).searchParams.get("r") || "");
     if (!RE_CODIGO_REF.test(r)) return;
-    const ua = req.headers.get("User-Agent") || "";
+    const ua = req.headers.get("User-Agent") || "", cab = (k) => String(req.headers.get(k) || "").toLowerCase();
     if (!ua || BOT_UA.test(ua) || /CofradeNews-/i.test(ua)) return;   // robots y vistas previas de WhatsApp o Telegram no cuentan
-    if (/prefetch|prerender/i.test((req.headers.get("Sec-Purpose") || "") + (req.headers.get("Purpose") || ""))) return;
+    // SEC_FETCH_PRUEBA solo existe en el arnés de pruebas: su cliente HTTP reescribe Sec-Fetch-Mode, y el arnés copia el valor real aparte
+    const modo = env.SEC_FETCH_PRUEBA ? cab("X-Prueba-Sec-Fetch-Mode") : cab("Sec-Fetch-Mode");
+    if (modo !== "navigate" || cab("Sec-Fetch-Dest") !== "document") return;
+    if (/prefetch|prerender/i.test(cab("Sec-Purpose") + cab("Purpose"))) return;
     if (ASN_NUBE.has(Number(req.cf && req.cf.asn))) return;
-    const fecha = fechaChile(), v = await hmacDif(env, ["ref", fecha, req.headers.get("CF-Connecting-IP") || "", ua].join("|"));
-    if (!v || !(await bajoLimite(env, "r:" + v))) return;
+    const fecha = fechaChile(), ip = req.headers.get("CF-Connecting-IP") || "";
+    const [v, red] = await Promise.all([hmacDif(env, ["ref", fecha, ip, ua].join("|")), hmacDif(env, ["red", fecha, r, redDe(ip)].join("|"))]);
+    if (!v || !red || !(await bajoLimite(env, "r:" + red))) return;
     await asegurarTablas(env, "difusion");
     await env.DB.batch([
-      env.DB.prepare("INSERT OR IGNORE INTO referidos_unicos (fecha, codigo, visitante) VALUES (?, ?, ?)").bind(fecha, r, v),
+      env.DB.prepare("INSERT OR IGNORE INTO referidos_unicos (fecha, codigo, visitante, red) SELECT ?1, ?2, ?3, ?4 WHERE (SELECT COUNT(*) FROM referidos_unicos WHERE fecha = ?1 AND codigo = ?2 AND red = ?4) < ?5")
+        .bind(fecha, r, v, red, CONCURSO.redesPorCodigo),
       env.DB.prepare("INSERT INTO referidos (fecha, codigo, n) VALUES (?, ?, 1) ON CONFLICT(fecha, codigo) DO UPDATE SET n = n + 1").bind(fecha, r),
     ]);
   } catch { /* la medición nunca rompe la página */ }
@@ -259,8 +285,8 @@ function leerYoutube(j) {
   }
   return out;
 }
-async function traerFuente(url, tipo) {
-  const r = await fetch(url, { headers: { "User-Agent": UA_MENCIONES, Accept: tipo === "json" ? "application/json" : "application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9" },
+async function traerFuente(url, tipo, extra = {}) {
+  const r = await fetch(url, { headers: { "User-Agent": UA_MENCIONES, Accept: tipo === "json" ? "application/json" : "application/rss+xml, application/atom+xml, application/xml, text/xml;q=0.9", ...extra },
     signal: AbortSignal.timeout(9000) });
   if (!r.ok) throw new Error("HTTP " + r.status);
   const t = await r.text();
@@ -273,7 +299,7 @@ function leerReglas(j) {
   for (const [k, d] of Object.entries(REDES_DEFECTO)) {
     const a = j && j.redes && j.redes[k] && j.redes[k].ajustes;
     const n = a ? Math.floor(Number(a.busquedas_dia)) : NaN;
-    redes[k] = a && typeof a.activo === "boolean" && Number.isFinite(n) && n >= 0 && n <= 100 ? { activo: a.activo, busquedas_dia: n } : d;
+    redes[k] = a && typeof a.activo === "boolean" && Number.isFinite(n) && n >= 0 && n <= 100 ? { activo: a.activo, busquedas_dia: Math.min(n, 50) } : d;   // tope 50: la cuota diaria de búsquedas es de 100
     if (a && a.nota) notas[k] = recorte(a.nota, 200);
   }
   return { origen: "datos/reglas-redes.json" + (j && j.revisado ? " (revisado " + recorte(j.revisado, 10) + ")" : ""), redes, notas };
@@ -286,7 +312,7 @@ async function bajarReglas() {
   } catch { /* quedan los valores por defecto del mismo archivo */ }
   return REGLAS_DEFECTO;
 }
-// robots.txt (RFC 9309): grupo propio o «*»; la regla más larga gana y, si empatan, Allow. 4xx = sin reglas; 5xx o sin respuesta = no se lee.
+// robots.txt (RFC 9309): grupo propio o «*»; la regla más larga gana y, si empatan, Allow. 4xx = sin reglas; 429, 5xx o sin respuesta = no se lee.
 function patronRobots(p) {
   const fin = p.endsWith("$");
   return new RegExp("^" + (fin ? p.slice(0, -1) : p).split("*").map((x) => x.replace(/[.+?^${}()|[\]\\]/g, "\\$&")).join(".*") + (fin ? "$" : ""));
@@ -313,6 +339,7 @@ async function revisarRobots(url) {
   const u = new URL(url);
   try {
     const r = await fetch(u.origin + "/robots.txt", { headers: { "User-Agent": UA_MENCIONES }, signal: AbortSignal.timeout(8000) });
+    if (r.status === 429) return false;   // «demasiadas consultas»: no se lee
     if (r.status >= 400 && r.status < 500) return true;
     if (!r.ok) return false;
     return robotsPermite((await r.text()).slice(0, 500000), u.pathname + u.search);
@@ -339,7 +366,8 @@ function fuentesMenciones(rss) {
     ...rss.map((u, i) => ({ id: "alerta" + (i + 1), url: u, tipo: "xml", robots: true, leer: (x) => leerRss(x, { fuente: "Alerta RSS (" + hostDe(u) + ")" }) })),
   ];
 }
-const urlYoutube = (env) => `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=date&maxResults=20&q=${encodeURIComponent(Q_YOUTUBE)}&key=${encodeURIComponent(env.YOUTUBE_API_KEY)}`;
+// La clave va en la cabecera X-Goog-Api-Key (no en la dirección, para que no quede en ningún registro)
+const URL_YOUTUBE = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=date&maxResults=20&q=${encodeURIComponent(Q_YOUTUBE)}`;
 // Turno atómico en la tabla config: una sola copia del Worker lo toma, y como mucho cada «cadaMin» minutos
 async function tomarTurno(env, clave, cadaMin) {
   const ahora = Date.now();
@@ -385,7 +413,7 @@ async function pasoMenciones(env, { completa = false, forzar = false } = {}) {
   const C = Object.fromEntries((((await env.DB.prepare("SELECT clave, valor FROM config WHERE clave IN ('menciones_estado', 'menciones_reglas', 'menciones_robots', 'menciones_yt_dia', 'menciones_rss')").all()).results) || []).map((x) => [x.clave, x.valor]));
   const st = jsonDe(C.menciones_estado, {}), robots = jsonDe(C.menciones_robots, {}), rss = listaRss(C.menciones_rss), fuentes = fuentesMenciones(rss);
   const tope = completa ? 40 : 1, fin = Date.now() + (completa ? 25000 : 18000), iso = () => new Date().toISOString(), fresco = (t) => Date.parse(t) > Date.now() - 86400000;
-  let descargas = 0, nuevas = 0, cambioRobots = false, termino = false;
+  let descargas = 0, nuevas = 0, cambioRobots = false;
   const queda = () => descargas < tope && Date.now() < fin;
   let reglas = jsonDe(C.menciones_reglas, null);
   if (!reglas || !fresco(reglas.t)) {
@@ -401,7 +429,7 @@ async function pasoMenciones(env, { completa = false, forzar = false } = {}) {
       await cfgDif(env, "menciones_yt_dia", JSON.stringify({ fecha: dia, n: n + 1 }));
       descargas++;
       let r = "error";
-      try { const items = leerYoutube(await traerFuente(urlYoutube(env), "json")); r = items.length; nuevas += await guardarMenciones(env, items); } catch { r = "error"; }   // el error no se guarda: la dirección lleva la clave
+      try { const items = leerYoutube(await traerFuente(URL_YOUTUBE, "json", { "X-Goog-Api-Key": String(env.YOUTUBE_API_KEY) })); r = items.length; nuevas += await guardarMenciones(env, items); } catch { r = "error"; }   // el error no se guarda: la dirección lleva la clave
       st.youtube = { hora: iso(), n: r };
     }
   }
@@ -423,15 +451,15 @@ async function pasoMenciones(env, { completa = false, forzar = false } = {}) {
       st.ronda.fuentes[id] = items.length; st.ronda.nuevas += k; nuevas += k;
     } catch { st.ronda.fuentes[id] = "error"; }
     st.ronda.pendientes.shift();
-    if (!st.ronda.pendientes.length) { st.ultima = { inicio: st.ronda.inicio, hora: iso(), fuentes: st.ronda.fuentes, nuevas: st.ronda.nuevas }; termino = true; }
+    if (!st.ronda.pendientes.length) st.ultima = { inicio: st.ronda.inicio, hora: iso(), fuentes: st.ronda.fuentes, nuevas: st.ronda.nuevas };
   }
   st.reglas = (reglas.r || REGLAS_DEFECTO).origen;
-  await cfgDif(env, "menciones_estado", JSON.stringify(st));
+  const stTxt = JSON.stringify(st);
+  if (stTxt !== (C.menciones_estado || "")) await cfgDif(env, "menciones_estado", stTxt);   // sin escrituras inútiles en la base
   if (cambioRobots) {   // solo las fuentes vigentes, para que la lista no crezca sin fin
     const vigentes = Object.fromEntries(fuentes.filter((f) => robots[f.url]).map((f) => [f.url, robots[f.url]]));
     await cfgDif(env, "menciones_robots", JSON.stringify(vigentes));
   }
-  if (termino) await mantenerDifusion(env).catch(() => null);
   return { estado: descargas ? "ok" : "en espera", nuevas, descargas };
 }
 // Desde la portada (ctx.waitUntil): un paso como mucho cada 2 minutos en todo el sitio, y nunca más de 20 s
@@ -443,15 +471,42 @@ function revisarMenciones(env) {
   const paso = (async () => ((await tomarTurno(env, "menciones_paso", cada / 60000)) ? (await pasoMenciones(env)).estado : "espera"))().catch(() => "error");
   return Promise.race([paso, new Promise((r) => setTimeout(() => r("corte"), 20000))]);
 }
-// Plazos de las bases: capturas borradas 30 días después del sorteo; datos de quienes no ganaron, el 01-02-2027; el resto al vencer los cupones
+// Plazos de las bases: capturas borradas 30 días después del sorteo; datos de quienes no ganaron, el 01-02-2027; cupones no reclamados
+// al 31-01-2027, anulados; los datos de un ganador se borran cuando usa su cupón; al vencer los cupones (31-03-2027), todo lo demás.
 async function mantenerDifusion(env) {
   const hoy = hoyConcurso(), ops = [env.DB.prepare("DELETE FROM referidos_unicos WHERE fecha < ?").bind(masDias(fechaChile(), -120))];
   await asegurarTablas(env, "concurso");
+  ops.push(env.DB.prepare("DELETE FROM concurso_envios WHERE fecha < ?").bind(masDias(fechaChile(), -30)),
+    env.DB.prepare("DELETE FROM concurso_participantes WHERE email IN (SELECT email FROM cupones WHERE origen = 'concurso' AND usado IS NOT NULL)"));
   if (hoy >= CONCURSO.borrarCapturas) ops.push(env.DB.prepare("UPDATE concurso_capturas SET datos = NULL WHERE datos IS NOT NULL"));
-  if (hoy >= CONCURSO.borrarDatos) ops.push(env.DB.prepare("DELETE FROM concurso_capturas"),
+  if (hoy > CONCURSO.reclamo) ops.push(env.DB.prepare("DELETE FROM cupones WHERE origen = 'concurso' AND reclamado IS NULL AND usado IS NULL"));
+  if (hoy >= CONCURSO.borrarDatos) ops.push(env.DB.prepare("DELETE FROM concurso_capturas"), env.DB.prepare("DELETE FROM concurso_envios"),
     env.DB.prepare("DELETE FROM concurso_participantes WHERE email NOT IN (SELECT email FROM cupones WHERE origen = 'concurso')"));
-  if (hoy > CONCURSO.vence) ops.push(env.DB.prepare("DELETE FROM concurso_participantes"), env.DB.prepare("DELETE FROM cupones WHERE origen = 'concurso' AND usado IS NULL"));
+  if (hoy > CONCURSO.vence) ops.push(env.DB.prepare("DELETE FROM concurso_participantes"), env.DB.prepare("DELETE FROM cupones WHERE origen = 'concurso' AND usado IS NULL"),
+    env.DB.prepare("UPDATE cupones SET email = 'borrado' WHERE origen = 'concurso' AND email <> 'borrado'"));
   await env.DB.batch(ops);
+}
+// Mantenimiento propio del concurso (no depende del recolector): los borrados de las bases una vez cada 12 horas y, desde el 26-12 a las
+// 18:00 (hora de Santiago), el sorteo oficial si nadie lo hizo desde el Panel. Lo dispara cualquier visita a la portada o al Panel.
+let _proximoMantConcurso = 0;
+function revisarConcurso(env) {
+  const cada = Math.max(0, Number(env.CONCURSO_MANT_SEG ?? 600)) * 1000;   // CONCURSO_MANT_SEG solo existe en el arnés de pruebas
+  if (!env.DB || Date.now() < _proximoMantConcurso) return Promise.resolve("espera");
+  _proximoMantConcurso = Date.now() + cada;   // cada copia del Worker mira como mucho cada 10 minutos
+  const tarea = (async () => {
+    await asegurarTablas(env, "difusion");
+    await asegurarTablas(env, "concurso");
+    let r = "nada";
+    if (await tomarTurno(env, "difusion_mant", cada ? 720 : 0)) {
+      try { await mantenerDifusion(env); await cfgDif(env, "difusion_mant_ok", new Date().toISOString()); r = "mantenimiento"; }
+      catch (e) { await cfgDif(env, "difusion_mant_error", new Date().toISOString() + " " + recorte((e && e.message) || e, 160)).catch(() => null); r = "error"; }
+    }
+    const hoy = hoyConcurso(), hora = /^\d{1,2}$/.test(_horaPrueba) ? Number(_horaPrueba) : horaDeChile();
+    if (hoy <= CONCURSO.reclamo && (hoy > CONCURSO.sorteo || (hoy === CONCURSO.sorteo && hora >= CONCURSO.sorteoAutoHora))
+      && !(await env.DB.prepare("SELECT id FROM concurso_sorteos WHERE tipo = 'oficial'").first()) && (await tomarTurno(env, "sorteo_auto", cada ? 30 : 0))) r = "sorteo:" + (await sortearOficial(env));
+    return r;
+  })().catch(() => "error");
+  return Promise.race([tarea, new Promise((ok) => setTimeout(() => ok("corte"), 25000))]);
 }
 async function accionMenciones(req, env) {
   if (!ORIGEN_OK(req) || !(await esAdmin(req, env))) return new Response("No autorizado.", { status: 403 });
@@ -506,11 +561,11 @@ const CONCURSO_DLG = `<dialog class="dlg-pub dlg-buzon dlg-concurso" id="dlgConc
 <button type="button" class="pub-cerrar" aria-label="Cerrar">✕</button>
 <span class="kicker">Concurso Comparte Cofrade News</span><h3 id="dlgConT">Participa por un 25 % de descuento</h3>
 <div class="pasos" aria-hidden="true"><i></i><i></i><i></i></div><p class="sub paso-n" style="margin:0" aria-live="polite">Paso 1 de 3</p>
-<div class="paso" data-paso="1"><p class="cc-txt">Comparte tu enlace personal: cada persona distinta que lo abre en un día suma 1 participación (hasta 10 al día), y cada captura aceptada suma 1 más (1 al día). El 26 de diciembre sorteamos 5 cupones de 25 % de descuento en el plan anual del Dashboard Financiero.</p>
+<div class="paso" data-paso="1"><p class="cc-txt">Comparte tu enlace personal: cada persona distinta que lo abre en un día suma 1 participación (hasta 10 al día). Cuando confirmes tu email, cada captura aceptada suma 1 más (1 al día). El 26 de diciembre sorteamos 5 cupones de 25 % de descuento en el primer año del plan anual del Dashboard Financiero.</p>
 <label class="pub-ok"><input type="checkbox" name="mayor" value="si"> Tengo 18 años o más y vivo en Chile</label>
 <label class="pub-ok"><input type="checkbox" name="bases" value="si"> Acepto las <a href="/bases-concurso" target="_blank" rel="noopener">bases del concurso</a></label></div>
 <div class="paso" data-paso="2" hidden><fieldset><legend>Captura de pantalla (opcional)</legend>
-<p class="ayuda">Sube una captura que muestre que compartiste Cofrade News. Si la aceptamos, suma 1 participación (máximo 1 al día).</p>
+<p class="ayuda">Si ya confirmaste tu email, sube una captura que muestre que compartiste Cofrade News. Si la aceptamos, suma 1 participación (máximo 1 al día).</p>
 <p class="cc-aviso"><b>Antes de subirla:</b> tapa los nombres, números y fotos de otras personas. La captura es privada: nunca se publica y se borra 30 días después del sorteo.</p>
 <label class="cc-archivo"><span>Elegir imagen</span><input type="file" name="archivo" accept="image/*"></label>
 <div class="cc-vista" hidden><img src="data:," alt="Vista previa de tu captura" width="72" height="72"><span class="cc-peso"></span><button type="button" class="enlace cc-quitar">Quitar</button></div></fieldset></div>
@@ -536,7 +591,8 @@ function cintaConcurso() {
   const abierto = e === "abierto";
   return `<section class="cc-sec" aria-labelledby="t-cc"><div class="cc-cinta"><div class="cc-c-txt"><span class="kicker">${abierto ? "Concurso · hasta el 24 de diciembre" : "Concurso cerrado"}</span>
 <h2 id="t-cc">${abierto ? "Comparte Cofrade News y gana" : "Resultados del concurso"}</h2>
-<p>${abierto ? "Participa por uno de los 5 cupones de 25 % de descuento en el plan anual del Dashboard Financiero. Cada persona que abre tu enlace suma una chance."
+<p>${abierto ? "Participa por uno de los 5 cupones de 25 % de descuento en el primer año del plan anual del Dashboard Financiero. Cada persona distinta que abre tu enlace en un día suma 1 participación (hasta 10 al día)."
+    : e === "cerrado" && hoyConcurso() > CONCURSO.sorteo ? "El sorteo de los 5 cupones se hizo el 26 de diciembre. Los resultados están en las bases del concurso."
     : "El sorteo de los 5 cupones es el 26 de diciembre. Los resultados se publican en las bases del concurso."}</p></div>
 <div class="cc-acc">${abierto ? `<button type="button" class="btn oro cmp-abrir">Compartir mi enlace</button><button type="button" class="btn linea concurso-abrir">Participar</button>` : ""}<a class="btn linea" href="/bases-concurso">Ver las bases</a></div></div></section>`;
 }
@@ -550,17 +606,38 @@ async function codigoDeSecreto(s) {
 }
 const enlacePersonal = (c) => `https://${DOMINIO}/?r=${c}&utm_source=compartir`;
 function errorConcurso(es, en, s = 400) { return jsonR({ ok: false, error: es, error_en: en }, s); }
+// Email para comparar y guardar: en minúsculas; en Gmail sin puntos, y sin «+etiqueta» en los correos que la aceptan. Así la misma
+// casilla no se inscribe dos veces con alias, y el correo de confirmación llega igual a la misma casilla.
+const PLUS_OK = /^(gmail\.com|googlemail\.com|outlook\.com|hotmail\.com|live\.com|msn\.com|icloud\.com|me\.com|mac\.com|proton\.me|protonmail\.com|pm\.me|fastmail\.com)$/;
+function emailCanonico(email) {
+  const i = email.lastIndexOf("@");
+  let u = email.slice(0, i), d = email.slice(i + 1);
+  if (d === "googlemail.com") d = "gmail.com";
+  if (PLUS_OK.test(d)) u = u.replace(/\+.*$/, "");
+  if (d === "gmail.com") u = u.replace(/\./g, "");
+  return u ? u + "@" + d : email;
+}
+// Las capturas se guardan en texto base64: D1 convierte un BLOB en una lista de números (mucha CPU en el plan gratuito); el texto no
+function aBase64(u8) {
+  let t = "";
+  for (let i = 0; i < u8.length; i += 0x8000) t += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+  return btoa(t);
+}
+const MSG_NEUTRO = {
+  es: "Si ese email está bien escrito, revisa tu bandeja: ahí llega (o ya llegó) nuestro correo con tu enlace personal. Para subir capturas, usa el mismo navegador con el que te inscribiste.",
+  en: "If that email is spelled correctly, check your inbox: our email with your personal link arrives (or already arrived) there. To upload screenshots, use the same browser you signed up with.",
+};
 async function recibirConcurso(req, env, ctx) {
   if (!ORIGEN_OK(req)) return errorConcurso("Origen no permitido.", "Origin not allowed.", 403);
   if (!env.DB) return errorConcurso("El concurso se habilita en unos minutos.", "The contest opens in a few minutes.", 503);
   const hoy = hoyConcurso();
   if (hoy < CONCURSO.desde) return errorConcurso("El concurso todavía no empieza.", "The contest has not started yet.");
   if (hoy > CONCURSO.hasta) return errorConcurso("El concurso ya cerró. ¡Gracias por participar!", "The contest is closed. Thank you for taking part!");
-  const ip = await huellaVisitante(req, env, fechaChile(), false);
+  const dia = fechaChile(), ip = await huellaVisitante(req, env, dia, false);
   if (!(await bajoLimite(env, "c:" + ip))) return errorConcurso("Demasiados intentos seguidos. Espera un minuto y vuelve a enviar.", "Too many attempts. Wait a minute and try again.", 429);
   const largo = Number(req.headers.get("Content-Length") || 0);
   if (!largo) return errorConcurso("No pudimos leer el envío.", "We could not read the form.", 411);
-  if (largo > 700000) return errorConcurso("La captura es demasiado pesada (máximo 600 KB).", "The screenshot is too large (600 KB max).", 413);
+  if (largo > CONCURSO.capturaMaxBytes + 60000) return errorConcurso("La captura es demasiado pesada (máximo 300 KB).", "The screenshot is too large (300 KB max).", 413);
   let f;
   try { f = await req.formData(); } catch { return errorConcurso("No pudimos leer el envío.", "We could not read the form."); }
   const v = (k, n) => String(f.get(k) || "").trim().slice(0, n);
@@ -568,84 +645,107 @@ async function recibirConcurso(req, env, ctx) {
   if (!(await turnstileOk(v("cf-turnstile-response", 2048), req, env))) return errorConcurso("No pudimos confirmar que eres una persona. Vuelve a marcar el recuadro de seguridad.", "We could not confirm you are a person. Please tick the security box again.");
   if (v("mayor", 4) !== "si") return errorConcurso("Para participar debes tener 18 años o más y vivir en Chile.", "To take part you must be 18 or older and live in Chile.");
   if (v("bases", 4) !== "si") return errorConcurso("Debes aceptar las bases del concurso.", "You must accept the contest rules.");
-  const email = v("email", 120).toLowerCase();
-  const m = email.match(/^[a-z0-9.!#$%&'*+/=?^_`{|}~-]{1,64}@([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+)$/);
+  const email0 = v("email", 120).toLowerCase();
+  const m = email0.match(/^[a-z0-9.!#$%&'*+/=?^_`{|}~-]{1,64}@([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+)$/);
   if (!m || !/\.[a-z]{2,}$/.test(m[1])) return errorConcurso("Ese email no parece válido. Revisa que esté bien escrito.", "That email does not look valid. Please check it.");
+  const email = emailCanonico(email0);
   const secreto = v("secreto", 40);
   if (!/^[a-z0-9]{24}$/.test(secreto)) return errorConcurso("Recarga la página e intenta de nuevo.", "Please reload the page and try again.");
   const codigo = await codigoDeSecreto(secreto);
   let cap = null;
   const archivo = f.get("captura");
   if (archivo && typeof archivo === "object" && typeof archivo.arrayBuffer === "function" && archivo.size > 0) {
-    if (archivo.size > 600000) return errorConcurso("La captura es demasiado pesada (máximo 600 KB).", "The screenshot is too large (600 KB max).", 413);
-    const buf = await archivo.arrayBuffer(), b = new Uint8Array(buf);
+    if (archivo.size > CONCURSO.capturaMaxBytes) return errorConcurso("La captura es demasiado pesada (máximo 300 KB).", "The screenshot is too large (300 KB max).", 413);
+    const b = new Uint8Array(await archivo.arrayBuffer());
     if (!(b.length > 100 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff)) return errorConcurso("La captura debe ser una imagen. Elige una captura de pantalla.", "The screenshot must be an image.");
     const entero = (k) => { const x = Math.floor(Number(v(k, 6))); return x > 0 && x <= 20000 ? x : null; };
-    cap = { buf, bytes: b.length, sha: hexDif(await crypto.subtle.digest("SHA-256", buf)), ancho: entero("ancho"), alto: entero("alto") };
+    cap = { b, bytes: b.length, sha: hexDif(await crypto.subtle.digest("SHA-256", b)), ancho: entero("ancho"), alto: entero("alto") };
   }
   await asegurarTablas(env, "concurso");
   const ahora = new Date().toISOString();
-  const [rp, ro, rd, rc] = await env.DB.batch([
-    env.DB.prepare("SELECT email, codigo, verificado, token, enviado, creado FROM concurso_participantes WHERE email = ?").bind(email),
-    env.DB.prepare("SELECT email FROM concurso_participantes WHERE codigo = ?").bind(codigo),
+  const [rp, ro, rd, rc, re] = await env.DB.batch([
+    env.DB.prepare("SELECT email, codigo, verificado, token, enviado, creado, estado FROM concurso_participantes WHERE email = ?").bind(email),
+    env.DB.prepare("SELECT email, verificado FROM concurso_participantes WHERE codigo = ?").bind(codigo),
     env.DB.prepare("SELECT id FROM concurso_capturas WHERE sha = ?").bind(cap ? cap.sha : "-"),
     env.DB.prepare("SELECT COUNT(*) AS n FROM concurso_capturas WHERE email = ? AND fecha = ?").bind(email, hoy),
+    env.DB.prepare("SELECT (SELECT COUNT(*) FROM concurso_envios WHERE fecha = ?1 AND ip = ?2) AS ipdia, (SELECT COUNT(*) FROM concurso_envios WHERE email = ?3) AS mail, (SELECT COUNT(*) FROM concurso_envios WHERE fecha = ?1) AS dia")
+      .bind(dia, ip, email),
   ]);
   let p = (rp.results || [])[0] || null;
-  const otro = (ro.results || [])[0];
-  if (!p && otro) return errorConcurso("Este navegador ya está inscrito en el concurso con otro email. Cada persona participa una sola vez.", "This browser is already signed up with another email. Each person can enter only once.", 409);
-  if (cap && (rd.results || []).length) return errorConcurso("Esa captura ya fue enviada. Sube una distinta.", "That screenshot was already sent. Please upload a different one.", 409);
-  if (cap && Number(((rc.results || [])[0] || {}).n || 0) >= CONCURSO.topeCaptura) return errorConcurso("Ya recibimos tu captura de hoy. Puedes subir otra mañana.", "We already received your screenshot today. You can upload another one tomorrow.", 429);
+  const otro = (ro.results || [])[0] || null, E = (re.results || [])[0] || {};
+  // El email ya está inscrito desde otro navegador: respuesta neutra (no revela si participa), sin reenvíos ni capturas a su nombre
+  if (p && p.codigo !== codigo) return jsonR({ ok: true, mensaje: MSG_NEUTRO.es, mensaje_en: MSG_NEUTRO.en });
+  if (!p && otro && otro.verificado) return errorConcurso("Este navegador ya está inscrito en el concurso con otro email. Cada persona participa una sola vez.", "This browser is already signed up with another email. Each person can enter only once.", 409);
+  let capPendiente = false;
+  if (cap && (!p || !p.verificado)) { cap = null; capPendiente = true; }   // la captura espera a que confirme su email; la inscripción sigue
+  if (cap) {
+    if (p.estado === "excluido") return errorConcurso("No pudimos recibir la captura. Escríbenos a hola@cofrad.es.", "We could not receive the screenshot. Please write to hola@cofrad.es.", 409);
+    if ((rd.results || []).length) return errorConcurso("Esa captura ya fue enviada. Sube una distinta.", "That screenshot was already sent. Please upload a different one.", 409);
+    if (Number(((rc.results || [])[0] || {}).n || 0) >= CONCURSO.topeCaptura) return errorConcurso("Ya recibimos tu captura de hoy. Puedes subir otra mañana.", "We already received your screenshot today. You can upload another one tomorrow.", 429);
+  }
+  const puedeEnviar = Number(E.ipdia || 0) < CONCURSO.correosIpDia && Number(E.mail || 0) < CONCURSO.correosPorEmail && Number(E.dia || 0) < CONCURSO.correosDia;
   let enviar = false;
   if (!p) {
+    if (!hayCorreo(env)) return errorConcurso("Las inscripciones se abren en unos minutos. Vuelve a intentarlo más tarde.", "Sign-ups open in a few minutes. Please try again later.", 503);
+    if (!puedeEnviar) return errorConcurso("Por hoy no podemos enviar más correos de confirmación desde esta conexión. Inténtalo mañana.", "We cannot send more confirmation emails from this connection today. Please try again tomorrow.", 429);
     if (await esDesechable(m[1], ctx)) return errorConcurso("No aceptamos correos temporales o desechables. Usa tu email de siempre.", "Temporary or disposable emails are not accepted.");
     if (!(await recibeCorreo(m[1]))) return errorConcurso("Ese dominio de correo no recibe emails. Revisa que esté bien escrito.", "That email domain does not receive email. Please check it.");
     const token = (await sha256hex(crypto.randomUUID() + email + Date.now())).slice(0, 40);
     try {
-      await env.DB.prepare("INSERT INTO concurso_participantes (email, codigo, creado, verificado, token, mayor, bases, ip) VALUES (?, ?, ?, 0, ?, 1, 1, ?)").bind(email, codigo, ahora, token, ip).run();
+      if (otro) {   // el mismo navegador corrige un email mal escrito que aún no confirma: el secreto del navegador prueba que el código es suyo
+        const r = await env.DB.prepare("UPDATE concurso_participantes SET email = ?, token = ?, creado = ?, enviado = NULL, ip = ? WHERE codigo = ? AND verificado = 0").bind(email, token, ahora, ip, codigo).run();
+        if (!(r.meta && r.meta.changes)) return errorConcurso("Recarga la página e intenta de nuevo.", "Please reload the page and try again.", 409);
+      } else {
+        await env.DB.prepare("INSERT INTO concurso_participantes (email, codigo, creado, verificado, token, mayor, bases, ip) VALUES (?, ?, ?, 0, ?, 1, 1, ?)").bind(email, codigo, ahora, token, ip).run();
+      }
     } catch (e) {
-      if (/UNIQUE/i.test(String((e && e.message) || e))) return errorConcurso("Este navegador ya está inscrito en el concurso con otro email. Cada persona participa una sola vez.", "This browser is already signed up with another email. Each person can enter only once.", 409);
+      if (/UNIQUE/i.test(String((e && e.message) || e))) return jsonR({ ok: true, mensaje: MSG_NEUTRO.es, mensaje_en: MSG_NEUTRO.en });
       throw e;
     }
-    p = { email, codigo, verificado: 0, token, enviado: null, creado: ahora };
+    p = { email, codigo, verificado: 0, token, enviado: null, creado: ahora, estado: "activo" };
     enviar = true;
-  } else if (!p.verificado && (!p.enviado || Date.parse(p.enviado) < Date.now() - 600000)) {   // reenvío como mucho cada 10 minutos, con enlace nuevo
+  } else if (!p.verificado && (!p.enviado || Date.parse(p.enviado) < Date.now() - 600000) && puedeEnviar && hayCorreo(env)) {   // reenvío: cada 10 minutos como mucho, con enlace nuevo
     p.token = (await sha256hex(crypto.randomUUID() + email + Date.now())).slice(0, 40);
     await env.DB.prepare("UPDATE concurso_participantes SET token = ?, creado = ? WHERE email = ? AND verificado = 0").bind(p.token, ahora, email).run();
     enviar = true;
   }
-  let capEs = "", capEn = "";
+  let capEs = capPendiente ? " La captura no se guardó: súbela de nuevo desde este navegador cuando confirmes tu email." : "";
+  let capEn = capPendiente ? " The screenshot was not saved: upload it again from this browser once you confirm your email." : "";
   if (cap) {
+    let r;
     try {
-      await env.DB.prepare("INSERT INTO concurso_capturas (email, fecha, creado, sha, bytes, ancho, alto, datos, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'por revisar')")
-        .bind(email, hoy, ahora, cap.sha, cap.bytes, cap.ancho, cap.alto, cap.buf).run();
+      r = await env.DB.prepare(`INSERT INTO concurso_capturas (email, fecha, creado, sha, bytes, ancho, alto, datos, estado, ip) SELECT ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, 'por revisar', ?9
+        WHERE (SELECT COUNT(*) FROM concurso_capturas WHERE fecha = ?2) < ?10 AND (SELECT COUNT(*) FROM concurso_capturas WHERE fecha = ?2 AND ip = ?9) < ?11
+        AND (SELECT COUNT(*) FROM concurso_capturas WHERE email = ?1) < ?12 AND (SELECT COALESCE(SUM(bytes), 0) FROM concurso_capturas WHERE datos IS NOT NULL) + ?5 <= ?13`)
+        .bind(email, hoy, ahora, cap.sha, cap.bytes, cap.ancho, cap.alto, aBase64(cap.b), ip, CONCURSO.capturasDia, CONCURSO.capturasIpDia, CONCURSO.capturasPorPersona, CONCURSO.capturasMaxTotal).run();
     } catch (e) {
       if (/UNIQUE/i.test(String((e && e.message) || e))) return errorConcurso("Esa captura ya fue enviada. Sube una distinta.", "That screenshot was already sent. Please upload a different one.", 409);
       throw e;
     }
+    if (!(r && r.meta && r.meta.changes)) return errorConcurso("Hoy no podemos recibir más capturas. Inténtalo mañana.", "We cannot receive more screenshots today. Please try again tomorrow.", 429);
     capEs = " Recibimos tu captura: la revisaremos y, si cumple las bases, suma 1 participación.";
     capEn = " We received your screenshot: we will review it and, if it meets the rules, it adds 1 entry.";
   }
   let es, en;
   if (p.verificado) { es = "Ya estás participando con este email."; en = "You are already taking part with this email."; }
-  else if (enviar && hayCorreo(env)) {
+  else if (enviar) {
+    await env.DB.prepare("INSERT INTO concurso_envios (fecha, ip, email, creado) VALUES (?, ?, ?, ?)").bind(dia, ip, email, ahora).run();
     let ok = false;
     try { ok = await enviarCorreo(env, { to: email, ...correoConcurso({ enlace: `https://${DOMINIO}/concurso/verificar?t=${p.token}`, personal: enlacePersonal(p.codigo) }) }); } catch { ok = false; }
     if (ok) await env.DB.prepare("UPDATE concurso_participantes SET enviado = ? WHERE email = ?").bind(ahora, email).run();
-    es = ok ? "Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Desde ese momento cuentan tus participaciones. Si no lo ves, revisa spam o promociones."
+    es = ok ? "Te enviamos un correo desde hola@cofrad.es: ábrelo y toca «Confirmar mi participación». Tus participaciones cuentan cuando confirmes (también las visitas que tu enlace ya trajo). Si no lo ves, revisa spam o promociones."
       : "Quedaste inscrito, pero no pudimos enviarte el correo de confirmación. Inténtalo de nuevo en unos minutos.";
-    en = ok ? "We sent you an email from hola@cofrad.es: open it and tap “Confirm my entry”. Your entries count from then on. If you don't see it, check spam or promotions."
+    en = ok ? "We sent you an email from hola@cofrad.es: open it and tap “Confirm my entry”. Your entries count once you confirm (including the visits your link already brought). If you don't see it, check spam or promotions."
       : "You are signed up, but we could not send the confirmation email. Please try again in a few minutes.";
-  } else if (enviar) { es = "Quedaste inscrito. Te enviaremos el correo de confirmación muy pronto."; en = "You are signed up. We will send you the confirmation email very soon."; }
+  } else if (!puedeEnviar) { es = "Ya te enviamos el correo de confirmación: revisa tu bandeja, spam o promociones. Por hoy no podemos enviarlo de nuevo."; en = "We already sent you the confirmation email: check your inbox, spam or promotions. We cannot send it again today."; }
   else { es = "Ya te enviamos el correo de confirmación hace unos minutos: revisa tu bandeja, spam o promociones."; en = "We already sent you the confirmation email a few minutes ago: check your inbox, spam or promotions."; }
-  const mio = p.codigo === codigo;   // el enlace personal solo se muestra en el mismo navegador que lo creó
-  return jsonR({ ok: true, mensaje: es + capEs, mensaje_en: en + capEn, ...(mio ? { codigo, enlace: enlacePersonal(codigo) } : {}) });
+  return jsonR({ ok: true, mensaje: es + capEs, mensaje_en: en + capEn, codigo, enlace: enlacePersonal(codigo) });   // solo llega aquí el navegador dueño del código
 }
 function correoConcurso({ enlace, personal }) {
   const subject = "Confirma tu participación en el Concurso Comparte Cofrade News";
   const text = `Hola:\n\nRecibimos tu inscripción en el Concurso «Comparte Cofrade News». Para que tus participaciones cuenten, confirma tu email con un clic:\n${enlace}\n`
     + `(El enlace vence en 7 días. Si no fuiste tú, ignora este correo.)\n\nTu enlace personal para compartir:\n${personal}\nCada persona distinta que lo abre en un día suma 1 participación (hasta 10 al día). `
-    + `El 26 de diciembre sorteamos 5 cupones de 25 % de descuento en el plan anual del Dashboard Financiero.\nBases: https://${DOMINIO}/bases-concurso\n\nUn cordial saludo,\nEquipo Cofrade News\nwww.cofrad.es · ${CORREO_HOLA}`;
+    + `El 26 de diciembre sorteamos 5 cupones de 25 % de descuento en el primer año del plan anual del Dashboard Financiero.\nBases: https://${DOMINIO}/bases-concurso\n\nUn cordial saludo,\nEquipo Cofrade News\nwww.cofrad.es · ${CORREO_HOLA}`;
   const p = (t) => `<p style="margin:0 0 14px">${t}</p>`;
   const html = `<div style="font:16px/1.6 Georgia,'Times New Roman',serif;color:#0B1F3A;max-width:560px;margin:0 auto;padding:8px 4px">`
     + `<p style="margin:0 0 18px;font:700 13px/1 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9A7B2F">Cofrade News · Concurso</p>`
@@ -653,7 +753,7 @@ function correoConcurso({ enlace, personal }) {
     + `<p style="margin:0 0 18px"><a href="${enlace}" style="display:inline-block;background:#C9A227;color:#0B1F3A;font:700 16px/1 Arial,sans-serif;text-decoration:none;padding:14px 26px;border-radius:999px">Confirmar mi participación</a></p>`
     + `<p style="margin:0 0 18px;font:13px/1.5 Arial,sans-serif;color:#5A6577">El enlace vence en 7 días. Si no fuiste tú, ignora este correo.</p>`
     + p(`Tu enlace personal para compartir:<br><a href="${personal}" style="color:#0B1F3A;word-break:break-all">${personal}</a>`)
-    + p("Cada persona distinta que lo abre en un día suma 1 participación (hasta 10 al día). El 26 de diciembre sorteamos 5 cupones de 25 % de descuento en el plan anual del Dashboard Financiero.")
+    + p("Cada persona distinta que lo abre en un día suma 1 participación (hasta 10 al día). El 26 de diciembre sorteamos 5 cupones de 25 % de descuento en el primer año del plan anual del Dashboard Financiero.")
     + `<p style="margin:22px 0 0">Un cordial saludo,<br><b>Equipo Cofrade News</b><br><a href="https://${DOMINIO}/bases-concurso" style="color:#0B1F3A">Bases del concurso</a> · <a href="mailto:${CORREO_HOLA}" style="color:#0B1F3A">${CORREO_HOLA}</a></p></div>`;
   return { subject, text, html };
 }
@@ -671,9 +771,10 @@ async function verificarConcurso(req, u, env) {
     const r = await env.DB.prepare("UPDATE concurso_participantes SET verificado = 1, confirmado = ?, token = NULL WHERE token = ? AND verificado = 0 AND creado >= ? RETURNING codigo")
       .bind(new Date().toISOString(), t, limite).first();
     if (!r) return vencido;
-    const personal = enlacePersonal(r.codigo);
-    return pagina(`<section style="border:0;max-width:680px"><span class="kicker">Concurso Comparte Cofrade News</span><h1>¡Listo! Ya estás participando.</h1>
-<p class="lede">Desde ahora, cada persona distinta que abre tu enlace en un día suma 1 participación (hasta 10 al día). Copia tu enlace personal y compártelo:</p>
+    const personal = enlacePersonal(r.codigo), abierto = etapaConcurso() === "abierto";
+    return pagina(`<section style="border:0;max-width:680px"><span class="kicker">Concurso Comparte Cofrade News</span><h1>${abierto ? "¡Listo! Ya estás participando." : "¡Listo! Tu email quedó confirmado."}</h1>
+<p class="lede">${abierto ? "Tus participaciones ya cuentan: cada persona distinta que abre tu enlace en un día suma 1 (hasta 10 al día), también las visitas que trajo antes de confirmar. Copia tu enlace personal y compártelo:"
+    : "Las inscripciones cerraron el 24 de diciembre: cuentan las visitas que tu enlace trajo hasta ese día. El sorteo es el 26 de diciembre. Tu enlace personal:"}</p>
 <p><input class="cc-enlace" readonly value="${esc(personal)}" aria-label="Tu enlace personal" style="width:100%;min-height:48px;border-radius:12px;border:1.5px solid var(--linea);padding:0 12px;font-size:16px;background:var(--card);color:var(--tinta)"></p>
 <p class="sub">En el navegador con el que te inscribiste, el botón Compartir de la portada ya usa este mismo enlace.</p>
 <div class="acciones"><a class="btn oro" href="/">Ir a la portada</a><a class="btn linea" href="/bases-concurso">Ver las bases</a></div></section>`);
@@ -692,7 +793,7 @@ async function entradasConcurso(env, conId = false) {
   await asegurarTablas(env, "difusion");
   await asegurarTablas(env, "concurso");
   const [ps, enl, caps] = await env.DB.batch([
-    env.DB.prepare("SELECT email, codigo, verificado, creado, confirmado FROM concurso_participantes ORDER BY creado"),
+    env.DB.prepare("SELECT email, codigo, verificado, creado, confirmado, estado FROM concurso_participantes ORDER BY creado"),
     env.DB.prepare("SELECT p.email AS email, u.fecha AS fecha, COUNT(*) AS n FROM concurso_participantes p JOIN referidos_unicos u ON u.codigo = p.codigo WHERE p.verificado = 1 AND u.fecha BETWEEN ? AND ? GROUP BY p.email, u.fecha")
       .bind(CONCURSO.desde, CONCURSO.hasta),
     env.DB.prepare("SELECT email, COUNT(DISTINCT fecha) AS n FROM concurso_capturas WHERE estado = 'aceptada' AND fecha BETWEEN ? AND ? GROUP BY email").bind(CONCURSO.desde, CONCURSO.hasta),
@@ -702,8 +803,8 @@ async function entradasConcurso(env, conId = false) {
   for (const x of caps.results || []) captura[x.email] = Math.min(Number(x.n) || 0, 99999);
   const lista = [];
   for (const p of ps.results || []) {
-    const e = p.verificado ? enlace[p.email] || 0 : 0, c = p.verificado ? captura[p.email] || 0 : 0;
-    lista.push({ email: p.email, codigo: p.codigo, verificado: !!p.verificado, creado: p.creado, enlace: e, captura: c, total: e + c, id: conId && e + c > 0 ? await hmacDif(env, "concurso|" + p.email, 16) : "" });
+    const vale = p.verificado && p.estado !== "excluido", e = vale ? enlace[p.email] || 0 : 0, c = vale ? captura[p.email] || 0 : 0;
+    lista.push({ email: p.email, codigo: p.codigo, verificado: !!p.verificado, estado: p.estado || "activo", creado: p.creado, enlace: e, captura: c, total: e + c, id: conId && e + c > 0 ? await hmacDif(env, "concurso|" + p.email, 16) : "" });
   }
   if (conId) lista.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   return lista;
@@ -767,13 +868,13 @@ async function sortearOficial(env) {
 }
 function correoGanador(cupon) {
   const subject = "¡Ganaste en el Concurso Comparte Cofrade News!";
-  const text = `Hola:\n\n¡Felicitaciones! Saliste sorteado en el Concurso «Comparte Cofrade News».\n\nTu premio es un cupón de un solo uso con 25 % de descuento en el plan anual del Dashboard Financiero:\n${cupon}\n\n`
+  const text = `Hola:\n\n¡Felicitaciones! Saliste sorteado en el Concurso «Comparte Cofrade News».\n\nTu premio es un cupón de un solo uso con 25 % de descuento en el primer año del plan anual del Dashboard Financiero:\n${cupon}\n\n`
     + `Es personal (vale para este email), no se suma a otros descuentos (tampoco al 20 % de los socios de la Cofradía) y vence el 31 de marzo de 2027.\n`
     + `Para reclamarlo, responde este correo antes del 31 de enero de 2027 y te indicamos cómo usarlo.\n\nBases: https://${DOMINIO}/bases-concurso\n\nUn cordial saludo,\nEquipo Cofrade News\nwww.cofrad.es · ${CORREO_HOLA}`;
   const html = `<div style="font:16px/1.6 Georgia,'Times New Roman',serif;color:#0B1F3A;max-width:560px;margin:0 auto;padding:8px 4px">`
     + `<p style="margin:0 0 18px;font:700 13px/1 Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9A7B2F">Cofrade News · Concurso</p>`
     + `<p style="margin:0 0 14px">Hola:</p><p style="margin:0 0 14px">¡Felicitaciones! Saliste sorteado en el <b>Concurso «Comparte Cofrade News»</b>.</p>`
-    + `<p style="margin:0 0 8px">Tu premio es un cupón de un solo uso con 25 % de descuento en el plan anual del Dashboard Financiero:</p>`
+    + `<p style="margin:0 0 8px">Tu premio es un cupón de un solo uso con 25 % de descuento en el primer año del plan anual del Dashboard Financiero:</p>`
     + `<p style="margin:0 0 16px;font:700 22px/1.2 'Courier New',monospace;letter-spacing:.08em">${cupon}</p>`
     + `<p style="margin:0 0 14px">Es personal (vale para este email), no se suma a otros descuentos (tampoco al 20 % de los socios de la Cofradía) y vence el 31 de marzo de 2027.</p>`
     + `<p style="margin:0 0 14px">Para reclamarlo, <b>responde este correo antes del 31 de enero de 2027</b> y te indicamos cómo usarlo.</p>`
@@ -789,9 +890,10 @@ async function validarCupon(env, codigo, email, plan) {
   const c = String(codigo || "").trim().toUpperCase();
   if (!/^CN25-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}$/.test(c)) return { ok: false, motivo: "formato" };
   await asegurarTablas(env, "concurso");
-  const f = await env.DB.prepare("SELECT codigo, email, pct, plan, vence, usado FROM cupones WHERE codigo = ?").bind(c).first();
+  const f = await env.DB.prepare("SELECT codigo, email, pct, plan, vence, usado, reclamado FROM cupones WHERE codigo = ?").bind(c).first();
   if (!f) return { ok: false, motivo: "no existe" };
   if (f.usado) return { ok: false, motivo: "ya usado" };
+  if (!f.reclamado && hoyConcurso() > CONCURSO.reclamo) return { ok: false, motivo: "no reclamado a tiempo" };
   if (hoyConcurso() > f.vence) return { ok: false, motivo: "vencido" };
   if (String(email || "").trim().toLowerCase() !== f.email) return { ok: false, motivo: "otro email" };
   if (plan !== f.plan) return { ok: false, motivo: "solo plan " + f.plan };
@@ -804,6 +906,7 @@ async function canjearCupon(env, codigo, ref) {
 // D1 entrega un BLOB como ArrayBuffer o como lista de números según la versión: aquí se aceptan las dos
 function bytesDe(x) {
   if (!x) return null;
+  if (typeof x === "string") { try { const t = atob(x), u = new Uint8Array(t.length); for (let i = 0; i < t.length; i++) u[i] = t.charCodeAt(i); return u; } catch { return null; } }
   if (x instanceof ArrayBuffer) return new Uint8Array(x);
   if (ArrayBuffer.isView(x)) return new Uint8Array(x.buffer, x.byteOffset, x.byteLength);
   return Array.isArray(x) ? Uint8Array.from(x) : null;
@@ -834,6 +937,26 @@ async function accionConcurso(req, env) {
     return volver(await sortearOficial(env));
   }
   if (accion === "cupon-usado") return volver((await canjearCupon(env, String(f.get("codigo") || "").toUpperCase(), "panel")) ? "cupon-usado" : "error:cupon");
+  if (accion === "cupon-reclamado") {
+    const r = await env.DB.prepare("UPDATE cupones SET reclamado = ? WHERE codigo = ? AND reclamado IS NULL").bind(new Date().toISOString(), String(f.get("codigo") || "").toUpperCase()).run();
+    return volver(r.meta && r.meta.changes ? "cupon-reclamado" : "error:cupon");
+  }
+  const email = String(f.get("email") || "").trim().toLowerCase().slice(0, 120);
+  if (accion === "excluir" || accion === "reincorporar") {
+    const r = await env.DB.prepare("UPDATE concurso_participantes SET estado = ? WHERE email = ?").bind(accion === "excluir" ? "excluido" : "activo", email).run();
+    return volver(r.meta && r.meta.changes ? accion : "error:no-existe");
+  }
+  if (accion === "borrar-datos") {   // derecho de supresión (Ley 21.719): inscripción, capturas, correos y visitas de su enlace
+    if (f.get("confirmo") !== "si") return volver("error:confirmar-borrado");
+    const q = await env.DB.prepare("SELECT codigo FROM concurso_participantes WHERE email = ?").bind(emailCanonico(email)).first();
+    if (!q) return volver("error:no-existe");
+    const e2 = emailCanonico(email);
+    await asegurarTablas(env, "difusion");
+    await env.DB.batch([env.DB.prepare("DELETE FROM concurso_capturas WHERE email = ?").bind(e2), env.DB.prepare("DELETE FROM concurso_envios WHERE email = ?").bind(e2),
+      env.DB.prepare("DELETE FROM referidos_unicos WHERE codigo = ?").bind(q.codigo), env.DB.prepare("DELETE FROM referidos WHERE codigo = ?").bind(q.codigo),
+      env.DB.prepare("DELETE FROM concurso_participantes WHERE email = ?").bind(e2)]);
+    return volver("borrado");
+  }
   return volver("error:accion");
 }
 // JSON solo para el Panel: vista previa del sorteo (no vale; con «semilla» se repite exacta) y el registro del sorteo oficial
@@ -856,28 +979,28 @@ async function concursoJson(req, env, u, que) {
 // ---------- página de bases (español e inglés; el botón EN cambia de bloque) ----------
 const BASES = {
   es: [
-    ["Organizador", "El concurso «Comparte Cofrade News» (el «Concurso») lo organiza Destak (el «Organizador»), a cargo del boletín Cofrade News que se publica en www.cofrad.es. Contacto: hola@cofrad.es."],
+    ["Organizador", "El concurso «Comparte Cofrade News» (el «Concurso») lo organiza Destak E.I.R.L. («Destak», el «Organizador»), a cargo del boletín Cofrade News que se publica en www.cofrad.es. Contacto: hola@cofrad.es."],
     ["Vigencia", "Desde el 20 de noviembre de 2026 hasta el 24 de diciembre de 2026 a las 23:59 (hora de Santiago de Chile). Las participaciones fuera de ese período no cuentan."],
     ["Quiénes pueden participar", "Personas naturales de 18 años o más que vivan en Chile. Una sola inscripción por persona y por email. No se necesita comprar ni pagar nada para participar. No pueden participar los trabajadores del Organizador ni sus familiares directos."],
-    ["Cómo participar", "1) Abre el Buzón de www.cofrad.es y elige «Participar en el concurso». 2) Marca que tienes 18 años o más, que vives en Chile y que aceptas estas bases. 3) Escribe tu email y confírmalo con el enlace que te enviamos desde hola@cofrad.es: las participaciones cuentan solo con el email confirmado. 4) Al inscribirte, tu email queda unido a tu enlace personal para compartir, el que crea en tu navegador el botón «Compartir» de www.cofrad.es (lleva tu código personal, por ejemplo www.cofrad.es/?r=abcd1234). Inscríbete desde el mismo navegador con el que compartes."],
-    ["Participaciones", "a) Por enlace: cada persona distinta que abre tu enlace personal en un día suma 1 participación, con un máximo de 10 por día. Cuentan las aperturas entre el 20 de noviembre y el 24 de diciembre de 2026. No cuentan los robots ni las vistas previas automáticas de las aplicaciones de mensajería. b) Por captura: puedes subir en el Buzón una captura de pantalla que muestre que compartiste Cofrade News. Cada captura aceptada suma 1 participación, con un máximo de 1 por día. Se rechazan las imágenes idénticas a otra ya enviada. El equipo del Organizador revisa cada captura. c) Antes de subir una captura, tapa los nombres, números de teléfono y fotos de otras personas."],
-    ["Premios", "5 ganadores. Cada uno recibe un cupón de un solo uso con 25 % de descuento en el plan anual del Dashboard Financiero de Cofrade News. El cupón es personal (vale para el email ganador), no se cambia por dinero, no se suma a otros descuentos, incluido el 20 % de los socios de la Cofradía, y vence el 31 de marzo de 2027."],
-    ["Sorteo", "El 26 de diciembre de 2026, el sistema de www.cofrad.es sortea a los 5 ganadores entre las personas con email confirmado y al menos 1 participación. Cada participación es una chance: quien tiene más participaciones tiene más probabilidades de ganar. Cada persona gana como máximo un premio (5 ganadores distintos). El sistema guarda un registro de auditoría con la huella digital (SHA-256) de la lista ordenada de participaciones, la semilla aleatoria y los ganadores."],
-    ["Aviso y resultados", "Avisamos a los ganadores por email y publicamos los resultados en esta página (con el email parcialmente oculto). Los ganadores pueden reclamar su premio hasta el 31 de enero de 2027 respondiendo el correo o escribiendo a hola@cofrad.es. Si un premio no se reclama en ese plazo, queda desierto."],
-    ["Datos personales", "Responsable: Destak. Finalidad: administrar el concurso (inscripción, conteo de participaciones, sorteo, aviso a los ganadores y entrega de premios). Datos que tratamos: tu email, tu código de enlace, la cantidad de aperturas de tu enlace (guardadas como huellas anónimas que cambian cada día, sin direcciones IP) y las capturas que subas. Las capturas son privadas: nunca se publican, solo las ve el equipo que las revisa y se borran 30 días después del sorteo. Los datos de los participantes se borran una vez entregados los premios (los de quienes no ganaron, el 1 de febrero de 2027; los de los ganadores, cuando usen su cupón o este venza), salvo que la persona se suscriba a nuestros servicios. Puedes pedir acceso, rectificación, supresión u oposición escribiendo a hola@cofrad.es. Tratamos los datos conforme a la Ley 19.628 y a la Ley 21.719 sobre protección de datos personales."],
+    ["Cómo participar", "1) Abre el Buzón de www.cofrad.es y elige «Participar en el concurso». 2) Marca que tienes 18 años o más, que vives en Chile y que aceptas estas bases. 3) Escribe tu email y confírmalo con el enlace que te enviamos desde hola@cofrad.es: las participaciones cuentan solo con el email confirmado. 4) Al inscribirte, tu email queda unido a tu enlace personal para compartir, el que crea en tu navegador el botón «Compartir» de www.cofrad.es (lleva tu código personal, por ejemplo www.cofrad.es/?r=abcd1234). Inscríbete desde el mismo navegador con el que compartes. Si cambias de navegador o borras sus datos, escríbenos a hola@cofrad.es."],
+    ["Participaciones", "a) Por enlace: cada persona distinta que abre tu enlace personal en su navegador en un día suma 1 participación, con un máximo de 10 por día y de 2 por conexión a internet. Cuentan las aperturas entre el 20 de noviembre y el 24 de diciembre de 2026, también las de antes de confirmar tu email. No cuentan los robots, las vistas previas automáticas de las aplicaciones de mensajería ni los enlaces escondidos en imágenes o marcos de otras páginas. b) Por captura: después de confirmar tu email, puedes subir en el Buzón, desde el mismo navegador, una captura de pantalla que muestre que compartiste Cofrade News. Cada captura aceptada suma 1 participación, con un máximo de 1 por día. Se rechazan las imágenes idénticas a otra ya enviada. El equipo del Organizador revisa cada captura. c) Antes de subir una captura, tapa los nombres, números de teléfono y fotos de otras personas."],
+    ["Premios", "5 ganadores. Cada uno recibe un cupón de un solo uso con 25 % de descuento en el primer año del plan anual del Dashboard Financiero de Cofrade News (si ya eres socio, se aplica al pasarte al plan anual o en tu próximo pago anual). El cupón es personal (vale para el email ganador), no se cambia por dinero, no se suma a otros descuentos, incluido el 20 % de los socios de la Cofradía, y vence el 31 de marzo de 2027."],
+    ["Sorteo", "El 26 de diciembre de 2026, a más tardar a las 18:00 (hora de Santiago de Chile), el sistema de www.cofrad.es sortea a los 5 ganadores entre las personas con email confirmado y al menos 1 participación. Antes del sorteo, el Organizador revisa las capturas y puede excluir participaciones según la cláusula de exclusiones. Cada participación es una chance: quien tiene más participaciones tiene más probabilidades de ganar. Cada persona gana como máximo un premio (5 ganadores distintos). El sistema guarda un registro de auditoría con la huella digital (SHA-256) de la lista ordenada de participaciones, la semilla aleatoria y los ganadores."],
+    ["Aviso y resultados", "Avisamos a los ganadores por email y publicamos los resultados en esta página (con el email parcialmente oculto). Los ganadores pueden reclamar su premio hasta el 31 de enero de 2027 respondiendo el correo o escribiendo a hola@cofrad.es. Si un premio no se reclama en ese plazo, queda desierto y el cupón se anula. El Organizador puede pedir a los ganadores que acrediten su edad y su residencia en Chile antes de entregar el premio."],
+    ["Datos personales", "Responsable: Destak E.I.R.L. Finalidad: administrar el concurso (inscripción, conteo de participaciones, sorteo, aviso a los ganadores y entrega de premios). Datos que tratamos: tu email, tu código de enlace, la cantidad de personas que abren tu enlace (guardadas como huellas seudónimas que cambian cada día, sin guardar direcciones IP), una huella diaria de tu conexión para frenar abusos y las capturas que subas. Las capturas son privadas: nunca se publican, solo las ve el equipo que las revisa y se borran 30 días después del sorteo. Los datos de los participantes se borran una vez entregados los premios (los de quienes no ganaron, el 1 de febrero de 2027; los de los ganadores, cuando usen su cupón o este venza), salvo que la persona se suscriba a nuestros servicios. Cloudflare (sitio y base de datos) y Resend (envío de correos) tratan estos datos por encargo del Organizador, con servidores fuera de Chile. Puedes pedir acceso, rectificación, supresión, oposición, portabilidad o bloqueo escribiendo a hola@cofrad.es. Tratamos los datos conforme a la Ley 19.628 y a la Ley 21.719 sobre protección de datos personales."],
     ["Exclusiones", "El Organizador puede anular las participaciones obtenidas con métodos automatizados, visitas falsas, capturas ajenas o adulteradas, o datos falsos."],
     ["Información legal", "Estas bases se informan aquí conforme a los artículos 35 y 36 de la Ley 19.496 sobre Protección de los Derechos de los Consumidores: duración del concurso, número de premios, plazo para reclamarlos y publicación de los resultados. Participar implica aceptar estas bases."],
   ],
   en: [
-    ["Organizer", "The “Share Cofrade News” contest (the “Contest”) is organized by Destak (the “Organizer”), which runs the Cofrade News newsletter published at www.cofrad.es. Contact: hola@cofrad.es."],
+    ["Organizer", "The “Share Cofrade News” contest (the “Contest”) is organized by Destak E.I.R.L. (“Destak”, the “Organizer”), which runs the Cofrade News newsletter published at www.cofrad.es. Contact: hola@cofrad.es."],
     ["Period", "From November 20, 2026 until December 24, 2026 at 23:59 (Santiago, Chile time). Entries outside this period do not count."],
     ["Who can enter", "Individuals aged 18 or older who live in Chile. One sign-up per person and per email. No purchase or payment of any kind is needed to take part. Employees of the Organizer and their immediate family cannot take part."],
-    ["How to enter", "1) Open the Suggestions box at www.cofrad.es and choose “Enter the contest”. 2) Confirm that you are 18 or older, that you live in Chile and that you accept these rules. 3) Enter your email and confirm it with the link we send you from hola@cofrad.es: entries only count once your email is confirmed. 4) When you sign up, your email is linked to your personal sharing link, the one the “Share” button on www.cofrad.es creates in your browser (it carries your personal code, for example www.cofrad.es/?r=abcd1234). Sign up from the same browser you share from."],
-    ["Entries", "a) Link: each different person who opens your personal link on a given day adds 1 entry, up to 10 per day. Visits between November 20 and December 24, 2026 count. Robots and automatic link previews from messaging apps do not count. b) Screenshot: you can upload in the Suggestions box a screenshot showing that you shared Cofrade News. Each accepted screenshot adds 1 entry, up to 1 per day. Images identical to one already sent are rejected. The Organizer's team reviews every screenshot. c) Before uploading a screenshot, cover other people's names, phone numbers and photos."],
-    ["Prizes", "5 winners. Each one receives a single-use coupon for 25% off the annual plan of the Cofrade News Financial Dashboard. The coupon is personal (valid for the winning email), cannot be exchanged for cash or combined with other discounts, including the 20% discount for members of the Cofradía, and expires on March 31, 2027."],
-    ["Draw", "On December 26, 2026, the www.cofrad.es system draws the 5 winners among the people with a confirmed email and at least 1 entry. Each entry is one chance: the more entries, the higher the probability of winning. Each person can win only one prize (5 different winners). The system keeps an audit record with the digital fingerprint (SHA-256) of the ordered list of entries, the random seed and the winners."],
-    ["Notice and results", "We notify the winners by email and publish the results on this page (with the email partly hidden). Winners can claim their prize until January 31, 2027 by replying to the email or writing to hola@cofrad.es. Prizes not claimed within that period are void."],
-    ["Personal data", "Controller: Destak. Purpose: running the contest (sign-up, counting entries, the draw, notifying the winners and delivering the prizes). Data we process: your email, your link code, the number of visits to your link (stored as anonymous daily fingerprints, without IP addresses) and the screenshots you upload. Screenshots are private: they are never published, only the reviewing team sees them, and they are deleted 30 days after the draw. Participants' data is deleted once the prizes are delivered (non-winners' data on February 1, 2027; winners' data when they use their coupon or it expires), unless the person subscribes to our services. You can request access, correction, deletion or objection by writing to hola@cofrad.es. We process data under Chilean Law 19,628 and Law 21,719 on personal data protection."],
+    ["How to enter", "1) Open the Suggestions box at www.cofrad.es and choose “Enter the contest”. 2) Confirm that you are 18 or older, that you live in Chile and that you accept these rules. 3) Enter your email and confirm it with the link we send you from hola@cofrad.es: entries only count once your email is confirmed. 4) When you sign up, your email is linked to your personal sharing link, the one the “Share” button on www.cofrad.es creates in your browser (it carries your personal code, for example www.cofrad.es/?r=abcd1234). Sign up from the same browser you share from. If you change browsers or clear its data, write to hola@cofrad.es."],
+    ["Entries", "a) Link: each different person who opens your personal link in their browser on a given day adds 1 entry, up to 10 per day and 2 per internet connection. Visits between November 20 and December 24, 2026 count, including those before you confirm your email. Robots, automatic link previews from messaging apps and links hidden in images or frames of other pages do not count. b) Screenshot: after confirming your email, you can upload in the Suggestions box, from the same browser, a screenshot showing that you shared Cofrade News. Each accepted screenshot adds 1 entry, up to 1 per day. Images identical to one already sent are rejected. The Organizer's team reviews every screenshot. c) Before uploading a screenshot, cover other people's names, phone numbers and photos."],
+    ["Prizes", "5 winners. Each one receives a single-use coupon for 25% off the first year of the annual plan of the Cofrade News Financial Dashboard (if you are already a member, it applies when you switch to the annual plan or to your next annual payment). The coupon is personal (valid for the winning email), cannot be exchanged for cash or combined with other discounts, including the 20% discount for members of the Cofradía, and expires on March 31, 2027."],
+    ["Draw", "On December 26, 2026, no later than 18:00 (Santiago, Chile time), the www.cofrad.es system draws the 5 winners among the people with a confirmed email and at least 1 entry. Before the draw, the Organizer reviews the screenshots and may cancel entries under the exclusions clause. Each entry is one chance: the more entries, the higher the probability of winning. Each person can win only one prize (5 different winners). The system keeps an audit record with the digital fingerprint (SHA-256) of the ordered list of entries, the random seed and the winners."],
+    ["Notice and results", "We notify the winners by email and publish the results on this page (with the email partly hidden). Winners can claim their prize until January 31, 2027 by replying to the email or writing to hola@cofrad.es. Prizes not claimed within that period are void and the coupon is cancelled. The Organizer may ask the winners to prove their age and residence in Chile before delivering the prize."],
+    ["Personal data", "Controller: Destak E.I.R.L. Purpose: running the contest (sign-up, counting entries, the draw, notifying the winners and delivering the prizes). Data we process: your email, your link code, the number of people who open your link (stored as pseudonymous daily fingerprints, without storing IP addresses), a daily fingerprint of your connection to curb abuse and the screenshots you upload. Screenshots are private: they are never published, only the reviewing team sees them, and they are deleted 30 days after the draw. Participants' data is deleted once the prizes are delivered (non-winners' data on February 1, 2027; winners' data when they use their coupon or it expires), unless the person subscribes to our services. Cloudflare (website and database) and Resend (email delivery) process this data on behalf of the Organizer, on servers outside Chile. You can request access, correction, deletion, objection, portability or blocking by writing to hola@cofrad.es. We process data under Chilean Law 19,628 and Law 21,719 on personal data protection."],
     ["Exclusions", "The Organizer may cancel entries obtained through automated methods, fake visits, someone else's or altered screenshots, or false data."],
     ["Legal information", "These rules are published here in accordance with articles 35 and 36 of Chilean Law 19,496 on Consumer Protection: duration of the contest, number of prizes, period to claim them and publication of the results. Taking part implies accepting these rules."],
   ],
@@ -900,10 +1023,10 @@ async function paginaBases(env) {
   const cuerpo = `<style>.bases-l{padding-left:1.3em;max-width:46em}.bases-l li{margin:0 0 14px;line-height:1.6}.bases-res{border:1.5px solid var(--oro);border-radius:16px;padding:18px 20px;margin:20px 0}
 .bases-res code{word-break:break-all;font-size:12.5px}html[lang=en] .b-es{display:none}html:not([lang=en]) .b-en{display:none}</style>
 <div class="b-es" data-no-tr><section style="border:0;padding-top:30px"><span class="kicker">Bases del concurso</span><h1 class="titulo-lujo">Concurso «Comparte Cofrade News»</h1>
-<p class="lede">Comparte Cofrade News y participa por uno de los 5 cupones de 25 % de descuento en el plan anual del Dashboard Financiero. Del 20 de noviembre al 24 de diciembre de 2026.</p>${accion(false)}
+<p class="lede">Comparte Cofrade News y participa por uno de los 5 cupones de 25 % de descuento en el primer año del plan anual del Dashboard Financiero. Del 20 de noviembre al 24 de diciembre de 2026.</p>${accion(false)}
 ${resultados(false)}${lista(BASES.es)}<p class="sub">Última actualización: 20 de noviembre de 2026.</p></section></div>
 <div class="b-en" lang="en" data-no-tr><section style="border:0;padding-top:30px"><span class="kicker">Contest rules</span><h1 class="titulo-lujo">“Share Cofrade News” contest</h1>
-<p class="lede">Share Cofrade News and win one of 5 coupons for 25% off the annual plan of the Financial Dashboard. From November 20 to December 24, 2026.</p>${accion(true)}
+<p class="lede">Share Cofrade News and win one of 5 coupons for 25% off the first year of the annual plan of the Financial Dashboard. From November 20 to December 24, 2026.</p>${accion(true)}
 ${resultados(true)}${lista(BASES.en)}<p class="sub">Last updated: November 20, 2026.</p></section></div>`;
   return html(marco({ titulo: "Bases del Concurso «Comparte Cofrade News» · Cofrade News", descripcion: "Bases del Concurso «Comparte Cofrade News»: fechas, cómo participar, premios, sorteo y datos personales.", cuerpo, canonica: "/bases-concurso" }), 200,
     { "Cache-Control": "public, max-age=300" });
@@ -932,7 +1055,9 @@ const MENSAJES_PANEL = {
   "error:rss": "Una de las direcciones RSS no es válida (solo https, sin claves ni contraseñas).", "error:rss-tope": "Máximo 5 direcciones RSS.",
   aceptar: "Captura aceptada: suma 1 participación.", rechazar: "Captura rechazada.", antes: "El sorteo oficial se habilita el 26-12-2026.", hecho: "El sorteo oficial ya se hizo.",
   "sin-participantes": "No hay personas con participaciones: no se sorteó.", "error:confirmar": "Marca la casilla de confirmación antes de sortear.", error: "No se pudo completar. Intenta de nuevo.",
-  "cupon-usado": "Cupón marcado como usado.", "error:cupon": "Ese cupón no existe o ya estaba usado.", "error:accion": "Acción desconocida.", "error:muy-grande": "Envío demasiado grande.",
+  "cupon-usado": "Cupón marcado como usado.", "error:cupon": "Ese cupón no existe, ya estaba usado o ya estaba marcado.", "cupon-reclamado": "Cupón marcado como reclamado: sigue válido hasta su vencimiento.",
+  excluir: "Participante excluido: no entra al sorteo.", reincorporar: "Participante reincorporado.", borrado: "Datos del participante borrados (inscripción, capturas, correos y visitas de su enlace).",
+  "error:confirmar-borrado": "Marca la casilla para confirmar el borrado.", "error:accion": "Acción desconocida.", "error:muy-grande": "Envío demasiado grande.",
 };
 function mensajePanel(c) {
   if (!c) return "";
@@ -1032,9 +1157,11 @@ async function seccionConcurso(env, u) {
     revisar: env.DB.prepare("SELECT id, email, fecha, creado, bytes, ancho, alto FROM concurso_capturas WHERE estado = 'por revisar' AND datos IS NOT NULL ORDER BY id LIMIT 30"),
     capEst: env.DB.prepare("SELECT estado, COUNT(*) AS n FROM concurso_capturas GROUP BY estado"),
     sorteo: env.DB.prepare("SELECT * FROM concurso_sorteos WHERE tipo = 'oficial'"),
-    cupones: env.DB.prepare("SELECT codigo, email, pct, plan, vence, usado FROM cupones WHERE origen = 'concurso' ORDER BY creado, codigo"),
+    cupones: env.DB.prepare("SELECT codigo, email, pct, plan, vence, usado, reclamado FROM cupones WHERE origen = 'concurso' ORDER BY creado, codigo"),
+    mant: env.DB.prepare("SELECT clave, valor FROM config WHERE clave IN ('difusion_mant_ok', 'difusion_mant_error')"),
   })]);
   const conf = lista.filter((x) => x.verificado), capE = Object.fromEntries((R.capEst || []).map((x) => [x.estado, Number(x.n || 0)]));
+  const mant = Object.fromEntries((R.mant || []).map((x) => [x.clave, x.valor]));
   const tEnl = lista.reduce((a, x) => a + x.enlace, 0), tCap = lista.reduce((a, x) => a + x.captura, 0), conChances = lista.filter((x) => x.total > 0).length;
   const etTxt = { antes: "Todavía no empieza", abierto: "Abierto", cerrado: "Cerrado", fin: "Terminado" }[etapa];
   const kpis = [
@@ -1044,7 +1171,8 @@ async function seccionConcurso(env, u) {
     kpiA("Participaciones por captura", num(tCap, 0), `${num(capE["por revisar"] || 0, 0)} capturas por revisar`, "Capturas aceptadas (máximo 1 por día y persona). Las por revisar todavía no suman."),
     kpiA("Con chances en el sorteo", num(conChances, 0), "personas con al menos 1 participación", "Entre ellas se sortean los 5 cupones; cada participación es una chance."),
   ].join("");
-  const filas = lista.slice().sort((a, b) => b.total - a.total || (a.creado < b.creado ? -1 : 1)).slice(0, 150).map((x) => `<tr><td>${esc(x.email)}</td><td><code>${esc(x.codigo)}</code></td><td>${x.verificado ? "sí" : "no"}</td><td>${num(x.enlace, 0)}</td><td>${num(x.captura, 0)}</td><td><b>${num(x.total, 0)}</b></td><td>${esc(String(x.creado || "").slice(0, 10))}</td></tr>`).join("");
+  const btnP = (x) => `<form method="post" action="/panel/concurso" style="display:inline"><input type="hidden" name="accion" value="${x.estado === "excluido" ? "reincorporar" : "excluir"}"><input type="hidden" name="email" value="${esc(x.email)}"><button class="btn linea chico" type="submit">${x.estado === "excluido" ? "Reincorporar" : "Excluir"}</button></form>`;
+  const filas = lista.slice().sort((a, b) => b.total - a.total || (a.creado < b.creado ? -1 : 1)).slice(0, 150).map((x) => `<tr${x.estado === "excluido" ? ' class="men-desc"' : ""}><td>${esc(x.email)}</td><td><code>${esc(x.codigo)}</code></td><td>${x.verificado ? "sí" : "no"}</td><td>${num(x.enlace, 0)}</td><td>${num(x.captura, 0)}</td><td><b>${num(x.total, 0)}</b></td><td>${esc(String(x.creado || "").slice(0, 10))}</td><td>${x.estado === "excluido" ? "<b>excluido</b>" : "activo"}</td><td>${btnP(x)}</td></tr>`).join("");
   const caps = (R.revisar || []).map((c) => {
     const b = (a, t, cls) => `<form method="post" action="/panel/concurso" style="display:inline"><input type="hidden" name="accion" value="${a}"><input type="hidden" name="id" value="${c.id}"><button class="btn ${cls} chico" type="submit">${t}</button></form>`;
     return `<figure class="cc-cap"><a href="/panel/concurso/captura/${c.id}" target="_blank" rel="noopener"><img src="/panel/concurso/captura/${c.id}" alt="Captura de ${esc(enmascarar(c.email))}" loading="lazy" width="180" height="180"></a>`
@@ -1055,25 +1183,34 @@ async function seccionConcurso(env, u) {
   if (s) {
     let g = [];
     try { g = JSON.parse(s.ganadores); } catch { g = []; }
-    const cup = (R.cupones || []).map((c) => `<tr><td><code>${esc(c.codigo)}</code></td><td>${esc(c.email)}</td><td>${c.pct} %</td><td>${ddmm(c.vence)}</td><td>${c.usado ? "usado " + esc(String(c.usado).slice(0, 10)) : `<form method="post" action="/panel/concurso" style="display:inline"><input type="hidden" name="accion" value="cupon-usado"><input type="hidden" name="codigo" value="${esc(c.codigo)}"><button class="btn linea chico" type="submit">Marcar como usado</button></form>`}</td></tr>`).join("");
+    const fc = (a, c, t) => `<form method="post" action="/panel/concurso" style="display:inline"><input type="hidden" name="accion" value="${a}"><input type="hidden" name="codigo" value="${esc(c.codigo)}"><button class="btn linea chico" type="submit">${t}</button></form>`;
+    const cup = (R.cupones || []).map((c) => `<tr><td><code>${esc(c.codigo)}</code></td><td>${esc(c.email)}</td><td>${c.pct} %</td><td>${ddmm(c.vence)}</td><td>${c.reclamado ? "reclamado " + esc(String(c.reclamado).slice(0, 10)) : fc("cupon-reclamado", c, "Marcar como reclamado")}</td><td>${c.usado ? "usado " + esc(String(c.usado).slice(0, 10)) : fc("cupon-usado", c, "Marcar como usado")}</td></tr>`).join("");
     sorteo = `<div class="tarjeta"><h4 class="kicker">Sorteo oficial · registro de auditoría</h4><p>Realizado el ${esc(horaCL(s.creado))} · ${num(s.participantes, 0)} personas · ${num(s.total, 0)} participaciones · ${num(s.avisos, 0)} correos enviados.</p>
 <p class="sub">Huella SHA-256 de la lista ordenada: <code>${esc(s.huella)}</code><br>Semilla: <code>${esc(s.semilla)}</code><br>Ganadores (huella del email): ${g.map((x) => `<code>${esc(x.id)}</code> ${esc(x.mascara)} (${num(x.entradas, 0)})`).join(" · ")}</p>
 <p><a class="btn linea chico" href="/panel/concurso/sorteo.json" target="_blank" rel="noopener">Descargar el registro completo (JSON)</a></p>
-<div style="overflow-x:auto"><table class="tabla-vis"><thead><tr><th>Cupón</th><th>Ganador</th><th>Descuento</th><th>Vence</th><th>Estado</th></tr></thead><tbody>${cup}</tbody></table></div></div>`;
+<div style="overflow-x:auto"><table class="tabla-vis"><thead><tr><th>Cupón</th><th>Ganador</th><th>Descuento</th><th>Vence</th><th>Reclamo (hasta el 31-01-2027)</th><th>Uso</th></tr></thead><tbody>${cup}</tbody></table></div></div>`;
   } else {
     const listo = hoy >= CONCURSO.sorteo;
     sorteo = `<div class="tarjeta"><h4 class="kicker">Sorteo</h4><p>${listo ? "Ya se puede hacer el sorteo oficial. Antes, revisa las capturas pendientes: las que queden sin revisar no suman." : `El botón se habilita el ${ddmm(CONCURSO.sorteo)}. Mientras, puedes ver una vista previa (no vale).`}</p>
 <p><a class="btn linea chico" href="/panel/concurso/vista.json" target="_blank" rel="noopener">Vista previa del sorteo (no vale)</a></p>
+<p class="sub">Si nadie lo hace antes, el sistema hace el sorteo oficial solo el ${ddmm(CONCURSO.sorteo)} desde las ${CONCURSO.sorteoAutoHora}:00 (hora de Santiago), con la primera visita a la portada o al Panel.</p>
 <form method="post" action="/panel/concurso"><input type="hidden" name="accion" value="sortear"><label class="pub-ok" style="display:flex;gap:8px;align-items:center;margin:8px 0"><input type="checkbox" name="revisado" value="si"${listo ? " required" : " disabled"}> Revisé las capturas y quiero hacer el sorteo oficial (no se puede repetir)</label>
 <button class="btn oro" type="submit"${listo ? "" : " disabled"}>Sortear</button></form></div>`;
   }
   const aviso = _hoyPrueba ? `<p class="aviso" style="color:var(--rojo);font-weight:700">Atención: fecha de prueba activa (CONCURSO_HOY_PRUEBA = ${esc(_hoyPrueba)}). En producción este secreto no debe existir.</p>` : "";
   return `<section id="concurso"><h3>Concurso «Comparte Cofrade News»</h3>${mensajePanel(u.searchParams.get("cc"))}${aviso}
-<p class="sub">Organiza Destak. Bases públicas en <a href="/bases-concurso">/bases-concurso</a>. Aquí los emails se ven completos; en la página pública, ocultos.</p>
+<p class="sub">Organiza Destak E.I.R.L. Bases públicas en <a href="/bases-concurso">/bases-concurso</a>. Aquí los emails se ven completos; en la página pública, ocultos.</p>
 <div class="cifras k5">${kpis}</div>
 <h4 class="grupo-k" style="margin-top:22px">Capturas por revisar (${num(capE["por revisar"] || 0, 0)})</h4>${caps ? `<div class="cc-caps">${caps}</div>` : `<p class="aviso">No hay capturas pendientes.</p>`}
-<h4 class="grupo-k" style="margin-top:22px">Participantes</h4>${filas ? `<div style="overflow-x:auto"><table class="tabla-vis"><thead><tr><th>Email</th><th>Código</th><th>Confirmado</th><th>Por enlace</th><th>Por captura</th><th>Total</th><th>Inscrito</th></tr></thead><tbody>${filas}</tbody></table></div>` : `<p class="aviso">Todavía no hay inscritos.</p>`}
-<div style="margin-top:16px">${sorteo}</div></section>`;
+<h4 class="grupo-k" style="margin-top:22px">Participantes</h4>${filas ? `<div style="overflow-x:auto"><table class="tabla-vis"><thead><tr><th>Email</th><th>Código</th><th>Confirmado</th><th>Por enlace</th><th>Por captura</th><th>Total</th><th>Inscrito</th><th>Estado</th><th></th></tr></thead><tbody>${filas}</tbody></table></div>` : `<p class="aviso">Todavía no hay inscritos.</p>`}
+<p class="sub">Excluir: la persona no entra al sorteo (por ejemplo, visitas falsas o la misma persona con varios emails, como dicen las bases). Se puede reincorporar.</p>
+<div style="margin-top:16px">${sorteo}</div>
+<details class="nuevo-anun" id="borrar-participante"><summary class="btn linea" style="display:inline-flex;margin:16px 0 4px">Borrar los datos de un participante (derecho de supresión)</summary>
+<form class="form-anun" method="post" action="/panel/concurso"><input type="hidden" name="accion" value="borrar-datos"><fieldset><legend>Borra su inscripción, sus capturas, sus correos y las visitas de su enlace</legend>
+<label class="ancho">Email *<input name="email" type="email" required maxlength="120"></label>
+<label class="pub-ok ancho" style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="confirmo" value="si" required> Confirmo que la persona lo pidió (no se puede deshacer)</label></fieldset>
+<button class="btn oro" type="submit">Borrar sus datos</button></form></details>
+<p class="sub">Borrados automáticos de las bases (capturas el 25-01-2027, datos el 01-02-2027, cupones al vencer): último mantenimiento ${esc(horaCL(mant.difusion_mant_ok) || "pendiente")}${mant.difusion_mant_error ? ` · <span style="color:var(--rojo)">último error: ${esc(mant.difusion_mant_error)}</span>` : ""}.</p></section>`;
 }
 
 // ---------- estilos de la cinta, el diálogo del concurso y las secciones del Panel ----------
@@ -1098,17 +1235,18 @@ Object.assign(EN_FIJO, {
   "Compartir Cofrade News": "Share Cofrade News", "Compartir esta edición": "Share this edition", "Compartir": "Share", "Enlace para compartir": "Link to share",
   "Concurso · hasta el 24 de diciembre": "Contest · until December 24", "Concurso cerrado": "Contest closed", "Comparte Cofrade News y gana": "Share Cofrade News and win",
   "Resultados del concurso": "Contest results",
-  "Participa por uno de los 5 cupones de 25 % de descuento en el plan anual del Dashboard Financiero. Cada persona que abre tu enlace suma una chance.":
-    "Win one of 5 coupons for 25% off the annual plan of the Financial Dashboard. Every person who opens your link adds a chance.",
+  "Participa por uno de los 5 cupones de 25 % de descuento en el primer año del plan anual del Dashboard Financiero. Cada persona distinta que abre tu enlace en un día suma 1 participación (hasta 10 al día).":
+    "Win one of 5 coupons for 25% off the first year of the annual plan of the Financial Dashboard. Every different person who opens your link on a given day adds 1 entry (up to 10 a day).",
+  "El sorteo de los 5 cupones se hizo el 26 de diciembre. Los resultados están en las bases del concurso.": "The draw for the 5 coupons took place on December 26. The results are in the contest rules.",
   "El sorteo de los 5 cupones es el 26 de diciembre. Los resultados se publican en las bases del concurso.": "The draw for the 5 coupons is on December 26. The results are published in the contest rules.",
   "Compartir mi enlace": "Share my link", "Participar": "Enter", "Ver las bases": "Read the rules",
   "¿Compartes Cofrade News?": "Do you share Cofrade News?", "Participar en el concurso": "Enter the contest", "Bases": "Rules",
   "Concurso Comparte Cofrade News": "“Share Cofrade News” contest", "Participa por un 25 % de descuento": "Win a 25% discount",
-  "Comparte tu enlace personal: cada persona distinta que lo abre en un día suma 1 participación (hasta 10 al día), y cada captura aceptada suma 1 más (1 al día). El 26 de diciembre sorteamos 5 cupones de 25 % de descuento en el plan anual del Dashboard Financiero.":
-    "Share your personal link: every different person who opens it on a given day adds 1 entry (up to 10 a day), and every accepted screenshot adds 1 more (1 a day). On December 26 we draw 5 coupons for 25% off the annual plan of the Financial Dashboard.",
+  "Comparte tu enlace personal: cada persona distinta que lo abre en un día suma 1 participación (hasta 10 al día). Cuando confirmes tu email, cada captura aceptada suma 1 más (1 al día). El 26 de diciembre sorteamos 5 cupones de 25 % de descuento en el primer año del plan anual del Dashboard Financiero.":
+    "Share your personal link: every different person who opens it on a given day adds 1 entry (up to 10 a day). Once you confirm your email, every accepted screenshot adds 1 more (1 a day). On December 26 we draw 5 coupons for 25% off the first year of the annual plan of the Financial Dashboard.",
   "Tengo 18 años o más y vivo en Chile": "I am 18 or older and live in Chile", "Acepto las": "I accept the", "bases del concurso": "contest rules",
   "Captura de pantalla (opcional)": "Screenshot (optional)",
-  "Sube una captura que muestre que compartiste Cofrade News. Si la aceptamos, suma 1 participación (máximo 1 al día).": "Upload a screenshot showing that you shared Cofrade News. If we accept it, it adds 1 entry (1 a day max).",
+  "Si ya confirmaste tu email, sube una captura que muestre que compartiste Cofrade News. Si la aceptamos, suma 1 participación (máximo 1 al día).": "If you already confirmed your email, upload a screenshot showing that you shared Cofrade News. If we accept it, it adds 1 entry (1 a day max).",
   "Antes de subirla:": "Before uploading it:",
   "tapa los nombres, números y fotos de otras personas. La captura es privada: nunca se publica y se borra 30 días después del sorteo.": "cover other people's names, numbers and photos. The screenshot is private: it is never published and it is deleted 30 days after the draw.",
   "Elegir imagen": "Choose image", "Vista previa de tu captura": "Preview of your screenshot", "Quitar": "Remove",

@@ -41,17 +41,22 @@ CREATE TABLE IF NOT EXISTS instalaciones (fecha TEXT NOT NULL, evento TEXT NOT N
 -- El Worker también las crea solo si faltan. Sin punto y coma en estos comentarios: el arnés corta el archivo por punto y coma.
 CREATE TABLE IF NOT EXISTS compartidos (fecha TEXT NOT NULL, canal TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (fecha, canal));
 CREATE TABLE IF NOT EXISTS referidos (fecha TEXT NOT NULL, codigo TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (fecha, codigo));
-CREATE TABLE IF NOT EXISTS referidos_unicos (fecha TEXT NOT NULL, codigo TEXT NOT NULL, visitante TEXT NOT NULL, PRIMARY KEY (fecha, codigo, visitante));
+CREATE TABLE IF NOT EXISTS referidos_unicos (fecha TEXT NOT NULL, codigo TEXT NOT NULL, visitante TEXT NOT NULL, red TEXT, PRIMARY KEY (fecha, codigo, visitante));
 CREATE INDEX IF NOT EXISTS referidos_unicos_codigo ON referidos_unicos (codigo, fecha);
+CREATE INDEX IF NOT EXISTS referidos_unicos_red ON referidos_unicos (fecha, codigo, red);
 CREATE TABLE IF NOT EXISTS menciones (id INTEGER PRIMARY KEY AUTOINCREMENT, fecha TEXT, medio TEXT NOT NULL, programa TEXT, persona TEXT, enlace TEXT UNIQUE, alcance INTEGER, origen TEXT NOT NULL, estado TEXT NOT NULL DEFAULT 'por confirmar', nota TEXT, titulo TEXT, fuente TEXT, creado TEXT NOT NULL, actualizado TEXT);
 CREATE INDEX IF NOT EXISTS menciones_estado ON menciones (estado, fecha);
 CREATE TABLE IF NOT EXISTS concurso_participantes (email TEXT PRIMARY KEY, codigo TEXT UNIQUE NOT NULL, creado TEXT NOT NULL, verificado INTEGER NOT NULL DEFAULT 0, confirmado TEXT, token TEXT, enviado TEXT, mayor INTEGER NOT NULL DEFAULT 0, bases INTEGER NOT NULL DEFAULT 0, ip TEXT, estado TEXT NOT NULL DEFAULT 'activo');
 CREATE INDEX IF NOT EXISTS concurso_participantes_token ON concurso_participantes (token);
-CREATE TABLE IF NOT EXISTS concurso_capturas (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL, fecha TEXT NOT NULL, creado TEXT NOT NULL, sha TEXT UNIQUE NOT NULL, bytes INTEGER NOT NULL, ancho INTEGER, alto INTEGER, datos BLOB, estado TEXT NOT NULL DEFAULT 'por revisar', revisado TEXT);
+CREATE TABLE IF NOT EXISTS concurso_capturas (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT NOT NULL, fecha TEXT NOT NULL, creado TEXT NOT NULL, sha TEXT UNIQUE NOT NULL, bytes INTEGER NOT NULL, ancho INTEGER, alto INTEGER, datos TEXT, estado TEXT NOT NULL DEFAULT 'por revisar', revisado TEXT, ip TEXT);
 CREATE INDEX IF NOT EXISTS concurso_capturas_email ON concurso_capturas (email, fecha);
+CREATE INDEX IF NOT EXISTS concurso_capturas_fecha ON concurso_capturas (fecha, ip);
+CREATE TABLE IF NOT EXISTS concurso_envios (id INTEGER PRIMARY KEY AUTOINCREMENT, fecha TEXT NOT NULL, ip TEXT, email TEXT NOT NULL, creado TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS concurso_envios_fecha ON concurso_envios (fecha, ip);
+CREATE INDEX IF NOT EXISTS concurso_envios_email ON concurso_envios (email);
 CREATE TABLE IF NOT EXISTS concurso_sorteos (id INTEGER PRIMARY KEY AUTOINCREMENT, creado TEXT NOT NULL, tipo TEXT NOT NULL, semilla TEXT NOT NULL, huella TEXT NOT NULL, total INTEGER NOT NULL, participantes INTEGER NOT NULL, ganadores TEXT NOT NULL, lista TEXT NOT NULL, avisos INTEGER NOT NULL DEFAULT 0);
 CREATE UNIQUE INDEX IF NOT EXISTS concurso_sorteo_oficial ON concurso_sorteos (tipo) WHERE tipo = 'oficial';
-CREATE TABLE IF NOT EXISTS cupones (codigo TEXT PRIMARY KEY, email TEXT NOT NULL, origen TEXT NOT NULL, pct INTEGER NOT NULL, plan TEXT NOT NULL, vence TEXT NOT NULL, creado TEXT NOT NULL, usado TEXT, ref TEXT);
+CREATE TABLE IF NOT EXISTS cupones (codigo TEXT PRIMARY KEY, email TEXT NOT NULL, origen TEXT NOT NULL, pct INTEGER NOT NULL, plan TEXT NOT NULL, vence TEXT NOT NULL, creado TEXT NOT NULL, usado TEXT, ref TEXT, reclamado TEXT);
 -- Migraciones ya aplicadas en producción (no volver a correrlas: SQLite no tiene «ADD COLUMN IF NOT EXISTS» y fallarían)
 --   14-11-2026  ALTER TABLE pagos ADD COLUMN ref TEXT
 --   14-11-2026  ALTER TABLE suscripciones ADD COLUMN pausada_por TEXT

@@ -527,6 +527,7 @@ async function panel(req, env) {
   if (!(await esAdmin(req, env))) return paginaPanelLogin("", 200, env);
   if (!env.DB) return html(marco({ titulo: "Panel", descripcion: "", cuerpo: `<section style="border:0"><h1>Falta la base de datos.</h1></section>` }), 503);
   const u = new URL(req.url), P = periodoPanel(u);
+  await revisarConcurso(env).catch(() => null);   // 20-11-2026: borrados de las bases y sorteo de respaldo también desde el Panel
   const [R, fundadores, cont, difusion, concurso] = await Promise.all([datosTablero(env, P), panelSocios(env, u).catch(() => ""), contadorVisitas(env, masDias(P.hoy, -29)),
     seccionDifusion(env, u).catch(() => `<section id="difusion"><h3>Difusión y menciones</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`),   // 20-11-2026
     seccionConcurso(env, u).catch(() => `<section id="concurso"><h3>Concurso «Comparte Cofrade News»</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`)]);

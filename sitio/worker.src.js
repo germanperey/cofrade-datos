@@ -1231,6 +1231,7 @@ async function portada(env, ctx, req) {
   // 15-11-2026: el vigía corre cada 3 horas; su propia visita reinicia el reloj y la de un lector lo despierta si GitHub se atrasó
   ctx.waitUntil(/CofradeNews-Vigia/.test((req && req.headers.get("User-Agent")) || "") ? marcarVigia(env) : revivirVigia(env));
   ctx.waitUntil(revisarMenciones(env));   // 20-11-2026: menciones en medios, un paso (una descarga como mucho) en segundo plano (modulos/difusion.js)
+  ctx.waitUntil(revisarConcurso(env));    // 20-11-2026: borrados de las bases del concurso (cada 12 h) y sorteo de respaldo el 26-12 (modulos/difusion.js)
   return html(marco({ titulo: "Cofrade News · El diario de la mañana", descripcion: "Chile y el mundo cada mañana: economía, política y Congreso, conflictos, ciencia, deportes, clima y vuelos, con datos verificados. Gratuito.", cuerpo, hero, compartir: true }), 200,
     { "Cache-Control": "public, max-age=120" });
 }
@@ -1358,13 +1359,13 @@ async function revivirVigia(env) {
 
 export default {
   async scheduled(event, env, ctx) {
-    _hoyPrueba = String(env.CONCURSO_HOY_PRUEBA || "");
+    _hoyPrueba = String(env.CONCURSO_HOY_PRUEBA || ""); _horaPrueba = String(env.CONCURSO_HORA_PRUEBA || "");
     ctx.waitUntil(pedirPulso(env).catch(() => "error"));
     ctx.waitUntil(pasoMenciones(env, { completa: true }).catch(() => "error"));   // 20-11-2026: menciones en medios (modulos/difusion.js)
   },
   async fetch(req, env, ctx) {
     const u = new URL(req.url);
-    _hoyPrueba = String(env.CONCURSO_HOY_PRUEBA || "");   // solo existe en el arnés de pruebas
+    _hoyPrueba = String(env.CONCURSO_HOY_PRUEBA || ""); _horaPrueba = String(env.CONCURSO_HORA_PRUEBA || "");   // solo existe en el arnés de pruebas
     if (u.hostname === "cofrad.es") return Response.redirect(`https://${DOMINIO}${u.pathname}${u.search}`, 301);
     const p = u.pathname.replace(/\/+$/, "") || "/";
     try {

@@ -1,10 +1,11 @@
 OK    después del 24-12 no se inscribe nadie (400, {'ok': False, 'error': 'El concurso ya cerró. ¡Gracias por participar!', 'error_en': 'The contest is closed. Thank you for taking part!'})
 OK    portada después del cierre: cinta de resultados, sin diálogo del concurso ni opción en el Buzón 
+OK    26-12 antes de las 18:00: la visita a la portada no sortea sola 
 OK    sorteo oficial el 26-12-2026: 5 ganadores y 5 correos /panel?cc=ok:5:5#concurso
 OK    registro: semilla aleatoria de 64 hex y huella SHA-256 de la lista 
 OK    registro: la lista no tiene emails (solo huellas) y excluye a quien no tiene chances 
-OK    registro: repetir el sorteo con la semilla da los mismos ganadores ['5101e0880a1eda4f', 'b290216e81562de2', '2da560084d1e770e', 'd25e70b6bfd8ebdc', '5b3d70fed2a31635']
-OK    5 cupones de un solo uso, 25 %, plan anual, vencen el 31-03-2027 [{'codigo': 'CN25-11WS-A32T', 'email': 'persona5@gmail.com', 'pct': 25, 'plan': 'anual', 'vence': '2027-03-31', 'usado': None}, {'codigo': 'CN25-A3A7-CP6Y', 'email': 'persona4@gmail.com', 'pct': 25, 'plan': 'anual', 'vence': '2027-03-31', 'usado': None}, {'cod
+OK    registro: repetir el sorteo con la semilla da los mismos ganadores ['5101e0880a1eda4f', '5b3d70fed2a31635', '2da560084d1e770e', '5e43147c424dbbe0', 'b290216e81562de2']
+OK    5 cupones de un solo uso, 25 %, plan anual, vencen el 31-03-2027 [{'codigo': 'CN25-1SYG-A3WV', 'email': 'persona5@example.com', 'pct': 25, 'plan': 'anual', 'vence': '2027-03-31', 'usado': None}, {'codigo': 'CN25-AXVN-D8AE', 'email': 'persona6@example.com', 'pct': 25, 'plan': 'anual', 'vence': '2027-03-31', 'usado': None}, {'cod
 OK    los ganadores tienen chances y están confirmados 
 OK    correo a cada ganador con su cupón 5
 OK    no se puede sortear dos veces /panel?cc=hecho#concurso
@@ -13,6 +14,7 @@ OK    cupón válido para el ganador en el plan anual: 25 %, $41.250, no combina
 OK    cupón: otro email no sirve 
 OK    cupón: plan mensual no sirve 
 OK    marcar cupón como usado; después ya no vale /panel?cc=cupon-usado#concurso
+OK    marcar cupón como reclamado /panel?cc=cupon-reclamado#concurso
 OK    Panel: registro de auditoría y aviso de fecha de prueba 
 
-16/16 pruebas OK (sorteo)
+18/18 pruebas OK (sorteo)

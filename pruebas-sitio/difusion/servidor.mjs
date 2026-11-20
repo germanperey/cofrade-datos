@@ -14,7 +14,7 @@ const mf = new Miniflare({
   d1Databases: { DB: "prueba" }, cache: true,
   // 14-11-2026: la IA de traducción simulada (en producción es Workers AI); cuenta las llamadas para probar el tope por visita
   serviceBindings: { AI_PRUEBA: async (req) => { if (new URL(req.url).pathname === "/oido") { oidos.push(new URL(req.url).searchParams.get("l")); if (process.env.OIDO_FALLA) return new Response("", { status: 500 }); return new Response(process.env.OIDO_TEXTO || "índice"); } llamadasIA.push(1); const t = await req.text(); return new Response(process.env.IA_CAIDA ? "" : "EN·" + t); } }, ratelimits: { LIMITE: { namespace_id: "1101", simple: { limit: 30, period: 60 } } },
-  bindings: { TURNSTILE_SECRET: SECRETO_TS, ...(process.env.CON_GITHUB ? { GITHUB_DISPATCH: "ghp_prueba" } : {}), PULSO_HORAS: process.env.PULSO_HORAS || "0-23", ...(process.env.CON_MP ? { MP_ACCESS_TOKEN: "prueba-llave-mp" } : {}), ...(process.env.CON_MP && !process.env.MP_SIN_AVISOS ? { MP_WEBHOOK_SECRET: "secreto-mp-prueba" } : {}), PANEL_CLAVE: "clave-de-prueba-123", SOCIOS_CLAVE: "socios-prueba", ...(process.env.CON_RESEND ? { RESEND_API_KEY: "re_prueba" } : {}), ...(process.env.AVISOS_HORAS ? { AVISOS_HORAS: process.env.AVISOS_HORAS } : {}), ...(process.env.CON_YOUTUBE ? { YOUTUBE_API_KEY: "yt-clave-prueba" } : {}), ...(process.env.HOY_CONCURSO ? { CONCURSO_HOY_PRUEBA: process.env.HOY_CONCURSO } : {}), ...(process.env.PASO_SEG !== undefined ? { MENCIONES_PASO_SEG: process.env.PASO_SEG } : {}) },
+  bindings: { TURNSTILE_SECRET: SECRETO_TS, SEC_FETCH_PRUEBA: "1", ...(process.env.CON_GITHUB ? { GITHUB_DISPATCH: "ghp_prueba" } : {}), PULSO_HORAS: process.env.PULSO_HORAS || "0-23", ...(process.env.CON_MP ? { MP_ACCESS_TOKEN: "prueba-llave-mp" } : {}), ...(process.env.CON_MP && !process.env.MP_SIN_AVISOS ? { MP_WEBHOOK_SECRET: "secreto-mp-prueba" } : {}), PANEL_CLAVE: "clave-de-prueba-123", SOCIOS_CLAVE: "socios-prueba", ...(process.env.CON_RESEND ? { RESEND_API_KEY: "re_prueba" } : {}), ...(process.env.AVISOS_HORAS ? { AVISOS_HORAS: process.env.AVISOS_HORAS } : {}), ...(process.env.CON_YOUTUBE ? { YOUTUBE_API_KEY: "yt-clave-prueba" } : {}), ...(process.env.HOY_CONCURSO ? { CONCURSO_HOY_PRUEBA: process.env.HOY_CONCURSO } : {}), ...(process.env.HORA_CONCURSO ? { CONCURSO_HORA_PRUEBA: process.env.HORA_CONCURSO } : {}), ...(process.env.MANT_SEG !== undefined ? { CONCURSO_MANT_SEG: process.env.MANT_SEG } : {}), ...(process.env.PASO_SEG !== undefined ? { MENCIONES_PASO_SEG: process.env.PASO_SEG } : {}) },
   outboundService: async (req) => {
     const u = new URL(req.url); salida.push(req.method + " " + u.hostname + u.pathname);
     // 15-11-2026: librería de gráficos aparte. LIB_FALLA: GitHub no la entrega; LIB_MALA: jsDelivr entrega otra cosa
@@ -65,7 +65,7 @@ const mf = new Miniflare({
     const fx = { "news.google.com": "google_news.xml", "itunes.apple.com": "itunes.json", "api.gdeltproject.org": "gdelt.json", "www.googleapis.com": "youtube.json", "alerts.talkwalker.com": "talkwalker.xml", "www.google.com": "google_alertas.xml" }[u.hostname];
     if (fx) {
       if (process.env["FALLA_" + u.hostname.replace(/\W/g, "_")]) return new Response("caída simulada", { status: 503 });
-      if (u.hostname === "www.googleapis.com") { const c = new URL(u); c.searchParams.delete("key"); youtube.push(c.toString()); if (u.searchParams.get("key") !== "yt-clave-prueba") return Response.json({ error: { code: 400 } }, { status: 400 }); }
+      if (u.hostname === "www.googleapis.com") { const c = new URL(u), k = req.headers.get("x-goog-api-key") || u.searchParams.get("key"); c.searchParams.delete("key"); c.searchParams.set("_clave", req.headers.get("x-goog-api-key") ? "cabecera" : u.searchParams.get("key") ? "url" : "no"); youtube.push(c.toString()); if (k !== "yt-clave-prueba") return Response.json({ error: { code: 400 } }, { status: 400 }); }
       return new Response(fs.readFileSync(FX + fx), { status: 200, headers: { "Content-Type": fx.endsWith(".json") ? "application/json" : "application/xml" } });
     }
     if (u.hostname === "api.mercadopago.com") {   // Mercado Pago de prueba: crea suscripciones pendientes y responde su estado
@@ -132,6 +132,7 @@ http.createServer(async (req, res) => {
   const h = { ...req.headers }; delete h.host;
   if (h["x-origen-real"]) h.origin = h["x-origen-real"]; else if (h.origin) h.origin = "https://www.cofrad.es";
   h["cf-connecting-ip"] = h["x-ip-prueba"] || "198.51.100.7";
+  if (h["sec-fetch-mode"]) h["x-prueba-sec-fetch-mode"] = h["sec-fetch-mode"];   // 20-11-2026: el cliente HTTP de Miniflare reescribe Sec-Fetch-Mode a «cors»
   const cf = h["x-asn-prueba"] ? { asn: Number(h["x-asn-prueba"]), country: "US" } : undefined;   // 16-11-2026: red de origen simulada
   const r = await mf.dispatchFetch("https://www.cofrad.es" + req.url, { method: req.method, headers: h, ...(cf ? { cf } : {}), body: ["GET", "HEAD"].includes(req.method) ? undefined : Buffer.concat(chunks), redirect: "manual" });
   const out = {}; r.headers.forEach((v, k) => { out[k] = v; });

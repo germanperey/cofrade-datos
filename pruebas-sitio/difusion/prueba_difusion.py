@@ -1,6 +1,6 @@
 # 20-11-2026 · Pruebas de la difusión: botón Compartir (portada y edición), visitas por enlace compartido, Panel «Difusión y menciones»,
 # recolector de menciones (fuentes simuladas, sin red real) y concurso «Comparte Cofrade News».
-# Uso: python3 prueba_difusion.py PUERTO MODO   (MODO: principal | sorteo | cerrado | antes | youtube). SOLO=grupo1,grupo2 para una parte.
+# Uso: python3 prueba_difusion.py PUERTO MODO   (MODO: principal | sorteo | auto | vencido | cerrado | antes | youtube). SOLO=grupo1,grupo2 para una parte.
 import json, os, sys, re, io, time, random, hashlib, string, urllib.request, urllib.parse, urllib.error
 from playwright.sync_api import sync_playwright
 PUERTO = sys.argv[1] if len(sys.argv) > 1 else '8891'
@@ -189,28 +189,43 @@ if MODO == 'principal':
             cx.close()
 
         if corre('referidos'):
+            NAV = {'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Dest': 'document'}
+            def nav(ip, extra=None): d = dict(NAV); d['x-ip-prueba'] = ip; d.update(extra or {}); return d
             def cuenta(c): f = sql(f"SELECT (SELECT COALESCE(SUM(n),0) FROM referidos WHERE codigo='{c}') AS n, (SELECT COUNT(*) FROM referidos_unicos WHERE codigo='{c}') AS u"); return f[0]['n'], f[0]['u']
             C = 'ab12cd34'
-            pedir(f'/?r={C}&utm_source=compartir', cab={'x-ip-prueba': '203.0.113.1'}); time.sleep(0.5)
+            pedir(f'/?r={C}&utm_source=compartir', cab=nav('203.0.113.1')); time.sleep(0.5)
             ok('visita por enlace compartido: suma 1 visita y 1 persona', cuenta(C) == (1, 1), cuenta(C))
-            pedir(f'/?r={C}&utm_source=compartir', cab={'x-ip-prueba': '203.0.113.1'}); time.sleep(0.5)
+            pedir(f'/?r={C}&utm_source=compartir', cab=nav('203.0.113.1')); time.sleep(0.5)
             ok('la misma persona el mismo día: 2 visitas, 1 persona', cuenta(C) == (2, 1), cuenta(C))
-            pedir(f'/?r={C}&utm_source=compartir', cab={'x-ip-prueba': '203.0.113.2'}); time.sleep(0.5)
+            pedir(f'/?r={C}&utm_source=compartir', cab=nav('203.0.113.2')); time.sleep(0.5)
             ok('otra conexión: 2 personas', cuenta(C) == (3, 2), cuenta(C))
-            pedir(f'/?r={C}', cab={'x-ip-prueba': '203.0.113.3', 'User-Agent': 'WhatsApp/2.23.20.0 A'}); time.sleep(0.4)
-            pedir(f'/?r={C}', cab={'x-ip-prueba': '203.0.113.4', 'User-Agent': 'TelegramBot (like TwitterBot)'}); time.sleep(0.4)
+            pedir(f'/?r={C}', cab=nav('203.0.113.3', {'User-Agent': 'WhatsApp/2.23.20.0 A'})); time.sleep(0.4)
+            pedir(f'/?r={C}', cab=nav('203.0.113.4', {'User-Agent': 'TelegramBot (like TwitterBot)'})); time.sleep(0.4)
             ok('vistas previas de WhatsApp y Telegram no cuentan', cuenta(C) == (3, 2), cuenta(C))
-            pedir(f'/?r={C}', cab={'x-ip-prueba': '203.0.113.5', 'Sec-Purpose': 'prefetch'}); time.sleep(0.4)
+            pedir(f'/?r={C}', cab=nav('203.0.113.5', {'Sec-Purpose': 'prefetch'})); time.sleep(0.4)
             ok('precargas del navegador no cuentan', cuenta(C) == (3, 2), cuenta(C))
-            for malo in ['AB12', 'ab12cd34ef567', 'ab-12cd3', '']: pedir('/?r=' + urllib.parse.quote(malo), cab={'x-ip-prueba': '203.0.113.6'})
+            pedir(f'/?r={C}', cab={'x-ip-prueba': '203.0.113.8', 'Sec-Fetch-Mode': 'no-cors', 'Sec-Fetch-Dest': 'image'})
+            pedir(f'/?r={C}', cab={'x-ip-prueba': '203.0.113.9', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Dest': 'iframe'})
+            pedir(f'/?r={C}', cab={'x-ip-prueba': '203.0.113.10'}); time.sleep(0.6)
+            ok('imagen o marco escondidos en otra web y pedidos sin cabeceras de navegación (curl) no cuentan', cuenta(C) == (3, 2), cuenta(C))
+            for malo in ['AB12', 'ab12cd34ef567', 'ab-12cd3', '']: pedir('/?r=' + urllib.parse.quote(malo), cab=nav('203.0.113.6'))
             time.sleep(0.5)
             ok('códigos inválidos no se cuentan', sql("SELECT COUNT(*) AS n FROM referidos WHERE codigo NOT IN ('ab12cd34','zzzz9999','abcd1234')")[0]['n'] == 0, sql("SELECT codigo FROM referidos"))
-            pedir(f'/edicion/2026-11-19?r={C}&utm_source=compartir', cab={'x-ip-prueba': '203.0.113.7'}); time.sleep(0.6)
+            pedir(f'/edicion/2026-11-19?r={C}&utm_source=compartir', cab=nav('203.0.113.7')); time.sleep(0.6)
             ok('en una edición también se cuenta', cuenta(C) == (4, 3), cuenta(C))
+            D = 'cd34ef56'
+            for ua in ['Mozilla/5.0 (A) Chrome/131', 'Mozilla/5.0 (B) Chrome/131', 'Mozilla/5.0 (C) Chrome/131', 'Mozilla/5.0 (D) Chrome/131']:
+                pedir(f'/?r={D}', cab=nav('198.51.100.40', {'User-Agent': ua})); time.sleep(0.3)
+            ok('la misma conexión con 4 navegadores distintos: 4 visitas y solo 2 personas', cuenta(D) == (4, 2), cuenta(D))
+            for ip6 in ['2001:db8:1:2::1', '2001:db8:1:2:aaaa::7', '2001:0db8:0001:0002:ffff:ffff:ffff:fff0']:
+                pedir(f'/?r={D}', cab=nav(ip6)); time.sleep(0.3)
+            ok('IPv6: direcciones del mismo /64 son una sola red (2 personas como máximo)', cuenta(D) == (7, 4), cuenta(D))
+            pedir(f'/?r={D}', cab=nav('2001:db8:1:3::1')); time.sleep(0.4)
+            ok('IPv6: otro /64 es otra red', cuenta(D) == (8, 5), cuenta(D))
             cols = [x['name'] for x in sql("SELECT name FROM pragma_table_info('referidos_unicos')")]
-            vis = [x['visitante'] for x in sql("SELECT visitante FROM referidos_unicos")]
-            ok('sin IP guardada: solo fecha, código y huella HMAC de 24 caracteres', cols == ['fecha', 'codigo', 'visitante'] and all(re.fullmatch(r'[0-9a-f]{24}', v) for v in vis) and not any('203.0' in v for v in vis), (cols, vis[:3]))
-            ok('ninguna tabla nueva guarda IP en claro', not any('203.0.113' in json.dumps(sql(f"SELECT * FROM {t}")) for t in ['referidos', 'referidos_unicos', 'compartidos']))
+            filas_u = sql("SELECT visitante, red FROM referidos_unicos")
+            ok('sin IP guardada: solo fecha, código, huella HMAC de 24 caracteres y huella de la red', cols == ['fecha', 'codigo', 'visitante', 'red'] and all(re.fullmatch(r'[0-9a-f]{24}', x['visitante']) and re.fullmatch(r'[0-9a-f]{24}', x['red'] or '') for x in filas_u), (cols, filas_u[:2]))
+            ok('ninguna tabla nueva guarda IP en claro', not any(ipx in json.dumps(sql(f"SELECT * FROM {t}")) for t in ['referidos', 'referidos_unicos', 'compartidos'] for ipx in ['203.0.113', '198.51.100', '2001:db8']))
             ok('origen de la visita: «compartido» en el panel de orígenes', sql("SELECT COALESCE(SUM(n),0) AS n FROM dimensiones WHERE origen='compartido'")[0]['n'] >= 3)
 
         if corre('panel'):
@@ -311,28 +326,37 @@ if MODO == 'principal':
             pg.set_input_files('#dlgConcurso input[type=file]', '/tmp/mf/prueba_wt2/captura_grande.png'); pg.wait_for_selector('#dlgConcurso .cc-vista:not([hidden])', timeout=20000)
             peso = pg.inner_text('#dlgConcurso .cc-peso')
             kb, dims = int(peso.split(' KB')[0]), peso.split('· ')[1]
-            ok('la captura se achica a 1280 px y bajo 400 KB en el navegador', dims == '1280×853' and kb <= 391, peso)
+            ok('la captura se achica a 1280 px y bajo 300 KB en el navegador', dims == '1280×853' and kb <= 292, peso)
             pg.click('#dlgConcurso .cc-sig'); pg.wait_for_timeout(700)
             ok('paso 3 con el recuadro de seguridad', pg.is_visible('#dlgConcurso .paso[data-paso="3"]') and pg.locator('#tsConcurso .ts-falso').count() == 1)
             pg.fill('#dlgConcurso input[name=email]', 'lectora.concurso@gmail.com'); pg.click('#dlgConcurso .cc-enviar')
             pg.wait_for_selector('#dlgConcurso .buzon-ok:not([hidden])', timeout=15000)
             msg = pg.inner_text('#dlgConcurso .buzon-msg'); ref = pg.evaluate("localStorage.getItem('cn-ref')")
-            ok('inscripción por la interfaz: mensaje de confirmación por correo y captura recibida', 'Te enviamos un correo' in msg and 'Recibimos tu captura' in msg, msg)
+            ok('inscripción por la interfaz: correo de confirmación; la captura espera a que confirme su email', 'Te enviamos un correo' in msg and 'súbela de nuevo' in msg and not sql("SELECT id FROM concurso_capturas"), msg)
             ok('muestra el enlace personal del mismo navegador', pg.input_value('#dlgConcurso .cc-enlace') == f'https://www.cofrad.es/?r={ref}&utm_source=compartir')
-            p1 = sql("SELECT * FROM concurso_participantes WHERE email='lectora.concurso@gmail.com'")
-            c1 = sql("SELECT id, email, bytes, ancho, alto, sha, estado, fecha, length(datos) AS largo FROM concurso_capturas")
+            p1 = sql("SELECT * FROM concurso_participantes WHERE email='lectoraconcurso@gmail.com'")
             ok('participante sin confirmar, unido al código del navegador', len(p1) == 1 and p1[0]['verificado'] == 0 and p1[0]['codigo'] == ref and p1[0]['mayor'] == 1 and p1[0]['bases'] == 1, p1)
-            ok('captura guardada privada en D1 (BLOB) con su SHA-256, por revisar', len(c1) == 1 and c1[0]['estado'] == 'por revisar' and c1[0]['ancho'] == 1280 and c1[0]['largo'] == c1[0]['bytes'] <= 400000 and re.fullmatch(r'[0-9a-f]{64}', c1[0]['sha']), c1)
-            ml = [m for m in correos() if m.get('to') == ['lectora.concurso@gmail.com']]
+            ml = [m for m in correos() if m.get('to') == ['lectoraconcurso@gmail.com']]
             tok = re.search(r'/concurso/verificar\?t=([0-9a-f]{40})', ml[-1]['text']).group(1) if ml else ''
             ok('correo de confirmación con el enlace y el enlace personal', bool(tok) and f'?r={ref}' in ml[-1]['text'] and 'hola@cofrad.es' in ml[-1]['text'], [m.get('subject') for m in ml])
             pg.click('#dlgConcurso .cc-copiar'); pg.wait_for_timeout(300)
             ok('copiar mi enlace (portapapeles)', pg.evaluate('navigator.clipboard.readText()') == f'https://www.cofrad.es/?r={ref}&utm_source=compartir')
             g = pg.goto(B + '/concurso/verificar?t=' + tok)
-            ok('el enlace del correo muestra un botón (no confirma solo)', g.status == 200 and pg.locator('form[action="/concurso/verificar"] button').count() == 1 and sql("SELECT verificado FROM concurso_participantes WHERE email='lectora.concurso@gmail.com'")[0]['verificado'] == 0)
+            ok('el enlace del correo muestra un botón (no confirma solo)', g.status == 200 and pg.locator('form[action="/concurso/verificar"] button').count() == 1 and sql("SELECT verificado FROM concurso_participantes WHERE email='lectoraconcurso@gmail.com'")[0]['verificado'] == 0)
             pg.click('form[action="/concurso/verificar"] button'); pg.wait_for_load_state()
-            ok('el botón confirma y muestra el enlace personal', 'Ya estás participando' in pg.inner_text('h1') and pg.input_value('.cc-enlace') == f'https://www.cofrad.es/?r={ref}&utm_source=compartir' and sql("SELECT verificado FROM concurso_participantes WHERE email='lectora.concurso@gmail.com'")[0]['verificado'] == 1)
+            ok('el botón confirma y muestra el enlace personal', 'Ya estás participando' in pg.inner_text('h1') and pg.input_value('.cc-enlace') == f'https://www.cofrad.es/?r={ref}&utm_source=compartir' and sql("SELECT verificado FROM concurso_participantes WHERE email='lectoraconcurso@gmail.com'")[0]['verificado'] == 1)
             ok('el enlace ya usado vence (410)', pg.goto(B + '/concurso/verificar?t=' + tok).status == 410)
+            pg.goto(B + '/'); pg.wait_for_timeout(600)
+            pg.click('nav .buzon-abrir'); pg.wait_for_timeout(300); pg.click('#dlgBuzon .concurso-abrir'); pg.wait_for_timeout(400)
+            pg.check('#dlgConcurso input[name=mayor]'); pg.check('#dlgConcurso input[name=bases]'); pg.click('#dlgConcurso .cc-sig'); pg.wait_for_timeout(200)
+            pg.set_input_files('#dlgConcurso input[type=file]', '/tmp/mf/prueba_wt2/captura_grande.png'); pg.wait_for_selector('#dlgConcurso .cc-vista:not([hidden])', timeout=20000)
+            pg.click('#dlgConcurso .cc-sig'); pg.wait_for_timeout(700)
+            pg.fill('#dlgConcurso input[name=email]', 'lectora.concurso@gmail.com'); pg.click('#dlgConcurso .cc-enviar')
+            pg.wait_for_selector('#dlgConcurso .buzon-ok:not([hidden])', timeout=15000)
+            msg2 = pg.inner_text('#dlgConcurso .buzon-msg')
+            ok('ya confirmada, desde su navegador: la captura se recibe', 'Ya estás participando' in msg2 and 'Recibimos tu captura' in msg2, msg2)
+            c1 = sql("SELECT id, email, bytes, ancho, alto, sha, estado, fecha, length(datos) AS largo, typeof(datos) AS tipo FROM concurso_capturas")
+            ok('captura privada en D1 en texto base64 (no BLOB) con su SHA-256, por revisar', len(c1) == 1 and c1[0]['tipo'] == 'text' and c1[0]['estado'] == 'por revisar' and c1[0]['ancho'] == 1280 and c1[0]['largo'] == 4 * ((c1[0]['bytes'] + 2) // 3) and c1[0]['bytes'] <= 300000 and re.fullmatch(r'[0-9a-f]{64}', c1[0]['sha']), c1)
             ok('concurso sin errores de JavaScript', not errs, errs[:3])
             cx.close()
             # --- casos por la API ---
@@ -348,17 +372,45 @@ if MODO == 'principal':
             ok('API rechaza una captura que no es JPEG', s == 400 and 'imagen' in j.get('error', ''), (s, j))
             img1 = jpeg(800, 600, 11)
             s, j = concurso({'email': 'a1@gmail.com', 'secreto': s0}, ('c.jpg', img1, 'image/jpeg'))
-            ok('API inscribe con captura', s == 200 and j.get('ok') and j.get('codigo') == codigo_de(s0), (s, j))
-            s, j = concurso({'email': 'a2@gmail.com', 'secreto': secreto()}, ('c.jpg', img1, 'image/jpeg'))
-            ok('imagen idéntica (mismo SHA-256) se rechaza aunque sea otra persona', s == 409 and 'ya fue enviada' in j.get('error', '') and not sql("SELECT 1 FROM concurso_participantes WHERE email='a2@gmail.com'"), (s, j))
+            ok('API inscribe; la captura de quien no confirmó su email no se guarda', s == 200 and j.get('ok') and j.get('codigo') == codigo_de(s0) and 'súbela de nuevo' in j.get('mensaje', '') and not sql("SELECT id FROM concurso_capturas WHERE email='a1@gmail.com'"), (s, j))
+            sql("UPDATE concurso_participantes SET verificado = 1 WHERE email = 'a1@gmail.com'")
+            s, j = concurso({'email': 'a1@gmail.com', 'secreto': s0}, ('c.jpg', img1, 'image/jpeg'))
+            ok('API: ya confirmada, desde su navegador, la captura se recibe', s == 200 and 'Recibimos tu captura' in j.get('mensaje', ''), (s, j))
+            s2 = secreto(); concurso({'email': 'a2@gmail.com', 'secreto': s2}); sql("UPDATE concurso_participantes SET verificado = 1 WHERE email = 'a2@gmail.com'")
+            s, j = concurso({'email': 'a2@gmail.com', 'secreto': s2}, ('c.jpg', img1, 'image/jpeg'))
+            ok('imagen idéntica (mismo SHA-256) se rechaza aunque sea otra persona', s == 409 and 'ya fue enviada' in j.get('error', ''), (s, j))
             s, j = concurso({'email': 'a1@gmail.com', 'secreto': s0}, ('c.jpg', jpeg(800, 600, 12), 'image/jpeg'))
             ok('tope de 1 captura por persona y día', s == 429 and 'mañana' in j.get('error', ''), (s, j))
             s, j = concurso({'email': 'a3@gmail.com', 'secreto': s0})
             ok('el mismo navegador no inscribe un segundo email', s == 409 and 'otro email' in j.get('error', ''), (s, j))
-            s, j = concurso({'email': 'a1@gmail.com', 'secreto': secreto()})
-            ok('el mismo email desde otro navegador no recibe el código ajeno', s == 200 and 'codigo' not in j and 'enlace' not in j, j)
+            n0 = len(correos())
+            s, j = concurso({'email': 'a1@gmail.com', 'secreto': secreto()}, ('c.jpg', jpeg(800, 600, 13), 'image/jpeg'))
+            ok('el mismo email desde otro navegador: respuesta neutra, sin código, sin captura y sin correo', s == 200 and 'codigo' not in j and 'enlace' not in j and 'Si ese email está bien escrito' in j.get('mensaje', '') and sql("SELECT COUNT(*) AS n FROM concurso_capturas WHERE email='a1@gmail.com'")[0]['n'] == 1 and len(correos()) == n0, j)
             s, j = concurso({'email': 'grande@gmail.com', 'secreto': secreto()}, ('c.jpg', b'\xff\xd8\xff' + os.urandom(610000), 'image/jpeg'))
             ok('captura sobre 600 KB rechazada', s == 413, s)
+            s, j = concurso({'email': 'mediana@gmail.com', 'secreto': secreto()}, ('c.jpg', b'\xff\xd8\xff' + os.urandom(320000), 'image/jpeg'))
+            ok('captura sobre 300 KB rechazada', s == 413 and '300 KB' in j.get('error', ''), (s, j))
+            s3 = secreto(); concurso({'email': 'juan.perez.typo@gmail.com', 'secreto': s3})
+            s, j = concurso({'email': 'juanperez.bien@gmail.com', 'secreto': s3})
+            filas = sql(f"SELECT email FROM concurso_participantes WHERE codigo = '{codigo_de(s3)}'")
+            ok('email mal escrito: el mismo navegador lo corrige mientras no confirma', s == 200 and filas == [{'email': 'juanperezbien@gmail.com'}] and 'Te enviamos un correo' in j.get('mensaje', ''), (s, j, filas))
+            s4 = secreto(); s, j = concurso({'email': 'Lector.Uno+concurso@gmail.com', 'secreto': s4})
+            ok('alias de Gmail: se guarda la casilla canónica (sin puntos ni +etiqueta)', s == 200 and sql("SELECT email FROM concurso_participantes WHERE codigo = '" + codigo_de(s4) + "'") == [{'email': 'lectoruno@gmail.com'}], (s, j))
+            s, j = concurso({'email': 'lectoruno@gmail.com', 'secreto': secreto()})
+            ok('alias de Gmail: la misma casilla desde otro navegador recibe la respuesta neutra', s == 200 and 'codigo' not in j, j)
+            res5 = [concurso({'email': f'tope.correo{i}@gmail.com', 'secreto': secreto()}, ip='198.51.100.77') for i in range(6)]
+            ok('tope de 5 correos de confirmación por conexión y día', [x[0] for x in res5[:5]] == [200] * 5 and res5[5][0] == 429 and 'esta conexión' in res5[5][1].get('error', ''), [(x[0], x[1].get('error', '')[:50]) for x in res5])
+            pc = []
+            for i in range(4):
+                sc = secreto(); concurso({'email': f'cap.red{i}@gmail.com', 'secreto': sc}); sql(f"UPDATE concurso_participantes SET verificado = 1 WHERE email = 'capred{i}@gmail.com'")
+                pc.append(concurso({'email': f'cap.red{i}@gmail.com', 'secreto': sc}, ('c.jpg', jpeg(640, 480, 40 + i), 'image/jpeg'), ip='198.51.100.88'))
+            ok('tope de 3 capturas por conexión y día', [x[0] for x in pc] == [200, 200, 200, 429] and 'más capturas' in pc[3][1].get('error', ''), [(x[0], (x[1].get('error') or x[1].get('mensaje', ''))[:40]) for x in pc])
+            hoyc = sql("SELECT fecha FROM concurso_capturas ORDER BY id DESC LIMIT 1")[0]['fecha']
+            sql("INSERT INTO concurso_capturas (email, fecha, creado, sha, bytes, datos, estado) VALUES " + ",".join(f"('relleno@example.com','{hoyc}','{hoyc}T10:00:00Z','{i:064x}',3,'/9j/','por revisar')" for i in range(1, 61)))
+            sg = secreto(); concurso({'email': 'cap.global@gmail.com', 'secreto': sg}); sql("UPDATE concurso_participantes SET verificado = 1 WHERE email = 'capglobal@gmail.com'")
+            s, j = concurso({'email': 'cap.global@gmail.com', 'secreto': sg}, ('c.jpg', jpeg(640, 480, 77), 'image/jpeg'))
+            ok('tope de 60 capturas al día en todo el sitio (la base no se llena)', s == 429 and 'más capturas' in j.get('error', ''), (s, j))
+            sql("DELETE FROM concurso_capturas WHERE email = 'relleno@example.com'")
             # --- conteo: topes diarios y fechas del concurso ---
             def ins_participante(email, cod, ver=1): sql(f"INSERT INTO concurso_participantes (email, codigo, creado, verificado, mayor, bases) VALUES ('{email}', '{cod}', '2026-11-20T10:00:00Z', {ver}, 1, 1)")
             def visitas(cod, fecha, n, pref='v'):
@@ -376,7 +428,7 @@ if MODO == 'principal':
             fila2 = re.search(r'<tr><td>sinconfirmar@gmail\.com</td><td><code>nover001</code></td><td>no</td><td>0</td><td>0</td><td><b>0</b>', hp)
             ok('sin email confirmado no suma', bool(fila2))
             # --- revisión de capturas en el Panel ---
-            cid = sql("SELECT id FROM concurso_capturas WHERE email='lectora.concurso@gmail.com'")[0]['id']
+            cid = sql("SELECT id FROM concurso_capturas WHERE email='lectoraconcurso@gmail.com'")[0]['id']
             ok('Panel: la captura por revisar aparece con su miniatura', f'/panel/concurso/captura/{cid}' in hp)
             s, h, b = pedir(f'/panel/concurso/captura/{cid}', cab=ADM)
             ok('Panel: la captura se ve (JPEG privado, sin caché)', s == 200 and h.get('content-type') == 'image/jpeg' and b[:3] == b'\xff\xd8\xff' and 'no-store' in h.get('cache-control', '') and len(b) == c1[0]['bytes'], (s, h.get('content-type'), len(b)))
@@ -385,6 +437,16 @@ if MODO == 'principal':
             cid2 = sql("SELECT id FROM concurso_capturas WHERE email='a1@gmail.com'")[0]['id']
             s, loc = panel_post('/panel/concurso', {'accion': 'rechazar', 'id': cid2})
             ok('rechazar captura', 'cc=rechazar' in loc and sql(f"SELECT estado FROM concurso_capturas WHERE id={cid2}")[0]['estado'] == 'rechazada', loc)
+            s, loc = panel_post('/panel/concurso', {'accion': 'excluir', 'email': 'tope@gmail.com'})
+            ok('excluir: queda fuera del sorteo (0 participaciones) y marcado', 'cc=excluir' in loc and re.search(r'<tr class="men-desc"><td>tope@gmail\.com</td><td><code>tope0001</code></td><td>sí</td><td>0</td><td>0</td><td><b>0</b>', panel_html()) is not None, loc)
+            s, loc = panel_post('/panel/concurso', {'accion': 'reincorporar', 'email': 'tope@gmail.com'})
+            hp = panel_html()
+            ok('reincorporar: vuelve con sus 14 participaciones', 'cc=reincorporar' in loc and re.search(r'<tr><td>tope@gmail\.com</td><td><code>tope0001</code></td><td>sí</td><td>13</td><td>1</td><td><b>14</b>', hp) is not None, loc)
+            ok('Panel: muestra el último mantenimiento de los borrados de las bases', re.search(r'último mantenimiento \d{2}[-/]\d{2}', hp) is not None, re.findall(r'último mantenimiento [^<]{0,40}', hp))
+            s, loc = panel_post('/panel/concurso', {'accion': 'borrar-datos', 'email': 'sinconfirmar@gmail.com'})
+            ok('borrar los datos de un participante exige confirmar', 'error:confirmar-borrado' in loc and bool(sql("SELECT 1 FROM concurso_participantes WHERE email='sinconfirmar@gmail.com'")), loc)
+            s, loc = panel_post('/panel/concurso', {'accion': 'borrar-datos', 'email': 'sinconfirmar@gmail.com', 'confirmo': 'si'})
+            ok('borrar datos: inscripción y visitas de su enlace eliminadas', 'cc=borrado' in loc and not sql("SELECT 1 FROM concurso_participantes WHERE email='sinconfirmar@gmail.com'") and not sql("SELECT 1 FROM referidos_unicos WHERE codigo='nover001'"), loc)
             # --- sorteo: antes del 26-12 no se puede; vista previa con semilla fija ---
             s, loc = panel_post('/panel/concurso', {'accion': 'sortear'})
             ok('sortear exige marcar la confirmación', 'error:confirmar' in loc, loc)
@@ -413,11 +475,12 @@ if MODO == 'principal':
         if corre('bases'):
             s, h, b = pedir('/bases-concurso'); t = b.decode()
             es = ['Destak', 'Concurso «Comparte Cofrade News»', 'Desde el 20 de noviembre de 2026 hasta el 24 de diciembre de 2026 a las 23:59 (hora de Santiago de Chile)', '18 años o más que vivan en Chile',
-                  'Una sola inscripción por persona y por email', 'No se necesita comprar ni pagar nada', 'máximo de 10 por día', 'máximo de 1 por día', 'idénticas', '5 ganadores', 'un solo uso con 25 % de descuento en el plan anual del Dashboard Financiero',
+                  'Una sola inscripción por persona y por email', 'No se necesita comprar ni pagar nada', 'máximo de 10 por día', 'máximo de 1 por día', 'idénticas', '5 ganadores', 'un solo uso con 25 % de descuento en el primer año del plan anual del Dashboard Financiero', 'Destak E.I.R.L.', 'y de 2 por conexión a internet',
+                  'a más tardar a las 18:00', 'acrediten su edad y su residencia', 'el cupón se anula', 'portabilidad o bloqueo', 'Resend', 'huellas seudónimas',
                   'incluido el 20 % de los socios de la Cofradía', 'vence el 31 de marzo de 2027', 'El 26 de diciembre de 2026', '5 ganadores distintos', 'SHA-256', 'la semilla aleatoria',
                   'Avisamos a los ganadores por email', 'hasta el 31 de enero de 2027', 'se borran 30 días después del sorteo', 'hola@cofrad.es', 'Ley 19.628', 'Ley 21.719', 'artículos 35 y 36 de la Ley 19.496', 'tapa los nombres']
             en = ['Organized by Destak'.split(' by ')[1], 'From November 20, 2026 until December 24, 2026 at 23:59 (Santiago, Chile time)', '18 or older who live in Chile', 'No purchase or payment',
-                  'up to 10 per day', 'up to 1 per day', 'single-use coupon for 25% off the annual plan', 'expires on March 31, 2027', 'On December 26, 2026', 'until January 31, 2027',
+                  'up to 10 per day', 'up to 1 per day', 'single-use coupon for 25% off the first year of the annual plan', 'Destak E.I.R.L.', 'no later than 18:00', 'portability or blocking', 'pseudonymous daily fingerprints', 'expires on March 31, 2027', 'On December 26, 2026', 'until January 31, 2027',
                   'deleted 30 days after the draw', 'Law 19,628 and Law 21,719', 'articles 35 and 36 of Chilean Law 19,496', "cover other people's names"]
             ok('bases en español: organizador, fechas, requisitos, participaciones, premio, sorteo, reclamo y datos personales', s == 200 and all(x in t for x in es), [x for x in es if x not in t])
             ok('bases en inglés: el mismo contenido', all(x in t for x in en), [x for x in en if x not in t])
@@ -448,6 +511,8 @@ if MODO == 'sorteo':
     ok('después del 24-12 no se inscribe nadie', s == 400 and 'cerró' in j.get('error', ''), (s, j))
     hp = pedir('/')[2].decode()
     ok('portada después del cierre: cinta de resultados, sin diálogo del concurso ni opción en el Buzón', 'Resultados del concurso' in hp and 'id="dlgConcurso"' not in hp and 'class="buzon-cc"' not in hp and 'class="cmp-cc"' not in hp)
+    time.sleep(2)
+    ok('26-12 antes de las 18:00: la visita a la portada no sortea sola', not sql("SELECT id FROM concurso_sorteos"))
     s, loc = panel_post('/panel/concurso', {'accion': 'sortear', 'revisado': 'si'})
     ok('sorteo oficial el 26-12-2026: 5 ganadores y 5 correos', 'cc=ok:5:5' in loc, loc)
     s, j = jget('/panel/concurso/sorteo.json'); so = j['sorteo']
@@ -471,8 +536,36 @@ if MODO == 'sorteo':
     ok('cupón: plan mensual no sirve', jget(f"/panel/cupon?codigo={c0['codigo']}&email={c0['email']}&plan=mensual")[1]['motivo'] == 'solo plan anual')
     s, loc = panel_post('/panel/concurso', {'accion': 'cupon-usado', 'codigo': c0['codigo']})
     ok('marcar cupón como usado; después ya no vale', 'cc=cupon-usado' in loc and jget(f"/panel/cupon?codigo={c0['codigo']}&email={c0['email']}&plan=anual")[1]['motivo'] == 'ya usado', loc)
+    s, loc = panel_post('/panel/concurso', {'accion': 'cupon-reclamado', 'codigo': cup[1]['codigo']})
+    ok('marcar cupón como reclamado', 'cc=cupon-reclamado' in loc and sql(f"SELECT reclamado FROM cupones WHERE codigo='{cup[1]['codigo']}'")[0]['reclamado'], loc)
     hp = panel_html()
     ok('Panel: registro de auditoría y aviso de fecha de prueba', 'registro de auditoría' in hp and so['semilla'] in hp and 'CONCURSO_HOY_PRUEBA' in hp)
+
+# ============================================================== SORTEO DE RESPALDO (26-12-2026, 19:00) ==================================
+if MODO == 'auto':
+    def ins(email, cod, ver=1): sql(f"INSERT INTO concurso_participantes (email, codigo, creado, verificado, mayor, bases) VALUES ('{email}', '{cod}', '2026-11-20T10:00:00Z', {ver}, 1, 1)")
+    def vis(cod, fecha, n, pref): sql("INSERT OR IGNORE INTO referidos_unicos (fecha, codigo, visitante) VALUES " + ",".join(f"('{fecha}','{cod}','{pref}{i:04d}')" for i in range(n)))
+    for i in range(7):
+        cod = f'aut{i:05d}'; ins(f'auto{i}@gmail.com', cod); vis(cod, '2026-12-02', 2 + i, f'b{i}')
+    pedir('/'); time.sleep(5)
+    so = sql("SELECT tipo, participantes, avisos FROM concurso_sorteos")
+    ok('sorteo de respaldo: el 26-12 desde las 18:00 la primera visita a la portada hace el sorteo oficial', len(so) == 1 and so[0]['tipo'] == 'oficial' and so[0]['participantes'] == 7, so)
+    ok('sorteo de respaldo: 5 cupones y 5 correos a los ganadores', len(sql("SELECT codigo FROM cupones")) == 5 and len([m for m in correos() if 'Ganaste' in m.get('subject', '')]) == 5 and so and so[0]['avisos'] == 5, so)
+    pedir('/'); time.sleep(2)
+    ok('sorteo de respaldo: otra visita no sortea de nuevo', len(sql("SELECT id FROM concurso_sorteos")) == 1 and len(sql("SELECT codigo FROM cupones")) == 5)
+
+# ============================================================== BORRADOS (02-02-2027) ================================================
+if MODO == 'vencido':
+    for em, cod in [('nogano@gmail.com', 'nog00001'), ('gano.reclama@gmail.com', 'gre00001'), ('gano.olvida@gmail.com', 'gol00001')]:
+        sql(f"INSERT INTO concurso_participantes (email, codigo, creado, verificado, mayor, bases) VALUES ('{em}', '{cod}', '2026-11-20T10:00:00Z', 1, 1, 1)")
+    sql("INSERT INTO cupones (codigo, email, origen, pct, plan, vence, creado, reclamado) VALUES ('CN25-AAAA-AAAA','gano.reclama@gmail.com','concurso',25,'anual','2027-03-31','2026-12-26T21:00:00Z','2027-01-10T10:00:00Z')")
+    sql("INSERT INTO cupones (codigo, email, origen, pct, plan, vence, creado) VALUES ('CN25-BBBB-BBBB','gano.olvida@gmail.com','concurso',25,'anual','2027-03-31','2026-12-26T21:00:00Z')")
+    sql("INSERT INTO concurso_capturas (email, fecha, creado, sha, bytes, datos, estado) VALUES ('nogano@gmail.com','2026-12-01','2026-12-01T10:00:00Z','" + 'd' * 64 + "',3,'/9j/','aceptada')")
+    entrar(); hp = panel_html()
+    ok('desde el 01-02-2027: se borran las capturas y los datos de quienes no ganaron', not sql("SELECT 1 FROM concurso_capturas") and not sql("SELECT 1 FROM concurso_participantes WHERE email='nogano@gmail.com'"))
+    ok('desde el 01-02-2027: el cupón no reclamado se anula y el reclamado sigue', [x['codigo'] for x in sql("SELECT codigo FROM cupones ORDER BY codigo")] == ['CN25-AAAA-AAAA'] and not sql("SELECT 1 FROM concurso_participantes WHERE email='gano.olvida@gmail.com'"))
+    ok('cupón reclamado: sigue válido hasta su vencimiento', jget("/panel/cupon?codigo=CN25-AAAA-AAAA&email=gano.reclama@gmail.com&plan=anual")[1].get('ok') is True)
+    ok('Panel: último mantenimiento con fecha', re.search(r'último mantenimiento \d{2}[-/]\d{2}', hp) is not None, re.findall(r'último mantenimiento [^<]{0,40}', hp))
 
 # ============================================================== CERRADO / ANTES ======================================================
 if MODO in ('cerrado', 'antes'):
@@ -495,6 +588,7 @@ if MODO == 'youtube':
     yt = json.loads(pedir('/__youtube')[2])
     ok('YouTube: una sola búsqueda con q="Cofrade News"|cofrad.es', len(yt) == 1 and urllib.parse.parse_qs(urllib.parse.urlparse(yt[0]).query)['q'] == ['"Cofrade News"|cofrad.es'], yt)
     m = sql("SELECT enlace, medio, programa FROM menciones WHERE fuente='YouTube'")
+    ok('YouTube: la clave va en la cabecera X-Goog-Api-Key, no en la dirección', urllib.parse.parse_qs(urllib.parse.urlparse(yt[0]).query).get('_clave') == ['cabecera'], yt)
     ok('YouTube: guarda solo los videos que nos nombran en título o descripción', m == [{'enlace': 'https://www.youtube.com/watch?v=abcDEF12345', 'medio': 'YouTube', 'programa': 'Canal Economía Simple'}], m)
     st = json.loads(sql("SELECT valor FROM config WHERE clave='menciones_estado'")[0]['valor'])
     ok('Google Noticias bloqueado por su robots.txt: no se lee', st['ultima']['fuentes'].get('google') == 'bloqueado' and 'GET news.google.com/rss/search' not in salida(), st['ultima']['fuentes'])
@@ -509,6 +603,6 @@ if MODO == 'youtube':
 if MODO == 'principal' and corre('esquema'):
     mod = open('/tmp/titulos/wt2/sitio/modulos/difusion.js', encoding='utf-8').read(); esq = open('/tmp/titulos/wt2/sitio/esquema-d1.sql', encoding='utf-8').read()
     lineas = re.findall(r'"(CREATE (?:TABLE|INDEX|UNIQUE INDEX) IF NOT EXISTS [^"]+)"', mod)
-    ok('esquema-d1.sql tiene exactamente las mismas tablas que crea el Worker', len(lineas) == 13 and all(l + ';' in esq for l in lineas), len(lineas))
+    ok('esquema-d1.sql tiene exactamente las mismas tablas que crea el Worker', len(lineas) == 18 and all(l + ';' in esq for l in lineas), len(lineas))
 
 print(f"\n{sum(1 for _, c in res if c)}/{len(res)} pruebas OK ({MODO})")
