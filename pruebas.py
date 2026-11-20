@@ -2490,6 +2490,24 @@ def fuente_del_podcast_con_las_7_secciones():
         j = json.load(open(ind, encoding="utf-8"))
         assert [x["fecha"] for x in j["fuentes"]] == ["2026-11-20"] and j["fuentes"][0]["secciones"] == 7, j
 
+def proyeccion_sin_fmi_usa_su_ultima_lectura():
+    """20-11-2026 (Germán: «falta agregar un gráfico... Corregir Urgente»): si el FMI no responde, la foto del día lleva su última lectura
+    buena (con su fecha) y no queda sin el gráfico de inflación y desempleo; pasados 200 días ya no se usa."""
+    import datetime as dt
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import bajar
+    with tempfile.TemporaryDirectory() as d:
+        os.makedirs(os.path.join(d, "datos", "proyecciones"))
+        json.dump({"generado": "2026-11-19T08:30", "fmi": {"series": {"pib": {"2027": 2.6}, "inflacion": {"2027": 3.5}, "desempleo": {"2027": 8.1}}}},
+                  open(os.path.join(d, "datos", "proyecciones", "2026-11-19.json"), "w"))
+        json.dump({"generado": "2026-11-20T08:30", "fmi": None}, open(os.path.join(d, "datos", "proyecciones", "2026-11-20.json"), "w"))
+        ser, leido = bajar.fmi_anterior(d, dt.date(2026, 11, 20))
+        assert leido == "2026-11-19" and ser["inflacion"]["2027"] == 3.5 and ser["desempleo"]["2027"] == 8.1, (ser, leido)
+        assert bajar.fmi_anterior(d, dt.date(2027, 7, 1))[0] == {}
+
+
+PRUEBAS.append(proyeccion_sin_fmi_usa_su_ultima_lectura)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

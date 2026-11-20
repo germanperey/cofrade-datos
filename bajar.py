@@ -3338,6 +3338,26 @@ def eee_pib(estado, hoy, catalogo):
     return {"mes": mes, "pib": pib, "series": {a: ids[int(a)] for a in pib}} if len(pib) >= 2 else None
 
 
+def fmi_anterior(base, hoy):
+    """Las series del FMI de la última foto que las trae (datos/proyecciones/AAAA-MM-DD.json o el archivo del día), con la fecha en que se
+    leyeron, si no tienen más de 200 días. El FMI publica sus Perspectivas en abril y octubre: entre medio, las cifras no cambian."""
+    cands = []
+    d = os.path.join(base, "datos", "proyecciones")
+    if os.path.isdir(d):
+        cands += [os.path.join(d, f) for f in sorted(os.listdir(d), reverse=True) if re.fullmatch(r"\d{4}-\d{2}-\d{2}\.json", f) and f[:10] <= hoy.isoformat()]
+    cands.append(os.path.join(base, "datos", "proyecciones-chile.json"))
+    for f in cands:
+        try:
+            j = json.load(open(f, encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        fm = (j.get("fmi") or {}) if isinstance(j, dict) else {}
+        ser, leido = fm.get("series") or {}, str(fm.get("leido") or (j.get("generado") or "")[:10])
+        if ser.get("pib") and re.fullmatch(r"\d{4}-\d{2}-\d{2}", leido) and (hoy - dt.date.fromisoformat(leido)).days <= 200:
+            return ser, leido
+    return {}, hoy.isoformat()
+
+
 def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tpm=None):
     """→ {fmi, instituciones, promedio (año en curso y los 4 siguientes), noticias} para datos/proyecciones-chile.json, o None.
     catalogo = series del catálogo mensual del Banco Central (datos/tasas-bcch-catalogo.json), para leer la Encuesta de Expectativas sola."""
@@ -3360,6 +3380,9 @@ def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tp
                 serie[str(k)] = round(float(x), 1)
         if serie:
             fmi[clave] = serie
+    fmi_leido, fmi_fresco = hoy.isoformat(), bool(fmi)
+    if not fmi:   # 20-11-2026 (Germán: faltaba el gráfico del FMI): sin respuesta del FMI, su última lectura buena (sale 2 veces al año)
+        fmi, fmi_leido = fmi_anterior(base, hoy)
     eee = eee_pib(estado, hoy, catalogo) if catalogo is not None else None
     for x in inst:   # la Encuesta de Expectativas leída del Banco Central manda sobre lo copiado a mano (llega sola cada mes)
         if x.get("clave") == "bcch_eee" and eee:
@@ -3421,13 +3444,13 @@ def proyecciones_chile(estado, hoy, base=None, titulares=None, catalogo=None, tp
     noticias.sort(key=lambda n: n["fecha"], reverse=True)
     noticias.sort(key=lambda n: n.pop("_n"))   # primero las de proyecciones e indicadores; después, las de inversión (cada grupo, de la más nueva)
     revisar = [x["clave"] for x in inst if str(x.get("revisar_desde") or "9999") <= hoy.isoformat()]
-    err = ([] if fmi else ["el FMI no respondió (quedan las cifras verificadas del archivo)"]) + (["revisar informe nuevo: " + ", ".join(revisar)] if revisar else [])
-    estado["proyecciones"] = {"ok": bool(fmi), "hora": ahora().isoformat(timespec="seconds"), "url": FMI_API, "n": len(inst),
+    err = ([] if fmi_fresco else [f"el FMI no respondió (se usa su lectura del {fmi_leido})" if fmi else "el FMI no respondió (quedan las cifras verificadas del archivo)"]) + (["revisar informe nuevo: " + ", ".join(revisar)] if revisar else [])
+    estado["proyecciones"] = {"ok": fmi_fresco, "hora": ahora().isoformat(timespec="seconds"), "url": FMI_API, "n": len(inst),
                               "fmi": sorted(fmi), "eee": bool(eee), "error": "; ".join(err)}
     if not inst and not fmi:
         return None
     return {"generado": ahora().isoformat(timespec="minutes"), "anio_base": hoy.year, "anios": anios,
-            "fmi": {"series": fmi, "fuente": "Fondo Monetario Internacional, base de datos de Perspectivas de la Economía Mundial",
+            "fmi": {"series": fmi, "leido": fmi_leido, "fuente": "Fondo Monetario Internacional, base de datos de Perspectivas de la Economía Mundial",
                     "url": "https://www.imf.org/external/datamapper/profile/CHL"} if fmi else None,
             "instituciones": inst, "promedio": promedio, "noticias": noticias[:6], "revisar": revisar, "nota": cur.get("nota") or "",
             "tpm_esperada": tpm if isinstance(tpm, dict) and tpm.get("trayectoria") else None}
