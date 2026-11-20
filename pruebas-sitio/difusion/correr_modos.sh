@@ -10,4 +10,5 @@ corre vencido 600 HOY_CONCURSO=2027-02-02 MANT_SEG=0
 corre cerrado 600 HOY_CONCURSO=2026-12-25 ROBOTS_GOOGLE=propio
 corre antes 600 HOY_CONCURSO=2026-11-19
 corre youtube 600 CON_YOUTUBE=1 ROBOTS_GOOGLE=bloquear
+corre pocos 600 CON_RESEND=1 HOY_CONCURSO=2026-12-26 HORA_CONCURSO=10
 fuser -k $P/tcp >/dev/null 2>&1; echo FIN

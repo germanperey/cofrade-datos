@@ -303,6 +303,7 @@ if MODO == 'principal':
             if not ADM: entrar()
             hp = pedir('/')[2].decode()
             ok('portada: cinta del concurso con Compartir, Participar y bases', 'class="cc-cinta"' in hp and 'cmp-abrir' in hp and 'href="/bases-concurso"' in hp)
+            ok('portada: la cinta y el diálogo anuncian los 5 premios por lugar', 'Comparte Cofrade News y gana hasta un año gratis' in hp and 'Participa por 5 premios en el plan anual del Dashboard Financiero (válidos el primer año): 1.er lugar, plan anual gratis; 2.º lugar, 75 % de descuento' in hp and 'Gana hasta un año gratis' in hp and '25 % de descuento en el primer año del plan anual del Dashboard Financiero.' not in hp)
             ok('Buzón: opción «Participar en el concurso» y enlace a las bases', 'class="buzon-cc"' in hp and 'Participar en el concurso' in hp)
             # --- flujo por la interfaz ---
             from PIL import Image
@@ -475,15 +476,16 @@ if MODO == 'principal':
         if corre('bases'):
             s, h, b = pedir('/bases-concurso'); t = b.decode()
             es = ['Destak', 'Concurso «Comparte Cofrade News»', 'Desde el 20 de noviembre de 2026 hasta el 24 de diciembre de 2026 a las 23:59 (hora de Santiago de Chile)', '18 años o más que vivan en Chile',
-                  'Una sola inscripción por persona y por email', 'No se necesita comprar ni pagar nada', 'máximo de 10 por día', 'máximo de 1 por día', 'idénticas', '5 ganadores', 'un solo uso con 25 % de descuento en el primer año del plan anual del Dashboard Financiero', 'Destak E.I.R.L.', 'y de 2 por conexión a internet',
+                  'Una sola inscripción por persona y por email', 'No se necesita comprar ni pagar nada', 'máximo de 10 por día', 'máximo de 1 por día', 'idénticas', '5 ganadores', '1.er lugar, plan anual gratis; 2.º lugar, 75 % de descuento; 3.er lugar, 50 % de descuento; 4.º y 5.º lugares, 25 % de descuento', 'valen solo para el primer año del plan anual', '($55.000): $13.750 (2.º lugar), $27.500 (3.er lugar) o $41.250 (4.º y 5.º lugares)', 'los que sobran quedan desiertos', 'el plan sigue solo si tú lo contratas', 'se aplica a tu siguiente período anual', 'cupón de un solo uso', 'el primero que sale gana el 1.er lugar', 'lo organiza Destak (el «Organizador»)', 'Responsable: Destak.', 'y de 2 por conexión a internet',
                   'a más tardar a las 18:00', 'acrediten su edad y su residencia', 'el cupón se anula', 'portabilidad o bloqueo', 'Resend', 'huellas seudónimas',
                   'incluido el 20 % de los socios de la Cofradía', 'vence el 31 de marzo de 2027', 'El 26 de diciembre de 2026', '5 ganadores distintos', 'SHA-256', 'la semilla aleatoria',
                   'Avisamos a los ganadores por email', 'hasta el 31 de enero de 2027', 'se borran 30 días después del sorteo', 'hola@cofrad.es', 'Ley 19.628', 'Ley 21.719', 'artículos 35 y 36 de la Ley 19.496', 'tapa los nombres']
             en = ['Organized by Destak'.split(' by ')[1], 'From November 20, 2026 until December 24, 2026 at 23:59 (Santiago, Chile time)', '18 or older who live in Chile', 'No purchase or payment',
-                  'up to 10 per day', 'up to 1 per day', 'single-use coupon for 25% off the first year of the annual plan', 'Destak E.I.R.L.', 'no later than 18:00', 'portability or blocking', 'pseudonymous daily fingerprints', 'expires on March 31, 2027', 'On December 26, 2026', 'until January 31, 2027',
+                  'up to 10 per day', 'up to 1 per day', '1st place, free annual plan; 2nd place, 75% off; 3rd place, 50% off; 4th and 5th places, 25% off', 'valid only for the first year of the annual plan', '(CLP 55,000): CLP 13,750 (2nd place), CLP 27,500 (3rd place) or CLP 41,250 (4th and 5th places)', 'the rest are void', 'continues only if you choose to subscribe', 'single-use coupon', 'the first person drawn wins 1st place', 'is organized by Destak (the “Organizer”)', 'Controller: Destak.', 'no later than 18:00', 'portability or blocking', 'pseudonymous daily fingerprints', 'expires on March 31, 2027', 'On December 26, 2026', 'until January 31, 2027',
                   'deleted 30 days after the draw', 'Law 19,628 and Law 21,719', 'articles 35 and 36 of Chilean Law 19,496', "cover other people's names"]
             ok('bases en español: organizador, fechas, requisitos, participaciones, premio, sorteo, reclamo y datos personales', s == 200 and all(x in t for x in es), [x for x in es if x not in t])
             ok('bases en inglés: el mismo contenido', all(x in t for x in en), [x for x in en if x not in t])
+            ok('bases: el organizador es «Destak» (sin E.I.R.L.) y el cambio de premios queda informado', 'E.I.R.L' not in t and 'Cambio del 20 de noviembre de 2026: se mejoraron los premios' in t and 'Change of November 20, 2026' in t)
             ok('bases: botón para participar mientras está abierto', 'class="btn oro concurso-abrir"' in t and 'id="dlgConcurso"' in t)
             cx = contexto(br, viewport={'width': 320, 'height': 760}); pg = cx.new_page(); pg.goto(B + '/bases-concurso'); pg.wait_for_timeout(500)
             ok('bases: abre en español (inglés oculto)', pg.is_visible('.b-es h1') and not pg.is_visible('.b-en h1'))
@@ -504,7 +506,7 @@ if MODO == 'sorteo':
     def vis(cod, fecha, n, pref): sql("INSERT OR IGNORE INTO referidos_unicos (fecha, codigo, visitante) VALUES " + ",".join(f"('{fecha}','{cod}','{pref}{i:04d}')" for i in range(n)))
     pesos = {}
     for i in range(8):
-        cod = f'gan{i:05d}'; ins(f'persona{i}@gmail.com', cod); vis(cod, '2026-12-01', 1 + i, f'a{i}'); pesos[f'persona{i}@gmail.com'] = 1 + i
+        cod = f'gan{i:05d}'; ins(f'{chr(97 + i)}{chr(106 + i)}persona{i}@gmail.com', cod); vis(cod, '2026-12-01', 1 + i, f'a{i}'); pesos[f'{chr(97 + i)}{chr(106 + i)}persona{i}@gmail.com'] = 1 + i
     ins('cero@gmail.com', 'cero0001')
     ins('noconf@gmail.com', 'noconf01', 0); vis('noconf01', '2026-12-01', 9, 'n')
     s, j = concurso({'email': 'tarde@gmail.com', 'secreto': secreto()})
@@ -521,17 +523,34 @@ if MODO == 'sorteo':
     ok('registro: la lista no tiene emails (solo huellas) y excluye a quien no tiene chances', all(re.fullmatch(r'[0-9a-f]{16}', x[0]) for x in aud) and sorted(x[1] for x in aud) == list(range(1, 9)) and '@' not in json.dumps(aud))
     ok('registro: repetir el sorteo con la semilla da los mismos ganadores', gan == [aud[i][0] for i in elegir([x[1] for x in aud], so['semilla'])], gan)
     cup = j['cupones']
-    ok('5 cupones de un solo uso, 25 %, plan anual, vencen el 31-03-2027', len(cup) == 5 and all(re.fullmatch(r'CN25-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}', c['codigo']) and c['pct'] == 25 and c['plan'] == 'anual' and c['vence'] == '2027-03-31' and not c['usado'] for c in cup) and len({c['email'] for c in cup}) == 5, cup)
+    vj = jget(f"/panel/concurso/vista.json?semilla={so['semilla']}")[1]
+    orden = [g['email'] for g in vj['ganadores']]   # la vista previa con la misma semilla repite el sorteo y trae los emails
+    ok('el orden del sorteo define el lugar: 1.º gratis, 2.º 75 %, 3.º 50 %, 4.º y 5.º 25 %', [g['id'] for g in vj['ganadores']] == gan and [(g.get('lugar'), g.get('pct')) for g in so['ganadores']] == [(1, 100), (2, 75), (3, 50), (4, 25), (5, 25)], so['ganadores'])
+    pct_de = {c['email']: c['pct'] for c in cup}
+    ok('cada ganador recibe el cupón de su lugar', [pct_de.get(e) for e in orden] == [100, 75, 50, 25, 25], [pct_de.get(e) for e in orden])
+    ok('5 cupones de un solo uso, plan anual, vencen el 31-03-2027, con el descuento en el código (CN100, CN75, CN50, CN25)', len(cup) == 5 and all(re.fullmatch(r'CN%d-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}' % c['pct'], c['codigo']) and c['plan'] == 'anual' and c['vence'] == '2027-03-31' and not c['usado'] for c in cup) and len({c['email'] for c in cup}) == 5 and [c['pct'] for c in cup] == [100, 75, 50, 25, 25], cup)
     ok('los ganadores tienen chances y están confirmados', all(c['email'] in pesos for c in cup))
     mails = [m for m in correos() if 'Ganaste' in m.get('subject', '')]
     ok('correo a cada ganador con su cupón', len(mails) == 5 and all(any(c['codigo'] in m['text'] for m in mails if m['to'] == [c['email']]) for c in cup), len(mails))
+    m1 = [m for m in mails if m['to'] == [orden[0]]]; m2 = [m for m in mails if m['to'] == [orden[1]]]; m5 = [m for m in mails if m['to'] == [orden[4]]]
+    ok('correo del 1.er lugar: año gratis; del 2.º: 75 %; del 5.º: 25 %; todos dicen que vale solo el primer año',
+       m1 and '1.er lugar' in m1[0]['subject'] and 'gratis (100 % de descuento)' in m1[0]['text'] and m2 and '2.º lugar' in m2[0]['subject'] and '75 % de descuento en el primer año' in m2[0]['text']
+       and m5 and '5.º lugar' in m5[0]['subject'] and '25 % de descuento' in m5[0]['text'] and all('desde el segundo año rige el precio normal' in m['text'] for m in mails), [m['subject'] for m in mails])
     s, loc = panel_post('/panel/concurso', {'accion': 'sortear', 'revisado': 'si'})
     ok('no se puede sortear dos veces', 'cc=hecho' in loc and len(sql("SELECT id FROM concurso_sorteos")) == 1 and len(sql("SELECT codigo FROM cupones")) == 5, loc)
     b = pedir('/bases-concurso')[2].decode()
     masc = [g['mascara'] for g in so['ganadores']]
     ok('bases: resultados publicados con el email oculto (ES y EN)', 'Resultados del sorteo' in b and 'Results of the draw' in b and all(m in b for m in masc) and not any(c['email'] in b for c in cup) and so['huella'] in b)
+    def masca(e): u, d = e.split('@'); return f"{u[:1 if len(u) <= 2 else 2]}***@{d}"
+    pr_es = {100: 'primer año gratis', 75: '75 % de descuento en el primer año', 50: '50 % de descuento en el primer año', 25: '25 % de descuento en el primer año'}
+    pr_en = {100: 'first year free', 75: '75% off the first year', 50: '50% off the first year', 25: '25% off the first year'}
+    li_es = re.findall(r'<li>([^<]*)</li>', b.split('Resultados del sorteo')[1].split('</ol>')[0]); li_en = re.findall(r'<li>([^<]*)</li>', b.split('Results of the draw')[1].split('</ol>')[0])
+    ok('bases: los 5 resultados en orden, cada máscara con el premio de SU cupón (ES y EN)', len({masca(e) for e in orden}) == 5 and li_es == [f"{masca(e)} · {pr_es[pct_de[e]]}" for e in orden] and li_en == [f"{masca(e)} · {pr_en[pct_de[e]]}" for e in orden], (li_es, li_en))
     c0 = cup[0]
-    ok('cupón válido para el ganador en el plan anual: 25 %, $41.250, no combinable', jget(f"/panel/cupon?codigo={c0['codigo']}&email={c0['email']}&plan=anual")[1] == {'ok': True, 'codigo': c0['codigo'], 'pct': 25, 'plan': 'anual', 'vence': '2027-03-31', 'combinable': False, 'monto': 41250})
+    ok('cupón del 1.er lugar válido en el plan anual: 100 %, $0, no combinable', jget(f"/panel/cupon?codigo={c0['codigo']}&email={c0['email']}&plan=anual")[1] == {'ok': True, 'codigo': c0['codigo'], 'pct': 100, 'plan': 'anual', 'vence': '2027-03-31', 'combinable': False, 'monto': 0})
+    pz = panel_html()
+    ok('Panel: organiza Destak, premios por lugar y cupón del 1.º como año gratis', 'Organiza Destak. Premios: 1.er lugar, plan anual gratis;' in pz and 'Ganadores en orden de lugar' in pz and '100 % (año gratis)' in pz and 'E.I.R.L' not in pz.split('id="concurso"')[1].split('</section>')[0])
+    ok('cupones del 2.º, 3.º y 4.º lugar: $13.750, $27.500 y $41.250', [jget(f"/panel/cupon?codigo={c['codigo']}&email={c['email']}&plan=anual")[1].get('monto') for c in cup[1:4]] == [13750, 27500, 41250])
     ok('cupón: otro email no sirve', jget(f"/panel/cupon?codigo={c0['codigo']}&email=otro@gmail.com&plan=anual")[1]['motivo'] == 'otro email')
     ok('cupón: plan mensual no sirve', jget(f"/panel/cupon?codigo={c0['codigo']}&email={c0['email']}&plan=mensual")[1]['motivo'] == 'solo plan anual')
     s, loc = panel_post('/panel/concurso', {'accion': 'cupon-usado', 'codigo': c0['codigo']})
@@ -553,6 +572,19 @@ if MODO == 'auto':
     ok('sorteo de respaldo: 5 cupones y 5 correos a los ganadores', len(sql("SELECT codigo FROM cupones")) == 5 and len([m for m in correos() if 'Ganaste' in m.get('subject', '')]) == 5 and so and so[0]['avisos'] == 5, so)
     pedir('/'); time.sleep(2)
     ok('sorteo de respaldo: otra visita no sortea de nuevo', len(sql("SELECT id FROM concurso_sorteos")) == 1 and len(sql("SELECT codigo FROM cupones")) == 5)
+
+if MODO == 'pocos':   # 20-11-2026: 2 personas con chances y 5 premios → 1.er y 2.º lugar; los demás quedan desiertos
+    entrar()
+    def ins(email, cod, ver=1): sql(f"INSERT INTO concurso_participantes (email, codigo, creado, verificado, mayor, bases) VALUES ('{email}', '{cod}', '2026-11-20T10:00:00Z', {ver}, 1, 1)")
+    def vis(cod, fecha, n, pref): sql("INSERT OR IGNORE INTO referidos_unicos (fecha, codigo, visitante) VALUES " + ",".join(f"('{fecha}','{cod}','{pref}{i:04d}')" for i in range(n)))
+    ins('uno.pocos@gmail.com', 'poc00001'); vis('poc00001', '2026-12-03', 3, 'p'); ins('dos.pocos@gmail.com', 'poc00002'); vis('poc00002', '2026-12-03', 5, 'q')
+    s, loc = panel_post('/panel/concurso', {'accion': 'sortear', 'revisado': 'si'})
+    cup = sorted((c['pct'], c['email']) for c in sql("SELECT pct, email FROM cupones"))
+    so = json.loads(sql("SELECT ganadores FROM concurso_sorteos")[0]['ganadores'])
+    ok('pocos: 2 personas → 2 premios (100 % y 75 %), en el orden del sorteo', 'cc=ok:2:2' in loc and [c[0] for c in cup] == [75, 100] and [(g['lugar'], g['pct']) for g in so] == [(1, 100), (2, 75)], (loc, cup, so))
+    b = pedir('/bases-concurso')[2].decode()
+    ok('pocos: los resultados muestran 2 ganadores', len(re.findall(r'<li>[^<]*· primer año gratis</li>', b)) == 1 and len(re.findall(r'<li>[^<]*· 75 % de descuento en el primer año</li>', b)) == 1 and '50 % de descuento en el primer año</li>' not in b)
+    ok('pocos: un código con prefijo que no calza con su porcentaje no vale', jget('/panel/cupon?codigo=CN50-' + sql("SELECT codigo FROM cupones WHERE pct = 100")[0]['codigo'][6:] + '&email=x@gmail.com&plan=anual')[1]['motivo'] in ('no existe', 'formato'))
 
 # ============================================================== BORRADOS (02-02-2027) ================================================
 if MODO == 'vencido':
