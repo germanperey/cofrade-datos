@@ -2288,9 +2288,8 @@ HISTORIA_BCCH = [
     # que da las cifras de esas tarjetas. Pueden ser negativas (IPC de un mes), por eso no pasan por el filtro «v > 0» de los diarios.
     ("utm", "Unidad Tributaria Mensual", "$", 0, "F073.UTR.PRE.Z.M", r"unidad tributaria mensual"),
     ("ipc", "IPC, variación mensual", "", 1, "F074.IPC.VAR.Z.Z.C.M", r"^IPC.*variaci[oó]n mensual"),
-    ("ipc12", "IPC, variación en 12 meses", "", 1, "F074.IPC.V12.Z.Z.C.M", r"^IPC.*12 meses"),
 ]
-HISTORIA_MENSUAL = {"utm", "ipc", "ipc12"}
+HISTORIA_MENSUAL = {"utm", "ipc"}
 
 
 def historia_bcch(estado, hoy, dias=400):
