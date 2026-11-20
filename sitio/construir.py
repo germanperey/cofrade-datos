@@ -50,6 +50,8 @@ for k, v in {
     "__COMPARTIR_JS__": json.dumps("<script>" + compartir_js + "</script>", ensure_ascii=False),   # van después del módulo que los nombra
     "__CONCURSO_JS__": json.dumps("<script>" + concurso_js + "</script>", ensure_ascii=False),
     "/*__PODCAST__*/": leer("modulos", "podcast.js"),   # 20-11-2026: podcast diario (fuente, episodios, /podcast y Panel)
+    "/*__SESENTA__*/": leer("modulos", "sesenta.js"),   # 20-11-2026: fichas de «Hoy en 60 segundos» resumidas
+    "/*__INDICADOR_GRAF__*/": leer("modulos", "indicador_graf.js"),   # 20-11-2026: gráfico emergente de cada indicador (sección 9)
     "__PODCAST_JS__": json.dumps("<script>" + podcast_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k

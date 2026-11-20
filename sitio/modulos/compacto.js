@@ -43,9 +43,14 @@ details.cn-cmp>.dos{margin-top:14px}
 // no estén tan amontonados, oxigenando un poco más la lectura y todo se vea más armónico y equilibrado»; en Industrias: «agrandar letras»
 // (el título de cada industria, «⛏ Minería»). La edición fija .ciudad-tit con !important: por eso estas dos reglas también lo llevan. Regla: más aire ENTRE grupos (texto → tabla, gráfico → tabla, tabla → gráfico, nota →
 // título, recuadros → botones) y nada dentro de un grupo (un título sigue pegado a lo suyo). Solo en pantalla: el PDF queda igual.
+// 20-11-2026 19:17 · Germán (capturas con «=» en rojo): más aire entre Cámara/Senado y sus recuadros, en «Perspectivas 2050»
+// (texto → recuadros → «Inversión por sector») y en «Avances»: cabecera → Elección (Servel/TRICEL) → Programa.
 const AIRE_CSS = `<style id="cnAire">@media screen{
 #crecw .dos+.dos{margin-top:16px}#crecw p.leer{margin-top:16px}.sec p.leer+.tabla{margin-top:20px}
 #cgw .cga{margin-top:30px}
+#cgw .botones-amb{margin-bottom:24px!important}#cgw .cg-panel>.kpis{margin-top:16px!important}
+#pjw>.sub+.kpis,#pjw>p.sub~.kpis{margin-top:24px!important}#pjw>.kpis+.dos{margin-top:32px!important}
+.gob-cab+.gob-servel,.gob-servel{margin-top:26px!important}.gob-servel+.gob-grid,.gob-grid{margin-top:28px!important}
 #gobiernos .gob-kpis{margin-top:22px}#gobiernos .gob-kpis+.pg-wrap{margin-top:24px}#gobiernos .gob-panel{margin-top:26px}#gobiernos .gob-servel{margin-top:18px}#gobiernos .gob-grid+.tabla{margin-top:22px}
 #fondos .fz-filtros{margin-top:18px}#fondos .fz-cuenta{margin-top:14px}
 .sec h3.ciudad-tit{margin-top:24px!important}

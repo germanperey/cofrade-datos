@@ -2215,7 +2215,7 @@ def cierres_fred_csv(txt, hoy):
     return sorted(out)
 
 
-def cierres_bcch(j, hoy):
+def cierres_bcch(j, hoy, negativos=False):
     """Servicio del Banco Central (SIETE) → [(fecha, valor)]; fechas «dd-mm-aaaa», solo observaciones con estado OK."""
     out = []
     for o in (((j or {}).get("Series") or {}).get("Obs") or []):
@@ -2227,7 +2227,7 @@ def cierres_bcch(j, hoy):
         except (TypeError, ValueError):
             continue
         f = f"{m.group(3)}-{m.group(2)}-{m.group(1)}"
-        if f < hoy.isoformat() and v > 0:
+        if f < hoy.isoformat() and (v > 0 or negativos):
             out.append((f, v))
     return sorted(out)
 
@@ -2284,7 +2284,13 @@ HISTORIA_BCCH = [
     ("euro", "Euro", "$", 2, "F072.CLP.EUR.N.O.D", r"\beuro\b"),
     ("cobre", "Cobre (US$/libra)", "US$", 2, "F019.PPB.PRE.100.D", r"precio del cobre refinado"),
     ("tpm", "Tasa de Política Monetaria", "", 2, "F022.TPM.TIN.D001.NO.Z.D", r"tasa de pol[ií]tica monetaria"),
+    # 20-11-2026 (Germán: al tocar un indicador de la sección 9, un gráfico con sus variaciones): series MENSUALES del mismo Banco Central
+    # que da las cifras de esas tarjetas. Pueden ser negativas (IPC de un mes), por eso no pasan por el filtro «v > 0» de los diarios.
+    ("utm", "Unidad Tributaria Mensual", "$", 0, "F073.UTR.PRE.Z.M", r"unidad tributaria mensual"),
+    ("ipc", "IPC, variación mensual", "", 1, "F074.IPC.VAR.Z.Z.C.M", r"^IPC.*variaci[oó]n mensual"),
+    ("ipc12", "IPC, variación en 12 meses", "", 1, "F074.IPC.V12.Z.Z.C.M", r"^IPC.*12 meses"),
 ]
+HISTORIA_MENSUAL = {"utm", "ipc", "ipc12"}
 
 
 def historia_bcch(estado, hoy, dias=400):
@@ -2309,7 +2315,7 @@ def historia_bcch(estado, hoy, dias=400):
                     break
                 intento = cand[0]["seriesId"]
             url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={quote(intento)}&firstdate={desde}&lastdate={hoy.isoformat()}"
-            datos = cierres_bcch(pedir(url, estado, f"historia_{clave}", espera=(0, 30), limite=45), hoy + dt.timedelta(days=1))
+            datos = cierres_bcch(pedir(url, estado, f"historia_{clave}", espera=(0, 30), limite=45), hoy + dt.timedelta(days=1), clave in HISTORIA_MENSUAL)
             if datos:
                 sid = intento
                 break
