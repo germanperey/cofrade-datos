@@ -55,6 +55,7 @@ for k, v in {
     "/*__SENADO_BANCADAS__*/": leer("modulos", "senado_bancadas.js"),   # 20-11-2026: «Cómo votan las bancadas» del Senado
     "/*__PILARES_DESGLOSE__*/": leer("modulos", "pilares_desglose.js"),   # 20-11-2026: desglose de Familia y Conectividad
     "/*__HOROSCOPO_COMPAT__*/": leer("modulos", "horoscopo_compat.js"),   # 20-11-2026: compatibilidad con otra persona
+    "/*__IDIOMA_RAPIDO__*/": leer("modulos", "idioma_rapido.js"),   # 21-11-2026: botón EN/ES más rápido en la edición
     "__PODCAST_JS__": json.dumps("<script>" + podcast_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k
