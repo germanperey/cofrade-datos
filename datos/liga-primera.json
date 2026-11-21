@@ -75,13 +75,13 @@
   {
    "pos": 7,
    "equipo": "Palestino",
-   "pj": 27,
+   "pj": 28,
    "pg": 11,
    "pe": 5,
-   "pp": 11,
+   "pp": 12,
    "gf": 39,
-   "gc": 38,
-   "dif": 1,
+   "gc": 39,
+   "dif": 0,
    "pts": 38
   },
   {
@@ -147,29 +147,41 @@
   {
    "pos": 13,
    "equipo": "Audax Italiano",
-   "pj": 27,
+   "pj": 28,
    "pg": 7,
    "pe": 9,
-   "pp": 11,
-   "gf": 28,
-   "gc": 36,
-   "dif": -8,
+   "pp": 12,
+   "gf": 30,
+   "gc": 39,
+   "dif": -9,
    "pts": 30
   },
   {
    "pos": 14,
    "equipo": "Cobresal",
-   "pj": 27,
-   "pg": 7,
+   "pj": 28,
+   "pg": 8,
    "pe": 6,
    "pp": 14,
-   "gf": 39,
-   "gc": 50,
-   "dif": -11,
-   "pts": 27
+   "gf": 42,
+   "gc": 52,
+   "dif": -10,
+   "pts": 30
   },
   {
    "pos": 15,
+   "equipo": "Unión La Calera",
+   "pj": 28,
+   "pg": 7,
+   "pe": 6,
+   "pp": 15,
+   "gf": 25,
+   "gc": 43,
+   "dif": -18,
+   "pts": 27
+  },
+  {
+   "pos": 16,
    "equipo": "Universidad de Concepción",
    "pj": 27,
    "pg": 7,
@@ -179,23 +191,20 @@
    "gc": 49,
    "dif": -27,
    "pts": 26
-  },
-  {
-   "pos": 16,
-   "equipo": "Unión La Calera",
-   "pj": 27,
-   "pg": 6,
-   "pe": 6,
-   "pp": 15,
-   "gf": 24,
-   "gc": 43,
-   "dif": -19,
-   "pts": 24
   }
  ],
- "tabla_fecha": "2026-11-08",
+ "tabla_fecha": "2026-11-20",
  "tabla_fuente": "Wikipedia (en)",
  "tabla_url": "https://en.wikipedia.org/wiki/2026_Liga_de_Primera",
- "partidos": [],
- "proxima_fecha": "2026-11-20"
+ "partidos": [
+  {
+   "local": "Palestino",
+   "visita": "Unión La Calera",
+   "gl": 0,
+   "gv": 1,
+   "fecha": "2026-11-20",
+   "competencia": "Liga de Primera",
+   "fuente": "TheSportsDB"
+  }
+ ]
 }
