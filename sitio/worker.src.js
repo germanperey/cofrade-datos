@@ -941,6 +941,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__INDICADOR_GRAF__*/
 /*__SENADO_BANCADAS__*/
 /*__PILARES_DESGLOSE__*/
+/*__HOROSCOPO_COMPAT__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -1427,7 +1428,8 @@ export default {
         const s60 = sesenta();   // 20-11-2026: fichas de «Hoy en 60 segundos» resumidas (modulos/sesenta.js)
         const cp = compacto();   // 18-11-2026: títulos de bloque más grandes y gráficos del Congreso en barra compacta (modulos/compacto.js)
         const pv = proyeccionCrecimiento(m[1], pc);   // 19-11-2026: proyección de crecimiento a 4 años, después de «Crecimiento de Chile» (modulos/proyeccion.js)
-        const ha = horoscopoAnual(m[1]);   // 18-11-2026: botones del horóscopo más grandes + horóscopo del año y chino, personalizado (modulos/horoscopo_anual.js)
+        const ha = horoscopoAnual(m[1]);
+        const hcx = horoscopoCompat(!!HORO_ANUAL[anioHoroscopo(m[1])]);   // 20-11-2026: compatibilidad con otra persona (modulos/horoscopo_compat.js)   // 18-11-2026: botones del horóscopo más grandes + horóscopo del año y chino, personalizado (modulos/horoscopo_anual.js)
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
         return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
@@ -1436,6 +1438,7 @@ export default {
           .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
           .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
+          .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
           .on("script", scriptsEdicion(lib))
           .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS + COMPARTIR_ESTILO, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
