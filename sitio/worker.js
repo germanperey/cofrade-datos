@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "abe99313c950";
+const VERSION_SITIO = "feedab9ff2f2";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -5706,6 +5706,25 @@ kpi.setAttribute('title',en()?'See the chart':'Ver el gráfico');
 kpi.addEventListener('click',function(){abrir(kpi,k)});kpi.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();abrir(kpi,k)}})});
 })();<\/script>`;
 
+// 21-11-2026 (Germán: «Hoy no se actualizaron los valores del Dólar, Euro y Yuan... Toda la información del Newsletter siempre debe
+// estar actualizada completa»): si la edición quedó con un dólar, euro o yuan más viejo que el que el Banco Central ya publicó
+// (datos/pulso.json, cada 30 min), la página lo actualiza al abrirse y lo dice: «rige el 23-11 · actualizado por el Banco Central».
+// Solo en ediciones de hasta 5 días antes de esa fecha: las ediciones viejas quedan como se publicaron.
+const FX_JS = `<script>(function(){var m=location.pathname.match(/(\\d{4})-(\\d{2})-(\\d{2})/);if(!m)return;var ed=m[0];
+function iso(t,y){var r=String(t||'').match(/(\\d{2})-(\\d{2})(?:-(\\d{4}))?/);return r?(r[3]||y)+'-'+r[2]+'-'+r[1]:''}
+function n(v){return Number(v).toLocaleString('es-CL',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function dm(f){return f.slice(8,10)+'-'+f.slice(5,7)}
+fetch('/pulso.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(p){var I={};(p.indicadores||[]).forEach(function(x){I[x.clave]=x});
+var lim=new Date(ed+'T12:00:00Z');lim.setUTCDate(lim.getUTCDate()+5);lim=lim.toISOString().slice(0,10);
+function nuevo(k,fe){var x=I[k];return x&&x.fecha&&x.fecha>fe&&x.fecha<=lim&&typeof x.valor==='number'?x:null}
+function nota(x){return x.rige?'rige el '+dm(x.rige)+(x.publicado?' · publicado el '+dm(x.publicado):'')+' · Banco Central':'al '+dm(x.fecha)+' · Banco Central'}
+[].forEach.call(document.querySelectorAll('#indicadores .kpi'),function(c){var kn=(c.querySelector('.kn')||{}).textContent||'',k=/d[oó]lar/i.test(kn)?'dolar':/^euro/i.test(kn)?'euro':/yuan/i.test(kn)?'yuan':null;if(!k)return;
+var kf=c.querySelector('.kf'),x=nuevo(k,iso(kf&&kf.textContent,ed.slice(0,4)));if(!x)return;c.querySelector('.kv').textContent='$ '+n(x.valor);var kd=c.querySelector('.kd');if(kd)kd.textContent='';if(kf)kf.textContent=nota(x);c.classList.add('cn-fx')});
+[].forEach.call(document.querySelectorAll('.moneda[data-k]'),function(b){var k={dolar:'dolar',euro:'euro',cny:'yuan',yuan:'yuan'}[b.getAttribute('data-k')];if(!k)return;var mf=b.querySelector('.mf'),x=nuevo(k,iso(mf&&mf.textContent,ed.slice(0,4)));if(!x)return;
+b.querySelector('.mv').textContent='$ '+n(x.valor);var md=b.querySelector('.md');if(md)md.textContent='';if(mf)mf.textContent=nota(x)});
+[].forEach.call(document.querySelectorAll('.chip60'),function(a){var t=(a.querySelector('.t60')||{}).textContent||'';if(!/d[oó]lar/i.test(t))return;var x=nuevo('dolar',ed);if(!x)return;var v=a.querySelector('.v60');if(v)v.innerHTML='<b>$'+n(x.valor)+'</b> · rige '+dm(x.rige||x.fecha)});
+}).catch(function(){})})();<\/script>`;
+
 // 20-11-2026 19:46 · Germán: «Estos gráficos aparecen para la configuración de la "Cámara de Diputados", pero falta agregar los mismos
 // gráficos de esta sección para el "Senado" (para tener todo el panorama de cómo están configuradas las bancadas políticas, sus
 // votaciones, etc.)». Del Senado casi no llegan votaciones del mes con el voto de cada senador, y con menos de 3 la edición no arma
@@ -6356,7 +6375,7 @@ export default {
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
           .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
-          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
+          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)

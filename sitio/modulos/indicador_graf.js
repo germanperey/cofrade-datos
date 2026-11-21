@@ -147,3 +147,22 @@ kpi.classList.add('cn-ig');kpi.setAttribute('role','button');kpi.setAttribute('t
 kpi.setAttribute('title',en()?'See the chart':'Ver el gráfico');
 kpi.addEventListener('click',function(){abrir(kpi,k)});kpi.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();abrir(kpi,k)}})});
 })();<\/script>`;
+
+// 21-11-2026 (Germán: «Hoy no se actualizaron los valores del Dólar, Euro y Yuan... Toda la información del Newsletter siempre debe
+// estar actualizada completa»): si la edición quedó con un dólar, euro o yuan más viejo que el que el Banco Central ya publicó
+// (datos/pulso.json, cada 30 min), la página lo actualiza al abrirse y lo dice: «rige el 23-11 · actualizado por el Banco Central».
+// Solo en ediciones de hasta 5 días antes de esa fecha: las ediciones viejas quedan como se publicaron.
+const FX_JS = `<script>(function(){var m=location.pathname.match(/(\\d{4})-(\\d{2})-(\\d{2})/);if(!m)return;var ed=m[0];
+function iso(t,y){var r=String(t||'').match(/(\\d{2})-(\\d{2})(?:-(\\d{4}))?/);return r?(r[3]||y)+'-'+r[2]+'-'+r[1]:''}
+function n(v){return Number(v).toLocaleString('es-CL',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function dm(f){return f.slice(8,10)+'-'+f.slice(5,7)}
+fetch('/pulso.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(p){var I={};(p.indicadores||[]).forEach(function(x){I[x.clave]=x});
+var lim=new Date(ed+'T12:00:00Z');lim.setUTCDate(lim.getUTCDate()+5);lim=lim.toISOString().slice(0,10);
+function nuevo(k,fe){var x=I[k];return x&&x.fecha&&x.fecha>fe&&x.fecha<=lim&&typeof x.valor==='number'?x:null}
+function nota(x){return x.rige?'rige el '+dm(x.rige)+(x.publicado?' · publicado el '+dm(x.publicado):'')+' · Banco Central':'al '+dm(x.fecha)+' · Banco Central'}
+[].forEach.call(document.querySelectorAll('#indicadores .kpi'),function(c){var kn=(c.querySelector('.kn')||{}).textContent||'',k=/d[oó]lar/i.test(kn)?'dolar':/^euro/i.test(kn)?'euro':/yuan/i.test(kn)?'yuan':null;if(!k)return;
+var kf=c.querySelector('.kf'),x=nuevo(k,iso(kf&&kf.textContent,ed.slice(0,4)));if(!x)return;c.querySelector('.kv').textContent='$ '+n(x.valor);var kd=c.querySelector('.kd');if(kd)kd.textContent='';if(kf)kf.textContent=nota(x);c.classList.add('cn-fx')});
+[].forEach.call(document.querySelectorAll('.moneda[data-k]'),function(b){var k={dolar:'dolar',euro:'euro',cny:'yuan',yuan:'yuan'}[b.getAttribute('data-k')];if(!k)return;var mf=b.querySelector('.mf'),x=nuevo(k,iso(mf&&mf.textContent,ed.slice(0,4)));if(!x)return;
+b.querySelector('.mv').textContent='$ '+n(x.valor);var md=b.querySelector('.md');if(md)md.textContent='';if(mf)mf.textContent=nota(x)});
+[].forEach.call(document.querySelectorAll('.chip60'),function(a){var t=(a.querySelector('.t60')||{}).textContent||'';if(!/d[oó]lar/i.test(t))return;var x=nuevo('dolar',ed);if(!x)return;var v=a.querySelector('.v60');if(v)v.innerHTML='<b>$'+n(x.valor)+'</b> · rige '+dm(x.rige||x.fecha)});
+}).catch(function(){})})();<\/script>`;

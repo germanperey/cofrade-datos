@@ -1437,7 +1437,7 @@ export default {
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
           .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
-          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
+          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
