@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-21T19:07-03:00",
- "proxima": "20:17",
+ "generado": "2026-11-21T20:27-03:00",
+ "proxima": "22:17",
  "indicadores": [
   {
    "clave": "dolar",
@@ -46,17 +46,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-21",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440.0,
+   "valor": 72440,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "tpm",
@@ -66,17 +66,17 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-20",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 5.6471,
+   "valor": 5.65,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-20",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   }
  ],
  "ipsa": {
@@ -84,11 +84,11 @@
   "valor": 10350.41,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-21T19:09-03:00",
+  "hora": "2026-11-21T20:27-03:00",
   "variacion_pct": 0.16
  },
  "sismos": {
-  "n": 6,
+  "n": 5,
   "mayores": [
    {
     "hora": "2026-11-21T16:03-03:00",
@@ -115,10 +115,10 @@
     "referencia": "16 km al SO de Ollagüe"
    },
    {
-    "hora": "2026-11-20T19:32-03:00",
-    "magnitud": 4.2,
-    "profundidad_km": 114.3,
-    "referencia": "66 km al O de Ollagüe"
+    "hora": "2026-11-21T13:04-03:00",
+    "magnitud": 4.0,
+    "profundidad_km": 101.8,
+    "referencia": "45 km al S de Calama"
    }
   ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
@@ -129,34 +129,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "EN VIVO: Cobreloa y San Luis, sin goles en el duelo de la final del campeonato 2026",
+     "titulo": "EN VIVO: Boca Juniors se impone 1 a 0 ante Atlético Mineiro",
+     "medio": "El Rancaguino",
+     "url": "https://www.elrancaguino.cl/2026/11/21/atletico-mineiro-vs-boca-juniors-previa-horario-y-como-llegan-para-la-final-de-la-copa-sudamericana/",
+     "hora": "20:25"
+    },
+    {
+     "titulo": "EN VIVO: Con un empate 0-0 se jeuga el segundo tiempo entre Cobreloa y San Luis",
      "medio": "El Rancaguino",
      "url": "https://www.elrancaguino.cl/2026/11/21/cobreloa-y-san-luis-se-enfrentan-en-la-final/",
-     "hora": "19:05"
+     "hora": "20:23"
     },
     {
-     "titulo": "Profecía autocumplida",
-     "medio": "La Tercera Opinion",
-     "url": "https://www.latercera.com/opinion/noticia/profecia-autocumplida/",
-     "hora": "19:04"
+     "titulo": "“Una infracción grave”: denuncian sobrecarga laboral tras muerte de trabajadora que habría trabajado 10 días seguidos",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/21/una-infraccion-grave-denuncian-sobrecarga-laboral-tras-muerte-de-trabajadora-que-habria-trabajado-10-dias-seguidos/",
+     "hora": "20:22"
     },
     {
-     "titulo": "Ley TEA y responsabilidad institucional: ¿Quién responde cuando la inclusión falla?",
-     "medio": "Diario Constitucional",
-     "url": "https://www.diarioconstitucional.cl/cartas-al-director/ley-tea-y-responsabilidad-institucional-quien-responde-cuando-la-inclusion-falla",
-     "hora": "19:03"
+     "titulo": "El ajuste que amenaza con profundizar la precariedad de Ñuble: incertidumbre por despidos masivos en el Estado",
+     "medio": "La Discusion de Chillan",
+     "url": "https://ladiscusion.cl/el-ajuste-que-amenaza-con-profundizar-la-precariedad-de-nuble-incertidumbre-por-despidos-masivos-en-el-estado/",
+     "hora": "20:22"
     },
     {
-     "titulo": "El eterno presente",
-     "medio": "La Tercera Opinion",
-     "url": "https://www.latercera.com/opinion/noticia/el-eterno-presente/",
-     "hora": "19:02"
-    },
-    {
-     "titulo": "EN VIVO: 0-0: Sin goles se van al entretiempo Universidad de Chile y O’Higgins",
-     "medio": "El Rancaguino",
-     "url": "https://www.elrancaguino.cl/2026/11/21/ohiggins-vs-universidad-de-chile-previa-horario-y-como-llegan-para-la-fecha-28-del-campeonato-chileno/",
-     "hora": "19:01"
+     "titulo": "Incertidumbre por inestabilidad climática domina entre los cereceros de Ñuble ad portas de la cosecha",
+     "medio": "La Discusion de Chillan",
+     "url": "https://ladiscusion.cl/incertidumbre-por-inestabilidad-climatica-domina-entre-los-cereceros-de-nuble-ad-portas-de-la-cosecha/",
+     "hora": "20:17"
     }
    ]
   },
@@ -164,34 +164,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Quiénes están detrás de Lader Energy, la startup chilena de energía que comenzó en Argentina y apuesta por los data centers",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/negocios/energia-chilena-lader-energy-data-centers/",
-     "hora": "18:48"
-    },
-    {
-     "titulo": "Miss Universo 2026: ¿Quiénes son las seis centroamericanas que compiten por la corona en Puerto Rico?",
+     "titulo": "Tres meses sin visitas: el castigo a la pareja de un periodista preso en Cuba por intentar entregarle agua, comida y libros",
      "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/el-salvador/2026/11/21/miss-universo-2026-quienes-son-las-seis-centroamericanas-que-compiten-por-la-corona-en-puerto-rico/",
-     "hora": "18:08"
+     "url": "https://www.infobae.com/cuba/2026/11/21/tres-meses-sin-visitas-el-castigo-a-la-pareja-de-un-periodista-preso-en-cuba-por-intentar-entregarle-agua-comida-y-libros/",
+     "hora": "19:53"
     },
     {
-     "titulo": "“Reparto”, el género de música cubano que puede ser un apoyo económico para los jóvenes ante la crisis de la isla",
+     "titulo": "“Cristo viene pronto”: el mensaje de «La Muñeca de la Mafia» tras recibir detención judicial en Honduras",
      "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/cuba/2026/11/21/reparto-el-genero-de-musica-cubano-que-puede-ser-un-apoyo-economico-para-los-jovenes-ante-la-crisis-de-la-isla/",
-     "hora": "18:07"
+     "url": "https://www.infobae.com/honduras/2026/11/21/cristo-viene-pronto-el-mensaje-de-la-muneca-de-la-mafia-tras-recibir-detencion-judicial-en-honduras/",
+     "hora": "19:49"
     },
     {
-     "titulo": "Sujeto realizaba turbazos con una banda y agredía sexualmente a víctimas en La Florida",
-     "medio": "Cooperativa",
-     "url": "https://www.cooperativa.cl/noticias/pais/policial/delitos-sexuales/sujeto-realizaba-turbazos-con-una-banda-y-agredia-sexualmente-a-victimas/2026-11-21/175202.html",
-     "hora": "17:52"
-    },
-    {
-     "titulo": "Rebaja de penas: Partido Nacional Libertario ficha a Iván Aróstica para acusación constitucional que preparan contra supremos",
+     "titulo": "Hidrógeno verde: la industria que se ha desinflado a nivel mundial y que Boric prometió consolidar como “política de Estado”",
      "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/politica/pnl-arostica-acusacion-supremos-rebaja/",
-     "hora": "17:36"
+     "url": "https://www.ex-ante.cl/internacional/hidrogeno-verde-industria-desinflada/",
+     "hora": "19:33"
+    },
+    {
+     "titulo": "Así es el megaproyecto para exportar gas que será la mayor inversión de la historia argentina",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/21/asi-es-el-megaproyecto-para-exportar-gas-que-sera-la-mayor-inversion-de-la-historia-argentina/",
+     "hora": "19:31"
+    },
+    {
+     "titulo": "Kavak inaugura nuevo centro en Chile y anuncia plan de expansión a regiones",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/kavak-inaugura-nuevo-centro-en-chile-y-anuncia-plan-de-expansion-a-regiones/",
+     "hora": "19:30"
     }
    ]
   },
@@ -199,22 +199,52 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Alianza Lima vs FC Cajamarca EN VIVO HOY: minuto a minuto del partido en Matute por Torneo Clausura de Liga 1 2026",
+     "titulo": "Boca Juniors domina a un aturdido Atlético Mineiro y le gana con el gol de Ascacibar en la final de la Copa Sudamericana",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/peru/deportes/2026/11/21/alianza-lima-vs-fc-cajamarca-en-vivo-hoy-minuto-a-minuto-partido-matute-fecha-17-torneo-clausura-liga-1-2026-goles-resumen-resultado/",
-     "hora": "19:07"
+     "url": "https://www.infobae.com/deportes/2026/11/21/boca-juniors-va-por-la-gloria-en-la-final-de-la-copa-sudamericana-ante-atletico-mineiro-en-barranquilla-hora-tv-y-posibles-formaciones/",
+     "hora": "20:25"
     },
     {
-     "titulo": "Con dos goles de Meza, Independiente venció 2-1 a Argentinos Juniors y se clasificó a los cuartos de final del Torneo Clausura",
+     "titulo": "EEUU emite alerta de seguridad por enfrentamientos y narcobloqueos derivados de la captura de “El Chapo Isidro” en Sinaloa",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/deportes/2026/11/21/argentinos-juniors-e-independiente-se-enfrentaran-por-los-octavos-de-final-del-torneo-clausura-hora-tv-y-posibles-formaciones/",
-     "hora": "19:07"
+     "url": "https://www.infobae.com/mexico/2026/11/21/eeuu-emite-alerta-de-seguridad-por-enfrentamientos-y-narcobloqueos-derivados-de-la-captura-de-el-chapo-isidro-en-sinaloa/",
+     "hora": "20:25"
+    },
+    {
+     "titulo": "Kate Middleton habla abiertamente sobre cómo el cáncer cambió su vida en un documental de la BBC",
+     "medio": "BBC Mundo",
+     "url": "https://www.bbc.com/mundo/articles/c6gregq1xynwo?at_medium=RSS&at_campaign=rss",
+     "hora": "19:57"
+    },
+    {
+     "titulo": "Diez años del acuerdo de paz en Colombia: la UE califica de \"éxito\" lo que hizo la Comisión de la Verdad",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/programas/la-entrevista/20261121-diez-a%C3%B1os-del-acuerdo-de-paz-en-colombia-la-ue-califica-de-%C3%A9xito-lo-que-hizo-la-comisi%C3%B3n-de-la-verdad",
+     "hora": "19:36"
+    },
+    {
+     "titulo": "Irán anuncia un ataque contra dos radares del sistema Patriot de EE.UU. en Bahréin",
+     "medio": "La Tercera · Mundo",
+     "url": "https://www.latercera.com/mundo/noticia/iran-anuncia-un-ataque-contra-dos-radares-del-sistema-patriot-de-eeuu-en-bahrein/",
+     "hora": "19:22"
     }
    ]
   },
   {
    "seccion": "Economía mundial",
    "notas": [
+    {
+     "titulo": "Kate Middleton habla abiertamente sobre cómo el cáncer cambió su vida en un documental de la BBC",
+     "medio": "BBC Mundo · Economía",
+     "url": "https://www.bbc.com/mundo/articles/c6gregq1xynwo?at_medium=RSS&at_campaign=rss",
+     "hora": "19:57"
+    },
+    {
+     "titulo": "OTAN promete defender \"cada centímetro\" de Polonia tras la incursión de misiles rusos",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/otan-promete-defender-cada-centímetro-de-polonia-tras-la-incursión-de-misiles-rusos/a-80011180?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "19:04"
+    },
     {
      "titulo": "Decenas de miles de personas manifiestan por sexto fin de semana en Francia",
      "medio": "DW en español",
@@ -232,24 +262,18 @@
      "medio": "Cinco Días portada",
      "url": "https://cincodias.elpais.com/smartlife/smart-tv/2026-11-21/gta-vi-tiene-un-problema-con-el-hdr-y-un-experto-explica-como-mejorar-la-imagen-con-tres-ajustes-en-tu-televisor.html",
      "hora": "15:23"
-    },
-    {
-     "titulo": "Una de cada cuatro capitales se queda sin oferta de alquiler asequible",
-     "medio": "Expansión España Economía",
-     "url": "https://www.expansion.com/economia/2026/11/21/cuatro-capitales-queda-oferta-alquiler-asequible.html",
-     "hora": "15:12"
-    },
-    {
-     "titulo": "BUNDESLIGA: escuche el partido FC Schalke 04 vs. VfB Stuttgart",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/bundesliga-escuche-el-partido-fc-schalke-04-vs-vfb-stuttgart/a-80010680?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "14:24"
     }
    ]
   },
   {
    "seccion": "Tecnología",
    "notas": [
+    {
+     "titulo": "Esta obra maestra de Clint Eastwood se estrenó hace 20 años y es considerada una de las películas bélicas más realistas de la historia",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/cine-y-tv/esta-obra-maestra-clint-eastwood-se-estreno-hace-20-anos-considerada-peliculas-belicas-realistas-historia",
+     "hora": "20:04"
+    },
     {
      "titulo": "Netflix se despide de más de 80 series originales en 2027. Una de sus mayores bajas será una trilogía de fantasía creada por Guillermo del Toro",
      "medio": "Xataka México",
@@ -261,12 +285,6 @@
      "medio": "Xataka",
      "url": "https://www.xataka.com/magnet/india-ciudad-lleva-decadas-intentando-vivir-dinero-partidos-politicos-religion-utopia-auroville",
      "hora": "18:00"
-    },
-    {
-     "titulo": "El auto más vendido del mundo ahora tiene versión pick-up con la nueva Toyota Corolla Deck híbrida que rivaliza directamente con la Ford Maverick",
-     "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/automovil/auto-vendido-mundo-ahora-tiene-version-pick-up-nueva-toyota-corolla-deck-hibrida-que-rivaliza-directamente-ford-maverick",
-     "hora": "17:02"
     },
     {
      "titulo": "De Badajoz a Escandinavia: la mina extremeña de hace 3.000 años que llevó el cobre al Báltico",
@@ -289,31 +307,31 @@
      "titulo": "Cobreloa - San Luis: goles, resultado y cómo va el partido por la final del Ascenso, en directo",
      "medio": "AS Chile portada",
      "url": "https://chile.as.com/futbol/cobreloa-san-luis-goles-resultado-y-como-va-el-partido-por-la-final-del-ascenso-en-directo-f202611-d/",
-     "hora": "19:06"
+     "hora": "20:26"
     },
     {
-     "titulo": "Real Madrid - Celta hoy, en directo: LaLiga EA Sports en vivo, última hora en el Bernabéu",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/primera/real-madrid-celta-en-directo-previa-y-ultima-hora-de-laliga-ea-sports-hoy-en-vivo-f202611-d/",
-     "hora": "19:06"
-    },
-    {
-     "titulo": "Espí siempre llega a tiempo",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/espi-siempre-llega-a-tiempo-f202611-n/",
-     "hora": "19:02"
-    },
-    {
-     "titulo": "Con Vélez-Independiente como primer cruce confirmado, así está el cuadro de cuartos de final del Torneo Clausura",
-     "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/21/tras-las-victorias-de-velez-y-barracas-central-asi-esta-el-cuadro-de-cuartos-de-final-del-torneo-clausura/",
-     "hora": "19:02"
-    },
-    {
-     "titulo": "Boca Juniors confirmó su formación para enfrentar a Atlético Mineiro en la final de la Copa Sudamericana",
+     "titulo": "Boca Juniors domina a un aturdido Atlético Mineiro y le gana con el gol de Ascacibar en la final de la Copa Sudamericana",
      "medio": "Infobae Deportes",
      "url": "https://www.infobae.com/deportes/2026/11/21/boca-juniors-va-por-la-gloria-en-la-final-de-la-copa-sudamericana-ante-atletico-mineiro-en-barranquilla-hora-tv-y-posibles-formaciones/",
-     "hora": "19:00"
+     "hora": "20:21"
+    },
+    {
+     "titulo": "Boca - Atl. Mineiro en directo: final de Copa Sudamericana hoy, en vivo",
+     "medio": "AS Chile portada",
+     "url": "https://as.com/futbol/internacional/boca-atl-mineiro-en-directo-final-de-copa-sudamericana-hoy-en-vivo-f202611-d/",
+     "hora": "20:20"
+    },
+    {
+     "titulo": "El gol que le anuló el sistema de fuera de juego semiautomático a Ascacibar en la final de la Copa Sudamericana",
+     "medio": "Infobae Deportes",
+     "url": "https://www.infobae.com/deportes/2026/11/21/el-gol-que-le-anulo-el-sistema-de-fuera-de-juego-semiautomatico-a-ascacibar-en-la-final-de-la-copa-sudamericana/",
+     "hora": "20:20"
+    },
+    {
+     "titulo": "Real Madrid 2-1 Celta: resumen, goles y resultado",
+     "medio": "AS Fútbol",
+     "url": "https://as.com/futbol/primera/real-madrid-celta-en-directo-previa-y-ultima-hora-de-laliga-ea-sports-hoy-en-vivo-f202611-d/",
+     "hora": "20:14"
     }
    ]
   },
@@ -338,16 +356,16 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "Inkling 2 Mini: IA local de 26B en tu laptop",
+     "titulo": "ScribeUp: US$13M para cancelar suscripciones desde el banco",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/inkling-2-mini-ia-local-de-26b-en-tu-laptop/",
-     "hora": "18:21"
+     "url": "https://ecosistemastartup.com/scribeup-us13m-para-cancelar-suscripciones-desde-el-banco/",
+     "hora": "20:21"
     },
     {
-     "titulo": "GSIC Valencia: 34 startups de sportech en su primer año",
+     "titulo": "Amazon pagaría US$7.500M por Decart, startup israelí de IA",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/gsic-valencia-34-startups-de-sportech-en-su-primer-ano/",
-     "hora": "16:21"
+     "url": "https://ecosistemastartup.com/amazon-pagaria-us7-500m-por-decart-startup-israeli-de-ia/",
+     "hora": "19:51"
     }
    ]
   }
@@ -356,10 +374,10 @@
   "ciudades": [
    {
     "ciudad": "Arica",
-    "aqi": 65,
-    "estado": "Moderada",
+    "aqi": 42,
+    "estado": "Buena",
     "estacion": "Arica, Chile",
-    "hora": "09:00",
+    "hora": "13:00",
     "url": "https://aqicn.org/city/chile/arica"
    },
    {
@@ -380,11 +398,11 @@
    },
    {
     "ciudad": "Valparaíso",
-    "aqi": 24,
+    "aqi": 34,
     "estado": "Buena",
-    "estacion": "Viña del Mar, Chile",
-    "hora": "16:00",
-    "url": "https://aqicn.org/city/chile/vina-del-mar"
+    "estacion": "Valparaiso, Chile",
+    "hora": "17:00",
+    "url": "https://aqicn.org/city/chile/valparaiso"
    },
    {
     "ciudad": "Santiago",
@@ -404,10 +422,10 @@
    },
    {
     "ciudad": "Temuco",
-    "aqi": 13,
-    "estado": "Buena",
+    "aqi": 67,
+    "estado": "Moderada",
     "estacion": "Ñielol, Chile",
-    "hora": "16:00",
+    "hora": "17:00",
     "url": "https://aqicn.org/city/chile/nielol"
    },
    {
@@ -420,10 +438,10 @@
    },
    {
     "ciudad": "Punta Arenas",
-    "aqi": 38,
+    "aqi": 42,
     "estado": "Buena",
     "estacion": "Punta Arenas, Chile",
-    "hora": "16:00",
+    "hora": "17:00",
     "url": "https://aqicn.org/city/chile/punta-arenas"
    }
   ],
@@ -467,18 +485,18 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 60128.14,
+  "bitcoin_usd": 60141.69,
   "bitcoin_fecha": "2026-11-21",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 348,
+ "fuentes_ok": 337,
  "indicadores_origen": {
   "dolar": "banco_central_rige",
   "euro": "banco_central_rige",
-  "yuan": "banco_central_rige",
-  "uf": "banco_central",
-  "utm": "banco_central",
-  "tpm": "banco_central",
-  "libra_cobre": "banco_central"
+  "uf": "mindicador",
+  "utm": "mindicador",
+  "tpm": "mindicador",
+  "libra_cobre": "mindicador",
+  "yuan": "banco_central_rige"
  }
 }
