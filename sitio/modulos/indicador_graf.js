@@ -57,10 +57,10 @@ async function apiIndicador(k, h) {
   p.sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0));
   p = p.filter((x, i) => i === 0 || x[0] !== p[i - 1][0]);
   p = c.mes ? p.slice(-13) : ultimoMes(p);
+  if (p.length < 2) return { error: "sin datos" };
   // Una fuente atrasada no se muestra como si fuera de hoy (20-11-2026: mindicador.cl seguía con el IPC de diciembre de 2025).
   const dias = p.length ? (Date.now() - Date.parse(p[p.length - 1][0] + "T12:00:00Z")) / 864e5 : 1e9;
   if (dias > (c.mes ? 130 : 20)) return { error: "fuente atrasada" };
-  if (p.length < 2) return { error: "sin datos" };
   return { k, nombre: c.n, nombre_en: c.en, pre: c.pre || "", suf: c.suf || "", dec: c.dec, mensual: !!c.mes, pp: !!c.pp, fuente, puntos: p };
 }
 
