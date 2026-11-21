@@ -2282,6 +2282,7 @@ HISTORIA_BCCH = [
     ("dolar", "Dólar observado", "$", 2, "F073.TCO.PRE.Z.D", r"d[oó]lar observado"),
     ("uf", "Unidad de Fomento", "$", 2, "F073.UFF.PRE.Z.D", r"unidad de fomento"),
     ("euro", "Euro", "$", 2, "F072.CLP.EUR.N.O.D", r"\beuro\b"),
+    ("yuan", "Yuan chino", "$", 2, "F072.CLP.CNY.N.O.D", r"yuan|renminbi"),   # 21-11-2026: mismo Banco Central que el dólar y el euro
     ("cobre", "Cobre (US$/libra)", "US$", 2, "F019.PPB.PRE.100.D", r"precio del cobre refinado"),
     ("tpm", "Tasa de Política Monetaria", "", 2, "F022.TPM.TIN.D001.NO.Z.D", r"tasa de pol[ií]tica monetaria"),
     # 20-11-2026 (Germán: al tocar un indicador de la sección 9, un gráfico con sus variaciones): series MENSUALES del mismo Banco Central
@@ -2290,6 +2291,10 @@ HISTORIA_BCCH = [
     ("ipc", "IPC, variación mensual", "", 1, "F074.IPC.VAR.Z.Z.C.M", r"^IPC.*variaci[oó]n mensual"),
 ]
 HISTORIA_MENSUAL = {"utm", "ipc"}
+# 21-11-2026 (Germán, sábado 09:32: «Hoy no se actualizaron los valores del Dólar, Euro y Yuan»): el Banco Central publica cada tarde
+# el tipo de cambio que rige el día hábil siguiente (el viernes publica el del lunes, calculado con las operaciones del viernes).
+# Para estas monedas se aceptan fechas futuras de hasta 5 días: así el sábado y el domingo se ve el valor nuevo, con su fecha.
+HISTORIA_FUTURO = {"dolar", "euro", "yuan"}
 
 
 def historia_bcch(estado, hoy, dias=400):
@@ -2315,7 +2320,7 @@ def historia_bcch(estado, hoy, dias=400):
                 intento = cand[0]["seriesId"]
             desde_k = (hoy - dt.timedelta(days=760)).isoformat() if clave in HISTORIA_MENSUAL else desde   # 25 meses: el IPC a 12 meses se calcula con 24
             url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={quote(intento)}&firstdate={desde_k}&lastdate={hoy.isoformat()}"
-            datos = cierres_bcch(pedir(url, estado, f"historia_{clave}", espera=(0, 30), limite=45), hoy + dt.timedelta(days=1), clave in HISTORIA_MENSUAL)
+            datos = cierres_bcch(pedir(url, estado, f"historia_{clave}", espera=(0, 30), limite=45), hoy + dt.timedelta(days=6 if clave in HISTORIA_FUTURO else 1), clave in HISTORIA_MENSUAL)
             if datos:
                 sid = intento
                 break

@@ -1848,8 +1848,9 @@ def indicadores_en_vivo_nunca_faltan():
     bc = {"F073.TCO.PRE.Z.D": [("14-11-2026", "999,5"), ("17-11-2026", "1001.17")], "F072.CLP.EUR.N.O.D": [("17-11-2026", "1102")],
           "F073.UFF.PRE.Z.D": [("17-11-2026", "41350.42"), ("18-11-2026", "41352.1")],   # la UF de mañana no se usa
           "F073.UTR.PRE.Z.M": [("01-11-2026", "72440")], "F022.TPM.TIN.D001.NO.Z.D": [("17-11-2026", "4.5")],
-          "F019.PPB.PRE.100.D": [("17-11-2026", "6.1089")]}
+          "F019.PPB.PRE.100.D": [("17-11-2026", "6.1089")], "F072.CLP.CNY.N.O.D": [("17-11-2026", "138.52")]}
     pedidas = []
+    FX = ("F073.TCO.PRE.Z.D", "F072.CLP.EUR.N.O.D", "F072.CLP.CNY.N.O.D")
 
     def pedir(url, est, cl, **k):
         pedidas.append(url)
@@ -1864,13 +1865,20 @@ def indicadores_en_vivo_nunca_faltan():
         modo = {"mind": mind, "bc": True}   # 1) mindicador responde: el Banco Central no se consulta
         est = {}
         r = P.indicadores(est)
-        assert [x["clave"] for x in r] == claves and not any("bcentral" in u for u in pedidas), (r, pedidas)
-        assert r[0]["nombre"] == "Dólar observado" and r[0]["fecha"] == "2026-11-17" and r[4]["sufijo"] == " %" and r[3]["decimales"] == 0
-        assert est["indicadores_cascada"]["ok"] and set(est["indicadores_cascada"]["origen"].values()) == {"mindicador"}
+        # 21-11-2026: el dólar, el euro y el yuan se piden siempre al Banco Central (puede haber un valor que rige mañana)
+        assert [x["clave"] for x in r] == claves and all(any(f in u for f in FX) for u in pedidas if "bcentral" in u), (r, pedidas)
+        k_ = {x["clave"]: x for x in r}; assert r[0]["nombre"] == "Dólar observado" and r[0]["fecha"] == "2026-11-17" and k_["tpm"]["sufijo"] == " %" and k_["utm"]["decimales"] == 0
+        assert est["indicadores_cascada"]["ok"] and set(est["indicadores_cascada"]["origen"].values()) == {"mindicador", "banco_central"}
         modo, pedidas[:] = {"mind": {k: v for k, v in mind.items() if k != "utm"}, "bc": True}, []   # 1b) falta solo la UTM
         est = {}
         assert [x["clave"] for x in P.indicadores(est)] == claves and est["indicadores_cascada"]["origen"]["utm"] == "banco_central"
-        assert [u for u in pedidas if "bcentral" in u] == [u for u in pedidas if "F073.UTR.PRE.Z.M" in u] and len(pedidas) == 2, pedidas
+        assert len([u for u in pedidas if "F073.UTR.PRE.Z.M" in u]) == 1 and not [u for u in pedidas if "bcentral" in u and not any(f in u for f in FX + ("F073.UTR.PRE.Z.M",))], pedidas
+        bc["F073.TCO.PRE.Z.D"].append(("18-11-2026", "1003.4"))   # 21-11-2026: el valor que rige mañana ya publicado gana, marcado «rige»
+        modo, pedidas[:] = {"mind": mind, "bc": True}, []
+        est = {}
+        d = {x["clave"]: x for x in P.indicadores(est)}
+        assert d["dolar"]["valor"] == 1003.4 and d["dolar"]["fecha"] == "2026-11-18" and d["dolar"]["rige"] == "2026-11-18" and "rige" not in d["euro"], d
+        bc["F073.TCO.PRE.Z.D"].pop()
         modo, pedidas[:] = {"mind": None, "bc": True}, []   # 2) mindicador cae: todo sale del Banco Central
         est = {}
         r = P.indicadores(est)
@@ -1891,7 +1899,7 @@ def indicadores_en_vivo_nunca_faltan():
             est = {}
             d = {x["clave"]: x for x in P.indicadores(est, tmp)}
             o = est["indicadores_cascada"]["origen"]
-            assert list(d) == claves and d["dolar"]["valor"] == 1001.17 and o["dolar"] == "manana", (d, o)   # la mañana antes que el pulso viejo
+            assert [k for k in d if k != "yuan"] == [k for k in claves if k != "yuan"] and d["dolar"]["valor"] == 1001.17 and o["dolar"] == "manana", (d, o)   # la mañana antes que el pulso viejo
             assert d["euro"]["valor"] == 1102.0 and d["uf"]["valor"] == 41350.42 and d["tpm"]["valor"] == 4.5 and o["tpm"] == "manana", d
             assert d["libra_cobre"]["valor"] == 6.05 and o["libra_cobre"] == "pulso_anterior", (d, o)   # el cobre del 10-11 no vale
             json.dump({"indicadores": [{"clave": "dolar", "valor": 990, "fecha": "2026-11-09"}]}, open(os.path.join(tmp, "pulso.json"), "w"))

@@ -1070,7 +1070,7 @@ function tarjetaCifra(nombre, cuando, valor, extra) {
 function grupoCifras(titulo, c) {
   return c.length ? `<div class="vivo-grupo"><h4 class="vivo-tit">${esc(titulo)}</h4><div class="cifras">${c.join("")}</div></div>` : "";
 }
-const VIVO_CHILE = ["dolar", "euro", "uf", "utm", "tpm"];
+const VIVO_CHILE = ["dolar", "euro", "yuan", "uf", "utm", "tpm"];   // 21-11-2026: + yuan
 const VIVO_FUENTES = "Banco Central, Bolsa de Santiago, Reserva Federal de St. Louis, Coinbase, USGS y los medios del país.";
 const VIVO_FUENTES_AIRE = "Banco Central, Bolsa de Santiago, Reserva Federal de St. Louis, Coinbase, USGS, aire medido y los medios del país.";
 function bloqueCifras(p) {
@@ -1078,7 +1078,8 @@ function bloqueCifras(p) {
   const ind = {};
   for (const x of p.indicadores || []) if (x && x.clave && typeof x.valor === "number") ind[x.clave] = x;
   const val = (x) => `${esc(x.prefijo || "")}${num(x.valor, x.decimales ?? 2)}${esc(x.sufijo || "")}`;
-  const chile = VIVO_CHILE.filter((k) => ind[k]).map((k) => tarjetaCifra(ind[k].nombre, fechaCifra(ind[k].fecha, k === "utm"), val(ind[k])));
+  // 21-11-2026: el Banco Central publica la víspera el valor que rige el día hábil siguiente: se muestra con «rige 23-11».
+  const chile = VIVO_CHILE.filter((k) => ind[k]).map((k) => tarjetaCifra(ind[k].nombre, ind[k].rige ? "rige " + fechaCifra(ind[k].rige) : fechaCifra(ind[k].fecha, k === "utm"), val(ind[k])));
   if (p.ipsa && typeof p.ipsa.valor === "number") chile.push(tarjetaCifra("IPSA (puntos)", String(p.ipsa.hora || "").slice(11, 16), num(p.ipsa.valor, 2), pct(p.ipsa.variacion_pct)));
   const merc = (p.mercados || []).filter((m) => m && m.nombre && typeof m.valor === "number");
   const cierre = (m) => tarjetaCifra(m.nombre, m.fecha ? "cierre " + fechaCifra(m.fecha) : "", num(m.valor, 2), pct(m.variacion_pct));

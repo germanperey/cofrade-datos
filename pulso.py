@@ -34,12 +34,13 @@ HORAS_TITULARES = 12
 INDICADORES = (   # clave, nombre, prefijo, sufijo, decimales, serie del Banco Central, días que vale el dato
     ("dolar", "Dólar observado", "$", "", 2, "F073.TCO.PRE.Z.D", 6),
     ("euro", "Euro", "$", "", 2, "F072.CLP.EUR.N.O.D", 6),
+    ("yuan", "Yuan chino", "$", "", 2, "F072.CLP.CNY.N.O.D", 6),   # 21-11-2026: lo publica el Banco Central junto al dólar
     ("uf", "UF", "$", "", 2, "F073.UFF.PRE.Z.D", 3),
     ("utm", "UTM", "$", "", 0, "F073.UTR.PRE.Z.M", 40),
     ("tpm", "TPM", "", " %", 2, "F022.TPM.TIN.D001.NO.Z.D", 10),
     ("libra_cobre", "Cobre (libra)", "US$", "", 2, "F019.PPB.PRE.100.D", 6),
 )
-HISTORIA_CLAVE = {"dolar": "dolar", "euro": "euro", "uf": "uf", "tpm": "tpm", "libra_cobre": "cobre"}   # datos/historia.json
+HISTORIA_CLAVE = {"dolar": "dolar", "euro": "euro", "yuan": "yuan", "uf": "uf", "tpm": "tpm", "libra_cobre": "cobre"}   # datos/historia.json
 LUGARES = (("Arica", -18.48, -70.31), ("Iquique", -20.21, -70.15), ("Calama", -22.46, -68.93), ("Antofagasta", -23.65, -70.40),
            ("Copiapó", -27.37, -70.33), ("La Serena", -29.90, -71.25), ("Valparaíso", -33.05, -71.61), ("Santiago", -33.45, -70.67),
            ("Rancagua", -34.17, -70.74), ("Talca", -35.43, -71.66), ("Concepción", -36.83, -73.05), ("Temuco", -38.74, -72.59),
@@ -120,6 +121,25 @@ def indicadores(estado, carpeta=None):
         for x in (_leer(carpeta, "pulso.json") or {}).get("indicadores") or []:
             if isinstance(x, dict) and x.get("clave") in {t[0] for t in INDICADORES}:
                 poner(x["clave"], x.get("valor"), x.get("fecha"), x.get("fuente") or "Banco Central de Chile", "pulso_anterior")
+    # 21-11-2026 (Germán: «Hoy no se actualizaron los valores del Dólar, Euro y Yuan... Es importantísimo»): el Banco Central publica
+    # cada tarde el valor que rige el día hábil siguiente; el sábado ya está el del lunes, calculado con el mercado del viernes.
+    # mindicador.cl y el filtro «nunca del futuro» lo dejaban fuera. Para el dólar, el euro y el yuan se pide siempre al Banco Central
+    # hasta 6 días adelante y, si trae una fecha más nueva que la elegida, gana esa, marcada con «rige» (la fecha en que rige).
+    if auth and B.robots_permite(B.BCCH_URL, estado):
+        for t in INDICADORES:
+            if t[0] not in ("dolar", "euro", "yuan"):
+                continue
+            desde = (hoy - dt.timedelta(days=t[6] + 3)).isoformat()
+            url = (f"{B.BCCH_URL}?{auth}&function=GetSeries&timeseries={t[5]}&firstdate={desde}"
+                   f"&lastdate={(hoy + dt.timedelta(days=6)).isoformat()}")
+            obs = B.cierres_bcch(B.pedir(url, estado, f"pulso_bcch_rige_{t[0]}", espera=(0, 10), limite=40), hoy + dt.timedelta(days=7))
+            if obs and obs[-1][1] > 0 and (t[0] not in out or obs[-1][0] > out[t[0]]["fecha"]):
+                out[t[0]] = {"clave": t[0], "nombre": t[1], "valor": round(obs[-1][1], 4), "prefijo": t[2], "sufijo": t[3], "decimales": t[4],
+                             "fecha": obs[-1][0], "fuente": "Banco Central de Chile"}
+                if obs[-1][0] > hoy.isoformat():
+                    out[t[0]]["rige"] = obs[-1][0]
+                    out[t[0]]["publicado"] = (obs[-2][0] if len(obs) > 1 else hoy.isoformat())
+                origen[t[0]] = "banco_central_rige"
     faltan = [t[1] for t in INDICADORES if t[0] not in out]
     estado["indicadores_cascada"] = {"ok": not faltan, "hora": B.ahora().isoformat(timespec="seconds"), "origen": origen,
                                      "error": ("sin dato: " + ", ".join(faltan)) if faltan else ""}
