@@ -1,30 +1,8 @@
 {
- "generado": "2026-11-21T05:38:12-03:00",
+ "generado": "2026-11-21T06:18:48-03:00",
  "ventana_h": 72,
  "excluidos": "Rusia–Ucrania, Gaza, Irán y frente regional y Sudán (ya salen todos los días)",
  "candidatos": [
-  {
-   "iso2": "SY",
-   "pais": "Siria",
-   "titulares_72h": 2,
-   "medios": 1,
-   "prom_7d": 1.3,
-   "revisar": false,
-   "ejemplos": [
-    {
-     "titulo": "Syrian authorities arrest ex-general over 2014 massacre",
-     "fuente": "The New Arab",
-     "url": "https://www.newarab.com/news/syrian-authorities-arrest-ex-general-over-2014-massacre",
-     "fecha": "2026-11-19 19:59"
-    },
-    {
-     "titulo": "Syria forecasts strong economic growth as EU plans conference",
-     "fuente": "The New Arab",
-     "url": "https://www.newarab.com/news/syria-forecasts-strong-economic-growth-eu-plans-conference",
-     "fecha": "2026-11-18 06:06"
-    }
-   ]
-  },
   {
    "iso2": "CO",
    "pais": "Colombia",
@@ -42,6 +20,38 @@
    ]
   },
   {
+   "iso2": "FI",
+   "pais": "Finlandia",
+   "titulares_72h": 1,
+   "medios": 1,
+   "prom_7d": 0.0,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "Ejércitos finlandés y estonio ponen restricciones a tráfico aéreo por posibles drones",
+     "fuente": "Infobae",
+     "url": "https://www.infobae.com/america/agencias/2026/11/21/ejercitos-finlandes-y-estonio-ponen-restricciones-a-trafico-aereo-por-posibles-drones/",
+     "fecha": "2026-11-21 06:00"
+    }
+   ]
+  },
+  {
+   "iso2": "EE",
+   "pais": "Estonia",
+   "titulares_72h": 1,
+   "medios": 1,
+   "prom_7d": 0.0,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "Ejércitos finlandés y estonio ponen restricciones a tráfico aéreo por posibles drones",
+     "fuente": "Infobae",
+     "url": "https://www.infobae.com/america/agencias/2026/11/21/ejercitos-finlandes-y-estonio-ponen-restricciones-a-trafico-aereo-por-posibles-drones/",
+     "fecha": "2026-11-21 06:00"
+    }
+   ]
+  },
+  {
    "iso2": "VE",
    "pais": "Venezuela",
    "titulares_72h": 1,
@@ -54,38 +64,6 @@
      "fuente": "Infobae",
      "url": "https://www.infobae.com/venezuela/2026/11/21/mas-de-30-militares-presos-en-venezuela-pidieron-atencion-medica-urgente-tras-11-dias-en-huelga-de-hambre/",
      "fecha": "2026-11-21 05:02"
-    }
-   ]
-  },
-  {
-   "iso2": "IQ",
-   "pais": "Irak",
-   "titulares_72h": 1,
-   "medios": 1,
-   "prom_7d": 0.3,
-   "revisar": false,
-   "ejemplos": [
-    {
-     "titulo": "Iraq PM targets militia stronghold in bid to assert state control",
-     "fuente": "Al Jazeera",
-     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/20/aje-onl-nf_iraq-pm-targets-militia-stronghold-jurf-al-sakhar-201126?traffic_source=rss",
-     "fecha": "2026-11-20 18:28"
-    }
-   ]
-  },
-  {
-   "iso2": "PL",
-   "pais": "Polonia",
-   "titulares_72h": 1,
-   "medios": 1,
-   "prom_7d": 0.3,
-   "revisar": false,
-   "ejemplos": [
-    {
-     "titulo": "PaÃ­ses europeos condenan la incursiÃ³n rusa en el espacio aÃ©reo polaco y alertan de una \"grave amenaza\" en el continente",
-     "fuente": "Europa Press · Internacional",
-     "url": "https://www.europapress.es/internacional/noticia-paises-europeos-condenan-incursion-rusa-espacio-aereo-polaco-alertan-grave-amenaza-continente-20261120155126.html",
-     "fecha": "2026-11-20 11:51"
     }
    ]
   },
@@ -152,6 +130,22 @@
      "fecha": "2026-11-20 10:05"
     }
    ]
+  },
+  {
+   "iso2": "SY",
+   "pais": "Siria",
+   "titulares_72h": 1,
+   "medios": 1,
+   "prom_7d": 1.3,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "Syrian authorities arrest ex-general over 2014 massacre",
+     "fuente": "The New Arab",
+     "url": "https://www.newarab.com/news/syrian-authorities-arrest-ex-general-over-2014-massacre",
+     "fecha": "2026-11-19 19:59"
+    }
+   ]
   }
  ],
  "crisis_group": [],
@@ -199,14 +193,14 @@
   },
   "2026-11-21": {
    "CO": 1,
+   "FI": 1,
+   "EE": 1,
    "VE": 1,
-   "IQ": 1,
-   "PL": 1,
    "BD": 1,
    "MM": 1,
    "JP": 1,
    "CN": 1,
-   "SY": 2
+   "SY": 1
   }
  }
 }
