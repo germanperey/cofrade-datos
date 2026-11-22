@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "fdcc3be906d6";
+const VERSION_SITIO = "9abead758eac";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -5916,6 +5916,11 @@ A4="traducir(document.body);observar()}",B4="__porPartes();observar()}";
 function uno(s,a){var i=s.indexOf(a);return i>=0&&s.indexOf(a,i+1)<0}
 C._d=function(b){var s=d0.call(this,b);try{if(s.indexOf('const enFila=c=>')>=0&&uno(s,A1)&&uno(s,A2)&&uno(s,A3)&&uno(s,A4)){s=s.replace(A1,function(){return B1}).replace(A2,function(){return B2}).replace(A3,function(){return B3}).replace(A4,function(){return B4});window.__cnIdiomaRapido=1}}catch(e){}return s}})();</script>`;
 
+// 22-11-2026 15:43 · Germán: «La "Portada" no puede tener el número 1 en el Indice, porque quedaría duplicado con la sección de
+// "Economía, Negocios e Inversión"... Por lo tanto, en el Indice la "Portada" debe tener el número 0». El Índice lo arma la edición
+// (motor del boletín) con una flecha «↑» en la Portada; el sitio la cambia por «0» en todas las ediciones, pasadas y futuras.
+const INDICE_CERO = `<script>(function(){function f(){var n=document.querySelector('#cnMenu .cn-ini .cn-n');if(n&&n.textContent!=='0')n.textContent='0'}f();document.addEventListener('DOMContentLoaded',f);document.addEventListener('cofrade-idioma',function(){setTimeout(f,0)})})();</script>`;
+
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -6411,7 +6416,7 @@ export default {
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
           .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
-          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
+          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS + INDICE_CERO, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)

@@ -29,3 +29,8 @@ B3="function __pre(r){if(!r||!r.querySelectorAll)return;const l=r.querySelectorA
 A4="traducir(document.body);observar()}",B4="__porPartes();observar()}";
 function uno(s,a){var i=s.indexOf(a);return i>=0&&s.indexOf(a,i+1)<0}
 C._d=function(b){var s=d0.call(this,b);try{if(s.indexOf('const enFila=c=>')>=0&&uno(s,A1)&&uno(s,A2)&&uno(s,A3)&&uno(s,A4)){s=s.replace(A1,function(){return B1}).replace(A2,function(){return B2}).replace(A3,function(){return B3}).replace(A4,function(){return B4});window.__cnIdiomaRapido=1}}catch(e){}return s}})();</script>`;
+
+// 22-11-2026 15:43 · Germán: «La "Portada" no puede tener el número 1 en el Indice, porque quedaría duplicado con la sección de
+// "Economía, Negocios e Inversión"... Por lo tanto, en el Indice la "Portada" debe tener el número 0». El Índice lo arma la edición
+// (motor del boletín) con una flecha «↑» en la Portada; el sitio la cambia por «0» en todas las ediciones, pasadas y futuras.
+const INDICE_CERO = `<script>(function(){function f(){var n=document.querySelector('#cnMenu .cn-ini .cn-n');if(n&&n.textContent!=='0')n.textContent='0'}f();document.addEventListener('DOMContentLoaded',f);document.addEventListener('cofrade-idioma',function(){setTimeout(f,0)})})();</script>`;
