@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-21",
+ "fecha": "2026-11-22",
  "listas": [
   {
    "url": "https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=-18.48&lon=-70.31",
@@ -38,12 +38,32 @@
    "archivo": "5fe34bb9854368bc.json"
   },
   {
-   "url": "https://api.frankfurter.dev/v1/2026-09-24..2026-11-21?base=USD&symbols=CNY",
-   "archivo": "eb2416f4e9664d84.json"
+   "url": "https://mindicador.cl/api/dolar/2026",
+   "archivo": "423178c9f01ca1f1.json"
   },
   {
-   "url": "https://api.wikimedia.org/feed/v1/wikipedia/es/onthisday/all/11/21",
-   "archivo": "a9beee13ae7234ba.json"
+   "url": "https://mindicador.cl/api/euro/2026",
+   "archivo": "00a5c4ef1f041f45.json"
+  },
+  {
+   "url": "https://mindicador.cl/api/uf/2026",
+   "archivo": "5b7e0e403b61d5f4.json"
+  },
+  {
+   "url": "https://mindicador.cl/api/utm/2026",
+   "archivo": "c7240dfcbf7268ac.json"
+  },
+  {
+   "url": "https://mindicador.cl/api",
+   "archivo": "c9f79b13ed9b1428.json"
+  },
+  {
+   "url": "https://api.frankfurter.dev/v1/2026-09-24..2026-11-22?base=USD&symbols=CNY",
+   "archivo": "dc48ba72fd1c125f.json"
+  },
+  {
+   "url": "https://api.wikimedia.org/feed/v1/wikipedia/es/onthisday/all/11/22",
+   "archivo": "87695140c1e8da38.json"
   },
   {
    "url": "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard",
@@ -96,26 +116,6 @@
  ],
  "fallidas": [
   {
-   "url": "https://mindicador.cl/api/dolar/2026",
-   "error": "robots.txt no lo permite"
-  },
-  {
-   "url": "https://mindicador.cl/api/euro/2026",
-   "error": "robots.txt no lo permite"
-  },
-  {
-   "url": "https://mindicador.cl/api/uf/2026",
-   "error": "robots.txt no lo permite"
-  },
-  {
-   "url": "https://mindicador.cl/api/utm/2026",
-   "error": "robots.txt no lo permite"
-  },
-  {
-   "url": "https://mindicador.cl/api",
-   "error": "robots.txt no lo permite"
-  },
-  {
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIPSA?range=5d&interval=1d",
    "error": "robots.txt no lo permite"
   },
@@ -144,75 +144,75 @@
    "error": "robots.txt no lo permite"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.copa_chi/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.copa_chi/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261119-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261120-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.1/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.copa_chi/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/chi.copa_chi/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.conmebol/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   },
   {
-   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261114-20261121",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20261115-20261122",
    "error": "HTTP 400"
   }
  ]
