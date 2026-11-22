@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-22T05:38:21-03:00",
+ "generado": "2026-11-22T06:18:11-03:00",
  "ventana_h": 72,
  "excluidos": "Rusia–Ucrania, Gaza, Irán y frente regional y Sudán (ya salen todos los días)",
  "candidatos": [
@@ -28,6 +28,50 @@
      "fuente": "France 24 en español",
      "url": "https://www.france24.com/es/am%C3%A9rica-latina/20261122-diez-a%C3%B1os-del-acuerdo-de-paz-en-colombia-la-guerra-que-termin%C3%B3-y-las-promesas-que-quedaron-a-medias",
      "fecha": "2026-11-21 23:35"
+    }
+   ]
+  },
+  {
+   "iso2": "MX",
+   "pais": "México",
+   "titulares_72h": 2,
+   "medios": 2,
+   "prom_7d": 0.0,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "México captura al líder narco 'Chapo Isidro', uno de los más buscados por el FBI",
+     "fuente": "France 24 en español",
+     "url": "https://www.france24.com/es/video/20261121-m%C3%A9xico-captura-al-l%C3%ADder-narco-chapo-isidro-uno-de-los-m%C3%A1s-buscados-por-el-fbi",
+     "fecha": "2026-11-21 10:17"
+    },
+    {
+     "titulo": "Guasave despierta hecha una zona de guerra: “El hospital del IMSS estuvo secuestrado por sicarios y luego llegaron los militares”",
+     "fuente": "El País · Internacional",
+     "url": "https://elpais.com/mexico/2026-11-21/guasave-despierta-hecha-una-zona-de-guerra-el-hospital-del-imss-estuvo-secuestrado-por-sicarios-y-luego-llegaron-militares.html",
+     "fecha": "2026-11-21 18:53"
+    }
+   ]
+  },
+  {
+   "iso2": "CN",
+   "pais": "China",
+   "titulares_72h": 2,
+   "medios": 2,
+   "prom_7d": 1.0,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "Taiwán detecta 24 aeronaves militares chinas cerca de la isla, por dos del día anterior",
+     "fuente": "Infobae",
+     "url": "https://www.infobae.com/america/agencias/2026/11/22/taiwan-detecta-24-aeronaves-militares-chinas-cerca-de-la-isla-por-dos-del-dia-anterior/",
+     "fecha": "2026-11-22 05:31"
+    },
+    {
+     "titulo": "PLA anti-submarine ships conduct South China Sea patrol with Vietnamese navy",
+     "fuente": "SCMP Mundo",
+     "url": "https://www.scmp.com/news/china/military/article/3375372/pla-anti-submarine-ships-conduct-south-china-sea-patrol-vietnamese-navy",
+     "fecha": "2026-11-22 05:56"
     }
    ]
   },
@@ -86,43 +130,11 @@
    ]
   },
   {
-   "iso2": "MX",
-   "pais": "México",
-   "titulares_72h": 1,
-   "medios": 1,
-   "prom_7d": 0.0,
-   "revisar": false,
-   "ejemplos": [
-    {
-     "titulo": "México captura al líder narco 'Chapo Isidro', uno de los más buscados por el FBI",
-     "fuente": "France 24 en español",
-     "url": "https://www.france24.com/es/video/20261121-m%C3%A9xico-captura-al-l%C3%ADder-narco-chapo-isidro-uno-de-los-m%C3%A1s-buscados-por-el-fbi",
-     "fecha": "2026-11-21 10:17"
-    }
-   ]
-  },
-  {
    "iso2": "TW",
    "pais": "Taiwán",
    "titulares_72h": 1,
    "medios": 1,
    "prom_7d": 0.5,
-   "revisar": false,
-   "ejemplos": [
-    {
-     "titulo": "Taiwán detecta 24 aeronaves militares chinas cerca de la isla, por dos del día anterior",
-     "fuente": "Infobae",
-     "url": "https://www.infobae.com/america/agencias/2026/11/22/taiwan-detecta-24-aeronaves-militares-chinas-cerca-de-la-isla-por-dos-del-dia-anterior/",
-     "fecha": "2026-11-22 05:31"
-    }
-   ]
-  },
-  {
-   "iso2": "CN",
-   "pais": "China",
-   "titulares_72h": 1,
-   "medios": 1,
-   "prom_7d": 1.0,
    "revisar": false,
    "ejemplos": [
     {
@@ -146,6 +158,22 @@
      "fuente": "NYT Asia Pacífico",
      "url": "https://www.nytimes.com/2026/11/19/world/asia/rohingya-camps-photos-bangladesh.html",
      "fecha": "2026-11-19 13:27"
+    }
+   ]
+  },
+  {
+   "iso2": "VN",
+   "pais": "Vietnam",
+   "titulares_72h": 1,
+   "medios": 1,
+   "prom_7d": 0.0,
+   "revisar": false,
+   "ejemplos": [
+    {
+     "titulo": "PLA anti-submarine ships conduct South China Sea patrol with Vietnamese navy",
+     "fuente": "SCMP Mundo",
+     "url": "https://www.scmp.com/news/china/military/article/3375372/pla-anti-submarine-ships-conduct-south-china-sea-patrol-vietnamese-navy",
+     "fecha": "2026-11-22 05:56"
     }
    ]
   },
@@ -237,11 +265,12 @@
    "CO": 3,
    "FI": 1,
    "HT": 1,
-   "MX": 1,
+   "MX": 2,
+   "CN": 2,
    "TW": 1,
-   "CN": 1,
    "BD": 2,
    "MM": 1,
+   "VN": 1,
    "SV": 1,
    "SY": 1
   }
