@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-22T05:18:36-03:00",
+ "generado": "2026-11-22T05:38:21-03:00",
  "secciones": {
   "perspectivas": {
    "consultadas": [
@@ -7,7 +7,7 @@
      "fuente": "Bing Noticias · SEA aprueba proyectos",
      "url": "https://www.bing.com/news/search?q=SEA%20aprueba%20proyecto%20inversi%C3%B3n%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 8
+     "n": 9
     },
     {
      "fuente": "Bing Noticias · Comité de Ministros",
@@ -37,7 +37,7 @@
      "fuente": "Bing Noticias · Infraestructura y puertos",
      "url": "https://www.bing.com/news/search?q=proyecto%20puerto%20aeropuerto%20tren%20Chile%20inversi%C3%B3n&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 4
+     "n": 5
     },
     {
      "fuente": "Minería Chilena (RSS)",
@@ -428,6 +428,13 @@
      "resumen": "Chile proyecta $111.1 mil millones en inversión minera 2026-2035. Litio duplica su participación a $10.8 mil millones, pero enfrenta aprobaciones ambientales clave."
     },
     {
+     "fuente": "Revista Digital Minera REDIMIN",
+     "titulo": "Comisión Ambiental de Tarapacá aprueba proyecto de US$63 millones para reactivar la mina Sagasca",
+     "fecha": "2026-11-20 03:22",
+     "url": "https://www.redimin.cl/comision-ambiental-de-tarapaca-aprueba-proyecto-de-us-63-millones-para-reactivar-la-mina-sagasca",
+     "resumen": "La Comisión Ambiental de Tarapacá aprueba proyecto para reactivar mina Sagasca, extendiendo su vida útil y produciendo cátodos de cobre."
+    },
+    {
      "fuente": "Minería en Línea · proyectos mineros (RSS)",
      "titulo": "Endeavour Silver Avanza a Construcción: Pitarrilla Genera VPN de US$736M y Posiciona Durango como Productor Primario de Plata",
      "fecha": "2026-11-19 22:40",
@@ -699,13 +706,6 @@
      "fecha": "2026-11-17 01:27",
      "url": "https://www.msn.com/es-cl/tecnolog%C3%ADa/general/por-econ%C3%B3micamente-inviable-el-mayor-proyecto-de-hidr%C3%B3geno-verde-en-chile-se-qued%C3%B3-solo-en-el-papel/ar-AA2hC9QD",
      "resumen": "Lo que era el proyecto más grande ingresado en la historia del Sistema de Evaluación Ambiental (SEA) de Chile terminó por quedarse solo en el papel. H2 Magallanes, iniciativa de TotalEnergies que cont..."
-    },
-    {
-     "fuente": "Prensa Latina",
-     "titulo": "Retiran en Chile proyecto para producir hidrógeno verde",
-     "fecha": "2026-11-16 23:06",
-     "url": "https://www.prensa-latina.cu/2026/11/17/retiran-en-chile-proyecto-para-producir-hidrogeno-verde/",
-     "resumen": "Santiago de Chile, 17 nov (Prensa Latina) El multimillonario proyecto H2 Magallanes, para producir hidrógeno verde en esa región austral chilena, está hoy detenido por tiempo indefinido tras su retiro..."
     }
    ]
   },
@@ -810,7 +810,7 @@
      "fuente": "Bing Noticias · Empresas Chile",
      "url": "https://www.bing.com/news/search?q=empresas%20Chile%20%28utilidades%20OR%20inversi%C3%B3n%20OR%20exportaciones%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · Hacienda y presupuesto",
@@ -822,7 +822,7 @@
      "fuente": "Bing Noticias · Banco Central / IPC / dólar",
      "url": "https://www.bing.com/news/search?q=%28%22Banco%20Central%22%20OR%20IPC%20OR%20d%C3%B3lar%20OR%20IMACEC%29%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 3
+     "n": 4
     },
     {
      "fuente": "Bing Noticias · Inversiones y proyectos en Chile",
@@ -1584,7 +1584,7 @@
      "fuente": "Bing Noticias · FMI y Banco Mundial",
      "url": "https://www.bing.com/news/search?q=%28FMI%20OR%20%22Banco%20Mundial%22%20OR%20OCDE%29%20econom%C3%ADa&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 6
+     "n": 7
     },
     {
      "fuente": "Bing Noticias · Economía América Latina",
@@ -1602,7 +1602,7 @@
      "fuente": "Bing Noticias · Comercio internacional",
      "url": "https://www.bing.com/news/search?q=%28comercio%20internacional%20OR%20exportaciones%20OR%20aranceles%29%20econom%C3%ADa%20mundial&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 11
+     "n": 12
     },
     {
      "fuente": "Banco Central Europeo Prensa (RSS, inglés)",
@@ -1655,9 +1655,8 @@
     {
      "fuente": "MarketWatch Titulares (RSS, inglés)",
      "url": "https://feeds.marketwatch.com/marketwatch/topstories/",
-     "ok": false,
-     "n": 0,
-     "error": "HTTP 400"
+     "ok": true,
+     "n": 10
     },
     {
      "fuente": "OilPrice.com (RSS, inglés)",
@@ -1679,6 +1678,13 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "Al Jazeera · Economía (RSS, inglés)",
+     "titulo": "Gukesh vs Sindarov: The youngest World Chess Championship in history",
+     "fecha": "2026-11-22 05:11",
+     "url": "https://www.aljazeera.com/sports/2026/11/22/gukesh-vs-sindarov-the-youngest-world-chess-championship-in-history?traffic_source=rss",
+     "resumen": "India's Gukesh defends his title against Uzbekistan’s Sindarov in up to 14 games in Geneva from November 22."
+    },
     {
      "fuente": "DW en español (RSS)",
      "titulo": "La industria automotriz alemana busca reinventarse para sobrevivir",
@@ -1960,6 +1966,13 @@
      "resumen": "US Treasury Secretary Scott Bessent says he’s still living at a US military base, two weeks after an Israeli warning."
     },
     {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "My husband is happily retired at 64 and thinks I should keep working. Is he being fair?",
+     "fecha": "2026-11-21 22:15",
+     "url": "https://www.marketwatch.com/story/my-husband-is-happily-retired-at-64-and-thinks-i-should-keep-working-is-he-being-fair-325c5f38?mod=mw_rss_topstories",
+     "resumen": "“I’m exhausted. My alarm goes off at 6 a.m., and I have a 50-minute commute.”"
+    },
+    {
      "fuente": "Al Jazeera · Economía (RSS, inglés)",
      "titulo": "Moviegoers head for the exits as quake strikes Peru",
      "fecha": "2026-11-21 22:07",
@@ -1988,6 +2001,13 @@
      "resumen": "People say they often hear nothing back after applying for jobs. But could employers be forced to respond to every applicant?"
     },
     {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "My wife is bankrolling her family’s trips to New York and it’s draining our savings. Should I ask her to stop?",
+     "fecha": "2026-11-21 21:03",
+     "url": "https://www.marketwatch.com/story/my-wife-pays-thousands-of-dollars-for-her-family-to-visit-from-argentina-how-can-i-convince-her-to-stop-9381351c?mod=mw_rss_topstories",
+     "resumen": "“Hotel rooms can cost as much as $400 per night.”"
+    },
+    {
      "fuente": "OilPrice.com (RSS, inglés)",
      "titulo": "AI Boom Forces Massive Investment in Power Grids Worldwide",
      "fecha": "2026-11-21 21:00",
@@ -2014,6 +2034,13 @@
      "fecha": "2026-11-21 20:18",
      "url": "https://www.aljazeera.com/video/newsfeed/2026/11/21/iran-faces-a-silent-economic-war-says-iranian-president?traffic_source=rss",
      "resumen": "Iran faces a ‘silent economic war’, says Iranian president"
+    },
+    {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "I’m in my 40s. Should I accept a lower pension in exchange for naming my husband or child as a beneficiary?",
+     "fecha": "2026-11-21 20:05",
+     "url": "https://www.marketwatch.com/story/im-in-my-40s-should-i-accept-a-lower-pension-in-exchange-for-naming-my-husband-or-child-as-a-beneficiary-b2352059?mod=mw_rss_topstories",
+     "resumen": "“If I die before my husband, he will receive a lifetime pension equal to 50%–66% of my monthly benefit.”"
     },
     {
      "fuente": "BBC Mundo · Economía (RSS)",
@@ -2045,17 +2072,10 @@
     },
     {
      "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "Bahrain says Iranian attack causes a fire at an industrial facility",
+     "titulo": "Bahrain says Iranian attack caused fire at industrial facility",
      "fecha": "2026-11-21 18:31",
      "url": "https://www.aljazeera.com/news/2026/11/21/bahrain-says-iranian-attack-causes-fire-at-industrial-facility?traffic_source=rss",
-     "resumen": "Bahrain reports no injuries, as Iran's IRGC says it targeted US military positions at two bases in al-Riffa and Awali."
-    },
-    {
-     "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "Impunity fuels surge in settler violence across occupied West Bank",
-     "fecha": "2026-11-21 18:11",
-     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/21/impunity-fuels-surge-in-settler-violence-across-occupied-west-bank?traffic_source=rss",
-     "resumen": "Impunity fuels surge in settler violence across occupied West Bank"
+     "resumen": "Bahrain reports no injuries as Iran's IRGC says it targeted US military positions at two bases in al-Riffa and Awali."
     },
     {
      "fuente": "DW en español (RSS)",
@@ -2065,11 +2085,32 @@
      "resumen": "El Ministerio del Interior informó que 82.500 personas participaron en las protestas en todo el país. Los organizadores cifraron la participación en 150.000."
     },
     {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "‘It’s downright dirty’: My brother moved in with our ailing mother and closed her bank account. What can I do?",
+     "fecha": "2026-11-21 17:15",
+     "url": "https://www.marketwatch.com/story/it-is-heartbreaking-exhausting-and-downright-dirty-my-brother-took-over-our-ailing-mothers-life-and-finances-what-can-i-do-b4d48817?mod=mw_rss_topstories",
+     "resumen": "“It is devastating when the people you should be able to trust become the very people you have to protect yourself from.”"
+    },
+    {
      "fuente": "OilPrice.com (RSS, inglés)",
      "titulo": "Trump’s Coal Revival Is Costing Americans More Than Expected",
      "fecha": "2026-11-21 17:00",
      "url": "https://oilprice.com/Energy/Coal/Trumps-Coal-Revival-Is-Costing-Americans-More-Than-Expected.html",
      "resumen": "United States President Trump has doubled down on his support for fossil fuels since coming into office almost two years ago, including the most polluting of them all – coal. Just as many coal plants were on their way to retirement, Trump stepped in and stopped them from closing, backing his decision with federal…"
+    },
+    {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "‘I’ve been a stay-at-home mom’: I’m 50 and have a chronic illness. My husband lost his job. Should he raid his 401(k)?",
+     "fecha": "2026-11-21 16:45",
+     "url": "https://www.marketwatch.com/story/ive-been-a-stay-at-home-mom-im-50-and-have-a-chronic-illness-my-husband-lost-his-job-should-he-raid-his-401-k-63e59123?mod=mw_rss_topstories",
+     "resumen": "“Our financial and healthcare situation has become increasingly concerning.”"
+    },
+    {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "‘Buyers are out for blood’: With home sales at a record low, buyers are calling the shots",
+     "fecha": "2026-11-21 16:45",
+     "url": "https://www.marketwatch.com/story/buyers-are-out-for-blood-as-housing-market-finally-hits-rock-bottom-fa5093a6?mod=mw_rss_topstories",
+     "resumen": "The few buyers left in the market braving record-high home prices and 7% mortgage rates are starting to call the shots, real-estate agents say."
     },
     {
      "fuente": "OilPrice.com (RSS, inglés)",
@@ -2098,6 +2139,20 @@
      "fecha": "2026-11-21 15:23",
      "url": "https://cincodias.elpais.com/smartlife/smart-tv/2026-11-21/gta-vi-tiene-un-problema-con-el-hdr-y-un-experto-explica-como-mejorar-la-imagen-con-tres-ajustes-en-tu-televisor.html",
      "resumen": "El experto en televisores Vincent Teoh demuestra que el brillo real de GTA VI no coincide con los valores de calibración y explica cómo corregirlo"
+    },
+    {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "America is definitely rich enough to fix Social Security and Medicare. Here’s how.",
+     "fecha": "2026-11-21 15:20",
+     "url": "https://www.marketwatch.com/story/america-is-definitely-rich-enough-to-fix-social-security-and-medicare-heres-how-30678aa5?mod=mw_rss_topstories",
+     "resumen": "This one, simple, low-pain tax solves all the problems."
+    },
+    {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "‘Never too late to start’: Practical investing advice from some of the top women in finance",
+     "fecha": "2026-11-21 15:19",
+     "url": "https://www.marketwatch.com/story/never-too-late-to-start-practical-investing-advice-from-some-of-the-top-women-in-finance-e01f0755?mod=mw_rss_topstories",
+     "resumen": "There are plenty of rich and influential women in the U.S. Their time may be coming."
     },
     {
      "fuente": "Expansión España Economía (RSS)",
@@ -2154,6 +2209,20 @@
      "fecha": "2026-11-21 13:56",
      "url": "https://www.bbc.com/mundo/articles/c9p83kyykr73o?at_medium=RSS&at_campaign=rss",
      "resumen": "Fausto Isidro \"Chapo Idisro\" Meza Flores, acusado de narcotráfico y tortura, fue detenido tras un enfrentamiento armado con las autoridades."
+    },
+    {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "Is Social Security a Ponzi scheme? No. Don’t get carried away with 1930s-era prophecies of doom.",
+     "fecha": "2026-11-21 13:50",
+     "url": "https://www.marketwatch.com/story/the-thought-of-living-to-100-terrifies-me-is-social-security-a-giant-ponzi-scheme-84a64e7e?mod=mw_rss_topstories",
+     "resumen": "Wisconsin Republican Sen. Ron Johnson called Social Security a “scam” and urged lawmakers to shut it down."
+    },
+    {
+     "fuente": "MarketWatch Titulares (RSS, inglés)",
+     "titulo": "‘I’m sick of flying’: I paid for priority boarding, but the overhead bins were full. Was I duped?",
+     "fecha": "2026-11-21 13:50",
+     "url": "https://www.marketwatch.com/story/im-sick-of-flying-i-paid-for-priority-boarding-but-the-overhead-bins-were-full-was-i-duped-0badcc80?mod=mw_rss_topstories",
+     "resumen": "“Maybe next time I’ll try the other approach: I’ll board whenever I feel like it and drop my suitcase in the first open slot I see.”"
     },
     {
      "fuente": "El País · Economía (RSS)",
@@ -2238,76 +2307,6 @@
      "fecha": "2026-11-21 11:07",
      "url": "https://www.cnbc.com/2026/11/20/anthropic-ipo-ai-stock-market-selloff.html",
      "resumen": "Anthropic's IPO was a big public market success for the company, but Friday's selloff shows that valuing the AI stock will remain volatile for investors."
-    },
-    {
-     "fuente": "CNBC Mundo (RSS, inglés)",
-     "titulo": "An ‘illusion of glitz and glamour’: Inside California’s modern-day gold rush, where miners can bring in millions",
-     "fecha": "2026-11-21 11:05",
-     "url": "https://www.cnbc.com/make-it/2026/11/21/california-mining-modern-gold-rush.html",
-     "resumen": "The price of gold has sparked a modern-day gold rush in California. Small-scale miners are investing time, physical labor and money to unearth the yellow metal."
-    },
-    {
-     "fuente": "Yahoo Finanzas (RSS)",
-     "titulo": "GTA 6 se puede jugar en una PS4 desbloqueada, aunque PlayStation asegura que el juego nunca llegarÃ¡ a esa consola",
-     "fecha": "2026-11-21 11:05",
-     "url": "https://es-us.noticias.yahoo.com/gta-6-jugar-ps4-desbloqueada-140505374.html",
-     "resumen": ""
-    },
-    {
-     "fuente": "Cinco Días portada (RSS)",
-     "titulo": "Comu Action Pro: el aliado de bolsillo que transcribe tus reuniones utilizando IA",
-     "fecha": "2026-11-21 11:00",
-     "url": "https://cincodias.elpais.com/smartlife/gadgets/2026-11-21/comu-action-pro-caracteristicas-precio.html",
-     "resumen": "Este modelo es capaz de traducir hasta 113 idiomas y tiene una alta efectividad ya que integra seis micrófonos."
-    },
-    {
-     "fuente": "BBC Mundo · Economía (RSS)",
-     "titulo": "\"Los asesinatos se convirtieron en ficción\": cómo la prensa sensacionalista del siglo XIX creó el mito de Jack el Destripador",
-     "fecha": "2026-11-21 10:58",
-     "url": "https://www.bbc.com/mundo/articles/cme3dv15kpxqo?at_medium=RSS&at_campaign=rss",
-     "resumen": "Los crímenes ocurrieron en una Londres marcada por el nacimiento de la prensa amarillista, los pasquines con historias macabras y las novelas de misterio."
-    },
-    {
-     "fuente": "El País · Economía (RSS)",
-     "titulo": "Miles de personas marchan en Barcelona por la educación pública en vísperas a una nueva huelga",
-     "fecha": "2026-11-21 10:54",
-     "url": "https://elpais.com/espana/catalunya/2026-11-21/miles-de-personas-marchan-en-barcelona-por-la-educacion-publica-en-visperas-a-una-nueva-huelga.html",
-     "resumen": "La protesta, convocada por los sindicatos Ustec, CGT y la Intersindical, ha contado con la adhesión del Sindicato de Inquilinas"
-    },
-    {
-     "fuente": "CNBC Mundo (RSS, inglés)",
-     "titulo": "State and federal battle over prediction markets regulation heats up after midterms",
-     "fecha": "2026-11-21 10:12",
-     "url": "https://www.cnbc.com/2026/11/21/prediction-market-regulation-kalshi-cftc.html",
-     "resumen": "States, Congress and the CFTC are escalating the fight over prediction market regulation after the midterms."
-    },
-    {
-     "fuente": "CNBC Mundo (RSS, inglés)",
-     "titulo": "Warren Buffett quadruples Thanksgiving gifts: A breakdown of how much wealth he's giving away",
-     "fecha": "2026-11-21 10:01",
-     "url": "https://www.cnbc.com/2026/11/21/warren-buffett-quadruples-thanksgiving-gifts.html",
-     "resumen": "Warren Buffett more than quadrupled his Thanksgiving donations to four family foundations this year to $5.5 billion."
-    },
-    {
-     "fuente": "The Guardian Negocios (RSS, inglés)",
-     "titulo": "‘Little room for error’: what a debt-laden cloud computing company says about the AI boom",
-     "fecha": "2026-11-21 10:00",
-     "url": "https://www.theguardian.com/business/2026/nov/21/debt-laden-cloud-computing-company-coreweave-ai-boom",
-     "resumen": "‘Poster child of AI bubble’ CoreWeave symbolises increasingly risky business model of datacentre buildout The Egyptians had pyramids. The Roman empire had roads. The early 21st-century tech bros have massive buildings full of expensive glass and metal blocks providing the substratum for a powerful inhuman…"
-    },
-    {
-     "fuente": "Yahoo Finanzas (RSS)",
-     "titulo": "40.000 dÃ³lares: el suelo que Benjamin Cowen no descarta para Bitcoin",
-     "fecha": "2026-11-21 10:00",
-     "url": "https://es.finance.yahoo.com/noticias/40-000-d%C3%B3lares-suelo-benjamin-130007932.html",
-     "resumen": ""
-    },
-    {
-     "fuente": "CNBC Mundo (RSS, inglés)",
-     "titulo": "An early breakdown in the polar vortex is threatening already depleted gas stocks",
-     "fecha": "2026-11-21 09:47",
-     "url": "https://www.cnbc.com/2026/11/21/polar-vortex-europe-gas-prices.html",
-     "resumen": "Colder weather and low wind speeds could strain Europe’s gas market, where storage started winter at its lowest level in more than a decade."
     }
    ]
   },
@@ -2401,7 +2400,7 @@
      "fuente": "Bing Noticias · Política Chile",
      "url": "https://www.bing.com/news/search?q=pol%C3%ADtica%20Chile%20%28gobierno%20OR%20Congreso%20OR%20Senado%20OR%20C%C3%A1mara%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 8
+     "n": 7
     },
     {
      "fuente": "ADN Radio Chile (RSS)",
@@ -3140,7 +3139,7 @@
      "fuente": "La Tercera · Mundo (RSS)",
      "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/mundo/?outputType=xml",
      "ok": true,
-     "n": 31
+     "n": 30
     },
     {
      "fuente": "BBC Mundo (RSS)",
@@ -3259,7 +3258,7 @@
      "fuente": "Bing Noticias · Mundo (EE. UU.)",
      "url": "https://www.bing.com/news/search?q=Estados%20Unidos%20Casa%20Blanca&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 11
     },
     {
      "fuente": "ABC Australia Titulares (RSS, inglés)",
@@ -3390,18 +3389,193 @@
    ],
    "notas": [
     {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Elecciones generales 29-N, en directo | Nueva jornada de mítines por toda España: Sánchez y Feijóo estarán en Murcia, Abascal en Zaragoza y Colau en Canarias",
+     "fecha": "2026-11-22 05:35",
+     "url": "https://www.infobae.com/espana/2026/11/22/elecciones-generales-29-n-en-directo-nueva-jornada-de-mitines-por-toda-espana-sanchez-y-feijoo-estaran-en-murcia-abascal-en-zaragoza-y-colau-en-canarias/",
+     "resumen": "Falta una semana para los comicios. Los partidos tratan de movilizar a sus votantes en las regiones donde se prevé un resultado más ajustado"
+    },
+    {
      "fuente": "NYT Asia Pacífico (RSS, inglés)",
      "titulo": "South Korea’s Education Minister Resigns Over Anti-A.I. Cheating Rules",
-     "fecha": "2026-11-22 05:13",
+     "fecha": "2026-11-22 05:35",
      "url": "https://www.nytimes.com/2026/11/22/world/asia/korea-csat-exam-ai-cheating.html",
      "resumen": "Two days before South Korea’s college entrance exam, new measures were announced, including loud phone alerts and eyeglass inspections. Public backlash came fast."
     },
     {
      "fuente": "Infobae (RSS)",
-     "titulo": "Elecciones generales 29-N, en directo | Nueva jornada de mítines por toda España: Sánchez y Feijóo estarán en Murcia, Abascal en Zaragoza y Colau en Canarias",
+     "titulo": "Este lunes, último día de sondeos para el 29N, con casi todos de acuerdo en la alternancia",
+     "fecha": "2026-11-22 05:32",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/este-lunes-ultimo-dia-de-sondeos-para-el-29n-con-casi-todos-de-acuerdo-en-la-alternancia/",
+     "resumen": "Madrid, 22 nov (EFE).- Este lunes será el último día en el que se podrán publicar sondeos de cara a las elecciones generales del 29N, después de varias semanas de encuestas que en su mayoría pronostican una victoria del PP que le permitiría alcanzar la mayoría absoluta si pacta con Vox. Es la Ley Orgánica del Régimen…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cataluña y Barcelona mantienen activada la alerta este domingo por fuertes vientos",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/cataluna-y-barcelona-mantienen-activada-la-alerta-este-domingo-por-fuertes-vientos/",
+     "resumen": "Barcelona, 22 nov (EFE).- Protección Civil de la Generalitat mantiene activada este domingo la alerta por fuertes vientos, que pueden superar los 72 kilómetros por hora en puntos del litoral y prelitoral central y sur, mientras que el Ayuntamiento de Barcelona activó la pasada noche su propio plan municipal de…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Núñez Feijóo y Sánchez coincidirán este domingo en Murcia, donde celebrarán mítines con media hora de diferencia",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/nunez-feijoo-y-sanchez-coincidiran-este-domingo-en-murcia-donde-celebraran-mitines-con-media-hora-de-diferencia/",
+     "resumen": "El candidato del PP a la Presidencia del Gobierno, Alberto Núñez Feijóo, ofrecerá un mitin este domingo, 22 de noviembre, a las 12.00 horas, en la plaza del Cardenal Belluga, en Murcia, según han confirmado fuentes 'populares'. Se da la circunstancia de que media hora antes, a las 11.30, el candidato socialista…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Taiwán detecta 24 aeronaves militares chinas cerca de la isla, por dos del día anterior",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/22/taiwan-detecta-24-aeronaves-militares-chinas-cerca-de-la-isla-por-dos-del-dia-anterior/",
+     "resumen": "Taipéi, 22 nov (EFE).- El Ministerio de Defensa Nacional (MDN) de Taiwán informó este domingo de la detección de 24 aeronaves militares chinas en los alrededores de la isla en las últimas 24 horas, frente a las dos registradas en la jornada anterior, además de once buques de guerra y una embarcación oficial de China…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Bolaños participa este domingo en dos actos de campaña en Eivissa y Formentera",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/bolanos-participa-este-domingo-en-dos-actos-de-campana-en-eivissa-y-formentera/",
+     "resumen": "El ministro de Presidencia, Justicia y Relaciones con las Cortes, Félix Bolaños, participará este domingo en dos actos de campaña del PSIB que se celebrarán en Eivissa y en Formentera. El primero de ellos, según ha informado el partido, tendrá lugar a las 11.00 horas en Sa Cafeteria, en el municipio formenterense de…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Un ataque ruso provoca el derrumbe parcial de edificio de viviendas en la región de Kiev",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.infobae.com/america/agencias/2026/11/22/un-ataque-ruso-provoca-el-derrumbe-parcial-de-edificio-de-viviendas-en-la-region-de-kiev/",
+     "resumen": "Berlín, 22 nov (EFE).- Un ataque ruso derribó parcialmente la noche del sábado al domingo un edificio de viviendas en la localidad ucraniana de Dimer, en la región de Kiev, informó el Servicio de Estatal Emergencias de Ucrania (DSNS), que teme que haya siete personas bajo los escombros. \"Podría haber siete personas…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Ataque con drones y carro bomba contra batallón del Ejército en La Jagua de Ibirico, Cesar deja más de 13 heridos",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.infobae.com/colombia/2026/11/22/ataque-con-drones-y-carro-bomba-contra-batallon-del-ejercito-en-la-jagua-de-ibirico-cesar-deja-mas-de-13-heridos/",
+     "resumen": "El alcalde pidió a los habitantes permanecer en sus viviendas ante el riesgo de nuevas incursiones, mientras la Gobernación activó la red hospitalaria para atender a los uniformados lesionados"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Sorteo 5 de la Triplex de la Once: los números que dieron fortuna a los nuevos ganadores",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.infobae.com/espana/2026/11/22/sorteo-5-de-la-triplex-de-la-once-los-numeros-que-dieron-fortuna-a-los-nuevos-ganadores/",
+     "resumen": "Con las loterías de Juegos Once no solo puedes llegar a ganar varios euros en premios, sino que parte del dinero recaudado se destina a beneficios sociales"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Tellado y Sémper participan este domingo en actos de campaña en Mallorca y Formentera",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/tellado-y-semper-participan-este-domingo-en-actos-de-campana-en-mallorca-y-formentera/",
+     "resumen": "El secretario general del PP, Miguel Tellado, y el portavoz nacional del partido, Borja Sémper, participarán este domingo en sendos actos de campaña que tendrán lugar en Campos (Mallorca) y Formentera. El primero de ellos será el de Sémper, que tendrá lugar a las 11.15 horas en la playa dels Arenals, cerca del hotel…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Sainz, sobre la carrera de Las Vegas: \"Hicimos una carrera impecable\"",
+     "fecha": "2026-11-22 05:30",
+     "url": "https://www.infobae.com/america/agencias/2026/11/22/sainz-sobre-la-carrera-de-las-vegas-hicimos-una-carrera-impecable/",
+     "resumen": "Redacción deportes, 22 nov (EFE).- El piloto español de Fórmula Uno Carlos Sainz (Williams) se mostró contento con su carrera en Las Vegas, en los Estados Unidos, en la que fue octavo, y dijo que llevaron a cabo \"una carrera impecable\". \"Estoy muy contento y orgulloso de nuestro rendimiento de hoy. Un P8 puede no…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La ministra Tolón participará este domingo en un acto de campaña del PSOE en Camargo (Cantabria)",
+     "fecha": "2026-11-22 05:30",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/la-ministra-tolon-participara-este-domingo-en-un-acto-de-campana-del-psoe-en-camargo-cantabria/",
+     "resumen": "La ministra de Educación y Deportes, Milagros Tolón, participará este domingo, 22 de noviembre, en un acto electoral del PSOE de Cantabria en Camargo. En concreto, será en una comida mitin que tendrá lugar en la bolera de Cros de Maliaño. El acto comenzará a las 13.45 horas y junto a ella intervendrán el secretario…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Alonso: \"Ha sido muy difícil, mi motor iba mal y hubo problemas en la unidad de potencia\"",
+     "fecha": "2026-11-22 05:30",
+     "url": "https://www.infobae.com/america/agencias/2026/11/22/alonso-ha-sido-muy-dificil-mi-motor-iba-mal-y-hubo-problemas-en-la-unidad-de-potencia/",
+     "resumen": "Redacción deportes, 22 nov (EFE).- El español Fernando Alonso (Aston Martin), que abandonó el Gran Premio de Las Vegas (Estados Unidos) antes de cruzar la línea de meta, reconoció que la carrera fue \"muy difícil\" porque su motor iba \"mal y hubo problemas en la unidad de potencia\". Durante la carrera, Alonso reportó…"
+    },
+    {
+     "fuente": "SCMP Mundo (RSS, inglés)",
+     "titulo": "UK needs real China expertise, not more hawks and ideologues",
+     "fecha": "2026-11-22 05:30",
+     "url": "https://www.scmp.com/opinion/world-opinion/article/3375168/uk-needs-real-china-expertise-not-more-hawks-and-ideologues",
+     "resumen": "If the British government wants to make an enemy of China, one sure way is to sideline the real experts – those who reject binary sound bites in favour of deeper analysis. That is the warning from the sinologist Kerry Brown, and it has sparked a debate in the Financial Times letters pages. The trigger was a report by…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "¿Quiénes siguen en la lista de los más buscados del FBI tras la captura de ‘El Chapo Isidro’?",
+     "fecha": "2026-11-22 05:28",
+     "url": "https://www.infobae.com/mexico/2026/11/22/quienes-siguen-en-la-lista-de-los-mas-buscados-del-fbi-tras-la-captura-de-el-chapo-isidro/",
+     "resumen": "Entre los criminales que permanecen prófugos figuran presuntos líderes de organizaciones delictivas, acusados de narcotráfico, terrorismo, asesinatos y fraudes millonarios"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El tiempo en España este domingo 22 de noviembre: bajan las temperaturas en todo el país, pero remiten las lluvias",
+     "fecha": "2026-11-22 05:26",
+     "url": "https://www.infobae.com/espana/2026/11/22/el-tiempo-en-espana-este-domingo-22-de-noviembre-bajan-las-temperaturas-en-todo-el-pais-pero-remiten-las-lluvias/",
+     "resumen": "La Aemet prevé rachas de viento muy fuertes en el área cantábrica, Baleares, el tercio oriental peninsular y zonas de montaña del centro y del sur"
+    },
+    {
+     "fuente": "SCMP Mundo (RSS, inglés)",
+     "titulo": "Hong Kong can help connect global bay areas, Paul Chan says",
+     "fecha": "2026-11-22 05:23",
+     "url": "https://www.scmp.com/news/hong-kong/hong-kong-economy/article/3375369/hong-kong-can-help-connect-global-bay-areas-paul-chan-says",
+     "resumen": "Hong Kong can make a distinctive contribution to the proposed world association of bay areas by leveraging its strengths in finance, common law, innovation and international networks to connect counterparts across the Asia-Pacific, the city’s financial secretary has said. Paul Chan Mo-po highlighted Hong Kong’s role…"
+    },
+    {
+     "fuente": "ABC Australia Titulares (RSS, inglés)",
+     "titulo": "CA says Cummins backing not a sign it is taking sides in sandpaper spat",
+     "fecha": "2026-11-22 05:20",
+     "url": "https://www.abc.net.au/news/2026-11-22/cricket-australia-not-picking-sides-cummins-sandpaper-feud/107414652",
+     "resumen": "Cricket Australia insists its backing of Pat Cummins to remain Australia's cricket captain does not mean it does not believe the accounts of other players."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Aegesen declara como testigo este lunes en un juzgado madrileño por la ayuda a Air Europa",
+     "fecha": "2026-11-22 05:16",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/aegesen-declara-como-testigo-este-lunes-en-un-juzgado-madrileno-por-la-ayuda-a-air-europa/",
+     "resumen": "Madrid, 22 nov (EFE).- La vicepresidenta tercera del Gobierno y ministra de Transición Ecológica, Sara Aagesen, declara este lunes como testigo por videoconferencia en el juzgado de instrucción nº 49 de Madrid, en la causa que investiga presuntas irregularidades en las ayudas a Air Europa. Un día después, el martes…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Temblor en Perú: sismo de magnitud 5.1 con epicentro en Pasco",
+     "fecha": "2026-11-22 05:16",
+     "url": "https://www.infobae.com/peru/2026/11/22/temblor-en-peru-sismo-de-magnitud-51-con-epicentro-en-cerro/",
+     "resumen": "El movimiento telúrico ocurrió a las 00:51 del 22 de noviembre, a 25 kilómetros al sureste de Cerro de Pasco. El Instituto Geofísico del Perú informó que tuvo una profundidad de 132 kilómetros y una intensidad IV en la ciudad"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La factura del compás: los tablaos flamencos mueven unos 500.000 euros diarios",
+     "fecha": "2026-11-22 05:16",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/la-factura-del-compas-los-tablaos-flamencos-mueven-unos-500000-euros-diarios/",
+     "resumen": "Daniela Goncalves Da Silva Madrid, 22 nov (EFE).- Entre el compás de los tacones y el rasgueo de las guitarras, los tablaos y las salas de espectáculos recurrentes de flamenco mueven unos 500.000 euros diarios, explica a EFE el investigador y director de la guía Flama, Isidoro Cascajo. Cascajo detalla que esa cifra…"
+    },
+    {
+     "fuente": "Europa Press · Internacional (RSS)",
+     "titulo": "La detenciÃ³n por el ICE de un padre y su hija en un aeropuerto de Seattle desata una oleada de indignaciÃ³n y crÃ­ticas",
+     "fecha": "2026-11-22 05:16",
+     "url": "https://www.europapress.es/internacional/noticia-detencion-ice-padre-hija-aeropuerto-seattle-desata-oleada-indignacion-criticas-20261122091626.html",
+     "resumen": "La detenciÃ³n de un hombre y su hija por agentes enmascarados del Servicio de InmigraciÃ³n y Control de Aduanas de Estados Unidos (ICE) en el Aeropuerto Internacional de Seattle-Tacoma ha provocado una fuerte reacciÃ³n de rechazo a nivel social y polÃ­tico, despuÃ©s de que varios vÃ­deos del operativo, desarrollado…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Eisenkot califica de \"terrorismo judío\" ataques de colonos en Cisjordania y pide arrestos",
+     "fecha": "2026-11-22 05:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/22/eisenkot-califica-de-terrorismo-judio-ataques-de-colonos-en-cisjordania-y-pide-arrestos/",
+     "resumen": "Jerusalén, 22 nov (EFE).- El líder opositor israelí, Gadi Eisenkot, calificó este domingo de \"terrorismo judío\" los ataques e incendios iniciados anoche por colonos en diferentes pueblos de Cisjordania, y dijo que Israel debe emplear \"todos los medios\", incluidas las detenciones administrativas, para castigarlos. \"La…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Francia tilda de \"retroceso inaceptable\" el borrador de la presidencia de la COP31",
+     "fecha": "2026-11-22 05:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/22/francia-tilda-de-retroceso-inaceptable-el-borrador-de-la-presidencia-de-la-cop31/",
+     "resumen": "Antalya (Turquía), 22 nov (EFE).- La ministra de Transición Ecológica y Desarrollo Sostenible de Francia, Monique Barbut, consideró este domingo un \"retroceso inaceptable\" el nuevo borrador presentado por la presidencia turco-australiana de la Cumbre del Clima de Antalya (COP31), que se prepara para celebrar su…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "15 Equipos de Primera esperan rival en la segunda ronda de la Copa del Rey",
+     "fecha": "2026-11-22 05:15",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/22/15-equipos-de-primera-esperan-rival-en-la-segunda-ronda-de-la-copa-del-rey/",
+     "resumen": "Madrid, 22 nov (EFE).- El sorteo de la segunda ronda de la Copa del Rey contará con la participación de 15 equipos de Primera División, que volverán a enfrentarse a otros tantos clubes de Primera y Segunda RFEF y al único procedente de la Copa Federación, el Sestao River, que sigue en competición tras eliminar al…"
+    },
+    {
+     "fuente": "Al Jazeera (RSS, inglés)",
+     "titulo": "Gukesh vs Sindarov: The youngest World Chess Championship in history",
      "fecha": "2026-11-22 05:11",
-     "url": "https://www.infobae.com/espana/2026/11/22/elecciones-generales-29-n-en-directo-nueva-jornada-de-mitines-por-toda-espana-sanchez-y-feijoo-estaran-en-murcia-abascal-en-zaragoza-y-colau-en-canarias/",
-     "resumen": "Falta una semana para los comicios. Los partidos tratan de movilizar a sus votantes en las regiones donde se prevé un resultado más ajustado"
+     "url": "https://www.aljazeera.com/sports/2026/11/22/gukesh-vs-sindarov-the-youngest-world-chess-championship-in-history?traffic_source=rss",
+     "resumen": "India's Gukesh defends his title against Uzbekistan’s Sindarov in up to 14 games in Geneva from November 22."
     },
     {
      "fuente": "Japan Times (RSS, inglés)",
@@ -3527,7 +3701,7 @@
      "titulo": "Europeans dare to believe Trump could deliver security for Ukraine",
      "fecha": "2026-11-22 04:44",
      "url": "https://www.politico.eu/article/europeans-dare-to-believe-trump-could-deliver-security-for-ukraine/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
-     "resumen": "After months of anxiety, some of Kyiv's allies now think the U.S will help deliver an acceptable peace."
+     "resumen": "After months of anxiety, some of Kyiv's allies now think the U.S will help them negotiate an acceptable peace."
     },
     {
      "fuente": "Infobae (RSS)",
@@ -3586,6 +3760,13 @@
      "resumen": "Los operativos se realizaron en Cauca, Risaralda y Norte de Santander. El balance incluye la destrucción de dos laboratorios, capturas y el sometimiento de integrantes de las disidencias de las FARC"
     },
     {
+     "fuente": "Europa Press · Internacional (RSS)",
+     "titulo": "Miles de personas salen a protestar en Lisboa contra los presupuestos de 2027 y el coste de la vida",
+     "fecha": "2026-11-22 04:18",
+     "url": "https://www.europapress.es/internacional/noticia-miles-personas-salen-protestar-lisboa-contra-presupuestos-2027-costo-vida-20261122081858.html",
+     "resumen": "Varios miles de personas han participado este sÃ¡bado en la manifestaciÃ³n nacional convocada por el sindicato CGTP, en Lisboa, la capital de Portugal, bajo el lema 'Una nueva direcciÃ³n para Portugal' para protestar contra el presupuesto de 2027 que se votarÃ¡ en el Parlamento la prÃ³xima semana."
+    },
+    {
      "fuente": "Infobae (RSS)",
      "titulo": "Rusia derriba 170 drones ucranianos sobre ocho regiones y los mares Negro y Azov",
      "fecha": "2026-11-22 04:15",
@@ -3615,7 +3796,7 @@
     },
     {
      "fuente": "The Guardian Mundo (RSS, inglés)",
-     "titulo": "Fire at confectionary factory in Indonesia leaves at least three dead and dozens missing",
+     "titulo": "Fire at confectionery factory in Indonesia leaves at least three dead and dozens missing",
      "fecha": "2026-11-22 04:11",
      "url": "https://www.theguardian.com/world/2026/nov/22/fire-confectionary-factory-indonesia-jakarta",
      "resumen": "Relatives of the missing victims flocked to the factory’s entrance, seeking updates about their loved ones A fire at a confectionery factory west of Jakarta has killed three people with 36 remaining missing, an Indonesian rescue official says. Drone footage showed large parts of the factory destroyed, with the roof…"
@@ -3633,13 +3814,6 @@
      "fecha": "2026-11-22 04:08",
      "url": "https://www.infobae.com/america/mundo/2026/11/22/reino-unido-pidio-mas-respaldo-a-ucrania-tras-la-caida-de-misiles-rusos-en-polonia-sabemos-a-quien-nos-enfrentamos/",
      "resumen": "Wes Streeting, titular de la cartera de Defensa británica, calificó el episodio en territorio polaco como “una provocación escandalosa” por parte del Kremlin y criticó a Vladimir Putin por hablar de paz en cumbres internacionales y luego lanzar ataques contra civiles"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Temblor en Perú: sismo de magnitud 5.1 con epicentro en Cerro de Pasco",
-     "fecha": "2026-11-22 04:05",
-     "url": "https://www.infobae.com/peru/2026/11/22/temblor-en-peru-sismo-de-magnitud-51-con-epicentro-en-cerro/",
-     "resumen": "El movimiento telúrico ocurrió a las 00:51 del 22 de noviembre, a 25 kilómetros al sureste de Cerro de Pasco. El Instituto Geofísico del Perú informó que tuvo una profundidad de 132 kilómetros y una intensidad IV en la ciudad"
     },
     {
      "fuente": "Japan Times (RSS, inglés)",
@@ -3831,181 +4005,6 @@
      "resumen": "El Gobierno llegaría con los justo para suspender las elecciones primarias y se le animan los aliados menos representativos. La falta de avances económicos vuelve al centro de la escena y el Presidente perdió el control de su relato. La “political session” de Bullrich y qué hay detrás de la reforma electoral. La Casa…"
     },
     {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Delirios y fantasías, en medio de una tempestad impiadosa",
-     "fecha": "2026-11-22 03:52",
-     "url": "https://www.infobae.com/opinion/2026/11/22/delirios-y-fantasias-en-medio-de-una-tempestad-impiadosa/",
-     "resumen": "Según Milei, en Argentina cae la pobreza, suben las jubilaciones, crece la economía y se instalan las grandes marcas. Por alguna razón, una y otra vez, los presidentes creen que al repetir datos falsos la gente los va querer un poco más. Pero el riesgo es que al dolor de una situación difícil se le agregue la…"
-    },
-    {
-     "fuente": "Times of India Mundo (RSS, inglés)",
-     "titulo": "After Ukraine strikes, Crimea bridge to take 'few months' to clear",
-     "fecha": "2026-11-22 03:49",
-     "url": "https://timesofindia.indiatimes.com/world/europe/after-relentless-ukraine-strikes-russia-to-take-at-least-a-few-months-to-clear-crimea-bridge/articleshow/136069125.cms",
-     "resumen": "Ukraine's defense minister has stated that clearing the debris from the Kerch Strait Bridge will span several months following its damage from Ukrainian drone and missile strikes targeted at the automobile section. President Zelenskyy has called these strikes a critical retaliation against Russian aggressions towards…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Lula da Silva defendió su plan de ajuste fiscal y descartó recortes a programas sociales",
-     "fecha": "2026-11-22 03:45",
-     "url": "https://www.infobae.com/america/america-latina/2026/11/22/lula-da-silva-defendio-su-plan-de-ajuste-fiscal-y-descarto-recortes-a-programas-sociales/",
-     "resumen": "“Vamos a dirigir el país de la forma como queremos. No es el sistema financiero el que me va a decirnos cómo dirigir el país”, sostuvo el mandatario brasileño mientras intenta recuperar el control de las cuentas públicas"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La turbulencia financiera antes de tiempo: qué números mira Milei y los planes políticos de la Casa Rosada",
-     "fecha": "2026-11-22 03:44",
-     "url": "https://www.infobae.com/politica/2026/11/22/la-turbulencia-financiera-antes-de-tiempo-que-numeros-mira-milei-y-los-planes-politicos-de-la-casa-rosada/",
-     "resumen": "El oficialismo transita por una dualidad. Con sus matices, el oficialismo logra articular los apoyos para su agenda parlamentaria, pero el riesgo país supera los 1.000 puntos y los activos financieros se desploman. Hay motivos que generan expectativas en el Gobierno. La nueva disposición política de la mesa chica…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Resultado del Baloto y Revancha HOY: números ganadores del sábado 21 de noviembre",
-     "fecha": "2026-11-22 03:42",
-     "url": "https://www.infobae.com/colombia/2026/11/22/baloto-y-revancha-numeros-ganadores-del-sabado-21-de-noviembre/",
-     "resumen": "Enseguida los resultados del sorteo Baloto y averigüe si ha sido uno de los ganadores"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Resultado oficial Lotería del Cauca, estos fueron los números ganadores hoy 21 de noviembre",
-     "fecha": "2026-11-22 03:41",
-     "url": "https://www.infobae.com/colombia/2026/11/22/resultado-loteria-del-cauca-hoy-21-de-noviembre/",
-     "resumen": "Como cada sábado, aquí están los resultados ganadores del último sorteo de esta lotería colombiana"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Sorteo Chontico Noche hoy, sábado 21 de noviembre de 2026: verifica aquí el resultado ganador",
-     "fecha": "2026-11-22 03:41",
-     "url": "https://www.infobae.com/colombia/2026/11/22/resultado-chontico-noche-numeros-ganadores-del-ultimo-sorteo-hoy-sabado-21-de-noviembre-de-2026/",
-     "resumen": "Los sorteos de esta lotería se llevan a cabo todas las noches en el país. A continuación le compartimos los últimos números que salieron ganadores"
-    },
-    {
-     "fuente": "Al Jazeera (RSS, inglés)",
-     "titulo": "Kansas City Current defeat Washington Spirit 2-1 to lift first NWSL title",
-     "fecha": "2026-11-22 03:40",
-     "url": "https://www.aljazeera.com/sports/2026/11/22/kansas-city-current-nwsl-2026-final-washington-spirit-womens-soccer?traffic_source=rss",
-     "resumen": "Trinity Rodman left in tears after scoring Spirit's only goal as DiBernardo and Debinha give Current a closely fought win."
-    },
-    {
-     "fuente": "Times of India Mundo (RSS, inglés)",
-     "titulo": "6 buyers win back apartment deposits as developer moved completion date forward",
-     "fecha": "2026-11-22 03:40",
-     "url": "https://timesofindia.indiatimes.com/world/rest-of-world/6-buyers-won-back-their-pre-construction-apartment-deposits-after-a-developer-moved-completion-forward-by-a-year-but-notified-them-six-months-later-supreme-court-of-british-columbia-ruled-the-delay-breached-disclosure-rules/articleshow/135992456.cms",
-     "resumen": ""
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Felipe Zuleta revela cómo Juliana Guerrero llegó al círculo de Petro: “Llegaba a la Casa de Nariño a dar órdenes”",
-     "fecha": "2026-11-22 03:39",
-     "url": "https://www.infobae.com/colombia/2026/11/22/felipe-zuleta-revela-como-juliana-guerrero-llego-al-circulo-de-petro-llegaba-a-la-casa-de-narino-a-dar-ordenes/",
-     "resumen": "El periodista contó que la joven y su hermana eran activistas petristas en el Cesar antes de trasladarse a Bogotá. También relató los presuntos conflictos de la joven con Verónica Alcocer y su creciente influencia dentro del Gobierno"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Temblor hoy en Perú EN VIVO: Último sismo de 5.1 se sintió en Lima y varias regiones del país",
-     "fecha": "2026-11-22 03:37",
-     "url": "https://www.infobae.com/peru/2026/11/21/temblor-hoy-en-peru-en-vivo-ultimos-sismos-epicentro-y-reporte-del-igp-del-sabado-21-de-noviembre-de-2026/",
-     "resumen": "El sismo se registró durante la madrugada de este domingo 22 de noviembre, con epicentro en la región Pasco, según el Instituto Geofísico del Perú (IGP). El movimiento ocurre después de los temblores de magnitud 6,7 y 5,0 registrados en Junín entre el viernes y el sábado"
-    },
-    {
-     "fuente": "SCMP Mundo (RSS, inglés)",
-     "titulo": "South Korea’s education minister quits amid backlash over anti-cheating exam checks",
-     "fecha": "2026-11-22 03:36",
-     "url": "https://www.scmp.com/news/asia/east-asia/article/3375362/south-koreas-education-minister-quits-amid-backlash-over-anti-cheating-exam-checks",
-     "resumen": "South Korea’s education minister resigned on Sunday over an artificial intelligence-assisted cheating scandal that erupted ahead of the country’s major college entrance exam this week. The country has been gripped by fears of AI-assisted exam cheating since last Sunday, when the top scorer in a national tax…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "EN VIVO | Clima CDMX y resto de México hoy domingo 22 de noviembre: frente frío 8 provocará lluvias y descenso de temperatura",
-     "fecha": "2026-11-22 03:33",
-     "url": "https://www.infobae.com/mexico/2026/11/22/en-vivo-clima-cdmx-y-resto-de-mexico-hoy-domingo-22-de-noviembre-frente-frio-8-provocara-lluvias-y-descenso-de-temperatura/",
-     "resumen": "Consulta en tiempo real actualizaciones, alertas, noticias y reportes sobre las condiciones meteorológicas en el país"
-    },
-    {
-     "fuente": "Al Jazeera (RSS, inglés)",
-     "titulo": "What Sandpapergate reveals about Australian cricket",
-     "fecha": "2026-11-22 03:32",
-     "url": "https://www.aljazeera.com/opinions/2026/11/22/what-sandpapergate-reveals-about-australian-cricket?traffic_source=rss",
-     "resumen": "A toxic culture of winning at any cost has been hiding behind the myth of ‘mateship’."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Ante la llegada del crudo invierno, Ucrania comienza la lucha por mantener el frío fuera de las casas",
-     "fecha": "2026-11-22 03:30",
-     "url": "https://www.infobae.com/america/mundo/2026/11/22/ante-la-llegada-del-crudo-invierno-ucrania-comienza-la-lucha-por-mantener-el-frio-fuera-de-las-casas/",
-     "resumen": "La escasez de instaladores de ventanas calificados afecta a los ucranianos afectados por los bombardeos rusos a edificios residenciales. Las empresas no pueden eximir a sus empleados del servicio militar y se dificulta la tarea"
-    },
-    {
-     "fuente": "Politico Europe (RSS, inglés)",
-     "titulo": "Security Sunday: Der Kampf um die Arktis – mit Robert Habeck",
-     "fecha": "2026-11-22 03:30",
-     "url": "https://www.politico.eu/podcast/berlin-playbook-podcast/security-sunday-der-kampf-um-die-arktis-mit-robert-habeck/?utm_source=RSS_Feed&utm_medium=RSS&utm_campaign=RSS_Syndication",
-     "resumen": "Zum ersten Mal in der Menschheitsgeschichte entsteht ein neuer Ozean und mit dem schmelzenden Eis der Arktis entbrennt ein Wettlauf der Großmächte. Es öffnet sich eine neue geopolitische Front. Im Gespräch mit POLITICO-Host Rixa Fürsen analysiert der ehemalige Vizekanzler Robert Habeck die brisante Lage am Nordpol…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Regresa a El Salvador restos de militar fallecido tras explosión en Haití",
-     "fecha": "2026-11-22 03:29",
-     "url": "https://www.infobae.com/el-salvador/2026/11/22/regresa-a-el-salvador-restos-de-militar-fallecidos-tras-una-explosion-en-haiti/",
-     "resumen": "Familiares, amigos y vecinos recibieron en el cantón Valle Nuevo, en Olocuilta, los restos de Cristian Daniel Santos Palacios, uno de los tres integrantes de la Fuerza Armada de El Salvador que murieron en el país caribeño"
-    },
-    {
-     "fuente": "SCMP Mundo (RSS, inglés)",
-     "titulo": "Tai Po fire: 1 year on",
-     "fecha": "2026-11-22 03:22",
-     "url": "https://www.scmp.com/news/hong-kong/society/series/3375359/tai-po-fire-1-year",
-     "resumen": ""
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "América pierde ante Tigres: Juan Brunetta marca al 90+1 con un golazo y frustra su pelea por el liderato de la Liga MX",
-     "fecha": "2026-11-22 03:20",
-     "url": "https://www.infobae.com/mexico/deportes/2026/11/22/america-pierde-ante-tigres-juan-brunetta-marca-al-901-con-un-golazo-y-frustra-su-pelea-por-el-liderato-de-la-liga-mx/",
-     "resumen": "El conjunto azulcrema dejó escapar la oportunidad de cerrar la fase regular con una victoria y aspirar al liderato general del Apertura 2026"
-    },
-    {
-     "fuente": "ABC Australia Titulares (RSS, inglés)",
-     "titulo": "Horne-Francis planning to recruit Nasiah during AFL Origin camp",
-     "fecha": "2026-11-22 03:12",
-     "url": "https://www.abc.net.au/news/2026-11-22/afl-origin-teams-horne-francis-nasiah-recruitment-plan/107414456",
-     "resumen": "Jason Horne-Francis says he will use South Australia's Origin camp to try and recruit Nasiah Wanganeen-Milera to Port Adelaide."
-    },
-    {
-     "fuente": "ABC Australia Titulares (RSS, inglés)",
-     "titulo": "India breaks New Zealand Test record with monster innings in Wellington",
-     "fecha": "2026-11-22 03:12",
-     "url": "https://www.abc.net.au/news/2026-11-22/cricket-india-highest-test-score-against-new-zealand/107414256",
-     "resumen": "India's star-studded batting line-up puts New Zealand's bowling attack to the sword in ruthless fashion as the records tumble in Wellington."
-    },
-    {
-     "fuente": "ABC Australia Titulares (RSS, inglés)",
-     "titulo": "'One-in-2,000-year weather' to be investigated post-blackout",
-     "fecha": "2026-11-22 03:06",
-     "url": "https://www.abc.net.au/news/2026-11-22/eyre-peninsula-blackout-weather-to-be-investigated/107404306",
-     "resumen": "The SA government says the suggestion that a \"one-in-2,000-year weather event\" was responsible for the Eyre Peninsula blackout will be critically examined amid ongoing fallout from the incident."
-    },
-    {
-     "fuente": "Japan Times (RSS, inglés)",
-     "titulo": "Giants coach John Harbaugh ‘happy’ to see Cam Skattebo end backflip celebration",
-     "fecha": "2026-11-22 03:06",
-     "url": "https://www.japantimes.co.jp/sports/2026/11/22/more-sports/cam-skattebo-backflip-retire/",
-     "resumen": "Skattebo's call to curb his acrobatics came after Detroit Lions star Aidan Hutchinson tore his ACL while celebrating after a sack last week."
-    },
-    {
-     "fuente": "BBC News · World (RSS, inglés)",
-     "titulo": "Three killed and dozens missing after fire at Indonesian factory",
-     "fecha": "2026-11-22 03:05",
-     "url": "https://www.bbc.co.uk/news/articles/cw8dvg5pgm0eo?at_medium=RSS&at_campaign=rss",
-     "resumen": "At least three people were killed and 36 are still missing after a fire at a confectionary factory."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Viajar en modo silver: Hawái, entre las huellas de la guerra y el cuidado de la vida",
-     "fecha": "2026-11-22 03:05",
-     "url": "https://www.infobae.com/generacion-silver/2026/11/22/viajar-en-modo-silver-hawai-entre-las-huellas-de-la-guerra-y-el-cuidado-de-la-vida/",
-     "resumen": "Una crónica sobre el significado de recorrer Honolulu con el ritmo y la perspectiva que dan los años, lejos de las apuradas del turismo tradicional. La experiencia invita a pensar en el rol activo de nuestra generación, la memoria histórica y la urgencia de cuidar el mundo que dejamos"
-    },
-    {
      "fuente": "Al Jazeera (RSS, inglés)",
      "titulo": "Displaced Darfur families face volatile winter as Sudan aid cuts bite",
      "fecha": "2026-11-22 02:21",
@@ -4109,7 +4108,7 @@
      "fuente": "Bing Noticias · Emprendimiento Chile",
      "url": "https://www.bing.com/news/search?q=%28emprendimiento%20OR%20startup%20OR%20%22capital%20de%20riesgo%22%29%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 6
+     "n": 7
     },
     {
      "fuente": "Bing Noticias · Innovación pymes",
@@ -4163,7 +4162,7 @@
      "fuente": "Bing Noticias · Innovación y empresas Chile",
      "url": "https://www.bing.com/news/search?q=innovaci%C3%B3n%20empresas%20Chile%20%28Corfo%20OR%20ANID%20OR%20%22Start-Up%20Chile%22%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 10
     },
     {
      "fuente": "CNC Camara Nacional de Comercio (RSS)",
@@ -4186,12 +4185,25 @@
     {
      "fuente": "Sercotec (RSS)",
      "url": "https://www.sercotec.cl/feed/",
-     "ok": false,
-     "n": 0,
-     "error": "robots.txt no respondió"
+     "ok": true,
+     "n": 10
     }
    ],
    "notas": [
+    {
+     "fuente": "Ecosistema Startup (RSS)",
+     "titulo": "Natan VC: el fondo de BIND que invierte hasta US$250.000",
+     "fecha": "2026-11-22 05:21",
+     "url": "https://ecosistemastartup.com/natan-vc-el-fondo-de-bind-que-invierte-hasta-us250-000/",
+     "resumen": "Un cheque de hasta US$250.000 y una puerta de entrada a los bancos Grupo BIND creó Natan VC, su fondo de inversión corporativa, con tickets de entre US$50.000 y US$250.000 para startups en etapa pre-seed y seed. Para un founder que está levantando su primera ronda en Argentina, la diferencia no está en el monto…"
+    },
+    {
+     "fuente": "Ecosistema Startup (RSS)",
+     "titulo": "España y las startups bonsái: 12 unicornios y 91% de rondas",
+     "fecha": "2026-11-22 05:21",
+     "url": "https://ecosistemastartup.com/espana-y-las-startups-bonsai-12-unicornios-y-91-de-rondas/",
+     "resumen": "España crea startups, pero no las hace crecer El 91% de las rondas de financiación cerradas en España en los últimos siete años no llegó a los cinco millones de euros. El dato no viene de un blog pesimista, sino del primer diagnóstico de la OCDE sobre el ecosistema de emprendimiento innovador español, publicado a…"
+    },
     {
      "fuente": "Ecosistema Startup (RSS)",
      "titulo": "Startups españolas captan 3.827M€ hasta septiembre, +49%",
@@ -4368,13 +4380,6 @@
      "resumen": "Radar, la fintech chilena especializada en dispersión de pagos, abrirá operaciones en Perú durante el primer trimestre de 2027, reveló su cofundadora y directora de Ingresos, Amanda Jacobson, quien es..."
     },
     {
-     "fuente": "ecosistemastartup",
-     "titulo": "Yuno, la fintech de pagos, refuerza su IA en Black Friday",
-     "fecha": "2026-11-19 05:24",
-     "url": "https://ecosistemastartup.com/yuno-la-fintech-de-pagos-refuerza-su-ia-en-black-friday/",
-     "resumen": "Black Friday en Chile: la venta que se cae en el último clic El comercio electrónico chileno movió cerca de $9,5 billones de pesos en 2025 —casi..."
-    },
-    {
      "fuente": "Radio Agricultura",
      "titulo": "Radio Agricultura se suma a EtMday 2026 con programación EN VIVO sobre emprendimiento y negocios",
      "fecha": "2026-11-19 05:05",
@@ -4473,6 +4478,13 @@
      "resumen": "The value of Nvidia’s private investments has nearly tripled over the past nine months, fueled by Jensen Huang’s aggressive dealmaking and rising valuations of its existing portfolio companies."
     },
     {
+     "fuente": "Sercotec (RSS)",
+     "titulo": "Histórica inversión de casi $15 mil millones para fortalecer el emprendimiento en Malleco y Cautín",
+     "fecha": "2026-11-17 17:34",
+     "url": "https://www.sercotec.cl/historica-inversion-de-casi-15-mil-millones-para-fortalecer-el-emprendimiento-en-malleco-y-cautin/",
+     "resumen": "• Consejo Regional y Sercotec relevaron el impacto de los recursos FNDR aprobados para financiar alrededor de 11 programas de apoyo a emprendedores, mujeres empresarias, pequeñas empresas y cooperativas de la región."
+    },
+    {
      "fuente": "LatamList (RSS)",
      "titulo": "Colombian fintech Akua secures investment from Itaú Unibanco",
      "fecha": "2026-11-17 16:01",
@@ -4562,7 +4574,7 @@
      "fuente": "Bing Noticias · Tecnología",
      "url": "https://www.bing.com/news/search?q=tecnolog%C3%ADa%20%28IA%20OR%20chips%20OR%20Apple%20OR%20Google%20OR%20Microsoft%20OR%20Nvidia%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 5
+     "n": 6
     },
     {
      "fuente": "Bing Noticias · Inteligencia artificial",
@@ -4699,6 +4711,13 @@
    ],
    "notas": [
     {
+     "fuente": "Xataka (RSS)",
+     "titulo": "Begoña Villacís: \"Es una prohibición de facto\". La patronal de los centros de datos, en pie de guerra contra el Gobierno",
+     "fecha": "2026-11-22 05:30",
+     "url": "https://www.xataka.com/empresas-y-economia/begona-villacis-prohibicion-facto-patronal-centros-datos-pie-guerra-gobierno",
+     "resumen": "El pasado 20 noviembre, a nueve días de las elecciones generales y tras una tramitación por urgencia con más de 600 alegaciones, el Consejo de Ministros de España aprobaba el Real Decreto 1032/2026 que regula la sostenibilidad y la soberanía digital de los centros de datos. La patronal Spain DC anunció de inmediato…"
+    },
+    {
      "fuente": "Genbeta (RSS)",
      "titulo": "Unos arqueólogos han desenterrado en Francia una vasija llena con decenas de miles de monedas romanas de hace 1.800 años",
      "fecha": "2026-11-22 05:00",
@@ -4756,9 +4775,9 @@
     },
     {
      "fuente": "Hacker News portada (RSS oficial)",
-     "titulo": "AI Supply Chain Security: What Canary Tokens Found",
-     "fecha": "2026-11-22 02:11",
-     "url": "https://www.dragos.com/blog/ai-supply-chain-security-canary-tokens",
+     "titulo": "Fast-Anything: Don't rewrite it in Rust. Rewrite the 5% that's slow",
+     "fecha": "2026-11-22 01:10",
+     "url": "https://github.com/EL4CTEO/fast-anything",
      "resumen": "Comments"
     },
     {
@@ -4766,13 +4785,6 @@
      "titulo": "Toyota, Nissan, and Honda to standardize parts to lower costs",
      "fecha": "2026-11-22 01:04",
      "url": "https://www.caranddriver.com/news/a74490092/toyota-nissan-honda-standardize-parts-lower-costs/",
-     "resumen": "Comments"
-    },
-    {
-     "fuente": "Hacker News portada (RSS oficial)",
-     "titulo": "Together.ai: Prompt Leakage for Requests",
-     "fecha": "2026-11-22 00:07",
-     "url": "https://www.together.ai/blog/security-event-prompt-leakage-for-requests-in-june-and-july-of-2026",
      "resumen": "Comments"
     },
     {
@@ -4804,13 +4816,6 @@
      "resumen": "It's not simple to say that one is better than the other."
     },
     {
-     "fuente": "Hacker News portada (RSS oficial)",
-     "titulo": "Leonida – PC Recompilation of the Xbox Version of GTA 6",
-     "fecha": "2026-11-21 21:57",
-     "url": "https://github.com/ItsNotRexed/Leonida",
-     "resumen": "Comments"
-    },
-    {
      "fuente": "Engadget (RSS, inglés)",
      "titulo": "This is what can happen if too many devices are sharing your home network",
      "fecha": "2026-11-21 21:45",
@@ -4830,13 +4835,6 @@
      "fecha": "2026-11-21 21:15",
      "url": "https://www.engadget.com/2317775/never-do-these-things-on-android-phone/",
      "resumen": "Every Android user should know what to avoid so they don't make mistakes that shorten their phone's useful life."
-    },
-    {
-     "fuente": "elDiario.es",
-     "titulo": "Pérez Pastor: “AutorIA nos invita a reflexionar sobre la frontera entre la creación humana y la inteligencia artificial en un entorno único”",
-     "fecha": "2026-11-21 21:13",
-     "url": "https://www.eldiario.es/la-rioja/perez-pastor-autoria-invita-reflexionar-frontera-creacion-humana-inteligencia-artificial-entorno-unico_1_13622915.html",
-     "resumen": "El consejero de Cultura del Gobierno de La Rioja ofrece las claves de una muestra que recorre por primera vez el relato completo que va del origen del español al futuro de nuestro idioma a través de s..."
     },
     {
      "fuente": "Hacker News portada (RSS oficial)",
@@ -5327,6 +5325,20 @@
      "fecha": "2026-11-21 12:00",
      "url": "https://www.theverge.com/podcast/1038701/anthropic-ipo-ai-safety-openai-nvidia-structure",
      "resumen": "Today, I’m talking with Hayden Field, The Verge’s senior AI reporter, about the Anthropic IPO for the third and final episode in our series about AI in real life. The AI lab behind Claude went public on the Nasdaq last Thursday. The numbers are gigantic, but not really that important for this conversation, except to…"
+    },
+    {
+     "fuente": "The Verge (RSS)",
+     "titulo": "Our go-to earbuds for taking calls have fallen to their lowest price to date",
+     "fecha": "2026-11-21 11:55",
+     "url": "https://www.theverge.com/gadgets/1039160/anker-soundcore-liberty-5-pro-black-friday-2026-deal-sale",
+     "resumen": "If you’re looking for a new pair of earbuds, the Soundcore Liberty 5 Pro are on sale for $129.99 at Amazon, Best Buy, and Walmart right now. That’s the lowest price we’ve seen for Anker’s excellent wireless earbuds, which normally retail for $169.99 and come in four colors (black, white, blue, and pink) all of […]"
+    },
+    {
+     "fuente": "Hacker News portada (RSS oficial)",
+     "titulo": "Lean verification of the Riemann Hypothesis",
+     "fecha": "2026-11-21 11:36",
+     "url": "https://leanprover-community.github.io/blog/posts/riemann-hypothesis/",
+     "resumen": "Comments"
     }
    ]
   },
@@ -5394,7 +5406,7 @@
      "fuente": "Bing Noticias · Arriendos",
      "url": "https://www.bing.com/news/search?q=arriendo%20departamentos%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 12
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · Permisos de edificación",
@@ -5541,10 +5553,10 @@
      "resumen": "El Catastro Inmobiliario 2026 de la CChC revela que los nuevos proyectos habitacionales se duplicaron en la región, con 2.755 viviendas incorporadas. La Serena lidera el crecimiento, mientras Coquimbo..."
     },
     {
-     "fuente": "24 horas",
-     "titulo": "CChC Ñuble pide al Senado rechazar glosa del Presupuesto 2027 que elimina anticipos de viviendas sociales",
+     "fuente": "24 horas on MSN",
+     "titulo": "CChC Ñuble pide al Senado rechazar glosa del presupuesto 2027 que elimina anticipos de viviendas sociales",
      "fecha": "2026-11-20 02:32",
-     "url": "https://www.24horas.cl/regiones/zona-centro/nuble/cchc-nuble-pide-al-senado-rechazar-glosa-del-presupuesto-2027-que",
+     "url": "https://www.msn.com/es-cl/noticias/other/cchc-%C3%B1uble-pide-al-senado-rechazar-glosa-del-presupuesto-2027-que-elimina-anticipos-de-viviendas-sociales/ar-AA2hR3bJ",
      "resumen": "El gremio advierte que pagar los subsidios DS49 solo al inscribir las casas pondría en riesgo 1.500 empleos y provocaría la quiebra de constructoras locales."
     },
     {
@@ -5672,7 +5684,7 @@
      "fuente": "BBC Sport · Fútbol (RSS, inglés)",
      "url": "https://feeds.bbci.co.uk/sport/football/rss.xml",
      "ok": true,
-     "n": 64
+     "n": 65
     },
     {
      "fuente": "Golf Digest (RSS, inglés)",
@@ -5763,13 +5775,13 @@
      "fuente": "Bing Noticias · Golf",
      "url": "https://www.bing.com/news/search?q=golf%20PGA%20Tour&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 12
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · Equitación",
      "url": "https://www.bing.com/news/search?q=equitaci%C3%B3n%20salto%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 6
+     "n": 5
     },
     {
      "fuente": "Jumper News (RSS, salto ecuestre latinoamericano)",
@@ -5805,13 +5817,13 @@
      "fuente": "Bing Noticias · Equitación internacional",
      "url": "https://www.bing.com/news/search?q=salto%20ecuestre%20FEI%20Longines%20Global%20Champions&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 7
     },
     {
      "fuente": "Bing Noticias · Hípica y polo Chile",
      "url": "https://www.bing.com/news/search?q=Federaci%C3%B3n%20Ecuestre%20de%20Chile%20concurso%20salto%20Club%20H%C3%ADpico&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 1
+     "n": 0
     },
     {
      "fuente": "FEI · Federación Ecuestre Internacional (RSS, inglés)",
@@ -5848,7 +5860,7 @@
      "fuente": "Bing Noticias · Rugby internacional",
      "url": "https://www.bing.com/news/search?q=rugby%20test%20match%20Pumas%20All%20Blacks%20Springboks&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 5
+     "n": 6
     },
     {
      "fuente": "Bing Noticias · Deportes Chile",
@@ -5884,7 +5896,7 @@
      "fuente": "Bing Noticias · Fórmula 1",
      "url": "https://www.bing.com/news/search?q=%22F%C3%B3rmula%201%22&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 11
+     "n": 12
     },
     {
      "fuente": "Bing Noticias · NBA",
@@ -5908,19 +5920,19 @@
      "fuente": "Bing Noticias · Fórmula 1 pilotos",
      "url": "https://www.bing.com/news/search?q=%28Colapinto%20OR%20Verstappen%20OR%20Antonelli%20OR%20Norris%20OR%20Piastri%20OR%20Leclerc%29%20F%C3%B3rmula%201&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · NBA resultados",
      "url": "https://www.bing.com/news/search?q=NBA%20%28resultados%20OR%20triunfo%20OR%20derrota%20OR%20puntos%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 7
+     "n": 6
     },
     {
      "fuente": "Bing Noticias · NBA figuras",
      "url": "https://www.bing.com/news/search?q=NBA%20%28LeBron%20OR%20Curry%20OR%20Doncic%20OR%20Jokic%20OR%20Antetokounmpo%20OR%20Wembanyama%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 6
+     "n": 5
     },
     {
      "fuente": "Bing Noticias · Rally y automovilismo Chile",
@@ -6172,7 +6184,7 @@
      "fuente": "The Guardian Fútbol (RSS)",
      "url": "https://www.theguardian.com/football/rss",
      "ok": true,
-     "n": 64
+     "n": 63
     },
     {
      "fuente": "The Guardian Tenis (RSS)",
@@ -6189,18 +6201,74 @@
    ],
    "notas": [
     {
+     "fuente": "ESPN · Fórmula 1 (noticias con fecha)",
+     "titulo": "Max Verstappen mocks George Russell in brutal outburst: 'So far below my level'",
+     "fecha": "2026-11-22 05:31",
+     "url": "https://www.espn.com/f1/story/_/id/50472110/max-verstappen-george-russell-las-vegas-grand-prix-formula-1",
+     "resumen": "Max Verstappen ridiculed George Russell after the Las Vegas Grand Prix, laughing at the Mercedes driver's late mistake, branding his 2026 season a \"complete joke.\""
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "El Slovan gana antes de recibir al Betis en la Champions",
+     "fecha": "2026-11-22 05:30",
+     "url": "https://www.mundodeportivo.com/futbol/betis/20261122/1004254008/slovan-gana-recibir-betis-champions.html",
+     "resumen": "El Slovan de Bratislava, próximo rival del Real Betis en la Champions, ganó por 0-1 en Ruzomberok con un penalti transformado por Tigran Barseghyan en el minuto 31. El conjunto de Yaya Touré, segundo en la liga eslovaca, recibirá este martes (21.00 h) a los verdiblancos en la quinta jornada de la fase liga, en la que…"
+    },
+    {
+     "fuente": "Motorsport.com ES F1 (RSS)",
+     "titulo": "Antonelli perdió potencia y no perdió el podio: \"Mi error fue levantar el pie\"",
+     "fecha": "2026-11-22 05:29",
+     "url": "https://es.motorsport.com/f1/news/declaraciones-carrera-antonelli-las-vegas-2026/10876787/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
+     "resumen": "Andrea Kimi Antonelli ha explicado el curioso \"error\" que le costó la oportunidad de ganar el Gran Premio de Las Vegas 2026 de la Fórmula 1. El piloto italiano, que fue el más rápido en la clasificación, salió desde sexto en la parrilla debido a una sanción de cinco posiciones por un cambio en el motor y fue el único…"
+    },
+    {
+     "fuente": "The Guardian Fútbol (RSS)",
+     "titulo": "Liverpool v Manchester United buildup and more Premier League news – matchday live",
+     "fecha": "2026-11-22 05:26",
+     "url": "https://www.theguardian.com/football/live/2026/nov/22/liverpool-v-manchester-united-buildup-and-more-premier-league-news-matchday-live",
+     "resumen": "All the latest match news and buildup for today’s games Today’s games | Tables | Follow on TikTok | And mail us Arsenal suffered a blow during the match against Newcastle when goalkeeper David Raya was forced off due to injury. Mikel Arteta said: “Obviously it’s not good David had to come off but at the moment I…"
+    },
+    {
+     "fuente": "Motorsport.com F1 (RSS)",
+     "titulo": "Lewis Hamilton: With No. 1 driver backing, we could have beaten Kimi Antonelli to F1 title",
+     "fecha": "2026-11-22 05:20",
+     "url": "https://www.motorsport.com/f1/news/lewis-hamilton-with-no-1-driver-backing-we-could-have-beaten-kimi-antonelli-to-f1-title/10876826/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=www",
+     "resumen": "Seven-time Formula 1 champion Lewis Hamilton believes he could have beaten Mercedes' Kimi Antonelli in their battle earlier in the season had he been given more support from Ferrari. The Briton was speaking after the Las Vegas Grand Prix, where he had another clash with his team-mate Charles Leclerc, which sent him…"
+    },
+    {
+     "fuente": "Motorsport.com ES F1 (RSS)",
+     "titulo": "Checo Pérez, primer sancionado en Qatar tras su choque con Cámara en Las Vegas",
+     "fecha": "2026-11-22 05:18",
+     "url": "https://es.motorsport.com/f1/news/checo-perez-primer-sancionado-qatar-choque-camara-vegas/10876825/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
+     "resumen": "La carrera de Sergio Pérez en Las Vegas acabó contra el muro en la vuelta 18. Para saber cuánto le costó aquel golpe, sin embargo, habrá que esperar a la parrilla de Qatar. Los comisarios consideraron al mexicano totalmente responsable de su choque con Rafael Cámara y le impusieron una sanción de 10 segundos que…"
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Oportunidad de Raphinha para ampliar su ventaja en la lucha por su primer Pichichi",
+     "fecha": "2026-11-22 05:18",
+     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261122/1004254001/oportunidad-raphinha-ampliar-ventaja-lucha-primer-pichichi.html",
+     "resumen": "Raphinha Dias retoma este domingo la Liga después de una difícil ventana FIFA como capitán de la selección brasileña. El delantero del FC Barcelona, que también luce brazalete como azulgrana, tiene ante el Villarreal en el Spotify Camp Nou a partir de las 14 horas la ocasión de recuperar la sonrisa y de ampliar su…"
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Polémico gesto de Messi con Gonzalo Tapia",
+     "fecha": "2026-11-22 05:18",
+     "url": "https://www.mundodeportivo.com/futbol/internacional/major-league-soccer/20261122/1004254004/polemico-gesto-messi-gonzalo-tapia.html",
+     "resumen": "Leo Messi protagonizó un tenso rifi-rafe con Gonzalo Tapia en una acción que se produjo en el tiempo de descuento del Inter Miami-Columbus Crew del playoff de la MLS y con 0-1 en el marcador. La polémica jugada bien pudo haberle causado la expulsión al delantero argentino, que finalmente pudo acabar el partido."
+    },
+    {
+     "fuente": "ESPN · Fórmula 1 (noticias con fecha)",
+     "titulo": "Max Verstappen fends off rivals in Las Vegas Grand Prix for third win in 4 years",
+     "fecha": "2026-11-22 05:17",
+     "url": "https://www.espn.com/racing/story/_/id/50560262/max-verstappen-wins-las-vegas-grand-prix-3rd-4-years",
+     "resumen": "In a race that featured 35 lead changes, Max Verstappen kept finding ways to gain an advantage and emerged victorious in the Las Vegas Grand Prix on Saturday night."
+    },
+    {
      "fuente": "RaceFans (RSS)",
      "titulo": "Hadjar given 10-second penalty for holding up Safety Car queue behind Verstappen | Formula 1",
      "fecha": "2026-11-22 05:17",
      "url": "https://www.racefans.net/2026/11/22/hadjar-given-10-second-penalty-for-holding-up-safety-car-queue-behind-verstappen/",
      "resumen": "The stewards found Isack Hadjar reduced his speed by around 100kph to hold up the Safety Car queue behind Max Verstappen."
-    },
-    {
-     "fuente": "AS Fútbol (RSS)",
-     "titulo": "Mercado de fichajes, en directo: rumores, altas y bajas de LaLiga, Premier, Serie A...",
-     "fecha": "2026-11-22 05:16",
-     "url": "https://as.com/futbol/internacional/mercado-de-fichajes-en-directo-rumores-altas-y-bajas-de-laliga-premier-serie-a-f202611-d-13/",
-     "resumen": "Sigue en directo las últimas noticias sobre el mercado de fichajes del 22 de noviembre de 2026: bajas, altas..."
     },
     {
      "fuente": "ESPN API Premier League",
@@ -6211,17 +6279,17 @@
     },
     {
      "fuente": "ESPN · Fórmula 1 (noticias con fecha)",
-     "titulo": "Max Verstappen fends off rivals in Las Vegas Grand Prix for third win in 4 years",
-     "fecha": "2026-11-22 05:07",
-     "url": "https://www.espn.com/racing/story/_/id/50560262/max-verstappen-wins-las-vegas-grand-prix-3rd-4-years",
-     "resumen": "In a race that featured 35 lead changes, Max Verstappen kept finding ways to gain an advantage and emerged victorious in the Las Vegas Grand Prix on Saturday night."
-    },
-    {
-     "fuente": "ESPN · Fórmula 1 (noticias con fecha)",
      "titulo": "Las Vegas Grand Prix 2026: Race start time, how to watch, full schedule, predictions",
      "fecha": "2026-11-22 05:04",
      "url": "https://www.espn.com/f1/story/_/id/50389130/las-vegas-grand-prix-2026-race-f1-start-s-how-watch-schedule-tv-channel-live-stream-predictions",
      "resumen": "Formula 1 is back under the bright lights of Las Vegas for one of the most extravagant weekends on the calendar."
+    },
+    {
+     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
+     "titulo": "Scottish Football Podcast",
+     "fecha": "2026-11-22 05:00",
+     "url": "https://www.bbc.co.uk/sounds/play/p0pp1j7j?at_medium=RSS&at_campaign=rss",
+     "resumen": "Scotland head coach Mel Andreatta on Scotland, Sweden and chasing her World Cup dream."
     },
     {
      "fuente": "Mundo Deportivo Fútbol (RSS)",
@@ -6231,8 +6299,22 @@
      "resumen": "El Athletic afronta el partido más difícil de la temporada. Medirse al Barça y además hacerlo en su campo (Johan Cruyff, 19 horas) es casi sinónimo de derrota, pero la ‘visita al dentista’ que en su día acuñó Caparrós para referirse al equipo masculino llega en un buen momento para las rojiblancas y con alguna duda…"
     },
     {
+     "fuente": "The Guardian Fútbol (RSS)",
+     "titulo": "César Azpilicueta: ‘At Chelsea a draw was a catastrophe – if you can’t perform, you’re out’",
+     "fecha": "2026-11-22 05:00",
+     "url": "https://www.theguardian.com/football/2026/nov/22/cesar-azpilicueta-at-chelsea-a-draw-was-a-catastrophe-if-you-cant-perform-youre-out",
+     "resumen": "Former defender reflects on his record-breaking longevity, kicking Eden Hazard in training, and life after retirement César Azpilicueta looks well. César Azpilicueta always looks well – “ah, Captain Handsome,” one Chelsea fan says when told who’s turning up – but today especially, smiling in the sunshine. Strolling…"
+    },
+    {
+     "fuente": "The Guardian Fútbol (RSS)",
+     "titulo": "Robins ‘aims for the stars’ as Stoke dream of Premier League return",
+     "fecha": "2026-11-22 05:00",
+     "url": "https://www.theguardian.com/football/2026/nov/22/mark-robins-stoke-birmingham-championship-premier-league-promotion",
+     "resumen": "The Championship’s form side climbed to second after holding on resiliently with 10 men to knock Birmingham off the summit There have been false dawns before. Plenty of them. This time last year, with Christmas on the near horizon, Stoke sat second in the Championship table and were beginning to wonder whether they…"
+    },
+    {
      "fuente": "AS Fútbol (RSS)",
-     "titulo": "El ‘balonazo’ de Messi a un rival de pura frustración por ir perdiendo",
+     "titulo": "El pelotazo en la cara de Messi a un rival de pura frustración por ir perdiendo desata la polémica en EE.UU.",
      "fecha": "2026-11-22 04:59",
      "url": "https://as.com/futbol/videos/el-balonazo-de-messi-a-un-rival-de-pura-frustracion-por-ir-perdiendo-f202611-v/",
      "resumen": "Al borde del descanso, el argentino quería jugar rápido un saque de banda mientras Inter Miami perdía 1-0 con un jugador menos en la primera eliminatoria por el título de MLS."
@@ -6278,13 +6360,6 @@
      "fecha": "2026-11-22 04:50",
      "url": "https://www.skysports.com/f1/news/12040/13615085/ferrari-boss-frederic-vasseur-blames-charles-leclerc-for-unacceptable-collision-with-lewis-hamilton-in-las-vegas-gp",
      "resumen": "Ferrari team principal Frederic Vasseur blamed Charles Leclerc for a \"completely unacceptable\" collision with team-mate Lewis Hamilton in the Las Vegas Grand Prix."
-    },
-    {
-     "fuente": "ESPN · Fórmula 1 (noticias con fecha)",
-     "titulo": "Max Verstappen mocks George Russell in brutal outburst: 'So far below my level'",
-     "fecha": "2026-11-22 04:49",
-     "url": "https://www.espn.com/f1/story/_/id/50472110/max-verstappen-george-russell-las-vegas-grand-prix-formula-1",
-     "resumen": "Max Verstappen ridiculed George Russell after the Las Vegas Grand Prix, laughing at the Mercedes driver's late mistake, branding his 2026 season a \"complete joke.\""
     },
     {
      "fuente": "Sky Sports Fútbol (RSS)",
@@ -6343,6 +6418,13 @@
      "resumen": "El último mensaje por radio antes de la bandera a cuadros del GP de Las Vegas fue tajante: Fred Vasseur ordenó a Charles Leclerc que acudiera a hablar con él nada más llegar al parque cerrado. El motivo no era otro que su comportamiento en pista, después de que el monegasco recibiera una penalización de 10 segundos…"
     },
     {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "Mercado de fichajes, en directo: rumores, altas y bajas de LaLiga, Premier, Serie A...",
+     "fecha": "2026-11-22 04:37",
+     "url": "https://as.com/futbol/internacional/mercado-de-fichajes-en-directo-rumores-altas-y-bajas-de-laliga-premier-serie-a-f202611-d-13/",
+     "resumen": "Sigue en directo las últimas noticias sobre el mercado de fichajes del 22 de noviembre de 2026: bajas, altas..."
+    },
+    {
      "fuente": "RaceFans (RSS)",
      "titulo": "Perez handed five-place grid penalty for Qatar Grand Prix for Camara collision | Formula 1",
      "fecha": "2026-11-22 04:37",
@@ -6376,6 +6458,13 @@
      "fecha": "2026-11-22 04:27",
      "url": "https://www.autosport.com/f1/news/my-mistake-was-to-lift-why-antonelli-lost-power-in-las-vegas-gp-victory-battle/10876786/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=uk",
      "resumen": "Kimi Antonelli has explained the quirky “mistake” that cost him a shot at Formula 1 victory in the Las Vegas Grand Prix. The fastest driver in qualifying, Antonelli was sixth on the grid owing to a five-place drop for an engine change and was the only top-10 starter on mediums rather than softs, which contributed to…"
+    },
+    {
+     "fuente": "Sail-World (RSS)",
+     "titulo": "Etchells NSW Championship 2027 Overall",
+     "fecha": "2026-11-22 04:27",
+     "url": "https://www.sail-world.com/news/301754/?source=rss",
+     "resumen": "An exhilarating final day after a final three races inside Pittwater, with nothing in it right to the final Race 9, which decided in favour of defending NSW champion, Racer CC, which was declared winner of the Lucky & Pep's Etchells NSW Championship."
     },
     {
      "fuente": "RaceFans (RSS)",
@@ -6417,7 +6506,7 @@
      "titulo": "El GP de Las Vegas se llena de famosos",
      "fecha": "2026-11-22 04:19",
      "url": "https://as.com/motor/fotorrelato/el-gp-de-las-vegas-se-llena-de-famosos-f202611-f/",
-     "resumen": "Este fin de semana se ha celebrado el GP de Las Vegas de la Fórmula y muchos rostros conocidos no se lo han querido perder."
+     "resumen": "Este fin de semana se ha celebrado el GP de Las Vegas de la Fórmula 1 y muchos rostros conocidos no se lo han querido perder."
     },
     {
      "fuente": "Mundo Deportivo Fútbol (RSS)",
@@ -6644,34 +6733,6 @@
      "resumen": "Red Bull's Max Verstappen wins an extraordinary Las Vegas Grand Prix that featured 34 lead changes and another collision between the Ferraris."
     },
     {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Getafe-Atlético: Un derbi en construcción en el Coliseum",
-     "fecha": "2026-11-22 03:25",
-     "url": "https://www.mundodeportivo.com/futbol/atletico-madrid/20261122/1004253824/getafe-atletico-derbi-construccion-coliseum.html",
-     "resumen": "El Atlético de Madrid vuelve a la competición para sanar las heridas que dejó el Bayern en la Champions League y el Barcelona en LaLiga. Los colchoneros sufrieron dos derrotas que acabaron con una racha de siete triunfos consecutivos que les hizo soñar en estos primeros compases de curso. Un golpe de realidad, del…"
-    },
-    {
-     "fuente": "BBC Sport · Fútbol (RSS, inglés)",
-     "titulo": "'He will see what Man Utd are made of' - Pulis on Pochettino's first game",
-     "fecha": "2026-11-22 03:21",
-     "url": "https://www.bbc.co.uk/sport/football/articles/ckqx5w58dgv7o?at_medium=RSS&at_campaign=rss",
-     "resumen": "BBC Sport columnist Tony Pulis explains how new Manchester United boss Mauricio Pochettino will prepare for Sunday's game against Liverpool after only a few days with his squad."
-    },
-    {
-     "fuente": "Motorsport.com ES F1 (RSS)",
-     "titulo": "Alonso: \"Ganaba dos segundos en curvas, pero perdía dos o tres en las rectas\"",
-     "fecha": "2026-11-22 03:20",
-     "url": "https://es.motorsport.com/f1/news/declaraciones-alonso-carrera-las-vegas-2026/10876710/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
-     "resumen": "En una carrera en la que el top 10 rodó durante prácticamente todas las vueltas a menos de 10 segundos de distancia, el Aston Martin - Honda demostró una vez más que no está para nada a la altura del resto de la parrilla, rodando constantemente varios segundos más lentos y con Lance Stroll acabando 17º a 68s del…"
-    },
-    {
-     "fuente": "RaceFans (RSS)",
-     "titulo": "Stewards explains Leclerc’s penalty for hitting Hamilton | Formula 1",
-     "fecha": "2026-11-22 03:19",
-     "url": "https://www.racefans.net/2026/11/22/stewards-explains-leclercs-penalty-for-hitting-hamilton/",
-     "resumen": "The stewards have explained why they penalised Charles Leclerc for colliding with Lewis Hamilton."
-    },
-    {
      "fuente": "ESPN · NHL (noticias con fecha)",
      "titulo": "Macklin Celebrini and Ivar Stenberg lead the Sharks to a 4-3 win over the Kraken",
      "fecha": "2026-11-22 03:14",
@@ -6679,60 +6740,11 @@
      "resumen": "— Macklin Celebrini and Ivar Stenberg each had a power-play goal and an assist, and the San Jose Sharks held off the Seattle Kraken 4-3 on Saturday night."
     },
     {
-     "fuente": "The Guardian Fórmula 1 (RSS)",
-     "titulo": "Max Verstappen wins Las Vegas Grand Prix: Formula One 2026 – as it happened",
-     "fecha": "2026-11-22 03:14",
-     "url": "https://www.theguardian.com/sport/live/2026/nov/22/las-vegas-grand-prix-formula-one-2026-race-updates-live",
-     "resumen": "Lando Norris finishes second and Oscar Piastri third Any thoughts? Get in touch with an email Lap 2/50 Oscar Piastri has done some fast overtaking, moving himself up from 17 to 12, now sitting behind Carlos Sainz. Continue reading..."
-    },
-    {
-     "fuente": "The Guardian Fórmula 1 (RSS)",
-     "titulo": "Max Verstappen touches perfection in dramatic Las Vegas Grand Prix win",
-     "fecha": "2026-11-22 03:08",
-     "url": "https://www.theguardian.com/sport/2026/nov/22/max-verstappen-touches-perfection-in-dramatic-las-vegas-grand-prix-win",
-     "resumen": "The Dutchman was under siege before pulling clear in the final lap Charles Leclerc and Lewis Hamilton once again clashed on the track Max Verstappen won the Las Vegas Grand Prix with a remarkable, determined drive for Red Bull having done battle in a thrilling contest where the lead changed 35 times but the Dutchman…"
-    },
-    {
      "fuente": "ESPN · NHL (noticias con fecha)",
      "titulo": "Minnesota Wild vs. Vancouver Canucks: Game Highlights",
      "fecha": "2026-11-22 03:07",
      "url": "https://www.espn.com/video/clip/_/id/50559818/game-highlights",
      "resumen": "Minnesota Wild vs. Vancouver Canucks: Game Highlights"
-    },
-    {
-     "fuente": "Motorsport.com ES F1 (RSS)",
-     "titulo": "Cinco conclusiones rápidas del GP de Las Vegas 2026 de F1",
-     "fecha": "2026-11-22 03:07",
-     "url": "https://es.motorsport.com/f1/news/conclusiones-rapidas-carrera-las-vegas/10876708/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
-     "resumen": "Las Vegas consigue la carrera en grupo que ansiaba En la capital artificial del entretenimiento de Estados Unidos, la Fórmula 1 ofreció el espectáculo más artificial y entretenido. Qué apropiado. Las carreras yo-yó de los primeros días de la temporada 2026 volvieron a mostrarse por completo, con la falta de energía…"
-    },
-    {
-     "fuente": "Olé (RSS)",
-     "titulo": "Así quedaron las posiciones de la Fórmula 1 tras el GP de Las Vegas",
-     "fecha": "2026-11-22 03:01",
-     "url": "https://www.ole.com.ar/autos/quedaron-posiciones-formula-1-gp-vegas_0_9HgA2MAhOE.html",
-     "resumen": "Verstappen se quedó con la victoria en la Ciudad del Pecado, seguido por Norris. Así quedaron ambas tablas de la Máxima."
-    },
-    {
-     "fuente": "AS Motor F1 (RSS)",
-     "titulo": "Resultados F1: clasificación del GP de Las Vegas y Mundial",
-     "fecha": "2026-11-22 03:00",
-     "url": "https://as.com/motor/formula_1/resultados-f1-clasificacion-del-gp-de-las-vegas-y-mundial-f202611-n/",
-     "resumen": "Victoria de Verstappen por delante de los McLaren en una carrera plagada de adelantamientos yo-yo. Sainz remonta del 20º en parrilla al 8º en meta."
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Barça-Villarreal: Un regreso exigente",
-     "fecha": "2026-11-22 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261122/1004253901/barca-villarreal-regreso-exigente.html",
-     "resumen": "Dos semanas después, el Barça vuelve a competir. Y lo hace en un momento de la temporada en el que el calendario entra en una fase frenética, con encuentros cada tres días –nueve antes de Navidad– y poco margen para el descanso o los errores. El primer obstáculo será el Villarreal en el Spotify Camp Nou (14…"
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Autoinculpación",
-     "fecha": "2026-11-22 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261122/1004253882/autoinculpacion.html",
-     "resumen": "El parón de selecciones nunca es inocente. Rompe el ritmo y devuelve a los internacionales tocados y cansados. El Barça regresa además a la fase más exigente del curso, con nueve compromisos en apenas 27 días. Toca dosificar esfuerzos con precisión quirúrgica sin que los resultados se resientan. Donde más aprieta es…"
     },
     {
      "fuente": "ESPN · NFL (noticias con fecha)",
@@ -6989,6 +7001,20 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "Muy Interesante (RSS)",
+     "titulo": "Este SUV fabricado en Barcelona combina 3 motores y no necesita enchufarse: así aprovecha la electricidad",
+     "fecha": "2026-11-22 05:06",
+     "url": "https://muyinteresante.okdiario.com/actualidad/ebro-s400-plus-hev-como-funcionan-sus-3-motores.html",
+     "resumen": "Dos motores eléctricos, uno de gasolina y una batería de 1,83 kWh trabajan juntos en el EBRO s400 Plus HEV. La clave está en cómo alterna la propulsión eléctrica, la generación de energía y el funcionamiento combinado para alcanzar 224 CV."
+    },
+    {
+     "fuente": "Muy Interesante (RSS)",
+     "titulo": "Los científicos descubren que los plásticos de la Gran Mancha de Basura del Pacífico tienen una peculiaridad que podría permitir detectarlos desde el espacio",
+     "fecha": "2026-11-22 05:00",
+     "url": "https://muyinteresante.okdiario.com/naturaleza/plastico-oceanico-satelite.html",
+     "resumen": "El estudio, publicado en la revista Remote Sensing of Environment, halló que las biopelículas que recubren el plástico generan una banda de absorción óptica cercana a los 674 nanómetros, muy similar a la que usan los satélites para rastrear la clorofila del fitoplancton."
+    },
     {
      "fuente": "Muy Interesante (RSS)",
      "titulo": "Científicos fabrican pequeños ladrillos que encajan como piezas de LEGO con un material que imita el suelo lunar y podrían servir para construir futuras bases en la Luna",
@@ -7604,20 +7630,6 @@
      "fecha": "2026-11-20 16:40",
      "url": "https://phys.org/news/2026-11-people-wade-floodwater-underestimate-danger.html",
      "resumen": "A footpath home disappears beneath brown water. The other side is only a few meters away and someone has already crossed. Turning back means a long detour and you will be late. Would you wade through? This is the kind of everyday decision that flood safety advice must address."
-    },
-    {
-     "fuente": "Phys.org Tierra (RSS, inglés)",
-     "titulo": "Global analysis reveals how lakes amplify glacier ice loss",
-     "fecha": "2026-11-20 16:40",
-     "url": "https://phys.org/news/2026-11-global-analysis-reveals-lakes-amplify.html",
-     "resumen": "Glacial lakes can accelerate the retreat of glaciers. If glaciers border a lake, the water can melt the ice from underneath; furthermore, chunks of ice can break off and fall into the lake. The extent to which these processes influence the situation, compared with other factors, had not been sufficiently clarified at…"
-    },
-    {
-     "fuente": "Medical Xpress (RSS)",
-     "titulo": "Heart rhythm data reveal early signs of heart disease before conventional measures",
-     "fecha": "2026-11-20 16:30",
-     "url": "https://medicalxpress.com/news/2026-11-heart-rhythm-reveal-early-disease.html",
-     "resumen": "The heart does not beat like a regular clock. Even at rest, the time between successive heartbeats continuously varies. Researchers at Tampere and Stanford universities have shown that the patterns of these subtle variations can reveal the early effects of cardiomyopathy, which is a hereditary heart disease. The…"
     }
    ]
   },
@@ -9842,9 +9854,8 @@
     {
      "fuente": "GDELT · Chile: panoramas y cultura",
      "url": "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28concierto+OR+festival+OR+estreno+OR+teatro+OR+exposici%C3%B3n+OR+panorama%29&timespan=3d",
-     "ok": false,
-     "n": 0,
-     "error": "HTTP 429"
+     "ok": true,
+     "n": 3
     },
     {
      "fuente": "IndieWire (RSS)",
