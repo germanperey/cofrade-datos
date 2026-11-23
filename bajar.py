@@ -2421,6 +2421,48 @@ def cierres_mindicador(j, hoy):
     return sorted(out)
 
 
+# 23-11-2026 · Germán: «Los mercados (o bolsas mundiales) no se actualizaron hoy, tienen datos del 20 de Noviembre (este error es
+# gravísimo...)». A las 07:00 del lunes FRED aún no publicaba el cierre del viernes del S&P 500 ni del Nasdaq (salieron con el del 19-11).
+# LarrainVial (robots.txt lo permite) muestra el último valor y su variación: con la Bolsa de Nueva York CERRADA ese valor es el cierre
+# del último día hábil de Nueva York. Abierta, no se usa (sería un valor en curso, no un cierre).
+LV_NOMBRE = {"^GSPC": "S&P 500", "^IXIC": "NASDAQ COMP"}
+FERIADOS_NY = {"2026-11-26", "2026-12-25", "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31", "2027-06-18",
+               "2027-07-05", "2027-09-06", "2027-11-25", "2027-12-24"}
+_LV = {}
+
+
+def _habil_ny(f):
+    return f.weekday() < 5 and f.isoformat() not in FERIADOS_NY
+
+
+def cierre_larrainvial(sym, estado, clave):
+    """[(fecha anterior, cierre anterior), (fecha, cierre)] del S&P 500 o el Nasdaq, solo con Nueva York cerrada."""
+    from zoneinfo import ZoneInfo
+    ny = dt.datetime.now(ZoneInfo("America/New_York"))
+    hm = ny.strftime("%H:%M")
+    if _habil_ny(ny.date()) and "09:30" <= hm < "16:15":
+        return []
+    f = ny.date() if (_habil_ny(ny.date()) and hm >= "16:15") else ny.date() - dt.timedelta(days=1)
+    for _ in range(10):
+        if _habil_ny(f):
+            break
+        f -= dt.timedelta(days=1)
+    if "t" not in _LV:
+        h = pedir("https://mercados.larrainvial.com/", estado, clave + "_larrainvial", como="text", espera=(0, 15), limite=40)
+        _LV["t"] = re.sub(r"\s+", " ", html_a_texto(h or "").replace("&amp;", "&"))
+    m = re.search(r"(?<![A-Z&])" + re.escape(LV_NOMBRE[sym]) + r"\s+(\d{1,3}(?:\.\d{3})*(?:,\d{1,2})?)\s+([+\-−]?\d{1,2},\d{1,2})(?!\d)", _LV["t"])
+    if not m:
+        return []
+    v = float(m.group(1).replace(".", "").replace(",", "."))
+    pct = float(m.group(2).replace("−", "-").replace(",", "."))
+    if v <= 0 or abs(pct) >= 25:
+        return []
+    a = f - dt.timedelta(days=1)
+    while not _habil_ny(a):
+        a -= dt.timedelta(days=1)
+    return [(a.isoformat(), v / (1 + pct / 100.0)), (f.isoformat(), v)]
+
+
 def _fuentes_mercado(sym, hoy, estado, clave):
     """La cascada de cada índice, en orden: (nombre de la fuente, función que trae los cierres). Las cuentas gratuitas solo
     se usan si su secreto está guardado en GitHub; todas pasan por el robots.txt del sitio."""
@@ -2433,6 +2475,8 @@ def _fuentes_mercado(sym, hoy, estado, clave):
         L.append(("CNBC", lambda u: cierre_cnbc(pedir(u, estado, clave + "_cnbc", espera=(0, 30), limite=30), hoy),
                   f"https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols={quote(CNBC[sym])}"
                   "&requestMethod=itv&noform=1&partnerId=2&fund=1&exthrs=1&output=json&events=1"))
+    if sym in LV_NOMBRE:
+        L.append(("LarrainVial", lambda u, s_=sym: cierre_larrainvial(s_, estado, clave), "https://mercados.larrainvial.com/"))
     desde = (hoy - dt.timedelta(days=15)).isoformat()
     k = os.environ.get("FRED_API_KEY", "").strip()
     if sym in FRED and k:

@@ -171,6 +171,48 @@ def ipsa(estado):
     return out
 
 
+# 23-11-2026 · Germán: «Los mercados (o bolsas mundiales) no se actualizaron hoy, tienen datos del 20 de Noviembre (este error es
+# gravísimo...)». La edición de las 07:00 trae el último cierre (lunes = viernes), y FRED publica con un día de atraso (S&P 500 y
+# Nasdaq salieron con el cierre del 19-11). LarrainVial (su robots.txt lo permite) publica todas las bolsas al instante: el pulso las
+# lee cada 2 horas y la edición del día las actualiza en el gráfico «Mercados, variación diaria».
+BOLSAS = [("IPSA", "IPSA"), ("IGPA", "IGPA"), ("S&P 500", "S&P 500"), ("NASDAQ COMP", "Nasdaq"), ("NASDAQ 100", "Nasdaq 100"),
+          ("BOVESPA", "Bovespa"), ("MERVAL", "Merval"), ("FTSE 100", "FTSE 100"), ("DAX", "DAX"), ("IBEX 35", "IBEX 35"),
+          ("NIKKEI 225", "Nikkei 225"), ("HANG SENG", "Hang Seng"), ("CSI 300", "CSI 300")]
+
+
+def bolsas_de_texto(t):
+    """Texto de la página de LarrainVial → [{nombre, valor, variacion_pct}] (solo cifras con forma de índice y variación creíble)."""
+    t = re.sub(r"\s+", " ", str(t or "").replace("&amp;", "&"))
+    out = []
+    for clave, nombre in BOLSAS:
+        m = re.search(r"(?<![A-Z&])" + re.escape(clave) + r"\s+(\d{1,3}(?:\.\d{3})*(?:,\d{1,2})?)\s+([+\-−]?\d{1,2},\d{1,2})(?!\d)", t)
+        if not m:
+            continue
+        try:
+            v = float(m.group(1).replace(".", "").replace(",", "."))
+            pct = float(m.group(2).replace("−", "-").replace(",", "."))
+        except ValueError:
+            continue
+        if 100 <= v <= 10_000_000 and abs(pct) < 25:
+            out.append({"nombre": nombre, "valor": v, "variacion_pct": pct})
+    return out
+
+
+def bolsas(estado):
+    url = "https://mercados.larrainvial.com/"
+    if not B.robots_permite(url, estado):
+        return None
+    h = B.pedir(url, estado, "bolsas", como="text", espera=(0, 15), limite=40)
+    if not h:
+        return None
+    lista = bolsas_de_texto(B.html_a_texto(h))
+    if len(lista) < 5:   # la página cambió de forma: mejor nada que cifras dudosas
+        estado["bolsas"] = {"ok": False, "hora": B.ahora().isoformat(timespec="seconds"), "url": url, "error": f"solo {len(lista)} bolsas"}
+        return None
+    estado["bolsas"] = {"ok": True, "hora": B.ahora().isoformat(timespec="seconds"), "url": url, "n": len(lista), "error": ""}
+    return {"lista": lista, "hora": B.ahora().isoformat(timespec="minutes"), "fuente": "LarrainVial", "url": url}
+
+
 def sismos(estado, horas=24, maximo=5):
     csv = B.sismos(estado)
     out = []
@@ -255,7 +297,7 @@ def aire(estado):
 def armar(estado, carpeta=None):
     """`carpeta`: la de datos/ (respaldos de los indicadores). Sin ella, el pulso solo usa lo que responde ahora."""
     p = {"generado": B.ahora().isoformat(timespec="minutes"), "proxima": None}
-    for nombre, fn in (("indicadores", lambda e: indicadores(e, carpeta)), ("ipsa", ipsa), ("sismos", sismos), ("titulares", titulares),
+    for nombre, fn in (("indicadores", lambda e: indicadores(e, carpeta)), ("ipsa", ipsa), ("bolsas", bolsas), ("sismos", sismos), ("titulares", titulares),
                        ("aire", aire)):
         try:
             p[nombre] = fn(estado)

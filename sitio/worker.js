@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "9abead758eac";
+const VERSION_SITIO = "f8dc6ab34b1a";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -5725,6 +5725,37 @@ b.querySelector('.mv').textContent='$ '+n(x.valor);var md=b.querySelector('.md')
 [].forEach.call(document.querySelectorAll('.chip60'),function(a){var t=(a.querySelector('.t60')||{}).textContent||'';if(!/d[oó]lar/i.test(t))return;var x=nuevo('dolar',ed);if(!x)return;var v=a.querySelector('.v60');if(v)v.innerHTML='<b>$'+n(x.valor)+'</b> · rige '+dm(x.rige||x.fecha)});
 }).catch(function(){})})();<\/script>`;
 
+// 23-11-2026 14:39 · Germán: «Los mercados (o bolsas mundiales) no se actualizaron hoy, tienen datos del 20 de Noviembre (este error es
+// gravísimo, porque cuando no se actualizan los datos los lectores pierden credibilidad y confianza en nuestro Newsletter)».
+// La edición de las 07:00 trae el último cierre (un lunes, el del viernes) y el gráfico quedaba fijo todo el día. Ahora, en la edición
+// del DÍA, el gráfico «Mercados, variación diaria» toma las bolsas que el pulso lee de LarrainVial cada 2 horas: si una bolsa cambió,
+// muestra su variación nueva con «en curso · hh:mm» (si está abierta) o «cierre dd-mm» (si ya cerró). Las que no cambiaron (feriado,
+// fin de semana) quedan como estaban. Ediciones de días anteriores no se tocan.
+const MERC_JS = `<script>(function(){var m=location.pathname.match(/(\\d{4}-\\d{2}-\\d{2})/);if(!m||typeof D==='undefined'||!D||!Array.isArray(D.mercados))return;
+var ed=m[1],hoy=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Santiago',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());if(ed!==hoy)return;
+var BOL={'IPSA':['America/Santiago','09:30','16:00'],'IGPA':['America/Santiago','09:30','16:00'],'S&P 500':['America/New_York','09:30','16:00'],'Nasdaq':['America/New_York','09:30','16:00'],
+'Bovespa':['America/Sao_Paulo','10:00','18:00'],'FTSE 100':['Europe/London','08:00','16:30'],'DAX':['Europe/Berlin','09:00','17:30'],'IBEX 35':['Europe/Madrid','09:00','17:30'],'Nikkei 225':['Asia/Tokyo','09:00','15:30']};
+var FER={'America/New_York':['2026-11-26','2026-12-25','2027-01-01','2027-01-18','2027-02-15'],'Asia/Tokyo':['2026-11-23','2026-12-31','2027-01-01','2027-01-11'],'America/Santiago':['2026-12-08','2026-12-25','2026-12-31','2027-01-01'],'America/Sao_Paulo':['2026-11-20','2026-12-24','2026-12-25','2026-12-31','2027-01-01'],'Europe/London':['2026-12-25','2026-12-28','2027-01-01'],'Europe/Berlin':['2026-12-24','2026-12-25','2026-12-31','2027-01-01'],'Europe/Madrid':['2026-12-24','2026-12-25','2026-12-31','2027-01-01']};
+var ORIG=D.mercados.map(function(x){return Object.assign({},x)}),NUEVO={},HORA='';
+function partes(tz,d){var p={};new Intl.DateTimeFormat('en-GB',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',weekday:'short',hourCycle:'h23'}).formatToParts(d).forEach(function(x){p[x.type]=x.value});return p}
+function habil(tz,iso){var w=new Date(iso+'T12:00:00Z').getUTCDay();return w>0&&w<6&&(FER[tz]||[]).indexOf(iso)<0}
+function antes(iso){var d=new Date(iso+'T12:00:00Z');d.setUTCDate(d.getUTCDate()-1);return d.toISOString().slice(0,10)}
+function estado(nom,d){var b=BOL[nom];if(!b)return null;var p=partes(b[0],d),f=p.year+'-'+p.month+'-'+p.day,h=p.hour+':'+p.minute;
+ if(habil(b[0],f)&&h>=b[1]&&h<b[2])return {curso:true};var c=(habil(b[0],f)&&h>=b[2])?f:antes(f);for(var i=0;i<10&&!habil(b[0],c);i++)c=antes(c);return {curso:false,fecha:c}}
+function en(){return /^en/i.test(document.documentElement.lang||'')}
+function aplicar(){var e2=en();D.mercados=ORIG.map(function(o){var n=NUEVO[o.nombre];if(!n)return Object.assign({},o);
+ var x=Object.assign({},o,{valor:n.valor,variacion_pct:n.variacion_pct,fuente:'LarrainVial',url:'https://mercados.larrainvial.com/'});
+ if(n.est.curso){x.fecha='';x.nombre=o.nombre+'\\n{f|'+(e2?'live · ':'en curso · ')+HORA+'}'}else x.fecha=n.est.fecha;return x});
+ var el=document.getElementById('gMercados'),g=(window.echarts&&el&&echarts.getInstanceByDom)?echarts.getInstanceByDom(el):null;if(!g)return;
+ var fm=function(f){var t=String(f||'');return /^\\d{4}-\\d{2}-\\d{2}/.test(t)?t.slice(8,10)+'-'+t.slice(5,7):''},MK=D.mercados;
+ try{g.setOption({yAxis:{data:MK.map(function(q){return q.nombre+(fm(q.fecha)?'\\n{f|'+(e2?'close ':'cierre ')+fm(q.fecha)+'}':'')})},series:[{data:MK.map(function(q){return {value:q.variacion_pct,itemStyle:{color:q.variacion_pct>=0?'#1E7B4F':'#B3261E'}}})}]})}catch(err){}}
+fetch('/pulso.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(p){if(!p||!p.bolsas||!Array.isArray(p.bolsas.lista))return;
+ var g=String(p.bolsas.hora||p.generado||''),d=g?new Date(g):new Date();if(isNaN(d)||g.slice(0,10)!==hoy)return;HORA=g.slice(11,16);
+ p.bolsas.lista.forEach(function(b){var o=null;ORIG.forEach(function(x){if(x.nombre===b.nombre)o=x});if(!o||typeof b.valor!=='number'||typeof b.variacion_pct!=='number')return;
+  if(Math.abs(b.valor-Number(o.valor))<0.005&&Math.abs(b.variacion_pct-Number(o.variacion_pct))<0.005)return;var st=estado(b.nombre,d);if(!st)return;
+  if(!st.curso&&o.fecha&&st.fecha<=String(o.fecha).slice(0,10))return;NUEVO[b.nombre]={valor:b.valor,variacion_pct:b.variacion_pct,est:st}});
+ if(Object.keys(NUEVO).length){aplicar();var t=0,iv=setInterval(function(){aplicar();if(++t>8)clearInterval(iv)},1500);document.addEventListener('cofrade-idioma',function(){setTimeout(aplicar,60)})}}).catch(function(){})})();</script>`;
+
 // 20-11-2026 19:46 · Germán: «Estos gráficos aparecen para la configuración de la "Cámara de Diputados", pero falta agregar los mismos
 // gráficos de esta sección para el "Senado" (para tener todo el panorama de cómo están configuradas las bancadas políticas, sus
 // votaciones, etc.)». Del Senado casi no llegan votaciones del mes con el voto de cada senador, y con menos de 3 la edición no arma
@@ -6416,7 +6447,7 @@ export default {
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
           .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
-          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS + INDICE_CERO, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
+          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS + MERC_JS + INDICE_CERO, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
