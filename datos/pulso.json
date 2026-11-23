@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-23T14:48-03:00",
+ "generado": "2026-11-23T14:58-03:00",
  "proxima": "16:17",
  "indicadores": [
   {
@@ -75,13 +75,84 @@
  ],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10407.78,
+  "valor": 10410.07,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-23T14:49-03:00",
-  "variacion_pct": 0.55
+  "hora": "2026-11-23T14:58-03:00",
+  "variacion_pct": 0.58
  },
- "bolsas": null,
+ "bolsas": {
+  "lista": [
+   {
+    "nombre": "IPSA",
+    "valor": 10410.07,
+    "variacion_pct": 0.58
+   },
+   {
+    "nombre": "IGPA",
+    "valor": 52640.78,
+    "variacion_pct": 0.55
+   },
+   {
+    "nombre": "S&P 500",
+    "valor": 7217.4,
+    "variacion_pct": 4.44
+   },
+   {
+    "nombre": "Nasdaq",
+    "valor": 24085.94,
+    "variacion_pct": 6.49
+   },
+   {
+    "nombre": "Nasdaq 100",
+    "valor": 26704.06,
+    "variacion_pct": 6.69
+   },
+   {
+    "nombre": "Bovespa",
+    "valor": 164399.79,
+    "variacion_pct": -1.19
+   },
+   {
+    "nombre": "Merval",
+    "valor": 2848945.0,
+    "variacion_pct": -0.35
+   },
+   {
+    "nombre": "FTSE 100",
+    "valor": 10480.82,
+    "variacion_pct": 1.3
+   },
+   {
+    "nombre": "DAX",
+    "valor": 25337.27,
+    "variacion_pct": 2.15
+   },
+   {
+    "nombre": "IBEX 35",
+    "valor": 19181.1,
+    "variacion_pct": 1.63
+   },
+   {
+    "nombre": "Nikkei 225",
+    "valor": 56436.65,
+    "variacion_pct": -5.06
+   },
+   {
+    "nombre": "Hang Seng",
+    "valor": 22383.74,
+    "variacion_pct": -0.12
+   },
+   {
+    "nombre": "CSI 300",
+    "valor": 3958.29,
+    "variacion_pct": 0.09
+   }
+  ],
+  "hora": "2026-11-23T14:58-03:00",
+  "fuente": "LarrainVial",
+  "url": "https://mercados.larrainvial.com/"
+ },
  "sismos": {
   "n": 1,
   "mayores": [
@@ -100,33 +171,33 @@
    "seccion": "Chile",
    "notas": [
     {
+     "titulo": "Test Drive Jetour G700 PHEV Limited: una limusina de 891 hp disfrazada de todoterreno extremo",
+     "medio": "The Clinic",
+     "url": "https://www.theclinic.cl/2026/11/23/prueba-de-manejo-jetour-g700-phev-limited-chile/",
+     "hora": "14:57"
+    },
+    {
+     "titulo": "Scarleth Cárdenas impacta con drástico cambio de look antes de tratamiento por cáncer: “Pocas veces en la vida...”",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/23/scarleth-cardenas-impacta-con-drastico-cambio-de-look-antes-de-tratamiento-por-cancer-pocas-veces-en-la-vida/",
+     "hora": "14:49"
+    },
+    {
      "titulo": "Rescatan a persona con fractura expuesta en sector boscoso de Punta Arenas",
      "medio": "La Prensa Austral",
      "url": "https://laprensaaustral.cl/2026/11/23/rescatan-a-persona-con-fractura-expuesta-en-sector-boscoso-de-punta-arenas/",
      "hora": "14:47"
     },
     {
+     "titulo": "Fin a la polémica: autorizan uso del nombre del estadio Santa Laura",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/23/fin-a-la-polemica-autorizan-uso-del-nombre-del-estadio-santa-laura/",
+     "hora": "14:46"
+    },
+    {
      "titulo": "“Estaba intentando hacer reír al público mientras mi cabeza tenía una batalla brígida”: Humorista cuenta cómo enfrentó una crisis de pánico en pleno show",
      "medio": "The Clinic",
      "url": "https://www.theclinic.cl/2026/11/23/estaba-intentando-hacer-reir-al-publico-mientras-mi-cabeza-tenia-una-batalla-brigida-humorista-cuenta-como-enfrento-una-crisis-de-panico-en-pleno-show/",
-     "hora": "14:43"
-    },
-    {
-     "titulo": "De LEGO a Pokémon: kidult, el fenómeno que impulsa la compra de juguetes entre adultos en Chile",
-     "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/23/de-lego-a-pokemon-kidult-el-fenomeno-que-impulsa-la-compra-de-juguetes-entre-adultos-en-chile/",
-     "hora": "14:43"
-    },
-    {
-     "titulo": "Condenan a presidio perpetuo a dos hombres por robo con homicidio de un padre que acudió a vender una consola en Rancagua",
-     "medio": "Diario Constitucional",
-     "url": "https://www.diarioconstitucional.cl/judicial/condenan-a-presidio-perpetuo-a-dos-hombres-por-robo-con-homicidio-de-un-padre-que-acudio-a-vender",
-     "hora": "14:43"
-    },
-    {
-     "titulo": "Desarticulan tres organizaciones criminales que defraudaron al fisco mediante negocios ganaderos",
-     "medio": "La Prensa Austral",
-     "url": "https://laprensaaustral.cl/2026/11/23/desarticulan-tres-organizaciones-criminales-que-defraudaron-al-fisco-mediante-negocios-ganaderos/",
      "hora": "14:43"
     }
    ]
@@ -134,6 +205,12 @@
   {
    "seccion": "Economía",
    "notas": [
+    {
+     "titulo": "NTT DATA lanza Innovation Center Chile para acelerar la aplicación de tecnologías emergentes en industrias estratégicas del país",
+     "medio": "Portal Innova · noticias",
+     "url": "https://portalinnova.cl/ntt-data-lanza-innovation-center-chile-para-acelerar-la-aplicacion-de-tecnologias-emergentes-en-industrias-estrategicas-del-pais/",
+     "hora": "14:50"
+    },
     {
      "titulo": "Nueva plataforma busca conectar las capacidades de las personas con las necesidades de las empresas",
      "medio": "Portal Innova · noticias",
@@ -157,12 +234,6 @@
      "medio": "Infobae America Economia",
      "url": "https://www.infobae.com/america/inhouse/2026/11/23/hasta-100-becas-completas-para-estudiar-una-carrera-convocatoria-cubre-costos-academicos-graduacion-y-titulacion/",
      "hora": "14:32"
-    },
-    {
-     "titulo": "Caso firmas: Qué hay tras la vuelta de carnero de Juan Luis Castro y la tormenta que enfrenta Paulina Vodanovic en el PS",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/politica/firmas-vuelta-de-carnero-castro-vodanovic/",
-     "hora": "14:31"
     }
    ]
   },
@@ -170,28 +241,34 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Arrestan al cantante puertorriqueño Manny Manuel por presuntamente manejar ebrio",
+     "titulo": "Universitario vs Sport Huancayo: día, hora y canal TV del partido de ida por semifinales de la Liga 1 2026",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/america/agencias/2026/11/23/arrestan-al-cantante-puertorriqueno-manny-manuel-por-presuntamente-manejar-ebrio/",
-     "hora": "14:45"
+     "url": "https://www.infobae.com/peru/deportes/2026/11/23/universitario-vs-sport-huancayo-dia-hora-y-canal-tv-del-partido-de-ida-por-semifinales-de-la-liga-1-2026/",
+     "hora": "14:55"
     },
     {
-     "titulo": "CrowdStrike comprará Zscaler por USD 44.000 millones: una de las mayores operaciones de ciberseguridad",
+     "titulo": "Movilidad en Bogotá en VIVO hoy, 23 de noviembre: manifestaciones en la calle 72 generan afectaciones viales",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/tecno/2026/11/23/crowdstrike-comprara-zscaler-por-usd-44000-millones-una-de-las-mayores-operaciones-de-ciberseguridad/",
-     "hora": "14:45"
-    },
-    {
-     "titulo": "Informe desde Estambul: Turquía guarda silencio tras fracaso de la COP31",
-     "medio": "France 24 en español",
-     "url": "https://www.france24.com/es/video/20261123-informe-desde-estambul-turqu%C3%ADa-guarda-silencio-tras-fracaso-de-la-cop31",
-     "hora": "14:18"
+     "url": "https://www.infobae.com/colombia/2026/11/23/en-vivo-problemas-de-movilidad-en-bogota-protesta-genera-afectaciones-y-conductores-convocaron-manifestaciones-en-la-tarde-de-este-lunes-23-de-noviembre/",
+     "hora": "14:54"
     }
    ]
   },
   {
    "seccion": "Economía mundial",
    "notas": [
+    {
+     "titulo": "Allianz no descarta que Francia precise ayuda directa de la UE para resolver su crisis",
+     "medio": "Cinco Días portada",
+     "url": "https://cincodias.elpais.com/mercados-financieros/2026-11-23/allianz-no-descarta-que-francia-precise-ayuda-directa-de-la-ue-para-resolver-su-crisis.html",
+     "hora": "14:53"
+    },
+    {
+     "titulo": "La sorprendente vida secreta de \"La ronda de noche\" de Rembrandt",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/la-sorprendente-vida-secreta-de-la-ronda-de-noche-de-rembrandt/a-80024032?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "14:49"
+    },
     {
      "titulo": "Blue Lagoon debuta en la Bolsa de Islandia en números rojos",
      "medio": "Yahoo Finanzas",
@@ -209,18 +286,6 @@
      "medio": "Expansión España Economía",
      "url": "https://www.expansion.com/economia/financial-times/2026/11/23/nueva-normalidad-golfo-persico.html",
      "hora": "14:26"
-    },
-    {
-     "titulo": "AllianzGI cree que 2027 será un año favorable para los bonos",
-     "medio": "Expansión España Mercados",
-     "url": "https://www.expansion.com/mercados/2026/11/23/allianzgi-cree-2027-sera-ano-favorable-bonos.html",
-     "hora": "14:17"
-    },
-    {
-     "titulo": "Un buque de guerra ruso es atacado y hundido por drones ucranianos en un puerto de Libia, según Zelensky",
-     "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/ckjwjq7z1v0jo?at_medium=RSS&at_campaign=rss",
-     "hora": "14:13"
     }
    ]
   },
@@ -458,11 +523,11 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 61514.77,
+  "bitcoin_usd": 61613.47,
   "bitcoin_fecha": "2026-11-23",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 359,
+ "fuentes_ok": 356,
  "indicadores_origen": {
   "dolar": "banco_central",
   "euro": "banco_central",
