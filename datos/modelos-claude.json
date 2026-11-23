@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-23T14:37-03:00",
+ "generado": "2026-11-23T18:36-03:00",
  "url": "https://platform.claude.com/docs/en/about-claude/model-deprecations.md",
  "tablas": {
   "Model status": [
@@ -77,9 +77,9 @@
    },
    {
     "API model name": "claude-opus-4-5-20251101",
-    "Current state": "Active",
-    "Deprecated": "N/A",
-    "Tentative retirement date": "Not sooner than November 24, 2026"
+    "Current state": "Deprecated",
+    "Deprecated": "November 23, 2026",
+    "Tentative retirement date": "January 22, 2027"
    },
    {
     "API model name": "claude-opus-4-1-20250805",
@@ -152,6 +152,13 @@
     "Current state": "Retired",
     "Deprecated": "February 19, 2026",
     "Tentative retirement date": "April 20, 2026"
+   }
+  ],
+  "2026-11-23: Claude Opus 4.5 model": [
+   {
+    "Retirement date": "January 22, 2027",
+    "Deprecated model": "claude-opus-4-5-20251101",
+    "Recommended replacement": "claude-opus-5-5"
    }
   ],
   "2026-09-30: Claude Sonnet 4.5 model": [
