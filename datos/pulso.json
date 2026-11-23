@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-23T19:05-03:00",
+ "generado": "2026-11-23T19:09-03:00",
  "proxima": "20:17",
  "indicadores": [
   {
@@ -84,7 +84,7 @@
   "valor": 10449.62,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-23T19:07-03:00",
+  "hora": "2026-11-23T19:09-03:00",
   "variacion_pct": 0.96
  },
  "bolsas": {
@@ -155,7 +155,7 @@
     "variacion_pct": 0.09
    }
   ],
-  "hora": "2026-11-23T19:07-03:00",
+  "hora": "2026-11-23T19:09-03:00",
   "fuente": "LarrainVial",
   "url": "https://mercados.larrainvial.com/"
  },
@@ -170,6 +170,12 @@
    "seccion": "Chile",
    "notas": [
     {
+     "titulo": "Leal oposición",
+     "medio": "La Tercera Opinion",
+     "url": "https://www.latercera.com/opinion/noticia/leal-oposicion/",
+     "hora": "19:04"
+    },
+    {
      "titulo": "Sala Cuna: no es universal sin la oferta pública",
      "medio": "La Tercera Opinion",
      "url": "https://www.latercera.com/opinion/noticia/sala-cuna-no-es-universal-sin-la-oferta-publica/",
@@ -180,12 +186,6 @@
      "medio": "Ex-Ante",
      "url": "https://www.ex-ante.cl/negocios/sii-fiscalizacion-a-empresarios/",
      "hora": "19:01"
-    },
-    {
-     "titulo": "Contracción hoy, ¿crecimiento mañana?",
-     "medio": "La Tercera Opinion",
-     "url": "https://www.latercera.com/opinion/noticia/contraccion-hoy-crecimiento-manana/",
-     "hora": "19:00"
     },
     {
      "titulo": "Lo que hay detrás del giro de Juan Luis Castro por el caso Firmas: cómo pasó de apuntar a Vodanovic a asumir la responsabilidad",
@@ -351,9 +351,9 @@
      "hora": "19:04"
     },
     {
-     "titulo": "Yankees llegan a un acuerdo de un año con el zurdo Bruce Suter (fuente)",
+     "titulo": "Yankees llegan a un acuerdo de un año con el zurdo Brent Suter (fuente)",
      "medio": "MLB.com en español",
-     "url": "https://www.mlb.com/es/news/brent-suter-yankees-contract",
+     "url": "https://www.mlb.com/es/news/brent-suter-pacta-con-yankees-por-un-ano",
      "hora": "19:00"
     },
     {
@@ -380,16 +380,16 @@
    "seccion": "Ciencia",
    "notas": [
     {
-     "titulo": "¿Sabes por qué un problema matemático de 174 años acaba de volverse mucho más rápido de resolver (sin que nadie lo haya vuelto a demostrar)?",
-     "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/ciencia/algoritmo-cuatro-colores.html",
-     "hora": "18:47"
-    },
-    {
      "titulo": "Descubren que un videojuego de carreras en pleno quirófano frena el aumento de la ansiedad infantil al empezar la anestesia",
      "medio": "Muy Interesante",
      "url": "https://muyinteresante.okdiario.com/salud/ansiedad-preoperatoria-infantil-videojuego.html",
      "hora": "18:20"
+    },
+    {
+     "titulo": "Científicos descubren que las experiencias cercanas a la muerte se recuerdan con más nitidez que otros episodios de la propia vida",
+     "medio": "Muy Interesante",
+     "url": "https://muyinteresante.okdiario.com/ciencia/experiencias-cercanas-muerte-memoria.html",
+     "hora": "18:19"
     },
     {
      "titulo": "Trabajar en una empresa sostenible no evita el agotamiento de sus empleados",
@@ -542,11 +542,11 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 61180.08,
+  "bitcoin_usd": 61184.5,
   "bitcoin_fecha": "2026-11-23",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 339,
+ "fuentes_ok": 341,
  "indicadores_origen": {
   "dolar": "banco_central_rige",
   "euro": "banco_central_rige",
