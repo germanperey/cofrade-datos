@@ -56,6 +56,7 @@ for k, v in {
     "/*__PILARES_DESGLOSE__*/": leer("modulos", "pilares_desglose.js"),   # 20-11-2026: desglose de Familia y Conectividad
     "/*__HOROSCOPO_COMPAT__*/": leer("modulos", "horoscopo_compat.js"),   # 20-11-2026: compatibilidad con otra persona
     "/*__IDIOMA_RAPIDO__*/": leer("modulos", "idioma_rapido.js"),   # 21-11-2026: botón EN/ES más rápido en la edición
+    "/*__REPUBLICA__*/": leer("modulos", "republica.js"),   # 23-11-2026: republicar, RSS, fichas e IndexNow
     "__PODCAST_JS__": json.dumps("<script>" + podcast_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k

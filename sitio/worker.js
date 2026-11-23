@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "f8dc6ab34b1a";
+const VERSION_SITIO = "114448f39222";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -2449,10 +2449,11 @@ async function panel(req, env) {
   if (!env.DB) return html(marco({ titulo: "Panel", descripcion: "", cuerpo: `<section style="border:0"><h1>Falta la base de datos.</h1></section>` }), 503);
   const u = new URL(req.url), P = periodoPanel(u);
   await revisarConcurso(env).catch(() => null);   // 20-11-2026: borrados de las bases y sorteo de respaldo también desde el Panel
-  const [R, fundadores, cont, difusion, concurso, podcast] = await Promise.all([datosTablero(env, P), panelSocios(env, u).catch(() => ""), contadorVisitas(env, masDias(P.hoy, -29)),
+  const [R, fundadores, cont, difusion, concurso, podcast, republica] = await Promise.all([datosTablero(env, P), panelSocios(env, u).catch(() => ""), contadorVisitas(env, masDias(P.hoy, -29)),
     seccionDifusion(env, u).catch(() => `<section id="difusion"><h3>Difusión y menciones</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`),   // 20-11-2026
     seccionConcurso(env, u).catch(() => `<section id="concurso"><h3>Concurso «Comparte Cofrade News»</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`),
-    seccionPodcast(env, u).catch(() => `<section id="podcast"><h3>Podcast diario</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`)]);   // 20-11-2026
+    seccionPodcast(env, u).catch(() => `<section id="podcast"><h3>Podcast diario</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`),
+    seccionRepublica(env)]);   // 23-11-2026: sitios que republican   // 20-11-2026
   const ini = R.inicios[0] || {}, sec = P.seccion, nomSec = sec ? NOMBRE_SECCION[sec] : "";
   // --- series por día ---
   const dias = [], primero = [ini.visitas, ini.vistas].filter(Boolean).sort()[0] || P.hoy;
@@ -2599,7 +2600,7 @@ ${filtros}<p class="tab-periodo">Mostrando: <b>${esc(P.etiqueta)}</b> (del ${ddm
 <h2 class="grupo-k">Audiencia</h2><div class="cifras k5">${kAud}</div>
 <h2 class="grupo-k">Comunidad</h2><div class="cifras k5">${kCom}</div></section>
 <section id="graficos"><h3>Gráficos del período</h3>${graficos}</section>
-${lectura}${publicidad}${fundadores}${seccionVisitas(cont)}${buzon}${difusion}${concurso}${podcast}
+${lectura}${publicidad}${fundadores}${seccionVisitas(cont)}${buzon}${difusion}${concurso}${republica}${podcast}
 <script type="application/json" id="tablero-datos">${datosJson}</script><script src="/a/${ECHARTS_ARCHIVO}" defer></script><script>${TABLERO_JS}</script>`;
   return html(marco({ titulo: "Panel de Control · Cofrade News", descripcion: "", cuerpo }), 200, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
 }
@@ -5952,6 +5953,150 @@ C._d=function(b){var s=d0.call(this,b);try{if(s.indexOf('const enFila=c=>')>=0&&
 // (motor del boletín) con una flecha «↑» en la Portada; el sitio la cambia por «0» en todas las ediciones, pasadas y futuras.
 const INDICE_CERO = `<script>(function(){function f(){var n=document.querySelector('#cnMenu .cn-ini .cn-n');if(n&&n.textContent!=='0')n.textContent='0'}f();document.addEventListener('DOMContentLoaded',f);document.addEventListener('cofrade-idioma',function(){setTimeout(f,0)})})();</script>`;
 
+// =====================================================================================================================
+// 23-11-2026 · REPUBLICA COFRADE NEWS: recuadro para pegar en otros sitios, canal RSS, fichas al compartir y aviso a buscadores.
+// Germán, 19:37: «Deja una semilla en múltiples páginas webs y redes sociales para que republiquen nuestro newsletter y capten nuevos
+// lectores». Se le advirtió que sembrar enlaces en sitios ajenos es spam (bloqueos, castigo de Google, pérdida de credibilidad) y
+// aprobó, 19:42: «aplica todo lo propuesto, y todo lo que puedas automatizar y validar de mi parte de forma automática y permanente».
+// La semilla queda en NUESTRO sitio y otros la usan por su cuenta:
+//  · /republica  página con el código para pegar, la vista previa y las condiciones.
+//  · /widget     recuadro «Las 3 del día» (se puede incrustar en cualquier sitio; cada carga y cada clic se cuentan por sitio).
+//  · /widget.js  una línea de código que pega el recuadro y ajusta su alto solo.
+//  · /rss.xml    canal RSS 2.0 con aviso WebSub (lectores de noticias y sitios que republican por RSS).
+//  · fichas Open Graph y Twitter con imagen (/og.png) y datos de noticia (JSON-LD) en la portada y en cada edición.
+//  · /<clave>.txt de IndexNow: el flujo «Índice de ediciones» avisa a Bing y otros buscadores al publicar (herramientas/difusion_datos.py).
+// Solo se republica el resumen «Las 3 del día» y siempre enlaza a cofrad.es: la edición completa sigue protegida como antes.
+// =====================================================================================================================
+const INDEXNOW_KEY = "d14dc1b3928cadd21d5ac21eed6d825a";
+const OG_IMG = `https://${DOMINIO}/og.png`;
+const TABLAS_REPUBLICA = ["CREATE TABLE IF NOT EXISTS republica (fecha TEXT NOT NULL, sitio TEXT NOT NULL, vistas INTEGER NOT NULL DEFAULT 0, clics INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (fecha, sitio))"];
+let _tablasRep = null;
+function asegurarRepublica(env) {
+  if (!_tablasRep) _tablasRep = env.DB.batch(TABLAS_REPUBLICA.map((q) => env.DB.prepare(q))).then(() => true, (e) => { _tablasRep = null; throw e; });
+  return _tablasRep;
+}
+async function resumenes(ctx) {
+  try {
+    const r = await desdeGitHub("datos/resumenes.json", 300, ctx);
+    const j = r ? await r.json() : null;
+    return (j && Array.isArray(j.ediciones) ? j.ediciones : []).filter((x) => x && /^\d{4}-\d{2}-\d{2}$/.test(x.f) && Array.isArray(x.tres) && x.tres.length);
+  } catch { return []; }
+}
+async function resumenDe(fecha, ctx) { return (await resumenes(ctx)).find((x) => x.f === fecha) || null; }
+const sitioDe = (t) => { try { const h = new URL(String(t || "")).hostname.toLowerCase().replace(/^www\./, ""); return /^[a-z0-9.-]{3,80}$/.test(h) && h.includes(".") && !/(^|\.)cofrad\.es$/.test(h) && !/^(localhost|127\.|10\.|192\.168\.)/.test(h) ? h : ""; } catch { return ""; } };
+async function contarRepublica(req, env, sitio, campo) {
+  try {
+    if (!env.DB || !sitio) return;
+    const ua = req.headers.get("User-Agent") || "";
+    if (!ua || BOT_UA.test(ua)) return;
+    if (!(await bajoLimite(env, "w:" + (await hmacDif(env, ["rep", fechaChile(), req.headers.get("CF-Connecting-IP") || "", ua].join("|")))))) return;
+    await asegurarRepublica(env);
+    await env.DB.prepare(`INSERT INTO republica (fecha, sitio, ${campo}) VALUES (?, ?, 1) ON CONFLICT(fecha, sitio) DO UPDATE SET ${campo} = ${campo} + 1`).bind(fechaChile(), sitio).run();
+  } catch { /* contar nunca rompe nada */ }
+}
+// ---------- fichas para compartir y datos de noticia ----------
+function fichaEdicion(fecha, res) {
+  const titulo = (res && res.titulo) || `Cofrade News · ${fechaLarga(fecha)}`;
+  const desc = res ? res.tres.join(" · ").slice(0, 297) + (res.tres.join(" · ").length > 297 ? "…" : "") : "El boletín matinal de Chile: economía, política, mar, indicadores y mundo, con cada dato y su fuente.";
+  const url = `https://${DOMINIO}/edicion/${fecha}`;
+  const ld = { "@context": "https://schema.org", "@type": "NewsArticle", headline: titulo.slice(0, 110), description: desc, datePublished: `${fecha}T07:00:00-03:00`,
+    dateModified: `${fecha}T07:00:00-03:00`, inLanguage: "es-CL", url, mainEntityOfPage: url, image: [OG_IMG], isAccessibleForFree: true,
+    author: { "@type": "Organization", name: "Cofrade News", url: `https://${DOMINIO}/` },
+    publisher: { "@type": "Organization", name: "Cofrade News", logo: { "@type": "ImageObject", url: `https://${DOMINIO}/icono-512.png`, width: 512, height: 512 } } };
+  return `<meta property="og:type" content="article"><meta property="og:site_name" content="Cofrade News"><meta property="og:title" content="${esc(titulo)}">`
+    + `<meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${url}"><meta property="og:locale" content="es_CL">`
+    + `<meta property="og:image" content="${OG_IMG}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Cofrade News, el boletín matinal de Chile">`
+    + `<meta property="article:published_time" content="${fecha}T07:00:00-03:00"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(titulo)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${OG_IMG}">`
+    + `<meta name="description" content="${esc(desc)}"><link rel="canonical" href="${url}"><link rel="alternate" type="application/rss+xml" title="Cofrade News" href="https://${DOMINIO}/rss.xml">`
+    + `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>`;
+}
+const FICHA_SITIO = `<meta property="og:site_name" content="Cofrade News"><meta property="og:image" content="${OG_IMG}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">`
+  + `<meta property="og:image:alt" content="Cofrade News, el boletín matinal de Chile"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${OG_IMG}">`
+  + `<link rel="alternate" type="application/rss+xml" title="Cofrade News" href="https://${DOMINIO}/rss.xml">`
+  + `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@graph": [
+    { "@type": "NewsMediaOrganization", "@id": `https://${DOMINIO}/#org`, name: "Cofrade News", url: `https://${DOMINIO}/`, logo: `https://${DOMINIO}/icono-512.png`, foundingLocation: "Santiago, Chile" },
+    { "@type": "WebSite", "@id": `https://${DOMINIO}/#web`, name: "Cofrade News", url: `https://${DOMINIO}/`, inLanguage: "es-CL", publisher: { "@id": `https://${DOMINIO}/#org` } }] }).replace(/</g, "\\u003c")}</script>`;
+// ---------- RSS ----------
+const xmlEsc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[c]));
+function rfc822(fecha) { return new Date(`${fecha}T10:00:00Z`).toUTCString(); }
+async function rss(ctx) {
+  const L = (await resumenes(ctx)).slice(0, 30), hoy = fechaChile();
+  const items = L.filter((x) => x.f <= hoy).map((x) => {
+    const url = `https://${DOMINIO}/edicion/${x.f}`;
+    const cuerpo = `<p><b>Las 3 del día</b></p><ol>${x.tres.map((t) => `<li>${esc(t)}</li>`).join("")}</ol><p><a href="${url}">Lee la edición completa en Cofrade News</a>, gratis cada mañana.</p>`;
+    return `<item><title>${xmlEsc(x.titulo)}</title><link>${url}</link><guid isPermaLink="true">${url}</guid><pubDate>${rfc822(x.f)}</pubDate>`
+      + `<description>${xmlEsc(x.tres.join(" · "))}</description><content:encoded><![CDATA[${cuerpo.replace(/\]\]>/g, "]]&gt;")}]]></content:encoded>`
+      + `<enclosure url="${OG_IMG}" length="30445" type="image/png"/></item>`;
+  }).join("\n");
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel><title>Cofrade News</title><link>https://${DOMINIO}/</link><description>El boletín matinal de Chile: economía, política, mar, indicadores y mundo, con cada dato y su fuente. Gratis cada mañana.</description>
+<language>es-cl</language><copyright>© ${hoy.slice(0, 4)} Cofrade News</copyright><ttl>60</ttl>
+<atom:link href="https://${DOMINIO}/rss.xml" rel="self" type="application/rss+xml"/><atom:link href="https://pubsubhubbub.appspot.com/" rel="hub"/>
+<image><url>https://${DOMINIO}/icono-512.png</url><title>Cofrade News</title><link>https://${DOMINIO}/</link></image>
+${items}
+</channel></rss>`;
+  return new Response(xml, { headers: { "Content-Type": "application/rss+xml; charset=utf-8", "Cache-Control": "public, max-age=900", "Access-Control-Allow-Origin": "*", ...SEGURIDAD } });
+}
+// ---------- recuadro para otros sitios ----------
+async function widget(req, env, ctx) {
+  const u = new URL(req.url), oscuro = u.searchParams.get("tema") === "oscuro", L = await resumenes(ctx), hoy = fechaChile();
+  const x = L.find((e) => e.f <= hoy);
+  const sitio = sitioDe(req.headers.get("Referer")) || sitioDe(u.searchParams.get("sitio") ? "https://" + u.searchParams.get("sitio") : "");
+  if (sitio) ctx.waitUntil(contarRepublica(req, env, sitio, "vistas"));
+  const ir = (ruta) => `https://${DOMINIO}${ruta}${ruta.includes("?") ? "&" : "?"}w=${encodeURIComponent(sitio || "directo")}`;
+  const c = oscuro ? { f: "#0B1F3A", t: "#F5EFE2", s: "#C9D2E0", l: "rgba(201,161,74,.45)", o: "#E0B85C" } : { f: "#FBF8F1", t: "#0B1F3A", s: "#3B4A5E", l: "#E4D9C3", o: "#8A6416" };
+  const cuerpo = x ? `<p class="f">${esc(fechaLarga(x.f))}</p><h2>Las 3 del día</h2><ol>${x.tres.map((t) => `<li>${esc(t)}</li>`).join("")}</ol>
+<p class="b"><a class="btn" href="${ir("/edicion/" + x.f)}" target="_blank" rel="noopener">Leer la edición completa</a><a class="sus" href="${ir("/")}" target="_blank" rel="noopener">Gratis cada mañana →</a></p>`
+    : `<h2>Cofrade News</h2><p>El boletín matinal de Chile.</p><p class="b"><a class="btn" href="${ir("/")}" target="_blank" rel="noopener">Ver la edición de hoy</a></p>`;
+  const pagina = `<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Cofrade News · Las 3 del día</title>
+<style>*{box-sizing:border-box}html,body{margin:0;background:${c.f};color:${c.t};font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{border:1px solid ${c.l};border-top:4px solid #B8892B;border-radius:10px;padding:14px 16px 12px}.cab{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.cab img{width:34px;height:34px;border-radius:7px}.cab b{font:700 19px Georgia,"Times New Roman",serif;letter-spacing:.2px}.f{margin:10px 0 0;font-size:12.5px;color:${c.s}}
+h2{margin:2px 0 6px;font:700 17px Georgia,"Times New Roman",serif;color:${c.o}}ol{margin:0;padding-left:20px}li{margin:0 0 7px}.b{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:10px 0 2px}
+.btn{display:inline-block;background:#B8892B;color:#fff;text-decoration:none;font-weight:600;padding:9px 14px;border-radius:8px;min-height:40px}.sus{color:${c.o};font-weight:600}
+.pie{margin:8px 0 0;font-size:11.5px;color:${c.s}}.pie a{color:inherit}a:focus-visible{outline:3px solid #B8892B;outline-offset:2px}</style></head><body>
+<div class="w"><a class="cab" href="${ir("/")}" target="_blank" rel="noopener"><img src="/icono-192.png" alt="" width="34" height="34"><b>Cofrade News</b></a>
+${cuerpo}<p class="pie">Resumen de Cofrade News, publicado con su autorización. <a href="${ir("/republica")}" target="_blank" rel="noopener">Ponlo en tu sitio</a></p></div>
+<script>(function(){function a(){try{parent.postMessage({cn:"alto",h:document.documentElement.scrollHeight},"*")}catch(e){}}addEventListener("load",a);addEventListener("resize",a);setTimeout(a,400)})();</script></body></html>`;
+  return new Response(pagina, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=600",
+    "Content-Security-Policy": `default-src 'none'; img-src https://${DOMINIO} 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; frame-ancestors *; base-uri 'none'`,
+    "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin" } });
+}
+const WIDGET_JS = `(function(){var s=document.currentScript;if(!s)return;var t=s.getAttribute("data-tema")==="oscuro"?"oscuro":"claro";
+var f=document.createElement("iframe");f.src="https://${DOMINIO}/widget?tema="+t+"&sitio="+encodeURIComponent(location.hostname);f.title="Cofrade News: Las 3 del día";
+f.loading="lazy";f.style.cssText="width:100%;max-width:640px;height:360px;border:0;display:block;overflow:hidden";f.setAttribute("scrolling","no");
+s.parentNode.insertBefore(f,s.nextSibling);addEventListener("message",function(e){if(e.origin==="https://${DOMINIO}"&&e.source===f.contentWindow&&e.data&&e.data.cn==="alto"&&e.data.h>80&&e.data.h<2000)f.style.height=e.data.h+"px"})})();`;
+function paginaRepublica() {
+  const s1 = `<script src="https://${DOMINIO}/widget.js" async></script>`, s2 = `<script src="https://${DOMINIO}/widget.js" data-tema="oscuro" async></script>`;
+  const s3 = `<iframe src="https://${DOMINIO}/widget" title="Cofrade News: Las 3 del día" style="width:100%;max-width:640px;height:380px;border:0"></iframe>`;
+  const bloque = (id, t) => `<div class="rp-cod"><pre id="${id}">${esc(t)}</pre><button type="button" class="btn linea rp-copiar" data-de="${id}">Copiar código</button></div>`;
+  const cuerpo = `<section style="border:0"><h1>Republica Cofrade News en tu sitio</h1>
+<p class="lede">Lleva «Las 3 del día» de Cofrade News a tu web, blog, intranet, club, municipio o medio. Es gratis, se actualiza solo cada mañana y no tienes que hacer nada más.</p>
+<h2>Así se ve</h2><iframe class="rp-vista" src="/widget" title="Vista previa del recuadro de Cofrade News"></iframe>
+<h2>Cómo ponerlo (1 minuto)</h2><ol class="rp-pasos"><li>Copia el código de abajo con el botón «Copiar código».</li><li>En tu sitio, abre el editor de la página donde lo quieres (en WordPress: bloque «HTML personalizado»; en Wix: «Insertar código»; en Blogger: gadget «HTML/JavaScript»).</li><li>Pega el código y guarda. Listo: cada mañana aparece la edición nueva.</li></ol>
+<h3>Recuadro claro (recomendado)</h3>${bloque("rpC1", s1)}<h3>Recuadro oscuro</h3>${bloque("rpC2", s2)}<h3>Si tu sitio no acepta scripts</h3>${bloque("rpC3", s3)}
+<h2>Por RSS</h2><p>Si tu sitio, tu aplicación o tu lector de noticias (Feedly, Inoreader, Flipboard) funciona con RSS, usa esta dirección: <a href="/rss.xml">https://${DOMINIO}/rss.xml</a>. Trae cada edición con «Las 3 del día» y su enlace.</p>
+<h2>Condiciones</h2><ul><li>Puedes publicar el recuadro o el RSS gratis, sin pedir permiso, en cualquier sitio que no promueva el odio, la violencia o actividades ilegales.</li><li>El texto va tal cual, sin cambios, con el nombre Cofrade News y su enlace a www.cofrad.es.</li><li>La edición completa no se copia ni se reproduce: se lee en www.cofrad.es.</li><li>Si quieres un formato especial o una alianza, escríbenos al Buzón.</li></ul>
+<h2>¿Prefieres compartir con tus contactos?</h2><p>Usa el botón Compartir de la portada o de la edición: con tu enlace personal del concurso «Comparte Cofrade News», cada persona distinta que lo abre suma una participación.</p></section>
+<style>.rp-vista{width:100%;max-width:640px;height:400px;border:0;display:block;margin:8px 0 18px}.rp-cod{margin:6px 0 16px}.rp-cod pre{white-space:pre-wrap;word-break:break-all;background:rgba(11,31,58,.06);border:1px solid rgba(184,137,43,.35);border-radius:8px;padding:12px;font:13.5px/1.45 ui-monospace,Menlo,Consolas,monospace;margin:0 0 8px}.rp-pasos li{margin-bottom:6px}</style>
+<script>document.querySelectorAll(".rp-copiar").forEach(function(b){b.addEventListener("click",function(){var t=document.getElementById(b.getAttribute("data-de")).textContent;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent="¡Copiado!";setTimeout(function(){b.textContent="Copiar código"},1800)},function(){var r=document.createRange();r.selectNodeContents(document.getElementById(b.getAttribute("data-de")));var s=getSelection();s.removeAllRanges();s.addRange(r)})})})</script>`;
+  return html(marco({ titulo: "Republica Cofrade News en tu sitio · Gratis", descripcion: "Pon «Las 3 del día» de Cofrade News en tu web, blog o medio: gratis, se actualiza solo cada mañana. Código para copiar y RSS.", cuerpo, canonica: "/republica" }),
+    200, {}, csp({ frame: " 'self'" }));
+}
+// ---------- Panel: qué sitios nos republican ----------
+async function seccionRepublica(env) {
+  try {
+    await asegurarRepublica(env);
+    const desde = fechaChile(new Date(Date.now() - 29 * 86400000));
+    const r = await env.DB.prepare("SELECT sitio, SUM(vistas) v, SUM(clics) c, MIN(fecha) p, MAX(fecha) u FROM republica WHERE fecha >= ? GROUP BY sitio ORDER BY v DESC LIMIT 40").bind(desde).all();
+    const L = (r && r.results) || [];
+    const filas = L.map((x) => `<tr><td>${esc(x.sitio)}</td><td>${Number(x.v || 0).toLocaleString("es-CL")}</td><td>${Number(x.c || 0).toLocaleString("es-CL")}</td><td>${esc(x.p)} a ${esc(x.u)}</td></tr>`).join("");
+    return `<section id="republica"><h3>Sitios que republican Cofrade News (30 días)</h3><p class="aviso">Cada sitio que pegó el recuadro de <a href="/republica">/republica</a>: cuántas veces se mostró y cuántos clics trajo. Se cuenta solo, sin datos personales.</p>`
+      + (L.length ? `<div class="tabla"><table><thead><tr><th>Sitio</th><th>Vistas</th><th>Clics a cofrad.es</th><th>Período</th></tr></thead><tbody>${filas}</tbody></table></div>` : `<p>Aún ningún sitio ha pegado el recuadro.</p>`) + `</section>`;
+  } catch { return `<section id="republica"><h3>Sitios que republican Cofrade News</h3><p class="aviso">No se pudo leer esta sección. Intenta de nuevo en un momento.</p></section>`; }
+}
+
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -5977,7 +6122,7 @@ function marco({ titulo, descripcion, cuerpo, canonica, hero = "", compartir = f
   return `<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(titulo)}</title><meta name="description" content="${esc(descripcion)}"><link rel="canonical" href="https://${DOMINIO}${canonica || "/"}">
 <meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descripcion)}"><meta property="og:type" content="website">
-<meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL"><meta name="theme-color" content="#0B1F3A">
+<meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL">${FICHA_SITIO}<meta name="twitter:title" content="${esc(titulo)}"><meta name="twitter:description" content="${esc(descripcion)}"><meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">${ICONO_HEAD}<link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}${ICONO_CSS}${DIFUSION_CSS}${PODCAST_CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha" data-iso="${fechaChile()}">${esc(fechaLarga(fechaChile()))}</span>
@@ -5986,7 +6131,7 @@ function marco({ titulo, descripcion, cuerpo, canonica, hero = "", compartir = f
 ${hero}<main class="hoja">${cuerpo}</main>
 ${bloqueMarcas()}${DIALOGO}${buzonHtml()}${concursoDialogo()}
 <footer class="hoja pie"><img class="pie-agua" src="/marca-agua.webp" alt="" aria-hidden="true">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
-Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar? <button type="button" class="enlace buzon-abrir">Escríbenos al Buzón</button>.<br>
+Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar? <button type="button" class="enlace buzon-abrir">Escríbenos al Buzón</button>.<br><a href="/republica">Ponlo gratis en tu sitio</a> · <a href="/rss.xml">RSS</a><br>
 © ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}${BUZON_JS}${CABECERA_JS}</script>${concursoScript()}${compartir ? COMPARTIR_JS : ""}
 <script type="speculationrules">{"prerender":[{"where":{"or":[{"href_matches":"/edicion"},{"href_matches":"/edicion/*"}]},"eagerness":"moderate"}]}</script>${ICONO_JS}</body></html>`;
 }
@@ -6410,12 +6555,14 @@ export default {
         // 10 minutos); en el navegador, ver la etiqueta más abajo (18-11). Los gráficos se dibujan cuando el lector llega a ellos (LENTO).
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
         const pcP = proyeccionLeer(m[1], ctx);
-        const sbP = senadoBancadasLeer(ctx);   // 20-11-2026: bancadas del Senado (modulos/senado_bancadas.js), en paralelo   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
+        const sbP = senadoBancadasLeer(ctx);
+        const rsP = resumenDe(m[1], ctx);   // 23-11-2026: ficha para compartir y datos de noticia (modulos/republica.js)   // 20-11-2026: bancadas del Senado (modulos/senado_bancadas.js), en paralelo   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
         const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
         ctx.waitUntil(contarVisita(req, env, p));
         if (u.searchParams.has("r")) ctx.waitUntil(contarReferido(req, env));   // 20-11-2026: visita que llega por un enlace compartido
+        if (u.searchParams.has("w")) ctx.waitUntil(contarRepublica(req, env, sitioDe("https://" + u.searchParams.get("w")), "clics"));   // 23-11-2026: clic desde el recuadro republicado
         ctx.waitUntil(revisarRenovaciones(env, ctx));
         // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): el navegador guardaba la edición 1 hora (la de hoy, 10 minutos)
         // y un cambio del sitio tardaba en verse. Ahora la revisa en cada apertura con su etiqueta: edición + versión del sitio + librería
@@ -6424,6 +6571,7 @@ export default {
         // que su versión también va en la etiqueta (si no, quien ya abrió la edición seguiría viendo las cifras de antes).
         const pc = await pcP;
         const sb = await sbP;
+        const rs = await rsP;
         const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}"`;
         // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
         // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.
@@ -6451,7 +6599,8 @@ export default {
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
-          .on('script[data-cn="boot"]', { element(e) { e.after(IDIOMA_RAPIDO, { html: true }); } })   // 21-11-2026: EN/ES más rápido (modulos/idioma_rapido.js)
+          .on('script[data-cn="boot"]', { element(e) { e.after(IDIOMA_RAPIDO, { html: true }); } })
+          .on('meta[name="description"]', { element(e) { e.remove(); } }).on('link[rel="canonical"]', { element(e) { e.remove(); } }).on("head", { element(e) { e.append(fichaEdicion(m[1], rs), { html: true }); } })   // 23-11-2026: ficha para compartir   // 21-11-2026: EN/ES más rápido (modulos/idioma_rapido.js)
           .on("script", scriptsEdicion(lib))
           .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS + COMPARTIR_ESTILO, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);
@@ -6539,7 +6688,7 @@ export default {
       }
       const ic = { "/favicon.ico": ["favicon.ico", "image/x-icon"], "/favicon-64.png": ["favicon-64.png", "image/png"], "/apple-touch-icon.png": ["apple-touch-icon.png", "image/png"],
         "/escudo-192.png": ["escudo-192.png", "image/png"], "/icono-180.png": ["icono-180.png", "image/png"], "/icono-192.png": ["icono-192.png", "image/png"],
-        "/icono-512.png": ["icono-512.png", "image/png"], "/icono-maskable-192.png": ["icono-maskable-192.png", "image/png"], "/icono-maskable-512.png": ["icono-maskable-512.png", "image/png"] }[p];
+        "/icono-512.png": ["icono-512.png", "image/png"], "/og.png": ["og-cofrade.png", "image/png"], "/icono-maskable-192.png": ["icono-maskable-192.png", "image/png"], "/icono-maskable-512.png": ["icono-maskable-512.png", "image/png"] }[p];
       if (ic) {
         const r = await desdeGitHub(`sitio/${ic[0]}`, 86400, ctx);
         return r ? new Response(r.body, { headers: { "Content-Type": ic[1], "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
@@ -6579,10 +6728,16 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return Response.redirect(`https://${u.host}/favicon-64.png`, 301);   // 13-11-2026: ícono = escudo de la Cofradía
+      // 23-11-2026: republicar en otros sitios, RSS e IndexNow (modulos/republica.js)
+      if (p === "/rss.xml" || p === "/feed" || p === "/rss") return p === "/rss.xml" ? await rss(ctx) : Response.redirect(`https://${u.host}/rss.xml`, 301);
+      if (p === "/widget") return await widget(req, env, ctx);
+      if (p === "/widget.js") return new Response(WIDGET_JS, { headers: { "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "public, max-age=3600", "Access-Control-Allow-Origin": "*", ...SEGURIDAD } });
+      if (p === "/republica") { ctx.waitUntil(contarVisita(req, env, "/republica")); return paginaRepublica(); }
+      if (p === `/${INDEXNOW_KEY}.txt`) return new Response(INDEXNOW_KEY, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } });
       if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nDisallow: /concurso\nDisallow: /ir/\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
       if (p === "/sitemap.xml") {
         const l = await indice(ctx);
-        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, `https://${DOMINIO}/bases-concurso`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
+        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, `https://${DOMINIO}/bases-concurso`, `https://${DOMINIO}/republica`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
         return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${x}</urlset>`, { headers: { "Content-Type": "application/xml" } });
       }
       return html(marco({ titulo: "Página no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esta página no existe.</h1><p class="lede">Vuelve a la <a href="/">portada</a>.</p></section>` }), 404);

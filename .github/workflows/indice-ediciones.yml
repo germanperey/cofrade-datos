@@ -46,11 +46,16 @@ jobs:
       - name: Armar la fuente del podcast
         continue-on-error: true
         run: python3 herramientas/podcast_fuente.py --ref origin/ediciones
+      # 23-11-2026 (Germán: «Deja una semilla en múltiples páginas webs y redes sociales para que republiquen nuestro newsletter»):
+      # «Las 3 del día» de cada edición para el RSS, el recuadro para republicar y las fichas al compartir; avisos a IndexNow y WebSub.
+      - name: Difusión automática (RSS, recuadro, IndexNow, WebSub)
+        continue-on-error: true
+        run: python3 herramientas/difusion_datos.py --ref origin/ediciones --salida datos
       - name: Guardar en el repositorio
         run: |
           git config user.name "cofrade-datos"
           git config user.email "actions@users.noreply.github.com"
-          git add datos/ediciones.json archivo/manifiesto/completas.json archivo/manifiesto/meses.json ediciones archivo/manifiesto
+          git add datos/ediciones.json archivo/manifiesto/completas.json; for f in datos/resumenes.json datos/difusion-estado.json; do [ -f $f ] && git add $f; done; git add archivo/manifiesto/meses.json ediciones archivo/manifiesto
           if [ -d podcast ]; then git add podcast; fi; if [ -f datos/podcast.json ]; then git add datos/podcast.json; fi
           git diff --cached --quiet || git commit -m "Índice y ediciones completas permanentes $(date -u +%Y-%m-%dT%H:%M)"
           ok=0; for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && ok=1 && break; sleep 10; done

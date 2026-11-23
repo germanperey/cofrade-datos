@@ -943,6 +943,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__PILARES_DESGLOSE__*/
 /*__HOROSCOPO_COMPAT__*/
 /*__IDIOMA_RAPIDO__*/
+/*__REPUBLICA__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -968,7 +969,7 @@ function marco({ titulo, descripcion, cuerpo, canonica, hero = "", compartir = f
   return `<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(titulo)}</title><meta name="description" content="${esc(descripcion)}"><link rel="canonical" href="https://${DOMINIO}${canonica || "/"}">
 <meta property="og:title" content="${esc(titulo)}"><meta property="og:description" content="${esc(descripcion)}"><meta property="og:type" content="website">
-<meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL"><meta name="theme-color" content="#0B1F3A">
+<meta property="og:url" content="https://${DOMINIO}${canonica || "/"}"><meta property="og:locale" content="es_CL">${FICHA_SITIO}<meta name="twitter:title" content="${esc(titulo)}"><meta name="twitter:description" content="${esc(descripcion)}"><meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">${ICONO_HEAD}<link rel="preload" href="/f/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/f/cormorant-garamond-latin-600-italic.woff2" as="font" type="font/woff2" crossorigin><style>${FUENTES}${CSS}${ICONO_CSS}${DIFUSION_CSS}${PODCAST_CSS}</style></head><body>
 <header class="cab"><div class="hoja"><a class="marca" href="/" aria-label="Cofrade News, portada"><img class="l-claro" src="${LOGO_CLARO}" alt="" width="52" height="52"><img class="l-oscuro" src="${LOGO_OSCURO}" alt="" width="52" height="52"><b>Cofrade News</b></a>
 <span class="fecha" data-iso="${fechaChile()}">${esc(fechaLarga(fechaChile()))}</span>
@@ -977,7 +978,7 @@ function marco({ titulo, descripcion, cuerpo, canonica, hero = "", compartir = f
 ${hero}<main class="hoja">${cuerpo}</main>
 ${bloqueMarcas()}${DIALOGO}${buzonHtml()}${concursoDialogo()}
 <footer class="hoja pie"><img class="pie-agua" src="/marca-agua.webp" alt="" aria-hidden="true">Cofrade News · boletín diario gratuito de la Cofradía, hecho en Chile. Cada dato lleva su fuente y su fecha en la edición.<br>
-Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar? <button type="button" class="enlace buzon-abrir">Escríbenos al Buzón</button>.<br>
+Medimos las visitas sin cookies y sin datos personales. ¿Una idea para mejorar? <button type="button" class="enlace buzon-abrir">Escríbenos al Buzón</button>.<br><a href="/republica">Ponlo gratis en tu sitio</a> · <a href="/rss.xml">RSS</a><br>
 © ${fechaChile().slice(0, 4)} <span>Cofrade News. Todos los derechos reservados.</span></footer><script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${SCRIPT}${BUZON_JS}${CABECERA_JS}</script>${concursoScript()}${compartir ? COMPARTIR_JS : ""}
 <script type="speculationrules">{"prerender":[{"where":{"or":[{"href_matches":"/edicion"},{"href_matches":"/edicion/*"}]},"eagerness":"moderate"}]}</script>${ICONO_JS}</body></html>`;
 }
@@ -1401,12 +1402,14 @@ export default {
         // 10 minutos); en el navegador, ver la etiqueta más abajo (18-11). Los gráficos se dibujan cuando el lector llega a ellos (LENTO).
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
         const pcP = proyeccionLeer(m[1], ctx);
-        const sbP = senadoBancadasLeer(ctx);   // 20-11-2026: bancadas del Senado (modulos/senado_bancadas.js), en paralelo   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
+        const sbP = senadoBancadasLeer(ctx);
+        const rsP = resumenDe(m[1], ctx);   // 23-11-2026: ficha para compartir y datos de noticia (modulos/republica.js)   // 20-11-2026: bancadas del Senado (modulos/senado_bancadas.js), en paralelo   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
         const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
         if (!r) return html(marco({ titulo: "Edición no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esa edición no está.</h1><p class="lede">Vuelve a la <a href="/">portada</a> para ver las disponibles.</p></section>` }), 404);
         ctx.waitUntil(contarVisita(req, env, p));
         if (u.searchParams.has("r")) ctx.waitUntil(contarReferido(req, env));   // 20-11-2026: visita que llega por un enlace compartido
+        if (u.searchParams.has("w")) ctx.waitUntil(contarRepublica(req, env, sitioDe("https://" + u.searchParams.get("w")), "clics"));   // 23-11-2026: clic desde el recuadro republicado
         ctx.waitUntil(revisarRenovaciones(env, ctx));
         // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): el navegador guardaba la edición 1 hora (la de hoy, 10 minutos)
         // y un cambio del sitio tardaba en verse. Ahora la revisa en cada apertura con su etiqueta: edición + versión del sitio + librería
@@ -1415,6 +1418,7 @@ export default {
         // que su versión también va en la etiqueta (si no, quien ya abrió la edición seguiría viendo las cifras de antes).
         const pc = await pcP;
         const sb = await sbP;
+        const rs = await rsP;
         const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}"`;
         // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
         // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.
@@ -1442,7 +1446,8 @@ export default {
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
-          .on('script[data-cn="boot"]', { element(e) { e.after(IDIOMA_RAPIDO, { html: true }); } })   // 21-11-2026: EN/ES más rápido (modulos/idioma_rapido.js)
+          .on('script[data-cn="boot"]', { element(e) { e.after(IDIOMA_RAPIDO, { html: true }); } })
+          .on('meta[name="description"]', { element(e) { e.remove(); } }).on('link[rel="canonical"]', { element(e) { e.remove(); } }).on("head", { element(e) { e.append(fichaEdicion(m[1], rs), { html: true }); } })   // 23-11-2026: ficha para compartir   // 21-11-2026: EN/ES más rápido (modulos/idioma_rapido.js)
           .on("script", scriptsEdicion(lib))
           .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS + COMPARTIR_ESTILO, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);
@@ -1530,7 +1535,7 @@ export default {
       }
       const ic = { "/favicon.ico": ["favicon.ico", "image/x-icon"], "/favicon-64.png": ["favicon-64.png", "image/png"], "/apple-touch-icon.png": ["apple-touch-icon.png", "image/png"],
         "/escudo-192.png": ["escudo-192.png", "image/png"], "/icono-180.png": ["icono-180.png", "image/png"], "/icono-192.png": ["icono-192.png", "image/png"],
-        "/icono-512.png": ["icono-512.png", "image/png"], "/icono-maskable-192.png": ["icono-maskable-192.png", "image/png"], "/icono-maskable-512.png": ["icono-maskable-512.png", "image/png"] }[p];
+        "/icono-512.png": ["icono-512.png", "image/png"], "/og.png": ["og-cofrade.png", "image/png"], "/icono-maskable-192.png": ["icono-maskable-192.png", "image/png"], "/icono-maskable-512.png": ["icono-maskable-512.png", "image/png"] }[p];
       if (ic) {
         const r = await desdeGitHub(`sitio/${ic[0]}`, 86400, ctx);
         return r ? new Response(r.body, { headers: { "Content-Type": ic[1], "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
@@ -1570,10 +1575,16 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=604800", ...SEGURIDAD } }) : new Response("", { status: 404 });
       }
       if (p === "/favicon.svg") return Response.redirect(`https://${u.host}/favicon-64.png`, 301);   // 13-11-2026: ícono = escudo de la Cofradía
+      // 23-11-2026: republicar en otros sitios, RSS e IndexNow (modulos/republica.js)
+      if (p === "/rss.xml" || p === "/feed" || p === "/rss") return p === "/rss.xml" ? await rss(ctx) : Response.redirect(`https://${u.host}/rss.xml`, 301);
+      if (p === "/widget") return await widget(req, env, ctx);
+      if (p === "/widget.js") return new Response(WIDGET_JS, { headers: { "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "public, max-age=3600", "Access-Control-Allow-Origin": "*", ...SEGURIDAD } });
+      if (p === "/republica") { ctx.waitUntil(contarVisita(req, env, "/republica")); return paginaRepublica(); }
+      if (p === `/${INDEXNOW_KEY}.txt`) return new Response(INDEXNOW_KEY, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } });
       if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nDisallow: /concurso\nDisallow: /ir/\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
       if (p === "/sitemap.xml") {
         const l = await indice(ctx);
-        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, `https://${DOMINIO}/bases-concurso`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
+        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, `https://${DOMINIO}/bases-concurso`, `https://${DOMINIO}/republica`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
         return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${x}</urlset>`, { headers: { "Content-Type": "application/xml" } });
       }
       return html(marco({ titulo: "Página no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esta página no existe.</h1><p class="lede">Vuelve a la <a href="/">portada</a>.</p></section>` }), 404);
