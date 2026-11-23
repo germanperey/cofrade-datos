@@ -2450,11 +2450,11 @@ def cierre_larrainvial(sym, estado, clave):
     if "t" not in _LV:
         h = pedir("https://mercados.larrainvial.com/", estado, clave + "_larrainvial", como="text", espera=(0, 15), limite=40)
         _LV["t"] = re.sub(r"\s+", " ", html_a_texto(h or "").replace("&amp;", "&"))
-    m = re.search(r"(?<![A-Z&])" + re.escape(LV_NOMBRE[sym]) + r"\s+(\d{1,3}(?:\.\d{3})*(?:,\d{1,2})?)\s+([+\-−]?\d{1,2},\d{1,2})(?!\d)", _LV["t"])
+    m = re.search(r"(?<![A-Z&])" + re.escape(LV_NOMBRE[sym]) + r"[\s|]+(\d{1,3}(?:\.\d{3})*(?:,\d{1,2})?)[\s|%]+([+\-−]?\s?\d{1,2},\d{1,2})(?!\d)", _LV["t"])
     if not m:
         return []
     v = float(m.group(1).replace(".", "").replace(",", "."))
-    pct = float(m.group(2).replace("−", "-").replace(",", "."))
+    pct = float(m.group(2).replace("−", "-").replace(" ", "").replace(",", "."))
     if v <= 0 or abs(pct) >= 25:
         return []
     a = f - dt.timedelta(days=1)

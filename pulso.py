@@ -185,12 +185,12 @@ def bolsas_de_texto(t):
     t = re.sub(r"\s+", " ", str(t or "").replace("&amp;", "&"))
     out = []
     for clave, nombre in BOLSAS:
-        m = re.search(r"(?<![A-Z&])" + re.escape(clave) + r"\s+(\d{1,3}(?:\.\d{3})*(?:,\d{1,2})?)\s+([+\-−]?\d{1,2},\d{1,2})(?!\d)", t)
+        m = re.search(r"(?<![A-Z&])" + re.escape(clave) + r"[\s|]+(\d{1,3}(?:\.\d{3})*(?:,\d{1,2})?)[\s|%]+([+\-−]?\s?\d{1,2},\d{1,2})(?!\d)", t)
         if not m:
             continue
         try:
             v = float(m.group(1).replace(".", "").replace(",", "."))
-            pct = float(m.group(2).replace("−", "-").replace(",", "."))
+            pct = float(m.group(2).replace("−", "-").replace(" ", "").replace(",", "."))
         except ValueError:
             continue
         if 100 <= v <= 10_000_000 and abs(pct) < 25:
@@ -205,9 +205,12 @@ def bolsas(estado):
     h = B.pedir(url, estado, "bolsas", como="text", espera=(0, 15), limite=40)
     if not h:
         return None
-    lista = bolsas_de_texto(B.html_a_texto(h))
-    if len(lista) < 5:   # la página cambió de forma: mejor nada que cifras dudosas
-        estado["bolsas"] = {"ok": False, "hora": B.ahora().isoformat(timespec="seconds"), "url": url, "error": f"solo {len(lista)} bolsas"}
+    t = B.html_a_texto(h)
+    lista = bolsas_de_texto(t)
+    if len(lista) < 5:   # la página cambió de forma: mejor nada que cifras dudosas (se guarda un trozo del texto para revisar)
+        i = max(0, t.find("IGPA") - 120)
+        estado["bolsas"] = {"ok": False, "hora": B.ahora().isoformat(timespec="seconds"), "url": url, "error": f"solo {len(lista)} bolsas",
+                            "muestra": t[i:i + 500]}
         return None
     estado["bolsas"] = {"ok": True, "hora": B.ahora().isoformat(timespec="seconds"), "url": url, "n": len(lista), "error": ""}
     return {"lista": lista, "hora": B.ahora().isoformat(timespec="minutes"), "fuente": "LarrainVial", "url": url}
@@ -313,6 +316,8 @@ def armar(estado, carpeta=None):
     h = B.ahora()
     siguiente = h.replace(minute=17, second=0, microsecond=0) + dt.timedelta(hours=2 - h.hour % 2)
     p["proxima"] = siguiente.strftime("%H:%M") if 7 <= siguiente.hour <= 23 else "07:17"
+    if not p.get("bolsas") and isinstance(estado.get("bolsas"), dict):
+        p["bolsas_estado"] = estado["bolsas"]   # 23-11-2026: diagnóstico visible si LarrainVial cambia de forma
     p["fuentes_ok"] = sum(1 for v in estado.values() if isinstance(v, dict) and v.get("ok"))
     p["indicadores_origen"] = (estado.get("indicadores_cascada") or {}).get("origen") or {}   # 17-11-2026: de dónde salió cada cifra
     return p
