@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-23T08:21:44-03:00",
- "total": 207,
+ "generado": "2026-11-23T15:50:42-03:00",
+ "total": 211,
  "secciones": {
   "politica/chile": [
    [
@@ -14,11 +14,6 @@
     "rss"
    ],
    [
-    "Diario Constitucional (RSS)",
-    "https://www.diarioconstitucional.cl/feed/",
-    "rss"
-   ],
-   [
     "Diario El Centro Talca (RSS)",
     "https://www.diarioelcentro.cl/feed/",
     "rss"
@@ -29,18 +24,13 @@
     "rss"
    ],
    [
-    "El Rancaguino (RSS)",
-    "https://www.elrancaguino.cl/feed/",
+    "El Siglo (RSS)",
+    "https://www.elsiglo.cl/feed/",
     "rss"
    ],
    [
     "La Cuarta (RSS)",
     "https://www.lacuarta.com/arc/outboundfeeds/rss/?outputType=xml",
-    "rss"
-   ],
-   [
-    "La Discusion de Chillan (RSS)",
-    "https://www.ladiscusion.cl/feed/",
     "rss"
    ],
    [
@@ -78,11 +68,6 @@
    [
     "Bloomberg Linea (RSS)",
     "https://www.bloomberglinea.com/arc/outboundfeeds/rss/?outputType=xml",
-    "rss"
-   ],
-   [
-    "CPC Confederacion de la Produccion (RSS)",
-    "https://www.cpc.cl/feed/",
     "rss"
    ],
    [
@@ -139,6 +124,11 @@
    ]
   ],
   "industrias": [
+   [
+    "Aqua.cl (RSS)",
+    "https://www.aqua.cl/feed/",
+    "rss"
+   ],
    [
     "Cadem (RSS)",
     "https://cadem.cl/feed/",
@@ -493,11 +483,6 @@
     "rss"
    ],
    [
-    "Microsoft Blog (RSS, inglés)",
-    "https://blogs.microsoft.com/feed/",
-    "rss"
-   ],
-   [
     "MIT Technology Review IA (RSS, inglés)",
     "https://www.technologyreview.com/topic/artificial-intelligence/feed",
     "rss"
@@ -804,6 +789,26 @@
     "json"
    ],
    [
+    "ESPN Deportes (español)",
+    "https://espndeportes.espn.com/espn/rss/news",
+    "rss"
+   ],
+   [
+    "ESPN FC noticias (RSS)",
+    "https://www.espn.com/espn/rss/soccer/news",
+    "rss"
+   ],
+   [
+    "ESPN MLB (RSS)",
+    "https://www.espn.com/espn/rss/mlb/news",
+    "rss"
+   ],
+   [
+    "ESPN NFL (RSS)",
+    "https://www.espn.com/espn/rss/nfl/news",
+    "rss"
+   ],
+   [
     "Eventing Nation (RSS)",
     "https://eventingnation.com/feed/",
     "rss"
@@ -1033,8 +1038,18 @@
   ],
   "chilenos-mundo": [
    [
+    "Fundación Imagen de Chile",
+    "https://www.fundacionimagendechile.cl/feed/",
+    "rss"
+   ],
+   [
     "La Tercera Tendencias (Arc)",
     "https://www.latercera.com/arc/outboundfeeds/rss/category/tendencias/?outputType=xml",
+    "rss"
+   ],
+   [
+    "Marca Chile / Imagen de Chile",
+    "https://www.marcachile.cl/feed/",
     "rss"
    ]
   ],
@@ -1045,8 +1060,8 @@
     "rss"
    ],
    [
-    "Electromineria (RSS)",
-    "https://www.electromineria.cl/feed/",
+    "Minería Chilena (RSS)",
+    "https://www.mch.cl/feed/",
     "rss"
    ],
    [
@@ -1057,6 +1072,11 @@
    [
     "Portal Minero · Noticias de proyectos (RSS)",
     "https://www.portalminero.com/wp/category/noticias/feed/",
+    "rss"
+   ],
+   [
+    "Revista Electricidad · proyectos de energía (RSS)",
+    "https://www.revistaei.cl/feed/",
     "rss"
    ]
   ],
@@ -1069,10 +1089,11 @@
   ]
  },
  "fallas": {
-  "https://www.cpc.cl/feed/": 2,
-  "https://deepmind.google/blog/rss.xml": 1,
-  "https://blogs.microsoft.com/feed/": 2,
-  "https://www.eso.org/public/blog/feed/": 1
+  "https://www.servel.cl/feed/": 1,
+  "https://www.eso.org/public/blog/feed/": 2,
+  "https://www.nasaspaceflight.com/feed/": 1,
+  "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28f%C3%BAtbol+OR+tenis+OR+golf+OR+%22La+Roja%22+OR+campeonato%29&timespan=1d": 1,
+  "https://ecosistemastartup.com/feed/": 1
  },
  "nota": "Fuentes verificadas desde GitHub (robots.txt, RSS válido y notas recientes). Las lee bajar.py."
 }
