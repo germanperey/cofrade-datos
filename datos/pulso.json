@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-24T09:07-03:00",
- "proxima": "10:17",
+ "generado": "2026-11-24T11:07-03:00",
+ "proxima": "12:17",
  "indicadores": [
   {
    "clave": "dolar",
@@ -10,7 +10,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "euro",
@@ -20,7 +20,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "yuan",
@@ -40,17 +40,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440,
+   "valor": 72440.0,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "tpm",
@@ -60,43 +60,43 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 5.51,
+   "valor": 5.5112,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   }
  ],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10441.24,
+  "valor": 10330.09,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-24T09:07-03:00",
-  "variacion_pct": -0.08
+  "hora": "2026-11-24T11:08-03:00",
+  "variacion_pct": -1.14
  },
  "bolsas": {
   "lista": [
    {
     "nombre": "IPSA",
-    "valor": 10441.24,
-    "variacion_pct": -0.08
+    "valor": 10330.09,
+    "variacion_pct": -1.14
    },
    {
     "nombre": "IGPA",
-    "valor": 52786.72,
-    "variacion_pct": -0.08
+    "valor": 52249.44,
+    "variacion_pct": -1.09
    },
    {
     "nombre": "S&P 500",
-    "valor": 7237.17,
-    "variacion_pct": 4.73
+    "valor": 7103.03,
+    "variacion_pct": -1.85
    },
    {
     "nombre": "Nasdaq",
@@ -110,8 +110,8 @@
    },
    {
     "nombre": "Bovespa",
-    "valor": 164796.05,
-    "variacion_pct": -0.95
+    "valor": 166793.53,
+    "variacion_pct": 1.21
    },
    {
     "nombre": "Merval",
@@ -120,13 +120,13 @@
    },
    {
     "nombre": "FTSE 100",
-    "valor": 10473.01,
-    "variacion_pct": -0.07
+    "valor": 10454.07,
+    "variacion_pct": -0.26
    },
    {
     "nombre": "DAX",
-    "valor": 25178.72,
-    "variacion_pct": -0.63
+    "valor": 25097.45,
+    "variacion_pct": -0.95
    },
    {
     "nombre": "IBEX 35",
@@ -149,13 +149,20 @@
     "variacion_pct": 0.14
    }
   ],
-  "hora": "2026-11-24T09:07-03:00",
+  "hora": "2026-11-24T11:08-03:00",
   "fuente": "LarrainVial",
   "url": "https://mercados.larrainvial.com/"
  },
  "sismos": {
-  "n": 0,
-  "mayores": [],
+  "n": 1,
+  "mayores": [
+   {
+    "hora": "2026-11-24T10:22-03:00",
+    "magnitud": 4.8,
+    "profundidad_km": 33.4,
+    "referencia": "145 km al N de La Serena"
+   }
+  ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
   "url": "https://earthquake.usgs.gov/earthquakes/map/"
  },
@@ -164,34 +171,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "“Se fue la Grande, la Matriarca, la Decana”: la emotiva despedida de Boric a Delfina Guzmán tras su muerte a los 98 años",
+     "titulo": "“No lo vi nunca”: TV argentina reporta que la carne de paloma es comercializada en carnicerías del país",
+     "medio": "The Clinic",
+     "url": "https://www.theclinic.cl/2026/11/24/no-lo-vi-nunca-tv-argentina-reporta-que-la-carne-de-paloma-llego-hasta-las-carnicerias-del-pais/",
+     "hora": "11:05"
+    },
+    {
+     "titulo": "Nueva alerta en Metro de Santiago: emergencia obliga a suspender servicio en estaciones de la Línea 1",
      "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/24/se-fue-la-grande-la-matriarca-la-decana-la-emotiva-despedida-de-boric-a-delfina-guzman-tras-su-muerte-a-los-98-anos/",
-     "hora": "09:07"
+     "url": "https://www.adnradio.cl/2026/11/24/nueva-alerta-en-metro-de-santiago-emergencia-medica-obliga-a-suspender-servicio-en-dos-estaciones-de-la-linea-1/",
+     "hora": "11:03"
     },
     {
-     "titulo": "Fallece Delfina Guzmán a los 98 años: Chile despide a una de sus grandes actrices",
-     "medio": "Diario El Centro Talca",
-     "url": "https://www.diarioelcentro.cl/2026/11/24/fallece-delfina-guzman-a-los-98-anos-chile-despide-a-una-de-sus-grandes-actrices/",
-     "hora": "09:06"
-    },
-    {
-     "titulo": "Caso Firmas: Fiscalía ordena a la PDI diligencias en el Senado para coordinar entrega voluntaria de documentos",
+     "titulo": "Inauguran edificio en honor a Sebastián Piñera en el campus San Joaquín de la Pontificia Universidad Católica",
      "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/caso-firmas-fiscalia-ordena-a-la-pdi-diligencias-en-el-senado-para-coordinar-entrega-voluntaria-de-documentos/",
-     "hora": "09:03"
+     "url": "https://www.latercera.com/nacional/noticia/inauguran-edificio-en-honor-a-sebastian-pinera-en-el-campus-san-joaquin-de-la-pontificia-universidad-catolica/",
+     "hora": "11:02"
     },
     {
-     "titulo": "Crystal Palace vs Real Sociedad: horario, canal de TV y cómo ver desde Chile a Darío Osorio en la Europa League",
-     "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/24/crystal-palace-vs-real-sociedad-horario-canal-de-tv-y-como-ver-desde-chile-a-dario-osorio-en-la-europa-league/",
-     "hora": "09:02"
+     "titulo": "La hizo pública tras su partida: Rodrigo Muñoz revela una de las últimas voluntades de Delfina Guzmán antes de morir",
+     "medio": "La Cuarta",
+     "url": "https://www.lacuarta.com/espectaculos/noticia/la-hizo-publica-tras-su-partida-rodrigo-munoz-revela-una-de-las-ultimas-voluntades-de-delfina-guzman-antes-de-morir/",
+     "hora": "10:52"
     },
     {
-     "titulo": "Coro Municipal de Porvenir llevó su canto a la Región de Los Ríos",
-     "medio": "La Prensa Austral",
-     "url": "https://laprensaaustral.cl/2026/11/24/coro-municipal-de-porvenir-llevo-su-canto-a-la-region-de-los-rios/",
-     "hora": "08:59"
+     "titulo": "A días del 25N: Quilicura alerta por 831 llamados de mujeres víctimas de violencia intrafamiliar",
+     "medio": "Publimetro Chile",
+     "url": "https://www.publimetro.cl/social/2026/11/24/a-dias-del-25n-quilicura-alerta-por-831-llamados-de-mujeres-victimas-de-violencia-intrafamiliar/",
+     "hora": "10:52"
     }
    ]
   },
@@ -199,34 +206,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "La emblemática actriz Delfina Guzmán muere a los 98 años de edad",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/economia-y-politica/actualidad/la-emblematica-actriz-delfina-guzman-muere-a-los-98-anos-de-edad",
-     "hora": "09:02"
-    },
-    {
-     "titulo": "Lo que un millón de jóvenes vino a decirnos en Palermo",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/opinion/2026/11/24/lo-que-un-millon-de-jovenes-vino-a-decirnos-en-palermo/",
-     "hora": "08:58"
-    },
-    {
-     "titulo": "Delfina Guzmán: los papeles que marcaron su trayectoria",
-     "medio": "Ex-Ante",
-     "url": "https://www.ex-ante.cl/cultura/delfina-guzman-papeles-marcaron-trayectoria/",
-     "hora": "08:57"
-    },
-    {
-     "titulo": "Tensión en el Kurdistán: Irak ordenó tomar el control de los yacimientos y pasos fronterizos en zonas bajo control kurdo",
+     "titulo": "La roya del café impulsó una ola migratoria en la región en los últimos quince años, según analista",
      "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/america/mundo/2026/11/24/tension-en-el-kurdistan-irak-ordeno-tomar-el-control-de-los-yacimientos-y-pasos-fronterizos-en-zonas-bajo-control-kurdo/",
-     "hora": "08:55"
+     "url": "https://www.infobae.com/el-salvador/2026/11/24/la-roya-del-cafe-impulso-una-ola-migratoria-en-la-region-en-los-ultimos-quince-anos-segun-analista-migratorio/",
+     "hora": "11:03"
     },
     {
-     "titulo": "Así quedó ahora el top ten de las empresas más valiosas del mundo tras el regreso de Jensen Huang a Nvidia",
-     "medio": "La Tercera · Pulso",
-     "url": "https://www.latercera.com/pulso/noticia/asi-quedo-ahora-el-top-ten-de-las-empresas-mas-valiosas-del-mundo-tras-el-regreso-de-jensen-huang-a-nvidia/",
-     "hora": "08:51"
+     "titulo": "Las petroleras advierten que podría haber faltante de nafta en la provincia de Buenos Aires si avanza un proyecto de ley",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/24/las-petroleras-advierten-que-podria-haber-faltante-de-nafta-en-la-provincia-de-buenos-aires-si-avanza-un-proyecto-de-ley/",
+     "hora": "11:00"
+    },
+    {
+     "titulo": "Las universidades privadas en Colombia pierden terreno incluso entre los hogares más ricos",
+     "medio": "Bloomberg Linea",
+     "url": "https://www.bloomberglinea.com/latinoamerica/colombia/las-universidades-privadas-en-colombia-pierden-terreno-incluso-entre-los-hogares-mas-ricos/",
+     "hora": "11:00"
+    },
+    {
+     "titulo": "Dólar abre al alza y recupera los $ 1.020 a medida que el cobre vuelve a verse arrastrado a mínimos desde marzo",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/mercados/bolsa-monedas/dolar-hoy-769uz",
+     "hora": "10:57"
+    },
+    {
+     "titulo": "Enrique Szewach: “Es difícil que en un año electoral las políticas generen algún cambio”",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/24/enrique-szewach-es-dificil-que-en-un-ano-electoral-las-politicas-generen-algun-cambio/",
+     "hora": "10:57"
     }
    ]
   },
@@ -234,16 +241,22 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Partidos de hoy, martes 24 de noviembre de 2026: programación, canales TV y resultados en vivo",
+     "titulo": "Cinco años de internamiento a una menor por la muerte de otro a la salida de su instituto",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/peru/deportes/2026/11/24/partidos-de-hoy-martes-24-de-noviembre-de-2026-programacion-canales-tv-y-resultados-en-vivo/",
-     "hora": "09:04"
+     "url": "https://www.infobae.com/espana/agencias/2026/11/24/cinco-anos-de-internamiento-a-una-menor-por-la-muerte-de-otro-a-la-salida-de-su-instituto/",
+     "hora": "11:05"
     },
     {
-     "titulo": "Maria Claudia Tarazona respaldó a Paloma Valencia tras polémica por mensajes que habrían advertido sobre el atentado contra Miguel Uribe Turbay: “No perdamos el foco”",
+     "titulo": "La elección del diseñador de la fachada de la Gloria de la Sagrada Familia no será rápida",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/2026/11/24/maria-claudia-tarazona-respaldo-a-paloma-valencia-tras-polemica-por-mensajes-que-habrian-advertido-sobre-el-atentado-contra-miguel-uribe-turbay-no-perdamos-el-foco/",
-     "hora": "09:04"
+     "url": "https://www.infobae.com/espana/agencias/2026/11/24/la-eleccion-del-disenador-de-la-fachada-de-la-gloria-de-la-sagrada-familia-no-sera-rapida/",
+     "hora": "11:04"
+    },
+    {
+     "titulo": "Zelenski apelará al nuevo Congreso de EEUU para presionar a Rusia y señala a Trump por seguir la dirección de Putin",
+     "medio": "Europa Press · Internacional",
+     "url": "https://www.europapress.es/internacional/noticia-zelenski-apelara-nuevo-congreso-eeuu-presionar-rusia-senala-trump-seguir-direccion-putin-20261124145209.html",
+     "hora": "10:52"
     },
     {
      "titulo": "Los drones siembran de muertos Sudán",
@@ -257,34 +270,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "El nuevo equilibrio político de EE UU cambia el escenario para los mercados",
+     "titulo": "Samsung rompe una tradición con la llegada de la Beta de One UI 9.5",
      "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/opinion/2026-11-24/el-nuevo-equilibrio-politico-de-ee-uu-cambia-el-escenario-para-los-mercados.html",
-     "hora": "09:02"
+     "url": "https://cincodias.elpais.com/smartlife/smartphones/2026-11-24/samsung-beta-one-ui-95-seis-paises.html",
+     "hora": "11:00"
     },
     {
-     "titulo": "Los sueños milenaristas de las ‘big tech’ evocan los cultos del pasado",
+     "titulo": "Actualización: Los futuros de renta variable estadounidense caen antes de la apertura del mercado mientras los operadores evalúan el repunte bursátil liderado por Nvidia.",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/actualizaci%C3%B3n-futuros-renta-variable-estadounidense-135142732.html",
+     "hora": "10:51"
+    },
+    {
+     "titulo": "Dos petroleros se incendian tras chocar contra minas en el estrecho de Ormuz, dice la Armada iraní",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/petroleros-incendian-chocar-minas-estrecho-134620869.html",
+     "hora": "10:46"
+    },
+    {
+     "titulo": "Israel mata al jefe del servicio de inteligencia de Hamás en un ataque en la Franja de Gaza",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/israel-mata-al-jefe-del-servicio-de-inteligencia-de-hamás-en-un-ataque-en-la-franja-de-gaza/a-80033426?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "10:08"
+    },
+    {
+     "titulo": "Hacienda rebaja el IRPF de los autónomos y elimina los pagos trimestrales del IVA para los pequeños negocios",
      "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/opinion/2026-11-24/los-suenos-milenaristas-de-las-big-tech-evocan-los-cultos-del-pasado.html",
-     "hora": "09:02"
-    },
-    {
-     "titulo": "Francia creará reservas estratégicas de tierras raras para reducir su dependencia de China",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/francia-crear%C3%A1-reservas-estrat%C3%A9gicas-tierras-115814167.html",
-     "hora": "08:58"
-    },
-    {
-     "titulo": "El regreso de Jensen Huang a Nvidia dispara su fortuna en 31.000 millones de euros en un solo día",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/regreso-jensen-huang-nvidia-dispara-113854894.html",
-     "hora": "08:49"
-    },
-    {
-     "titulo": "Claves del nuevo permiso de duelo por fallecimiento: cuánto crece y a qué familiares beneficia",
-     "medio": "El País · Economía",
-     "url": "https://elpais.com/economia/2026-11-24/claves-del-nuevo-permiso-de-duelo-por-fallecimiento-cuanto-crece-y-a-que-familiares-beneficia.html",
-     "hora": "08:37"
+     "url": "https://elpais.com/economia/2026-11-24/hacienda-rebaja-el-irpf-de-los-autonomos-y-elimina-los-pagos-trimestrales-del-iva-para-los-pequenos-negocios.html",
+     "hora": "10:04"
     }
    ]
   },
@@ -292,34 +305,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "El mapa de todos los centros de datos en España: radiografía de la infraestructura digital más polémica de 2026",
+     "titulo": "Hoy en Netflix y HBO Max: la película de ciencia ficción que tiene 4 finales diferentes, 81% del público la recomienda",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/cine-y-tv/hoy-netflix-hbo-max-pelicula-ciencia-ficcion-que-tiene-4-finales-diferentes-81-publico-recomienda",
+     "hora": "11:07"
+    },
+    {
+     "titulo": "Alemania acaba de activar el pánico: Rusia tiene en un almacén de Moscú lo más parecido al botón de apagado de la civilización moderna",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/magnet/mapa-que-muestra-cuantos-centros-datos-hay-espana",
-     "hora": "09:01"
+     "url": "https://www.xataka.com/magnet/alemania-acaba-lanzar-advertencia-rusia-tendria-almacen-moscu-parecido-al-boton-apagado-civilizacion-moderna",
+     "hora": "11:01"
     },
     {
-     "titulo": "Ingrid (58) compra una autocaravana por 12.500 euros, que inmediatamente necesita una reparación de 3.000 euros",
+     "titulo": "De una isla retiraron 131 gatos, y luego sucedió algo que incluso sorprendió a los científicos",
      "medio": "Genbeta",
-     "url": "https://www.genbeta.com/actualidad/ingrid-58-compra-autocaravana-12-500-euros-que-inmediatamente-necesita-reparacion-3-000-euros",
-     "hora": "09:01"
+     "url": "https://www.genbeta.com/actualidad/isla-retiraron-131-gatos-luego-sucedio-algo-que-incluso-sorprendio-a-cientificos",
+     "hora": "11:01"
     },
     {
-     "titulo": "El petróleo tiene un nuevo enemigo: el clima extremo. Y amenaza con encarecer la energía",
+     "titulo": "Un diseño que no pasa desapercibido y un estuche que puedes usar como micrófono: los Nothing Ear (3) caen a su nuevo mínimo histórico",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/energia/petroleo-tiene-nuevo-enemigo-clima-extremo-amenaza-encarecer-energia",
-     "hora": "08:49"
+     "url": "https://www.xataka.com/seleccion/diseno-que-no-pasa-desapercibido-estuche-que-puedes-usar-como-microfono-nothing-ear-3-caen-a-su-nuevo-minimo-historico",
+     "hora": "10:47"
     },
     {
-     "titulo": "La película live-action de ‘Naruto’ ficha a Hiroyuki Sanada para un papel clave",
-     "medio": "Hipertextual",
-     "url": "https://hipertextual.com/cine-television/la-pelicula-live-action-de-naruto-ficha-a-hiroyuki-sanada-para-un-papel-clave/",
-     "hora": "08:44"
-    },
-    {
-     "titulo": "Contrata como empleada de hogar durante 4 meses a la mujer de un amigo y consigue que tenga derecho a paro en Vigo",
-     "medio": "Genbeta",
-     "url": "https://www.genbeta.com/actualidad/contrata-como-empleada-hogar-durante-4-meses-a-mujer-amigo-consigue-que-tenga-derecho-a-paro-vigo",
-     "hora": "07:57"
+     "titulo": "Renault y Geely desafían el mercado de autos eléctricos con un motor V8 biturbo de 4 litros que debutará en el nuevo Lotus Type 135",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/automovil/renault-geely-desafian-mercado-autos-electricos-motor-v8-biturbo-4-litros-que-debutara-nuevo-lotus-type-135",
+     "hora": "10:31"
     }
    ]
   },
@@ -327,34 +340,34 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "La singular advertencia de Javier Correa a Alexis Sánchez: “Que venga; y si no, lo mataremos a patadas”",
-     "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/la-singular-advertencia-de-javier-correa-a-alexis-sanchez-que-venga-y-si-no-lo-mataremos-a-patadas/",
-     "hora": "09:06"
+     "titulo": "Transfer rumors, news: PSG eye Chelsea's Estêvão, Bayern's Luis Díaz amid injury woes",
+     "medio": "ESPN API Premier League",
+     "url": "https://www.espn.com/soccer/story/_/id/50580721/transfer-rumors-news-psg-estevao-luis-diaz-chelsea-bayern",
+     "hora": "11:02"
+    },
+    {
+     "titulo": "Las líneas maestras de la reconstrucción del Real Zaragoza",
+     "medio": "Mundo Deportivo Fútbol",
+     "url": "https://www.mundodeportivo.com/futbol/futbol-catala/20261124/1004254938/lineas-maestras-reconstruccion-real-zaragoza.html",
+     "hora": "10:52"
+    },
+    {
+     "titulo": "Impacto argentino en la UFC: Kevin Chino Vallejos se convirtió en el N°3 del mundo y quedó a un paso de pelear por el título mundial",
+     "medio": "Infobae Deportes",
+     "url": "https://www.infobae.com/deportes/2026/11/24/impacto-argentino-en-la-ufc-kevin-chino-vallejos-se-convirtio-en-el-n3-del-mundo-y-quedo-a-un-paso-de-pelear-por-el-titulo-mundial/",
+     "hora": "10:48"
     },
     {
      "titulo": "Real Madrid - PSV hoy, en directo: partido de fase liga de Champions League, última hora en el Bernabéu",
      "medio": "AS Fútbol",
      "url": "https://as.com/futbol/champions/real-madrid-psv-hoy-en-directo-partido-de-fase-liga-de-champions-league-ultima-hora-en-el-bernabeu-f202611-d/",
-     "hora": "09:00"
+     "hora": "10:45"
     },
     {
-     "titulo": "Crisis total en Ferrari por la relación “inmanejable” entre Leclerc y Hamilton: “Es un problema personal entre ellos”",
-     "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/24/crisis-total-en-ferrari-por-la-relacion-inmanejable-entre-leclerc-y-hamilton-es-un-problema-personal-entre-ellos/",
-     "hora": "09:00"
-    },
-    {
-     "titulo": "Miguel Ángel Gil dimite como vicepresidente de LaLiga",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/primera/miguel-angel-gil-dimite-como-vicepresidente-de-laliga-f202611-n/",
-     "hora": "08:57"
-    },
-    {
-     "titulo": "El Athletic premia a Mo Marley con el One Club Woman 2026",
+     "titulo": "No hay rectificación: la lesionada Kika Nazareth se incorpora con Portugal",
      "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/athletic-bilbao/20261124/1004254889/athletic-premia-mo-marley-one-club-woman-2026.html",
-     "hora": "08:57"
+     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261124/1004254937/no-hay-rectificacion-lesionada-kika-nazareth-incorpora-martes-portugal.html",
+     "hora": "10:41"
     }
    ]
   },
@@ -362,16 +375,16 @@
    "seccion": "Ciencia",
    "notas": [
     {
-     "titulo": "¿Sabes qué nos dicen los huesos de Atapuerca sobre el origen de la violencia humana?",
+     "titulo": "¿Sabrías decir a qué diosa se adoraba en esta cima griega? Ni la arqueología lo tiene claro",
      "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/historia/violencia-humana-atapuerca.html",
-     "hora": "08:25"
+     "url": "https://muyinteresante.okdiario.com/historia/santuario-de-montana-eubea.html",
+     "hora": "10:08"
     },
     {
-     "titulo": "Energía nuclear: tres debates que conviene separar para entenderla",
+     "titulo": "¿Sabes por qué sobrevivió la materia tras el Big Bang? Una «partícula olvidada» ofrece una pista, no la respuesta",
      "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/actualidad/energia-nuclear-tres-debates-que-conviene-separar-para-entenderla.html",
-     "hora": "08:00"
+     "url": "https://muyinteresante.okdiario.com/ciencia/materia-antimateria-big-bang.html",
+     "hora": "10:04"
     },
     {
      "titulo": "El CEU de Elche y el Colegio de Médicos crean una cátedra para recuperar la historia de la medicina",
@@ -385,16 +398,16 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "Fluidra Ventures lidera una ronda en la finlandesa Aerisio",
+     "titulo": "PortXL, aceleradora marítima, elige 11 startups de 250",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/fluidra-ventures-lidera-una-ronda-en-la-finlandesa-aerisio/",
-     "hora": "09:03"
+     "url": "https://ecosistemastartup.com/portxl-aceleradora-maritima-elige-11-startups-de-250/",
+     "hora": "11:06"
     },
     {
-     "titulo": "Talent+FORUM 2026: startups verdes a debate en Cartagena",
+     "titulo": "Architect Labs: CPU diseñada por IA, 4,59x más eficiente",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/talentforum-2026-startups-verdes-a-debate-en-cartagena/",
-     "hora": "07:54"
+     "url": "https://ecosistemastartup.com/architect-labs-cpu-disenada-por-ia-459x-mas-eficiente/",
+     "hora": "10:54"
     },
     {
      "titulo": "Black Friday: 7 consejos para que tus compras lleguen a salvo",
@@ -409,10 +422,10 @@
      "hora": "06:30"
     },
     {
-     "titulo": "El camino pendiente para el emprendimiento femenino",
-     "medio": "Opinión Sur Noticias",
-     "url": "https://opinionsur.cl/article.php?slug=el-camino-pendiente-para-el-emprendimiento-femenino",
-     "hora": "00:39"
+     "titulo": "UNAB participa en EtMday 2026 y reafirma compromiso con el emprendimiento y la innovación",
+     "medio": "Noticias UNAB",
+     "url": "https://noticias.unab.cl/unab-participa-en-etmday-2026-y-reafirma-compromiso-con-el-emprendimiento-y-la-innovacion/",
+     "hora": "02:54"
     }
    ]
   }
@@ -481,8 +494,8 @@
  "mercados": [
   {
    "nombre": "S&P 500",
-   "valor": 7237.17,
-   "variacion_pct": 4.73,
+   "valor": 7102.69,
+   "variacion_pct": -1.86,
    "fecha": "2026-11-23",
    "fuente": "LarrainVial"
   },
@@ -516,18 +529,18 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 60236.32,
+  "bitcoin_usd": 60189.46,
   "bitcoin_fecha": "2026-11-24",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 345,
+ "fuentes_ok": 349,
  "indicadores_origen": {
-  "dolar": "mindicador",
-  "euro": "mindicador",
-  "uf": "mindicador",
-  "utm": "mindicador",
-  "tpm": "mindicador",
-  "libra_cobre": "mindicador",
-  "yuan": "banco_central"
+  "dolar": "banco_central",
+  "euro": "banco_central",
+  "yuan": "banco_central",
+  "uf": "banco_central",
+  "utm": "banco_central",
+  "tpm": "banco_central",
+  "libra_cobre": "banco_central"
  }
 }
