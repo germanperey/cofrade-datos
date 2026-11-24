@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-24T17:42-03:00",
- "proxima": "18:17",
+ "generado": "2026-11-24T19:07-03:00",
+ "proxima": "20:17",
  "indicadores": [
   {
    "clave": "dolar",
@@ -17,22 +17,26 @@
   {
    "clave": "euro",
    "nombre": "Euro",
-   "valor": 1107.84,
+   "valor": 1124.46,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 2,
-   "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile"
+   "fecha": "2026-11-25",
+   "fuente": "Banco Central de Chile",
+   "rige": "2026-11-25",
+   "publicado": "2026-11-24"
   },
   {
    "clave": "yuan",
    "nombre": "Yuan chino",
-   "valor": 152.62,
+   "valor": 153.8,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 2,
-   "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile"
+   "fecha": "2026-11-25",
+   "fuente": "Banco Central de Chile",
+   "rige": "2026-11-25",
+   "publicado": "2026-11-24"
   },
   {
    "clave": "uf",
@@ -42,17 +46,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440.0,
+   "valor": 72440,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "tpm",
@@ -62,17 +66,17 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 5.5112,
+   "valor": 5.51,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-24",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   }
  ],
  "ipsa": {
@@ -80,7 +84,7 @@
   "valor": 10331.15,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-24T17:42-03:00",
+  "hora": "2026-11-24T19:09-03:00",
   "variacion_pct": -1.13
  },
  "bolsas": {
@@ -97,23 +101,23 @@
    },
    {
     "nombre": "S&P 500",
-    "valor": 7180.28,
-    "variacion_pct": -0.79
+    "valor": 7201.09,
+    "variacion_pct": -0.5
    },
    {
     "nombre": "Nasdaq",
-    "valor": 23628.21,
-    "variacion_pct": -1.92
+    "valor": 23733.54,
+    "variacion_pct": -1.48
    },
    {
     "nombre": "Nasdaq 100",
-    "valor": 26112.51,
-    "variacion_pct": -2.37
+    "valor": 26214.17,
+    "variacion_pct": -1.99
    },
    {
     "nombre": "Bovespa",
-    "valor": 164694.02,
-    "variacion_pct": -0.06
+    "valor": 164089.81,
+    "variacion_pct": -0.43
    },
    {
     "nombre": "Merval",
@@ -151,18 +155,24 @@
     "variacion_pct": 0.14
    }
   ],
-  "hora": "2026-11-24T17:42-03:00",
+  "hora": "2026-11-24T19:09-03:00",
   "fuente": "LarrainVial",
   "url": "https://mercados.larrainvial.com/"
  },
  "sismos": {
-  "n": 1,
+  "n": 2,
   "mayores": [
    {
     "hora": "2026-11-24T10:22-03:00",
     "magnitud": 4.8,
     "profundidad_km": 33.4,
     "referencia": "145 km al N de La Serena"
+   },
+   {
+    "hora": "2026-11-24T17:27-03:00",
+    "magnitud": 4.6,
+    "profundidad_km": 50.9,
+    "referencia": "49 km al SO de Ovalle"
    }
   ],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
@@ -173,34 +183,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "Estados Unidos respalda candidatura de Chile y Bélgica para albergar Secretaría del Tratado de Alta Mar",
+     "titulo": "La política de los desacuerdos",
+     "medio": "La Tercera Opinion",
+     "url": "https://www.latercera.com/opinion/noticia/la-politica-de-los-desacuerdos/",
+     "hora": "19:04"
+    },
+    {
+     "titulo": "Camila Andrade preocupa por problema de salud previo a Fiebre de Canto: “Me duele mucho, me cuesta abrirlo...”",
      "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/24/estados-unidos-respalda-candidatura-de-chile-y-belgica-para-albergar-secretaria-del-tratado-de-alta-mar/",
-     "hora": "17:36"
+     "url": "https://www.adnradio.cl/2026/11/24/camila-andrade-preocupa-por-problema-de-salud-previo-a-fiebre-de-canto-me-duele-mucho-me-cuesta-abrirlo/",
+     "hora": "19:03"
     },
     {
-     "titulo": "Destapan detalles del regreso de Mauricio Bustamante a la televisión abierta: así será su dupla con reconocida periodista",
-     "medio": "La Cuarta",
-     "url": "https://www.lacuarta.com/espectaculos/noticia/destapan-detalles-del-regreso-de-mauricio-bustamante-a-la-television-abierta-asi-sera-su-dupla-con-reconocida-periodista/",
-     "hora": "17:35"
+     "titulo": "La cumbre por la impunidad",
+     "medio": "La Tercera Opinion",
+     "url": "https://www.latercera.com/opinion/noticia/la-cumbre-por-la-impunidad/",
+     "hora": "19:02"
     },
     {
-     "titulo": "Canal 13 homenajeará a Delfina Guzmán con la retransmisión de un capítulo especial de “Biografías”",
-     "medio": "Publimetro Chile",
-     "url": "https://www.publimetro.cl/entretenimiento/2026/11/24/canal-13-homenajeara-a-delfina-guzman-con-la-retransmision-de-un-capitulo-especial-de-biografias/",
-     "hora": "17:33"
-    },
-    {
-     "titulo": "La autocrítica de la bancada de diputados UDI: “En el oficialismo seguimos sin actuar de forma conjunta y responsable”",
-     "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/24/la-autocritica-de-la-bancada-de-diputados-udi-en-el-oficialismo-seguimos-sin-actuar-de-forma-conjunta-y-responsable/",
-     "hora": "17:32"
-    },
-    {
-     "titulo": "De los caballos de fuerza al poder de fuego: cómo Japón reconvierte a sus proveedores automotrices para fabricar drones militares",
+     "titulo": "Los chats detrás de la nueva acusación contra el “mejor abogado de Chile”: víctima de agresión sexual pagó $2,8 millones en una causa que nunca avanzó",
      "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/24/drones-militares-en-japon-proveedores-autos/",
-     "hora": "17:31"
+     "url": "https://www.theclinic.cl/2026/11/24/los-chats-detras-de-la-nueva-acusacion-contra-el-mejor-abogado-de-chile-victima-de-agresion-sexual-pago-28-millones-en-una-causa-que-nunca-avanzo/",
+     "hora": "19:00"
+    },
+    {
+     "titulo": "Conmoción en Alto Hospicio tras muerte de niña migrante: denuncian que hospital exigió dinero para atenderla",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/24/conmocion-en-alto-hospicio-tras-muerte-de-nina-migrante-denuncian-que-hospital-exigio-dinero-para-atenderla/",
+     "hora": "19:00"
     }
    ]
   },
@@ -208,34 +218,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "WOM lleva a arbitraje a Telefónica por saldo prepagado de US$ 1,4 millones en contrato de roaming",
+     "titulo": "La economía de Argentina entró oficialmente en recesión técnica",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/empresas/industria/wom-lleva-a-arbitraje-a-telefonica-por-saldo-prepagado-de-1-400-millones",
-     "hora": "17:40"
+     "url": "http://www.df.cl/internacional/economia/la-economia-de-argentina-entro-oficialmente-en-recesion-tecnica",
+     "hora": "19:08"
     },
     {
-     "titulo": "FlixBus acelera en Chile: suma 120 buses nuevos para el verano e inyecta capital por US$ 11 millones",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/empresas/industria/flixbus-acelera-en-chile-120-buses-nuevos-para-el-verano-y-una-inyeccion",
-     "hora": "17:39"
+     "titulo": "SKY Plus extenderá beneficios Platino a un acompañante en sus vuelos",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/sky-plus-extendera-beneficios-platino-a-un-acompanante-verano/",
+     "hora": "19:08"
     },
     {
-     "titulo": "CyberMonday 2026: las ventas online de artículos de primera necesidad crecieron un 50% y cayeron las de bienes durables",
+     "titulo": "El riesgo país rozó los 1.100 puntos, cayeron las acciones argentinas y el dólar superó los $1.600",
      "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/24/cybermonday-2026-las-ventas-online-de-articulos-de-primera-necesidad-crecieron-un-50-y-cayeron-las-de-bienes-durables/",
-     "hora": "17:39"
+     "url": "https://www.infobae.com/economia/2026/11/24/el-riesgo-pais-rozo-los-1100-puntos-cayeron-las-acciones-argentinas-y-el-dolar-supero-los-1600/",
+     "hora": "19:06"
     },
     {
-     "titulo": "Guatemala encabeza la tasa de feminicidios en América Latina, según el nuevo informe de la CEPAL",
+     "titulo": "“Mia Dio tiene todo para ganar Miss Universo 2026”, afirmó la ex Miss Cuba Marianela Ancheta a Infobae",
      "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/guatemala/2026/11/24/guatemala-encabeza-la-tasa-de-feminicidios-en-america-latina-segun-el-nuevo-informe-de-la-cepal/",
-     "hora": "17:37"
+     "url": "https://www.infobae.com/cuba/2026/11/24/mia-dio-tiene-todo-para-ganar-miss-universo-2026-afirmo-la-ex-miss-cuba-marianela-ancheta-a-infobae/",
+     "hora": "18:56"
     },
     {
-     "titulo": "Finanzas asegura que pagará esta semana la deuda a transportistas de Honduras y cuestiona paro anunciado",
-     "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/honduras/2026/11/24/finanzas-asegura-que-pagara-esta-semana-la-deuda-a-transportistas-de-honduras-y-cuestiona-paro-anunciado/",
-     "hora": "17:35"
+     "titulo": "La economía argentina entró en recesión técnica: qué factores explican la caída de la actividad",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/24/la-economia-argentina-entro-en-recesion-tecnica-que-factores-explican-la-caida-de-la-actividad/",
+     "hora": "18:50"
     }
    ]
   },
@@ -243,16 +253,16 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Flor de la V volvió a su programa y le pidió disculpas a su equipo: \"Soy una persona y me puedo equivocar\"",
+     "titulo": "Pasos para reducir el gasto de datos móviles en iPhone",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/teleshow/2026/11/24/flor-de-la-v-volvio-a-su-programa-y-le-pidio-disculpas-a-su-equipo-soy-una-persona-y-me-puedo-equivocar/",
-     "hora": "17:36"
+     "url": "https://www.infobae.com/tecno/2026/11/24/pasos-para-reducir-el-gasto-de-datos-moviles-en-iphone/",
+     "hora": "19:07"
     },
     {
-     "titulo": "Finanzas asegura que pagará esta semana la deuda a transportistas de Honduras y cuestiona paro anunciado",
+     "titulo": "Millonarios vs. Atlético Bucaramanga en vivo: los equipos buscan sus primeros tres puntos en los cuadrangulares semifinales de la Liga BetPlay",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/honduras/2026/11/24/finanzas-asegura-que-pagara-esta-semana-la-deuda-a-transportistas-de-honduras-y-cuestiona-paro-anunciado/",
-     "hora": "17:35"
+     "url": "https://www.infobae.com/colombia/2026/11/24/millonarios-vs-atletico-bucaramanga-en-vivo-los-equipos-buscan-sus-primeros-tres-puntos-en-los-cuadrangulares-semifinales-de-la-liga-betplay/",
+     "hora": "19:07"
     }
    ]
   },
@@ -260,34 +270,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "29N: ¿Qué supondría para Europa un cambio de Gobierno en España?",
+     "titulo": "La Copa América 2028 se jugará en Estados Unidos con 16 selecciones de la Conmebol y la Concacaf",
      "medio": "DW en español",
-     "url": "https://www.dw.com/es/29n-¿qué-supondría-para-europa-un-cambio-de-gobierno-en-españa/a-80041734?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "17:28"
+     "url": "https://www.dw.com/es/la-copa-américa-2028-se-jugará-en-estados-unidos-con-16-selecciones-de-la-conmebol-y-la-concacaf/a-80042001?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "18:57"
+    },
+    {
+     "titulo": "Cifra récord de víctimas de violencia contra las mujeres en Alemania, según estadísticas policiales",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/cifra-récord-de-víctimas-de-violencia-contra-las-mujeres-en-alemania-según-estadísticas-policiales/a-80041310?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "18:25"
+    },
+    {
+     "titulo": "Capitanía de Puertos de Perú ordena cierre temporal de 58 puertos por fuertes oleajes",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/capitan%C3%ADa-puertos-per%C3%BA-ordena-cierre-210830349.html",
+     "hora": "18:08"
+    },
+    {
+     "titulo": "Empresa china Huawei es condenada en EEUU en un extenso juicio penal por sus negocios con Irán",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/empresa-china-huawei-condenada-eeuu-204305965.html",
+     "hora": "17:43"
     },
     {
      "titulo": "El iPhone más barato de 2027 prepara un cambio de diseño que no esperábamos",
      "medio": "Cinco Días portada",
      "url": "https://cincodias.elpais.com/smartlife/smartphones/2026-11-24/el-iphone-mas-barato-de-2027-prepara-un-cambio-de-diseno-que-no-esperabamos.html",
      "hora": "17:00"
-    },
-    {
-     "titulo": "Pablo Isla, primer doctor ‘honoris causa’ de ESIC University: “El propósito de una empresa no puede ser ganar dinero”",
-     "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/companias/2026-11-24/pablo-isla-primer-doctor-honoris-causa-de-esic-university-el-proposito-de-una-empresa-no-puede-ser-ganar-dinero.html",
-     "hora": "16:57"
-    },
-    {
-     "titulo": "Cifra récord de víctimas de violencia contra las mujeres en Alemania, según estadísticas policiales",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/cifra-récord-de-víctimas-de-violencia-contra-las-mujeres-en-alemania-según-estadísticas-policiales/a-80041310?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "16:47"
-    },
-    {
-     "titulo": "Gobierno de Trump se dispone a anunciar nuevos aranceles tras investigación sobre exceso de capacidad industrial",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/gobierno-trump-dispone-anunciar-aranceles-191546300.html",
-     "hora": "16:15"
     }
    ]
   },
@@ -295,34 +305,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "Dicen que a partir de los 50 el desayuno ideal es un pan tostado de masa madre con huevo cocido y café con leche vegetal sin azúcar. Esto es lo que opina la ciencia",
+     "titulo": "Los mexicanos usan cada vez más aplicaciones bancarias, pero el ahorro y el crédito no crecen al mismo ritmo",
      "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/medicina-y-salud/dicen-que-a-partir-50-desayuno-ideal-pan-tostado-masa-madre-huevo-cocido-cafe-leche-vegetal-azucar-esto-que-opina-ciencia",
-     "hora": "17:38"
+     "url": "https://www.xataka.com.mx/banca-digital/mexicanos-usan-cada-vez-aplicaciones-bancarias-ahorro-credito-no-crecen-al-ritmo",
+     "hora": "19:02"
     },
     {
-     "titulo": "Durante años hemos cambiado de navegador sin cambiar de motor. Ladybird acaba de ampliar nuestras opciones",
+     "titulo": "Al MacBook Neo le faltaba un rival de la talla de los LG gram: la espera ha terminado y LG ha apostado por la ligereza",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/aplicaciones/durante-anos-hemos-cambiado-navegador-cambiar-motor-ladybird-acaba-ampliar-nuestras-opciones",
-     "hora": "17:30"
+     "url": "https://www.xataka.com/ordenadores/al-macbook-neo-le-faltaba-rival-talla-lg-gram-espera-ha-terminado-lg-ha-apostado-ligereza",
+     "hora": "19:00"
     },
     {
-     "titulo": "Ya es oficial el nuevo Samsung Odyssey G6, el primer monitor gaming del mundo con 1.100 Hz",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/seleccion/oficial-nuevo-samsung-odyssey-g6-primer-monitor-gaming-mundo-1-100-hz",
-     "hora": "17:16"
+     "titulo": "Hay más riesgo de morir, dice la ciencia: Los efectos del duelo según nuevos estudios",
+     "medio": "FayerWayer",
+     "url": "https://www.fayerwayer.com/ciencia/2026/11/24/hay-mas-riesgo-de-morir-segun-la-ciencia-los-efectos-del-duelo-segun-nuevos-estudios/",
+     "hora": "18:34"
     },
     {
-     "titulo": "Es oficial: ‘Los Anillos de Poder’ tendrá cuarta temporada en Prime Video",
+     "titulo": "McAfee tiene antivirus, VPN y detector de fraudes: ahora es más barato por Black Friday",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/seleccion/mcafee-tiene-antivirus-vpn-detector-fraudes-ahora-barato-black-friday",
+     "hora": "18:34"
+    },
+    {
+     "titulo": "¿Tu PC va más lento? Este ajuste de Chrome podría estar consumiendo RAM sin que lo sepas",
      "medio": "Hipertextual",
-     "url": "https://hipertextual.com/cine-television/los-anillos-de-poder-tendra-una-cuarta-temporada-en-prime-video/",
-     "hora": "16:52"
-    },
-    {
-     "titulo": "OXXO ya vende y recarga el TAG IAVE para pagar casetas en México",
-     "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/automovil/oxxo-vende-recarga-tag-iave-para-pagar-casetas-mexico",
-     "hora": "16:50"
+     "url": "https://hipertextual.com/internet/chrome-consume-ram-cerrado-culpa-gemini/",
+     "hora": "18:02"
     }
    ]
   },
@@ -330,40 +340,52 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "Slovan Bratislava - Real Betis, hoy en directo: última hora de la Champions League en vivo",
+     "titulo": "Slovan Bratislava 0 - 2 Real Betis: resumen, goles y resultado de la Champions League",
      "medio": "AS Fútbol",
      "url": "https://as.com/futbol/champions/slovan-bratislava-real-betis-hoy-en-directo-ultima-hora-de-la-champions-league-en-vivo-f202611-d/",
-     "hora": "17:41"
+     "hora": "19:01"
     },
     {
-     "titulo": "Manchester City - Nápoles, en directo: Champions League, en vivo hoy",
+     "titulo": "Real Madrid - PSV hoy, en directo: partido de fase liga de Champions League, última hora en el Bernabéu",
      "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/champions/manchester-city-napoles-en-directo-champions-league-en-vivo-hoy-f202611-d/",
-     "hora": "17:41"
+     "url": "https://as.com/futbol/champions/real-madrid-psv-hoy-en-directo-partido-de-fase-liga-de-champions-league-ultima-hora-en-el-bernabeu-f202611-d/",
+     "hora": "19:00"
     },
     {
-     "titulo": "Con Enzo Fernández como titular, Manchester City empata con el Napoli por la fecha 5 de la Champions League: la agenda completa",
-     "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/24/con-enzo-fernandez-y-nico-paz-como-protagonistas-se-inicia-la-fecha-5-de-la-champions-league-la-agenda-completa/",
-     "hora": "17:34"
-    },
-    {
-     "titulo": "Colapinto avisó que Qatar va a ser diferente a Las Vegas: \"Volveremos a ver una carrera más normal\"",
+     "titulo": "El uno por uno de los argentinos en la Champions",
      "medio": "Olé",
-     "url": "https://www.ole.com.ar/autos/franco-colapinto-qatar-vegas-formula-1-diferente_0_MScOE13QPz.html",
-     "hora": "17:32"
+     "url": "https://www.ole.com.ar/futbol-internacional/champions/champions-league-quinta-fecha-argentinos_0_kMZlE2w3Lv.html",
+     "hora": "19:00"
     },
     {
-     "titulo": "Revelaron la carta premonitoria de una figura de Boca Juniors que anticipó el título en la Sudamericana",
+     "titulo": "La selección argentina de talla baja goleó 5-1 a Brasil y se clasificó a los cuartos de final del Mundial: el particular festejo",
      "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/24/revelaron-la-carta-premonitoria-de-una-figura-de-boca-juniors-que-anticipo-el-titulo-en-la-sudamericana/",
-     "hora": "17:30"
+     "url": "https://www.infobae.com/deportes/2026/11/24/la-seleccion-argentina-de-talla-baja-goleo-5-1-a-brasil-y-se-clasifico-a-los-cuartos-de-final-del-mundial-el-particular-festejo/",
+     "hora": "18:59"
+    },
+    {
+     "titulo": "Triunfo de nivel Champions del Betis para soñar en grande",
+     "medio": "Mundo Deportivo Fútbol",
+     "url": "https://www.mundodeportivo.com/futbol/betis/20261124/1004255113/triunfo-nivel-champions-betis-sonar-grande.html",
+     "hora": "18:59"
     }
    ]
   },
   {
    "seccion": "Ciencia",
    "notas": [
+    {
+     "titulo": "La trastienda de la campaña: por qué a Sánchez y a Feijóo les conviene que el 29-N parezca un duelo",
+     "medio": "The Conversation España",
+     "url": "https://theconversation.com/la-trastienda-de-la-campana-por-que-a-sanchez-y-a-feijoo-les-conviene-que-el-29-n-parezca-un-duelo-297356",
+     "hora": "18:10"
+    },
+    {
+     "titulo": "La pobreza energética no se combate solo con ayudas económicas, también con alfabetización sobre facturas y consumo",
+     "medio": "The Conversation España",
+     "url": "https://theconversation.com/la-pobreza-energetica-no-se-combate-solo-con-ayudas-economicas-tambien-con-alfabetizacion-sobre-facturas-y-consumo-294532",
+     "hora": "18:09"
+    },
     {
      "titulo": "Hasta 415 kilómetros con una batería de 52 kWh: este eléctrico gana autonomía retocando piezas que apenas se ven",
      "medio": "Muy Interesante",
@@ -375,18 +397,6 @@
      "medio": "Muy Interesante",
      "url": "https://muyinteresante.okdiario.com/bazar/xiaomi-no-se-queda-satisfecho-solo-con-la-respuesta-a-google-sino-que-tambien-rebaja-su-nuevo-poco-x8s-para-dominar-la-gama-media.html",
      "hora": "15:30"
-    },
-    {
-     "titulo": "Cómo evitar estereotipos y mensajes erróneos en los carteles contra la violencia de género",
-     "medio": "The Conversation España",
-     "url": "https://theconversation.com/como-evitar-estereotipos-y-mensajes-erroneos-en-los-carteles-contra-la-violencia-de-genero-297334",
-     "hora": "13:59"
-    },
-    {
-     "titulo": "Cuando el líder es imprescindible: el regreso de Jensen Huang a Nvidia y los límites de la ética empresarial",
-     "medio": "The Conversation España",
-     "url": "https://theconversation.com/cuando-el-lider-es-imprescindible-el-regreso-de-jensen-huang-a-nvidia-y-los-limites-de-la-etica-empresarial-295319",
-     "hora": "13:59"
     }
    ]
   },
@@ -394,34 +404,22 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "Pax, IA brasileña contra el crimen, levanta US$40M",
+     "titulo": "ChileConverge Emprende: $75 millones y cómo postular",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/pax-ia-brasilena-contra-el-crimen-levanta-us40m/",
-     "hora": "17:06"
+     "url": "https://ecosistemastartup.com/chileconverge-emprende-75-millones-y-como-postular/",
+     "hora": "18:36"
     },
     {
-     "titulo": "Hunty: IA de reclutamiento por WhatsApp para LATAM",
+     "titulo": "Turbodato, startup de precios, suma socios ex Silicon Valley",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/hunty-ia-de-reclutamiento-por-whatsapp-para-latam/",
-     "hora": "17:03"
+     "url": "https://ecosistemastartup.com/turbodato-startup-de-precios-suma-socios-ex-silicon-valley/",
+     "hora": "18:21"
     },
     {
      "titulo": "Talento universitario se suma al furor de las startups en Venezuela",
      "medio": "Contxto",
      "url": "https://contxto.com/es/venezuela-es/talento-universitario-se-suma-al-furor-de-las-startups-en-venezuela/",
      "hora": "15:23"
-    },
-    {
-     "titulo": "Black Friday: 7 consejos para que tus compras lleguen a salvo",
-     "medio": "Tour Innovación · emprendimiento",
-     "url": "https://www.tourinnovacion.cl/emprendimiento/black-friday-7-consejos-para-que-tus-compras-lleguen-a-salvo/",
-     "hora": "06:33"
-    },
-    {
-     "titulo": "Fragata portuguesa en Biobío: por qué sigue siendo peligrosa incluso muerta",
-     "medio": "Tour Innovación · emprendimiento",
-     "url": "https://www.tourinnovacion.cl/tecnologia-ciencia/fragata-portuguesa-en-biobio-por-que-sigue-siendo-peligrosa-incluso-muerta/",
-     "hora": "06:30"
     }
    ]
   }
@@ -430,10 +428,10 @@
   "ciudades": [
    {
     "ciudad": "Arica",
-    "aqi": 34,
+    "aqi": 38,
     "estado": "Buena",
     "estacion": "Arica, Chile",
-    "hora": "11:00",
+    "hora": "15:00",
     "url": "https://aqicn.org/city/chile/arica"
    },
    {
@@ -445,44 +443,52 @@
     "url": "https://aqicn.org/city/chile/antofagasta"
    },
    {
+    "ciudad": "La Serena",
+    "aqi": 42,
+    "estado": "Buena",
+    "estacion": "La Serena, Chile",
+    "hora": "15:00",
+    "url": "https://aqicn.org/city/chile/la-serena"
+   },
+   {
     "ciudad": "Valparaíso",
-    "aqi": 25,
+    "aqi": 30,
     "estado": "Buena",
     "estacion": "Valparaiso, Chile",
-    "hora": "11:00",
+    "hora": "15:00",
     "url": "https://aqicn.org/city/chile/valparaiso"
    },
    {
     "ciudad": "Santiago",
-    "aqi": 37,
+    "aqi": 47,
     "estado": "Buena",
     "estacion": "Parque O'Higgins, Chile",
-    "hora": "11:00",
+    "hora": "15:00",
     "url": "https://aqicn.org/city/chile/parque-ohiggins"
    },
    {
     "ciudad": "Concepción",
-    "aqi": 21,
+    "aqi": 6,
     "estado": "Buena",
     "estacion": "Kingston College, Chile",
-    "hora": "11:00",
+    "hora": "15:00",
     "url": "https://aqicn.org/city/chile/kingston-college"
    },
    {
     "ciudad": "Temuco",
-    "aqi": 21,
+    "aqi": 17,
     "estado": "Buena",
     "estacion": "Ñielol, Chile",
-    "hora": "10:00",
+    "hora": "15:00",
     "url": "https://aqicn.org/city/chile/nielol"
    },
    {
     "ciudad": "Puerto Montt",
-    "aqi": 50,
+    "aqi": 46,
     "estado": "Buena",
-    "estacion": "Puerto Varas, Chile",
-    "hora": "11:00",
-    "url": "https://aqicn.org/city/chile/puerto-varas"
+    "estacion": "Alerce, Chile",
+    "hora": "15:00",
+    "url": "https://aqicn.org/city/chile/alerce"
    }
   ],
   "fuente": "SINCA (Ministerio del Medio Ambiente) vía Índice Mundial de Calidad del Aire (aqicn.org)"
@@ -490,17 +496,17 @@
  "mercados": [
   {
    "nombre": "S&P 500",
-   "valor": 7237.17,
-   "variacion_pct": 4.73,
-   "fecha": "2026-11-23",
-   "fuente": "FRED (Reserva Federal de St. Louis)"
+   "valor": 7201.09,
+   "variacion_pct": -0.5,
+   "fecha": "2026-11-24",
+   "fuente": "LarrainVial"
   },
   {
    "nombre": "Nasdaq",
-   "valor": 23879.2,
-   "variacion_pct": -2.25,
-   "fecha": "2026-11-19",
-   "fuente": "FRED (Reserva Federal de St. Louis)"
+   "valor": 23733.54,
+   "variacion_pct": -1.48,
+   "fecha": "2026-11-24",
+   "fuente": "LarrainVial"
   },
   {
    "nombre": "Dow Jones",
@@ -525,18 +531,18 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 59508.82,
+  "bitcoin_usd": 59881.31,
   "bitcoin_fecha": "2026-11-24",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 351,
+ "fuentes_ok": 343,
  "indicadores_origen": {
   "dolar": "banco_central_rige",
-  "euro": "banco_central",
-  "yuan": "banco_central",
-  "uf": "banco_central",
-  "utm": "banco_central",
-  "tpm": "banco_central",
-  "libra_cobre": "banco_central"
+  "euro": "banco_central_rige",
+  "uf": "mindicador",
+  "utm": "mindicador",
+  "tpm": "mindicador",
+  "libra_cobre": "mindicador",
+  "yuan": "banco_central_rige"
  }
 }
