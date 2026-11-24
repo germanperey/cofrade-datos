@@ -185,12 +185,12 @@ def imacec(estado, anio):
             _BCCH["imacec_hist"] = [[f"{k}-01", float(v)] for ln in (imacec_bcch_csv(obs, anio - 1) + txt).splitlines()
                                     for k, v in [ln.split(",")]][-13:]
             if txt:
-                estado["imacec_fuente"] = {"fuente": "Banco Central de Chile (Base de Datos Estadísticos)", "serie": IMACEC_BCCH,
+                estado["imacec_fuente"] = {"ok": True, "fuente": "Banco Central de Chile (Base de Datos Estadísticos)", "serie": IMACEC_BCCH,
                                            "ultimo": txt.strip().splitlines()[-1], "hora": ahora().isoformat(timespec="seconds")}
                 return txt
     j = pedir(f"https://mindicador.cl/api/imacec/{anio}", estado, "imacec")
     if j:
-        estado["imacec_fuente"] = {"fuente": "Banco Central de Chile (vía mindicador.cl, cifras preliminares)", "hora": ahora().isoformat(timespec="seconds")}
+        estado["imacec_fuente"] = {"ok": True, "fuente": "Banco Central de Chile (vía mindicador.cl, cifras preliminares)", "hora": ahora().isoformat(timespec="seconds")}
     return imacec_csv(j) if j else ""
 
 
@@ -3850,7 +3850,7 @@ def main(argv=None):
     escribir(os.path.join(a.salida, "estado.json"), resumen)
     for k, v in estado.items():
         if not k.startswith(("camara_detalle_", "servicio_", "asistencia_", "vuelos_", "rss_", "robots_")):
-            print(("OK   " if v["ok"] else "FALLA"), k, v.get("error", ""))
+            print(("OK   " if v.get("ok") else "FALLA"), k, v.get("error", ""))   # 24-11-2026: una anotación sin «ok» ya no bota la corrida
     rss = [v for k, v in estado.items() if k.startswith("rss_")]
     print(f"RSS de los medios: {sum(1 for v in rss if v['ok'])} de {len(rss)} respondieron; "
           f"{sum(1 for v in rss if 'no lo permite' in str(v.get('error')))} no permitidos por su robots.txt")
