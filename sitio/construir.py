@@ -57,6 +57,7 @@ for k, v in {
     "/*__HOROSCOPO_COMPAT__*/": leer("modulos", "horoscopo_compat.js"),   # 20-11-2026: compatibilidad con otra persona
     "/*__IDIOMA_RAPIDO__*/": leer("modulos", "idioma_rapido.js"),   # 21-11-2026: botón EN/ES más rápido en la edición
     "/*__REPUBLICA__*/": leer("modulos", "republica.js"),   # 23-11-2026: republicar, RSS, fichas e IndexNow
+    "/*__EVENTOS_EMPR__*/": leer("modulos", "eventos_empr.js"),   # 24-11-2026: ferias, eventos y concursos de emprendimiento
     "__PODCAST_JS__": json.dumps("<script>" + podcast_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k

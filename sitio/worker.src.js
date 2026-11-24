@@ -944,6 +944,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__HOROSCOPO_COMPAT__*/
 /*__IDIOMA_RAPIDO__*/
 /*__REPUBLICA__*/
+/*__EVENTOS_EMPR__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -1403,6 +1404,7 @@ export default {
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
         const pcP = proyeccionLeer(m[1], ctx);
         const sbP = senadoBancadasLeer(ctx);
+        const evP = eventosLeer(m[1], ctx);   // 24-11-2026: «Ferias, eventos y concursos de emprendimiento» (modulos/eventos_empr.js)
         const rsP = resumenDe(m[1], ctx);   // 23-11-2026: ficha para compartir y datos de noticia (modulos/republica.js)   // 20-11-2026: bancadas del Senado (modulos/senado_bancadas.js), en paralelo   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
         const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
@@ -1419,7 +1421,8 @@ export default {
         const pc = await pcP;
         const sb = await sbP;
         const rs = await rsP;
-        const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}"`;
+        const ev = await evP;
+        const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}${ev ? "-e" + ev.ver : ""}"`;
         // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
         // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.
         const ultima = new Date(Date.parse(m[1] + "T03:00:00Z") - (fnv1a(etiqueta) % 2592000) * 1000).toUTCString();
@@ -1434,6 +1437,7 @@ export default {
         const s60 = sesenta();   // 20-11-2026: fichas de «Hoy en 60 segundos» resumidas (modulos/sesenta.js)
         const cp = compacto();   // 18-11-2026: títulos de bloque más grandes y gráficos del Congreso en barra compacta (modulos/compacto.js)
         const pv = proyeccionCrecimiento(m[1], pc);   // 19-11-2026: proyección de crecimiento a 4 años, después de «Crecimiento de Chile» (modulos/proyeccion.js)
+        const evx = eventosEmpr(m[1], ev);
         const ha = horoscopoAnual(m[1]);
         const hcx = horoscopoCompat(!!HORO_ANUAL[anioHoroscopo(m[1])]);   // 20-11-2026: compatibilidad con otra persona (modulos/horoscopo_compat.js)   // 18-11-2026: botones del horóscopo más grandes + horóscopo del año y chino, personalizado (modulos/horoscopo_anual.js)
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
@@ -1446,6 +1450,7 @@ export default {
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
+          .on("head", evx.cabeza).on("#fondos", evx.fondos).on("section#emprendimiento", evx.seccion).on("body", evx.cuerpo)   // 24-11-2026: ferias, eventos y concursos
           .on('script[data-cn="boot"]', { element(e) { e.after(IDIOMA_RAPIDO, { html: true }); } })
           .on('meta[name="description"]', { element(e) { e.remove(); } }).on('link[rel="canonical"]', { element(e) { e.remove(); } }).on("head", { element(e) { e.append(fichaEdicion(m[1], rs), { html: true }); } })   // 23-11-2026: ficha para compartir   // 21-11-2026: EN/ES más rápido (modulos/idioma_rapido.js)
           .on("script", scriptsEdicion(lib))

@@ -2516,6 +2516,28 @@ def proyeccion_sin_fmi_usa_su_ultima_lectura():
 
 PRUEBAS.append(proyeccion_sin_fmi_usa_su_ultima_lectura)
 
+def eventos_emprendimiento_solo_fichas_completas_y_futuras():
+    """24-11-2026 (Germán: «Ferias, Eventos y Concursos de Emprendimiento»): la base verificada trae cada ficha completa y con fuente https;
+    lo que propone la tarea diaria entra solo si está completo, es futuro y no está repetido; las noticias de un robo no entran."""
+    import datetime as dt
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import eventos_emprendimiento as E
+    base = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas", "eventos-base.json"), encoding="utf-8"))
+    for e in base["eventos"]:
+        assert E.revisar(e, dt.date(2026, 11, 24), set()) == "", (e["id"], E.revisar(e, dt.date(2026, 11, 24), set()))
+    hoy, ids = dt.date(2026, 11, 24), {"fiiem-2026"}
+    ok = {"id": "x-2027", "tipo": "feria", "nombre": "X", "inicio": "2027-01-10", "lugar": "Santiago", "desc": "Feria.", "url": "https://a.cl/x", "fuente": "A"}
+    assert E.revisar(ok, hoy, ids) == ""
+    assert E.revisar(dict(ok, id="fiiem-2026"), hoy, ids) == "ya está"
+    assert E.revisar(dict(ok, inicio="2026-11-01"), hoy, ids) == "ya pasó"
+    assert E.revisar(dict(ok, url="http://a.cl"), hoy, ids) == "url debe ser https"
+    assert E.revisar(dict(ok, tipo="charla"), hoy, ids).startswith("tipo")
+    assert E.revisar(dict(ok, fuente=""), hoy, ids) == "falta fuente"
+    assert E.FUERA.search("Detenido tras robo en feria de emprendedores") and not E.FUERA.search("Abren concurso para emprendedores")
+
+
+PRUEBAS.append(eventos_emprendimiento_solo_fichas_completas_y_futuras)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

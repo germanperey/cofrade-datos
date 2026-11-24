@@ -47,6 +47,9 @@ jobs:
           BCCH_PASS: ${{ secrets.BCCH_PASS }}
           WAQI_TOKEN: ${{ secrets.WAQI_TOKEN }}   # 03-11-2026: calidad del aire medida (aqicn.org, clave gratuita; opcional)
         run: python bajar.py --salida datos
+      - name: Ferias, eventos y concursos de emprendimiento (24-11-2026)
+        continue-on-error: true
+        run: python herramientas/eventos_emprendimiento.py
       - name: Bancadas del Senado (mismo análisis que la Cámara)
         continue-on-error: true
         run: python herramientas/senado_bancadas.py datos/senado-votaciones.json datos/senado-bancadas.json

@@ -1220,10 +1220,10 @@ function leerSecciones() {
 // 19-11-2026 (Germán, 18:45: «debería tener como estructura decir la palabra "Índice" + Número (o el título de la sección) debido a que
 // algunas secciones son submenus y no tienen un número que los anteceda»): los temas de cada sección, tal como los muestra el índice.
 var SUBS_FIJOS = [['crecw', 'Crecimiento de Chile: proyección del año'], ['proyw', 'Proyección de crecimiento: próximos 4 años'], ['pjw', 'Perspectivas de Desarrollo para Chile 2050'],
-  ['cgw', 'Congreso: votaciones de la semana'], ['gobiernos', 'Avances logrados a igual período'], ['fondos', 'Fondos concursables'], ['tasw', 'Proyección de tasas a 12 meses'],
+  ['cgw', 'Congreso: votaciones de la semana'], ['gobiernos', 'Avances logrados a igual período'], ['eventos', 'Ferias, eventos y concursos'], ['fondos', 'Fondos concursables'], ['tasw', 'Proyección de tasas a 12 meses'],
   ['subsidios', 'Subsidios habitacionales'], ['dep-futbol', 'Fútbol: tabla y proyección'], ['dep-golf', 'Golf'], ['dep-tenis', 'Tenis']];
 var SUBSIN = { crecw: 'pib producto', proyw: 'cuatro anos 2027 2028 2029 2030 mediano plazo', pjw: 'largo plazo', cgw: 'votaciones leyes votadas senado diputados',
-  gobiernos: 'avances gobiernos presidentes', fondos: 'concursables postular corfo sercotec', tasw: 'tasas hipotecarias hipotecario', subsidios: 'subsidio serviu',
+  gobiernos: 'avances gobiernos presidentes', eventos: 'ferias eventos concursos premios encuentros', fondos: 'concursables postular corfo sercotec', tasw: 'tasas hipotecarias hipotecario', subsidios: 'subsidio serviu',
   'dep-futbol': 'futbol tabla campeonato', 'dep-golf': 'golf', 'dep-tenis': 'tenis atp wta' };
 function subs() {
   var n = D.querySelectorAll('#cnIdx li.cn-sub').length + '/' + R.secs.length;
