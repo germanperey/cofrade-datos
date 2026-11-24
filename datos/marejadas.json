@@ -1,11 +1,19 @@
 {
  "fecha": "2026-11-24",
- "generado": "2026-11-24T06:42-03:00",
+ "generado": "2026-11-24T18:59-03:00",
  "revisadas": [
   "https://meteoarmada.directemar.cl/",
   "https://www.directemar.cl/aviso-de-marejadas-0"
  ],
  "avisos": [
+  {
+   "tipo": "Aviso temporal área oceánica",
+   "sector": "FARO SAN PEDRO A LATITUD 60 GDS",
+   "emitido": "2026-11-24T16:52",
+   "url": null,
+   "fuente": "Servicio Meteorológico de la Armada (meteoarmada.directemar.cl)",
+   "estado": "emitido, sin fechas en el texto"
+  },
   {
    "tipo": "Aviso de marejadas",
    "sector": "GOLFO DE PENAS HASTA ARICA Y ARCH. JUAN FERNÁNDEZ",
@@ -19,6 +27,14 @@
    "desde": "2026-11-24",
    "hasta": "2026-11-26",
    "estado": "vigente"
+  },
+  {
+   "tipo": "Aviso de temporal área oceánica",
+   "sector": "FARO SAN PEDRO A LATITUD 60 GDS",
+   "emitido": "2026-11-24T16:49",
+   "url": null,
+   "fuente": "Servicio Meteorológico de la Armada (meteoarmada.directemar.cl)",
+   "estado": "emitido, sin fechas en el texto"
   }
  ],
  "nota": "Se publican todos los avisos que no han terminado, también los que empiezan en los próximos días."
