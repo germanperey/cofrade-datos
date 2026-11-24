@@ -2538,6 +2538,27 @@ def eventos_emprendimiento_solo_fichas_completas_y_futuras():
 
 PRUEBAS.append(eventos_emprendimiento_solo_fichas_completas_y_futuras)
 
+def imacec_oficial_con_revisiones_y_vigia_del_ultimo_mes():
+    """24-11-2026 (Germán: «un gráfico ... no se actualizó el último mes (esto es gravisimo...)»): el Imacec sale de la serie del Banco
+    Central (variación anual del índice, con sus revisiones) y el vigía sabe qué mes ya debió publicarse (primer día hábil de M+2)."""
+    import datetime as dt
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, raiz)
+    sys.path.insert(0, os.path.join(raiz, "herramientas"))
+    import bajar
+    import vigia
+    obs = [("2025-08-01", 100.0), ("2025-09-01", 98.0), ("2026-08-01", 99.0), ("2026-09-01", 98.196)]
+    assert bajar.imacec_bcch_csv(obs, 2026) == "2026-08,-1.0\n2026-09,0.2\n", bajar.imacec_bcch_csv(obs, 2026)
+    assert bajar.imacec_bcch_csv(obs, 2025) == ""
+    P = vigia.publicacion_imacec
+    assert [P(2026, 2), P(2026, 3), P(2026, 6), P(2026, 9), P(2026, 10), P(2026, 11)] == [dt.date(2026, 4, 1), dt.date(2026, 5, 4),
+        dt.date(2026, 8, 3), dt.date(2026, 11, 2), dt.date(2026, 12, 1), dt.date(2027, 1, 4)]
+    assert vigia.imacec_esperado(dt.date(2026, 11, 24)) == "2026-09"   # octubre sale el 1 de diciembre
+    assert vigia.imacec_esperado(dt.date(2026, 12, 1)) == "2026-09" and vigia.imacec_esperado(dt.date(2026, 12, 2)) == "2026-10"
+
+
+PRUEBAS.append(imacec_oficial_con_revisiones_y_vigia_del_ultimo_mes)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

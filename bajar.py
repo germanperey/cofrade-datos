@@ -155,8 +155,42 @@ def clima_json(j, hoy):
 
 
 # ---------- IMACEC e indicadores (mindicador.cl) ----------
+# 24-11-2026 (Germán: un gráfico «no se actualizó el último mes (esto es gravisimo, porque debes actualizar todo permanentemente y
+# para eso debes monitorear cada contenido)»). mindicador.cl guarda la cifra PRELIMINAR de cada mes y no recoge las revisiones que el
+# Banco Central publica con las Cuentas Nacionales (el 18-11-2026 el tercer trimestre pasó de −0,8 % a −1,1 %). Desde hoy la fuente
+# es la Base de Datos Estadísticos del Banco Central: el índice del Imacec (serie original, 2018=100) y su variación a 12 meses, igual
+# que la publica el Banco Central. mindicador.cl queda solo de respaldo si el Banco Central no responde.
+IMACEC_BCCH = "F032.IMC.IND.Z.Z.EP18.Z.Z.0.M"
+
+
+def imacec_bcch_csv(obs, anio):
+    """[(AAAA-MM-DD, índice)] → «AAAA-MM,var» de cada mes de `anio`: variación anual del índice, con 1 decimal."""
+    ind = {f[:7]: v for f, v in obs}
+    out = []
+    for m in range(1, 13):
+        k, k0 = f"{anio}-{m:02d}", f"{anio - 1}-{m:02d}"
+        if k in ind and ind.get(k0):
+            out.append(f"{k},{round((ind[k] / ind[k0] - 1) * 100 + 1e-9, 1)}\n")
+    return "".join(out)
+
+
 def imacec(estado, anio):
+    auth = _bcch_auth()
+    if auth:
+        url = f"{BCCH_URL}?{auth}&function=GetSeries&timeseries={IMACEC_BCCH}&firstdate={anio - 2}-01-01&lastdate={anio}-12-31"
+        if robots_permite(url, estado):
+            obs = cierres_bcch(pedir(url, estado, "imacec", espera=(0, 30), limite=45), ahora().date() + dt.timedelta(days=1))
+            txt = imacec_bcch_csv(obs, anio)
+            # los últimos 13 meses también van a historia.json (gráfico emergente del indicador en la sección 9)
+            _BCCH["imacec_hist"] = [[f"{k}-01", float(v)] for ln in (imacec_bcch_csv(obs, anio - 1) + txt).splitlines()
+                                    for k, v in [ln.split(",")]][-13:]
+            if txt:
+                estado["imacec_fuente"] = {"fuente": "Banco Central de Chile (Base de Datos Estadísticos)", "serie": IMACEC_BCCH,
+                                           "ultimo": txt.strip().splitlines()[-1], "hora": ahora().isoformat(timespec="seconds")}
+                return txt
     j = pedir(f"https://mindicador.cl/api/imacec/{anio}", estado, "imacec")
+    if j:
+        estado["imacec_fuente"] = {"fuente": "Banco Central de Chile (vía mindicador.cl, cifras preliminares)", "hora": ahora().isoformat(timespec="seconds")}
     return imacec_csv(j) if j else ""
 
 
@@ -2326,6 +2360,8 @@ def historia_bcch(estado, hoy, dias=400):
                 break
         if datos:
             out[clave] = {"nombre": nombre, "prefijo": pre, "decimales": dec, "id": sid, "datos": [[f, round(v, 4)] for f, v in datos]}
+    if _BCCH.get("imacec_hist"):   # 24-11-2026: variación anual del Imacec, calculada en imacec() con la serie del Banco Central
+        out["imacec"] = {"nombre": "Imacec, variación anual", "prefijo": "", "decimales": 1, "id": IMACEC_BCCH, "datos": _BCCH["imacec_hist"]}
     estado["historia_bcch"] = {"ok": bool(out), "hora": ahora().isoformat(timespec="seconds"), "url": "Banco Central (historia diaria)",
                                "error": "" if out else "ninguna serie respondió", "series": {k: len(v["datos"]) for k, v in out.items()}}
     return {"fecha": hoy.isoformat(), "fuente": "Banco Central de Chile (Base de Datos Estadísticos)", "series": out} if out else None

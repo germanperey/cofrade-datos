@@ -323,6 +323,7 @@ def revisar_datos(inf, reparar):
                       f"última bajada {ult.isoformat(timespec='minutes') if ult else 'desconocida'}"):
             if reparar:
                 r = gh("POST", "/actions/workflows/cofrade-datos.yml/dispatches", json={"ref": "main"})
+                inf.bajada_pedida = True
                 inf.reparar("Volver a bajar los datos del día", r is not None and r.status_code == 204, f"HTTP {getattr(r, 'status_code', 'sin token')}")
     except (OSError, ValueError) as ex:
         inf.ok("Datos del día al día (bajada de GitHub)", False, type(ex).__name__)
@@ -339,6 +340,74 @@ def revisar_datos(inf, reparar):
                 inf.reparar("Volver a generar el Pulso", r is not None and r.status_code == 204, f"HTTP {getattr(r, 'status_code', 'sin token')}")
     except (OSError, ValueError) as ex:
         inf.ok("«En vivo» de la portada al día (Pulso)", False, type(ex).__name__)
+
+
+# 24-11-2026 (Germán: «hay un gráfico que detecté que no se actualizó el último mes (esto es gravisimo, porque debes actualizar todo
+# permanentemente y para eso debes monitorear cada contenido)»). Cada archivo de datos que alimenta la edición y el sitio, con la fecha
+# que trae adentro y cuánto puede tener: si uno se quedó atrás, el vigía lo dice (y vuelve a bajar los datos una vez).
+# (archivo, campo con la fecha, días que puede tener, grave)
+VIGENCIA = [("historia.json", "fecha", 0, True), ("tasas-bcch.json", "fecha", 0, True), ("mercados.json", "fecha", 0, True),
+            ("marejadas.json", "fecha", 0, True), ("aire.json", "fecha", 0, True), ("proyecciones-chile.json", "generado", 0, True),
+            ("titulares.json", "generado", 0, True), ("golf.json", "generado", 0, True), ("oleaje.json", "generado", 0, True),
+            ("conflictos-radar.json", "generado", 0, True), ("eventos-emprendimiento.json", "generado", 0, True),
+            ("liga-primera.json", "tabla_fecha", 14, True), ("senado-votaciones.json", "actualizado", 14, False)]
+FERIADOS_DIA1 = {(1, 1), (5, 1), (11, 1)}   # feriados que caen el día 1 (el Banco Central publica el primer día hábil del mes)
+
+
+def publicacion_imacec(anio, mes):
+    """El Banco Central publica el Imacec del mes M el primer día hábil del mes M+2 (calendario estadístico)."""
+    m, a = mes + 2, anio
+    if m > 12:
+        m, a = m - 12, a + 1
+    d = dt.date(a, m, 1)
+    while d.weekday() >= 5 or (d.month, d.day) in FERIADOS_DIA1:
+        d += dt.timedelta(days=1)
+    return d
+
+
+def imacec_esperado(hoy):
+    """Último mes del Imacec que ya debería estar publicado hoy (pasadas las 10:00, por si el robot corrió antes de la publicación)."""
+    a, m = hoy.year, hoy.month
+    for _ in range(4):
+        m -= 1
+        if m == 0:
+            a, m = a - 1, 12
+        if publicacion_imacec(a, m) < hoy:
+            return f"{a}-{m:02d}"
+    return None
+
+
+def revisar_vigencia(inf, reparar):
+    t = ahora()
+    hoy = t.date()
+    viejos = []
+    for nombre, campo, dias, grave in VIGENCIA:
+        try:
+            d = json.load(open(os.path.join(RAIZ, "datos", nombre), encoding="utf-8"))
+            f = dt.date.fromisoformat(str(d.get(campo) or "")[:10])
+        except (OSError, ValueError, TypeError):
+            inf.ok(f"Datos al día: {nombre}", False, "no se pudo leer su fecha", grave=grave)
+            continue
+        limite = hoy - dt.timedelta(days=dias + (1 if t.hour < 9 else 0))
+        if not inf.ok(f"Datos al día: {nombre}", f >= limite, f"{campo} = {f.isoformat()} (máximo {dias} días)", grave=grave) and grave:
+            viejos.append(nombre)
+    try:   # el último mes del Imacec publicado por el Banco Central tiene que estar
+        meses = [ln.split(",")[0] for ln in open(os.path.join(RAIZ, "datos", "imacec.csv"), encoding="utf-8").read().split()]
+        esp = imacec_esperado(hoy)
+        if esp and esp[:4] == str(hoy.year):
+            if not inf.ok("Imacec con el último mes publicado", bool(meses) and max(meses) >= esp,
+                          f"el archivo llega a {max(meses) if meses else 'nada'}; el Banco Central ya publicó {esp}"):
+                viejos.append("imacec.csv")
+        est = json.load(open(os.path.join(RAIZ, "datos", "estado.json"), encoding="utf-8"))
+        fu = ((est.get("fuentes") or est).get("imacec_fuente") or {}).get("fuente", "")
+        inf.ok("Imacec desde el Banco Central (con sus revisiones)", "Base de Datos" in fu, f"fuente: {fu or 'desconocida'}", grave=False)
+    except (OSError, ValueError) as ex:
+        inf.ok("Imacec con el último mes publicado", False, type(ex).__name__)
+    if viejos and reparar and not getattr(inf, "bajada_pedida", False):
+        r = gh("POST", "/actions/workflows/cofrade-datos.yml/dispatches", json={"ref": "main"})
+        inf.bajada_pedida = True
+        inf.reparar("Volver a bajar los datos atrasados (" + ", ".join(viejos)[:200] + ")", r is not None and r.status_code == 204,
+                    f"HTTP {getattr(r, 'status_code', 'sin token')}")
 
 
 def revisar_corridas(inf, reparar):
@@ -416,6 +485,7 @@ def main(argv=None):
         revisar_navegador(inf, fecha)
     revisar_contenido(inf, fecha)
     revisar_datos(inf, not a.sin_reparar)
+    revisar_vigencia(inf, not a.sin_reparar)   # 24-11-2026: cada archivo de datos con su fecha
     revisar_corridas(inf, not a.sin_reparar)
     salida = {"generado": ahora().isoformat(timespec="seconds"), "ok": not inf.graves, "graves": len(inf.graves),
               "revisiones": inf.revisiones, "reparaciones": inf.reparaciones}
