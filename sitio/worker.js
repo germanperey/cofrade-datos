@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "5556847d8cd8";
+const VERSION_SITIO = "f032340cafb9";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -5577,7 +5577,7 @@ const IND = {
   utm: { n: "UTM", en: "UTM", h: "utm", md: "utm", pre: "$", dec: 0, f: "Banco Central de Chile", mes: 1 },
   ipc: { n: "IPC del mes", en: "CPI, monthly change", h: "ipc", md: "ipc", suf: "%", dec: 1, f: "Banco Central de Chile", mes: 1, pp: 1 },
   ipc12: { n: "IPC 12 meses", en: "CPI, 12-month change", h: "ipc12", suf: "%", dec: 1, f: "Banco Central de Chile", mes: 1, pp: 1 },
-  imacec: { n: "IMACEC", en: "IMACEC", md: "imacec", suf: "%", dec: 1, f: "Banco Central de Chile vía mindicador.cl", mes: 1, pp: 1 },
+  imacec: { n: "IMACEC", en: "IMACEC", h: "imacec", md: "imacec", suf: "%", dec: 1, f: "Banco Central de Chile", mes: 1, pp: 1 },   // 24-11-2026: serie del Banco Central (con revisiones); mindicador, de respaldo
   desempleo: { n: "Desempleo", en: "Unemployment", md: "tasa_desempleo", suf: "%", dec: 1, f: "INE vía mindicador.cl", mes: 1, pp: 1 },
   bitcoin: { n: "Bitcoin", en: "Bitcoin", pre: "US$", dec: 0, f: "Coinbase", cb: 1 },
 };
