@@ -11,7 +11,7 @@
 //     teclado y con lector de pantalla. Abrir o cerrar uno hace lo mismo en los otros meses y cámaras. Los gráficos se dibujan recién
 //     al abrirse (la capa LENTO espera a que se vean) y al imprimir se abren todos. Un mes sin proyectos queda como estaba.
 const COMPACTO_CSS = `<style id="cnCompacto">
-#cgw>h3,#fondos>h3,#tasw>h3,#subsidios>h3{font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:6px 0 10px;padding-bottom:5px}
+#cgw>h3,#fondos>h3,#eventos>.ev-l>h3,#tasw>h3,#subsidios>h3{font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:6px 0 10px;padding-bottom:5px}
 #mar>h3.tabtit:has(+p.sub+.leyenda-naves),#mar>h3.tabtit:has(+.leyenda-naves){font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:28px 0 10px;padding-bottom:5px}
 details.cn-cmp{margin:12px 0 6px}
 details.cn-cmp>summary{list-style:none;display:flex;flex-direction:column;gap:9px;padding:12px 14px;min-height:44px;box-sizing:border-box;background:var(--card,#fff);border:1px solid var(--linea,#DDD3BF);border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;transition:border-color .15s ease-out,box-shadow .15s ease-out}

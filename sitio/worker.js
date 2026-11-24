@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "5cdb9f7e7a11";
+const VERSION_SITIO = "5556847d8cd8";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -3014,7 +3014,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 //     teclado y con lector de pantalla. Abrir o cerrar uno hace lo mismo en los otros meses y cámaras. Los gráficos se dibujan recién
 //     al abrirse (la capa LENTO espera a que se vean) y al imprimir se abren todos. Un mes sin proyectos queda como estaba.
 const COMPACTO_CSS = `<style id="cnCompacto">
-#cgw>h3,#fondos>h3,#tasw>h3,#subsidios>h3{font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:6px 0 10px;padding-bottom:5px}
+#cgw>h3,#fondos>h3,#eventos>.ev-l>h3,#tasw>h3,#subsidios>h3{font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:6px 0 10px;padding-bottom:5px}
 #mar>h3.tabtit:has(+p.sub+.leyenda-naves),#mar>h3.tabtit:has(+.leyenda-naves){font-family:var(--serif,Georgia,serif);font-size:clamp(20px,2.6vw,24px);line-height:1.2;color:var(--tinta);margin:28px 0 10px;padding-bottom:5px}
 details.cn-cmp{margin:12px 0 6px}
 details.cn-cmp>summary{list-style:none;display:flex;flex-direction:column;gap:9px;padding:12px 14px;min-height:44px;box-sizing:border-box;background:var(--card,#fff);border:1px solid var(--linea,#DDD3BF);border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;transition:border-color .15s ease-out,box-shadow .15s ease-out}
@@ -6174,8 +6174,8 @@ function eventosLado(lista, nots, hoy, en) {
   const T = (es, ing) => (en ? ing : es);
   const cuenta = { feria: 0, evento: 0, concurso: 0 };
   lista.forEach((e) => cuenta[e.tipo]++);
-  const filtros = `<div class="ev-g" role="group" aria-label="${T("Tipo", "Type")}"><button type="button" class="vamb ev-b" data-v="" aria-pressed="true">${T("Todos", "All")} (${lista.length})</button>`
-    + ["feria", "evento", "concurso"].filter((k) => cuenta[k]).map((k) => `<button type="button" class="vamb ev-b" data-v="${k}" aria-pressed="false">${EV_TIPO[k][en ? 3 : 2]} (${cuenta[k]})</button>`).join("") + "</div>";
+  const filtros = `<div class="fz-g ev-g" role="group" aria-label="${T("Tipo", "Type")}"><button type="button" class="vamb fz-b ev-b" data-v="" aria-pressed="true">${T("Todos", "All")} (${lista.length})</button>`
+    + ["feria", "evento", "concurso"].filter((k) => cuenta[k]).map((k) => `<button type="button" class="vamb fz-b ev-b" data-v="${k}" aria-pressed="false">${EV_TIPO[k][en ? 3 : 2]} (${cuenta[k]})</button>`).join("") + "</div>";
   const tarjetas = lista.map((e, i) => {
     const st = evEstado(e, hoy, en), ag = evAgenda(e), desc = en ? e.desc_en || e.desc : e.desc;
     const costo = e.costo !== "gratis" ? "" : e.tipo === "concurso" ? `<div class="ev-f"><dt>${T("Postular", "To apply")}</dt><dd>${T("Sin costo", "Free")}</dd></div>`
@@ -6187,7 +6187,7 @@ function eventosLado(lista, nots, hoy, en) {
       + `<p class="ev-pie"><a href="${evEsc(evUrl(e.url))}" target="_blank" rel="noopener">${T("Más información", "More info")}</a> <span class="fuente">${T("Fuente", "Source")}: ${evEsc(e.fuente)}</span>`
       + (ag ? ` · <a class="ev-ag" href="${evEsc(ag)}" target="_blank" rel="noopener">${T("Agendar", "Add to calendar")}</a>` : "") + "</p></article>";
   }).join("");
-  const mas = lista.length > 6 ? `<button type="button" class="vamb ev-mas">${T(`Ver ${lista.length - 6} más`, `Show ${lista.length - 6} more`)}</button>` : "";
+  const mas = lista.length > 6 ? `<button type="button" class="vamb fz-b ev-mas">${T(`Ver ${lista.length - 6} más`, `Show ${lista.length - 6} more`)}</button>` : "";
   const notas = nots.length ? `<div class="ev-notas"><p class="ev-h">${T("En las noticias", "In the news")}</p><ul>` + nots.map((n) =>
     `<li><a href="${evEsc(evUrl(n.url))}" target="_blank" rel="noopener">${evEsc(n.titulo)}</a> <span class="fuente">${evEsc(n.medio)} · ${evEsc(evCorta(n.fecha, en))}</span></li>`).join("") + "</ul></div>" : "";
   return `<div class="ev-l" lang="${en ? "en" : "es"}"><h3>${T("Ferias, eventos y concursos de emprendimiento", "Entrepreneurship fairs, events and contests")}</h3>`
@@ -6226,7 +6226,7 @@ const EV_CSS = `<style id="cnEventos">
 .ev-bloque>.ev-l[lang="en"],.ev-bloque.ev-en>.ev-l[lang="es"],html[lang^="en"] .ev-bloque:not(.ev-es)>.ev-l[lang="es"]{display:none}
 .ev-bloque.ev-en>.ev-l[lang="en"],html[lang^="en"] .ev-bloque:not(.ev-es)>.ev-l[lang="en"]{display:block}
 .ev-bloque{margin:clamp(28px,4vw,44px) 0 clamp(20px,3vw,32px)}
-.ev-bloque .ev-g{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+.ev-bloque .ev-g{margin:18px 0 14px}
 .ev-bloque .ev-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
 .ev-bloque .ev-card{border:1px solid var(--linea,#DDD3BF);border-radius:12px;padding:14px 16px;background:var(--card,#fff);display:flex;flex-direction:column;min-width:0}
 .ev-bloque .ev-card[hidden]{display:none}
