@@ -2526,8 +2526,17 @@ def eventos_emprendimiento_solo_fichas_completas_y_futuras():
     for e in base["eventos"]:
         assert E.revisar(e, dt.date(2026, 11, 24), set()) == "", (e["id"], E.revisar(e, dt.date(2026, 11, 24), set()))
     hoy, ids = dt.date(2026, 11, 24), {"fiiem-2026"}
-    ok = {"id": "x-2027", "tipo": "feria", "nombre": "X", "inicio": "2027-01-10", "lugar": "Santiago", "desc": "Feria.", "url": "https://a.cl/x", "fuente": "A"}
+    ok = {"id": "x-2027", "tipo": "feria", "nombre": "X", "inicio": "2027-01-10", "lugar": "Santiago", "desc": "Feria.", "url": "https://a.cl/x", "fuente": "A",
+          "inscripcion": "https://a.cl/inscribete", "costo": "gratis"}
     assert E.revisar(ok, hoy, ids) == ""
+    # 25-11-2026 (Germán): «Ver» para inscribirse, y valor y requisitos si se paga; lo que ya pasó sale solo
+    assert E.revisar(dict(ok, inscripcion=""), hoy, ids).startswith("falta inscripcion")
+    assert E.revisar(dict(ok, costo=""), hoy, ids).startswith("si no es gratis, falta valor")
+    assert E.revisar(dict(ok, costo="", valor="$15.000 general"), hoy, ids) == ""
+    F = E.fin_efectivo
+    assert F({"inicio": "2026-12-01", "fin": "2026-12-03"}) == "2026-12-03" and F({"inicio": "2026-12-01", "tipo": "feria"}) == "2026-12-01"
+    assert F({"inicio": "2027-04-01", "solo_mes": True}) == "2027-04-30" and F({"inicio": "2027-01-01", "tipo": "concurso"}) == "2027-03-02"
+    assert F({"inicio": "2026-12-01", "solo_mes": True}) == "2026-12-31"
     assert E.revisar(dict(ok, id="fiiem-2026"), hoy, ids) == "ya está"
     assert E.revisar(dict(ok, inicio="2026-11-01"), hoy, ids) == "ya pasó"
     assert E.revisar(dict(ok, url="http://a.cl"), hoy, ids) == "url debe ser https"

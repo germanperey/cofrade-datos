@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "57ebc7de7fc7";
+const VERSION_SITIO = "7895ee07345c";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6180,10 +6180,19 @@ function evAgenda(e) {
   return "https://calendar.google.com/calendar/render?" + q.toString();
 }
 
+// 25-11-2026 (Germán: «las actividades que se hayan realizado y pasada la fecha las eliminas del Newsletter (para conservar sólo aquellas
+// que están vigentes o pendientes de realizarse)»). Último día en que la ficha sigue vigente: su término; si solo se conoce el mes, el
+// último día de ese mes; un concurso sin cierre publicado, 60 días desde que abre; un evento sin término, el mismo día en que empieza.
+function evFinEf(e) {
+  if (e.fin && evDia(e.fin)) return e.fin;
+  if (e.solo_mes) { const d = new Date(Date.UTC(+e.inicio.slice(0, 4), +e.inicio.slice(5, 7), 0)); return d.toISOString().slice(0, 10); }
+  if (e.tipo === "concurso") return new Date(evDia(e.inicio).t + 60 * 86400000).toISOString().slice(0, 10);
+  return e.inicio;
+}
 function eventosValidos(d, hoy) {
   if (!d || !Array.isArray(d.eventos)) return [];
   return d.eventos.filter((e) => e && EV_TIPO[e.tipo] && e.nombre && evDia(e.inicio) && evUrl(e.url)
-    && ((e.fin && evDia(e.fin)) ? e.fin >= hoy : e.inicio >= hoy || (evDia(hoy).t - evDia(e.inicio).t) / 86400000 <= 60))
+    && evFinEf(e) >= hoy)
     .map((e) => [evClave(e, hoy), e]).sort((x, y) => (x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : String(x[1].nombre).localeCompare(String(y[1].nombre)))).map((x) => x[1]);
 }
 // Orden por la próxima fecha que le importa al lector: un concurso abierto, su cierre; uno por abrir o un evento, su inicio; lo que ya está
@@ -6201,14 +6210,21 @@ function eventosLado(lista, nots, hoy, en) {
     + ["feria", "evento", "concurso"].filter((k) => cuenta[k]).map((k) => `<button type="button" class="vamb fz-b ev-b" data-v="${k}" aria-pressed="false">${EV_TIPO[k][en ? 3 : 2]} (${cuenta[k]})</button>`).join("") + "</div>";
   const tarjetas = lista.map((e, i) => {
     const st = evEstado(e, hoy, en), ag = evAgenda(e), desc = en ? e.desc_en || e.desc : e.desc;
-    const costo = e.costo !== "gratis" ? "" : e.tipo === "concurso" ? `<div class="ev-f"><dt>${T("Postular", "To apply")}</dt><dd>${T("Sin costo", "Free")}</dd></div>`
-      : `<div class="ev-f"><dt>${T("Entrada", "Entry")}</dt><dd>${T("Gratuita", "Free")}</dd></div>`;
+    // 25-11-2026 (Germán: «En caso que la actividad tenga un costo señala cuánto es el valor a pagar y los principales requisitos de
+    // admisibilidad»): gratis, el valor publicado o «por confirmar»; y los requisitos cuando la ficha los trae
+    const fila = (dt, dd) => `<div class="ev-f"><dt>${dt}</dt><dd>${evEsc(dd)}</dd></div>`;
+    const conc = e.tipo === "concurso", valor = en ? e.valor_en || e.valor : e.valor, req = en ? e.requisitos_en || e.requisitos : e.requisitos;
+    const costo = (e.costo === "gratis" ? fila(conc ? T("Postular", "To apply") : T("Entrada", "Entry"), conc ? T("Sin costo", "Free") : T("Gratuita", "Free"))
+      : fila(conc ? T("Postular", "To apply") : T("Valor", "Price"), valor || T("Por confirmar en el sitio oficial", "To be confirmed on the official site")))
+      + (req ? fila(T("Requisitos", "Requirements"), req) : "");
+    const ver = evUrl(e.inscripcion) || evUrl(e.url);
     return `<article class="ev-card" data-tipo="${evEsc(e.tipo)}"${i >= 6 ? " data-extra hidden" : ""}><p class="ev-inst">${EV_TIPO[e.tipo][en ? 1 : 0]}<span class="ev-est ${st.c}">${evEsc(st.t)}</span></p>`
       + `<h4 class="ev-tit">${evEsc(e.nombre)}</h4><dl class="ev-dl"><div class="ev-f"><dt>${T(e.tipo === "concurso" ? "Postulación" : "Cuándo", e.tipo === "concurso" ? "Applications" : "When")}</dt><dd>`
       + evEsc(e.tipo === "concurso" && e.fin ? T(`Hasta el ${evRango(e.fin, "", en)}`, `Until ${evRango(e.fin, "", en)}`) : e.tipo === "concurso" && !e.fin ? T(`Desde el ${evRango(e.inicio, "", en)}`, `From ${evRango(e.inicio, "", en)}`) : e.solo_mes ? evMes(e.inicio, en) : evRango(e.inicio, e.fin, en))
       + `</dd></div><div class="ev-f"><dt>${T("Dónde", "Where")}</dt><dd>${evEsc(e.lugar)}</dd></div>${costo}</dl><p class="ev-desc">${evEsc(desc)}</p>`
-      + `<p class="ev-pie"><a href="${evEsc(evUrl(e.url))}" target="_blank" rel="noopener">${T("Más información", "More info")}</a> <span class="fuente">${T("Fuente", "Source")}: ${evEsc(e.fuente)}</span>`
-      + (ag ? ` · <a class="ev-ag" href="${evEsc(ag)}" target="_blank" rel="noopener">${T("Agendar", "Add to calendar")}</a>` : "") + "</p></article>";
+      + `<p class="ev-pie"><span class="ev-pie-i"><span class="fuente">${T("Fuente", "Source")}: <a href="${evEsc(evUrl(e.url))}" target="_blank" rel="noopener">${evEsc(e.fuente)}</a></span>`
+      + (ag ? ` · <a class="ev-ag" href="${evEsc(ag)}" target="_blank" rel="noopener">${T("Agendar", "Add to calendar")}</a>` : "") + `</span>`
+      + `<a class="ev-ver" href="${evEsc(ver)}" target="_blank" rel="noopener" aria-label="${evEsc(T("Ver e inscribirse: ", "View and sign up: ") + e.nombre)}">${T("Ver", "View")}</a></p></article>`;
   }).join("");
   const mas = lista.length > 6 ? `<button type="button" class="vamb fz-b ev-mas">${T(`Ver ${lista.length - 6} más`, `Show ${lista.length - 6} more`)}</button>` : "";
   const notas = nots.length ? `<div class="ev-notas"><p class="ev-h">${T("En las noticias", "In the news")}</p><ul>` + nots.map((n) =>
@@ -6261,7 +6277,13 @@ html[data-theme="dark"] .ev-bloque .ev-ab{color:#5fcf95}html[data-theme="dark"] 
 .ev-bloque .ev-dl{margin:0 0 8px;display:grid;gap:4px}.ev-bloque .ev-f{display:grid;grid-template-columns:6.6em 1fr;gap:8px;font-size:14px;line-height:1.45}
 .ev-bloque .ev-f dt{color:var(--gris,#5f6670);margin:0}.ev-bloque .ev-f dd{margin:0;color:var(--tinta,#0B1F3A);overflow-wrap:anywhere}
 .ev-bloque .ev-desc{font-size:14.5px;line-height:1.5;margin:0 0 10px;color:var(--tinta,#0B1F3A)}
-.ev-bloque .ev-pie{margin:auto 0 0;font-size:13.5px;line-height:1.5}.ev-bloque .ev-pie a{font-weight:600}
+.ev-bloque .ev-pie{margin:auto 0 0;font-size:13.5px;line-height:1.5;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}.ev-bloque .ev-pie a{font-weight:600}
+.ev-bloque .ev-pie-i{min-width:0;overflow-wrap:anywhere}
+.ev-bloque .ev-ver{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:64px;min-height:44px;padding:0 18px;border-radius:999px;background:#C9A14A;color:#1A1406!important;font:700 15px/1 var(--sans,system-ui,sans-serif);text-decoration:none!important;transition:background-color .15s,transform .1s}
+@media (hover:hover) and (pointer:fine){.ev-bloque .ev-ver:hover{background:#D9B35E}}
+.ev-bloque .ev-ver:active{transform:scale(.97)}.ev-bloque .ev-ver:focus-visible{outline:2px solid var(--tinta,#0B1F3A);outline-offset:2px}
+html[data-theme="dark"] .ev-bloque .ev-ver{background:transparent;color:#E5C77A!important;border:1.5px solid #D9AE52}
+@media (prefers-reduced-motion:reduce){.ev-bloque .ev-ver{transition:none}}
 .ev-bloque .ev-mas{margin-top:14px}
 .ev-bloque .ev-vacio{color:var(--gris,#5f6670);font-size:14px}
 .ev-bloque .ev-notas{margin-top:clamp(20px,3vw,28px)}
@@ -6269,7 +6291,7 @@ html[data-theme="dark"] .ev-bloque .ev-ab{color:#5fcf95}html[data-theme="dark"] 
 .ev-bloque .ev-notas ul{list-style:none;margin:0;padding:0}.ev-bloque .ev-notas li{padding:9px 0;border-bottom:1px solid var(--linea,#DDD3BF);line-height:1.45}
 .ev-bloque .ev-notas li a{color:var(--tinta,#0B1F3A);font-weight:600;text-decoration:none}.ev-bloque .ev-notas li a:hover,.ev-bloque .ev-notas li a:focus-visible{text-decoration:underline}
 .ev-bloque .ev-notas .fuente{white-space:nowrap}
-@media print{.ev-bloque .ev-g,.ev-bloque .ev-mas,.ev-bloque .ev-ag{display:none}.ev-bloque .ev-card[hidden]{display:flex}}
+@media print{.ev-bloque .ev-g,.ev-bloque .ev-mas,.ev-bloque .ev-ag,.ev-bloque .ev-ver{display:none}.ev-bloque .ev-card[hidden]{display:flex}}
 </style>`;
 
 // En el navegador: filtros por tipo, «Ver más», idioma con el botón EN/ES y el tema en el Índice (antes de «Fondos concursables»)

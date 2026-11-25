@@ -65,6 +65,21 @@ def noticias(estado, hoy):
     return out[:8]
 
 
+def fin_efectivo(e):
+    """25-11-2026 (Germán: «las actividades que se hayan realizado y pasada la fecha las eliminas del Newsletter»). Último día vigente:
+    el término; si solo se sabe el mes, el último día de ese mes; un concurso sin cierre, 60 días desde que abre; un evento sin término,
+    su mismo día. Lo mismo hace el sitio (evFinEf en sitio/modulos/eventos_empr.js)."""
+    if e.get("fin"):
+        return e["fin"]
+    i = e.get("inicio") or "0000-01-01"
+    if e.get("solo_mes"):
+        a, m = int(i[:4]), int(i[5:7])
+        return (dt.date(a + (m == 12), m % 12 + 1, 1) - dt.timedelta(days=1)).isoformat()
+    if e.get("tipo") == "concurso":
+        return (dt.date.fromisoformat(i) + dt.timedelta(days=60)).isoformat()
+    return i
+
+
 TIPOS = {"feria", "evento", "concurso"}
 OBLIG = ("id", "tipo", "nombre", "inicio", "lugar", "desc", "url", "fuente")
 
@@ -82,10 +97,17 @@ def revisar(e, hoy, ids):
             return f"{k} no es AAAA-MM-DD"
     if e.get("fin") and e["fin"] < e["inicio"]:
         return "fin antes que inicio"
-    if (e.get("fin") or e["inicio"]) < hoy.isoformat():
+    if fin_efectivo(e) < hoy.isoformat():
         return "ya pasó"
     if not re.match(r"https://[^\s\"'<>]+$", e["url"]):
         return "url debe ser https"
+    # 25-11-2026 (Germán): botón «Ver» para ingresar e inscribirse, y el valor y los requisitos cuando la actividad se paga
+    if not re.match(r"https://[^\s\"'<>]+$", str(e.get("inscripcion") or "")):
+        return "falta inscripcion (https de la página oficial para ver e inscribirse)"
+    if e.get("costo") != "gratis" and not str(e.get("valor") or "").strip():
+        return "si no es gratis, falta valor (cuánto se paga, o «Sin valor publicado» con dónde se buscó)"
+    if len(e.get("valor") or "") > 140 or len(e.get("requisitos") or "") > 200:
+        return "valor de más de 140 o requisitos de más de 200 caracteres"
     if e["id"] in ids:
         return "ya está"
     if len(e["desc"]) > 260 or len(e.get("desc_en") or "") > 260:
@@ -159,14 +181,7 @@ def main():
     salida = os.path.join(os.path.dirname(AQUI), "datos", "eventos-emprendimiento.json")
     hoy = hoy_chile()
     base = json.load(open(os.path.join(AQUI, "eventos-base.json"), encoding="utf-8"))
-    vigentes = []
-    for e in base.get("eventos", []):
-        fin = e.get("fin") or ""
-        if fin and fin < hoy.isoformat():
-            continue
-        if not fin and (e.get("inicio") or "9999") < (hoy - dt.timedelta(days=60)).isoformat():   # sin fecha de término: 60 días
-            continue
-        vigentes.append(e)
+    vigentes = [e for e in base.get("eventos", []) if fin_efectivo(e) >= hoy.isoformat()]   # lo que ya pasó sale solo (25-11-2026)
     vigentes.sort(key=lambda e: (e.get("inicio") or "9999", e.get("nombre", "")))
     estado = {}
     try:
