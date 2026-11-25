@@ -93,6 +93,37 @@ def revisar(e, hoy, ids):
     return ""
 
 
+def _clave(t):
+    return re.sub(r"[^a-z0-9]", "", (t or "").lower().translate(str.maketrans("áéíóúñü", "aeiounu")))
+
+
+def pendientes(hoy, base, dias=120):
+    """25-11-2026 (Germán: «falta incluir la Exponaval, entre muchas otras actividades»). Recurrentes cuyo mes llega dentro de `dias`
+    y que no tienen ficha vigente: la tarea diaria y el Guardián deben buscar su fecha oficial y agregarlas. La clave se busca en el id
+    y el nombre de las fichas; «minimo» exige varias fichas (por ejemplo, ferias navideñas de distintas comunas)."""
+    try:
+        rec = json.load(open(os.path.join(AQUI, "eventos-recurrentes.json"), encoding="utf-8"))["eventos"]
+    except Exception:
+        return []
+    vig = [e for e in base.get("eventos", []) if (e.get("fin") or e.get("inicio") or "") >= hoy.isoformat()]
+    out = []
+    for r in rec:
+        prox = None
+        for k in range(0, dias + 1, 7):   # semana a semana: ¿cae su mes en la ventana y en el año que corresponde?
+            f = hoy + dt.timedelta(days=k)
+            if f.strftime("%Y-%m") <= (r.get("hecho") or ""):   # esa edición ya se cubrió o ya pasó
+                continue
+            if f.month in r["meses"] and (r.get("cada", 1) == 1 or (f.year % 2 == 0) == (r.get("paridad") == "par")):
+                prox = f
+                break
+        if not prox:
+            continue
+        hay = sum(1 for e in vig if r["clave"] in _clave(e.get("id")) + _clave(e.get("nombre")))
+        if hay < r.get("minimo", 1):
+            out.append({"nombre": r["nombre"], "mes": prox.strftime("%Y-%m"), "sitio": r["sitio"], "fichas": hay, "minimo": r.get("minimo", 1)})
+    return out
+
+
 def agregar(archivo):
     """La tarea diaria propone fichas verificadas (rule 42): solo entran las completas, futuras y nuevas."""
     ruta = os.path.join(AQUI, "eventos-base.json")
@@ -119,6 +150,12 @@ def agregar(archivo):
 def main():
     if len(sys.argv) > 2 and sys.argv[1] == "agregar":
         return agregar(sys.argv[2])
+    if len(sys.argv) > 1 and sys.argv[1] == "pendientes":   # lo que falta investigar hoy (tarea diaria y Guardián)
+        p = pendientes(hoy_chile(), json.load(open(os.path.join(AQUI, "eventos-base.json"), encoding="utf-8")))
+        for r in p:
+            print(f"POR INVESTIGAR {r['nombre']} · mes {r['mes']} · fichas {r['fichas']} de {r['minimo']} · {r['sitio']}")
+        print(f"pendientes {len(p)}")
+        return
     salida = os.path.join(os.path.dirname(AQUI), "datos", "eventos-emprendimiento.json")
     hoy = hoy_chile()
     base = json.load(open(os.path.join(AQUI, "eventos-base.json"), encoding="utf-8"))
@@ -143,7 +180,7 @@ def main():
         except Exception:
             nots = []
     datos = {"generado": dt.datetime.now(dt.timezone(dt.timedelta(hours=-3))).isoformat(timespec="minutes"), "verificado": base.get("verificado"),
-             "eventos": vigentes, "noticias": nots}
+             "eventos": vigentes, "noticias": nots, "por_investigar": pendientes(hoy, base)}
     os.makedirs(os.path.dirname(salida), exist_ok=True)
     json.dump(datos, open(salida, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     foto = os.path.join(os.path.dirname(salida), "eventos", hoy.isoformat() + ".json")   # la edición de cada día lee su foto

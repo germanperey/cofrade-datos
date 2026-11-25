@@ -1,0 +1,183 @@
+{
+ "nota": "25-11-2026 (Germán: «Diariamente debes ir agregando nuevas actividades que estén activas o próximas a iniciarse, por ejemplo, falta incluir la Exponaval, entre muchas otras actividades»). Agenda de ferias, eventos y concursos que vuelven cada año o cada dos años. Cuando se acerca su mes y no hay ficha, el robot los deja en «por_investigar» y la tarea diaria y el Guardián deben buscar la fecha oficial y agregar la ficha. paridad: «par» o «impar» para las bienales. Se agregan nuevas filas cuando aparezca un evento que se repite. hecho: «AAAA-MM» de la última edición ya cubierta o ya pasada; los meses hasta ese no se vuelven a pedir.",
+ "eventos": [
+  {
+   "clave": "exponaval",
+   "nombre": "Exponaval",
+   "meses": [
+    12
+   ],
+   "cada": 2,
+   "paridad": "par",
+   "sitio": "https://www.exponaval.cl/"
+  },
+  {
+   "clave": "fidae",
+   "nombre": "FIDAE",
+   "meses": [
+    4
+   ],
+   "cada": 2,
+   "paridad": "par",
+   "sitio": "https://www.fidae.cl/"
+  },
+  {
+   "clave": "expomin",
+   "nombre": "Expomin",
+   "meses": [
+    4
+   ],
+   "cada": 2,
+   "paridad": "impar",
+   "sitio": "https://www.expomin.cl/"
+  },
+  {
+   "clave": "exponor",
+   "nombre": "Exponor",
+   "meses": [
+    6
+   ],
+   "cada": 2,
+   "paridad": "par",
+   "sitio": "https://exponor.cl/"
+  },
+  {
+   "clave": "etmday",
+   "nombre": "EtMday (Emprende tu Mente)",
+   "meses": [
+    11
+   ],
+   "cada": 1,
+   "sitio": "https://www.emprendetumente.org/",
+   "hecho": "2026-11"
+  },
+  {
+   "clave": "maspitch",
+   "nombre": "MAS Pitch (DF MAS)",
+   "meses": [
+    12
+   ],
+   "cada": 1,
+   "sitio": "https://www.df.cl/eventomaspitch"
+  },
+  {
+   "clave": "congresofuturo",
+   "nombre": "Congreso Futuro",
+   "meses": [
+    1
+   ],
+   "cada": 1,
+   "sitio": "https://congresofuturo.cl/"
+  },
+  {
+   "clave": "foodservice",
+   "nombre": "Espacio Food & Service",
+   "meses": [
+    9,
+    10
+   ],
+   "cada": 1,
+   "sitio": "https://www.espaciofoodservice.cl/"
+  },
+  {
+   "clave": "exposalud",
+   "nombre": "Expo Salud",
+   "meses": [
+    11,
+    12
+   ],
+   "cada": 1,
+   "sitio": "https://www.fisa.cl/",
+   "hecho": "2026-12"
+  },
+  {
+   "clave": "fintechforum",
+   "nombre": "Chile Fintech Forum",
+   "meses": [
+    5
+   ],
+   "cada": 1,
+   "sitio": "https://www.fintechile.org/"
+  },
+  {
+   "clave": "minexcellence",
+   "nombre": "Minexcellence (Gecamin)",
+   "meses": [
+    11,
+    12
+   ],
+   "cada": 1,
+   "sitio": "https://gecamin.com/minexcellence/",
+   "hecho": "2026-12"
+  },
+  {
+   "clave": "desafioemprendedor",
+   "nombre": "Concurso Nacional Desafío Emprendedor (Banco de Chile)",
+   "meses": [
+    9,
+    2
+   ],
+   "cada": 1,
+   "sitio": "https://sitiospublicos.bancochile.cl/"
+  },
+  {
+   "clave": "chileconverge",
+   "nombre": "Premio ChileConverge Emprende",
+   "meses": [
+    10,
+    11,
+    12
+   ],
+   "cada": 1,
+   "sitio": "https://www.chileconverge.cl/"
+  },
+  {
+   "clave": "startupchile",
+   "nombre": "Convocatoria Start-Up Chile (BIG)",
+   "meses": [
+    5,
+    11
+   ],
+   "cada": 1,
+   "sitio": "https://www.startupchile.org/",
+   "hecho": "2026-11"
+  },
+  {
+   "clave": "semanapyme",
+   "nombre": "Semana de la Pyme",
+   "meses": [
+    10
+   ],
+   "cada": 1,
+   "sitio": "https://www.economia.gob.cl/"
+  },
+  {
+   "clave": "navid",
+   "nombre": "Ferias navideñas de emprendedores (municipios y Sercotec)",
+   "meses": [
+    12
+   ],
+   "cada": 1,
+   "sitio": "https://www.sercotec.cl/",
+   "minimo": 4
+  },
+  {
+   "clave": "fiiem",
+   "nombre": "FIIEM (Ñuñoa)",
+   "meses": [
+    12
+   ],
+   "cada": 1,
+   "sitio": "https://www.nunoa.cl/"
+  },
+  {
+   "clave": "nerdearla",
+   "nombre": "Nerdearla Chile",
+   "meses": [
+    4
+   ],
+   "cada": 1,
+   "sitio": "https://nerdear.la/"
+  }
+ ]
+}

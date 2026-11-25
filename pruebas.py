@@ -2611,6 +2611,28 @@ def banners_de_suscripcion_en_su_lugar():
 
 PRUEBAS.append(banners_de_suscripcion_en_su_lugar)
 
+def eventos_recurrentes_por_investigar():
+    """25-11-2026 (Germán: «Diariamente debes ir agregando nuevas actividades ... falta incluir la Exponaval»). La agenda de recurrentes
+    pide investigar lo que se acerca sin ficha, respeta bienales y ediciones ya cubiertas, y Exponaval 2026 está en la base."""
+    import datetime as dt, json
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import eventos_emprendimiento as E
+    base = {"eventos": []}
+    p = {r["nombre"] for r in E.pendientes(dt.date(2026, 10, 15), base)}
+    assert "Exponaval" in p and "Expomin" not in p, p            # bienal par: 2026 sí; Expomin (impar) cae en abril de 2027, fuera de 120 días
+    p = {r["nombre"] for r in E.pendientes(dt.date(2027, 1, 5), base)}
+    assert "Expomin" in p and "FIDAE" not in p, p
+    base = {"eventos": [{"id": "exponaval-2026", "nombre": "Exponaval 2026", "inicio": "2026-12-01", "fin": "2026-12-03"}]}
+    assert "Exponaval" not in {r["nombre"] for r in E.pendientes(dt.date(2026, 10, 15), base)}
+    nav = [r for r in E.pendientes(dt.date(2026, 11, 20), {"eventos": [{"id": "feria-navidena-x", "nombre": "Feria Navideña X", "inicio": "2026-12-10"}]})
+           if r["nombre"].startswith("Ferias navide")]
+    assert nav and nav[0]["fichas"] == 1 and nav[0]["minimo"] == 4, nav
+    real = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas", "eventos-base.json"), encoding="utf-8"))
+    assert any(e["id"] == "exponaval-2026" and e["inicio"] == "2026-12-01" for e in real["eventos"])
+
+
+PRUEBAS.append(eventos_recurrentes_por_investigar)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

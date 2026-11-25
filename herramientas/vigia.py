@@ -457,6 +457,17 @@ def revisar_vigencia(inf, reparar):
         inf.ok("Imacec desde el Banco Central (con sus revisiones)", "Base de Datos" in fu, f"fuente: {fu or 'desconocida'}", grave=False)
     except (OSError, ValueError) as ex:
         inf.ok("Imacec con el último mes publicado", False, type(ex).__name__)
+    # 25-11-2026 (Germán: «Diariamente debes ir agregando nuevas actividades que estén activas o próximas a iniciarse, por ejemplo, falta
+    # incluir la Exponaval»). Ferias y eventos: la agenda debe crecer cada día y no puede quedar ningún recurrente sin investigar.
+    try:
+        base = json.load(open(os.path.join(RAIZ, "herramientas", "eventos-base.json"), encoding="utf-8"))
+        ult = max([dt.date.fromisoformat(e["agregado"]) for e in base.get("eventos", []) if e.get("agregado")] or [dt.date(2000, 1, 1)])
+        inf.ok("Ferias y eventos: fichas nuevas al día", (hoy - ult).days <= 1, f"última ficha nueva {ult.isoformat()} (máximo 1 día)", grave=False)
+        ev = json.load(open(os.path.join(RAIZ, "datos", "eventos-emprendimiento.json"), encoding="utf-8"))
+        pi = ev.get("por_investigar") or []
+        inf.ok("Ferias y eventos recurrentes investigados", not pi, f"{len(pi)} por investigar: " + ", ".join(r["nombre"] for r in pi)[:220], grave=False)
+    except (OSError, ValueError, KeyError) as ex:
+        inf.ok("Ferias y eventos: fichas nuevas al día", False, type(ex).__name__, grave=False)
     if viejos and reparar and not getattr(inf, "bajada_pedida", False):
         r = gh("POST", "/actions/workflows/cofrade-datos.yml/dispatches", json={"ref": "main"})
         inf.bajada_pedida = True
