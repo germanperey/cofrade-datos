@@ -2524,15 +2524,20 @@ def eventos_emprendimiento_solo_fichas_completas_y_futuras():
     import eventos_emprendimiento as E
     base = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas", "eventos-base.json"), encoding="utf-8"))
     for e in base["eventos"]:
-        assert E.revisar(e, dt.date(2026, 11, 24), set()) == "", (e["id"], E.revisar(e, dt.date(2026, 11, 24), set()))
+        he = max(dt.date(2026, 11, 25), dt.date.fromisoformat(e.get("verificado") or e.get("agregado") or "2026-11-25"))   # el día en que se revisó
+        assert E.revisar(e, he, set()) == "", (e["id"], E.revisar(e, he, set()))
     hoy, ids = dt.date(2026, 11, 24), {"fiiem-2026"}
     ok = {"id": "x-2027", "tipo": "feria", "nombre": "X", "inicio": "2027-01-10", "lugar": "Santiago", "desc": "Feria.", "url": "https://a.cl/x", "fuente": "A",
-          "inscripcion": "https://a.cl/inscribete", "costo": "gratis"}
+          "inscripcion": "https://a.cl/inscribete", "costo": "gratis", "fecha_fuente": "2026-11-20"}
     assert E.revisar(ok, hoy, ids) == ""
     # 25-11-2026 (Germán): «Ver» para inscribirse, y valor y requisitos si se paga; lo que ya pasó sale solo
     assert E.revisar(dict(ok, inscripcion=""), hoy, ids).startswith("falta inscripcion")
     assert E.revisar(dict(ok, costo=""), hoy, ids).startswith("si no es gratis, falta valor")
     assert E.revisar(dict(ok, costo="", valor="$15.000 general"), hoy, ids) == ""
+    # 25-11-2026: Exponaval salió con la sede de un comunicado de 2025; fuente vieja solo si es la página oficial revisada
+    assert E.revisar(dict(ok, fecha_fuente="2025-11-18"), hoy, ids).startswith("fuente de más de 90 días")
+    assert E.revisar(dict(ok, fecha_fuente="2025-11-18", oficial=True), hoy, ids) == ""
+    assert E.revisar(dict(ok, fecha_fuente=""), hoy, ids).startswith("falta fecha_fuente")
     F = E.fin_efectivo
     assert F({"inicio": "2026-12-01", "fin": "2026-12-03"}) == "2026-12-03" and F({"inicio": "2026-12-01", "tipo": "feria"}) == "2026-12-01"
     assert F({"inicio": "2027-04-01", "solo_mes": True}) == "2027-04-30" and F({"inicio": "2027-01-01", "tipo": "concurso"}) == "2027-03-02"
@@ -2637,7 +2642,7 @@ def eventos_recurrentes_por_investigar():
            if r["nombre"].startswith("Ferias navide")]
     assert nav and nav[0]["fichas"] == 1 and nav[0]["minimo"] == 4, nav
     real = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas", "eventos-base.json"), encoding="utf-8"))
-    assert any(e["id"] == "exponaval-2026" and e["inicio"] == "2026-12-01" for e in real["eventos"])
+    assert any(e["id"] == "exponaval-2026" and e["inicio"] == "2026-12-01" and "Espacio Riesco" in e["lugar"] for e in real["eventos"])
 
 
 PRUEBAS.append(eventos_recurrentes_por_investigar)

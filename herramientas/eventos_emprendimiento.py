@@ -102,6 +102,15 @@ def revisar(e, hoy, ids):
     if not re.match(r"https://[^\s\"'<>]+$", e["url"]):
         return "url debe ser https"
     # 25-11-2026 (Germán): botón «Ver» para ingresar e inscribirse, y el valor y los requisitos cuando la actividad se paga
+    # 25-11-2026 (Germán: «Debes corregir la ubicación de la "Exponaval" porque este año se realizará en Santiago, en "Espacio Riesco"»):
+    # salió con la sede de un comunicado de 2025, anterior al cambio. La fuente debe ser reciente (90 días) o la página oficial del
+    # organizador revisada hoy (oficial: true).
+    try:
+        ff = dt.date.fromisoformat(str(e.get("fecha_fuente") or ""))
+    except ValueError:
+        return "falta fecha_fuente (AAAA-MM-DD: fecha de la nota, o de hoy si es la página oficial sin fecha)"
+    if ff > hoy or ((hoy - ff).days > 90 and not e.get("oficial")):
+        return "fuente de más de 90 días: busca una nota reciente o la página oficial del organizador (oficial: true)"
     if not re.match(r"https://[^\s\"'<>]+$", str(e.get("inscripcion") or "")):
         return "falta inscripcion (https de la página oficial para ver e inscribirse)"
     if e.get("costo") != "gratis" and not str(e.get("valor") or "").strip():
