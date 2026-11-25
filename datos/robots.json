@@ -1,5 +1,5 @@
 {
- "fecha": "2026-11-24",
+ "fecha": "2026-11-25",
  "sitios": {
   "si3.bcentral.cl": {
    "estado": 200,
@@ -44,10 +44,6 @@
   },
   "data.techforpalestine.org": {
    "estado": 404,
-   "reglas": []
-  },
-  "tramitacion.senado.cl": {
-   "estado": 200,
    "reglas": []
   },
   "web-back.senado.cl": {
@@ -127,25 +123,16 @@
    "estado": 200,
    "reglas": []
   },
-  "www.portalminero.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /panel/",
-    "Disallow: /b/"
-   ]
-  },
-  "chocale.cl": {
-   "estado": 200,
-   "reglas": []
-  },
   "www.mch.cl": {
    "estado": 200,
    "reglas": []
   },
-  "www.capital.cl": {
-   "estado": "SSLError",
-   "reglas": []
+  "www.chiledesarrollosustentable.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
   },
   "www.df.cl": {
    "estado": 200,
@@ -154,24 +141,21 @@
     "Disallow: /qr-inter"
    ]
   },
-  "www.infobae.com": {
+  "www.revistanos.cl": {
+   "estado": 200,
+   "reglas": []
+  },
+  "www.portalminero.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /buscador",
-    "Disallow: /metrics"
+    "Allow: /",
+    "Disallow: /panel/",
+    "Disallow: /b/"
    ]
   },
   "www.revistaei.cl": {
    "estado": 200,
    "reglas": []
-  },
-  "www.latercera.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /pf/api/v3/*",
-    "Disallow: /search/?q=*"
-   ]
   },
   "www.infraestructurapublica.cl": {
    "estado": 200,
@@ -181,6 +165,53 @@
     "Disallow: /xmlrpc.php",
     "Disallow: /?s=",
     "Disallow: /*?replytocom="
+   ]
+  },
+  "www.capital.cl": {
+   "estado": "SSLError",
+   "reglas": []
+  },
+  "www.electromineria.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-content/uploads/wc-logs/",
+    "Disallow: /wp-content/uploads/woocommerce_transient_files/",
+    "Disallow: /wp-content/uploads/woocommerce_uploads/",
+    "Disallow: /*?add-to-cart=",
+    "Disallow: /*?*add-to-cart=",
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
+  "chocale.cl": {
+   "estado": 200,
+   "reglas": []
+  },
+  "www.infobae.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /buscador",
+    "Disallow: /metrics"
+   ]
+  },
+  "www.latercera.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /",
+    "Disallow: /pf/api/v3/*",
+    "Disallow: /search/?q=*"
+   ]
+  },
+  "www.eldinamo.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /draft/"
+   ]
+  },
+  "www.ex-ante.cl": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
    ]
   },
   "www.elmostrador.cl": {
@@ -195,18 +226,6 @@
     "Disallow: /categoria/newsletter/",
     "Disallow: /_files/internal/",
     "Disallow: /*?new_size_elmo=*"
-   ]
-  },
-  "www.eldinamo.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /draft/"
-   ]
-  },
-  "www.ex-ante.cl": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /"
    ]
   },
   "www.cooperativa.cl": {
@@ -270,6 +289,16 @@
     "Disallow: /latinoamerica/ecuador/jan-topic-lo-que-debe-saber-del-posible-candidato-presidencial-2023/"
    ]
   },
+  "www.cnnchile.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /draft/"
+   ]
+  },
+  "www.france24.com": {
+   "estado": 200,
+   "reglas": []
+  },
   "feeds.bbci.co.uk": {
    "estado": 200,
    "reglas": [
@@ -295,14 +324,6 @@
     "Disallow: /2/hi/uk_news/england/beds/bucks/herts/3663494.stm"
    ]
   },
-  "portalinnova.cl": {
-   "estado": 200,
-   "reglas": []
-  },
-  "www.france24.com": {
-   "estado": 200,
-   "reglas": []
-  },
   "www.aljazeera.com": {
    "estado": 200,
    "reglas": [
@@ -324,21 +345,15 @@
     "Disallow: /*&playlist="
    ]
   },
+  "portalinnova.cl": {
+   "estado": 200,
+   "reglas": []
+  },
   "feeds.elpais.com": {
    "estado": 403,
    "reglas": []
   },
-  "www.cnnchile.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /draft/"
-   ]
-  },
   "rss.dw.com": {
-   "estado": 200,
-   "reglas": []
-  },
-  "www.economia.gob.cl": {
    "estado": 200,
    "reglas": []
   },
@@ -376,53 +391,6 @@
     "Disallow: /*&_ptid=",
     "Disallow: /apw.js",
     "Allow: /ed/premium.html"
-   ]
-  },
-  "www.ecb.europa.eu": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /*_content.bg.html$",
-    "Disallow: /*_content.cs.html$",
-    "Disallow: /*_content.da.html$",
-    "Disallow: /*_content.de.html$",
-    "Disallow: /*_content.el.html$",
-    "Disallow: /*_content.en.html$",
-    "Disallow: /*_content.es.html$",
-    "Disallow: /*_content.et.html$",
-    "Disallow: /*_content.fi.html$",
-    "Disallow: /*_content.fr.html$",
-    "Disallow: /*_content.ga.html$",
-    "Disallow: /*_content.hr.html$",
-    "Disallow: /*_content.hu.html$",
-    "Disallow: /*_content.it.html$",
-    "Disallow: /*_content.lt.html$",
-    "Disallow: /*_content.lv.html$",
-    "Disallow: /*_content.mt.html$",
-    "Disallow: /*_content.nl.html$",
-    "Disallow: /*_content.pl.html$",
-    "Disallow: /*_content.pt.html$",
-    "Disallow: /*_content.ro.html$",
-    "Disallow: /*_content.sk.html$",
-    "Disallow: /*_content.sl.html$",
-    "Disallow: /*_content.sv.html$",
-    "Disallow: /ecb/10ann/shared/movies/",
-    "Disallow: /ecb/educational/pricestab/shared/movie/",
-    "Disallow: /ecb/educational/shared/movies/",
-    "Disallow: /paym/coll/assets/html/dla/EA/",
-    "Disallow: /press/tvservices/webcast/shared/video/",
-    "Disallow: /paym/coll/assets/html/dla/EA/",
-    "Disallow: /events/conferences/shared/movie/",
-    "Disallow: /euro/changeover/shared/data/"
-   ]
-  },
-  "es.finance.yahoo.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /r/",
-    "Disallow: /__rapidworker-1.2.js",
-    "Disallow: /__blank",
-    "Disallow: /_td_api",
-    "Disallow: /_remote"
    ]
   },
   "www.theguardian.com": {
@@ -476,6 +444,53 @@
     "Disallow: *.emailtxt",
     "Disallow: /headline.txt",
     "Disallow: *?*dcr=apps*"
+   ]
+  },
+  "www.ecb.europa.eu": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /*_content.bg.html$",
+    "Disallow: /*_content.cs.html$",
+    "Disallow: /*_content.da.html$",
+    "Disallow: /*_content.de.html$",
+    "Disallow: /*_content.el.html$",
+    "Disallow: /*_content.en.html$",
+    "Disallow: /*_content.es.html$",
+    "Disallow: /*_content.et.html$",
+    "Disallow: /*_content.fi.html$",
+    "Disallow: /*_content.fr.html$",
+    "Disallow: /*_content.ga.html$",
+    "Disallow: /*_content.hr.html$",
+    "Disallow: /*_content.hu.html$",
+    "Disallow: /*_content.it.html$",
+    "Disallow: /*_content.lt.html$",
+    "Disallow: /*_content.lv.html$",
+    "Disallow: /*_content.mt.html$",
+    "Disallow: /*_content.nl.html$",
+    "Disallow: /*_content.pl.html$",
+    "Disallow: /*_content.pt.html$",
+    "Disallow: /*_content.ro.html$",
+    "Disallow: /*_content.sk.html$",
+    "Disallow: /*_content.sl.html$",
+    "Disallow: /*_content.sv.html$",
+    "Disallow: /ecb/10ann/shared/movies/",
+    "Disallow: /ecb/educational/pricestab/shared/movie/",
+    "Disallow: /ecb/educational/shared/movies/",
+    "Disallow: /paym/coll/assets/html/dla/EA/",
+    "Disallow: /press/tvservices/webcast/shared/video/",
+    "Disallow: /paym/coll/assets/html/dla/EA/",
+    "Disallow: /events/conferences/shared/movie/",
+    "Disallow: /euro/changeover/shared/data/"
+   ]
+  },
+  "es.finance.yahoo.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /r/",
+    "Disallow: /__rapidworker-1.2.js",
+    "Disallow: /__blank",
+    "Disallow: /_td_api",
+    "Disallow: /_remote"
    ]
   },
   "oilprice.com": {
@@ -547,6 +562,14 @@
    "estado": 403,
    "reglas": []
   },
+  "www.theclinic.cl": {
+   "estado": 200,
+   "reglas": []
+  },
+  "interferencia.cl": {
+   "estado": 403,
+   "reglas": []
+  },
   "www.eldesconcierto.cl": {
    "estado": 200,
    "reglas": [
@@ -559,13 +582,14 @@
     "Disallow: /*?fbclid="
    ]
   },
-  "www.theclinic.cl": {
+  "ellibero.cl": {
    "estado": 200,
-   "reglas": []
-  },
-  "interferencia.cl": {
-   "estado": 403,
-   "reglas": []
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Disallow: /link-in-bio/",
+    "Disallow: /redirect/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
   },
   "radio.uchile.cl": {
    "estado": 200,
@@ -580,14 +604,13 @@
     "Allow: /"
    ]
   },
-  "ellibero.cl": {
+  "www.economia.gob.cl": {
    "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Disallow: /link-in-bio/",
-    "Disallow: /redirect/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
+   "reglas": []
+  },
+  "www.diarioelcentro.cl": {
+   "estado": 200,
+   "reglas": []
   },
   "www.elciudadano.com": {
    "estado": 200,
@@ -600,9 +623,77 @@
     "Disallow: /wp-content/themes"
    ]
   },
-  "www.diarioelcentro.cl": {
+  "www.diarioconstitucional.cl": {
    "estado": 200,
-   "reglas": []
+   "reglas": [
+    "Allow: /",
+    "Allow: /api/og-foto",
+    "Allow: /tags/recurso-de-proteccion$",
+    "Allow: /tags/recurso-de-amparo$",
+    "Allow: /tags/amparo-economico$",
+    "Allow: /tags/inaplicabilidad-por-inconstitucionalidad$",
+    "Allow: /tags/debido-proceso$",
+    "Allow: /tags/igualdad-ante-la-ley$",
+    "Allow: /tags/derecho-de-propiedad$",
+    "Allow: /tags/libertad-de-expresion$",
+    "Allow: /tags/libertad-personal$",
+    "Allow: /tags/derecho-a-la-salud$",
+    "Allow: /tags/derecho-a-la-educacion$",
+    "Allow: /tags/datos-personales$",
+    "Allow: /tags/tutela-judicial-efectiva$",
+    "Allow: /tags/indemnizacion-de-perjuicios$",
+    "Allow: /tags/dano-moral$",
+    "Allow: /tags/responsabilidad-del-estado$",
+    "Allow: /tags/accidente-de-transito$",
+    "Allow: /tags/despido-injustificado$",
+    "Allow: /tags/nulidad-del-despido$",
+    "Allow: /tags/despido-indirecto$",
+    "Allow: /tags/indemnizacion-por-anos-de-servicio$",
+    "Allow: /tags/tutela-laboral$",
+    "Allow: /tags/acoso-laboral$",
+    "Allow: /tags/accidente-del-trabajo$",
+    "Allow: /tags/licencia-medica$",
+    "Allow: /tags/feriado-legal$",
+    "Allow: /tags/subcontratacion$",
+    "Allow: /tags/cotizaciones-previsionales$",
+    "Allow: /tags/isapres$",
+    "Allow: /tags/contraloria-general-de-la-republica$",
+    "Allow: /tags/funcionarios-publicos$",
+    "Allow: /tags/confianza-legitima$",
+    "Allow: /tags/municipalidades$",
+    "Allow: /tags/carabineros-de-chile$",
+    "Allow: /tags/gendarmeria-de-chile$",
+    "Allow: /tags/servicio-nacional-de-migraciones$",
+    "Allow: /tags/expropiacion$",
+    "Allow: /tags/prision-preventiva$",
+    "Allow: /tags/violencia-intrafamiliar$",
+    "Allow: /tags/derechos-del-consumidor$",
+    "Allow: /tags/pension-de-alimentos$",
+    "Allow: /tags/copropiedad-inmobiliaria$",
+    "Allow: /tags/cae$",
+    "Allow: /tags/embargo$",
+    "Allow: /tags/arrendamiento$",
+    "Allow: /tags/posesion-efectiva$",
+    "Allow: /tags/medio-ambiente$",
+    "Allow: /tags/propiedad-intelectual$",
+    "Allow: /tags/libre-competencia$",
+    "Allow: /tags/derecho-tributario$",
+    "Allow: /tags/inteligencia-artificial$",
+    "Disallow: /admin",
+    "Disallow: /api/",
+    "Disallow: /vista-previa",
+    "Disallow: /tags/",
+    "Disallow: /paises/",
+    "Disallow: /*/pagina/",
+    "Disallow: /buscar"
+   ]
+  },
+  "www.elrancaguino.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
   },
   "www.adnradio.cl": {
    "estado": 200,
@@ -665,16 +756,16 @@
     "Disallow: /search/"
    ]
   },
+  "www.servel.cl": {
+   "estado": 404,
+   "reglas": []
+  },
   "noticias.udec.cl": {
    "estado": 200,
    "reglas": [
     "Disallow: /wp/wp-admin/",
     "Allow: /wp/wp-admin/admin-ajax.php"
    ]
-  },
-  "www.servel.cl": {
-   "estado": 404,
-   "reglas": []
   },
   "www.radioudec.cl": {
    "estado": 200,
@@ -686,6 +777,25 @@
     "Disallow: /wp-admin/",
     "Allow: /wp-admin/admin-ajax.php"
    ]
+  },
+  "www.europapress.es": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /abonados/",
+    "Disallow: /europa/",
+    "Disallow: /europa2001/",
+    "Disallow: /europa2003/",
+    "Disallow: /boletin-joven-00135/",
+    "Disallow: /rsc-00195/",
+    "Disallow: /enviarnoticia.aspx",
+    "Disallow: /enviatunoticia.aspx",
+    "Disallow: /ws/AltaBoletin.ashx",
+    "Disallow: /buscador/"
+   ]
+  },
+  "sudantribune.com": {
+   "estado": 403,
+   "reglas": []
   },
   "news.un.org": {
    "estado": 200,
@@ -750,25 +860,6 @@
     "Disallow: */news/",
     "Disallow: */features*",
     "Disallow: */interviews*"
-   ]
-  },
-  "sudantribune.com": {
-   "estado": 403,
-   "reglas": []
-  },
-  "www.europapress.es": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /abonados/",
-    "Disallow: /europa/",
-    "Disallow: /europa2001/",
-    "Disallow: /europa2003/",
-    "Disallow: /boletin-joven-00135/",
-    "Disallow: /rsc-00195/",
-    "Disallow: /enviarnoticia.aspx",
-    "Disallow: /enviatunoticia.aspx",
-    "Disallow: /ws/AltaBoletin.ashx",
-    "Disallow: /buscador/"
    ]
   },
   "www.ciperchile.cl": {
@@ -839,6 +930,10 @@
     "Disallow: /*/registration*"
    ]
   },
+  "feeds.npr.org": {
+   "estado": 404,
+   "reglas": []
+  },
   "www.scmp.com": {
    "estado": 200,
    "reglas": [
@@ -904,10 +999,6 @@
     "Disallow: /filter/tips/"
    ]
   },
-  "feeds.npr.org": {
-   "estado": 404,
-   "reglas": []
-  },
   "feeds.skynews.com": {
    "estado": 200,
    "reglas": [
@@ -916,10 +1007,29 @@
    ]
   },
   "ecosistemastartup.com": {
+   "estado": 403,
+   "reglas": []
+  },
+  "techcrunch.com": {
    "estado": 200,
    "reglas": [
     "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
+    "Disallow: /wp-json/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /search/",
+    "Disallow: /?s=",
+    "Disallow: /*?customize_changeset_uuid=*"
+   ]
+  },
+  "contxto.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-content/uploads/wpo/wpo-plugins-tables-list.json",
+    "Disallow: /?s=",
+    "Disallow: /page/*/?s=",
+    "Disallow: /search/",
+    "Disallow: /wp-json/",
+    "Disallow: /?rest_route="
    ]
   },
   "timesofindia.indiatimes.com": {
@@ -987,26 +1097,11 @@
     "Disallow: /fbpostaction.cms?article="
    ]
   },
-  "techcrunch.com": {
+  "latamlist.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /wp-admin/",
-    "Disallow: /wp-json/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /search/",
-    "Disallow: /?s=",
-    "Disallow: /*?customize_changeset_uuid=*"
-   ]
-  },
-  "contxto.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-content/uploads/wpo/wpo-plugins-tables-list.json",
-    "Disallow: /?s=",
-    "Disallow: /page/*/?s=",
-    "Disallow: /search/",
-    "Disallow: /wp-json/",
-    "Disallow: /?rest_route="
+    "Disallow: /wp-login.php",
+    "Disallow: /wp-admin/"
    ]
   },
   "www.emprendepyme.net": {
@@ -1036,16 +1131,15 @@
     "Allow: /*/page/2$"
    ]
   },
-  "latamlist.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-login.php",
-    "Disallow: /wp-admin/"
-   ]
-  },
   "startupchile.org": {
    "estado": 404,
    "reglas": []
+  },
+  "www.fia.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /xmlrpc.php"
+   ]
   },
   "news.crunchbase.com": {
    "estado": 200,
@@ -1054,21 +1148,27 @@
     "Disallow: /search/"
    ]
   },
-  "www.fia.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /xmlrpc.php"
-   ]
-  },
   "www.tourinnovacion.cl": {
    "estado": 200,
    "reglas": []
   },
-  "www.sercotec.cl": {
+  "www.fayerwayer.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
+    "Allow: /",
+    "Disallow: /300x250_1/",
+    "Disallow: /300x250_2/",
+    "Disallow: /300x250_3/",
+    "Disallow: /300x250_4/",
+    "Disallow: /layer/",
+    "Disallow: /Skyscrapper/",
+    "Disallow: /bottom/",
+    "Disallow: /footer/",
+    "Disallow: /skin/",
+    "Disallow: /top/",
+    "Disallow: /customer-preview/",
+    "Disallow: /buscador/",
+    "Disallow: /search/"
    ]
   },
   "www.wired.com": {
@@ -1109,24 +1209,9 @@
     "Disallow: /uk/"
    ]
   },
-  "www.fayerwayer.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /300x250_1/",
-    "Disallow: /300x250_2/",
-    "Disallow: /300x250_3/",
-    "Disallow: /300x250_4/",
-    "Disallow: /layer/",
-    "Disallow: /Skyscrapper/",
-    "Disallow: /bottom/",
-    "Disallow: /footer/",
-    "Disallow: /skin/",
-    "Disallow: /top/",
-    "Disallow: /customer-preview/",
-    "Disallow: /buscador/",
-    "Disallow: /search/"
-   ]
+  "www.sercotec.cl": {
+   "estado": "TooManyRedirects",
+   "reglas": []
   },
   "www.cnc.cl": {
    "estado": 200,
@@ -1227,13 +1312,6 @@
     "Disallow: /frontend_dev.php/"
    ]
   },
-  "hipertextual.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /tag/",
-    "Disallow: /page/"
-   ]
-  },
   "www.theverge.com": {
    "estado": 200,
    "reglas": [
@@ -1254,6 +1332,13 @@
     "Disallow: /share$",
     "Disallow: /share/*",
     "Disallow: /share?*"
+   ]
+  },
+  "hipertextual.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /tag/",
+    "Disallow: /page/"
    ]
   },
   "feeds.arstechnica.com": {
@@ -1278,31 +1363,12 @@
     "Disallow: /intl/*/search?"
    ]
   },
-  "deepmind.google": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /"
-   ]
-  },
-  "research.google": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /"
-   ]
-  },
   "www.technologyreview.com": {
    "estado": 200,
    "reglas": [
     "Disallow: /wp-admin/",
     "Allow: /wp-admin/admin-ajax.php",
     "Disallow: /*.pdf$"
-   ]
-  },
-  "openai.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /microsoft-for-startups/"
    ]
   },
   "news.ycombinator.com": {
@@ -1320,6 +1386,25 @@
     "Disallow: /submitlink?",
     "Disallow: /vote?",
     "Disallow: /x?"
+   ]
+  },
+  "openai.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /",
+    "Disallow: /microsoft-for-startups/"
+   ]
+  },
+  "deepmind.google": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
+   ]
+  },
+  "research.google": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
    ]
   },
   "www.xataka.com.mx": {
@@ -1435,16 +1520,16 @@
    "estado": 403,
    "reglas": []
   },
-  "www.biobiochile.cl": {
-   "estado": 200,
-   "reglas": []
-  },
   "site.api.espn.com": {
    "estado": 403,
    "reglas": []
   },
   "www.golfdigest.com": {
    "estado": 403,
+   "reglas": []
+  },
+  "www.biobiochile.cl": {
+   "estado": 200,
    "reglas": []
   },
   "cpichile.org": {
@@ -1457,6 +1542,13 @@
     "Disallow: /*?replytocom="
    ]
   },
+  "jumpernews.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
   "www.theplaidhorse.com": {
    "estado": 200,
    "reglas": [
@@ -1465,13 +1557,6 @@
     "Disallow: /*?*plugin=",
     "Disallow: /*?*controller=",
     "Disallow: /*?*ai1ec_post_ids="
-   ]
-  },
-  "jumpernews.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
    ]
   },
   "www.worldofshowjumping.com": {
@@ -1620,20 +1705,6 @@
     "Disallow: /2/"
    ]
   },
-  "www.cruisingworld.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
-  },
-  "www.conmebol.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
-  },
   "www.cyclingnews.com": {
    "estado": 200,
    "reglas": [
@@ -1657,6 +1728,20 @@
     "Disallow: /infinite-scroll-review/*",
     "Disallow: /infinite-scroll-recipe/*",
     "Disallow: /flexi/lazy-data/*"
+   ]
+  },
+  "www.cruisingworld.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
+  "www.conmebol.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
    ]
   },
   "espndeportes.espn.com": {
@@ -1724,13 +1809,6 @@
     "Disallow: */undefined/*"
    ]
   },
-  "www.formula1.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /en/latest/tags/*",
-    "Allow: /"
-   ]
-  },
   "www.golfmonthly.com": {
    "estado": 200,
    "reglas": [
@@ -1759,7 +1837,14 @@
     "Disallow: /stylesheets/"
    ]
   },
-  "eventingnation.com": {
+  "www.formula1.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /en/latest/tags/*",
+    "Allow: /"
+   ]
+  },
+  "golf.com": {
    "estado": 200,
    "reglas": []
   },
@@ -1792,7 +1877,7 @@
     "Disallow: *jwsource=*"
    ]
   },
-  "golf.com": {
+  "eventingnation.com": {
    "estado": 200,
    "reglas": []
   },
@@ -1859,6 +1944,21 @@
     "Disallow: /es/guardians/search",
     "Disallow: /es/mariners/search",
     "Disallow: /es/marlins/search"
+   ]
+  },
+  "es.motorsport.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /videos/embed/",
+    "Disallow: /driver/*/bio/",
+    "Disallow: /v/*",
+    "Disallow: /lt/*",
+    "Disallow: /dashboard/*",
+    "Disallow: /search/*",
+    "Disallow: */party-poker/get-odds/*",
+    "Disallow: */first-article/*",
+    "Disallow: /live-timing/widget/*",
+    "Disallow: /live-tv/*"
    ]
   },
   "www.motorsport.com": {
@@ -1941,21 +2041,6 @@
     "Disallow: /resultados/futbol/regional/*"
    ]
   },
-  "es.motorsport.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /videos/embed/",
-    "Disallow: /driver/*/bio/",
-    "Disallow: /v/*",
-    "Disallow: /lt/*",
-    "Disallow: /dashboard/*",
-    "Disallow: /search/*",
-    "Disallow: */party-poker/get-odds/*",
-    "Disallow: */first-article/*",
-    "Disallow: /live-timing/widget/*",
-    "Disallow: /live-tv/*"
-   ]
-  },
   "www.ole.com.ar": {
    "estado": 200,
    "reglas": [
@@ -1972,14 +2057,21 @@
   "www.racefans.net": {
    "estado": 200,
    "reglas": [
-    "Allow: /",
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
+    "Allow: /"
    ]
   },
   "www.sailingscuttlebutt.com": {
    "estado": 200,
    "reglas": []
+  },
+  "www.surfer.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /.api/",
+    "Disallow: /api/",
+    "Disallow: /*?_rsc=*",
+    "Disallow: /account$"
+   ]
   },
   "www.skiracing.com": {
    "estado": 200,
@@ -1989,36 +2081,11 @@
     "Allow: /wp-admin/admin-ajax.php"
    ]
   },
-  "www.sail-world.com": {
+  "www.sailingworld.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /sorry.aspx",
-    "Disallow: /error.aspx",
-    "Disallow: /product/retailerclick.aspx",
-    "Disallow: /community/classifieds/resend_email.asp",
-    "Disallow: /Library/LogAction.aspx",
-    "Disallow: /library/logaction.aspx",
-    "Disallow: /Library/CountView.aspx",
-    "Disallow: /Library/MailshotTracking.aspx",
-    "Disallow: /library/mailshottracking.aspx",
-    "Disallow: /Library/PressReleaseClick.aspx",
-    "Disallow: /library/pressreleaseclick.aspx",
-    "Disallow: /redirect/articleid.aspx",
-    "Disallow: /redirect/indexs.aspx",
-    "Disallow: /video/report.aspx",
-    "Disallow: /video/suggest.aspx",
-    "Disallow: /forum/",
-    "Disallow: /search/",
-    "Disallow: /search.aspx"
-   ]
-  },
-  "www.surfer.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /.api/",
-    "Disallow: /api/",
-    "Disallow: /*?_rsc=*",
-    "Disallow: /account$"
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
    ]
   },
   "www.skysports.com": {
@@ -2101,14 +2168,38 @@
     "Disallow: /cdn-cgi/"
    ]
   },
-  "velo.outsideonline.com": {
+  "www.sail-world.com": {
    "estado": 200,
    "reglas": [
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /wp-admin/",
-    "Disallow: /wp-login.php",
-    "Disallow: /login/",
-    "Disallow: /preview/"
+    "Disallow: /sorry.aspx",
+    "Disallow: /error.aspx",
+    "Disallow: /product/retailerclick.aspx",
+    "Disallow: /community/classifieds/resend_email.asp",
+    "Disallow: /Library/LogAction.aspx",
+    "Disallow: /library/logaction.aspx",
+    "Disallow: /Library/CountView.aspx",
+    "Disallow: /Library/MailshotTracking.aspx",
+    "Disallow: /library/mailshottracking.aspx",
+    "Disallow: /Library/PressReleaseClick.aspx",
+    "Disallow: /library/pressreleaseclick.aspx",
+    "Disallow: /redirect/articleid.aspx",
+    "Disallow: /redirect/indexs.aspx",
+    "Disallow: /video/report.aspx",
+    "Disallow: /video/suggest.aspx",
+    "Disallow: /forum/",
+    "Disallow: /search/",
+    "Disallow: /search.aspx"
+   ]
+  },
+  "www.rugbypass.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: */*%*",
+    "Disallow: */?amp=*",
+    "Disallow: */?fb_comment_id=*",
+    "Disallow: */?ht-comment-id=*",
+    "Disallow: */?c=*",
+    "Allow: /llms.txt"
    ]
   },
   "www.sciencedaily.com": {
@@ -2126,6 +2217,16 @@
     "Disallow: /rss-feed/breaking/search/",
     "Disallow: /rss-feed/tags/",
     "Disallow: /*/sort/"
+   ]
+  },
+  "velo.outsideonline.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /wp-admin/",
+    "Disallow: /wp-login.php",
+    "Disallow: /login/",
+    "Disallow: /preview/"
    ]
   },
   "medicalxpress.com": {
@@ -2244,42 +2345,6 @@
     "Disallow: /content/download/"
    ]
   },
-  "www.newscientist.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /21632812681/",
-    "Disallow: /activate-subscription/",
-    "Disallow: /feed/",
-    "Disallow: /login/",
-    "Disallow: /logout/",
-    "Disallow: /lost-password/",
-    "Disallow: /my-account/",
-    "Disallow: /registration/",
-    "Disallow: /search/",
-    "Disallow: /upfront/",
-    "Disallow: /wp-admin/",
-    "Disallow: /api/",
-    "Disallow: /build/",
-    "Disallow: /nsj/jobsjson/",
-    "Disallow: /nsj/logon/",
-    "Disallow: /nsj/newalert/",
-    "Disallow: /nsj/analytics/",
-    "Disallow: /nsj/apply-profile/",
-    "Disallow: /nsj/document/",
-    "Disallow: /nsj/emailjob/",
-    "Disallow: /nsj/external-redirect-registration/",
-    "Disallow: /nsj/invalid-request/",
-    "Disallow: /nsj/jbequicksignup/",
-    "Disallow: /nsj/jobsrss/",
-    "Disallow: /nsj/previewjob/",
-    "Disallow: /nsj/searchjobs/",
-    "Disallow: /nsj/session-img/",
-    "Disallow: /nsj/your-jobs/",
-    "Disallow: /nsj/profile/",
-    "Disallow: /nsj/remindme/",
-    "Disallow: /nsj/searchjobs/"
-   ]
-  },
   "www.nature.com": {
    "estado": 200,
    "reglas": [
@@ -2333,15 +2398,40 @@
     "Disallow: */cas-redirect/*"
    ]
   },
-  "www.rugbypass.com": {
+  "www.newscientist.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: */*%*",
-    "Disallow: */?amp=*",
-    "Disallow: */?fb_comment_id=*",
-    "Disallow: */?ht-comment-id=*",
-    "Disallow: */?c=*",
-    "Allow: /llms.txt"
+    "Disallow: /21632812681/",
+    "Disallow: /activate-subscription/",
+    "Disallow: /feed/",
+    "Disallow: /login/",
+    "Disallow: /logout/",
+    "Disallow: /lost-password/",
+    "Disallow: /my-account/",
+    "Disallow: /registration/",
+    "Disallow: /search/",
+    "Disallow: /upfront/",
+    "Disallow: /wp-admin/",
+    "Disallow: /api/",
+    "Disallow: /build/",
+    "Disallow: /nsj/jobsjson/",
+    "Disallow: /nsj/logon/",
+    "Disallow: /nsj/newalert/",
+    "Disallow: /nsj/analytics/",
+    "Disallow: /nsj/apply-profile/",
+    "Disallow: /nsj/document/",
+    "Disallow: /nsj/emailjob/",
+    "Disallow: /nsj/external-redirect-registration/",
+    "Disallow: /nsj/invalid-request/",
+    "Disallow: /nsj/jbequicksignup/",
+    "Disallow: /nsj/jobsrss/",
+    "Disallow: /nsj/previewjob/",
+    "Disallow: /nsj/searchjobs/",
+    "Disallow: /nsj/session-img/",
+    "Disallow: /nsj/your-jobs/",
+    "Disallow: /nsj/profile/",
+    "Disallow: /nsj/remindme/",
+    "Disallow: /nsj/searchjobs/"
    ]
   },
   "www.sciencenews.org": {
@@ -2385,36 +2475,15 @@
     "Allow: /action/downloadSupplement"
    ]
   },
-  "www.quantamagazine.org": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
-  },
-  "www.smithsonianmag.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /accounts/*",
-    "Disallow: /museumdays/accounts/",
-    "Disallow: /accounts/login/",
-    "Disallow: /search?",
-    "Disallow: /rss?",
-    "Disallow: /search?q=",
-    "Disallow: /*?ms=",
-    "Disallow: /*?no-cache=",
-    "Disallow: /article/preview/*/",
-    "Disallow: /blogs/blogpost/preview/*",
-    "Disallow: /dashboard/",
-    "Disallow: /email/",
-    "Disallow: /membership/"
-   ]
-  },
   "www.nasa.gov": {
    "estado": 200,
    "reglas": [
     "Allow: /"
    ]
+  },
+  "www.esa.int": {
+   "estado": 200,
+   "reglas": []
   },
   "theconversation.com": {
    "estado": 200,
@@ -2434,76 +2503,22 @@
     "Disallow: /pb/*"
    ]
   },
-  "spacenews.com": {
-   "estado": 200,
-   "reglas": []
-  },
-  "www.space.com": {
+  "www.smithsonianmag.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: */deals/compare",
-    "Disallow: */html/",
-    "Disallow: */p/*/embed/captioned",
-    "Disallow: */outlink*",
-    "Disallow: *.freyr.*",
-    "Disallow: */comments/*",
-    "Disallow: */.events-handler*",
-    "Disallow: *CoreWebVitalsThresholdEvent*",
-    "Disallow: */partials/*",
-    "Disallow: */future.adtech.freyr.v1.PageViewEvent",
-    "Disallow: *searchTerm=*",
-    "Disallow: *sortBy=*",
-    "Disallow: *productBrand=*",
-    "Disallow: *%7B*%7D*",
-    "Disallow: *seenMatchId=*",
-    "Disallow: *q=*",
-    "Disallow: /infinite-scroll-article/*",
-    "Disallow: /infinite-scroll-review/*",
-    "Disallow: /infinite-scroll-recipe/*",
-    "Disallow: /search.php",
-    "Disallow: /social.php",
-    "Disallow: /newsletter-signup",
-    "Disallow: /_proxy*"
-   ]
-  },
-  "skyandtelescope.org": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin",
-    "Disallow: /wp-includes",
-    "Disallow: /wp-content/cache",
-    "Disallow: */trackback",
-    "Disallow: */feed",
-    "Disallow: */comments",
-    "Disallow: /*?*",
-    "Disallow: /*?",
-    "Disallow: /*.png",
-    "Disallow: /*trackback",
-    "Disallow: /*/feed/$",
-    "Disallow: /*/feed/rss/$",
-    "Disallow: /blog/tag/",
-    "Disallow: /*.gz$",
-    "Disallow: /*.cgi$",
-    "Disallow: /*.wmv$",
-    "Disallow: /*.png$",
-    "Disallow: /*.gif$",
-    "Disallow: /*.cgi$",
-    "Disallow: /*.xhtml$",
-    "Disallow: /*.php*",
-    "Disallow: */trackback*",
-    "Disallow: /wp-content/observing-tools/moonphase/moon.html",
-    "Disallow: /wp-content/observing-tools/almanac/almanac.html",
-    "Disallow: /wp-content/uploads/meteors-free-ebook.html",
-    "Disallow: /wp-content/observing-tools/mars_profiler/mars.html",
-    "Disallow: /wp-content/observing-tools/jupiter_moons/jupiter.html",
-    "Disallow: /wp-content/observing-tools/almanac/welcome.htm"
-   ]
-  },
-  "www.almaobservatory.org": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
+    "Disallow: /accounts/*",
+    "Disallow: /museumdays/accounts/",
+    "Disallow: /accounts/login/",
+    "Disallow: /search?",
+    "Disallow: /rss?",
+    "Disallow: /search?q=",
+    "Disallow: /*?ms=",
+    "Disallow: /*?no-cache=",
+    "Disallow: /article/preview/*/",
+    "Disallow: /blogs/blogpost/preview/*",
+    "Disallow: /dashboard/",
+    "Disallow: /email/",
+    "Disallow: /membership/"
    ]
   },
   "noirlab.edu": {
@@ -2563,6 +2578,56 @@
     "Disallow: /index.php/*/media/oembed"
    ]
   },
+  "www.space.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: */deals/compare",
+    "Disallow: */html/",
+    "Disallow: */p/*/embed/captioned",
+    "Disallow: */outlink*",
+    "Disallow: *.freyr.*",
+    "Disallow: */comments/*",
+    "Disallow: */.events-handler*",
+    "Disallow: *CoreWebVitalsThresholdEvent*",
+    "Disallow: */partials/*",
+    "Disallow: */future.adtech.freyr.v1.PageViewEvent",
+    "Disallow: *searchTerm=*",
+    "Disallow: *sortBy=*",
+    "Disallow: *productBrand=*",
+    "Disallow: *%7B*%7D*",
+    "Disallow: *seenMatchId=*",
+    "Disallow: *q=*",
+    "Disallow: /infinite-scroll-article/*",
+    "Disallow: /infinite-scroll-review/*",
+    "Disallow: /infinite-scroll-recipe/*",
+    "Disallow: /search.php",
+    "Disallow: /social.php",
+    "Disallow: /newsletter-signup",
+    "Disallow: /_proxy*"
+   ]
+  },
+  "spacenews.com": {
+   "estado": 200,
+   "reglas": []
+  },
+  "www.quantamagazine.org": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
+  "skyandtelescope.org": {
+   "estado": 403,
+   "reglas": []
+  },
+  "www.almaobservatory.org": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
   "earthsky.org": {
    "estado": 200,
    "reglas": [
@@ -2570,14 +2635,37 @@
     "Allow: /wp-admin/admin-ajax.php"
    ]
   },
-  "www.esa.int": {
-   "estado": 200,
-   "reglas": []
-  },
   "ciencia.nasa.gov": {
    "estado": 200,
    "reglas": [
     "Allow: /"
+   ]
+  },
+  "www.nasaspaceflight.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /"
+   ]
+  },
+  "www.universetoday.com": {
+   "estado": 200,
+   "reglas": [
+    "Allow: /",
+    "Disallow: /index-*.html"
+   ]
+  },
+  "spaceflightnow.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /*?q=",
+    "Disallow: /*&q=",
+    "Disallow: /*?s=",
+    "Disallow: /*&s=",
+    "Disallow: /*?by=",
+    "Disallow: /*&by=",
+    "Disallow: /search/"
    ]
   },
   "www.eso.org": {
@@ -2645,53 +2733,11 @@
     "Disallow: /observing/dfo/status"
    ]
   },
-  "www.nasaspaceflight.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /"
-   ]
-  },
-  "spaceflightnow.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /*?q=",
-    "Disallow: /*&q=",
-    "Disallow: /*?s=",
-    "Disallow: /*&s=",
-    "Disallow: /*?by=",
-    "Disallow: /*&by=",
-    "Disallow: /search/"
-   ]
-  },
-  "www.universetoday.com": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /index-*.html"
-   ]
-  },
   "cadem.cl": {
    "estado": 200,
    "reglas": [
     "Disallow: /wp-admin/",
     "Allow: /wp-admin/admin-ajax.php"
-   ]
-  },
-  "www.mining-technology.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /wp-includes/",
-    "Allow: /wp-includes/js/",
-    "Allow: /wp-includes/images/",
-    "Disallow: /trackback/",
-    "Disallow: /wp-login.php",
-    "Disallow: /wp-register.php",
-    "Disallow: /?s=*",
-    "Disallow: *.pdf"
    ]
   },
   "www.corma.cl": {
@@ -2711,6 +2757,43 @@
     "Disallow: /*controller=ai1ec_exporter_controller*",
     "Disallow: /*/action~*/"
    ]
+  },
+  "www.mining-technology.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /wp-includes/",
+    "Allow: /wp-includes/js/",
+    "Allow: /wp-includes/images/",
+    "Disallow: /trackback/",
+    "Disallow: /wp-login.php",
+    "Disallow: /wp-register.php",
+    "Disallow: /?s=*",
+    "Disallow: *.pdf"
+   ]
+  },
+  "generadoras.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
+  "www.globalseafood.org": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
+  },
+  "www.aqua.cl": {
+   "estado": 200,
+   "reglas": []
+  },
+  "www.northernminer.com": {
+   "estado": 200,
+   "reglas": []
   },
   "www.mundoacuicola.cl": {
    "estado": 200,
@@ -2742,23 +2825,17 @@
     "Disallow: / *?"
    ]
   },
-  "www.northernminer.com": {
+  "portalportuario.cl": {
    "estado": 200,
-   "reglas": []
-  },
-  "www.aqua.cl": {
-   "estado": 200,
-   "reglas": []
+   "reglas": [
+    "Allow: /"
+   ]
   },
   "www.pv-magazine-latam.com": {
    "estado": 200,
    "reglas": [
     "Disallow: /*sso_start="
    ]
-  },
-  "www.odepa.gob.cl": {
-   "estado": 200,
-   "reglas": []
   },
   "splash247.com": {
    "estado": 200,
@@ -2774,18 +2851,9 @@
     "Disallow: /wp-content/uploads/wp-import-export-lite/"
    ]
   },
-  "portalportuario.cl": {
+  "www.odepa.gob.cl": {
    "estado": 200,
-   "reglas": [
-    "Allow: /"
-   ]
-  },
-  "www.sna.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php"
-   ]
+   "reglas": []
   },
   "theloadstar.com": {
    "estado": 200,
@@ -2794,15 +2862,6 @@
     "Disallow: /tag/",
     "Disallow: /category/",
     "Disallow: /wp-admin/"
-   ]
-  },
-  "www.salmonchile.cl": {
-   "estado": 200,
-   "reglas": [
-    "Allow: /",
-    "Disallow: /wp-content/uploads/*.mp4$",
-    "Disallow: /wp-content/uploads/*.webm$",
-    "Disallow: /wp-content/uploads/*.mov$"
    ]
   },
   "www.al-monitor.com": {
@@ -2863,9 +2922,21 @@
     "Disallow: /search"
    ]
   },
-  "www.defensenews.com": {
+  "www.salmonchile.cl": {
    "estado": 200,
-   "reglas": []
+   "reglas": [
+    "Allow: /",
+    "Disallow: /wp-content/uploads/*.mp4$",
+    "Disallow: /wp-content/uploads/*.webm$",
+    "Disallow: /wp-content/uploads/*.mov$"
+   ]
+  },
+  "www.sna.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php"
+   ]
   },
   "breakingdefense.com": {
    "estado": 200,
@@ -2875,39 +2946,13 @@
     "Allow: /wp-admin/admin-ajax.php"
    ]
   },
+  "www.defensenews.com": {
+   "estado": 200,
+   "reglas": []
+  },
   "www.crisisgroup.org": {
    "estado": 403,
    "reglas": []
-  },
-  "www.longwarjournal.org": {
-   "estado": 200,
-   "reglas": []
-  },
-  "kyivindependent.com": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /ghost/",
-    "Disallow: /p/",
-    "Disallow: /preview/",
-    "Disallow: /email/",
-    "Disallow: /members/",
-    "Disallow: /r/",
-    "Disallow: /crowdfunding/",
-    "Disallow: /?*",
-    "Disallow: /?ref=*",
-    "Disallow: /?fbclid=*",
-    "Disallow: /?__cf*",
-    "Disallow: /*gsid=*"
-   ]
-  },
-  "www.dabangasudan.org": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /search/",
-    "Disallow: /*/search/",
-    "Disallow: /*?s=",
-    "Disallow: /*&s="
-   ]
   },
   "www.middleeasteye.net": {
    "estado": 200,
@@ -2960,6 +3005,36 @@
     "Disallow: /index.php/user/logout",
     "Disallow: /index.php/media/oembed",
     "Disallow: /index.php/*/media/oembed"
+   ]
+  },
+  "kyivindependent.com": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /ghost/",
+    "Disallow: /p/",
+    "Disallow: /preview/",
+    "Disallow: /email/",
+    "Disallow: /members/",
+    "Disallow: /r/",
+    "Disallow: /crowdfunding/",
+    "Disallow: /?*",
+    "Disallow: /?ref=*",
+    "Disallow: /?fbclid=*",
+    "Disallow: /?__cf*",
+    "Disallow: /*gsid=*"
+   ]
+  },
+  "www.longwarjournal.org": {
+   "estado": 200,
+   "reglas": []
+  },
+  "www.dabangasudan.org": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /search/",
+    "Disallow: /*/search/",
+    "Disallow: /*?s=",
+    "Disallow: /*&s="
    ]
   },
   "www.newarab.com": {
@@ -3015,10 +3090,6 @@
     "Disallow: /Services/GetAlbum/",
     "Disallow: /Services/GetAlbum/*"
    ]
-  },
-  "api.gdeltproject.org": {
-   "estado": 404,
-   "reglas": []
   },
   "www.pravda.com.ua": {
    "estado": 200,
@@ -3079,21 +3150,12 @@
     "Disallow: /*theme_preview=true"
    ]
   },
-  "www.indiewire.com": {
+  "www.ukrinform.net": {
    "estado": 200,
    "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /?s=",
-    "Disallow: /*/?s=",
-    "Disallow: /search/",
-    "Disallow: /search?",
-    "Disallow: *?v02",
-    "Disallow: *?replytocom",
-    "Disallow: /genre/",
-    "Disallow: /genre/*",
-    "Disallow: /*preview=true",
-    "Disallow: /*theme_preview=true"
+    "Disallow: /redirect",
+    "Disallow: /search",
+    "Disallow: /counter"
    ]
   },
   "www.espinof.com": {
@@ -3134,13 +3196,26 @@
     "Disallow: /goto*"
    ]
   },
-  "www.ukrinform.net": {
+  "www.indiewire.com": {
    "estado": 200,
    "reglas": [
-    "Disallow: /redirect",
-    "Disallow: /search",
-    "Disallow: /counter"
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /?s=",
+    "Disallow: /*/?s=",
+    "Disallow: /search/",
+    "Disallow: /search?",
+    "Disallow: *?v02",
+    "Disallow: *?replytocom",
+    "Disallow: /genre/",
+    "Disallow: /genre/*",
+    "Disallow: /*preview=true",
+    "Disallow: /*theme_preview=true"
    ]
+  },
+  "letraslibres.com": {
+   "estado": 404,
+   "reglas": []
   },
   "lithub.com": {
    "estado": 200,
@@ -3155,14 +3230,6 @@
     "Disallow: /search/*",
     "Allow: /wp-admin/admin-ajax.php"
    ]
-  },
-  "letraslibres.com": {
-   "estado": 404,
-   "reglas": []
-  },
-  "www.elsiglo.cl": {
-   "estado": "ConnectTimeout",
-   "reglas": []
   },
   "pitchfork.com": {
    "estado": 200,
@@ -3233,21 +3300,6 @@
     "Disallow: /_video/partner/"
    ]
   },
-  "www.futuro.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /wp-admin/",
-    "Allow: /wp-admin/admin-ajax.php",
-    "Disallow: /?s=",
-    "Disallow: /*/?s"
-   ]
-  },
-  "www.sernatur.cl": {
-   "estado": 200,
-   "reglas": [
-    "Disallow: /suggest/?*"
-   ]
-  },
   "www.hollywoodreporter.com": {
    "estado": 200,
    "reglas": [
@@ -3280,16 +3332,35 @@
     "Disallow: /*theme_preview=true"
    ]
   },
+  "www.sernatur.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /suggest/?*"
+   ]
+  },
   "www.marcachile.cl": {
-   "estado": 403,
+   "estado": 200,
    "reglas": []
   },
+  "www.futuro.cl": {
+   "estado": 200,
+   "reglas": [
+    "Disallow: /wp-admin/",
+    "Allow: /wp-admin/admin-ajax.php",
+    "Disallow: /?s=",
+    "Disallow: /*/?s"
+   ]
+  },
   "www.fundacionimagendechile.cl": {
-   "estado": 403,
+   "estado": 200,
    "reglas": []
   },
   "www.chilealimentos.com": {
    "estado": 200,
+   "reglas": []
+  },
+  "api.gdeltproject.org": {
+   "estado": "ReadTimeout",
    "reglas": []
   },
   "query1.finance.yahoo.com": {
@@ -3334,7 +3405,7 @@
    "reglas": []
   },
   "mindicador.cl": {
-   "estado": "ReadTimeout",
+   "estado": 404,
    "reglas": []
   },
   "api.frankfurter.dev": {
