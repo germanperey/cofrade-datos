@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-24T17:03:38-03:00",
+ "generado": "2026-11-24T21:06:39-03:00",
  "ok": true,
  "graves": 0,
  "revisiones": [
@@ -136,11 +136,107 @@
    "grave": true
   },
   {
-   "nombre": "Corridas de GitHub de las últimas 24 h sin fallas",
+   "nombre": "Datos al día: historia.json",
    "ok": true,
    "detalle": "",
    "grave": true
+  },
+  {
+   "nombre": "Datos al día: tasas-bcch.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: mercados.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: marejadas.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: aire.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: proyecciones-chile.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: titulares.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: golf.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: oleaje.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: conflictos-radar.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: eventos-emprendimiento.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: liga-primera.json",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Datos al día: senado-votaciones.json",
+   "ok": false,
+   "detalle": "actualizado = 2026-10-21 (máximo 14 días)",
+   "grave": false
+  },
+  {
+   "nombre": "Imacec con el último mes publicado",
+   "ok": true,
+   "detalle": "",
+   "grave": true
+  },
+  {
+   "nombre": "Imacec desde el Banco Central (con sus revisiones)",
+   "ok": true,
+   "detalle": "",
+   "grave": false
+  },
+  {
+   "nombre": "Corrida «Datos oficiales del día» sin fallas",
+   "ok": false,
+   "detalle": "falló el 2026-11-24T21:29:21Z",
+   "grave": false
   }
  ],
- "reparaciones": []
+ "reparaciones": [
+  {
+   "que": "Volver a correr «Datos oficiales del día»",
+   "hecho": true,
+   "detalle": "HTTP 201"
+  }
+ ]
 }
