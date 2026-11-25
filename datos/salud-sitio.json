@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-24T21:06:39-03:00",
+ "generado": "2026-11-24T21:53:58-03:00",
  "ok": true,
  "graves": 0,
  "revisiones": [
@@ -110,6 +110,12 @@
    "ok": true,
    "detalle": "",
    "grave": false
+  },
+  {
+   "nombre": "Edición 2026-11-24: Imacec igual al del Banco Central (con sus revisiones)",
+   "ok": true,
+   "detalle": "",
+   "grave": true
   },
   {
    "nombre": "Edición 2026-11-24: no falta nada de lo que salió el 2026-11-23",
@@ -232,11 +238,5 @@
    "grave": false
   }
  ],
- "reparaciones": [
-  {
-   "que": "Volver a correr «Datos oficiales del día»",
-   "hecho": true,
-   "detalle": "HTTP 201"
-  }
- ]
+ "reparaciones": []
 }
