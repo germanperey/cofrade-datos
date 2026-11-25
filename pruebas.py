@@ -2584,6 +2584,31 @@ def vuelos_en_vivo_desde_flight_status():
 
 PRUEBAS.append(vuelos_en_vivo_desde_flight_status)
 
+def banners_de_suscripcion_en_su_lugar():
+    """25-11-2026 (Germán, 04:19): 8 banners de suscripción en lugares fijos de la edición, dos carruseles, y «¡Suscríbete!» abre una
+    ventana flotante con el formulario de socios (Mercado Pago). Si alguien mueve un banner o rompe la ventana, esta prueba falla."""
+    import json, subprocess
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    js = open(os.path.join(raiz, "sitio/modulos/banners.js"), encoding="utf-8").read()
+    out = subprocess.run(["node", "-e", "const s=require('fs').readFileSync(0,'utf8');const f=new Function(s+';return [BANNERS,BANNERS_JS,BANNERS_DLG]');"
+                          "const [b,j,d]=f();new Function(j.match(/<script>([\\s\\S]*)<\\/script>/)[1]);console.log(JSON.stringify({b,d}))"],
+                         input=js, capture_output=True, text=True, check=True).stdout
+    o = json.loads(out)
+    lugares = {(x["k"], x["g"], x.get("sel")) for x in o["b"]}
+    assert lugares == {("economia", "eco", "section#economia"), ("politica", "pol", "section#politica"), ("votaciones", "pol", None),
+                       ("emprendimiento", "emp", "section#emprendimiento"), ("tecnologia", "emp", None), ("vuelos", "vue", "section#vuelos"),
+                       ("inmobiliario", "inm", "#subsidios"), ("deportes", "dep", "section#deportes")}, lugares
+    assert 'id="cnbDlg"' in o["d"] and "cnb-dlg-f" in o["d"]
+    from PIL import Image
+    for x in o["b"]:
+        for tipo, tam in (("pc", (2112, 360)), ("tel", (732, 460))):
+            assert Image.open(os.path.join(raiz, f"sitio/banners/{x['k']}-{tipo}.webp")).size == tam, (x["k"], tipo)
+    sus = open(os.path.join(raiz, "sitio/modulos/suscripciones.js"), encoding="utf-8").read()
+    assert "frame-ancestors 'self'" in sus and "window.top!==window?window.top:window" in sus and "SAMEORIGIN" in sus
+
+
+PRUEBAS.append(banners_de_suscripcion_en_su_lugar)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

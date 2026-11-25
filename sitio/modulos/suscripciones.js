@@ -100,7 +100,28 @@ Object.assign(EN_FIJO, {
   "Versión del 14 de noviembre de 2026.": "Version of November 14, 2026.",
 });
 
-function paginaFundador(env, pct, modo) {
+// Ventana flotante: página mínima con los estilos del sitio, el diálogo «Avísenme» (si las inscripciones siguen cerradas), el idioma y
+// el tema de la edición (comparten localStorage por ser el mismo sitio; ?t= fija el tema que la edición tiene en pantalla) y el alto real
+// de la página, que la edición usa para dimensionar la ventana sin barras de desplazamiento dobles.
+const CSP_EMBED = CSP_PORTADA.replace("frame-ancestors 'none'", "frame-ancestors 'self'");
+const EMBED_JS = `(function(){var r=document.documentElement,q=new URLSearchParams(location.search),t=q.get('t');if(t==='dark'||t==='light')r.setAttribute('data-theme',t);
+function alto(){try{parent.postMessage({cnb:'alto',h:Math.ceil(document.body.scrollHeight)},location.origin)}catch(e){}}
+if(window.ResizeObserver)new ResizeObserver(alto).observe(document.body);addEventListener('load',alto);alto();
+document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&!document.querySelector('dialog[open]'))try{parent.postMessage({cnb:'cerrar'},location.origin)}catch(e){}})})();`;
+function marcoEmbed(cuerpo) {
+  const script = SCRIPT.replace("setTimeout(function(){location.reload()},20*60*1000);", "");   // la ventana no se recarga sola: perdería lo escrito
+  return `<!doctype html><html lang="es-CL"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Suscripción · Cofrade News</title><style>${FUENTES}${CSS}
+html,body{background:transparent}body{margin:0}main.emb{padding:22px 24px 26px;max-width:none}main.emb section{max-width:none!important;margin:0;padding:0}
+main.emb .titulo-lujo{font-size:clamp(24px,4.6vw,32px);line-height:1.12;margin:6px 0 10px}main.emb .lede{font-size:16px;margin:0 0 18px}
+@media (max-width:540px){main.emb{padding:16px 16px 22px}}</style></head><body>
+<button id="idioma" type="button" hidden></button><main class="hoja emb">${cuerpo}</main>${DIALOGO}
+<script>window.__EN=${JSON.stringify(EN_FIJO).replace(/</g, "\\u003c")};${script}${EMBED_JS}</script></body></html>`;
+}
+// 25-11-2026: ?plan=anual deja marcado el plan anual; ?embed=1 es la ventana flotante de los banners de la edición (modulos/banners.js):
+// el mismo formulario, sin cabecera ni pie, que se deja mostrar dentro del propio sitio (frame-ancestors 'self') y al terminar lleva la
+// pestaña completa a Mercado Pago. Un solo formulario para la página y la ventana: si cambia un precio o una regla, cambia en ambos.
+function paginaFundador(env, pct, modo, planInicial = "mensual", embed = false) {
   const ms = primerCobro(), dia = isoChile(ms);
   const fechaHtml = `<span data-iso="${dia}">${esc(fechaFrase(dia))}</span>`;
   const rotClave = `Clave de socio de la Cofradía (opcional, para el ${pct} % menos)`;
@@ -111,7 +132,7 @@ function paginaFundador(env, pct, modo) {
   const form = modo !== "cerrada"
     ? `${modo === "prueba" ? `<p class="aviso">Modo de prueba: solo tú ves este formulario, durante 2 horas. Para el público las inscripciones siguen cerradas.</p>` : ""}
 <form class="pub-form fundador" id="fFundador" method="post" action="/socios/fundador" novalidate>
-<fieldset><legend>Elige tu plan</legend><div class="planes-s">${plan("mensual", "Mensual", "al mes", true)}${plan("anual", "Anual", "al año, con un mes de regalo", false)}</div></fieldset>
+<fieldset><legend>Elige tu plan</legend><div class="planes-s">${plan("mensual", "Mensual", "al mes", planInicial !== "anual")}${plan("anual", "Anual", "al año, con un mes de regalo", planInicial === "anual")}</div></fieldset>
 <label>Nombre y apellido *<input name="nombre" required maxlength="80" autocomplete="name"></label>
 <label>Email de tu cuenta de Mercado Pago *<input name="email" type="email" required maxlength="120" autocomplete="email"></label>
 <label>${esc(rotClave)}<input name="clave" type="password" maxlength="80" autocomplete="off"></label>
@@ -125,7 +146,7 @@ function paginaFundador(env, pct, modo) {
 <script>(function(){var f=document.getElementById('fFundador');if(!f||!window.fetch)return;var st=f.querySelector('.pub-estado'),b=f.querySelector('.pub-enviar'),en=function(){return document.documentElement.lang==='en'};
 f.addEventListener('submit',function(ev){ev.preventDefault();st.textContent=en()?'Connecting with Mercado Pago…':'Conectando con Mercado Pago…';b.disabled=true;
 fetch('/socios/fundador',{method:'POST',headers:{'Accept':'application/json'},body:new URLSearchParams(new FormData(f))}).then(function(r){return r.json().catch(function(){return{ok:false}})}).then(function(j){
-if(j&&j.ok&&j.url){st.textContent=en()?'Taking you to Mercado Pago…':'Te llevamos a Mercado Pago…';location.assign(j.url);return}
+if(j&&j.ok&&j.url){st.textContent=en()?'Taking you to Mercado Pago…':'Te llevamos a Mercado Pago…';(window.top!==window?window.top:window).location.assign(j.url);return}
 st.textContent=(j&&j.error)||(en()?'We could not connect. Try again in a minute.':'No pudimos conectar. Intenta de nuevo en un minuto.');b.disabled=false;try{if(window.turnstile)turnstile.reset()}catch(e){}
 }).catch(function(){st.textContent=en()?'We could not connect. Try again in a minute.':'No pudimos conectar. Intenta de nuevo en un minuto.';b.disabled=false})})})();</script>`
     : `<p class="aviso">Las inscripciones de socios fundadores abren pronto. Déjanos tus datos y te avisamos.</p>
@@ -138,6 +159,8 @@ st.textContent=(j&&j.error)||(en()?'We could not connect. Try again in a minute.
 <h1 class="titulo-lujo"><span>Inscríbete hoy. No pagas nada hasta el</span> ${fechaHtml}.</h1>
 <p class="lede">Puente de Mando reúne la bolsa chilena y extranjera, ETF, cripto, el dinero que entra y sale de Chile y el radar político que mueve los mercados.</p>
 ${form}</section>`;
+  if (embed) return html(marcoEmbed(cuerpo), 200,
+    { "Cache-Control": "no-store", "X-Robots-Tag": "noindex", "X-Frame-Options": "SAMEORIGIN" }, CSP_EMBED);
   return html(marco({ titulo: "Socios fundadores · Cofrade News", descripcion: "Inscríbete como socio fundador del Dashboard Financiero de Cofrade News.",
     cuerpo, canonica: "/socios/fundador" }), 200, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
 }

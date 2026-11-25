@@ -572,7 +572,7 @@ html{scroll-padding-top:calc(var(--alto-cab,112px) + 12px)}
 
 const SCRIPT = `
 (function(){var r=document.documentElement,b=document.getElementById('tema');function g(){try{return localStorage.getItem('cn-tema')}catch(e){return null}}
-var t=g();if(t)r.setAttribute('data-theme',t);if(b)b.addEventListener('click',function(){var o=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+var t=g();if(t==='oscuro')t='dark';else if(t==='claro')t='light';if(t)r.setAttribute('data-theme',t);if(b)b.addEventListener('click',function(){var o=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
 var n=o==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('cn-tema',n)}catch(e){}});
 setTimeout(function(){location.reload()},20*60*1000);})();
 // 13-11-2026 · formulario de publicidad (el mismo del boletín): llega a Germán por la planilla, sin mostrar sus datos
@@ -946,6 +946,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__REPUBLICA__*/
 /*__EVENTOS_EMPR__*/
 /*__VUELOS_VIVO__*/
+/*__BANNERS__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -1442,7 +1443,7 @@ export default {
         const ha = horoscopoAnual(m[1]);
         const hcx = horoscopoCompat(!!HORO_ANUAL[anioHoroscopo(m[1])]);   // 20-11-2026: compatibilidad con otra persona (modulos/horoscopo_compat.js)   // 18-11-2026: botones del horóscopo más grandes + horóscopo del año y chino, personalizado (modulos/horoscopo_anual.js)
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
-        return new HTMLRewriter()   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono
+        return conBanners(new HTMLRewriter())   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono; 25-11: banners de suscripción (modulos/banners.js)
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
@@ -1455,7 +1456,7 @@ export default {
           .on('script[data-cn="boot"]', { element(e) { e.after(IDIOMA_RAPIDO, { html: true }); } })
           .on('meta[name="description"]', { element(e) { e.remove(); } }).on('link[rel="canonical"]', { element(e) { e.remove(); } }).on("head", { element(e) { e.append(fichaEdicion(m[1], rs), { html: true }); } })   // 23-11-2026: ficha para compartir   // 21-11-2026: EN/ES más rápido (modulos/idioma_rapido.js)
           .on("script", scriptsEdicion(lib))
-          .on("head", { element(e) { e.prepend(LENTO + NAVEGAR, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS + COMPARTIR_ESTILO, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
+          .on("head", { element(e) { e.prepend(LENTO + NAVEGAR + BANNERS_HEAD, { html: true }); e.append('<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64">' + ICONO_HEAD + SITIO_CSS + BANNERS_CSS + COMPARTIR_ESTILO, { html: true }); } })   // 16-11-2026: ícono y ficha de instalación
           .transform(resp);
       }
       if (p === "/api/gasto-pilares") {   // 20-11-2026: desglose de Familia y Conectividad (modulos/pilares_desglose.js)
@@ -1509,6 +1510,12 @@ export default {
       if (ira) return await irAnuncio(req, env, ctx, ira[1], u);
       const lga = p.match(/^\/anuncios\/([a-z0-9][a-z0-9-]{0,60})\.(png|jpg|webp)$/);
       if (lga) return await logoAnuncio(req, env, ctx, lga[1], lga[2]);
+      const bn = p.match(BANNERS_ARCHIVO);   // 25-11-2026: imágenes de los banners de suscripción (un año de caché; BANNERS_V las renueva)
+      if (bn) {
+        const r = await desdeGitHub(`sitio/banners/${bn[1]}?v=${BANNERS_V}`, 31536000, ctx);
+        return r ? new Response(r.body, { headers: { "Content-Type": "image/webp", "Cache-Control": "public, max-age=31536000, immutable", ...SEGURIDAD } })
+          : new Response("", { status: 404, headers: { "Cache-Control": "no-store" } });
+      }
       const cap = p.match(/^\/capturas\/([a-z0-9-]+\.webp)$/);
       if (cap || p === "/marca-agua.webp") {
         // 15-11-2026: el vigía rehace las capturas con cada edición nueva (herramientas/capturas.py) y corre cada 3 horas: 3 h de caché,
@@ -1559,7 +1566,7 @@ export default {
       // 14-11-2026: socios fundadores del Dashboard Financiero con Mercado Pago (modulos/suscripciones.js)
       if (p === "/socios/fundador") {
         if (req.method === "POST") return await crearSuscripcion(req, env, ctx).catch(() => jsonR({ ok: false, error: "No pudimos conectar con Mercado Pago. Intenta de nuevo en unos minutos." }, 503));
-        return paginaFundador(env, env.DB ? await pctCofradia(env) : 20, await modoInscripcion(req, env));
+        return paginaFundador(env, env.DB ? await pctCofradia(env) : 20, await modoInscripcion(req, env), u.searchParams.get("plan") === "anual" ? "anual" : "mensual", u.searchParams.get("embed") === "1");
       }
       if (p === "/socios/gracias") return await paginaGracias(req, u, env);
       if (p === "/socios/canjear") return await paginaCanje(req, env, u).catch(() => new Response("No pudimos procesar el canje. Intenta de nuevo en unos minutos.", { status: 503 }));   // 20-11-2026: premio del 1.er lugar del concurso
