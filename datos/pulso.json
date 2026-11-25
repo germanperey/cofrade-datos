@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-25T09:07-03:00",
- "proxima": "10:17",
+ "generado": "2026-11-25T11:07-03:00",
+ "proxima": "12:17",
  "indicadores": [
   {
    "clave": "dolar",
@@ -10,7 +10,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "euro",
@@ -20,7 +20,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "yuan",
@@ -40,17 +40,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440.0,
+   "valor": 72440,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "tpm",
@@ -60,43 +60,43 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 5.6627,
+   "valor": 5.66,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   }
  ],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10263.83,
+  "valor": 10195.55,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-25T09:07-03:00",
-  "variacion_pct": -0.65
+  "hora": "2026-11-25T11:08-03:00",
+  "variacion_pct": -1.31
  },
  "bolsas": {
   "lista": [
    {
     "nombre": "IPSA",
-    "valor": 10263.83,
-    "variacion_pct": -0.65
+    "valor": 10195.55,
+    "variacion_pct": -1.31
    },
    {
     "nombre": "IGPA",
-    "valor": 51918.1,
-    "variacion_pct": -0.61
+    "valor": 51584.74,
+    "variacion_pct": -1.25
    },
    {
     "nombre": "S&P 500",
-    "valor": 7201.09,
-    "variacion_pct": -0.5
+    "valor": 7001.62,
+    "variacion_pct": -2.77
    },
    {
     "nombre": "Nasdaq",
@@ -110,8 +110,8 @@
    },
    {
     "nombre": "Bovespa",
-    "valor": 164089.81,
-    "variacion_pct": -0.43
+    "valor": 164639.08,
+    "variacion_pct": 0.33
    },
    {
     "nombre": "Merval",
@@ -120,13 +120,13 @@
    },
    {
     "nombre": "FTSE 100",
-    "valor": 10484.2,
-    "variacion_pct": 0.16
+    "valor": 10470.23,
+    "variacion_pct": 0.03
    },
    {
     "nombre": "DAX",
-    "valor": 25002.67,
-    "variacion_pct": -0.06
+    "valor": 24873.5,
+    "variacion_pct": -0.58
    },
    {
     "nombre": "IBEX 35",
@@ -149,19 +149,13 @@
     "variacion_pct": -1.65
    }
   ],
-  "hora": "2026-11-25T09:07-03:00",
+  "hora": "2026-11-25T11:08-03:00",
   "fuente": "LarrainVial",
   "url": "https://mercados.larrainvial.com/"
  },
  "sismos": {
-  "n": 2,
+  "n": 1,
   "mayores": [
-   {
-    "hora": "2026-11-24T10:22-03:00",
-    "magnitud": 4.8,
-    "profundidad_km": 33.4,
-    "referencia": "145 km al N de La Serena"
-   },
    {
     "hora": "2026-11-24T17:27-03:00",
     "magnitud": 4.6,
@@ -177,34 +171,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "(VIDEO) A un año de la alerta oncológica: retrasos en garantías y presupuesto insuficiente",
-     "medio": "El Ciudadano",
-     "url": "https://www.elciudadano.com/reels/video-a-un-ano-de-la-alerta-oncologica-retrasos-en-garantias-y-presupuesto-insuficiente/11/25/",
-     "hora": "09:00"
+     "titulo": "Colo Colo vs D. La Serena: previa, horario y cómo llegan para la fecha 29 del campeonato chileno",
+     "medio": "El Rancaguino",
+     "url": "https://www.elrancaguino.cl/2026/11/25/colo-colo-vs-d-la-serena-previa-horario-y-como-llegan-para-la-fecha-29-del-campeonato-chileno/",
+     "hora": "11:08"
     },
     {
-     "titulo": "Aprobación al Presidente Kast cae a 20%, según Data Influye: es la cifra más baja desde 2022",
+     "titulo": "No solo fue el exalcalde: vocalista de Los Viking’s 5, Pedro Barraza, figura entre los 11 detenidos por el caso “PirataGate” en Coquimbo",
+     "medio": "The Clinic",
+     "url": "https://www.theclinic.cl/2026/11/25/no-solo-fue-el-exalcalde-vocalista-de-los-vikings-5-pedro-barraza-figura-entre-los-11-detenidos-por-el-caso-piratagate-en-coquimbo/",
+     "hora": "11:07"
+    },
+    {
+     "titulo": "Entre lágrimas, Germán Garmendia conmueve tras sufrir sensible pérdida: “Te extrañaré por el resto de mi vida”",
      "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/25/aprobacion-al-presidente-kast-cae-a-20-segun-data-influye-es-la-cifra-mas-baja-desde-2022/",
-     "hora": "08:56"
+     "url": "https://www.adnradio.cl/2026/11/25/entre-lagrimas-german-garmendia-conmueve-tras-sufrir-sensible-perdida-te-extranare-por-el-resto-de-mi-vida/",
+     "hora": "11:03"
     },
     {
-     "titulo": "Cinco estudiantes se formaron como agentes preventivos",
-     "medio": "La Prensa Austral",
-     "url": "https://laprensaaustral.cl/2026/11/25/cinco-estudiantes-se-formaron-como-agentes-preventivos/",
-     "hora": "08:56"
+     "titulo": "Copiapó: más de 150 asistentes consolidan a Chacana Emprende como un gran polo de innovación y emprendimiento indígena",
+     "medio": "Atacama Noticias",
+     "url": "https://www.atacamanoticias.cl/2026/11/25/copiapo-mas-de-150-asistentes-consolidan-a-chacana-emprende-como-un-gran-polo-de-innovacion-y-emprendimiento-indigena/",
+     "hora": "11:02"
     },
     {
-     "titulo": "Ministro de la Suprema constata en terreno cómo se está impartiendo justicia en Magallanes",
-     "medio": "La Prensa Austral",
-     "url": "https://laprensaaustral.cl/2026/11/25/ministro-de-la-suprema-constata-en-terreno-como-se-esta-impartiendo-justicia-en-magallanes/",
-     "hora": "08:55"
-    },
-    {
-     "titulo": "¿Cómo le fue al Miss Universo en rating? Canal no da tregua, se impone sin despeinarse y aplasta a la competencia",
-     "medio": "La Cuarta",
-     "url": "https://www.lacuarta.com/espectaculos/noticia/como-le-fue-al-miss-universo-en-rating-canal-no-da-tregua-se-impone-sin-despeinarse-y-aplasta-a-la-competencia/",
-     "hora": "08:50"
+     "titulo": "Coquimbo Unido vs Deportes Limache: previa, horario y cómo llegan para la fecha 29 del campeonato chileno",
+     "medio": "El Rancaguino",
+     "url": "https://www.elrancaguino.cl/2026/11/25/coquimbo-unido-vs-deportes-limache-previa-horario-y-como-llegan-para-la-fecha-29-del-campeonato-chileno/",
+     "hora": "11:02"
     }
    ]
   },
@@ -212,34 +206,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "Dólar salta $ 13 en la apertura y se acerca a sus máximos históricos en medio de una ola global de ventas de acciones tecnológicas",
+     "titulo": "Bolsa chilena vuelve a caer y el IPSA arriesga cerrar en nuevos mínimos a medida que se profundiza la huida del riesgo en los mercados globales",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/bolsa-monedas/dolar-hoy-wbvnj",
-     "hora": "09:04"
+     "url": "http://www.df.cl/mercados/bolsa-monedas/bolsas-hoy-egedl",
+     "hora": "11:07"
     },
     {
-     "titulo": "San Pedro de Atacama prepara plan de emergencia para anticiparse a eventuales lluvias de verano",
+     "titulo": "Fondos de Moneda Patria redoblan apuesta por CLC e inyectan nuevo financiamiento por UF 1 millón",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/regiones/antofagasta/san-pedro-de-atacama-prepara-plan-de-emergencia-para-enfrentar-eventuales",
-     "hora": "09:03"
+     "url": "http://www.df.cl/mercados/fondos-de-inversion/fondos-de-moneda-patria-redoblan-apuesta-por-clc-e-inyectan-nuevo",
+     "hora": "11:07"
     },
     {
-     "titulo": "Cuánto costará salir a la ruta con el auto en vacaciones: cuál es el precio del service, la VTV y otros gastos clave",
+     "titulo": "La inflación que mira la Reserva Federal subió a 3,8% en octubre, su nivel más alto en tres años",
      "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/25/cuanto-costara-salir-a-la-ruta-con-el-auto-en-vacaciones-cual-es-el-precio-del-service-la-vtv-y-otros-gastos-clave/",
-     "hora": "09:01"
+     "url": "https://www.infobae.com/estados-unidos/2026/11/25/la-inflacion-que-mira-la-reserva-federal-subio-a-38-en-octubre-su-nivel-mas-alto-en-tres-anos/",
+     "hora": "11:01"
     },
     {
-     "titulo": "Garantías Corfo alcanzan cifras récord y movilizan más de $1,3 billones en financiamiento para empresas al cierre de octubre",
-     "medio": "Portal Innova · noticias",
-     "url": "https://portalinnova.cl/garantias-corfo-alcanzan-cifras-record-y-movilizan-mas-de-13-billones-en-financiamiento-para-empresas-al-cierre-de-octubre/",
-     "hora": "09:01"
+     "titulo": "Caputo minimizó el riesgo de que se acelere la inflación: “No tememos que la suba del dólar pase a los precios”",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/25/caputo-minimizo-el-riesgo-de-que-se-acelere-la-inflacion-no-tememos-que-la-suba-del-dolar-pase-a-los-precios/",
+     "hora": "10:55"
     },
     {
-     "titulo": "Senadores estadounidenses acusan a Nicaragua de profundizar su aislamiento tras rechazar a Natasha Franceschi como embajadora",
-     "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/nicaragua/2026/11/25/senadores-estadounidenses-acusan-a-nicaragua-de-profundizar-su-aislamiento-tras-rechazar-a-natasha-franceschi-como-embajadora/",
-     "hora": "08:58"
+     "titulo": "La historia de la emprendedora de Peumo de 40 años detrás del nuevo negocio de snacks de Concha y Toro",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/negocios/concha-y-toro-creadora-barras-uva/",
+     "hora": "10:54"
     }
    ]
   },
@@ -247,34 +241,28 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Cómo China mantiene su influencia en América Latina en pleno pulso geopolítico con EE.UU.",
-     "medio": "BBC Mundo",
-     "url": "https://www.bbc.com/mundo/articles/c32l5enge15go?at_medium=RSS&at_campaign=rss",
-     "hora": "09:02"
-    },
-    {
-     "titulo": "Díaz pregunta al PP si mantendrá los nuevos permisos de nacimiento y duelo aprobados por el Gobierno",
+     "titulo": "Resultados de La Tinka del 22 de noviembre: estos son los números ganadores y premios del ‘Sí o Sí’",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/25/diaz-pregunta-al-pp-si-mantendra-los-nuevos-permisos-de-nacimiento-y-duelo-aprobados-por-el-gobierno/",
-     "hora": "09:02"
+     "url": "https://www.infobae.com/peru/2026/11/23/resultados-de-la-tinka-del-domingo-22-de-noviembre-numeros-ganadores-y-premios-del-si-o-si/",
+     "hora": "11:05"
     },
     {
-     "titulo": "Colau augura que si el líder de Vox es vicepresidente desplegará \"un ICE\" en España",
+     "titulo": "Movimiento del Sombrero definirá candidaturas independientes en Michoacán, adelanta Grecia Quiroz: “Los traicioneros se han ido”",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/america/agencias/2026/11/25/colau-augura-que-si-el-lider-de-vox-es-vicepresidente-desplegara-un-ice-en-espana/",
-     "hora": "09:02"
+     "url": "https://www.infobae.com/mexico/2026/11/25/movimiento-del-sombrero-definira-candidaturas-independientes-en-michoacan-adelanta-grecia-quiroz-los-traicioneros-se-han-ido/",
+     "hora": "11:05"
     },
     {
-     "titulo": "Rusia confirma \"contactos\" con representantes europeos sobre participación de la UE en el diálogo sobre Ucrania",
-     "medio": "Europa Press · Internacional",
-     "url": "https://www.europapress.es/internacional/noticia-rusia-confirma-contactos-representantes-europeos-participacion-ue-dialogo-ucrania-20261125125356.html",
-     "hora": "08:53"
+     "titulo": "Trump propone nuevos aranceles a 14 socios comerciales y reaviva las tensiones económicas",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/econom%C3%ADa-y-tecnolog%C3%ADa/20261125-trump-propone-nuevos-aranceles-a-14-socios-comerciales-y-reaviva-las-tensiones-econ%C3%B3micas",
+     "hora": "10:56"
     },
     {
-     "titulo": "Zelenski rechaza la \"frívola\" propuesta de Lukashenko de volar juntos a Rusia para un diálogo con Putin",
-     "medio": "Europa Press · Internacional",
-     "url": "https://www.europapress.es/internacional/noticia-zelenski-rechaza-frivola-propuesta-lukashenko-volar-juntos-rusia-dialogo-putin-20261125125133.html",
-     "hora": "08:51"
+     "titulo": "Richard Posner, el juez que quería que las leyes tuvieran sentido",
+     "medio": "El País · Internacional",
+     "url": "https://elpais.com/internacional/2026-11-25/richard-posner-el-juez-que-queria-que-las-leyes-tuvieran-sentido.html",
+     "hora": "10:53"
     }
    ]
   },
@@ -282,34 +270,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "Cómo China mantiene su influencia en América Latina en pleno pulso geopolítico con EE.UU.",
-     "medio": "BBC Mundo · Economía",
-     "url": "https://www.bbc.com/mundo/articles/c32l5enge15go?at_medium=RSS&at_campaign=rss",
-     "hora": "09:02"
-    },
-    {
-     "titulo": "Las dudas sobre la IA y la amenaza arancelaria lastran a los futuros de Wall Street",
+     "titulo": "España concede más de la mitad de las ayudas a empresas en la UE por la crisis energética",
      "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/mercados-financieros/2026-11-25/la-bolsa-y-el-ibex-35.html",
-     "hora": "09:02"
+     "url": "https://elpais.com/economia/2026-11-25/espana-concede-mas-de-la-mitad-de-las-ayudas-a-empresas-en-la-ue-por-la-crisis-energetica.html",
+     "hora": "11:04"
     },
     {
-     "titulo": "Baseus PicoGo Air AM71: nueva batería externa magnética de 10.000 mAh y muy segura",
+     "titulo": "Estos son todos los estrenos de Filmin para el mes de diciembre del 2026",
      "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/smartlife/gadgets/2026-11-25/baseus-picogo-air-am71-bateria-caracteristicas.html",
-     "hora": "09:00"
+     "url": "https://cincodias.elpais.com/smartlife/smart-tv/2026-11-25/estrenos-filmin-diciembre-2026.html",
+     "hora": "11:00"
     },
     {
-     "titulo": "Reproche a Sánchez de la Unión Europea por el despilfarro",
-     "medio": "Expansión España Economía",
-     "url": "https://www.expansion.com/elecciones/elecciones-generales/2026/11/25/reproche-sanchez-union-europea-despilfarro.html",
-     "hora": "09:00"
+     "titulo": "Trump propone nuevos aranceles a 14 socios comerciales y reaviva las tensiones económicas",
+     "medio": "France 24 · Economía",
+     "url": "https://www.france24.com/es/econom%C3%ADa-y-tecnolog%C3%ADa/20261125-trump-propone-nuevos-aranceles-a-14-socios-comerciales-y-reaviva-las-tensiones-econ%C3%B3micas",
+     "hora": "10:51"
     },
     {
-     "titulo": "Las políticas erróneas tras la crisis de vivienda",
+     "titulo": "El PIB de EEUU se revisa al alza hasta el 1,1% en el tercer trimestre de 2026",
      "medio": "Expansión España Economía",
-     "url": "https://www.expansion.com/elecciones/elecciones-generales/2026/11/25/politicas-erroneas-crisis-vivienda.html",
-     "hora": "08:51"
+     "url": "https://www.expansion.com/economia/2026/11/25/pib-eeuu-revisa-alza-1-1-tercer-trimestre-2026.html",
+     "hora": "10:51"
+    },
+    {
+     "titulo": "Deutsche Bank Research rebaja la calificación de Coca-Cola Europacific Partners a \"Mantener\" y eleva su precio objetivo.",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/deutsche-bank-research-rebaja-calificaci%C3%B3n-134315077.html",
+     "hora": "10:43"
     }
    ]
   },
@@ -317,34 +305,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "Hayao Miyazaki: \"Cuando dibujo el mar, no me queda otra que hacerlo lleno de basura y ponerle mas realismo a la basura que la que necesita el mar\"",
+     "titulo": "El iPhone 18 Pro Max no hizo la jugada más vistosa, pero sí el mejor partido. Y por eso es el mejor móvil premium de 2026",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/cine-y-tv/hayao-miyazaki-cuando-dibujo-mar-no-me-queda-otra-que-hacerlo-lleno-basura-ponerle-realismo-a-basura-que-que-necesita-mar",
-     "hora": "09:00"
+     "url": "https://www.xataka.com/moviles/iphone-18-pro-max-no-hizo-jugada-vistosa-mejor-partido-eso-mejor-movil-premium-2026",
+     "hora": "11:00"
     },
     {
-     "titulo": "Cavó un estanque de 60 cm en el jardín y en pocas semanas aparecieron puestas de huevos de rana: de césped inútil a vivero",
+     "titulo": "Según los psicólogos, las personas que crecieron en los años 80 y 90 han desarrollado la falacia de la llegada por culpa de los finales felices",
      "medio": "Genbeta",
-     "url": "https://www.genbeta.com/internacional/cavo-estanque-60-cm-jardin-pocas-semanas-aparecieron-puestas-huevos-rana-cesped-inutil-a-vivero",
-     "hora": "09:00"
+     "url": "https://www.genbeta.com/actualidad/psicologos-personas-que-crecieron-anos-80-90-han-desarrollado-falacia-llegada-culpa-finales-felices",
+     "hora": "11:00"
     },
     {
-     "titulo": "De manera inédita, decenas de serpientes que se criaron en cautiverio han regresado a su hábitat natural en California",
+     "titulo": "Hoy en Disney: la película de ciencia ficción que Estados Unidos odió, pero que en Francia la llamaron una obra maestra",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/cine-y-tv/hoy-disney-pelicula-ciencia-ficcion-que-estados-unidos-odio-que-francia-llamaron-obra-maestra",
+     "hora": "11:00"
+    },
+    {
+     "titulo": "Europa está a punto de poner pie en el asteroide que la NASA disparó en 2022: hoy sabremos cómo quedó Dimorphos",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/ecologia-y-naturaleza/manera-inedita-decenas-serpientes-que-se-criaron-cautiverio-han-regresado-a-su-habitat-natural-california",
-     "hora": "08:51"
+     "url": "https://www.xataka.com/espacio/europa-esta-a-punto-poner-pie-asteroide-que-nasa-disparo-2022-hoy-sabremos-como-quedo-dimorphos",
+     "hora": "10:47"
     },
     {
-     "titulo": "Stephen Hawking: “Cada uno de nosotros vive solo un breve periodo de tiempo, y solo visitamos apenas una minúscula parte del universo”",
-     "medio": "Genbeta",
-     "url": "https://www.genbeta.com/genbeta/stephen-hawking-cada-uno-nosotros-vive-solo-breve-periodo-tiempo-solo-visitamos-apenas-minuscula-parte-universo",
-     "hora": "07:01"
-    },
-    {
-     "titulo": "Lo nuevo de BYD se llama Shark y es una pick-up híbrida con la mayor batería de su segmento",
+     "titulo": "Lo nuevo de Claude convierte tus Artefactos en apps que puedes instalar en tu PC o Mac",
      "medio": "Hipertextual",
-     "url": "https://hipertextual.com/movilidad/byd-shark-2/",
-     "hora": "06:52"
+     "url": "https://hipertextual.com/inteligencia-artificial/claude-ahora-puede-convertir-tus-artefactos-en-apps-de-escritorio/",
+     "hora": "10:36"
     }
    ]
   },
@@ -352,34 +340,34 @@
    "seccion": "Deportes",
    "notas": [
     {
+     "titulo": "La misteriosa acompañante de Manuel Neuer en su viaje por Brasil que sorprendió tras un resonante divorcio días después de ser padre",
+     "medio": "Infobae Deportes",
+     "url": "https://www.infobae.com/deportes/2026/11/25/la-misteriosa-acompanante-de-manuel-neuer-durante-su-descanso-en-brasil-que-abrio-las-preguntas-en-medio-de-un-resonante-divorcio-dias-despues-de-ser-padre/",
+     "hora": "11:04"
+    },
+    {
+     "titulo": "Haaland no aguanta más: es uno de los vídeos de la noche de Champions",
+     "medio": "AS Fútbol",
+     "url": "https://as.com/futbol/videos/haaland-no-aguanta-mas-es-uno-de-los-videos-de-la-noche-de-champions-f202611-v/",
+     "hora": "11:03"
+    },
+    {
+     "titulo": "“Fijate por donde caminás, alineate”: las historias de los policías que cambiaron de bando y se hicieron barrabravas",
+     "medio": "Infobae Deportes",
+     "url": "https://www.infobae.com/deportes/2026/11/25/fijate-por-donde-caminas-alineate-las-historias-de-los-policias-que-cambiaron-de-bando-y-se-hicieron-barrabravas/",
+     "hora": "11:02"
+    },
+    {
+     "titulo": "Isco revela charla de Manuel Pellegrini tras triunfo del Betis en la Champions: “Nos ha dicho que esto no tiene mucho mérito”",
+     "medio": "La Tercera · El Deportivo",
+     "url": "https://www.latercera.com/el-deportivo/noticia/isco-revela-charla-de-manuel-pellegrini-tras-triunfo-del-betis-en-la-champions-nos-ha-dicho-que-esto-no-tiene-mucho-merito/",
+     "hora": "11:00"
+    },
+    {
      "titulo": "Sabah - Barcelona, en directo: previa y última hora de la Champions League, hoy en vivo",
      "medio": "AS Fútbol",
      "url": "https://as.com/futbol/champions/sabah-barcelona-en-directo-previa-y-ultima-hora-de-la-champions-league-hoy-en-vivo-f202611-d/",
-     "hora": "09:00"
-    },
-    {
-     "titulo": "Atlético - Viking, en directo: última hora de la fase liga de la Champions League, hoy en vivo",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/champions/atletico-viking-en-directo-ultima-hora-de-la-fase-liga-de-la-champions-league-hoy-en-vivo-f202611-d/",
-     "hora": "09:00"
-    },
-    {
-     "titulo": "Tras ganar la Copa Sudamericana, Boca Juniors jugará con Independiente Rivadavia por los octavos de final del Clausura: hora, TV y formaciones",
-     "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/25/tras-ganar-la-copa-sudamericana-boca-juniors-jugara-con-independiente-rivadavia-por-los-octavos-de-final-del-clausura-hora-tv-y-formaciones/",
-     "hora": "08:56"
-    },
-    {
-     "titulo": "De La Plata a Montevideo en bicicleta: la travesía de dos hinchas de Estudiantes para la final con Palmeiras",
-     "medio": "Olé",
-     "url": "https://www.ole.com.ar/estudiantes/estudiantes-plata-copa-libertadores_0_gUlViYBZMt.html",
-     "hora": "08:56"
-    },
-    {
-     "titulo": "Alcaraz reaparece entrenando dos horas el dobles con Granollers en la Copa Davis",
-     "medio": "Mundo Deportivo Tenis",
-     "url": "https://www.mundodeportivo.com/tenis/copa-davis/20261125/1004255338/alcaraz-reaparece-entrenando-dos-horas-dobles-granollers-copa-davis.html",
-     "hora": "08:50"
+     "hora": "11:00"
     }
    ]
   },
@@ -387,16 +375,16 @@
    "seccion": "Ciencia",
    "notas": [
     {
+     "titulo": "La estrella que se tragó a su compañera: cómo se reconstruye una fusión estelar a 2,5 millones de años luz",
+     "medio": "Muy Interesante",
+     "url": "https://muyinteresante.okdiario.com/ciencia/fusion-estelar-andromeda.html",
+     "hora": "09:01"
+    },
+    {
      "titulo": "Investigadores de Cambridge crea un chip de 16 gramos que usa la luz reflejada por la piel para estimar la glucosa sin pinchazos",
      "medio": "Muy Interesante",
      "url": "https://muyinteresante.okdiario.com/salud/chip-de-glucosa-muneca.html",
      "hora": "05:01"
-    },
-    {
-     "titulo": "El día que el Citroën 2 CV se convirtió en el coche de James Bond",
-     "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/actualidad/citroen-2-cv-007-la-historia-del-coche-de-james-bond.html",
-     "hora": "04:44"
     }
    ]
   },
@@ -404,10 +392,22 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "100 Minds: IA chilena para riesgos fatales en Codelco",
+     "titulo": "IA sin censura: Ollama y Venice.ai para tu startup",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/100-minds-ia-chilena-para-riesgos-fatales-en-codelco/",
-     "hora": "09:06"
+     "url": "https://ecosistemastartup.com/ia-sin-censura-ollama-y-venice-ai-para-tu-startup/",
+     "hora": "10:51"
+    },
+    {
+     "titulo": "Informa D&B: 5.948 startups en España, un 11,91% más",
+     "medio": "Ecosistema Startup",
+     "url": "https://ecosistemastartup.com/informa-db-5-948-startups-en-espana-un-1191-mas/",
+     "hora": "10:33"
+    },
+    {
+     "titulo": "Con realidad virtual y experiencias interactivas, Educa Sostenible acercó la eficiencia energética a estudiantes y comunidades de Valparaíso",
+     "medio": "Tour Innovación · emprendimiento",
+     "url": "https://www.tourinnovacion.cl/energia/con-realidad-virtual-y-experiencias-interactivas-educa-sostenible-acerco-la-eficiencia-energetica-a-estudiantes-y-comunidades-de-valparaiso/",
+     "hora": "06:34"
     },
     {
      "titulo": "DGAC Chile logra importante representación en la OACI",
@@ -416,16 +416,24 @@
      "hora": "06:30"
     },
     {
-     "titulo": "El redescubrimiento del esfuerzo",
-     "medio": "Tour Innovación · emprendimiento",
-     "url": "https://www.tourinnovacion.cl/visiones/el-redescubrimiento-del-esfuerzo/",
-     "hora": "06:30"
+     "titulo": "Copiapó: más de 150 asistentes consolidan a Chacana Emprende como un gran polo de innovación y emprendimiento indígena",
+     "medio": "Atacama Noticias",
+     "url": "https://www.atacamanoticias.cl/2026/11/25/copiapo-mas-de-150-asistentes-consolidan-a-chacana-emprende-como-un-gran-polo-de-innovacion-y-emprendimiento-indigena/",
+     "hora": "03:02"
     }
    ]
   }
  ],
  "aire": {
   "ciudades": [
+   {
+    "ciudad": "Arica",
+    "aqi": 42,
+    "estado": "Buena",
+    "estacion": "Arica, Chile",
+    "hora": "07:00",
+    "url": "https://aqicn.org/city/chile/arica"
+   },
    {
     "ciudad": "Antofagasta",
     "aqi": 40,
@@ -436,43 +444,43 @@
    },
    {
     "ciudad": "La Serena",
-    "aqi": 46,
+    "aqi": 50,
     "estado": "Buena",
-    "estacion": "Coquimbo, Chile",
-    "hora": "03:00",
-    "url": "https://aqicn.org/city/chile/coquimbo"
+    "estacion": "La Serena, Chile",
+    "hora": "07:00",
+    "url": "https://aqicn.org/city/chile/la-serena"
    },
    {
     "ciudad": "Valparaíso",
     "aqi": 38,
     "estado": "Buena",
     "estacion": "Valparaiso, Chile",
-    "hora": "03:00",
+    "hora": "07:00",
     "url": "https://aqicn.org/city/chile/valparaiso"
    },
    {
     "ciudad": "Santiago",
-    "aqi": 42,
+    "aqi": 44,
     "estado": "Buena",
     "estacion": "Parque O'Higgins, Chile",
-    "hora": "03:00",
+    "hora": "07:00",
     "url": "https://aqicn.org/city/chile/parque-ohiggins"
    },
    {
     "ciudad": "Concepción",
-    "aqi": 1,
+    "aqi": 25,
     "estado": "Buena",
     "estacion": "Kingston College, Chile",
-    "hora": "04:00",
+    "hora": "07:00",
     "url": "https://aqicn.org/city/chile/kingston-college"
    },
    {
     "ciudad": "Temuco",
-    "aqi": 42,
+    "aqi": 25,
     "estado": "Buena",
-    "estacion": "Las Encinas Temuco, Chile",
-    "hora": "02:00",
-    "url": "https://aqicn.org/city/chile/las-encinas-temuco"
+    "estacion": "Ñielol, Chile",
+    "hora": "06:00",
+    "url": "https://aqicn.org/city/chile/nielol"
    },
    {
     "ciudad": "Puerto Montt",
@@ -496,8 +504,8 @@
  "mercados": [
   {
    "nombre": "S&P 500",
-   "valor": 7201.09,
-   "variacion_pct": -0.5,
+   "valor": 7001.39,
+   "variacion_pct": -2.77,
    "fecha": "2026-11-24",
    "fuente": "LarrainVial"
   },
@@ -531,18 +539,18 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 58425.4,
+  "bitcoin_usd": 58181.69,
   "bitcoin_fecha": "2026-11-25",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 354,
+ "fuentes_ok": 349,
  "indicadores_origen": {
-  "dolar": "banco_central",
-  "euro": "banco_central",
-  "yuan": "banco_central",
-  "uf": "banco_central",
-  "utm": "banco_central",
-  "tpm": "banco_central",
-  "libra_cobre": "banco_central"
+  "dolar": "mindicador",
+  "euro": "mindicador",
+  "uf": "mindicador",
+  "utm": "mindicador",
+  "tpm": "mindicador",
+  "libra_cobre": "mindicador",
+  "yuan": "banco_central"
  }
 }
