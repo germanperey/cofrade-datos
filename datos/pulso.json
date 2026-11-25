@@ -1,36 +1,42 @@
 {
- "generado": "2026-11-25T17:07-03:00",
- "proxima": "18:17",
+ "generado": "2026-11-25T19:07-03:00",
+ "proxima": "20:17",
  "indicadores": [
   {
    "clave": "dolar",
    "nombre": "Dólar observado",
-   "valor": 1025.06,
+   "valor": 1044.08,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 2,
-   "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fecha": "2026-11-26",
+   "fuente": "Banco Central de Chile",
+   "rige": "2026-11-26",
+   "publicado": "2026-11-25"
   },
   {
    "clave": "euro",
    "nombre": "Euro",
-   "valor": 1124.46,
+   "valor": 1146.84,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 2,
-   "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fecha": "2026-11-26",
+   "fuente": "Banco Central de Chile",
+   "rige": "2026-11-26",
+   "publicado": "2026-11-25"
   },
   {
    "clave": "yuan",
    "nombre": "Yuan chino",
-   "valor": 153.8,
+   "valor": 156.61,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 2,
-   "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fecha": "2026-11-26",
+   "fuente": "Banco Central de Chile",
+   "rige": "2026-11-26",
+   "publicado": "2026-11-25"
   },
   {
    "clave": "uf",
@@ -40,17 +46,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440.0,
+   "valor": 72440,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "tpm",
@@ -60,17 +66,17 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 5.6627,
+   "valor": 5.66,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-25",
-   "fuente": "Banco Central de Chile"
+   "fuente": "Banco Central de Chile (vía mindicador.cl)"
   }
  ],
  "ipsa": {
@@ -78,7 +84,7 @@
   "valor": 10416.24,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-25T17:08-03:00",
+  "hora": "2026-11-25T19:07-03:00",
   "variacion_pct": 0.82
  },
  "bolsas": {
@@ -95,23 +101,23 @@
    },
    {
     "nombre": "S&P 500",
-    "valor": 7173.81,
-    "variacion_pct": -0.38
+    "valor": 7182.78,
+    "variacion_pct": -0.25
    },
    {
     "nombre": "Nasdaq",
-    "valor": 23579.73,
-    "variacion_pct": -0.65
+    "valor": 23585.8,
+    "variacion_pct": -0.62
    },
    {
     "nombre": "Nasdaq 100",
-    "valor": 26025.42,
-    "variacion_pct": -0.72
+    "valor": 26046.9,
+    "variacion_pct": -0.64
    },
    {
     "nombre": "Bovespa",
-    "valor": 166897.53,
-    "variacion_pct": 1.71
+    "valor": 166684.61,
+    "variacion_pct": 1.58
    },
    {
     "nombre": "Merval",
@@ -149,20 +155,13 @@
     "variacion_pct": -1.65
    }
   ],
-  "hora": "2026-11-25T17:08-03:00",
+  "hora": "2026-11-25T19:07-03:00",
   "fuente": "LarrainVial",
   "url": "https://mercados.larrainvial.com/"
  },
  "sismos": {
-  "n": 1,
-  "mayores": [
-   {
-    "hora": "2026-11-24T17:27-03:00",
-    "magnitud": 4.6,
-    "profundidad_km": 50.9,
-    "referencia": "49 km al SO de Ovalle"
-   }
-  ],
+  "n": 0,
+  "mayores": [],
   "fuente": "Servicio Geológico de EE. UU. (USGS)",
   "url": "https://earthquake.usgs.gov/earthquakes/map/"
  },
@@ -171,34 +170,34 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "Detienen a colombiano acusado de homicidio frustrado en Rancagua",
-     "medio": "El Rancaguino",
-     "url": "https://www.elrancaguino.cl/2026/11/25/detienen-a-colombiano-acusado-de-homicidio-frustrado-en-rancagua/",
-     "hora": "17:08"
+     "titulo": "Unión Española define a su nuevo entrenador para 2027: anuncio inminente",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/25/union-espanola-define-a-su-nuevo-entrenador-para-2027-anuncio-inminente/",
+     "hora": "19:04"
     },
     {
-     "titulo": "Kiva 2026: cuatro días de encuentro, memoria ancestral y conexión con la tierra",
-     "medio": "El Ciudadano",
-     "url": "https://www.elciudadano.com/actualidad/kiva-chile-2026-pueblos-originarios-codegua-cronica/11/25/",
-     "hora": "17:07"
-    },
-    {
-     "titulo": "Tienen botón de pánico y GPS: Las Condes invita a vecinas en riesgo por VIF a consultar por sus relojes SOS para mujeres",
-     "medio": "La Tercera · Nacional",
-     "url": "https://www.latercera.com/nacional/noticia/tienen-boton-de-panico-y-gps-las-condes-invita-a-vecinas-en-riesgo-por-vif-a-consultar-por-sus-relojes-sos-para-mujeres/",
-     "hora": "17:02"
-    },
-    {
-     "titulo": "“Me dijo: ‘yo por usted haría cualquier cosa'”: Expresidente Boric revela desconocida anécdota con Delfina Guzmán",
+     "titulo": "Detienen a hombre acusado del femicidio de su pareja y agresión sexual de su suegra en Villa Alemana",
      "medio": "The Clinic",
-     "url": "https://www.theclinic.cl/2026/11/25/me-dijo-yo-por-usted-haria-cualquier-cosa-expresidente-boric-revela-desconocida-anecdota-con-delfina-guzman/",
-     "hora": "17:01"
+     "url": "https://www.theclinic.cl/2026/11/25/detienen-a-hombre-acusado-del-femicidio-de-su-pareja-y-agresion-sexual-de-su-suegra-en-villa-alemana/",
+     "hora": "19:02"
     },
     {
-     "titulo": "Por falta de fundamento constitucional concreto TC declara derechamente inadmisible inaplicabilidad",
-     "medio": "Diario Constitucional",
-     "url": "https://www.diarioconstitucional.cl/tribunal-constitucional/por-falta-de-fundamento-constitucional-concreto-tc-declara-derechamente-inadmisible-inaplicabilidad",
-     "hora": "17:01"
+     "titulo": "Vinexpo Explorer: el gigante francés del vino trae por primera vez a Chile su feria boutique, con compradores de 29 países",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/negocios/feria-mundial-vinos-aterriza-en-chile/",
+     "hora": "19:02"
+    },
+    {
+     "titulo": "Mamá de Arturo Vidal se sincera sobre el retiro del “King” y confiesa lo que más le apena: “Después va a ser...”",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/25/mama-de-arturo-vidal-se-sincera-sobre-el-retiro-del-king-y-confiesa-lo-que-mas-le-apena-despues-va-a-ser/",
+     "hora": "19:02"
+    },
+    {
+     "titulo": "La oposición y el arte de sabotearse",
+     "medio": "La Tercera Opinion",
+     "url": "https://www.latercera.com/opinion/noticia/la-oposicion-y-el-arte-de-sabotearse/",
+     "hora": "19:02"
     }
    ]
   },
@@ -206,34 +205,34 @@
    "seccion": "Economía",
    "notas": [
     {
-     "titulo": "¿Llama a una intervención? El Tipo de Cambio Real estaría en niveles de alerta, según economistas",
+     "titulo": "Vinexpo Explorer: el gigante francés del vino trae por primera vez a Chile su feria boutique, con compradores de 29 países",
+     "medio": "Ex-Ante",
+     "url": "https://www.ex-ante.cl/negocios/feria-mundial-vinos-aterriza-en-chile/",
+     "hora": "19:02"
+    },
+    {
+     "titulo": "I-Med acuerda pagar US$ 4 millones al Fisco tras investigación de la FNE por riesgos a la libre competencia",
      "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/bolsa-monedas/llama-a-una-intervencion-el-tipo-de-cambio-real-estaria-en-niveles-de",
-     "hora": "17:06"
+     "url": "http://www.df.cl/empresas/salud/i-med-acuerda-pagar-us-4-millones-al-fisco-tras-investigacion-de-la-fne",
+     "hora": "19:00"
     },
     {
-     "titulo": "El consumo masivo, en baja: las ventas de súpers y mayoristas cayeron y extendieron sus rachas negativas",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/25/el-consumo-masivo-en-baja-las-ventas-de-supers-y-mayoristas-cayeron-y-extendieron-sus-rachas-negativas/",
-     "hora": "17:00"
+     "titulo": "Con su creciente poder sobre el mundo empresarial, Trump desafía el síndrome del “pato cojo”",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/internacional/economia/con-su-creciente-poder-sobre-el-mundo-empresarial-trump-desafia-el",
+     "hora": "19:00"
     },
     {
-     "titulo": "La industria busca optimizar el consumo energético mediante nuevas tecnologías de control de motores",
+     "titulo": "Wall Street cierra dividido ante la ola de ventas en IA: el Nasdaq retrocede y el IPSA va contracorriente",
      "medio": "Portal Innova · noticias",
-     "url": "https://portalinnova.cl/variadores-frecuencia-arrancadores-suaves-motores-industriales/",
-     "hora": "16:59"
+     "url": "https://portalinnova.cl/wall-street-cierra-dividido-ante-la-ola-de-ventas-en-ia-el-nasdaq-retrocede-y-el-ipsa-va-contracorriente/",
+     "hora": "19:00"
     },
     {
-     "titulo": "¿El 2026 puso en jaque las entrevistas de trabajo?",
+     "titulo": "CIO Summit Cono Sur 2026 reunió a líderes tecnológicos para analizar los desafíos de la era digital",
      "medio": "Portal Innova · noticias",
-     "url": "https://portalinnova.cl/el-2026-puso-en-jaque-las-entrevistas-de-trabajo/",
-     "hora": "16:59"
-    },
-    {
-     "titulo": "El puerto Santo Tomás de Castilla en Guatemala inaugura la temporada de cruceros con 759 turistas extranjeros",
-     "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/guatemala/2026/11/25/el-puerto-santo-tomas-de-castilla-en-guatemala-inaugura-la-temporada-de-cruceros-con-759-turistas-extranjeros/",
-     "hora": "16:58"
+     "url": "https://portalinnova.cl/cio-summit-cono-sur-2026-reunio-a-lideres-tecnologicos-para-analizar-los-desafios-de-la-era-digital/",
+     "hora": "18:54"
     }
    ]
   },
@@ -241,16 +240,22 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Sporting Lisboa vs. Manchester United - EN VIVO: minuto a minuto del partido de Luis Suárez en la Champions League",
+     "titulo": "Diego Santilli presenta ante el Senado su primer informe como jefe de Gabinete: “Valió la pena ordenar las cuentas”",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/deportes/2026/11/25/sporting-lisboa-vs-manchester-united-en-vivo-minuto-a-minuto-del-partido-de-luis-suarez-en-la-champions-league/",
-     "hora": "17:05"
+     "url": "https://www.infobae.com/politica/2026/11/25/diego-santilli-presentara-ante-el-senado-su-primer-informe-como-jefe-de-gabinete/",
+     "hora": "19:04"
     },
     {
-     "titulo": "Lille vs. Bayern Múnich EN VIVO: se juega el primer tiempo sin el colombiano Luis Díaz en Champions League",
+     "titulo": "Al Manchester United de Pochettino y Lisandro Martínez se le escapó la victoria en la Champions League: la agenda de la jornada",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/colombia/deportes/2026/11/25/lille-vs-bayern-munich-en-vivo-asi-es-el-regreso-de-luis-diaz-por-la-champions-league/",
-     "hora": "17:05"
+     "url": "https://www.infobae.com/deportes/2026/11/25/el-inter-de-lautaro-martinez-y-el-atletico-de-madrid-de-julian-alvarez-salen-a-la-cancha-por-la-fecha-5-de-la-champions-league-la-agenda-de-la-jornada/",
+     "hora": "19:04"
+    },
+    {
+     "titulo": "África: la región con mayor número de mujeres asesinadas en el ámbito privado",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/video/20261125-%C3%A1frica-la-regi%C3%B3n-con-mayor-n%C3%BAmero-de-mujeres-asesinadas-en-el-%C3%A1mbito-privado",
+     "hora": "18:51"
     }
    ]
   },
@@ -258,34 +263,34 @@
    "seccion": "Economía mundial",
    "notas": [
     {
+     "titulo": "Brasil expresa su \"indignación\" ante las nuevas propuestas arancelarias de EEUU",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/brasil-expresa-indignaci%C3%B3n-propuestas-arancelarias-213906267.html",
+     "hora": "18:39"
+    },
+    {
+     "titulo": "ActualizaciÃ³n: Los Ã­ndices bursÃ¡tiles estadounidenses presentan resultados mixtos, los rendimientos de los bonos del Tesoro caen a medida que los inversores retiran sus inversiones de los fabricantes de chips…",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/actualizaci%C3%B3n-%C3%ADndices-burs%C3%A1tiles-estadounidenses-presentan-213222824.html",
+     "hora": "18:32"
+    },
+    {
+     "titulo": "La selección femenina de fútbol de Alemania se posiciona contra la violencia doméstica",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/la-selección-femenina-de-fútbol-de-alemania-se-posiciona-contra-la-violencia-doméstica/a-80054783?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "18:06"
+    },
+    {
+     "titulo": "\"Ya no tenemos dinero para todo\": Alemania, ante una deuda récord",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/ya-no-tenemos-dinero-para-todo-alemania-ante-una-deuda-récord/a-80054956?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "17:52"
+    },
+    {
      "titulo": "Casio lanza en España su nuevo G-Shock: diseño exclusivo con acabados mediante deposición de vapor",
      "medio": "Cinco Días portada",
      "url": "https://cincodias.elpais.com/smartlife/gadgets/2026-11-25/casio-lanza-en-espana-su-nuevo-g-shock-diseno-exclusivo-con-acabados-mediante-deposicion-de-vapor.html",
      "hora": "17:00"
-    },
-    {
-     "titulo": "Apple TV ya tiene sus estrenos para diciembre del 2026, esto es todo lo que llega",
-     "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/smartlife/smart-tv/2026-11-25/apple-tv-estrenos-diciembre-2026.html",
-     "hora": "16:00"
-    },
-    {
-     "titulo": "Polonia anuncia creación de zona de exclusión aérea en la frontera con Ucrania",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/polonia-anuncia-creación-de-zona-de-exclusión-aérea-en-la-frontera-con-ucrania/a-80054707?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "15:59"
-    },
-    {
-     "titulo": "Por qué cada vez más indios se suman a la guerra entre Rusia y Ucrania",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/por-qué-cada-vez-más-indios-se-suman-a-la-guerra-entre-rusia-y-ucrania/a-80054056?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "15:46"
-    },
-    {
-     "titulo": "ActualizaciÃ³n: Los Ã­ndices bursÃ¡tiles estadounidenses presentan resultados mixtos, mientras que los rendimientos de los bonos del Tesoro caen en medio de una fuerte venta masiva en el sector de los fabricantes de…",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/actualizaci%C3%B3n-%C3%ADndices-burs%C3%A1tiles-estadounidenses-presentan-184032781.html",
-     "hora": "15:40"
     }
    ]
   },
@@ -293,34 +298,34 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "1Password sufre un hackeo. Qué ha pasado y cómo te afecta",
+     "titulo": "El botón oculto junto a la palanca automática que pocos conocen: para qué sirve el Shift Lock",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/automovil/boton-oculto-a-palanca-automatica-que-pocos-conocen-sirve-shift-lock",
+     "hora": "19:04"
+    },
+    {
+     "titulo": "Primero el FBI, después la CIA y ahora el Tesoro: EEUU encadena incidentes de ciberseguridad y el último salpica a un videojuego",
+     "medio": "Xataka",
+     "url": "https://www.xataka.com/seguridad/primero-fbi-despues-cia-ahora-tesoro-eeuu-encadena-incidentes-ciberseguridad-ultimo-salpica-a-videojuego",
+     "hora": "18:30"
+    },
+    {
+     "titulo": "Número 1 en 87 países: en 2022, su película le ganó a Dune y a Steven Spielberg. Ahora su nuevo trabajo está arrasando en streaming",
+     "medio": "Xataka México",
+     "url": "https://www.xataka.com.mx/cine-y-tv/numero-1-87-paises-2022-su-pelicula-le-gano-a-dune-a-steven-spielberg-ahora-su-nuevo-trabajo-esta-arrasando-streaming",
+     "hora": "18:30"
+    },
+    {
+     "titulo": "La forma más inesperada de usar Windows XP en 2026 está dentro de Linux",
      "medio": "Hipertextual",
-     "url": "https://hipertextual.com/seguridad/1password-sufre-un-hackeo-que-ha-pasado-y-como-te-afecta/",
-     "hora": "17:06"
+     "url": "https://hipertextual.com/tecnologia/windows-xp-linux-win4wine-proyecto/",
+     "hora": "18:10"
     },
     {
-     "titulo": "Temu quiere fortalecer su negocio en México: ahora busca mejorar sus pagos y reducir el fraude con Mastercard",
-     "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/comercio-electronico/temu-quiere-fortalecer-su-negocio-mexico-ahora-busca-mejorar-sus-pagos-reducir-fraude-mastercard",
-     "hora": "17:02"
-    },
-    {
-     "titulo": "Siempre nos han dicho que parar 15 minutos a hacer ejercicio mejora el estudio. La ciencia dice que no es tan sencillo",
+     "titulo": "Take-Two frena Leonida, un proyecto que pretendía llevar 'GTA VI' a Windows a partir de una versión filtrada de Xbox",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/medicina-y-salud/siempre-nos-han-dicho-que-parar-15-minutos-a-hacer-ejercicio-mejora-estudio-ciencia-dice-que-no-sencillo",
-     "hora": "17:00"
-    },
-    {
-     "titulo": "Los Sony WH-1000XM4C a precio de liquidación, ofertas en AirPods, Beats y otros auriculares Bluetooth durante el Black Friday 2026",
-     "medio": "Xataka",
-     "url": "https://www.xataka.com/seleccion/sony-wh-1000xm4c-a-precio-liquidacion-ofertas-airpods-beats-otros-auriculares-bluetooth-durante-black-friday-2026",
-     "hora": "16:46"
-    },
-    {
-     "titulo": "En 2027, Sheinbaum reabrirá registro para depositar apoyo de más de 9,500 pesos al mes a jóvenes de 18 a 29 años: requisitos y cómo inscribirse",
-     "medio": "Xataka México",
-     "url": "https://www.xataka.com.mx/empresas-y-economia/2027-sheinbaum-reabrira-registro-para-depositar-apoyo-9-500-pesos-al-mes-a-jovenes-18-a-29-anos-requisitos-como-inscribirse",
-     "hora": "16:32"
+     "url": "https://www.xataka.com/videojuegos/take-two-frena-leonida-proyecto-que-pretendia-llevar-gta-vi-a-windows-a-partir-version-filtrada-xbox",
+     "hora": "18:00"
     }
    ]
   },
@@ -328,34 +333,34 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "Atlético - Viking, en directo: última hora de la fase liga de la Champions League, hoy en vivo",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/champions/atletico-viking-en-directo-ultima-hora-de-la-fase-liga-de-la-champions-league-hoy-en-vivo-f202611-d/",
-     "hora": "17:06"
-    },
-    {
-     "titulo": "PSG - Roma, en directo: Champions League, en vivo hoy",
+     "titulo": "PSG 2-2 Roma: goles, resumen y resultado",
      "medio": "AS Fútbol",
      "url": "https://as.com/futbol/champions/psg-roma-en-directo-champions-league-en-vivo-hoy-f202611-d/",
-     "hora": "17:06"
+     "hora": "19:06"
     },
     {
-     "titulo": "Con Pochettino y Lisandro Martínez, Manchester United busca recuperarse en la Champions League: la agenda de la jornada",
+     "titulo": "Sporting CP 2 - Manchester United 2: resumen, resultado y goles del partido",
+     "medio": "AS Fútbol",
+     "url": "https://as.com/futbol/champions/sporting-cp-manchester-united-en-directo-champions-league-en-vivo-hoy-f202611-d/",
+     "hora": "19:02"
+    },
+    {
+     "titulo": "El PSG no puede con la Roma y deja al Real Madrid de Mourinho como el único con puntaje ideal en la Champions League",
+     "medio": "La Tercera · El Deportivo",
+     "url": "https://www.latercera.com/el-deportivo/noticia/el-psg-no-puede-con-la-roma-y-deja-al-real-madrid-de-mourinho-como-el-unico-con-puntaje-ideal-en-la-champions-league/",
+     "hora": "18:59"
+    },
+    {
+     "titulo": "Al Manchester United de Pochettino y Lisandro Martínez se le escapó la victoria en la Champions League: la agenda de la jornada",
      "medio": "Infobae Deportes",
      "url": "https://www.infobae.com/deportes/2026/11/25/el-inter-de-lautaro-martinez-y-el-atletico-de-madrid-de-julian-alvarez-salen-a-la-cancha-por-la-fecha-5-de-la-champions-league-la-agenda-de-la-jornada/",
-     "hora": "17:03"
+     "hora": "18:59"
     },
     {
-     "titulo": "Gabriel Jesus: \"Estoy contento por el gol, pero sé que puedo jugar mejor\"",
+     "titulo": "El PSG se atasca en Roma sin sus cracks",
      "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261125/1004255528/gabriel-jesus-contento-gol-jugar-mejor.html",
-     "hora": "16:56"
-    },
-    {
-     "titulo": "Video: así avanzan los trabajos en la cancha de Instituto para recibir a River",
-     "medio": "Olé",
-     "url": "https://www.ole.com.ar/river-plate/instituto-river-monumentaldealtacordoba-torneoclausura-cancha-gloria-pasto-video-drones-avances-hinchas-riverplatense_0_Rl2MdF9aLz.html",
-     "hora": "16:56"
+     "url": "https://www.mundodeportivo.com/futbol/champions-league/20261125/1004255607/psg-atasca-roma-cracks.html",
+     "hora": "18:59"
     }
    ]
   },
@@ -363,16 +368,16 @@
    "seccion": "Ciencia",
    "notas": [
     {
+     "titulo": "Arqueólogos creen que un enigmático túnel de 158 metros excavado hace más de 2.000 años en Turquía pudo funcionar como una trampa sagrada",
+     "medio": "Muy Interesante",
+     "url": "https://muyinteresante.okdiario.com/historia/misterioso-tunel-arsameia-turquia-trampa-sagrada-2000-anos.html",
+     "hora": "17:33"
+    },
+    {
      "titulo": "Sony reina en la semana más importante del año rebajando sus famosos auriculares WH-1000XM5",
      "medio": "Muy Interesante",
      "url": "https://muyinteresante.okdiario.com/bazar/sony-reina-en-la-semana-mas-importante-del-ano-rebajando-sus-famosos-auriculares-wh-1000xm5.html",
      "hora": "16:15"
-    },
-    {
-     "titulo": "¿Por qué el núcleo de la Tierra no se enfría? El equívoco de una brasa de 4.500 millones de años",
-     "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/ciencia/nucleo-terrestre-enfriamiento.html",
-     "hora": "15:02"
     },
     {
      "titulo": "Hierro en los océanos: cuando tan poco importa tanto",
@@ -392,16 +397,22 @@
    "seccion": "Emprendimiento",
    "notas": [
     {
-     "titulo": "Impulsa Startup: 15 startups llegan a su Demo Day",
+     "titulo": "Caputo pide a China US$5.000M del swap para enero",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/impulsa-startup-15-startups-llegan-a-su-demo-day/",
-     "hora": "16:21"
+     "url": "https://ecosistemastartup.com/caputo-pide-a-china-us5-000m-del-swap-para-enero/",
+     "hora": "18:36"
     },
     {
-     "titulo": "VMOS, el oleoducto de Vaca Muerta, busca US$66M más",
+     "titulo": "El control de motores eléctricos es clave para la seguridad y continuidad de las operaciones industriales",
+     "medio": "Tour Innovación · emprendimiento",
+     "url": "https://www.tourinnovacion.cl/industrias/el-control-de-motores-electricos-es-clave-para-la-seguridad-y-continuidad-de-las-operaciones-industriales/",
+     "hora": "18:29"
+    },
+    {
+     "titulo": "Leapmotor produce 2 millones de autos y acelera en Europa",
      "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/vmos-el-oleoducto-de-vaca-muerta-busca-us66m-mas/",
-     "hora": "16:06"
+     "url": "https://ecosistemastartup.com/leapmotor-produce-2-millones-de-autos-y-acelera-en-europa/",
+     "hora": "18:09"
     },
     {
      "titulo": "Novedades para la postulación a fondos concursables de Sercotec",
@@ -410,16 +421,10 @@
      "hora": "15:27"
     },
     {
-     "titulo": "Con realidad virtual y experiencias interactivas, Educa Sostenible acercó la eficiencia energética a estudiantes y comunidades de Valparaíso",
-     "medio": "Tour Innovación · emprendimiento",
-     "url": "https://www.tourinnovacion.cl/energia/con-realidad-virtual-y-experiencias-interactivas-educa-sostenible-acerco-la-eficiencia-energetica-a-estudiantes-y-comunidades-de-valparaiso/",
-     "hora": "06:34"
-    },
-    {
-     "titulo": "DGAC Chile logra importante representación en la OACI",
-     "medio": "Tour Innovación · emprendimiento",
-     "url": "https://www.tourinnovacion.cl/actualidad/dgac-chile-logra-importante-representacion-en-la-oaci/",
-     "hora": "06:30"
+     "titulo": "Startups chilenas participan en gira a Miami para impulsar su expansión internacional",
+     "medio": "Portal Innova",
+     "url": "https://portalinnova.cl/startups-chilenas-participan-en-gira-a-miami-para-impulsar-su-expansion-internacional-2/",
+     "hora": "09:07"
     }
    ]
   }
@@ -439,7 +444,7 @@
     "aqi": 42,
     "estado": "Buena",
     "estacion": "Antofagasta, Chile",
-    "hora": "11:00",
+    "hora": "13:00",
     "url": "https://aqicn.org/city/chile/antofagasta"
    },
    {
@@ -452,11 +457,11 @@
    },
    {
     "ciudad": "Valparaíso",
-    "aqi": 42,
+    "aqi": 28,
     "estado": "Buena",
-    "estacion": "Valparaiso, Chile",
-    "hora": "11:00",
-    "url": "https://aqicn.org/city/chile/valparaiso"
+    "estacion": "Viña del Mar, Chile",
+    "hora": "13:00",
+    "url": "https://aqicn.org/city/chile/vina-del-mar"
    },
    {
     "ciudad": "Santiago",
@@ -504,17 +509,17 @@
  "mercados": [
   {
    "nombre": "S&P 500",
-   "valor": 7201.09,
-   "variacion_pct": -0.5,
-   "fecha": "2026-11-24",
-   "fuente": "FRED (Reserva Federal de St. Louis)"
+   "valor": 7182.78,
+   "variacion_pct": -0.25,
+   "fecha": "2026-11-25",
+   "fuente": "LarrainVial"
   },
   {
    "nombre": "Nasdaq",
-   "valor": 23733.54,
-   "variacion_pct": -1.48,
-   "fecha": "2026-11-24",
-   "fuente": "FRED (Reserva Federal de St. Louis)"
+   "valor": 23585.8,
+   "variacion_pct": -0.62,
+   "fecha": "2026-11-25",
+   "fuente": "LarrainVial"
   },
   {
    "nombre": "Dow Jones",
@@ -539,18 +544,18 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 59879.67,
+  "bitcoin_usd": 60154.01,
   "bitcoin_fecha": "2026-11-25",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 349,
+ "fuentes_ok": 347,
  "indicadores_origen": {
-  "dolar": "banco_central",
-  "euro": "banco_central",
-  "yuan": "banco_central",
-  "uf": "banco_central",
-  "utm": "banco_central",
-  "tpm": "banco_central",
-  "libra_cobre": "banco_central"
+  "dolar": "banco_central_rige",
+  "euro": "banco_central_rige",
+  "uf": "mindicador",
+  "utm": "mindicador",
+  "tpm": "mindicador",
+  "libra_cobre": "mindicador",
+  "yuan": "banco_central_rige"
  }
 }
