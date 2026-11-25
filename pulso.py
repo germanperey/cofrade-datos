@@ -17,6 +17,7 @@ import math
 import os
 import re
 import sys
+import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import bajar as B  # noqa: E402
@@ -297,6 +298,61 @@ def aire(estado):
     return {"ciudades": out, "fuente": r.get("fuente")} if out else None
 
 
+# 25-11-2026 (Germán, 00:40: «el Auditor que revisa cada 3 horas debe también actualizar los vuelos aéreos (Salidas y Llegadas)
+# colocando el status actualizado de cada vuelo y el horario confirmado»). La edición sale a las 07:00 con el estado de esa hora; el
+# pulso relee cada 2 horas el tablero público de Flight-Status de los 5 aeropuertos (su robots.txt lo permite; las mismas 10 páginas
+# que bajar.py ya lee de madrugada) y deja datos/vuelos-vivo.json: por vuelo y hora programada, la hora confirmada y el estado. El
+# sitio lo aplica sobre la tabla de la edición del día (sitio/modulos/vuelos_vivo.js) y el vigía revisa que esté al día.
+VUELOS_AEROP = ("scl", "anf", "ccp", "pmc", "puq")
+RX_VUELO = re.compile(r"^[A-Z0-9]{2}\d{1,4}[A-Z]?$")
+RX_HORA = re.compile(r"^\d{2}:\d{2}$")
+
+
+def vuelos_de_texto(t, hoy_iso):
+    """Texto de una página de Flight-Status (salidas o llegadas) → {«VUELO|HH:MM»: {"c": hora confirmada, "e": estado}} solo de hoy."""
+    toks = [x.strip() for x in (t or "").split("|")]
+    out = {}
+    for i, x in enumerate(toks):
+        x = x.split("\n")[-1].strip()
+        if not RX_VUELO.match(x) or i + 5 >= len(toks):
+            continue
+        prog, est, _lugar, _term, st = (z.split("\n")[0].strip() for z in toks[i + 1:i + 6])
+        if not RX_HORA.match(prog) or not st:
+            continue
+        m = re.match(r"(.*?)\s+on\s+(\d{4}-\d{2}-\d{2})$", st)
+        if m:
+            if m.group(2) != hoy_iso:   # «Scheduled on <mañana>» o «Arrived on <ayer>»: no es el vuelo de hoy
+                continue
+            st = m.group(1)
+        lu = re.match(r"\(\s*([A-Z]{3})\s*\)\s*(.*)$", _lugar)   # «( IAH ) Houston, TX»: el otro aeropuerto del vuelo
+        out[f"{x}|{prog}"] = {"c": est if RX_HORA.match(est) else "", "e": st[:40], **({"i": lu.group(1), "l": lu.group(2)[:40]} if lu else {})}
+    return out
+
+
+def vuelos_vivo(estado):
+    hoy = B.ahora().date().isoformat()
+    aer, n, fallas = {}, 0, []
+    for c in VUELOS_AEROP:
+        for tipo, k in (("departures", "salidas"), ("arrivals", "llegadas")):
+            url = f"https://flight-status.com/airport/{c}-{tipo}/"
+            if not B.robots_permite(url, estado):
+                fallas.append(f"{c}-{tipo}: robots.txt")
+                continue
+            h = B.pedir(url, estado, f"vuelos_vivo_{c}_{tipo}", como="text", espera=(0, 10), limite=40)
+            filas = vuelos_de_texto(B.html_a_texto(h, limite=3_000_000), hoy) if h else {}
+            if filas:
+                aer.setdefault(c, {})[k] = filas
+                n += len(filas)
+            else:
+                fallas.append(f"{c}-{tipo}: sin filas")
+            time.sleep(2)   # una página cada 2 segundos: trato amable al sitio
+    estado["vuelos_vivo"] = {"ok": n > 0, "hora": B.ahora().isoformat(timespec="seconds"), "n": n, "error": "; ".join(fallas[:10])}
+    if not n:
+        return None
+    return {"generado": B.ahora().isoformat(timespec="minutes"), "fecha": hoy, "fuente": "Flight-Status (flight-status.com)",
+            "aeropuertos": aer}
+
+
 def armar(estado, carpeta=None):
     """`carpeta`: la de datos/ (respaldos de los indicadores). Sin ella, el pulso solo usa lo que responde ahora."""
     p = {"generado": B.ahora().isoformat(timespec="minutes"), "proxima": None}
@@ -331,6 +387,13 @@ def main(argv=None):
     p = armar(estado, a.salida)
     os.makedirs(a.salida, exist_ok=True)
     json.dump(p, open(os.path.join(a.salida, "pulso.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    try:   # 25-11-2026: vuelos con su estado y hora confirmada (archivo aparte; si falla, queda el anterior)
+        vv = vuelos_vivo(estado)
+        if vv:
+            json.dump(vv, open(os.path.join(a.salida, "vuelos-vivo.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        print(f"VUELOS EN VIVO: {(estado.get('vuelos_vivo') or {}).get('n', 0)} vuelos · {(estado.get('vuelos_vivo') or {}).get('error', '')}")
+    except Exception as ex:   # noqa: BLE001 — los vuelos nunca botan el pulso
+        print("VUELOS EN VIVO: falla", type(ex).__name__, ex)
     n_tit = sum(len(s["notas"]) for s in p.get("titulares") or [])
     cas = estado.get("indicadores_cascada") or {}
     print(f"PULSO {p['generado']}: {len(p.get('indicadores') or [])} de {len(INDICADORES)} indicadores "

@@ -434,6 +434,17 @@ def revisar_vigencia(inf, reparar):
         limite = hoy - dt.timedelta(days=dias + (1 if t.hour < 9 else 0))
         if not inf.ok(f"Datos al día: {nombre}", f >= limite, f"{campo} = {f.isoformat()} (máximo {dias} días)", grave=grave) and grave:
             viejos.append(nombre)
+    # 25-11-2026 (Germán: el Auditor «debe también actualizar los vuelos aéreos (Salidas y Llegadas) colocando el status actualizado de
+    # cada vuelo y el horario confirmado»): el pulso los relee cada 2 horas; de 09:00 a 23:59 no pueden tener más de 5 horas.
+    if 9 <= t.hour:
+        try:
+            g = dt.datetime.fromisoformat(json.load(open(os.path.join(RAIZ, "datos", "vuelos-vivo.json"), encoding="utf-8"))["generado"])
+            horas = (t - g).total_seconds() / 3600
+            if not inf.ok("Vuelos con estado y hora confirmada al día", horas <= 5, f"actualizados hace {horas:.1f} h (máximo 5)") and reparar:
+                r = gh("POST", "/actions/workflows/pulso.yml/dispatches", json={"ref": "main"})
+                inf.reparar("Volver a leer los vuelos (Pulso del día)", r is not None and r.status_code == 204, f"HTTP {getattr(r, 'status_code', 'sin token')}")
+        except (OSError, ValueError, KeyError, TypeError) as ex:
+            inf.ok("Vuelos con estado y hora confirmada al día", False, f"sin datos/vuelos-vivo.json ({type(ex).__name__})")
     try:   # el último mes del Imacec publicado por el Banco Central tiene que estar
         meses = [ln.split(",")[0] for ln in open(os.path.join(RAIZ, "datos", "imacec.csv"), encoding="utf-8").read().split()]
         esp = imacec_esperado(hoy)

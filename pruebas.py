@@ -2566,6 +2566,24 @@ def imacec_oficial_con_revisiones_y_vigia_del_ultimo_mes():
 
 PRUEBAS.append(imacec_oficial_con_revisiones_y_vigia_del_ultimo_mes)
 
+def vuelos_en_vivo_desde_flight_status():
+    """25-11-2026 (Germán: el Auditor «debe también actualizar los vuelos aéreos (Salidas y Llegadas) colocando el status actualizado
+    de cada vuelo y el horario confirmado»): el pulso lee el tablero de Flight-Status; solo vuelos de hoy, con hora y estado."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import pulso
+    t = (" No. | \n Scheduled | \n Estimate/Actual | \n Destination | \n Terminal | \n Status | \n KL702\n | \n 13:10 | \n 13:12 | \n ( EZE ) Buenos Aires | \n"
+         " 2 - Gate E11 | \n Arrived | \n KL9225\n | \n 10:15 | \n | \n ( AEP ) Buenos Aires | \n 2 | \n Scheduled on 2026-11-25 | \n"
+         " LA312\n | \n 15:40 | \n | \n ( PUQ ) Punta Arenas | \n - | \n Cancelled | \n IB1\n | \n 01:10 | \n 01:20 | \n ( MAD ) Madrid | \n - | \n Arrived on 2026-11-24 | ")
+    d = pulso.vuelos_de_texto(t, "2026-11-24")
+    assert d == {"KL702|13:10": {"c": "13:12", "e": "Arrived", "i": "EZE", "l": "Buenos Aires"},
+                 "LA312|15:40": {"c": "", "e": "Cancelled", "i": "PUQ", "l": "Punta Arenas"},
+                 "IB1|01:10": {"c": "01:20", "e": "Arrived", "i": "MAD", "l": "Madrid"}}, d
+    assert pulso.vuelos_de_texto(t, "2026-11-25") == {"KL702|13:10": d["KL702|13:10"], "LA312|15:40": d["LA312|15:40"],
+                                                       "KL9225|10:15": {"c": "", "e": "Scheduled", "i": "AEP", "l": "Buenos Aires"}}
+
+
+PRUEBAS.append(vuelos_en_vivo_desde_flight_status)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:
