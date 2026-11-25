@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-23T15:50:42-03:00",
- "total": 211,
+ "generado": "2026-11-25T01:27:38-03:00",
+ "total": 219,
  "secciones": {
   "politica/chile": [
    [
@@ -14,6 +14,11 @@
     "rss"
    ],
    [
+    "Diario Constitucional (RSS)",
+    "https://www.diarioconstitucional.cl/feed/",
+    "rss"
+   ],
+   [
     "Diario El Centro Talca (RSS)",
     "https://www.diarioelcentro.cl/feed/",
     "rss"
@@ -24,8 +29,8 @@
     "rss"
    ],
    [
-    "El Siglo (RSS)",
-    "https://www.elsiglo.cl/feed/",
+    "El Rancaguino (RSS)",
+    "https://www.elrancaguino.cl/feed/",
     "rss"
    ],
    [
@@ -68,6 +73,11 @@
    [
     "Bloomberg Linea (RSS)",
     "https://www.bloomberglinea.com/arc/outboundfeeds/rss/?outputType=xml",
+    "rss"
+   ],
+   [
+    "Diario Financiero · últimas noticias (RSS)",
+    "https://www.df.cl/noticias/site/list/port/rss.xml",
     "rss"
    ],
    [
@@ -147,6 +157,16 @@
    [
     "CORMA (RSS)",
     "https://www.corma.cl/feed/",
+    "rss"
+   ],
+   [
+    "Generadoras de Chile (RSS)",
+    "https://generadoras.cl/feed/",
+    "rss"
+   ],
+   [
+    "Global Seafood Alliance (RSS)",
+    "https://www.globalseafood.org/feed/",
     "rss"
    ],
    [
@@ -647,11 +667,6 @@
     "rss"
    ],
    [
-    "ESO Blog (RSS)",
-    "https://www.eso.org/public/blog/feed/",
-    "rss"
-   ],
-   [
     "ESO Imagen de la semana (RSS)",
     "https://www.eso.org/public/images/potw/feed/",
     "rss"
@@ -894,6 +909,11 @@
     "rss"
    ],
    [
+    "Sailing World (RSS)",
+    "https://www.sailingworld.com/feed/",
+    "rss"
+   ],
+   [
     "Scuttlebutt Sailing News (RSS)",
     "https://www.sailingscuttlebutt.com/feed/",
     "rss"
@@ -963,6 +983,11 @@
    [
     "Espinof (RSS)",
     "https://www.espinof.com/feedburner.xml",
+    "rss"
+   ],
+   [
+    "GDELT · Chile: panoramas y cultura",
+    "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28concierto+OR+festival+OR+estreno+OR+teatro+OR+exposici%C3%B3n+OR+panorama%29&timespan=3d",
     "rss"
    ],
    [
@@ -1055,8 +1080,18 @@
   ],
   "perspectivas": [
    [
+    "Chile Desarrollo Sustentable · noticias (RSS)",
+    "https://www.chiledesarrollosustentable.cl/feed/",
+    "rss"
+   ],
+   [
     "Consejo de Políticas de Infraestructura (RSS)",
     "https://www.infraestructurapublica.cl/feed/",
+    "rss"
+   ],
+   [
+    "Electromineria (RSS)",
+    "https://www.electromineria.cl/feed/",
     "rss"
    ],
    [
@@ -1078,6 +1113,11 @@
     "Revista Electricidad · proyectos de energía (RSS)",
     "https://www.revistaei.cl/feed/",
     "rss"
+   ],
+   [
+    "Revista NOS · regiones e infraestructura (RSS)",
+    "https://www.revistanos.cl/feed/",
+    "rss"
    ]
   ],
   "inmobiliario": [
@@ -1089,11 +1129,16 @@
   ]
  },
  "fallas": {
-  "https://www.servel.cl/feed/": 1,
-  "https://www.eso.org/public/blog/feed/": 2,
-  "https://www.nasaspaceflight.com/feed/": 1,
-  "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28f%C3%BAtbol+OR+tenis+OR+golf+OR+%22La+Roja%22+OR+campeonato%29&timespan=1d": 1,
-  "https://ecosistemastartup.com/feed/": 1
+  "https://www.sercotec.cl/feed/": 1,
+  "https://www.chilealimentos.com/feed/": 1,
+  "https://www.sciencedaily.com/rss/top/technology.xml": 1,
+  "https://www.espn.com/espn/rss/soccer/news": 1,
+  "https://www.espn.com/espn/rss/nfl/news": 1,
+  "https://www.espn.com/espn/rss/mlb/news": 1,
+  "https://espndeportes.espn.com/espn/rss/news": 1,
+  "https://www.marcachile.cl/feed/": 1,
+  "https://www.fundacionimagendechile.cl/feed/": 1,
+  "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28f%C3%BAtbol+OR+tenis+OR+golf+OR+%22La+Roja%22+OR+campeonato%29&timespan=1d": 2
  },
  "nota": "Fuentes verificadas desde GitHub (robots.txt, RSS válido y notas recientes). Las lee bajar.py."
 }
