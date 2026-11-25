@@ -2599,6 +2599,8 @@ def banners_de_suscripcion_en_su_lugar():
                        ("emprendimiento", "emp", "section#emprendimiento"), ("tecnologia", "emp", None), ("vuelos", "vue", "section#vuelos"),
                        ("inmobiliario", "inm", "#subsidios"), ("deportes", "dep", "section#deportes")}, lugares
     assert 'id="cnbDlg"' in o["d"] and "cnb-dlg-f" in o["d"]
+    # 25-11 04:46: la ventana toma el tema solo de la edición (con el sistema en oscuro y la edición en claro quedaba ilegible)
+    assert "var t=R.getAttribute('data-theme')==='dark'?'dark':'light'" in js and "prefers-color-scheme: dark)').matches?'dark'" not in js
     from PIL import Image
     for x in o["b"]:
         for tipo, tam in (("pc", (2112, 360)), ("tel", (732, 460))):

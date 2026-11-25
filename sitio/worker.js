@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "c13cc1d5fe49";
+const VERSION_SITIO = "57ebc7de7fc7";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6555,6 +6555,8 @@ function grupoHtml(lista) {
     + `<div class="cnb-pista">${bs}</div><div class="cnb-ctrl" data-no-tr><button type="button" class="cnb-prev" aria-label="Banner anterior">‹</button>${puntos}`
     + `<button type="button" class="cnb-next" aria-label="Banner siguiente">›</button><button type="button" class="cnb-pausa" aria-label="Pausar el carrusel" aria-pressed="false">⏸</button></div></div>`;
 }
+// 25-11-2026 04:46 (captura de Germán: el título de la ventana casi no se leía): con la edición en modo claro y el equipo en modo oscuro,
+// la ventana recibía «oscuro» y quedaba letra clara sobre fondo claro. Ahora el tema sale solo del data-theme de la edición.
 // Ventana flotante: va una sola vez al final de la página. El formulario es el de /socios/fundador (modo embed), así que precio, plan,
 // recuadro de seguridad, validaciones, estado de las inscripciones (abiertas, en prueba o cerradas con «Avísenme») y el paso a
 // Mercado Pago salen del mismo lugar que la página de socios. Sin JavaScript, el botón abre esa página.
@@ -6590,7 +6592,7 @@ dlg.querySelector('.cnb-dlg-x').addEventListener('click',cerrar);dlg.addEventLis
 addEventListener('message',function(ev){if(ev.origin!==location.origin||!ev.data||ev.source!==fr.contentWindow)return;
 if(ev.data.cnb==='alto'&&ev.data.h>0)fr.style.height=Math.min(4000,Math.max(320,ev.data.h))+'px';if(ev.data.cnb==='cerrar')cerrar()});
 d.addEventListener('click',function(ev){var a=ev.target.closest&&ev.target.closest('.cnb-cta');if(!a||ev.defaultPrevented||ev.button||ev.metaKey||ev.ctrlKey||ev.shiftKey)return;ev.preventDefault();origen=a;
-var t=R.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),src='/socios/fundador?embed=1&plan=anual&t='+t+(en()?'&l=en':'');
+var t=R.getAttribute('data-theme')==='dark'?'dark':'light',src='/socios/fundador?embed=1&plan=anual&t='+t+(en()?'&l=en':'');
 if(cargado!==src){cargado=src;dlg.classList.remove('listo');fr.style.height='560px';fr.src=src}
 R.classList.add('cnb-abierto');dlg.showModal();dlg.querySelector('.cnb-dlg-x').focus()})}
 d.addEventListener('cofrade-idioma',function(){setTimeout(rot,0)});rot()})();</script>`;
