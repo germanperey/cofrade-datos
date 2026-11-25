@@ -274,6 +274,42 @@ def rapidez_faltante(html):
     return [n for n, m in MARCAS_RAPIDEZ.items() if m not in html]
 
 
+MESES_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+def _num_cl(t):
+    return float(str(t).replace("\u2212", "-").replace("\u00a0", "").replace(" ", "").replace(".", "").replace(",", ".").replace("%", "").replace("+", ""))
+
+
+def imacec_en_edicion(html_ed, csv_txt):
+    """24-11-2026 (Germán: «debes actualizar todo permanentemente y para eso debes monitorear cada contenido»): el Imacec que muestra
+    la edición (Crecimiento de Chile y la sección 9) contra la serie oficial del Banco Central (datos/imacec.csv). → lista de problemas."""
+    serie = {}
+    for ln in (csv_txt or "").split():
+        k, _, v = ln.partition(",")
+        try:
+            serie[k] = float(v)
+        except ValueError:
+            pass
+    mal = []
+    m = re.search(r'Último IMACEC \((\w+) (\d{4})\)</span><span class="kv">([^<]+)</span>', html_ed or "")
+    if m and m.group(1).lower() in MESES_ES:
+        mes = f"{m.group(2)}-{MESES_ES.index(m.group(1).lower()) + 1:02d}"
+        v = _num_cl(m.group(3))
+        if mes in serie and abs(v - serie[mes]) > 0.05:
+            mal.append(f"Crecimiento de Chile dice {m.group(3).strip()} para {m.group(1)} {m.group(2)} y el Banco Central {str(serie[mes]).replace('.', ',')} %")
+        if serie and mes < max(serie):
+            mal.append(f"Crecimiento de Chile llega a {m.group(1)} {m.group(2)} y el Banco Central ya publicó {max(serie)}")
+    m = re.search(r'IMACEC \(último\)</span><span class="kv">([^<]+)</span><span class="kf">\d{2}-(\d{2})-(\d{4})', html_ed or "")
+    if m:
+        mes, v = f"{m.group(3)}-{m.group(2)}", _num_cl(m.group(1))
+        if mes in serie and abs(v - serie[mes]) > 0.05:
+            mal.append(f"Indicadores económicos dice {m.group(1).strip()} para {mes} y el Banco Central {str(serie[mes]).replace('.', ',')} %")
+        if serie and mes < max(serie):
+            mal.append(f"Indicadores económicos llega a {mes} y el Banco Central ya publicó {max(serie)}")
+    return mal
+
+
 def revisar_contenido(inf, fecha):
     """La edición más nueva contra la anterior publicada (hasta 6 días atrás), tal como las sirve el sitio."""
     if not fecha:
@@ -284,6 +320,13 @@ def revisar_contenido(inf, fecha):
             falta = rapidez_faltante(r.text)
             inf.ok(f"Edición {fecha}: el sitio aplica sus 5 correcciones de rapidez", not falta,
                    "la Skill cambió ese código; la edición se ve igual pero carga más lenta. Falta: " + ", ".join(falta), grave=False)
+        if r.status_code == 200 and fecha >= ahora().date().isoformat():   # las ediciones pasadas quedan como salieron
+            try:
+                csv = open(os.path.join(RAIZ, "datos", "imacec.csv"), encoding="utf-8").read()
+                mal = imacec_en_edicion(r.text, csv)
+                inf.ok(f"Edición {fecha}: Imacec igual al del Banco Central (con sus revisiones)", not mal, "; ".join(mal))
+            except OSError:
+                pass
         hoy = inventario_html(r.text) if r.status_code == 200 else None
         if not hoy or len(hoy["graficos"]) < 10:
             return   # sin la edición completa no se compara (eso ya lo dice la revisión «se sirve la edición completa»)

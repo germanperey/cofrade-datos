@@ -2555,6 +2555,13 @@ def imacec_oficial_con_revisiones_y_vigia_del_ultimo_mes():
         dt.date(2026, 8, 3), dt.date(2026, 11, 2), dt.date(2026, 12, 1), dt.date(2027, 1, 4)]
     assert vigia.imacec_esperado(dt.date(2026, 11, 24)) == "2026-09"   # octubre sale el 1 de diciembre
     assert vigia.imacec_esperado(dt.date(2026, 12, 1)) == "2026-09" and vigia.imacec_esperado(dt.date(2026, 12, 2)) == "2026-10"
+    csv = "2026-08,-1.3\n2026-09,-0.1\n"
+    viejo = ('<span class="kn">Último IMACEC (septiembre 2026)</span><span class="kv">+0,2 %</span>'
+             '<span class="kn">IMACEC (último)</span><span class="kv">0,2%</span><span class="kf">01-09-2026</span>')
+    nuevo = ('<span class="kn">Último IMACEC (septiembre 2026)</span><span class="kv">\u22120,1 %</span>'
+             '<span class="kn">IMACEC (último)</span><span class="kv">-0,1%</span><span class="kf">01-09-2026</span>')
+    assert len(vigia.imacec_en_edicion(viejo, csv)) == 2 and vigia.imacec_en_edicion(nuevo, csv) == []
+    assert vigia.imacec_en_edicion(nuevo, csv + "2026-10,0.5\n")   # el Banco Central ya publicó octubre y la edición no
 
 
 PRUEBAS.append(imacec_oficial_con_revisiones_y_vigia_del_ultimo_mes)
