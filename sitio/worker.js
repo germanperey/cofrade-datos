@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "3a56424fd863";
+const VERSION_SITIO = "4156adba3201";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6969,6 +6969,9 @@ function bloqueEventos(filas) {
 //    enlace a ese gráfico.
 const AGUJA_TITULO = "Lo que mueve la aguja hoy";
 const AGUJA_REW = { element(e) { e.setInnerContent(AGUJA_TITULO); } };
+// 26-11-2026 (Germán: «todo esté respaldado con su fuente»): Indicadores y Feriados nombraban la fuente sin enlace; ahora la enlazan.
+const FUENTES_IND = { element(e) { e.append(' Ver en la fuente: <a href="https://si3.bcentral.cl/siete" target="_blank" rel="noopener">Banco Central de Chile (Base de Datos Estadísticos)</a> · <a href="https://www.coinbase.com/price/bitcoin" target="_blank" rel="noopener">Coinbase</a>.', { html: true }); } };
+const FUENTES_FER = { element(e) { e.append('<p class="fuente">Fuentes: <a href="https://www.bcn.cl/leychile" target="_blank" rel="noopener">Biblioteca del Congreso Nacional (Ley 19.668 y Ley 20.983)</a> · <a href="https://www.feriados.cl" target="_blank" rel="noopener">feriados.cl</a> (feriados extraordinarios) · feriados de otros países: calendarios oficiales de cada gobierno.</p>', { html: true }); } };
 const EXTRA_CSS = `<style>
 .cn-gcw{display:flex;justify-content:flex-end;margin:8px 0 0}.cn-gc{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid rgba(201,161,74,.6);
 background:rgba(251,248,242,.94);color:#1A1406;font:600 12.5px/1 var(--sans,system-ui);cursor:pointer;opacity:.9}
@@ -7037,6 +7040,116 @@ el.setAttribute('data-gc','1');var w=D.createElement('div');w.className='cn-gcw'
 bt.innerHTML=ICO+(en()?'Share chart':'Compartir gráfico');bt.setAttribute('aria-label',(en()?'Share chart: ':'Compartir gráfico: ')+titulo(el));bt.onclick=function(){compartir(el,bt)};w.appendChild(bt);el.insertAdjacentElement('afterend',w)})}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){botones();}})},{rootMargin:'200px'});[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){io.observe(el)})}else botones();
 })()</script>`;
+
+// 26-11-2026 · Decisiones de la Sala del Senado desde la fuente oficial. Germán (con captura de la edición: «Senado 1» en noviembre):
+// «Puedes verificar si el Senado ha tenido más de una votación en el mes de Noviembre?». No: en noviembre la Sala votó, entre otros,
+// el Presupuesto 2027, la Sala Cuna Universal, combustibles, incendios forestales y varias nacionalidades por gracia. El voto de cada
+// senador venía de la API del Senado (web-back.senado.cl), que hoy responde con un desafío anti-robots, y de una copia pública que dejó
+// de actualizarse el 21-10-2026. No se salta ningún bloqueo: se usa la página pública de Tramitación de proyectos del Senado
+// (tramitacion.senado.cl, «últimos movimientos»), que lista cada decisión de Sala con fecha, boletín, etapa y resultado, sin desafío,
+// y respetando su robots.txt. El sitio la lee como mucho cada 6 horas, en segundo plano, y acumula cada fila en D1 (tabla senado_sala),
+// porque la página muestra solo los movimientos recientes. En la edición, el panel «Senado» del mes muestra esas decisiones, con enlace
+// a cada boletín, y los contadores toman el mayor entre lo que traía la edición y lo oficial. Lo que la fuente no publica (el voto de
+// cada senador) se dice, no se inventa.
+const SENADO_SALA_URL = "https://tramitacion.senado.cl/appsenado/index.php?ac=ultimos_vistos&mo=tramitacion";
+const SENADO_SALA_TABLA = "CREATE TABLE IF NOT EXISTS senado_sala (clave TEXT PRIMARY KEY, fecha TEXT NOT NULL, boletin TEXT NOT NULL, titulo TEXT, etapa TEXT, resultado TEXT, visto TEXT NOT NULL)";
+const SS_UA = "CofradeNews/1.0 (+https://www.cofrad.es; noticias@cofrad.es)";
+const ssEsc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const ssTexto = (s) => String(s || "").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#0?39;/g, "'").replace(/\s+/g, " ").trim();
+const ssAprobado = (r) => /aprob|despach/i.test(r) && !/rechaz/i.test(r);
+const ssRechazado = (r) => /rechaz/i.test(r);
+const ssDecision = (r) => ssAprobado(r) || ssRechazado(r);
+
+// ¿Permite el robots.txt leer /appsenado/? (grupo «*»; sin robots.txt o ilegible, se permite como lo hace cualquier navegador)
+function ssRobotsPermite(txt, ruta) {
+  let aplica = false, permite = true, largo = -1;
+  for (const l of String(txt || "").split(/\r?\n/)) {
+    const [k, ...r] = l.split("#")[0].split(":"); const v = r.join(":").trim(), c = (k || "").trim().toLowerCase();
+    if (c === "user-agent") aplica = v === "*";
+    else if (aplica && (c === "disallow" || c === "allow") && v && ruta.startsWith(v) && v.length > largo) { largo = v.length; permite = c === "allow"; }
+  }
+  return permite;
+}
+// Filas de la tabla de Sala (grid_nivel1): [{fecha:'2026-11-25', boletin, titulo, etapa, resultado}]
+function ssLeerTabla(html) {
+  const t = (String(html || "").match(/<table[^>]*id="grid_nivel1"[\s\S]*?<\/table>/) || [""])[0];
+  const out = [];
+  for (const m of t.matchAll(/<tr>\s*<td>\s*(\d{2})\/(\d{2})\/(\d{4})\s*<\/td>\s*<td>([\s\S]*?)<\/td>\s*<td>([\s\S]*?)<\/td>\s*<td>([\s\S]*?)<\/td>\s*<td>([\s\S]*?)<\/td>/g)) {
+    const boletin = (ssTexto(m[4]).match(/\d{3,6}-\d{2}/) || [""])[0];
+    if (!boletin) continue;
+    out.push({ fecha: `${m[3]}-${m[2]}-${m[1]}`, boletin, titulo: ssTexto(m[5]).slice(0, 400), etapa: ssTexto(m[6]).slice(0, 200), resultado: ssTexto(m[7]).slice(0, 200) });
+  }
+  return out;
+}
+async function senadoSalaActualizar(env) {
+  const ahora = new Date().toISOString();
+  try {
+    await env.DB.prepare(SENADO_SALA_TABLA).run();
+    const rb = await fetch("https://tramitacion.senado.cl/robots.txt", { headers: { "User-Agent": SS_UA }, signal: AbortSignal.timeout(10000) }).catch(() => null);
+    if (rb && rb.ok && !ssRobotsPermite(await rb.text(), "/appsenado/index.php")) { await ponerConfig(env, "senado_sala_estado", JSON.stringify({ ok: false, hora: ahora, motivo: "robots.txt no lo permite" })); return 0; }
+    const r = await fetch(SENADO_SALA_URL, { headers: { "User-Agent": SS_UA, Accept: "text/html" }, signal: AbortSignal.timeout(20000) });
+    const html = r.ok ? await r.text() : "";
+    const filas = ssLeerTabla(html);
+    if (!filas.length) { await ponerConfig(env, "senado_sala_estado", JSON.stringify({ ok: false, hora: ahora, motivo: `sin filas (HTTP ${r.status})` })); return 0; }
+    await env.DB.batch(filas.map((f) => env.DB.prepare("INSERT INTO senado_sala (clave, fecha, boletin, titulo, etapa, resultado, visto) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(clave) DO UPDATE SET resultado=excluded.resultado, titulo=excluded.titulo, visto=excluded.visto")
+      .bind(`${f.fecha}|${f.boletin}|${f.etapa}`.slice(0, 300), f.fecha, f.boletin, f.titulo, f.etapa, f.resultado, ahora)));
+    await ponerConfig(env, "senado_sala_estado", JSON.stringify({ ok: true, hora: ahora, filas: filas.length, mas_nueva: filas.map((f) => f.fecha).sort().pop() }));
+    return filas.length;
+  } catch (e) {
+    try { await ponerConfig(env, "senado_sala_estado", JSON.stringify({ ok: false, hora: ahora, motivo: String(e.message || e).slice(0, 120) })); } catch { /* nada */ }
+    return 0;
+  }
+}
+// Lee lo guardado; si la última lectura tiene más de 6 horas, pide otra en segundo plano (una sola a la vez: candado en config)
+async function senadoSalaDatos(env, ctx) {
+  if (!env.DB) return null;
+  try {
+    await env.DB.prepare(SENADO_SALA_TABLA).run();
+    const est = JSON.parse((await leerConfig(env, "senado_sala_estado")) || "null");
+    const viejo = !est || Date.now() - Date.parse(est.hora) > 6 * 3600e3;
+    if (viejo) {
+      const cand = await leerConfig(env, "senado_sala_candado");
+      if (!cand || Date.now() - Date.parse(cand) > 300e3) {
+        await ponerConfig(env, "senado_sala_candado", new Date().toISOString());
+        const t = senadoSalaActualizar(env).catch(() => 0);
+        if (ctx && ctx.waitUntil) ctx.waitUntil(t); else await t;
+      }
+    }
+    const filas = (await env.DB.prepare("SELECT fecha, boletin, titulo, etapa, resultado FROM senado_sala ORDER BY fecha DESC, boletin").all()).results || [];
+    return { estado: est, filas };
+  } catch { return null; }
+}
+function ssMes(datos, mes) {
+  const f = ((datos && datos.filas) || []).filter((x) => x.fecha.startsWith(mes) && ssDecision(x.resultado));
+  return { filas: f, proyectos: new Set(f.map((x) => x.boletin)).size, aprobados: f.filter((x) => ssAprobado(x.resultado)).length, rechazados: f.filter((x) => ssRechazado(x.resultado)).length };
+}
+const SS_MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+function ssBloque(datos, mes) {
+  const m = ssMes(datos, mes);
+  if (!m.filas.length) return "";
+  const est = (datos && datos.estado) || {};
+  const h = est.hora ? new Date(est.hora).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).replace(",", " a las") : "";
+  const filas = m.filas.map((x) => `<tr><td class="nw">${x.fecha.slice(8)}-${x.fecha.slice(5, 7)}</td><td class="nw"><a href="https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=${encodeURIComponent(x.boletin)}" target="_blank" rel="noopener">${ssEsc(x.boletin)}</a></td><td>${ssEsc(x.titulo)}</td><td>${ssEsc(x.etapa)}</td><td><span class="vres ${ssRechazado(x.resultado) ? "mal" : "ok"}">${ssEsc(x.resultado)}</span></td></tr>`).join("");
+  return `<div class="ss-of" data-ss="${m.filas.length}"><p class="sub"><b>Decisiones de la Sala del Senado en ${SS_MESES[+mes.slice(5) - 1]}: ${m.filas.length}</b> (${m.proyectos} proyectos · ${m.aprobados} aprobadas · ${m.rechazados} rechazadas). Fuente oficial: <a href="https://tramitacion.senado.cl/appsenado/index.php?ac=ultimos_vistos&amp;mo=tramitacion" target="_blank" rel="noopener">Senado de Chile, Tramitación de proyectos</a>${h ? `, revisada el ${h}` : ""}. El Senado dejó de publicar en formato abierto el voto de cada senador el 21-10-2026: por eso estas decisiones van sin el detalle por senador.</p>
+<div class="tabla-scroll"><table class="tabla"><thead><tr><th>Fecha</th><th>Boletín</th><th>Proyecto</th><th>Etapa</th><th>Resultado</th></tr></thead><tbody>${filas}</tbody></table></div></div>`;
+}
+// Ajusta el total del mes (Cámara + Senado) en el navegador, porque el total va antes en la página que los números de cada cámara
+const SS_JS = `<script>(function(){[].forEach.call(document.querySelectorAll('.cg-mes[data-mes]'),function(g){var m=g.getAttribute('data-mes');var c=g.querySelector('button.vcam[data-cam="c"] span'),s=g.querySelector('button.vcam[data-cam="s"] span'),b=document.querySelector('button.cg-mesb[data-mes="'+m+'"] span');if(c&&s&&b){var t=(parseInt(c.textContent,10)||0)+(parseInt(s.textContent,10)||0);if(t>(parseInt(b.textContent,10)||0))b.textContent=t}})})()</script>`;
+const SS_CSS = `<style>.ss-of{margin:12px 0 18px}.ss-of .tabla td{vertical-align:top}.ss-of .vres.mal{color:#9b2c2c}</style>`;
+// Reescritor de la edición para el mes indicado: contadores (el mayor entre la edición y lo oficial) y el bloque oficial en el panel
+function conSenadoSala(rw, datos, mes) {
+  const m = ssMes(datos, mes);
+  if (!m.filas.length) return rw;
+  const mayor = (n) => ({ text(t) { const v = parseInt(t.text, 10); if (!isNaN(v)) t.replace(String(Math.max(v, n))); } });
+  const base = `div.cg-mes[data-mes="${mes}"]`;
+  let k = 0;
+  const kp = [m.proyectos, m.aprobados, m.rechazados];
+  return rw
+    .on(`${base} button.vcam[data-cam="s"] span`, mayor(m.filas.length))
+    .on(`${base} div.cg-panel[data-cam="s"] .kpi .kv`, { text(t) { const v = parseInt(t.text, 10); if (!isNaN(v) && k < 3) { t.replace(String(Math.max(v, kp[k]))); k++; } } })
+    .on(`${base} div.cg-panel[data-cam="s"] h4.cg-cam`, { element(e) { e.after(ssBloque(datos, mes), { html: true }); } })
+    .on("body", { element(e) { e.append(SS_CSS + SS_JS, { html: true }); } });
+}
 
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
@@ -7498,7 +7611,8 @@ export default {
         const pasada = m[1] < fechaChile(), ttl = pasada ? 86400 : 600;
         const pcP = proyeccionLeer(m[1], ctx);
         const sbP = senadoBancadasLeer(ctx);
-        const evP = eventosLeer(m[1], ctx);   // 24-11-2026: «Ferias, eventos y concursos de emprendimiento» (modulos/eventos_empr.js)
+        const evP = eventosLeer(m[1], ctx);
+        const ssP = senadoSalaDatos(env, ctx);   // 26-11-2026: decisiones de Sala del Senado desde tramitacion.senado.cl (modulos/senado_sala.js)   // 24-11-2026: «Ferias, eventos y concursos de emprendimiento» (modulos/eventos_empr.js)
         const rsP = resumenDe(m[1], ctx);   // 23-11-2026: ficha para compartir y datos de noticia (modulos/republica.js)   // 20-11-2026: bancadas del Senado (modulos/senado_bancadas.js), en paralelo   // 19-11-2026: la proyección a 4 años se pide en paralelo con la edición (no la atrasa)
         const r = (await desdeGitHub(`completa/${m[1]}`, ttl, ctx, rutaEdicion(m[1], true), ttl)) || (pasada && (await desdeGitHub(`permanente/${m[1]}`, 86400, ctx, rutaPermanente(m[1]), 86400)))
           || (await desdeGitHub(`ediciones/Cofrade-News-${m[1]}.html`, ttl, ctx, null, ttl));
@@ -7516,7 +7630,8 @@ export default {
         const sb = await sbP;
         const rs = await rsP;
         const ev = await evP;
-        const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}${ev ? "-e" + ev.ver : ""}"`;
+        const ss = await ssP, ssn = ssMes(ss, m[1].slice(0, 7)).filas.length;
+        const etiqueta = `W/"${String(r.headers.get("X-Cn-Fuente") || r.headers.get("X-Cn-Guardado") || "0").replace(/[^\w.-]/g, "").slice(0, 80)}-${VERSION_SITIO}-${conLibreria(req) ? 1 : 0}${pc ? "-p" + pc.ver : ""}${ev ? "-e" + ev.ver : ""}${ssn ? "-s" + ssn : ""}"`;
         // Cloudflare borra el ETag de las páginas que retoca (ofuscación de correos, reescritura https), así que la misma etiqueta viaja
         // también como fecha (Last-Modified): un día fijo de los 30 anteriores a la edición, elegido por la etiqueta. Se compara exacta.
         const ultima = new Date(Date.parse(m[1] + "T03:00:00Z") - (fnv1a(etiqueta) % 2592000) * 1000).toUTCString();
@@ -7535,13 +7650,13 @@ export default {
         const ha = horoscopoAnual(m[1]);
         const hcx = horoscopoCompat(!!HORO_ANUAL[anioHoroscopo(m[1])]);   // 20-11-2026: compatibilidad con otra persona (modulos/horoscopo_compat.js)   // 18-11-2026: botones del horóscopo más grandes + horóscopo del año y chino, personalizado (modulos/horoscopo_anual.js)
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
-        return conBanners(new HTMLRewriter())   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono; 25-11: banners de suscripción (modulos/banners.js)
+        return conSenadoSala(conBanners(new HTMLRewriter()), ss, m[1].slice(0, 7))   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono; 25-11: banners de suscripción (modulos/banners.js)
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
           .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + EVENTOS_JS + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
           .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
           // 26-11-2026: aguja, secciones favoritas y compartir gráfico (modulos/edicion_extra.js)
-          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS + EXTRA_CSS, { html: true }); } }).on("section.tres h2", AGUJA_REW).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS + MERC_JS + INDICE_CERO + VUELOS_VIVO_JS + EXTRA_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
+          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS + EXTRA_CSS, { html: true }); } }).on("section.tres h2", AGUJA_REW).on("section#indicadores p.fuente", FUENTES_IND).on("section#feriados", FUENTES_FER).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS + MERC_JS + INDICE_CERO + VUELOS_VIVO_JS + EXTRA_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
@@ -7589,7 +7704,12 @@ export default {
       if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
       if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
       if (p === "/m" && req.method === "POST") return await recibirLectura(req, env, ctx);
-      if (p === "/e" && req.method === "POST") return await recibirEventos(req, env);   // 26-11-2026: eventos anónimos (modulos/metricas.js)
+      if (p === "/e" && req.method === "POST") return await recibirEventos(req, env);
+      if (p === "/senado-sala.json") {   // 26-11-2026: decisiones de Sala del Senado (oficial), para el vigía y la tarea de la edición
+        const d = await senadoSalaDatos(env, ctx);
+        return new Response(JSON.stringify(d ? { fuente: "Senado de Chile, Tramitación de proyectos (tramitacion.senado.cl)", url: SENADO_SALA_URL, estado: d.estado, filas: d.filas } : {}),
+          { status: d ? 200 : 503, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=300", ...SEGURIDAD } });
+      }   // 26-11-2026: eventos anónimos (modulos/metricas.js)
       if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
       if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);

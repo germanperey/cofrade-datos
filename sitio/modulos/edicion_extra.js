@@ -11,6 +11,9 @@
 //    enlace a ese gráfico.
 const AGUJA_TITULO = "Lo que mueve la aguja hoy";
 const AGUJA_REW = { element(e) { e.setInnerContent(AGUJA_TITULO); } };
+// 26-11-2026 (Germán: «todo esté respaldado con su fuente»): Indicadores y Feriados nombraban la fuente sin enlace; ahora la enlazan.
+const FUENTES_IND = { element(e) { e.append(' Ver en la fuente: <a href="https://si3.bcentral.cl/siete" target="_blank" rel="noopener">Banco Central de Chile (Base de Datos Estadísticos)</a> · <a href="https://www.coinbase.com/price/bitcoin" target="_blank" rel="noopener">Coinbase</a>.', { html: true }); } };
+const FUENTES_FER = { element(e) { e.append('<p class="fuente">Fuentes: <a href="https://www.bcn.cl/leychile" target="_blank" rel="noopener">Biblioteca del Congreso Nacional (Ley 19.668 y Ley 20.983)</a> · <a href="https://www.feriados.cl" target="_blank" rel="noopener">feriados.cl</a> (feriados extraordinarios) · feriados de otros países: calendarios oficiales de cada gobierno.</p>', { html: true }); } };
 const EXTRA_CSS = `<style>
 .cn-gcw{display:flex;justify-content:flex-end;margin:8px 0 0}.cn-gc{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid rgba(201,161,74,.6);
 background:rgba(251,248,242,.94);color:#1A1406;font:600 12.5px/1 var(--sans,system-ui);cursor:pointer;opacity:.9}

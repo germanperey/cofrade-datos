@@ -2752,6 +2752,39 @@ def edicion_aguja_favoritas_compartir_y_eventos():
 PRUEBAS.append(edicion_aguja_favoritas_compartir_y_eventos)
 
 
+def senado_sala_oficial_del_mes():
+    """26-11-2026 (Germán, con captura de la edición que decía «Senado 1» en noviembre: «Puedes verificar si el Senado ha tenido más
+    de una votación en el mes de Noviembre?»). No: la API del Senado responde con un desafío anti-robots y la copia pública quedó en el
+    21-10. Ahora el sitio lee la página pública de Tramitación del Senado, respeta su robots.txt y acumula las decisiones de Sala."""
+    import json, subprocess, datetime as dt
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    js = open(os.path.join(raiz, "sitio/modulos/senado_sala.js"), encoding="utf-8").read()
+    html = ('<table id="grid_nivel1"><tbody><tr>\n<td>25/11/2026</td>\n<td><a href="#" onclick="datos(\'18702-05\')">18702-05</a></td>\n'
+            '<td>Ley de Presupuestos 2027</td>\n<td>Discusión informe de Comisión Mixta</td>\n<td>Aprobado </td>\n<td>2026/11/25</td></tr></tbody>'
+            '<tbody><tr><td>24/11/2026</td><td><a>15589-07</a></td><td>Ley 20.084</td><td>Particular</td><td>Queda pendiente</td></tr></tbody>'
+            '<tbody><tr><td>11/11/2026</td><td><a>16743-04</a></td><td>Establecimientos &amp; otros</td><td>Tercer trámite</td><td>Rechazadas las modificaciones</td></tr></tbody>'
+            '<tbody><tr><td>28/10/2026</td><td><a>11111-11</a></td><td>Octubre</td><td>x</td><td>Aprobado</td></tr></tbody></table>'
+            '<table id="grid_nivel2"><tbody><tr><td>25/11/2026</td><td><a>99999-99</a></td><td>Comisión</td><td>x</td><td>Pasa a la Sala</td></tr></tbody></table>')
+    prueba = "const f=ssLeerTabla(H);const m=ssMes({filas:f},'2026-11');console.log(JSON.stringify({f,m:{n:m.filas.length,p:m.proyectos,a:m.aprobados,r:m.rechazados},b:ssBloque({filas:f,estado:{hora:'2026-11-26T15:00:00Z'}},'2026-11'),r1:ssRobotsPermite('User-agent: *\\nDisallow: /appsenado/','/appsenado/index.php'),r2:ssRobotsPermite('User-agent: Googlebot\\nDisallow: /\\nUser-agent: *\\nDisallow: /privado/','/appsenado/index.php'),r3:ssRobotsPermite('','/appsenado/x')}))"
+    o = json.loads(subprocess.run(["node", "-e", "const s=require('fs').readFileSync(0,'utf8');new Function('H',s)(" + json.dumps(html) + ");"],
+                                  input=js + ";" + prueba, capture_output=True, text=True, check=True).stdout)
+    assert [x["boletin"] for x in o["f"]] == ["18702-05", "15589-07", "16743-04", "11111-11"], o["f"]   # solo la tabla de Sala
+    assert o["f"][0]["fecha"] == "2026-11-25" and o["f"][2]["titulo"] == "Establecimientos & otros"
+    assert o["m"] == {"n": 2, "p": 2, "a": 1, "r": 1}, o["m"]   # «Queda pendiente» no es una decisión; octubre no cuenta
+    assert "Decisiones de la Sala del Senado en noviembre: 2" in o["b"] and "boletin_ini=18702-05" in o["b"] and "Establecimientos &amp; otros" in o["b"]
+    assert o["r1"] is False and o["r2"] is True and o["r3"] is True
+    sys.path.insert(0, os.path.join(raiz, "herramientas"))
+    import vigia as V
+    t = dt.datetime(2026, 11, 26, 12, 0, tzinfo=dt.timezone(dt.timedelta(hours=-3)))
+    assert V.senado_sala_al_dia({"estado": {"ok": True, "hora": "2026-11-26T13:00:00Z"}, "filas": [{"fecha": "2026-11-25"}]}, t)[0]
+    assert not V.senado_sala_al_dia({"estado": {"ok": True, "hora": "2026-11-25T10:00:00Z"}}, t)[0]   # más de 12 horas
+    assert not V.senado_sala_al_dia({"estado": {"ok": False, "hora": "2026-11-26T14:00:00Z", "motivo": "robots"}}, t)[0]
+    assert not V.senado_sala_al_dia({}, t)[0]
+
+
+PRUEBAS.append(senado_sala_oficial_del_mes)
+
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

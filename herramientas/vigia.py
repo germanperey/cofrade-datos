@@ -538,6 +538,37 @@ def avisar(inf, previos=(None, None)):
             gh("PATCH", f"/issues/{x['number']}", json={"state": "closed"})
 
 
+def senado_sala_al_dia(d, t=None):
+    """26-11-2026 (Germán: «Puedes verificar si el Senado ha tenido más de una votación en el mes de Noviembre?»; la edición decía
+    «Senado 1»): el sitio lee las decisiones de Sala de tramitacion.senado.cl cada 6 horas. → (ok, detalle)."""
+    t = t or ahora()
+    est = (d or {}).get("estado") or {}
+    if not est:
+        return False, "el sitio todavía no ha leído la fuente del Senado"
+    try:
+        h = dt.datetime.fromisoformat(str(est.get("hora")).replace("Z", "+00:00"))
+    except ValueError:
+        return False, "fecha de lectura ilegible"
+    horas = (t - h).total_seconds() / 3600
+    if not est.get("ok"):
+        return False, f"la última lectura falló: {est.get('motivo') or 'sin detalle'}"
+    if horas > 12:
+        return False, f"última lectura hace {horas:.0f} h (máximo 12)"
+    mes = t.date().isoformat()[:7]
+    n = sum(1 for f in (d.get("filas") or []) if str(f.get("fecha", "")).startswith(mes))
+    return True, f"leída hace {horas:.1f} h · {n} movimientos de Sala este mes"
+
+
+def revisar_senado_sala(inf):
+    try:
+        r = pedir(f"{SITIO}/senado-sala.json")
+        d = r.json() if r.status_code == 200 else {}
+    except Exception as ex:   # noqa: BLE001
+        d = {"estado": {"ok": False, "hora": ahora().isoformat(), "motivo": type(ex).__name__}}
+    ok, det = senado_sala_al_dia(d)
+    inf.ok("Senado: decisiones de Sala del mes desde la fuente oficial", ok, det)
+
+
 def main(argv=None):
     a = argparse.ArgumentParser()
     a.add_argument("--sin-navegador", action="store_true")
@@ -550,6 +581,7 @@ def main(argv=None):
     if not a.sin_navegador:
         revisar_navegador(inf, fecha)
     revisar_contenido(inf, fecha)
+    revisar_senado_sala(inf)   # 26-11-2026
     revisar_datos(inf, not a.sin_reparar)
     revisar_vigencia(inf, not a.sin_reparar)   # 24-11-2026: cada archivo de datos con su fecha
     revisar_corridas(inf, not a.sin_reparar)
