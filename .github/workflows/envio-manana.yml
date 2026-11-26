@@ -1,0 +1,45 @@
+# Cofrade News · Envío de la mañana (26-11-2026). Correo (Kit) y canal de Telegram a las 7:00 con lo que mueve la aguja hoy y el
+# audio. Corre apenas la tarea de la edición sube la memoria del diario (alrededor de las 6:45; espera hasta las 7:00) y, de respaldo,
+# a las 7:40, 8:40 y 9:40 de Santiago en verano. Envía una sola vez al día (datos/envio-manana.json). También a mano: pestaña
+# «Actions» → «Envío de la mañana» → «Run workflow». Secretos: KIT_API_KEY y TELEGRAM_BOT_TOKEN; variable: TELEGRAM_CANAL.
+name: Envío de la mañana
+
+on:
+  push:
+    branches: [main]
+    paths: ["memoria/cofrade-cache-*.json"]
+  schedule:
+    - cron: "40 10,11,12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cofrade-envio-manana
+  cancel-in-progress: false
+
+jobs:
+  envio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar librerías
+        run: pip install --quiet requests==2.32.3
+      - name: Enviar
+        env:
+          KIT_API_KEY: ${{ secrets.KIT_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CANAL: ${{ vars.TELEGRAM_CANAL }}
+        run: python herramientas/envio_manana.py
+      - name: Guardar en el repositorio
+        run: |
+          git config user.name "cofrade-datos"
+          git config user.email "actions@users.noreply.github.com"
+          git add datos/envio-manana.json 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "Envío de la mañana $(TZ=America/Santiago date +%F)"
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 10; done

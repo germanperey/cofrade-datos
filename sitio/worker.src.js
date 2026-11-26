@@ -238,10 +238,11 @@ async function indice(ctx) {
   return lista;
 }
 
-async function pulso(ctx) {
+async function pulso(ctx, env) {
   try {
     const r = await desdeGitHub("datos/pulso.json", 300, ctx);
-    return r ? await r.json() : null;
+    const p = r ? await r.json() : null;
+    return env ? await pulsoCurado(p, env, ctx) : p;   // 26-11-2026: curaduría con IA de los titulares (modulos/curaduria.js)
   } catch { return null; }
 }
 
@@ -295,7 +296,7 @@ async function traducirIA(t, env) {
   } catch { return null; }
 }
 async function traduccionesPortada(env, ctx) {
-  const { cuerpo, p } = await cuerpoPortada(ctx);
+  const { cuerpo, p } = await cuerpoPortada(ctx, env);
   const cache = caches.default;
   const clave = new Request("https://cache.cofrad.es/en-portada-v2/" + encodeURIComponent((p && p.generado) || "sin-pulso") + "/" + fechaChile());
   const c = await cache.match(clave);
@@ -661,14 +662,14 @@ const EN_FIJO = {
   "Cofrade News, portada": "Cofrade News, home", "Cambiar entre modo claro y oscuro": "Switch between light and dark mode", "Secciones": "Sections",
   "El diario de la mañana · gratuito": "The morning paper · free",
   "Chile y el mundo, ordenados en minutos y con datos verificados.": "Chile and the world, sorted in minutes, with verified data.",
-  "Cada mañana a las 9:00: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.":
-    "Every morning at 9:00: economy, politics and Congress, conflicts, science, sports, weather, flights and more. Every figure with its source and date.",
+  "Cada mañana antes de las 7:00: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.":
+    "Every morning before 7:00 a.m.: economy, politics and Congress, conflicts, science, sports, weather, flights and more. Every figure with its source and date.",
   "Leer la edición de hoy →": "Read today's edition →", "Leer la edición →": "Read the edition →", "Ver lo último": "See the latest",
   "Hoy ·": "Today ·", "Última edición ·": "Latest edition ·", "Muy pronto": "Coming soon", "Edición": "Edition",
   "La edición de hoy ya está publicada.": "Today's edition is out.",
-  "La edición de hoy se publica a las 9:00. Mientras, lee la última.": "Today's edition comes out at 9:00. Meanwhile, read the latest one.",
+  "La edición de hoy se publica antes de las 7:00. Mientras, lee la última.": "Today's edition comes out before 7:00 a.m. Meanwhile, read the latest one.",
   "La edición de hoy viene en camino. Mientras, lee la última.": "Today's edition is on its way. Meanwhile, read the latest one.",
-  "La primera edición web aparece mañana a las 9:00.": "The first web edition comes out tomorrow at 9:00.",
+  "La primera edición web aparece mañana antes de las 7:00.": "The first web edition comes out tomorrow before 7:00 a.m.",
   "Crecimiento de Chile": "Chile's growth", "Economía y mercados": "Economy and markets", "Política y Congreso": "Politics and Congress",
   "Conflictos en el mundo": "Conflicts around the world", "Perspectivas 2050": "Outlook 2050", "Ciencia y Astronomía": "Science and Astronomy",
   "Deportes": "Sports", "Clima, mar y sismos": "Weather, sea and earthquakes", "Vuelos comerciales": "Commercial flights",
@@ -947,6 +948,10 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__EVENTOS_EMPR__*/
 /*__VUELOS_VIVO__*/
 /*__BANNERS__*/
+/*__CURADURIA__*/
+/*__LECTORES__*/
+/*__METRICAS__*/
+/*__EDICION_EXTRA__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -1122,11 +1127,11 @@ function bloqueTierra(p) {
 // 16-11-2026 · Germán: «en vez de colocar 07:30 cámbialo por las 9.00, porque antes de esa hora estás procesando el Newsletter y aún
 // no aparece publicado». La tarea parte a las 07:30 y la edición quedó arriba entre las 08:24 y las 09:04 (7 al 16-11). Pasadas
 // las 9:00 sin la edición de hoy, el aviso ya no promete una hora que pasó.
-const HORA_EDICION = 9;
+const HORA_EDICION = 7;   // 26-11-2026: la edición sale antes de las 7:00 (tarea de las 06:02; antes 08:00)
 function estadoEdicion(ultima, hoy, hora) {
-  if (!ultima) return "La primera edición web aparece mañana a las 9:00.";
+  if (!ultima) return "La primera edición web aparece mañana antes de las 7:00.";
   if (ultima === hoy) return "La edición de hoy ya está publicada.";
-  return hora < HORA_EDICION ? "La edición de hoy se publica a las 9:00. Mientras, lee la última." : "La edición de hoy viene en camino. Mientras, lee la última.";
+  return hora < HORA_EDICION ? "La edición de hoy se publica antes de las 7:00. Mientras, lee la última." : "La edición de hoy viene en camino. Mientras, lee la última.";
 }
 
 // 19-11-2026 (Germán: «agregues un párrafo destacando esta nueva funcionalidad… el único medio informativo de Noticias inclusivo… para
@@ -1150,8 +1155,8 @@ function vozPortada(ultima, hoy) {
 </div></div></section>`;
 }
 
-async function cuerpoPortada(ctx) {
-  const [lista, p, h] = await Promise.all([indice(ctx), pulso(ctx), historia(ctx)]);   // 15-11-2026: los tres a la vez
+async function cuerpoPortada(ctx, env) {
+  const [lista, p, h] = await Promise.all([indice(ctx), pulso(ctx, env), historia(ctx)]);   // 15-11-2026: los tres a la vez
   const ultima = lista[0];
   const hoy = fechaChile();
   const estado = estadoEdicion(ultima, hoy, horaDeChile());
@@ -1160,11 +1165,12 @@ async function cuerpoPortada(ctx) {
   const hero = `<section class="lujo" aria-label="Portada"><img class="agua" src="/marca-agua.webp" alt="" aria-hidden="true">
 <div class="hoja lujo-in"><div class="lujo-txt"><span class="kicker">El diario de la mañana · Gratuito</span>
 <h1>Chile y el mundo, ordenados en minutos y con <em>datos verificados.</em></h1>
-<p class="lede">Cada mañana a las 9:00: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.</p>
+<p class="lede">Cada mañana antes de las 7:00: economía, política y Congreso, conflictos, ciencia, deportes, clima, vuelos y más. Cada cifra con su fuente y su fecha.</p>
+${cajaLectores(env)}
 <div class="acciones"><a class="btn oro" href="/edicion">Leer la edición${ultima === hoy ? " de hoy" : ""} →</a><a class="btn claro" href="#puente">Dashboard Financiero</a><a class="btn claro" href="/mercados">Mercados en vivo</a></div>
 <ul class="sellos"><li>${ultima ? (ultima === hoy ? "Edición de hoy publicada" : "Última edición: " + esc(fechaLarga(ultima))) : "Primera edición muy pronto"}</li><li>Cada dato con su fuente</li><li>Bienvenido a Chile, la joya del Pacífico, y el mejor país para invertir</li></ul></div>
 ${piz || `<aside class="pizarra"><div class="piz-cab">Hoy · <span data-iso="${hoy}">${esc(fechaLarga(hoy))}</span></div><p style="margin:6px 0 0;color:#D8D2C4">${esc(estado)}</p></aside>`}</div></section>`;
-  const cuerpo = `${INSTALAR_HTML}
+  const cuerpo = `${INSTALAR_HTML}<style>${LECTORES_CSS}</style>${EVENTOS_JS}${LECTORES_JS}
 ${vozPortada(ultima, hoy)}
 ${cintaConcurso()}
 <!--PODCAST-->
@@ -1238,7 +1244,7 @@ async function oidoNube(req, env) {
 }
 
 async function portada(env, ctx, req) {
-  const [{ cuerpo: c0, hero, p }, , pod] = await Promise.all([cuerpoPortada(ctx), prepararAnuncios(env), podcastPortada(env).catch(() => "")]);
+  const [{ cuerpo: c0, hero, p }, , pod] = await Promise.all([cuerpoPortada(ctx, env), prepararAnuncios(env), podcastPortada(env).catch(() => "")]);
   const cuerpo = c0.replace("<!--PODCAST-->", () => pod);   // 20-11-2026: podcast diario, los 3 episodios más nuevos (modulos/podcast.js); con función, un «$&» del título no altera nada
   ctx.waitUntil(revisarRenovaciones(env, ctx));   // 16-11-2026: correos de renovación de los anunciantes (como mucho 1 revisión por hora)
   ctx.waitUntil(revivirPulso(env, p));
@@ -1445,10 +1451,11 @@ export default {
         const lib = conLibreria(req);   // 15-11-2026: el navegador ya tiene la librería de gráficos (ver ECHARTS_ARCHIVO)
         return conBanners(new HTMLRewriter())   // 13-11-2026: la edición también lleva el escudo de la Cofradía como ícono; 25-11: banners de suscripción (modulos/banners.js)
           .on('link[rel~="icon"]', { element(e) { e.remove(); } })
-          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
+          .on("body", { element(e) { e.prepend(NAV_HTML, { html: true }); e.append(SUBIR_HTML + PROTEGER + MEDIR + EVENTOS_JS + COMPARTIR_JS + NAV_JS + (lib ? "" : GUARDAR_LIBRERIA) + ICONO_JS + VOZ, { html: true }); } })
           .on("header.cabecera .acciones", { element(e) { e.append(compartirHtml("edicion", `https://${DOMINIO}/edicion/${m[1]}`), { html: true }); } })   // 20-11-2026: botón Compartir
           .on("head", cp.cabeza).on("body", cp.cuerpo).on('.cg-panel[data-cam="s"]', sbx.panel).on('.cg-panel[data-cam="s"] .cga', sbx.cga).on('.cg-panel[data-cam="s"] > button.cg-tog', sbx.tog).on(".sesenta .chip60 .v60", s60.v).on(".sesenta .chip60 .v60 b", s60.b).on("body", s60.cuerpo)
-          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS, { html: true }); } }).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS + MERC_JS + INDICE_CERO + VUELOS_VIVO_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
+          // 26-11-2026: aguja, secciones favoritas y compartir gráfico (modulos/edicion_extra.js)
+          .on("head", { element(e) { e.append(INDG_CSS + PILARES_CSS + EXTRA_CSS, { html: true }); } }).on("section.tres h2", AGUJA_REW).on("body", { element(e) { e.append(INDG_JS + PILARES_JS + FX_JS + MERC_JS + INDICE_CERO + VUELOS_VIVO_JS + EXTRA_JS, { html: true }); } }).on("#cgw .kpis", cp.kpis).on("#cgw .kpi .kn", cp.kn).on("#cgw .kpi .kv", cp.kv).on("#cgw div.dos", cp.dos)
           .on("head", ha.cabeza).on(".horo .vista-horo", ha.vista).on(".horo .signos", ha.signos).on("body", ha.cuerpo)
           .on("head", hcx.cabeza).on(".horo .vista-horo", hcx.vista).on(".horo .signos", hcx.signos).on("body", hcx.cuerpo)
           .on("head", pv.cabeza).on("#crecw", pv.crec).on("#pjw", pv.pj).on("body", pv.cuerpo)
@@ -1496,6 +1503,7 @@ export default {
       if (p === "/buzon/verificar") return await verificarBuzon(req, u, env);
       if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
       if (p === "/m" && req.method === "POST") return await recibirLectura(req, env, ctx);
+      if (p === "/e" && req.method === "POST") return await recibirEventos(req, env);   // 26-11-2026: eventos anónimos (modulos/metricas.js)
       if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
       if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);
@@ -1558,9 +1566,9 @@ export default {
         return r ? new Response(r.body, { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=300", ...SEGURIDAD } })
           : new Response("{}", { status: 503, headers: { "Content-Type": "application/json" } });
       }
-      if (p === "/pulso.json") {
-        const r = await desdeGitHub("datos/pulso.json", 300, ctx);
-        return r ? new Response(r.body, { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=300", ...SEGURIDAD } })
+      if (p === "/pulso.json") {   // 26-11-2026: con los titulares curados (modulos/curaduria.js)
+        const pj = await pulso(ctx, env);
+        return pj ? new Response(JSON.stringify(pj), { headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=300", ...SEGURIDAD } })
           : new Response("{}", { status: 503, headers: { "Content-Type": "application/json" } });
       }
       // 14-11-2026: socios fundadores del Dashboard Financiero con Mercado Pago (modulos/suscripciones.js)
@@ -1569,6 +1577,9 @@ export default {
         return paginaFundador(env, env.DB ? await pctCofradia(env) : 20, await modoInscripcion(req, env), u.searchParams.get("plan") === "anual" ? "anual" : "mensual", u.searchParams.get("embed") === "1");
       }
       if (p === "/socios/gracias") return await paginaGracias(req, u, env);
+      // 26-11-2026: «Recíbelo a las 7:00» de la portada, con doble confirmación y alta en Kit (modulos/lectores.js)
+      if (p === "/suscribir" && req.method === "POST") return await suscribirLector(req, env, ctx).catch(() => jsonR({ ok: false, mensaje: "No pudimos registrar tu correo. Intenta de nuevo en unos minutos." }, 503));
+      if (p === "/suscribir/confirmar") return await confirmarLector(req, env, ctx);
       if (p === "/socios/canjear") return await paginaCanje(req, env, u).catch(() => new Response("No pudimos procesar el canje. Intenta de nuevo en unos minutos.", { status: 503 }));   // 20-11-2026: premio del 1.er lugar del concurso
       if (p === "/socios/condiciones") return paginaCondiciones(env.DB ? await pctCofradia(env) : 20);
       if (p === "/panel/probar") return await probarInscripcion(req, env);

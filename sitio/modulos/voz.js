@@ -1212,6 +1212,7 @@ function leerSecciones() {
   var L = [], s = D.querySelectorAll('.hoja section.sec[id]');
   for (var i = 0; i < s.length; i++) {
     var h = s[i].querySelector('h2'); if (!h) continue;
+    if (s[i].classList.contains('cn-oculta')) continue;   // 26-11-2026: el lector la sacó en «Mis secciones» (modulos/edicion_extra.js)
     var tt = limpio(h), m = tt.match(/^(\d{1,2})\.\s*(.+)$/);
     L.push({ el: s[i], id: s[i].id, n: m ? +m[1] : L.length + 1, t: (m ? m[2] : tt).replace(/\s*·\s*/g, ', '), clave: norm((SIN[s[i].id] || '') + ' ' + (m ? m[2] : tt)) });
   }

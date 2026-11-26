@@ -60,6 +60,10 @@ for k, v in {
     "/*__EVENTOS_EMPR__*/": leer("modulos", "eventos_empr.js"),   # 24-11-2026: ferias, eventos y concursos de emprendimiento
     "/*__VUELOS_VIVO__*/": leer("modulos", "vuelos_vivo.js"),   # 25-11-2026: estado y hora confirmada de cada vuelo, al momento
     "/*__BANNERS__*/": leer("modulos", "banners.js"),   # 25-11-2026: 8 banners de suscripción con ventana flotante (Mercado Pago)
+    "/*__CURADURIA__*/": leer("modulos", "curaduria.js"),   # 26-11-2026: curaduría con IA de los titulares «En vivo»
+    "/*__LECTORES__*/": leer("modulos", "lectores.js"),   # 26-11-2026: «Recíbelo a las 7:00» en la portada (Kit + Telegram)
+    "/*__METRICAS__*/": leer("modulos", "metricas.js"),   # 26-11-2026: eventos anónimos sin cookies
+    "/*__EDICION_EXTRA__*/": leer("modulos", "edicion_extra.js"),   # 26-11-2026: aguja, secciones favoritas y compartir gráfico
     "__PODCAST_JS__": json.dumps("<script>" + podcast_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k

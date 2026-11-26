@@ -263,28 +263,51 @@ def _en_espanol(n):
     return "inglés" not in f and "english" not in f and es_espanol(arreglar(n.get("titulo")))
 
 
+# 26-11-2026 (Germán, con una revisión externa: «en Deportes aparece la gala de Miss Universo y un robo de camiones; en Economía Mundial
+# sale duplicada una nota policial del padre de Meghan Markle; y en Ciencia se coló política electoral española y una oferta de Xiaomi.
+# Un filtro rápido con IA antes de publicar, que reclasifique, descarte farándula y elimine duplicados»). Dos capas:
+# (1) aquí, reglas fijas y seguras: horóscopo, farándula, concursos de belleza, ofertas y descuentos, sorteos, y la misma nota en dos
+#     secciones (queda solo en la primera); (2) en el sitio, Workers AI reclasifica o descarta cada titular (sitio/modulos/curaduria.js),
+#     por eso cada sección lleva además «extra»: hasta 7 candidatas que reemplazan a las que la IA saque.
+DESCARTE = re.compile(
+    r"hor[oó]scopo|signo zodiacal|\bzodiaco\b|\btarot\b|\bmiss (?:universo|universe|chile|mundo|world)\b|reina de belleza|certamen de belleza"
+    r"|far[aá]ndula|\breality\b|\bmeghan markle\b|pr[ií]ncipe harry|kardashian|\bcelebrity\b|telenovela|\bchisme"
+    r"|descuentos? de hasta|ofert[oó]n|\ben oferta\b|\bofertas? (?:de|en|para) (?:navidad|black|cyber|verano)|black friday|cyber ?(?:day|monday)"
+    r"|\bcup[oó]n|precio m[aá]s bajo|a mitad de precio|rebajad[oa]s?\b|chollo|\bresultados? del (?:loto|kino|sorteo)|\bloter[ií]a\b"
+    r"|¿sabr[ií]as distinguir|\btest (?:visual|de personalidad)|\bseg[uú]n los psic[oó]logos",
+    re.I)
+POR_SECCION_EXTRA = 7
+
+
+def descartable(titulo):
+    return bool(DESCARTE.search(str(titulo or "")))
+
+
 def titulares(estado, horas=HORAS_TITULARES):
     t = B.titulares(estado, feeds=B.todas_las_fuentes(radar=False)) or {}   # 14-11-2026: sin las 54 búsquedas del radar (solo «Datos oficiales»)
     sec = t.get("secciones") or {}
     limite = (B.ahora() - dt.timedelta(hours=horas)).strftime("%Y-%m-%d %H:%M")
-    out = []
+    out, vistos, urls = [], set(), set()   # 26-11-2026: «vistos» y «urls» cruzan las secciones (una nota, un solo lugar)
     for clave, nombre in SECCIONES:
         notas = [n for n in (sec.get(clave) or {}).get("notas") or [] if isinstance(n, dict) and _en_espanol(n)
-                 and str(n.get("fecha") or "") >= limite and re.match(r"^https?://", str(n.get("url") or "")) and n.get("titulo")]
+                 and str(n.get("fecha") or "") >= limite and re.match(r"^https?://", str(n.get("url") or "")) and n.get("titulo")
+                 and not descartable(arreglar(n.get("titulo")))]
         notas.sort(key=lambda n: n.get("fecha") or "", reverse=True)
-        vistos, elegidas, medios = set(), [], {}
+        elegidas, medios = [], {}
         for n in notas:
-            k = re.sub(r"\W+", " ", arreglar(n["titulo"]).lower())[:70]
+            k = re.sub(r"\W+", " ", arreglar(n["titulo"]).lower()).strip()[:70]
+            u = str(n["url"]).split("#")[0].rstrip("/")
             medio = re.sub(r"\s*\(.*?\)\s*$", "", str(n.get("fuente") or "")).strip()
-            if k in vistos or medios.get(medio, 0) >= 2:   # sin repetir y sin que un medio llene la sección
+            if k in vistos or u in urls or medios.get(medio, 0) >= 2:   # sin repetir y sin que un medio llene la sección
                 continue
             vistos.add(k)
+            urls.add(u)
             medios[medio] = medios.get(medio, 0) + 1
             elegidas.append({"titulo": arreglar(n["titulo"])[:220], "medio": arreglar(medio), "url": n["url"], "hora": str(n.get("fecha") or "")[11:16]})
-            if len(elegidas) >= POR_SECCION:
+            if len(elegidas) >= POR_SECCION + POR_SECCION_EXTRA:
                 break
         if elegidas:
-            out.append({"seccion": nombre, "notas": elegidas})
+            out.append({"seccion": nombre, "notas": elegidas[:POR_SECCION], "extra": elegidas[POR_SECCION:]})
     return out
 
 

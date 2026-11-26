@@ -1458,8 +1458,8 @@ def vigia_cada_3_horas_con_hora_de_chile_todo_el_anio():
     sys.path.insert(0, os.path.join(raiz, "herramientas"))
     import vigia as V
     utc = dt.timezone.utc
-    # desde las 10:00 de Chile se espera la edición de hoy: en verano (UTC-3) y también en invierno (UTC-4)
-    for iso, hoy in (("2026-11-15T12:59", False), ("2026-11-15T13:01", True), ("2027-06-15T13:30", False), ("2027-06-15T14:01", True)):
+    # 26-11-2026: desde las 08:00 de Chile se espera la edición de hoy (sale a las 06:02): en verano (UTC-3) y en invierno (UTC-4)
+    for iso, hoy in (("2026-11-15T10:59", False), ("2026-11-15T11:01", True), ("2027-06-15T11:30", False), ("2027-06-15T12:01", True)):
         t = dt.datetime.fromisoformat(iso).replace(tzinfo=utc).astimezone(V.TZ)
         assert (V.fecha_esperada(t) == t.date()) is hoy, (iso, t.isoformat(), V.fecha_esperada(t))
     assert V.ahora().utcoffset() in (dt.timedelta(hours=-3), dt.timedelta(hours=-4)), V.ahora().isoformat()
@@ -2646,6 +2646,110 @@ def eventos_recurrentes_por_investigar():
 
 
 PRUEBAS.append(eventos_recurrentes_por_investigar)
+
+def en_vivo_curado_sin_farandula_ni_duplicados():
+    """26-11-2026 (Germán, revisión externa: «en Deportes aparece la gala de Miss Universo y un robo de camiones; en Economía Mundial
+    sale duplicada una nota policial del padre de Meghan Markle; y en Ciencia se coló política electoral española y una oferta de
+    Xiaomi»). Capa 1 (pulso.py): reglas fijas y una nota en un solo lugar. Capa 2 (curaduria.js): la IA reclasifica o descarta."""
+    import json, subprocess
+    import pulso as P
+    for t in ("HORÓSCOPO DEL JUEVES 26 DE NOVIEMBRE", "Gala de Miss Universo 2026 en Bangkok", "El padre de Meghan Markle, detenido",
+              "Black SKY: Aerolínea lanzó descuentos de hasta un 63% en pasajes", "Xiaomi 15 rebajado a mitad de precio",
+              "Según los psicólogos, las personas de los 70", "¿Sabrías distinguir un gecko de una serpiente?"):
+        assert P.descartable(t), t
+    for t in ("Oferta pública de adquisición por Enel Chile", "Corfo: fondo de fondos para startups avanza en el Congreso",
+              "Banco Central mantiene la tasa en 4,25 %", "Gordon, nominado a MVP de la jornada en Champions"):
+        assert not P.descartable(t), t
+    ahora = P.B.ahora().strftime("%Y-%m-%d %H:%M")
+    nota = lambda t, u, f="La Tercera": {"titulo": t, "url": u, "fecha": ahora, "fuente": f}
+    viejo = P.B.titulares
+    P.B.titulares = lambda estado, feeds=None: {"secciones": {
+        "deportes": {"notas": [nota("Gala de Miss Universo 2026 en Bangkok", "https://a.cl/1"), nota("Colo-Colo gana la Copa Chile", "https://a.cl/2")]},
+        "economia/mundo": {"notas": [nota("La Fed mantiene la tasa de interés", "https://a.cl/3"), nota("Colo-Colo gana la Copa Chile", "https://a.cl/2", "Otro")]},
+    }}
+    try:
+        t = P.titulares({})
+    finally:
+        P.B.titulares = viejo
+    todas = [n["titulo"] for s in t for n in s["notas"] + s["extra"]]
+    assert "Gala de Miss Universo 2026 en Bangkok" not in todas and todas.count("Colo-Colo gana la Copa Chile") == 1, todas
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    js = open(os.path.join(raiz, "sitio/modulos/curaduria.js"), encoding="utf-8").read()
+    prueba = r"""
+const p={generado:'2026-11-26T07:17-03:00',titulares:[
+ {seccion:'Economía',notas:[{titulo:'Elina Valtonen: Rusia puede terminar esta guerra',url:'https://a/1',medio:'Infobae'},{titulo:'Muñeki77a, la última víctima',url:'https://a/2',medio:'Infobae'}],extra:[{titulo:'Codelco sube producción',url:'https://a/3',medio:'DF'}]},
+ {seccion:'Mundo',notas:[{titulo:'Kim Jong Un advierte',url:'https://a/4',medio:'LT'}]}]};
+const c=curCandidatas(p); const d=curLeer('```json\n{"0":"M","1":"X","2":"E","3":"ZZ"}\n```',c.length);
+const q=curAplicar(p,d);
+console.log(JSON.stringify({n:c.length,d,q,malo:curLeer('no es json',4),corto:curLeer('{"0":"C"}',4),largo:curAplicar(p,['C'])===p}));"""
+    o = json.loads(subprocess.run(["node", "-e", "const s=require('fs').readFileSync(0,'utf8');new Function(s)();"],
+                                  input=js + prueba, capture_output=True, text=True, check=True).stdout)
+    assert o["n"] == 4 and o["d"] == ["M", "X", "E", ""], o
+    assert [(s["seccion"], [n["url"] for n in s["notas"]]) for s in o["q"]["titulares"]] == [("Economía", ["https://a/3"]), ("Mundo", ["https://a/1", "https://a/4"])], o["q"]
+    assert o["q"]["curado"] is True and o["malo"] is None and o["corto"] is None and o["largo"] is True
+    assert "llama-3.3-70b" in js and "INSERT OR IGNORE INTO pulso_curado" in js
+
+
+PRUEBAS.append(en_vivo_curado_sin_farandula_ni_duplicados)
+
+
+def envio_de_la_manana_y_casillero_de_portada():
+    """26-11-2026 (Germán, revisión externa: «Un envío automatizado a las 7:00 AM, con los 5 titulares clave y el link directo al audio» y
+    «en la portada no hay ningún casillero para suscribirse»). Correo con Kit y Telegram; solo la edición de hoy, una vez al día."""
+    import datetime as dt
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "herramientas"))
+    import envio_manana as E
+    ed = ('<section class="tres"><h2>Las 3 del día</h2><ol><li>El IPSA cerró en 10.331,15 puntos (−1,13 %).</li><li>Se despachó el '
+          'Presupuesto 2027.</li><li>Alerta por ola de calor &amp; marejadas.</li></ol></section><section class="sesenta"><div class="chips60">'
+          '<a class="chip60" href="#clima"><span class="i60">☀</span><span class="t60">Santiago hoy</span><span class="v60">Despejado · 17° / <b>32°</b></span></a>'
+          '<a class="chip60" href="#indicadores"><span class="i60">$</span><span class="t60">Dólar</span><span class="v60"><b>$1.025,06</b> (+0,73%)</span></a></div></section>')
+    b = E.cinco(E.extraer(ed))
+    assert b == ["El IPSA cerró en 10.331,15 puntos (−1,13 %).", "Se despachó el Presupuesto 2027.", "Alerta por ola de calor & marejadas.",
+                 "Dólar: $1.025,06 (+0,73%).", "Santiago hoy: Despejado · 17° / 32°."], b
+    m = E.armar(dt.date(2026, 11, 27), b)
+    assert m["asunto"] == "Cofrade News · Viernes 27 de noviembre: lo que mueve la aguja hoy", m["asunto"]
+    assert "/edicion/2026-11-27?voz=1" in m["html"] and "ola de calor &amp; marejadas" in m["html"] and "<script" not in m["html"]
+    assert "/edicion/2026-11-27?voz=1&amp;utm_source=telegram" in m["telegram"] and m["telegram"].count("\n") >= 6
+    assert E.cinco(E.extraer("<p>sin nada</p>")) == []   # sin balas ni cifras: no se envía un correo vacío
+    wf = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".github/workflows/envio-manana.yml"), encoding="utf-8").read()
+    assert 'paths: ["memoria/cofrade-cache-*.json"]' in wf and "secrets.KIT_API_KEY" in wf and "secrets.TELEGRAM_BOT_TOKEN" in wf
+    js = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "sitio/modulos/lectores.js"), encoding="utf-8").read()
+    assert "confirmado IS NOT NULL" in js and "if (d.web || d.cn_web) return" in js and "bajoLimite(env, \"lect:\" + ip)" in js
+    assert "CREATE TABLE IF NOT EXISTS lectores (email TEXT PRIMARY KEY, token TEXT NOT NULL, creado TEXT NOT NULL, confirmado TEXT, origen TEXT, kit TEXT, enviado TEXT)" in js
+
+
+PRUEBAS.append(envio_de_la_manana_y_casillero_de_portada)
+
+
+def edicion_aguja_favoritas_compartir_y_eventos():
+    """26-11-2026 (Germán, revisión externa): «5 balas ejecutivas ("Lo que mueve la aguja hoy")», «que cada lector elija sus secciones
+    favoritas para leer o escuchar», «botón de "Compartir gráfico por WhatsApp / LinkedIn" en cada infografía (con tu logo y cofrad.es)»
+    y «eventos anónimos (sin cookies)». También vigila el error de ese día: un comentario «//» en medio de la cadena de la edición dejó
+    fuera media docena de módulos (el resto de la línea quedó comentado)."""
+    import json, re, subprocess
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    w = open(os.path.join(raiz, "sitio/worker.src.js"), encoding="utf-8").read()
+    for n, l in enumerate(w.split("\n"), 1):
+        if ".on(" in l and "//" in l:
+            k = l.index("//")
+            if "://" not in l[k - 1:k + 2]:
+                assert ".on(" not in l[k:], f"línea {n}: hay código después de un comentario en la cadena de la edición"
+    assert "VUELOS_VIVO_JS + EXTRA_JS" in w and 'on("section.tres h2", AGUJA_REW)' in w and "MEDIR + EVENTOS_JS" in w
+    x = open(os.path.join(raiz, "sitio/modulos/edicion_extra.js"), encoding="utf-8").read()
+    assert 'AGUJA_TITULO = "Lo que mueve la aguja hoy"' in x and "localStorage.setItem('cn-favs'" in x and "www.cofrad.es" in x
+    assert "https://wa.me/?text=" in x and "linkedin.com/sharing/share-offsite" in x and "navigator.canShare" in x
+    v = open(os.path.join(raiz, "sitio/modulos/voz.js"), encoding="utf-8").read()
+    assert "classList.contains('cn-oculta')) continue;" in v   # la voz se salta lo que el lector ocultó
+    m = open(os.path.join(raiz, "sitio/modulos/metricas.js"), encoding="utf-8").read()
+    out = subprocess.run(["node", "-e", "const s=require('fs').readFileSync(0,'utf8');const f=new Function(s+';return EV_OK');const r=f();"
+                          "console.log(JSON.stringify(['audio_min_0','audio_min_30','audio_min_31','socios_banner_economia','compartir_grafico',"
+                          "'x','suscripcion_correo','email_juan@x.cl'].map(n=>r.test(n))))"], input=m, capture_output=True, text=True, check=True).stdout
+    assert json.loads(out) == [True, True, False, True, True, False, True, False], out
+    assert "PRIMARY KEY (fecha, nombre)" in m and "ip" not in re.sub(r"(?i)skip|tip|ipsa|equip", "", m.split("const EVENTOS_JS")[0].split("async function recibirEventos")[1]).lower().replace("ipo", "")
+
+
+PRUEBAS.append(edicion_aguja_favoritas_compartir_y_eventos)
+
 
 if __name__ == "__main__":
     malas = 0

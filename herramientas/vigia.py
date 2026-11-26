@@ -76,9 +76,10 @@ def gh(metodo, ruta, **kw):
 
 
 def fecha_esperada(t=None):
-    """La edición sale a las 07:30 y demora hasta ~1,5 h: desde las 10:00 se espera la de hoy; antes, la de ayer basta."""
+    """26-11-2026: la edición sale a las 06:02 y demora hasta ~1,5 h: desde las 08:00 se espera la de hoy; antes, la de ayer basta
+    (antes 07:30 y 10:00)."""
     t = t or ahora()
-    return t.date() if t.hour >= 10 else t.date() - dt.timedelta(days=1)
+    return t.date() if t.hour >= 8 else t.date() - dt.timedelta(days=1)
 
 
 # 17-11-2026 (Germán: «En el Landing page de www.cofrad.es está incompleta la cantidad de Indicadores económicos»): el vigía solo

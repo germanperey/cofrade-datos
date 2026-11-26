@@ -201,7 +201,7 @@ async function fuentePodcast(f, txt, ctx) {
     if (r.ok) md = await r.text();
   } catch { md = null; }
   if (!md) {
-    const cuerpo = `<section style="border:0"><span class="kicker">Podcast</span><h1>La fuente de esa fecha todavía no está.</h1><p class="lede">Se arma sola cuando se publica la edición del día (alrededor de las 8:00).</p><div class="acciones"><a class="btn oro" href="/edicion">Leer la edición</a></div></section>`;
+    const cuerpo = `<section style="border:0"><span class="kicker">Podcast</span><h1>La fuente de esa fecha todavía no está.</h1><p class="lede">Se arma sola cuando se publica la edición del día (alrededor de las 6:45).</p><div class="acciones"><a class="btn oro" href="/edicion">Leer la edición</a></div></section>`;
     return txt ? new Response("La fuente de esa fecha todavía no está.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store", ...SEGURIDAD } })
       : html(marco({ titulo: "Fuente del podcast · Cofrade News", descripcion: "", cuerpo }), 404, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
   }
@@ -286,7 +286,7 @@ async function seccionPodcast(env, u) {
 <p class="sub">${estado}. Episodios en la portada: los 3 más nuevos; todos en <a href="/podcast">/podcast</a>.</p>
 <div class="dos d2"><div class="tarjeta pod-paso"><h4 class="kicker">1 · Fuente de hoy para Gemini Notebook</h4>
 ${fuente ? `<p>Lista la fuente del ${esc(fechaLarga(hoy))} con las 7 secciones.</p><p class="pod-bot"><a class="btn oro chico" href="/podcast/fuente/${hoy}" target="_blank" rel="noopener">Abrir la fuente</a><button type="button" class="btn linea chico" data-copiar-url="/podcast/fuente/${hoy}.txt">Copiar el texto</button><button type="button" class="btn linea chico" data-copiar-url="https://${DOMINIO}/podcast/fuente/${hoy}" data-literal="1">Copiar el enlace</button></p>`
-    : `<p>La fuente de hoy se arma sola cuando se publica la edición (alrededor de las 8:00). <a href="/podcast/fuente/${masDias(hoy, -1)}" target="_blank" rel="noopener">Ver la de ayer</a>.</p>`}
+    : `<p>La fuente de hoy se arma sola cuando se publica la edición (alrededor de las 6:45). <a href="/podcast/fuente/${masDias(hoy, -1)}" target="_blank" rel="noopener">Ver la de ayer</a>.</p>`}
 <p class="pod-bot"><button type="button" class="btn linea chico" data-copiar-id="podIndicaciones">Copiar las indicaciones del audio</button><a class="btn linea chico" href="${PODCAST.notebook}" target="_blank" rel="noopener">Abrir Gemini Notebook</a></p>
 <p class="sub" id="podIndicaciones">${esc(PODCAST_INDICACIONES)}</p></div>
 <div class="tarjeta pod-paso"><h4 class="kicker">2 · Convertir el audio en video con portada fija</h4>
