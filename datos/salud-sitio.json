@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-26T08:15:41-03:00",
+ "generado": "2026-11-26T11:56:20-03:00",
  "ok": false,
  "graves": 1,
  "revisiones": [
@@ -23,8 +23,8 @@
   },
   {
    "nombre": "La edición más nueva está publicada",
-   "ok": false,
-   "detalle": "el sitio lleva a 2026-11-25; se espera 2026-11-26 o más nueva",
+   "ok": true,
+   "detalle": "",
    "grave": true
   },
   {
@@ -70,25 +70,25 @@
    "grave": false
   },
   {
-   "nombre": "Edición 2026-11-25: se sirve la edición completa (no la liviana de respaldo)",
+   "nombre": "Edición 2026-11-26: se sirve la edición completa (no la liviana de respaldo)",
    "ok": true,
    "detalle": "",
    "grave": false
   },
   {
-   "nombre": "Edición 2026-11-25: gráficos dibujados",
+   "nombre": "Edición 2026-11-26: gráficos dibujados",
    "ok": true,
    "detalle": "",
    "grave": true
   },
   {
-   "nombre": "Edición 2026-11-25: flecha para volver y botón para subir",
+   "nombre": "Edición 2026-11-26: flecha para volver y botón para subir",
    "ok": true,
    "detalle": "",
    "grave": true
   },
   {
-   "nombre": "Edición 2026-11-25: gráficos con datos (ninguno vacío ni todo en cero; golf con torneo terminado)",
+   "nombre": "Edición 2026-11-26: gráficos con datos (ninguno vacío ni todo en cero; golf con torneo terminado)",
    "ok": true,
    "detalle": "",
    "grave": true
@@ -106,13 +106,19 @@
    "grave": true
   },
   {
-   "nombre": "Edición 2026-11-25: el sitio aplica sus 5 correcciones de rapidez",
+   "nombre": "Edición 2026-11-26: el sitio aplica sus 5 correcciones de rapidez",
    "ok": true,
    "detalle": "",
    "grave": false
   },
   {
-   "nombre": "Edición 2026-11-25: no falta nada de lo que salió el 2026-11-24",
+   "nombre": "Edición 2026-11-26: Imacec igual al del Banco Central (con sus revisiones)",
+   "ok": false,
+   "detalle": "Indicadores económicos dice 0,2% para 2026-09 y el Banco Central -0,1 %",
+   "grave": true
+  },
+  {
+   "nombre": "Edición 2026-11-26: no falta nada de lo que salió el 2026-11-25",
    "ok": true,
    "detalle": "",
    "grave": true
@@ -212,6 +218,12 @@
    "ok": false,
    "detalle": "actualizado = 2026-10-21 (máximo 14 días)",
    "grave": false
+  },
+  {
+   "nombre": "Vuelos con estado y hora confirmada al día",
+   "ok": true,
+   "detalle": "",
+   "grave": true
   },
   {
    "nombre": "Imacec con el último mes publicado",
