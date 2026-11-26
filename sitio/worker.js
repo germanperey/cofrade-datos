@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "0ad2653db95b";
+const VERSION_SITIO = "3a56424fd863";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6638,7 +6638,10 @@ const BANNERS_ARCHIVO = /^\/b\/((?:economia|politica|votaciones|emprendimiento|t
 // electoral española y una oferta de Xiaomi. Un filtro rápido con IA antes de publicar, que reclasifique, descarte farándula y elimine
 // duplicados». La primera capa está en pulso.py (reglas fijas y duplicados entre secciones). Esta es la segunda: Workers AI lee los
 // titulares de cada pulso (las 5 visibles y hasta 7 candidatas «extra» por sección) y decide la sección o el descarte de cada uno.
-// Medido el 26-11-2026 con 35 titulares reales etiquetados a mano: llama-3.3-70b acertó 34 (el que falló lo saca la regla fija);
+// Medido el 26-11-2026 con 35 titulares reales etiquetados a mano: llama-3.3-70b acertó 34 (el que falló lo saca la regla fija).
+// Ese mismo día, con el sitio ya publicado, se colaron trámites de Argentina (ANSES), perfiles personales y fichas de producto: se
+// endureció el criterio («ante la duda, descarta») y con 49 titulares acertó 47 en dos corridas iguales (el que falla siempre es una
+// ficha de producto en Ciencia; el otro lo saca la regla fija);
 // gpt-oss-120b acertó 34 y 35, pero tarda de 7 a 15 segundos, por eso queda de respaldo. Cuesta unas 85 neuronas por pulso (el plan
 // gratuito trae 10.000 al día y hay 12 pulsos). La decisión se guarda en D1 por pulso: se pide una sola vez cada 2 horas, en segundo
 // plano. Mientras no está, la portada muestra el pulso con la primera capa. La IA no escribe texto: solo elige, y lo que devuelva
@@ -6665,8 +6668,11 @@ Descarta (X) todo lo que no sirve a un lector que toma decisiones:
 - ofertas, descuentos, guías de compra, precios de productos, publicidad encubierta;
 - crónica policial o judicial menor y local (robos, detenciones, juicios de personas comunes), sobre todo de otros países;
 - noticias locales de otros países sin efecto fuera de su ciudad o provincia;
-- titulares sin contenido informativo ("La última víctima", "Tremendo susto").
-Mueve a la sección correcta lo que está mal ubicado (una entrevista a un canciller sobre una guerra va en M aunque venga en Economía). Ante la duda entre dos secciones, elige la del tema principal. Ante la duda entre publicar o descartar, publica si un ejecutivo chileno lo leería con provecho.
+- titulares sin contenido informativo ("La última víctima", "Tremendo susto");
+- trámites, pagos y beneficios sociales de otros países (ANSES, Asignación Universal por Hijo, aguinaldos, jubilaciones, bonos locales) y servicios al consumidor de otros países;
+- historias personales, testimonios y perfiles de vida ("Ainoa, una camionera…"), reseñas o fichas de productos, listas de consejos ("Las 5 habilidades…");
+- casos individuales de tribunales o recursos de protección de personas comunes, aunque sean de Chile.
+Mueve a la sección correcta lo que está mal ubicado (una entrevista a un canciller sobre una guerra va en M aunque venga en Economía). Ante la duda entre dos secciones, elige la del tema principal. Ante la duda entre publicar o descartar, descarta: es mejor una sección con 3 titulares sólidos que con 5 flojos. El deporte de competencia (resultados, partidos, fichajes, lesiones) siempre se publica en D.
 
 Responde SOLO un objeto JSON cuyas claves son los números de la lista y cuyos valores son los códigos, por ejemplo {"0":"C","1":"X","2":"EM"}. Incluye todos los números. Nada más.`;
 
