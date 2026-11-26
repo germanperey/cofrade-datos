@@ -1,0 +1,388 @@
+{
+ "generado": "2026-11-26T05:18-03:00",
+ "anio_base": 2026,
+ "anios": [
+  "2027",
+  "2028",
+  "2029",
+  "2030"
+ ],
+ "fmi": {
+  "series": {
+   "pib": {
+    "2023": 0.7,
+    "2024": 2.8,
+    "2025": 2.5,
+    "2026": 0.6,
+    "2027": 2.6,
+    "2028": 2.4,
+    "2029": 2.3,
+    "2030": 2.3,
+    "2031": 2.3
+   },
+   "inflacion": {
+    "2023": 7.6,
+    "2024": 3.9,
+    "2025": 4.2,
+    "2026": 3.7,
+    "2027": 3.5,
+    "2028": 3.0,
+    "2029": 3.0,
+    "2030": 3.0,
+    "2031": 3.0
+   },
+   "desempleo": {
+    "2023": 8.7,
+    "2024": 8.5,
+    "2025": 8.5,
+    "2026": 9.5,
+    "2027": 9.6,
+    "2028": 9.1,
+    "2029": 8.5,
+    "2030": 8.0,
+    "2031": 7.8
+   },
+   "cuenta_corriente": {
+    "2023": -3.1,
+    "2024": -1.2,
+    "2025": -1.2,
+    "2026": -0.3,
+    "2027": -1.5,
+    "2028": -1.4,
+    "2029": -1.4,
+    "2030": -1.5,
+    "2031": -1.5
+   },
+   "deuda": {
+    "2023": 39.4,
+    "2024": 41.8,
+    "2025": 41.5,
+    "2026": 42.8,
+    "2027": 44.5,
+    "2028": 46.0,
+    "2029": 47.2,
+    "2030": 48.1,
+    "2031": 49.0
+   }
+  },
+  "leido": "2026-11-26",
+  "fuente": "Fondo Monetario Internacional, base de datos de Perspectivas de la Economía Mundial",
+  "url": "https://www.imf.org/external/datamapper/profile/CHL"
+ },
+ "instituciones": [
+  {
+   "clave": "bcch_ipom",
+   "institucion": "Banco Central de Chile",
+   "institucion_en": "Central Bank of Chile",
+   "corto": "Banco Central (IPoM)",
+   "corto_en": "Central Bank (IPoM)",
+   "informe": "Informe de Política Monetaria (IPoM) de septiembre de 2026",
+   "informe_en": "Monetary Policy Report (IPoM), September 2026",
+   "fecha": "2026-09-09",
+   "url": "https://www.bcentral.cl/contenido/-/detalle/publicaciones/politica-monetaria/ipom-septiembre-2026",
+   "pib": {
+    "2026": "0,25 a 0,75",
+    "2027": "2 a 3",
+    "2028": "2,25 a 3,25"
+   },
+   "inflacion": {
+    "tipo": "promedio anual",
+    "tipo_en": "annual average",
+    "2026": "3,7",
+    "2027": "3,1",
+    "2028": "3,0"
+   },
+   "cuenta_corriente": {
+    "2026": "0,2",
+    "2027": "-1,8",
+    "2028": "-2,4"
+   },
+   "cobre": {
+    "unidad": "centavos de dólar por libra",
+    "unidad_en": "US cents per pound",
+    "2026": "610",
+    "2027": "540",
+    "2028": "560"
+   },
+   "revisar_desde": "2026-12-16",
+   "activo": true
+  },
+  {
+   "clave": "bcch_eee",
+   "institucion": "Banco Central de Chile",
+   "institucion_en": "Central Bank of Chile",
+   "corto": "Economistas (Encuesta del Banco Central)",
+   "corto_en": "Economists (Central Bank survey)",
+   "informe": "Encuesta de Expectativas Económicas de noviembre de 2026 (mediana)",
+   "informe_en": "Economic Expectations Survey, November 2026 (median)",
+   "fecha": "2026-11-01",
+   "url": "https://www.bcentral.cl/web/banco-central/areas/encuestas-economicas/encuesta-expectativas-economicas",
+   "pib": {
+    "2026": "0",
+    "2027": "3",
+    "2028": "2,7"
+   },
+   "inflacion": {
+    "tipo": "a diciembre",
+    "tipo_en": "December",
+    "mes": "2026-11",
+    "2027": "3,2",
+    "2028": "3"
+   },
+   "tpm": {
+    "diciembre de 2027": "4,5",
+    "en 23 meses": "4,25"
+   },
+   "revisar_desde": "2026-12-10",
+   "fecha_texto": "noviembre de 2026",
+   "fecha_texto_en": "November 2026",
+   "fuente_datos": "base de datos del Banco Central",
+   "series": {
+    "2026": "F089.PIB.V12.2026.M",
+    "2027": "F089.PIB.V12.2027.M",
+    "2028": "F089.PIB.V12.2028.M"
+   },
+   "activo": true
+  },
+  {
+   "clave": "fmi_weo",
+   "institucion": "Fondo Monetario Internacional",
+   "institucion_en": "International Monetary Fund",
+   "corto": "FMI",
+   "corto_en": "IMF",
+   "informe": "Perspectivas de la Economía Mundial (WEO), última edición en su base de datos oficial",
+   "informe_en": "World Economic Outlook, latest edition in its official database",
+   "fecha": "2026-11-26",
+   "url": "https://www.imf.org/en/publications/weo/issues/2026/10/13/world-economic-outlook-october-2026",
+   "api": "fmi",
+   "pib": {
+    "2023": "0,7",
+    "2024": "2,8",
+    "2025": "2,5",
+    "2026": "0,6",
+    "2027": "2,6",
+    "2028": "2,4",
+    "2029": "2,3",
+    "2030": "2,3",
+    "2031": "2,3"
+   },
+   "inflacion": {
+    "tipo": "promedio anual",
+    "tipo_en": "annual average",
+    "2026": "3,7",
+    "2027": "3,5",
+    "2031": "3,0",
+    "2023": "7,6",
+    "2024": "3,9",
+    "2025": "4,2",
+    "2028": "3,0",
+    "2029": "3,0",
+    "2030": "3,0"
+   },
+   "revisar_desde": "2027-04-14",
+   "fuente_datos": "base de datos oficial del FMI",
+   "fecha_texto": "leída el 26 de noviembre de 2026",
+   "fecha_texto_en": "read on November 26, 2026",
+   "activo": true
+  },
+  {
+   "clave": "bm_mpo",
+   "institucion": "Banco Mundial",
+   "institucion_en": "World Bank",
+   "corto": "Banco Mundial",
+   "corto_en": "World Bank",
+   "informe": "Macro Poverty Outlook de octubre de 2026 (ficha de Chile)",
+   "informe_en": "Macro Poverty Outlook, October 2026 (Chile)",
+   "fecha": "2026-10-01",
+   "fecha_texto": "octubre de 2026",
+   "fecha_texto_en": "October 2026",
+   "url": "https://thedocs.worldbank.org/en/doc/e408a7e21ba62d843bdd90dc37e61b57-0500032021/related/mpo-lac.pdf",
+   "pib": {
+    "2026": "0,8",
+    "2027": "3,0",
+    "2028": "2,3"
+   },
+   "inflacion": {
+    "tipo": "anual",
+    "tipo_en": "annual",
+    "2026": "3,6",
+    "2027": "3,2",
+    "2028": "3,0"
+   },
+   "cuenta_corriente": {
+    "2026": "-0,7",
+    "2027": "-1,2",
+    "2028": "-1,6"
+   },
+   "deuda": {
+    "2026": "42,7",
+    "2027": "43,4",
+    "2028": "45,0"
+   },
+   "revisar_desde": "2027-01-13",
+   "activo": true
+  },
+  {
+   "clave": "ocde_eo",
+   "institucion": "OCDE",
+   "institucion_en": "OECD",
+   "corto": "OCDE",
+   "corto_en": "OECD",
+   "informe": "Perspectivas Económicas de la OCDE de junio de 2026",
+   "informe_en": "OECD Economic Outlook, June 2026",
+   "fecha": "2026-06-03",
+   "url": "https://www.oecd.org/en/publications/oecd-economic-outlook-volume-2026-issue-1_2d1956f0-en/full-report/chile_670cc596.html",
+   "pib": {
+    "2026": "1,7",
+    "2027": "2,5"
+   },
+   "inflacion": {
+    "tipo": "anual",
+    "tipo_en": "annual",
+    "2026": "3,8",
+    "2027": "3,2"
+   },
+   "revisar_desde": "2026-12-02",
+   "activo": true
+  },
+  {
+   "clave": "cepal",
+   "institucion": "CEPAL",
+   "institucion_en": "ECLAC",
+   "corto": "CEPAL",
+   "corto_en": "ECLAC",
+   "informe": "Proyecciones de crecimiento 2026 y 2027 (octubre de 2026)",
+   "informe_en": "Growth projections for 2026 and 2027 (October 2026)",
+   "fecha": "2026-10-22",
+   "url": "https://www.pauta.cl/actualidad/2026/10/22/cepal-proyecta-que-chile-crecera-solo-02-en-2026-y-repuntara-a-22-en-2027.html",
+   "via": "Pauta",
+   "pib": {
+    "2026": "0,2",
+    "2027": "2,2"
+   },
+   "revisar_desde": "2026-12-15",
+   "activo": true
+  },
+  {
+   "clave": "hacienda_ifp",
+   "institucion": "Ministerio de Hacienda",
+   "institucion_en": "Ministry of Finance of Chile",
+   "corto": "Hacienda",
+   "corto_en": "Finance Ministry",
+   "informe": "Informe de Finanzas Públicas del tercer trimestre de 2026 (Presupuesto 2027)",
+   "informe_en": "Public Finance Report, Q3 2026 (2027 Budget)",
+   "fecha": "2026-10-06",
+   "url": "https://www.dipres.gob.cl/598/w3-article-433298.html",
+   "pib": {
+    "2026": "0,7",
+    "2027": "3,3"
+   },
+   "inflacion": {
+    "tipo": "promedio anual",
+    "tipo_en": "annual average",
+    "2027": "2,9"
+   },
+   "tendencial": {
+    "texto": "PIB no minero tendencial: 2,6 % en 2027 y 2,3 % en promedio entre 2027 y 2031",
+    "texto_en": "Trend non-mining GDP: 2.6% in 2027 and 2.3% on average in 2027-2031"
+   },
+   "revisar_desde": "2027-01-15",
+   "activo": true
+  }
+ ],
+ "promedio": {
+  "2026": {
+   "valor": 0.6,
+   "min": 0.0,
+   "max": 1.7,
+   "n": 7
+  },
+  "2027": {
+   "valor": 2.7,
+   "min": 2.2,
+   "max": 3.3,
+   "n": 7
+  },
+  "2028": {
+   "valor": 2.5,
+   "min": 2.3,
+   "max": 2.75,
+   "n": 4
+  },
+  "2029": {
+   "valor": 2.3,
+   "min": 2.3,
+   "max": 2.3,
+   "n": 1
+  },
+  "2030": {
+   "valor": 2.3,
+   "min": 2.3,
+   "max": 2.3,
+   "n": 1
+  }
+ },
+ "noticias": [
+  {
+   "titulo": "Cochilco: Producción de oro crecerá 10% este año y Chile se convertirá en el productor mundial número 23",
+   "fuente": "La Tercera · Pulso",
+   "url": "https://www.latercera.com/pulso/noticia/cochilco-produccion-de-oro-crecera-10-este-ano-y-chile-se-convertira-en-el-productor-mundial-numero-23/",
+   "fecha": "2026-11-25"
+  },
+  {
+   "titulo": "Entrevista a Sangbu Kim, del Banco Mundial: “Chile tiene un enorme potencial y la innovación digital y la IA serán el motor clave para dar un verdadero salto económico”",
+   "fuente": "Consejo de Políticas de Infraestructura",
+   "url": "https://cpichile.org/entrevista-a-sangbu-kim-del-banco-mundial-chile-tiene-un-enorme-potencial-y-la-innovacion-digital-y-la-ia-seran-el-motor-clave-para-dar-un-verdadero-salto-economico/?utm_source=rss&utm_medium=rss&utm_campaign=entrevista-a-sangbu-kim-del-banco-mundial-chile-tiene-un-enorme-potencial-y-la-innovacion-digital-y-la-ia-seran-el-motor-clave-para-dar-un-verdadero-salto-economico",
+   "fecha": "2026-11-25"
+  },
+  {
+   "titulo": "Eduardo Frei llama a acelerar las inversiones para consolidar a Chile como líder logístico de Sudamérica",
+   "fuente": "Consejo de Políticas de Infraestructura",
+   "url": "https://cpichile.org/eduardo-frei-llama-a-acelerar-las-inversiones-para-consolidar-a-chile-como-lider-logistico-de-sudamerica/?utm_source=rss&utm_medium=rss&utm_campaign=eduardo-frei-llama-a-acelerar-las-inversiones-para-consolidar-a-chile-como-lider-logistico-de-sudamerica",
+   "fecha": "2026-11-25"
+  },
+  {
+   "titulo": "Chile proyecta US$1.616 millones en inversiones para ampliar su infraestructura de centros de datos hacia 2031",
+   "fuente": "Consejo de Políticas de Infraestructura",
+   "url": "https://cpichile.org/chile-proyecta-us1-616-millones-en-inversiones-para-ampliar-su-infraestructura-de-centros-de-datos-hacia-2031/?utm_source=rss&utm_medium=rss&utm_campaign=chile-proyecta-us1-616-millones-en-inversiones-para-ampliar-su-infraestructura-de-centros-de-datos-hacia-2031",
+   "fecha": "2026-11-25"
+  },
+  {
+   "titulo": "Gobierno Destaca Inversión Pública Y Generación De Empleo A Través Del Plan Chile Despega En La Región De Coquimbo",
+   "fuente": "Consejo de Políticas de Infraestructura",
+   "url": "https://cpichile.org/gobierno-destaca-inversion-publica-y-generacion-de-empleo-a-traves-del-plan-chile-despega-en-la-region-de-coquimbo/?utm_source=rss&utm_medium=rss&utm_campaign=gobierno-destaca-inversion-publica-y-generacion-de-empleo-a-traves-del-plan-chile-despega-en-la-region-de-coquimbo",
+   "fecha": "2026-11-25"
+  },
+  {
+   "titulo": "Las reservas del proyecto de litio de Chile se duplican a 10.800 millones de dólares, impulsando el crecimiento de la inversión minera",
+   "fuente": "Shanghai Metals Market",
+   "url": "https://news.metal.com/es/newscontent/4P4WUYFXKQ7Q3D2WGKN2EQE2ZCCQKZKFUQELWRY-las-reservas-del-proyecto-de-litio-de-chile-se-duplican-a-10800-millones-de-dólares-impulsando-el-crecimiento-de-la-inversión-minera",
+   "fecha": "2026-11-23"
+  }
+ ],
+ "revisar": [],
+ "nota": "Cifras tal como las publicó cada institución, con su fecha y su enlace (verificadas el 19-11-2026). PIB e inflación en porcentaje. Se revisan cuando sale un informe nuevo: ver «revisar_desde». Las del FMI se renuevan solas desde su base de datos oficial.",
+ "tpm_esperada": {
+  "encuesta": "2026-11",
+  "trayectoria": [
+   [
+    "2026-11",
+    4.5
+   ],
+   [
+    "2027-04",
+    4.5
+   ],
+   [
+    "2027-10",
+    4.5
+   ],
+   [
+    "2028-10",
+    4.25
+   ]
+  ],
+  "fuente": "Encuesta de Expectativas Económicas (Banco Central de Chile)",
+  "url": "https://www.bcentral.cl/web/banco-central/areas/encuestas-economicas/encuesta-expectativas-economicas"
+ }
+}
