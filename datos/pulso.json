@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-26T08:15-03:00",
+ "generado": "2026-11-26T09:07-03:00",
  "proxima": "10:17",
  "indicadores": [
   {
@@ -10,7 +10,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-26",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "euro",
@@ -20,7 +20,7 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-26",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "yuan",
@@ -40,17 +40,17 @@
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-26",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "utm",
    "nombre": "UTM",
-   "valor": 72440,
+   "valor": 72440.0,
    "prefijo": "$",
    "sufijo": "",
    "decimales": 0,
    "fecha": "2026-11-01",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "tpm",
@@ -60,38 +60,38 @@
    "sufijo": " %",
    "decimales": 2,
    "fecha": "2026-11-26",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   },
   {
    "clave": "libra_cobre",
    "nombre": "Cobre (libra)",
-   "valor": 5.35,
+   "valor": 5.3512,
    "prefijo": "US$",
    "sufijo": "",
    "decimales": 2,
    "fecha": "2026-11-26",
-   "fuente": "Banco Central de Chile (vía mindicador.cl)"
+   "fuente": "Banco Central de Chile"
   }
  ],
  "ipsa": {
   "nombre": "IPSA",
-  "valor": 10416.24,
+  "valor": 10410.2,
   "fuente": "LarrainVial (Bolsa de Santiago)",
   "url": "https://mercados.larrainvial.com/",
-  "hora": "2026-11-26T08:16-03:00",
-  "variacion_pct": 0.82
+  "hora": "2026-11-26T09:08-03:00",
+  "variacion_pct": -0.06
  },
  "bolsas": {
   "lista": [
    {
     "nombre": "IPSA",
-    "valor": 10416.24,
-    "variacion_pct": 0.82
+    "valor": 10410.2,
+    "variacion_pct": -0.06
    },
    {
     "nombre": "IGPA",
-    "valor": 52632.15,
-    "variacion_pct": 0.75
+    "valor": 52602.85,
+    "variacion_pct": -0.06
    },
    {
     "nombre": "S&P 500",
@@ -120,13 +120,13 @@
    },
    {
     "nombre": "FTSE 100",
-    "valor": 10574.78,
-    "variacion_pct": 1.42
+    "valor": 10585.99,
+    "variacion_pct": 1.53
    },
    {
     "nombre": "DAX",
-    "valor": 25142.83,
-    "variacion_pct": 1.78
+    "valor": 25168.21,
+    "variacion_pct": 1.89
    },
    {
     "nombre": "IBEX 35",
@@ -149,7 +149,7 @@
     "variacion_pct": 0.06
    }
   ],
-  "hora": "2026-11-26T08:16-03:00",
+  "hora": "2026-11-26T09:08-03:00",
   "fuente": "LarrainVial",
   "url": "https://mercados.larrainvial.com/"
  },
@@ -164,78 +164,78 @@
    "seccion": "Chile",
    "notas": [
     {
-     "titulo": "Gala Caldirola se sincera y hace pública última charla con Luis Jiménez tras infidelidad: apuntó a confesión del galán",
-     "medio": "La Cuarta",
-     "url": "https://www.lacuarta.com/espectaculos/noticia/gala-caldirola-se-sincera-y-hace-publica-ultima-charla-con-luis-jimenez-tras-infidelidad-apunto-a-confesion-del-galan/",
-     "hora": "08:14"
+     "titulo": "Menos burocracia, más autonomía, inclusión de las familias y cambios al SAE: las 15 medidas del Mineduc y su hoja de ruta de Directores por Chile",
+     "medio": "The Clinic",
+     "url": "https://www.theclinic.cl/2026/11/26/menos-burocracia-mas-autonomia-inclusion-de-las-familias-y-cambios-al-sae-las-15-medidas-del-mineduc-y-su-hoja-de-ruta-de-directores-por-chile/",
+     "hora": "09:05"
     },
     {
-     "titulo": "Defensa planetaria que transformó un asteroide con su impacto: Hera revela el rostro deformado de Dimorphos",
-     "medio": "El Ciudadano",
-     "url": "https://www.elciudadano.com/ciencia-tecnologia/defensa-planetaria-que-transformo-un-asteroide-con-su-impacto-hera-revela-el-rostro-deformado-de-dimorphos/11/26/",
-     "hora": "08:13"
-    },
-    {
-     "titulo": "Cierran la Ruta 5 al norte en Conchalí por accidente fatal entre una moto y un bus RED",
-     "medio": "Atacama Noticias",
-     "url": "https://www.atacamanoticias.cl/2026/11/26/cierran-la-ruta-5-al-norte-en-conchali-por-accidente-fatal-entre-una-moto-y-un-bus-red/",
-     "hora": "08:04"
-    },
-    {
-     "titulo": "España vs Chile femenino: dos “Rojas” frente a frente por primera vez en la historia",
-     "medio": "El Ciudadano",
-     "url": "https://www.elciudadano.com/deportes/espana-vs-chile-femenino-dos-rojas-frente-a-frente-por-primera-vez-en-la-historia/11/26/",
-     "hora": "08:04"
-    },
-    {
-     "titulo": "Fatal accidente en Ruta 5 Norte: motociclista muere tras chocar con bus en Conchalí",
+     "titulo": "Brutal crimen en Villa Alemana: este jueves formalizarán a hombre acusado de matar a su expareja y violar a su exsuegra",
      "medio": "ADN Radio Chile",
-     "url": "https://www.adnradio.cl/2026/11/26/fatal-accidente-en-ruta-5-norte-motociclista-muere-tras-chocar-con-bus-en-conchali/",
-     "hora": "08:00"
+     "url": "https://www.adnradio.cl/2026/11/26/brutal-crimen-en-villa-alemana-este-jueves-formalizaran-a-hombre-acusado-de-matar-a-su-expareja-y-violar-a-su-exsuegra/",
+     "hora": "09:03"
+    },
+    {
+     "titulo": "Corte de Santiago confirma multa a colegio de Maipú por sancionar a apoderado sin respetar el debido proceso",
+     "medio": "Diario Constitucional",
+     "url": "https://www.diarioconstitucional.cl/judicial/corte-de-santiago-confirma-multa-a-colegio-de-maipu-por-sancionar-a-apoderado-sin-respetar-el-debido",
+     "hora": "09:00"
+    },
+    {
+     "titulo": "Sokol y Cosal partieron goleando en el Torneo Oficial",
+     "medio": "La Prensa Austral",
+     "url": "https://laprensaaustral.cl/2026/11/26/sokol-y-cosal-partieron-goleando-en-el-torneo-oficial/",
+     "hora": "09:00"
+    },
+    {
+     "titulo": "Exsubcampeón mundial de ajedrez Alexei Shirov retorna a Magallanes",
+     "medio": "La Prensa Austral",
+     "url": "https://laprensaaustral.cl/2026/11/26/exsubcampeon-mundial-de-ajedrez-alexei-shirov-retorna-a-magallanes/",
+     "hora": "09:00"
     }
    ],
    "extra": [
     {
-     "titulo": "DC por detención de exalcalde de Coquimbo: “Ninguna militancia puede estar por encima de la ley”",
-     "medio": "Atacama Noticias",
-     "url": "https://www.atacamanoticias.cl/2026/11/26/dc-por-detencion-de-exalcalde-de-coquimbo-ninguna-militancia-puede-estar-por-encima-de-la-ley/",
-     "hora": "08:00"
-    },
-    {
-     "titulo": "Paciente con tumor cerebral recurre de protección contra Fonasa por retraso de dos meses en cirugía",
-     "medio": "Diario Constitucional",
-     "url": "https://www.diarioconstitucional.cl/accion-de-proteccion/paciente-con-tumor-cerebral-recurre-de-proteccion-contra-fonasa-por-retraso-de-dos-meses-en-cirugia",
-     "hora": "08:00"
-    },
-    {
-     "titulo": "Vendía zapatillas y ropa falsificada: detienen a hombre con productos avaluados en $10 millones en Curicó",
+     "titulo": "Innovación y tecnología sobre ruedas: INACAP Talca invita a su Feria de Mecánica y Electromovilidad Automotriz",
      "medio": "Diario El Centro Talca",
-     "url": "https://www.diarioelcentro.cl/2026/11/26/vendia-zapatillas-y-ropa-falsificada-detienen-a-hombre-con-productos-avaluados-en-10-millones-en-curico/",
-     "hora": "08:00"
+     "url": "https://www.diarioelcentro.cl/2026/11/26/innovacion-y-tecnologia-sobre-ruedas-inacap-talca-invita-a-su-feria-de-mecanica-y-electromovilidad-automotriz/",
+     "hora": "08:59"
     },
     {
-     "titulo": "Propietario asegura que vendió terreno de 5 mil metros cuadrados a dirigenta de la toma villa Las Etnias",
-     "medio": "La Prensa Austral",
-     "url": "https://laprensaaustral.cl/2026/11/26/propietario-asegura-que-vendio-terreno-de-5-mil-metros-cuadrados-a-dirigenta-de-la-toma-villa-las-etnias/",
-     "hora": "08:00"
+     "titulo": "Congreso Biobío Activo 2026 abordará estrategias para incorporar movimiento en la jornada escolar",
+     "medio": "Noticias UdeC",
+     "url": "https://noticias.udec.cl/congreso-biobio-activo-2026-abordara-estrategias-para-incorporar-movimiento-en-la-jornada-escolar/",
+     "hora": "08:58"
     },
     {
-     "titulo": "De “correo humano” tildó fiscal a colombiano que será condenado a 7 años por tráfico de cocaína",
-     "medio": "La Prensa Austral",
-     "url": "https://laprensaaustral.cl/2026/11/26/de-correo-humano-tildo-fiscal-a-colombiano-que-sera-condenado-a-7-anos-por-trafico-de-cocaina/",
-     "hora": "08:00"
+     "titulo": "Servel presentó su Observatorio en el III Festival Género, Comunicación y Tecnología",
+     "medio": "Servel",
+     "url": "https://www.servel.cl/Ch/app/servel-presento-su-observatorio-en-el-iii-festival-genero-comunicacion-y-tecnologia/sin-categoria/",
+     "hora": "08:58"
     },
     {
-     "titulo": "Santiago Wanderers recibirá a Recoleta por la llave 2",
-     "medio": "El Rancaguino",
-     "url": "https://www.elrancaguino.cl/2026/11/26/santiago-wanderers-vs-recoleta-previa-horario-y-como-llegan-para-la-llave-2-del-campeonato-2026/",
-     "hora": "07:57"
-    },
-    {
-     "titulo": "A meses de convertirse en padre y separarse: famoso futbolista fue visto con mujer 17 años menor",
+     "titulo": "El íntimo desahogo de Rosario Bravo: reconoce “angustia” que tiene desde que se casó y hace alusión a edad de Carlos Caorsi",
      "medio": "La Cuarta",
-     "url": "https://www.lacuarta.com/deportes/noticia/a-meses-de-convertirse-en-padre-y-separarse-famoso-futbolista-fue-visto-con-mujer-17-anos-menor/",
-     "hora": "07:57"
+     "url": "https://www.lacuarta.com/espectaculos/noticia/el-intimo-desahogo-de-rosario-bravo-reconoce-angustia-que-tiene-desde-que-se-caso-y-hace-alusion-a-edad-de-carlos-caorsi/",
+     "hora": "08:57"
+    },
+    {
+     "titulo": "Ya no basta el esfuerzo: la gente espera más del Estado",
+     "medio": "CIPER",
+     "url": "https://www.ciperchile.cl/2026/11/26/ya-no-basta-el-esfuerzo-la-gente-espera-mas-del-estado/?utm_source=rss&utm_medium=rss&utm_campaign=ya-no-basta-el-esfuerzo-la-gente-espera-mas-del-estado",
+     "hora": "08:56"
+    },
+    {
+     "titulo": "“Hay un último secreto”: Checho Hirane queda helado tras confesión de sobreviviente de la tragedia de Los Andes",
+     "medio": "La Cuarta",
+     "url": "https://www.lacuarta.com/chile/noticia/hay-un-ultimo-secreto-checho-hirane-queda-helado-tras-confesion-de-sobreviviente-de-la-tragedia-de-los-andes/",
+     "hora": "08:55"
+    },
+    {
+     "titulo": "Palmeiras vs Estudiantes: horario, canal de TV y dónde ver en Chile la final de la Copa Libertadores 2026",
+     "medio": "ADN Radio Chile",
+     "url": "https://www.adnradio.cl/2026/11/26/palmeiras-vs-estudiantes-horario-canal-de-tv-y-donde-ver-en-chile-la-final-de-la-copa-libertadores-2026/",
+     "hora": "08:52"
     }
    ]
   },
@@ -243,78 +243,78 @@
    "seccion": "Economía",
    "notas": [
     {
+     "titulo": "El banco más grande del mundo analizó el salto del riesgo país y la volatilidad en Argentina: que prevé para las elecciones 2027",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/economia/2026/11/26/el-banco-mas-grande-del-mundo-analizo-el-salto-del-riesgo-pais-y-la-volatilidad-en-argentina-que-preve-para-las-elecciones-2027/",
+     "hora": "09:03"
+    },
+    {
+     "titulo": "Brink’s amplía sus operaciones en el norte con nueva sucursal de $1.800 millones en Antofagasta",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/regiones/antofagasta/empresas/brink-s-amplia-sus-operaciones-en-el-norte-con-nueva-sucursal-de-1-800",
+     "hora": "09:01"
+    },
+    {
+     "titulo": "NADBank prepara línea de crédito para CFE destinada a fondear múltiples proyectos de energía",
+     "medio": "Bloomberg Linea",
+     "url": "https://www.bloomberglinea.com/latinoamerica/mexico/nadbank-prepara-linea-de-credito-para-cfe-destinada-a-fondear-multiples-proyectos-de-energia/",
+     "hora": "08:58"
+    },
+    {
+     "titulo": "Honduras: Copeco prevé hasta siete frentes fríos durante la temporada que se extenderá hasta marzo de 2027",
+     "medio": "Infobae America Economia",
+     "url": "https://www.infobae.com/honduras/2026/11/26/honduras-copeco-preve-hasta-siete-frentes-frios-durante-la-temporada-que-se-extendera-hasta-marzo-de-2027/",
+     "hora": "08:57"
+    },
+    {
+     "titulo": "La red que robaba carros en zonas residenciales de Guatemala y las vendía en Honduras con placas falsas",
+     "medio": "Infobae America Economia",
+     "url": "https://www.infobae.com/guatemala/2026/11/26/la-red-que-robaba-carros-en-zonas-residenciales-de-guatemala-y-las-vendia-en-honduras-con-placas-falsas/",
+     "hora": "08:52"
+    }
+   ],
+   "extra": [
+    {
+     "titulo": "Cuando llega el verano, el arte también necesita vacaciones: dónde guardar lo que no se puede reemplazar",
+     "medio": "Infobae · Economía",
+     "url": "https://www.infobae.com/opinion/2026/11/26/cuando-llega-el-verano-el-arte-tambien-necesita-vacaciones-donde-guardar-lo-que-no-se-puede-reemplazar/",
+     "hora": "08:47"
+    },
+    {
+     "titulo": "Dólar abre plano mientras el precio del cobre repunta y EEUU entra a su feriado de Acción de Gracias",
+     "medio": "Diario Financiero",
+     "url": "http://www.df.cl/mercados/bolsa-monedas/dolar-hoy-85yw8",
+     "hora": "08:45"
+    },
+    {
+     "titulo": "Banco Central descarta intervenir ante el alza del dólar: \"Se ha estado moviendo con sus fundamentos\"",
+     "medio": "Chócale",
+     "url": "https://chocale.cl/2026/11/banco-central-descarta-intervenir-ante-el-alza-del-dolar-se-ha-estado-moviendo-con-sus-fundamentos/",
+     "hora": "08:30"
+    },
+    {
+     "titulo": "Fernando González y Mateo Muñoz: dos historias que inspiran",
+     "medio": "Cooperativa",
+     "url": "https://www.cooperativa.cl/noticias/pais/iglesia-catolica/hogar-de-cristo/fernando-gonzalez-y-mateo-munoz-dos-historias-que-inspiran/2026-11-26/083031.html",
+     "hora": "08:30"
+    },
+    {
+     "titulo": "Hombre fue asesinado de un disparo en la cabeza en San Bernardo",
+     "medio": "Cooperativa",
+     "url": "https://www.cooperativa.cl/noticias/pais/policial/homicidios/hombre-fue-asesinado-de-un-disparo-en-la-cabeza-en-san-bernardo/2026-11-26/082326.html",
+     "hora": "08:23"
+    },
+    {
      "titulo": "Dólar rozó los $1.050: ¿Por qué no baja de la \"luca\"? Esto dicen los expertos",
      "medio": "Chócale",
      "url": "https://chocale.cl/2026/11/dolar-por-que-no-baja-de-la-luca/",
      "hora": "08:15"
     },
     {
-     "titulo": "La nueva ofensiva arancelaria de EEUU y las señales que deja para la negociación con Chile",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/internacional/economia/la-nueva-ofensiva-arancelaria-de-eeuu-y-las-senales-que-deja-para-la",
-     "hora": "08:14"
-    },
-    {
-     "titulo": "Diputado Héctor Ulloa (PPD), presidente de la comisión investigadora por la caída del fondo E: “Aquí no ha habido un mea culpa ni una autocrítica por parte de las AFP”",
-     "medio": "Diario Financiero",
-     "url": "http://www.df.cl/mercados/pensiones/diputado-hector-ulloa-ppd-presidente-comision-investigadora-por-la-caida",
-     "hora": "08:08"
-    },
-    {
-     "titulo": "Aguinaldo para jubilados: cuánto cobrarán quienes reciben la mínima en diciembre de 2026",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/26/aguinaldo-para-jubilados-cuanto-cobraran-quienes-reciben-la-minima-en-diciembre-de-2026/",
-     "hora": "08:05"
-    },
-    {
-     "titulo": "PIFO: La manzana de la discordia que divide a Mastercard y los procesadores de pago",
-     "medio": "Chócale",
-     "url": "https://chocale.cl/2026/11/pifo-manzana-de-la-discordia-que-divide-a-mastercard-y-los-procesadores-de-pago/",
-     "hora": "08:00"
-    }
-   ],
-   "extra": [
-    {
      "titulo": "Los países de Latinoamérica donde cada año hay menos católicos",
      "medio": "Bloomberg Linea",
      "url": "https://www.bloomberglinea.com/latinoamerica/los-paises-de-latinoamerica-donde-cada-ano-hay-menos-catolicos/",
      "hora": "08:00"
-    },
-    {
-     "titulo": "Ahorrar, gastar menos y desendeudarse: el mensaje de Olga Lucía Acosta a los colombianos para 2027",
-     "medio": "Bloomberg Linea",
-     "url": "https://www.bloomberglinea.com/latinoamerica/colombia/ahorrar-gastar-menos-y-desendeudarse-el-mensaje-de-olga-lucia-acosta-a-los-colombianos-para-2027/",
-     "hora": "07:00"
-    },
-    {
-     "titulo": "De cuánto será la Asignación Universal por Hijo de ANSES en diciembre 2026",
-     "medio": "Infobae · Economía",
-     "url": "https://www.infobae.com/economia/2026/11/26/de-cuanto-sera-la-asignacion-universal-por-hijo-de-anses-en-diciembre-2026/",
-     "hora": "06:26"
-    },
-    {
-     "titulo": "Nació en la guerra, fue restaurada por universitarios y terminó inspirando a El Expreso Polar navideño: la historia de la Pere Marquette 1225",
-     "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/historias/2026/11/26/nacio-en-la-guerra-fue-restaurada-por-universitarios-y-termino-inspirando-a-el-expreso-polar-navideno-la-historia-de-la-pere-marquette-1225/",
-     "hora": "06:00"
-    },
-    {
-     "titulo": "Elina Valtonen, canciller de Finlandia: “Rusia puede terminar esta guerra hoy”",
-     "medio": "Infobae America Economia",
-     "url": "https://www.infobae.com/america/mundo/2026/11/26/elina-valtonen-canciller-de-finlandia-rusia-puede-terminar-esta-guerra-hoy/",
-     "hora": "04:00"
-    },
-    {
-     "titulo": "Comité Regional de Infraestructura define 23 proyectos prioritarios para destrabar y acelerar iniciativas",
-     "medio": "Portal Innova · noticias",
-     "url": "https://portalinnova.cl/comite-regional-de-infraestructura-define-23-proyectos-prioritarios-para-destrabar-y-acelerar-iniciativas/",
-     "hora": "23:51"
-    },
-    {
-     "titulo": "Iansa anunció el fin de su producción de azúcar de remolacha",
-     "medio": "Cooperativa",
-     "url": "https://www.cooperativa.cl/noticias/economia/sectores-productivos/agricultura/iansa-anuncio-el-fin-de-su-produccion-de-azucar-de-remolacha/2026-11-25/234513.html",
-     "hora": "23:45"
     }
    ]
   },
@@ -322,40 +322,91 @@
    "seccion": "Mundo",
    "notas": [
     {
-     "titulo": "Duki explicó cómo el ejercicio físico cambió su personalidad: “No estoy tan irascible”",
+     "titulo": "El hallazgo que alarmó a una familia en Córdoba: una yarará venenosa estaba enroscada en el filtro de la pileta de su casa",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/teleshow/2026/11/26/duki-explico-como-el-ejercicio-fisico-cambio-su-personalidad-no-estoy-tan-irascible/",
-     "hora": "08:11"
+     "url": "https://www.infobae.com/sociedad/2026/11/26/el-hallazgo-que-alarmo-a-una-familia-en-cordoba-una-yarara-venenosa-estaba-enroscada-en-el-filtro-de-la-pileta-de-su-casa/",
+     "hora": "09:07"
     },
     {
-     "titulo": "No funciona el Tren Mitre: una formación quedó detenida entre humo y chispazos",
+     "titulo": "Cómo está ordenado el PJ para enfrentar las elecciones en las seis provincias que ya definieron fecha",
      "medio": "Infobae",
-     "url": "https://www.infobae.com/sociedad/2026/11/26/no-funciona-el-tren-mitre-una-formacion-quedo-detenida-entre-humo-y-chispazos/",
-     "hora": "08:10"
+     "url": "https://www.infobae.com/politica/2026/11/26/como-esta-ordenado-el-pj-para-enfrentar-las-elecciones-en-las-seis-provincias-que-ya-definieron-fecha/",
+     "hora": "09:06"
     },
     {
-     "titulo": "Una nueva investigación en Francia apuntala la veracidad de los mensajes antisemitas del delfín de Marine Le Pen",
-     "medio": "El País · Internacional",
-     "url": "https://elpais.com/internacional/2026-11-26/una-nueva-investigacion-en-francia-apuntala-la-veracidad-de-los-mensajes-antisemitas-del-delfin-de-marine-le-pen.html",
-     "hora": "08:01"
-    },
-    {
-     "titulo": "Un tribunal de Irak condena a cadena perpetua a ocho franceses por unirse a Estado Islámico",
+     "titulo": "Serbia convoca elecciones presidenciales para el 27 de diciembre",
      "medio": "Europa Press · Internacional",
-     "url": "https://www.europapress.es/internacional/noticia-tribunal-irak-condena-cadena-perpetua-ocho-franceses-unirse-estado-islamico-20261126114656.html",
-     "hora": "07:46"
+     "url": "https://www.europapress.es/internacional/noticia-serbia-convoca-elecciones-presidenciales-27-diciembre-20261126130434.html",
+     "hora": "09:04"
+    },
+    {
+     "titulo": "Una explosión y un incendio en una refinería de Bangkok dejan siete heridos",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/asia-pac%C3%ADfico/20261126-una-explosi%C3%B3n-y-un-incendio-en-una-refiner%C3%ADa-de-bangkok-dejan-siete-heridos",
+     "hora": "09:03"
+    },
+    {
+     "titulo": "Mensajes antisemitas: nuevos indicios comprometen a Jordan Bardella, que vuelve a negar su autoría",
+     "medio": "France 24 en español",
+     "url": "https://www.france24.com/es/francia/20261126-mensajes-antisemitas-nuevos-indicios-comprometen-a-jordan-bardella-que-vuelve-a-negar-su-autor%C3%ADa",
+     "hora": "09:02"
     }
    ],
-   "extra": []
+   "extra": [
+    {
+     "titulo": "Rusia teme un contragolpe ucranio contra su sistema energético: “La cuestión es cómo sobrevivimos al invierno”",
+     "medio": "El País · Internacional",
+     "url": "https://elpais.com/internacional/2026-11-26/rusia-teme-un-contragolpe-ucranio-contra-su-sistema-energetico-la-cuestion-es-como-sobrevivimos-al-invierno.html",
+     "hora": "08:46"
+    }
+   ]
   },
   {
    "seccion": "Economía mundial",
    "notas": [
     {
-     "titulo": "UniCredit propone a Orcel como nuevo presidente del Consejo de Supervisión de Commerzbank",
+     "titulo": "Aranceles de Trump: el día de la marmota",
+     "medio": "Expansión España Economía",
+     "url": "https://www.expansion.com/opinion/2026/11/26/aranceles-trump-dia-marmota.html",
+     "hora": "09:03"
+    },
+    {
+     "titulo": "Apple podría cambiar sus tablets para siempre: ya prueba macOS en los iPad",
      "medio": "Cinco Días portada",
-     "url": "https://elpais.com/economia/2026-11-26/unicredit-propone-a-orcel-como-nuevo-presidente-del-consejo-de-supervision-de-commerzbank.html",
-     "hora": "08:10"
+     "url": "https://cincodias.elpais.com/smartlife/tablets/2026-11-26/apple-prueba-macos-ipad.html",
+     "hora": "09:00"
+    },
+    {
+     "titulo": "La UME envía a El Hierro un equipo sanitario de 120 efectivos por la llegada de más de 2.000 migrantes en un día",
+     "medio": "DW en español",
+     "url": "https://www.dw.com/es/la-ume-envía-a-el-hierro-un-equipo-sanitario-de-120-efectivos-por-la-llegada-de-más-de-2-000-migrantes-en-un-día/a-80060123?maca=spa-rss-sp-all-1122-xml-mrss",
+     "hora": "08:59"
+    },
+    {
+     "titulo": "La OPEP+ podría mantener sus actuales objetivos de producción de petróleo el domingo, según fuentes",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/opep-mantener-actuales-objetivos-producci%C3%B3n-115712708.html",
+     "hora": "08:57"
+    },
+    {
+     "titulo": "Ucrania dice que Rusia atacó dos buques graneleros cerca de los puertos de Odesa",
+     "medio": "Yahoo Finanzas",
+     "url": "https://es.finance.yahoo.com/noticias/ucrania-rusia-atac%C3%B3-buques-graneleros-114944732.html",
+     "hora": "08:49"
+    }
+   ],
+   "extra": [
+    {
+     "titulo": "\"Si puedes reconocer como padre a alguien sin vínculo biológico, también es justo que puedas dejar de hacerlo si no hay relación\"",
+     "medio": "BBC Mundo · Economía",
+     "url": "https://www.bbc.com/mundo/articles/cwm2m625qej3o?at_medium=RSS&at_campaign=rss",
+     "hora": "08:37"
+    },
+    {
+     "titulo": "Las Bolsas europeas rebotan con fuerza sin la referencia de Wall Street por Acción de Gracias",
+     "medio": "Cinco Días portada",
+     "url": "https://cincodias.elpais.com/mercados-financieros/2026-11-26/la-bolsa-y-el-ibex-35.html",
+     "hora": "08:32"
     },
     {
      "titulo": "Guindos defiende la solidez de la banca europea y pide una \"jurisdicción única\" en el sector",
@@ -364,30 +415,10 @@
      "hora": "08:01"
     },
     {
-     "titulo": "Musk promete dar 2 acciones de SpaceX a cada niño de Estados Unidos",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/musk-promete-2-acciones-spacex-110113980.html",
-     "hora": "08:01"
-    },
-    {
-     "titulo": "Juan Camilo Amaya, nuevo director general de Pons IP en Colombia",
-     "medio": "Cinco Días portada",
-     "url": "https://cincodias.elpais.com/legal/2026-11-26/juan-camilo-amaya-nuevo-director-general-de-pons-ip-en-colombia.html",
-     "hora": "08:00"
-    },
-    {
      "titulo": "Por qué nuestros cerebros no están preparados para hacer varias tareas a la vez (aunque creas que lo haces bien)",
      "medio": "BBC Mundo · Economía",
      "url": "https://www.bbc.com/mundo/articles/cw808pxm2ndzo?at_medium=RSS&at_campaign=rss",
      "hora": "07:33"
-    }
-   ],
-   "extra": [
-    {
-     "titulo": "Iberdrola obtiene la aprobación final para adquirir la participación mayoritaria en la finlandesa Caruna.",
-     "medio": "Yahoo Finanzas",
-     "url": "https://es.finance.yahoo.com/noticias/iberdrola-obtiene-aprobaci%C3%B3n-final-adquirir-103118870.html",
-     "hora": "07:31"
     },
     {
      "titulo": "Los jóvenes trabajan 13 días más al año que antes de la reforma laboral",
@@ -402,28 +433,10 @@
      "hora": "07:26"
     },
     {
-     "titulo": "Reynés: \"Los políticos deben hacer de políticos y los empresarios, de empresarios\"",
-     "medio": "Expansión España Economía",
-     "url": "https://www.expansion.com/catalunya/2026/11/26/reynes-politicos-deben-politicos-empresarios-empresarios.html",
-     "hora": "07:25"
-    },
-    {
-     "titulo": "La RDC supera la barrera de los 12.000 casos de ébola, incluidos más de 5.900 muertos",
-     "medio": "DW en español",
-     "url": "https://www.dw.com/es/la-rdc-supera-la-barrera-de-los-12-000-casos-de-ébola-incluidos-más-de-5-900-muertos/a-80057782?maca=spa-rss-sp-all-1122-xml-mrss",
-     "hora": "06:52"
-    },
-    {
      "titulo": "\"Inaceptables\": China, la UE y otras grandes economías rechazan los nuevos aranceles de EE. UU.",
      "medio": "France 24 · Economía",
      "url": "https://www.france24.com/es/econom%C3%ADa-y-tecnolog%C3%ADa/20261126-inaceptables-china-la-ue-y-otras-grandes-econom%C3%ADas-rechazan-los-nuevos-aranceles-de-ee-uu",
      "hora": "06:41"
-    },
-    {
-     "titulo": "Nvidia rebota desde su suporte de largo plazo",
-     "medio": "Expansión España Mercados",
-     "url": "https://www.expansion.com/mercados/2026/11/26/nvidia-rebota-suporte-plazo.html",
-     "hora": "05:59"
     }
    ]
   },
@@ -431,16 +444,22 @@
    "seccion": "Tecnología",
    "notas": [
     {
-     "titulo": "El mayor terremoto de la salida a bolsa de Anthropic no se notó en Wall Street, lo está sufriendo la vivienda de lujo de San Francisco",
+     "titulo": "Olvídate del cargador durante semanas: este reloj deportivo Garmin con carga solar y linterna LED tiene descuentazo",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/magnet/mayor-terremoto-salida-a-bolsa-anthropic-no-se-noto-wall-street-esta-sufriendo-vivienda-lujo-san-francisco",
-     "hora": "08:02"
+     "url": "https://www.xataka.com/seleccion/olvidate-cargador-durante-semanas-este-reloj-deportivo-garmin-carga-solar-linterna-led-tiene-descuentazo",
+     "hora": "09:00"
     },
     {
-     "titulo": "Una Nintendo Switch por 216 euros y portátiles Apple por 636 euros: las mejores ofertas del outlet de MediaMarkt",
+     "titulo": "Hace un año instalé OpenClaw y he matado más agentes que Tamagotchis. Sigo convencido de que cambió la IA",
      "medio": "Xataka",
-     "url": "https://www.xataka.com/seleccion/nintendo-switch-216-euros-portatiles-apple-636-euros-mejores-ofertas-outlet-mediamarkt",
-     "hora": "07:46"
+     "url": "https://www.xataka.com/robotica-e-ia/hace-ano-instale-openclaw-he-matado-agentes-que-tamagotchis-sigo-convencido-que-cambio-ia",
+     "hora": "09:00"
+    },
+    {
+     "titulo": "Iñaki Gabilondo: “Cuando ya tienes una edad, ya tienes el piso pagado, ya los hijos son mayores, ya tienes los reconocimientos que has podido tener, ¿qué motor puedes tener?”",
+     "medio": "Genbeta",
+     "url": "https://www.genbeta.com/actualidad/inaki-gabilondo-cuando-tienes-edad-tienes-piso-pagado-hijos-mayores-tienes-reconocimientos-que-has-podido-tener-que-motor-puedes-tener",
+     "hora": "09:00"
     },
     {
      "titulo": "Brutal clip de ‘Avengers: Doomsday’ con el enfrentamiento de Magneto y el Doctor Doom: casi le arranca la máscara",
@@ -453,20 +472,20 @@
      "medio": "Genbeta",
      "url": "https://www.genbeta.com/internacional/friedrich-nietzsche-filosofo-a-menudo-contradecimos-opinion-cuando-realidad-solo-nos-resulta-desagradable-tono-que-fue-expresada",
      "hora": "07:00"
-    },
-    {
-     "titulo": "Ainoa, una camionera en España: \"La ruta cambia cada día. Si voy a Madrid, calculo las horas que puedo hacer del tirón para saber dónde parar\"",
-     "medio": "Genbeta",
-     "url": "https://www.genbeta.com/nuevo/ainoa-camionera-espana-ruta-cambia-cada-dia-voy-a-madrid-calculo-horas-que-puedo-hacer-tiron-para-saber-donde-parar",
-     "hora": "06:00"
     }
    ],
    "extra": [
     {
+     "titulo": "Cómo aplicar la inteligencia artificial a cualquier negocio: las claves que dejó el T-Connect en Tucumán",
+     "medio": "LA GACETA",
+     "url": "https://www.lagaceta.com.ar/nota/1164313/sociedad/como-aplicar-inteligencia-artificial-cualquier-negocio-claves-dejo-tconnect-tucuman.html",
+     "hora": "00:26"
+    },
+    {
      "titulo": "Nvidia vendió chips de inteligencia artificial a dos empresas de California controladas por firmas chinas",
      "medio": "Infobae",
      "url": "https://www.infobae.com/estados-unidos/2026/11/26/nvidia-vendio-chips-de-inteligencia-artificial-a-dos-empresas-de-california-controladas-por-firmas-chinas/",
-     "hora": "23:58"
+     "hora": "00:04"
     },
     {
      "titulo": "Tener Netflix, Disney+ y Prime Video al mismo tiempo puede salir caro: Profeco explica cómo elegir mejor",
@@ -504,78 +523,78 @@
    "seccion": "Deportes",
    "notas": [
     {
-     "titulo": "A meses del debut de la competencia en Chile: Carola Vergara y Agustín Davis brillan en HYROX Río de Janeiro",
-     "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/a-meses-del-debut-de-la-competencia-en-chile-carola-vergara-y-agustin-davis-brillan-en-hyrox-rio-de-janeiro/",
-     "hora": "08:11"
+     "titulo": "El desafío oculto de Qatar y Abu Dhabi: cómo la crisis geopolítica complicó la logística de F1",
+     "medio": "Motorsport.com ES F1",
+     "url": "https://es.motorsport.com/f1/news/f1-la-sfida-nascosta-di-qatar-e-abu-dhabi-cosi-la-crisi-geopolitica-ha-complicato-la-logistica-dei-/10877541/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
+     "hora": "09:06"
     },
     {
-     "titulo": "Sem Westerveld, una historia muy especial en la portería del Real Zaragoza",
+     "titulo": "Luis Enrique y un elogio al rival: \"No me gustaría volver a enfrentarlo\"",
+     "medio": "Olé",
+     "url": "https://www.ole.com.ar/futbol-internacional/champions/luis-enrique-sorprendio-elogios-partido-roma-psg-champions-league_0_uABJ1X8r8i.html",
+     "hora": "08:58"
+    },
+    {
+     "titulo": "Militao, a lo Joaquín: ‘secuestra’ el autobús del Real Madrid",
+     "medio": "AS Fútbol",
+     "url": "https://as.com/futbol/videos/militao-a-lo-joaquin-secuestra-el-autobus-del-real-madrid-f202611-v/",
+     "hora": "08:56"
+    },
+    {
+     "titulo": "El Real Madrid vuelve al trabajo pensando en el Alavés",
      "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/futbol-catala/20261126/1004255757/sem-westerveld-evolucion-porteria-real-zaragoza.html",
-     "hora": "08:00"
+     "url": "https://www.mundodeportivo.com/futbol/real-madrid/20261126/1004255792/real-madrid-vuelve-trabajo-pensando-alaves.html",
+     "hora": "08:55"
     },
     {
-     "titulo": "Escándalo por la agresión de un árbitro contra un jugador argentino tras una final en Bolivia: “Que pegue más fuerte”",
-     "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/26/escandalo-por-la-agresion-de-un-arbitro-contra-un-jugador-argentino-tras-una-final-en-bolivia-que-pegue-mas-fuerte/",
-     "hora": "07:55"
-    },
-    {
-     "titulo": "Selhurst Park acoge el sexto viaje de la Real Sociedad a Inglaterra: estos son los precedentes",
-     "medio": "Mundo Deportivo Fútbol",
-     "url": "https://www.mundodeportivo.com/futbol/real-sociedad/20261126/1004255478/selhurst-park-acoge-sexto-viaje-real-sociedad-inglaterra-son-precedenrtes.html",
-     "hora": "07:55"
-    },
-    {
-     "titulo": "Con el llanto desconsolado de Williams Alarcón tras lesionarse y sin Carlos Palacios: Boca Juniors avanza en el Clausura",
+     "titulo": "Nuevo golpe para Jannik Sinner: el Abierto de Australia confirma la baja del italiano",
      "medio": "La Tercera · El Deportivo",
-     "url": "https://www.latercera.com/el-deportivo/noticia/con-el-llanto-desconsolado-de-williams-alarcon-tras-lesionarse-y-sin-carlos-palacios-boca-juniors-avanza-en-el-clausura/",
-     "hora": "07:53"
+     "url": "https://www.latercera.com/el-deportivo/noticia/nuevo-golpe-para-jannik-sinner-el-abierto-de-australia-confirma-la-baja-del-italiano/",
+     "hora": "08:49"
     }
    ],
    "extra": [
     {
-     "titulo": "Conmoción por la muerte de un reconocido fisicoculturista de Brasil a los de 31 años",
+     "titulo": "El mapa de pilotos de la Fórmula 1 para 2027 tras el anuncio de Haas por la renovación de Bearman: así quedó la alineación de los 22 equipos",
      "medio": "Infobae Deportes",
-     "url": "https://www.infobae.com/deportes/2026/11/26/conmocion-por-la-muerte-de-un-reconocido-fisicoculturista-de-brasil-a-los-de-31-anos/",
-     "hora": "07:50"
+     "url": "https://www.infobae.com/deportes/2026/11/26/el-mapa-de-pilotos-de-la-formula-1-para-2027-tras-el-anuncio-de-haas-por-la-renovacion-de-bearman-asi-quedo-la-alineacion-de-los-22-equipos/",
+     "hora": "08:46"
     },
     {
-     "titulo": "Alonso, ausente el jueves en Qatar por un \"virus\"; volverá el viernes en la FP2",
+     "titulo": "Con cambios de horarios, se confirmó el cronograma de cuartos de final del Torneo Clausura",
+     "medio": "Infobae Deportes",
+     "url": "https://www.infobae.com/deportes/2026/11/26/con-cambios-de-horarios-se-confirmo-el-cronograma-de-cuartos-de-final-del-torneo-clausura/",
+     "hora": "08:44"
+    },
+    {
+     "titulo": "Morante vuelve al grupo y puede reaparecer ante el Rayo",
+     "medio": "Mundo Deportivo Fútbol",
+     "url": "https://www.mundodeportivo.com/futbol/betis/20261126/1004255755/morante-vuelve-grupo-reaparecer-rayo.html",
+     "hora": "08:43"
+    },
+    {
+     "titulo": "“No veía salida y no sentía avances; mi familia me sostuvo en los momentos más difíciles... Estuve con apoyo psicológico”",
+     "medio": "AS Chile portada",
+     "url": "https://chile.as.com/futbol/no-veia-salida-y-no-sentia-avances-mi-familia-me-sostuvo-en-los-momentos-mas-dificiles-estuve-con-apoyo-psicologico-f202611-n/",
+     "hora": "08:41"
+    },
+    {
+     "titulo": "De la UC a la B de Estados Unidos: propuesta formal",
+     "medio": "AS Chile portada",
+     "url": "https://chile.as.com/futbol/de-la-uc-a-la-b-de-estados-unidos-propuesta-formal-f202611-n/",
+     "hora": "08:34"
+    },
+    {
+     "titulo": "El regreso de los V8 a la F1 en 2030 es mucho más que el ruido: ¿Por qué?",
      "medio": "Motorsport.com ES F1",
-     "url": "https://es.motorsport.com/f1/news/alonso-ausente-jueves-qatar-virus-volvera-fp2/10877847/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
-     "hora": "07:46"
+     "url": "https://es.motorsport.com/f1/news/regreso-v8-2030-mas-que-ruido-por-que/10876205/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
+     "hora": "08:32"
     },
     {
-     "titulo": "Kimmich carga contra la directiva por el caso Musiala: “Inaceptable e impropio”",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/kimmich-carga-contra-la-directiva-por-el-caso-musiala-inaceptable-e-impropio-f202611-n/",
-     "hora": "07:23"
-    },
-    {
-     "titulo": "Fallece Rafael Candel, histórico presidente del Albacete",
-     "medio": "AS Fútbol",
-     "url": "https://as.com/futbol/segunda/fallece-rafael-candel-historico-presidente-del-albacete-f202611-n/",
-     "hora": "07:21"
-    },
-    {
-     "titulo": "Lebron James, 41 años, contra la élite de la NBA: 50″ que resumen una exhibición irrepetible",
-     "medio": "AS · NBA en español",
-     "url": "https://as.com/baloncesto/videos/lebron-james-41-anos-contra-la-elite-de-la-nba-53-de-puro-disfrute-que-seran-irrepetibles-f202611-v/",
-     "hora": "07:13"
-    },
-    {
-     "titulo": "A qué hora es la FP1 y la FP2 de F1 del GP de Qatar y cómo ver",
-     "medio": "Motorsport.com ES F1",
-     "url": "https://es.motorsport.com/f1/news/hora-libres-fp1-fp2-qatar-como-ver-2026/10877823/?utm_source=RSS&utm_medium=referral&utm_campaign=RSS-F1&utm_term=News&utm_content=es",
-     "hora": "07:02"
-    },
-    {
-     "titulo": "Partidos de HOY, jueves 26 de noviembre: agenda, horario y por dónde ver fútbol EN VIVO",
-     "medio": "Olé",
-     "url": "https://www.ole.com.ar/agenda-deportiva/partidos-hoy-jueves-26-noviembre-2026-agenda-ole-horario-ver-futbol-vivo_0_6PaIJQpv6P.html",
-     "hora": "07:00"
+     "titulo": "Globe40 2028-2029 Interview - Matéo Le Calvic",
+     "medio": "Sail-World",
+     "url": "https://www.sail-world.com/news/301873/?source=rss",
+     "hora": "08:32"
     }
    ]
   },
@@ -583,16 +602,16 @@
    "seccion": "Ciencia",
    "notas": [
     {
+     "titulo": "¿Las aves migratorias sufren 'jet lag'? El desfase que les tuerce el rumbo",
+     "medio": "Muy Interesante",
+     "url": "https://muyinteresante.okdiario.com/ciencia/jet-lag-aves-migratorias.html",
+     "hora": "09:01"
+    },
+    {
      "titulo": "Puede remolcar 3,5 toneladas y alimentar herramientas: las dos formas de trabajar de esta pick-up enchufable",
      "medio": "Muy Interesante",
      "url": "https://muyinteresante.okdiario.com/actualidad/ford-ranger-wolftrak-42-km-electricos-y-energia-a-bordo.html",
      "hora": "07:34"
-    },
-    {
-     "titulo": "Hallan restos de una cota de malla bajo el castillo de proa del buque insignia del rey de Dinamarca, hundido en el Báltico en 1495",
-     "medio": "Muy Interesante",
-     "url": "https://muyinteresante.okdiario.com/historia/cota-de-malla-gribshunden.html",
-     "hora": "07:00"
     }
    ],
    "extra": []
@@ -611,18 +630,6 @@
      "medio": "Tour Innovación · emprendimiento",
      "url": "https://www.tourinnovacion.cl/mineria/empresas-de-antofagasta-destacan-su-participacion-en-ecomondo-2026-en-italia/",
      "hora": "06:30"
-    },
-    {
-     "titulo": "Málaga Sun & Tech: 3 startups de IA, deuda y pagos",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/malaga-sun-tech-3-startups-de-ia-deuda-y-pagos/",
-     "hora": "06:03"
-    },
-    {
-     "titulo": "Inkling 2 Mini: IA local de 20 GB que no es china",
-     "medio": "Ecosistema Startup",
-     "url": "https://ecosistemastartup.com/inkling-2-mini-ia-local-de-20-gb-que-no-es-china/",
-     "hora": "05:36"
     }
    ],
    "extra": []
@@ -735,18 +742,18 @@
   }
  ],
  "bitcoin": {
-  "bitcoin_usd": 60538.51,
+  "bitcoin_usd": 60718.21,
   "bitcoin_fecha": "2026-11-26",
   "bitcoin_fuente": "Coinbase"
  },
- "fuentes_ok": 347,
+ "fuentes_ok": 355,
  "indicadores_origen": {
-  "dolar": "mindicador",
-  "euro": "mindicador",
-  "uf": "mindicador",
-  "utm": "mindicador",
-  "tpm": "mindicador",
-  "libra_cobre": "mindicador",
-  "yuan": "banco_central"
+  "dolar": "banco_central",
+  "euro": "banco_central",
+  "yuan": "banco_central",
+  "uf": "banco_central",
+  "utm": "banco_central",
+  "tpm": "banco_central",
+  "libra_cobre": "banco_central"
  }
 }
