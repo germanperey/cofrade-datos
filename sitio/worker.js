@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "56ffc8e62a74";
+const VERSION_SITIO = "0ad2653db95b";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6700,10 +6700,14 @@ function curLeer(txt, total) {
 function curAplicar(p, d) {
   const c = curCandidatas(p);
   if (!Array.isArray(d) || d.length !== c.length) return p;
-  const por = {};
+  const por = {}, vistos = new Set();
   c.forEach((x, i) => {
     const v = d[i];
     if (v === "X") return;
+    // 26-11-2026: la misma nota contada por dos medios («"Inaceptables": China, la UE…» dos veces en Mundo) sale una sola vez
+    const k = String(x.n.titulo).toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "").slice(0, 40);
+    if (vistos.has(k)) return;
+    vistos.add(k);
     const sec = v ? CUR_SECC[v] : x.seccion;
     (por[sec] = por[sec] || []).push(x.n);
   });

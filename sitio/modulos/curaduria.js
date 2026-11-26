@@ -65,10 +65,14 @@ function curLeer(txt, total) {
 function curAplicar(p, d) {
   const c = curCandidatas(p);
   if (!Array.isArray(d) || d.length !== c.length) return p;
-  const por = {};
+  const por = {}, vistos = new Set();
   c.forEach((x, i) => {
     const v = d[i];
     if (v === "X") return;
+    // 26-11-2026: la misma nota contada por dos medios («"Inaceptables": China, la UE…» dos veces en Mundo) sale una sola vez
+    const k = String(x.n.titulo).toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "").slice(0, 40);
+    if (vistos.has(k)) return;
+    vistos.add(k);
     const sec = v ? CUR_SECC[v] : x.seccion;
     (por[sec] = por[sec] || []).push(x.n);
   });

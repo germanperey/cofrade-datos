@@ -295,7 +295,7 @@ def titulares(estado, horas=HORAS_TITULARES):
         notas.sort(key=lambda n: n.get("fecha") or "", reverse=True)
         elegidas, medios = [], {}
         for n in notas:
-            k = re.sub(r"\W+", " ", arreglar(n["titulo"]).lower()).strip()[:70]
+            k = re.sub(r"[\W_]+", "", arreglar(n["titulo"]).lower())[:40]   # 26-11-2026: 40 letras (antes 70): la misma nota de dos medios
             u = str(n["url"]).split("#")[0].rstrip("/")
             medio = re.sub(r"\s*\(.*?\)\s*$", "", str(n.get("fuente") or "")).strip()
             if k in vistos or u in urls or medios.get(medio, 0) >= 2:   # sin repetir y sin que un medio llene la sección

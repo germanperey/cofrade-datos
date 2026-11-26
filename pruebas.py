@@ -2678,13 +2678,14 @@ def en_vivo_curado_sin_farandula_ni_duplicados():
     prueba = r"""
 const p={generado:'2026-11-26T07:17-03:00',titulares:[
  {seccion:'Economía',notas:[{titulo:'Elina Valtonen: Rusia puede terminar esta guerra',url:'https://a/1',medio:'Infobae'},{titulo:'Muñeki77a, la última víctima',url:'https://a/2',medio:'Infobae'}],extra:[{titulo:'Codelco sube producción',url:'https://a/3',medio:'DF'}]},
- {seccion:'Mundo',notas:[{titulo:'Kim Jong Un advierte',url:'https://a/4',medio:'LT'}]}]};
-const c=curCandidatas(p); const d=curLeer('```json\n{"0":"M","1":"X","2":"E","3":"ZZ"}\n```',c.length);
+ {seccion:'Mundo',notas:[{titulo:'Kim Jong Un advierte que su arsenal nuclear es irreversible',url:'https://a/4',medio:'LT'}]}]};
+p.titulares[1].notas.push({titulo:'"Kim Jong Un advierte que su arsenal nuclear es irreversible", dice KCNA',url:'https://a/5',medio:'X'});
+const c=curCandidatas(p); const d=curLeer('```json\n{"0":"M","1":"X","2":"E","3":"ZZ","4":"M"}\n```',c.length);
 const q=curAplicar(p,d);
 console.log(JSON.stringify({n:c.length,d,q,malo:curLeer('no es json',4),corto:curLeer('{"0":"C"}',4),largo:curAplicar(p,['C'])===p}));"""
     o = json.loads(subprocess.run(["node", "-e", "const s=require('fs').readFileSync(0,'utf8');new Function(s)();"],
                                   input=js + prueba, capture_output=True, text=True, check=True).stdout)
-    assert o["n"] == 4 and o["d"] == ["M", "X", "E", ""], o
+    assert o["n"] == 5 and o["d"] == ["M", "X", "E", "", "M"], o
     assert [(s["seccion"], [n["url"] for n in s["notas"]]) for s in o["q"]["titulares"]] == [("Economía", ["https://a/3"]), ("Mundo", ["https://a/1", "https://a/4"])], o["q"]
     assert o["q"]["curado"] is True and o["malo"] is None and o["corto"] is None and o["largo"] is True
     assert "llama-3.3-70b" in js and "INSERT OR IGNORE INTO pulso_curado" in js
