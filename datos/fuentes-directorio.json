@@ -1,6 +1,6 @@
 {
- "generado": "2026-11-25T01:27:38-03:00",
- "total": 219,
+ "generado": "2026-11-26T14:24:36-03:00",
+ "total": 221,
  "secciones": {
   "politica/chile": [
    [
@@ -39,6 +39,11 @@
     "rss"
    ],
    [
+    "La Discusion de Chillan (RSS)",
+    "https://www.ladiscusion.cl/feed/",
+    "rss"
+   ],
+   [
     "La Prensa Austral (RSS)",
     "https://www.laprensaaustral.cl/feed/",
     "rss"
@@ -73,6 +78,11 @@
    [
     "Bloomberg Linea (RSS)",
     "https://www.bloomberglinea.com/arc/outboundfeeds/rss/?outputType=xml",
+    "rss"
+   ],
+   [
+    "CPC Confederacion de la Produccion (RSS)",
+    "https://www.cpc.cl/feed/",
     "rss"
    ],
    [
@@ -152,6 +162,11 @@
    [
     "CONAF (RSS)",
     "https://www.conaf.cl/feed/",
+    "rss"
+   ],
+   [
+    "Consejo Minero (RSS)",
+    "https://consejominero.cl/feed/",
     "rss"
    ],
    [
@@ -834,11 +849,6 @@
     "rss"
    ],
    [
-    "GDELT · Chile: deportes",
-    "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28f%C3%BAtbol+OR+tenis+OR+golf+OR+%22La+Roja%22+OR+campeonato%29&timespan=1d",
-    "rss"
-   ],
-   [
     "Golf Monthly (RSS)",
     "https://www.golfmonthly.com/feeds.xml",
     "rss"
@@ -1129,16 +1139,15 @@
   ]
  },
  "fallas": {
-  "https://www.sercotec.cl/feed/": 1,
-  "https://www.chilealimentos.com/feed/": 1,
-  "https://www.sciencedaily.com/rss/top/technology.xml": 1,
-  "https://www.espn.com/espn/rss/soccer/news": 1,
-  "https://www.espn.com/espn/rss/nfl/news": 1,
-  "https://www.espn.com/espn/rss/mlb/news": 1,
-  "https://espndeportes.espn.com/espn/rss/news": 1,
-  "https://www.marcachile.cl/feed/": 1,
-  "https://www.fundacionimagendechile.cl/feed/": 1,
-  "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28f%C3%BAtbol+OR+tenis+OR+golf+OR+%22La+Roja%22+OR+campeonato%29&timespan=1d": 2
+  "https://generadoras.cl/feed/": 1,
+  "https://www.chilealimentos.com/feed/": 2,
+  "https://www.espn.com/espn/rss/soccer/news": 2,
+  "https://www.espn.com/espn/rss/nfl/news": 2,
+  "https://www.espn.com/espn/rss/mlb/news": 2,
+  "https://espndeportes.espn.com/espn/rss/news": 2,
+  "https://www.marcachile.cl/feed/": 2,
+  "https://www.fundacionimagendechile.cl/feed/": 2,
+  "https://api.gdeltproject.org/api/v2/doc/doc?mode=artlist&format=rss&maxrecords=75&sort=datedesc&query=sourcecountry%3Achile+sourcelang%3Aspanish+%28concierto+OR+festival+OR+estreno+OR+teatro+OR+exposici%C3%B3n+OR+panorama%29&timespan=3d": 1
  },
  "nota": "Fuentes verificadas desde GitHub (robots.txt, RSS válido y notas recientes). Las lee bajar.py."
 }
