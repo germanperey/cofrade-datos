@@ -1,0 +1,70 @@
+# Cofrade News · Resumen en audio del día (27-11-2026, Germán: «no viene adjunto el audio con el resumen de las Noticias!!!»).
+# Apenas la tarea de la edición sube ediciones/Cofrade-News-AAAA-MM-DD.html: arma el guion (2 a 3 minutos), pide la voz al sitio
+# (Workers AI) y deja el MP3 en la rama «audio» (solo los últimos 7 días). La tarea lo adjunta al correo y Kit y Telegram lo enlazan.
+# A mano: pestaña «Actions» → «Audio del día» → «Run workflow» (fecha opcional).
+name: Audio del día
+
+on:
+  push:
+    branches: [main]
+    paths: ["ediciones/Cofrade-News-*.html"]
+  schedule:
+    - cron: "20 10,11 * * *"
+  workflow_dispatch:
+    inputs:
+      fecha:
+        description: "Fecha AAAA-MM-DD (vacío = hoy)"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cofrade-audio-dia
+  cancel-in-progress: false
+
+jobs:
+  audio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+      - name: Herramientas
+        run: command -v ffmpeg >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - name: Guion
+        id: guion
+        run: |
+          F="${{ github.event.inputs.fecha }}"; [ -n "$F" ] || F=$(TZ=America/Santiago date +%F)
+          echo "fecha=$F" >> "$GITHUB_OUTPUT"
+          if [ ! -f "ediciones/Cofrade-News-$F.html" ]; then echo "Sin edición $F todavía"; echo "seguir=no" >> "$GITHUB_OUTPUT"; exit 0; fi
+          python3 herramientas/audio_dia.py guion --fecha "$F"
+          H=$(python3 -c "import json;print(json.load(open('datos/audio-guion/$F.json'))['huella'])")
+          echo "huella=$H" >> "$GITHUB_OUTPUT"
+          if git fetch -q --depth 1 origin audio 2>/dev/null && git show "origin/audio:Cofrade-News-$F-resumen.txt" 2>/dev/null | grep -qx "$H"; then
+            echo "El audio de $F ya está hecho con este mismo guion"; echo "seguir=no" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          git config user.name "cofrade-datos"; git config user.email "actions@users.noreply.github.com"
+          git add "datos/audio-guion/$F.json"
+          git diff --cached --quiet || git commit -q -m "Guion del audio $F"
+          for i in 1 2 3; do git pull -q --rebase -X theirs origin main && git push -q && break; sleep 8; done
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "seguir=si" >> "$GITHUB_OUTPUT"
+      - name: Voz
+        if: steps.guion.outputs.seguir == 'si'
+        run: python3 herramientas/audio_dia.py voz --fecha "${{ steps.guion.outputs.fecha }}" --sha "${{ steps.guion.outputs.sha }}" --salida /tmp/resumen.mp3
+      - name: Publicar en la rama audio
+        if: steps.guion.outputs.seguir == 'si'
+        run: |
+          F="${{ steps.guion.outputs.fecha }}"
+          rm -rf /tmp/rama && mkdir /tmp/rama && cd /tmp/rama && git init -q && git checkout -q -b audio
+          if git fetch -q --depth 1 "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" audio 2>/dev/null; then
+            git checkout -q FETCH_HEAD -- . 2>/dev/null || true
+          fi
+          rm -f "Cofrade-News-$F-resumen.mp3" "Cofrade-News-$F-resumen.txt"
+          ls Cofrade-News-*-resumen.mp3 2>/dev/null | sort | head -n -6 | while read -r v; do rm -f "$v" "${v%.mp3}.txt"; done
+          cp /tmp/resumen.mp3 "Cofrade-News-$F-resumen.mp3"
+          echo "${{ steps.guion.outputs.huella }}" > "Cofrade-News-$F-resumen.txt"
+          printf 'Resumen en audio de Cofrade News (últimos 7 días). Lo genera .github/workflows/audio-dia.yml de la rama main.\n' > README.md
+          git add -A && git -c user.name="cofrade-datos" -c user.email="actions@users.noreply.github.com" commit -q -m "Audio del día $F"
+          git push -q --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" audio
+          ls -la

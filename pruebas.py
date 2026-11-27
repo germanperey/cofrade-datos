@@ -2809,6 +2809,51 @@ def textos_del_sitio_en_dos_idiomas():
 
 PRUEBAS.append(textos_del_sitio_en_dos_idiomas)
 
+
+def audio_y_correo_del_dia():
+    """27-11-2026 (Germán, con capturas del correo: «aparecen varios links que hay que ocultar..... Y además, no viene adjunto el audio
+    con el resumen de las Noticias!!!»). Eligió: un audio de 2 a 3 minutos adjunto, ningún enlace en el correo y el bloque interno aparte."""
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, os.path.join(raiz, "herramientas"))
+    import audio_dia as A, correo_dia as C, envio_manana as E
+    assert [A.en_letras(n) for n in (1, 21, 100, 101, 1037, 2026, 10541, 21000, 51000000)] == [
+        "uno", "veintiuno", "cien", "ciento uno", "mil treinta y siete", "dos mil veintiséis", "diez mil quinientos cuarenta y uno",
+        "veintiún mil", "cincuenta y un millones"]
+    assert A.hablar("El dólar queda en $1.037,91 y el IPSA en 10.541 puntos, con un alza de 1,20 %.") == (
+        "El dólar queda en mil treinta y siete pesos con noventa y un centavos y el Ipsa en diez mil quinientos cuarenta y un puntos, con un alza de uno coma veinte por ciento.")
+    assert A.hablar("pide multa de US$80 millones ante el TDLC") == "pide multa de ochenta millones de dólares ante el Tribunal de Defensa de la Libre Competencia."
+    assert A.hablar("apalancan $51 mil millones de pesos; cayó -0,59%") == "apalancan cincuenta y un mil millones de pesos; cayó menos cero coma cincuenta y nueve por ciento."
+    assert "http" not in A.hablar("ver https://x.cl/a") and A.hablar("Limache 1-2 La Serena") == "Limache uno a dos La Serena."
+    ed = ('<section class="tres"><h2>x</h2><ol><li>El dólar sube a $950,10.</li><li>Codelco nombra gerente.</li></ol></section>'
+          '<section id="economia"><h2>1</h2><ul><li><strong>El dólar sube a $950,10</strong> <span>x</span></li></ul></section>'
+          '<section id="politica"><h2>2</h2><ul><li><strong>Senado aprueba la ley de presupuestos</strong> <span>y</span></li></ul></section>')
+    g = A.armar_guion(ed, "2026-11-27")
+    assert g["texto"].startswith("Buenos días. Este es el resumen en audio de Cofrade News, del viernes 27 de noviembre. Lo que mueve la aguja hoy.")
+    assert "En política: Senado aprueba la ley de presupuestos." in g["texto"] and "En economía" not in g["texto"]   # no repite una bala
+    assert all(len(p) <= A.MAX_PARTE for p in g["partes"]) and " ".join(g["partes"]) == g["texto"]
+    largo = A.partir(["Uno, " * 120 + "fin."])
+    assert all(len(p) <= A.MAX_PARTE for p in largo) and "".join(largo).replace(" ", "") == ("Uno, " * 120 + "fin.").replace(" ", "")
+    correo = ("Cofrade News\nViernes 27\n\nHistoria Naval de Chile\n- Efeméride… (http://armada.cl)\n- Avance (http://phys.org, 26-11-2026)\n"
+              "- Un estudio de Yapo.cl\n[Nota interna, no se publica en el boletín] Pendiente X.\n\nTecnología desarrollada por Germán Perey: https://www.linkedin.com/in/x/\n"
+              "Boletín completo: archivos HTML y PDF. Copia de respaldo: https://github.com/germanperey/cofrade-datos/blob/main/e.html\n\n"
+              "TEXTO PARA COMPARTIR EN REDES (copiar y pegar)\nLinkedIn: www.cofrad.es\n")
+    lector, interno = C.separar(correo)
+    assert "http" not in lector and not C.DOMINIO.findall(lector) and "Nota interna" not in lector and "REDES" not in lector
+    assert "(Armada de Chile)" in lector and "(Phys org, 26-11-2026)" in lector and "Tecnología desarrollada por Germán Perey." in lector
+    assert "Nota interna" in interno and "TEXTO PARA COMPARTIR EN REDES" in interno and "Copia de respaldo: GitHub" in interno and "http" not in interno
+    h = C.a_html(lector, "2026-11-27")
+    assert "<a " not in h and "Historia Naval de Chile</div>" in h
+    m = E.armar(dt.date(2026, 11, 27), ["a", "b", "c"], audio=True)
+    assert m["audio"] == "https://www.cofrad.es/audio/2026-11-27.mp3" and "/audio/2026-11-27.mp3" in m["html"] and "resumen en audio" in m["html"]
+    assert "?voz=1" in E.armar(dt.date(2026, 11, 27), ["a", "b", "c"])["html"]
+    js = open(os.path.join(raiz, "sitio/modulos/audio_dia.js"), encoding="utf-8").read()
+    assert "r.n > 4" in js and "/datos/audio-guion/" in js and "[0-9a-f]{40}" in js   # freno de gasto y guion solo del repositorio propio
+    wf = open(os.path.join(raiz, ".github/workflows/audio-dia.yml"), encoding="utf-8").read()
+    assert 'paths: ["ediciones/Cofrade-News-*.html"]' in wf and "head -n -6" in wf and "--force" in wf
+
+
+PRUEBAS.append(audio_y_correo_del_dia)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

@@ -953,6 +953,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__METRICAS__*/
 /*__EDICION_EXTRA__*/
 /*__SENADO_SALA__*/
+/*__AUDIO_DIA__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -1507,6 +1508,10 @@ export default {
       if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
       if (p === "/m" && req.method === "POST") return await recibirLectura(req, env, ctx);
       if (p === "/e" && req.method === "POST") return await recibirEventos(req, env);
+      const aud = p.match(/^\/audio\/generar\/(\d{4}-\d{2}-\d{2})$/);   // 27-11-2026: resumen en audio (modulos/audio_dia.js)
+      if (aud) return await audioGenerar(aud[1], u, env).catch((e) => new Response(JSON.stringify({ ok: false, error: String(e && e.message || e).slice(0, 200) }), { status: 500, headers: { "Content-Type": "application/json" } }));
+      const audf = p.match(/^\/audio\/(\d{4}-\d{2}-\d{2})\.mp3$/);
+      if (audf) return await audioArchivo(audf[1]);
       if (p === "/senado-sala.json") {   // 26-11-2026: decisiones de Sala del Senado (oficial), para el vigía y la tarea de la edición
         const d = await senadoSalaDatos(env, ctx);
         return new Response(JSON.stringify(d ? { fuente: "Senado de Chile, Tramitación de proyectos (tramitacion.senado.cl)", url: SENADO_SALA_URL, estado: d.estado, filas: d.filas } : {}),

@@ -62,10 +62,22 @@ def fecha_larga(d):
     return f"{DIAS[d.weekday()]} {d.day} de {MESES[d.month - 1]}"
 
 
-def armar(d, balas):
+RAW_AUDIO = "https://raw.githubusercontent.com/germanperey/cofrade-datos/audio/Cofrade-News-{}-resumen.mp3"
+
+
+def hay_audio(f):
+    """27-11-2026: el resumen en audio del día (herramientas/audio_dia.py) ya está publicado."""
+    try:
+        import requests
+        return requests.head(RAW_AUDIO.format(f), timeout=30, allow_redirects=True).status_code == 200
+    except Exception:   # noqa: BLE001
+        return False
+
+
+def armar(d, balas, audio=False):
     """Asunto, texto previo, HTML del correo y texto de Telegram. Solo con lo publicado en la edición."""
     f = d.isoformat()
-    ed, voz = f"{SITIO}/edicion/{f}?utm_source=correo", f"{SITIO}/edicion/{f}?voz=1&utm_source=correo"
+    ed, voz = f"{SITIO}/edicion/{f}?utm_source=correo", (f"{SITIO}/audio/{f}.mp3" if audio else f"{SITIO}/edicion/{f}?voz=1&utm_source=correo")
     asunto = f"Cofrade News · {fecha_larga(d).capitalize()}: lo que mueve la aguja hoy"
     previo = (balas[0][:120] + "…") if balas and len(balas[0]) > 120 else (balas[0] if balas else "La edición de hoy ya está publicada.")
     li = "".join(f'<li style="margin:0 0 12px;line-height:1.5">{H.escape(b)}</li>' for b in balas)
@@ -74,13 +86,13 @@ def armar(d, balas):
               f'<ol style="margin:0 0 20px;padding-left:20px;font-size:16px;color:#222">{li}</ol>'
               f'<p style="margin:0 0 12px"><a href="{ed}" style="display:inline-block;background:#C9A14A;color:#1A1406;padding:12px 18px;border-radius:999px;'
               f'text-decoration:none;font-weight:600">Leer la edición completa</a></p>'
-              f'<p style="margin:0 0 20px"><a href="{voz}" style="color:#1A1406">🎧 Escuchar la edición (audio)</a></p>'
+              f'<p style="margin:0 0 20px"><a href="{voz}" style="color:#1A1406">{"🎧 Escuchar el resumen en audio (2 a 3 minutos)" if audio else "🎧 Escuchar la edición (audio)"}</a></p>'
               f'<p style="margin:0;color:#777;font-size:13px">Cada cifra con su fuente y su fecha, en www.cofrad.es. Recibes este correo porque te '
               f'suscribiste en la portada de Cofrade News.</p>')
     tg = (f"<b>Cofrade News · {H.escape(fecha_larga(d).capitalize())}</b>\nLo que mueve la aguja hoy:\n\n"
           + "\n".join(f"{i}. {H.escape(b)}" for i, b in enumerate(balas, 1))
           + f'\n\n<a href="{SITIO}/edicion/{f}?utm_source=telegram">Leer la edición</a> · <a href="{SITIO}/edicion/{f}?voz=1&amp;utm_source=telegram">🎧 Escuchar</a>')
-    return {"asunto": asunto, "previo": previo, "html": cuerpo, "telegram": tg}
+    return {"asunto": asunto, "previo": previo, "html": cuerpo, "telegram": tg, "audio": f"{SITIO}/audio/{f}.mp3" if audio else ""}
 
 
 def _kit(metodo, ruta, clave, **kw):
@@ -110,13 +122,20 @@ def enviar_kit(clave, m, ahora):
     return f"programado (Kit {b.get('id')}, {b.get('status') or 'ok'}){nota}"
 
 
-def enviar_telegram(token, canal, texto):
+def enviar_telegram(token, canal, texto, audio=""):
     import requests
     r = requests.post(f"https://api.telegram.org/bot{token}/sendMessage", timeout=40,
                       json={"chat_id": canal, "text": texto, "parse_mode": "HTML", "disable_web_page_preview": False})
     j = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
     if not j.get("ok"):
         raise RuntimeError(f"Telegram HTTP {r.status_code} {str(j.get('description') or r.text)[:160]}")
+    if audio:   # el resumen en audio va como archivo para escucharlo dentro de Telegram; si falla, el mensaje ya salió
+        try:
+            a = requests.post(f"https://api.telegram.org/bot{token}/sendAudio", timeout=90,
+                              json={"chat_id": canal, "audio": audio, "title": "Cofrade News · resumen del día", "performer": "Cofrade News"}).json()
+            return "publicado con audio" if a.get("ok") else f"publicado (audio no: {str(a.get('description'))[:80]})"
+        except Exception as ex:   # noqa: BLE001
+            return f"publicado (audio no: {type(ex).__name__})"
     return "publicado"
 
 
@@ -145,10 +164,10 @@ def main(argv=None):
     balas = cinco(extraer(r.text))
     if len(balas) < 3:
         print("La edición no trae «Lo que mueve la aguja hoy» ni cifras: no envío un correo vacío."); return 1
-    m = armar(ahora.date(), balas)
+    m = armar(ahora.date(), balas, audio=hay_audio(hoy))
     canales = {"correo": (os.environ.get("KIT_API_KEY"), lambda: enviar_kit(os.environ["KIT_API_KEY"], m, ahora)),
                "telegram": (os.environ.get("TELEGRAM_BOT_TOKEN") and os.environ.get("TELEGRAM_CANAL"),
-                            lambda: enviar_telegram(os.environ["TELEGRAM_BOT_TOKEN"], os.environ["TELEGRAM_CANAL"], m["telegram"]))}
+                            lambda: enviar_telegram(os.environ["TELEGRAM_BOT_TOKEN"], os.environ["TELEGRAM_CANAL"], m["telegram"], m["audio"]))}
     for k, (listo, fn) in canales.items():
         if str(hecho.get(k, "")).startswith(("programado", "publicado")):
             print(f"{k}: ya enviado hoy ({hecho[k]})"); continue

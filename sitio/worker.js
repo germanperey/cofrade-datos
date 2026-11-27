@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "085046cb4383";
+const VERSION_SITIO = "e23944d34ec6";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -7190,6 +7190,65 @@ function conSenadoSala(rw, datos, mes) {
     .on("body", { element(e) { e.append(SS_CSS + SS_JS, { html: true }); } });
 }
 
+// 27-11-2026 · Germán, con capturas del correo del día: «no viene adjunto el audio con el resumen de las Noticias!!!». Eligió un
+// resumen de 2 a 3 minutos (las balas de «Lo que mueve la aguja hoy» y un titular por sección), adjunto al correo.
+// Cómo funciona: GitHub (herramientas/audio_dia.py) arma el guion desde la edición publicada y lo guarda en datos/audio-guion/;
+// después llama a /audio/generar/AAAA-MM-DD?sha=<commit>, que lee ese guion fijo (por su commit, sin caché vieja) y lo pasa por la
+// voz de Workers AI (MeloTTS, español). GitHub une las partes, lo deja en la rama «audio» y la tarea de la edición lo adjunta.
+// /audio/AAAA-MM-DD.mp3 sirve ese archivo para el correo de Kit y Telegram.
+// Freno de gasto: cada fecha se puede generar 4 veces como máximo (tabla audio_gen); el guion viene solo del repositorio propio.
+const AUDIO_VOZ = "@cf/myshell-ai/melotts";
+const AUDIO_REPO = "https://raw.githubusercontent.com/germanperey/cofrade-datos";
+const AUDIO_TABLA = "CREATE TABLE IF NOT EXISTS audio_gen (fecha TEXT PRIMARY KEY, n INTEGER NOT NULL, actualizado TEXT NOT NULL)";
+
+function audioB64(buf) {
+  const b = new Uint8Array(buf);
+  let s = "";
+  for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+
+async function audioVoz(env, texto) {
+  const r = await env.AI.run(AUDIO_VOZ, { prompt: texto, lang: "es" });
+  if (r && typeof r.audio === "string") return r.audio;   // MeloTTS entrega el MP3 en base64
+  if (r instanceof ArrayBuffer || ArrayBuffer.isView(r)) return audioB64(r instanceof ArrayBuffer ? r : r.buffer);
+  if (r && typeof r.getReader === "function") return audioB64(await new Response(r).arrayBuffer());
+  throw new Error("la voz no devolvió audio");
+}
+
+async function audioGenerar(f, u, env) {
+  const sha = u.searchParams.get("sha") || "";
+  const J = (o, s) => new Response(JSON.stringify(o), { status: s, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" } });
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(f) || !/^[0-9a-f]{40}$/.test(sha)) return J({ ok: false, error: "fecha o commit inválido" }, 400);
+  if (!env.AI) return J({ ok: false, error: "sin Workers AI" }, 503);
+  const g = await fetch(`${AUDIO_REPO}/${sha}/datos/audio-guion/${f}.json`, { cf: { cacheTtl: 0 } });
+  if (!g.ok) return J({ ok: false, error: `guion no encontrado (${g.status})` }, 404);
+  let guion;
+  try { guion = await g.json(); } catch { return J({ ok: false, error: "guion ilegible" }, 422); }
+  const partes = Array.isArray(guion && guion.partes) ? guion.partes.filter((x) => typeof x === "string" && x.trim()) : [];
+  if (guion.fecha !== f || !partes.length || partes.length > 24 || partes.some((x) => x.length > 420)) return J({ ok: false, error: "guion fuera de formato" }, 422);
+  if (env.DB) {
+    await env.DB.prepare(AUDIO_TABLA).run();
+    const r = await env.DB.prepare("INSERT INTO audio_gen (fecha, n, actualizado) VALUES (?, 1, ?) ON CONFLICT(fecha) DO UPDATE SET n = n + 1, actualizado = excluded.actualizado RETURNING n")
+      .bind(f, new Date().toISOString()).first();
+    if (r && r.n > 4) return J({ ok: false, error: "ya se generó 4 veces hoy" }, 429);
+  }
+  const salida = [];
+  for (const t of partes) {
+    let ok = null;
+    for (let i = 0; i < 2 && !ok; i++) { try { ok = await audioVoz(env, t); } catch { /* un reintento */ } }
+    if (!ok) return J({ ok: false, error: `la voz falló en la parte ${salida.length + 1}` }, 502);
+    salida.push(ok);
+  }
+  return J({ ok: true, fecha: f, voz: AUDIO_VOZ, formato: "mp3", partes: salida }, 200);
+}
+
+async function audioArchivo(f) {
+  const r = await fetch(`${AUDIO_REPO}/audio/Cofrade-News-${f}-resumen.mp3`, { cf: { cacheTtl: 600 } });
+  if (!r.ok) return new Response("El audio de esa fecha todavía no está listo.", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } });
+  return new Response(r.body, { status: 200, headers: { "Content-Type": "audio/mpeg", "Content-Disposition": `inline; filename="Cofrade-News-${f}-resumen.mp3"`, "Cache-Control": "public, max-age=3600", "Access-Control-Allow-Origin": "*" } });
+}
+
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -7744,6 +7803,10 @@ export default {
       if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
       if (p === "/m" && req.method === "POST") return await recibirLectura(req, env, ctx);
       if (p === "/e" && req.method === "POST") return await recibirEventos(req, env);
+      const aud = p.match(/^\/audio\/generar\/(\d{4}-\d{2}-\d{2})$/);   // 27-11-2026: resumen en audio (modulos/audio_dia.js)
+      if (aud) return await audioGenerar(aud[1], u, env).catch((e) => new Response(JSON.stringify({ ok: false, error: String(e && e.message || e).slice(0, 200) }), { status: 500, headers: { "Content-Type": "application/json" } }));
+      const audf = p.match(/^\/audio\/(\d{4}-\d{2}-\d{2})\.mp3$/);
+      if (audf) return await audioArchivo(audf[1]);
       if (p === "/senado-sala.json") {   // 26-11-2026: decisiones de Sala del Senado (oficial), para el vigía y la tarea de la edición
         const d = await senadoSalaDatos(env, ctx);
         return new Response(JSON.stringify(d ? { fuente: "Senado de Chile, Tramitación de proyectos (tramitacion.senado.cl)", url: SENADO_SALA_URL, estado: d.estado, filas: d.filas } : {}),
