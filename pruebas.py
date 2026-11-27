@@ -2841,6 +2841,13 @@ def audio_y_correo_del_dia():
     assert "http" not in lector and not C.DOMINIO.findall(lector) and "Nota interna" not in lector and "REDES" not in lector
     assert "(Armada de Chile)" in lector and "(Phys org, 26-11-2026)" in lector and "Tecnología desarrollada por Germán Perey." in lector
     assert "Nota interna" in interno and "TEXTO PARA COMPARTIR EN REDES" in interno and "Copia de respaldo: GitHub" in interno and "http" not in interno
+    t = C.separar("Cofrade News\n- 1975 — Juan Carlos I (en la imagen) es coronado rey.\n\n⚠ AVISO DE MAREJADAS VIGENTE\n- Península Antártica · emitido el 25-11 a las 16:27\n"
+                  "Embarcaciones en puerto: trincar para la mar y estar listos para zarpe de emergencia.\n\nMar y mareas\n")[0]
+    assert "(en la imagen)" not in t and "Juan Carlos I es coronado" in t and "Embarcaciones en puerto" not in t and "lejos de los puertos" in t and "Península Antártica" in t
+    t2 = C.separar("⚠ AVISO DE MAREJADAS VIGENTE\n- Golfo de Penas hasta Arica\nEmbarcaciones en puerto: trincar para la mar.\n")[0]
+    assert "Embarcaciones en puerto" in t2   # si toca la costa, el aviso rojo se mantiene
+    ex = open(os.path.join(raiz, "sitio/modulos/edicion_extra.js"), encoding="utf-8").read()
+    assert "MAREJADA_JS" in ex and "SIN_IMAGEN_JS" in ex and "grid|flex" in ex   # marejadas claras, sin «(en la imagen)», sismos al lado del mapa
     h = C.a_html(lector, "2026-11-27")
     assert "<a " not in h and "Historia Naval de Chile</div>" in h
     m = E.armar(dt.date(2026, 11, 27), ["a", "b", "c"], audio=True)

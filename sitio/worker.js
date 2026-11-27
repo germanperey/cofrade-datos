@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "7a800515c6d4";
+const VERSION_SITIO = "48056955a98c";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6987,6 +6987,40 @@ const AGUJA_REW = { element(e) { e.setInnerContent(BIL(AGUJA_TITULO, AGUJA_EN), 
 // Los enlaces van en un párrafo aparte: si se agregaran dentro del párrafo de la edición, el traductor ya no lo reconoce y queda en español.
 const FUENTES_IND = { element(e) { e.after('<p class="fuente">' + BIL("Ver en la fuente:", "See the source:") + ' <a href="https://si3.bcentral.cl/siete" target="_blank" rel="noopener">' + BIL("Banco Central de Chile (Base de Datos Estadísticos)", "Central Bank of Chile (Statistics Database)") + '</a> · <a href="https://www.coinbase.com/price/bitcoin" target="_blank" rel="noopener">Coinbase</a></p>', { html: true }); } };
 const FUENTES_FER = { element(e) { e.append('<p class="fuente">' + BIL("Fuentes:", "Sources:") + ' <a href="https://www.bcn.cl/leychile" target="_blank" rel="noopener">' + BIL("Biblioteca del Congreso Nacional (Ley 19.668 y Ley 20.983)", "Library of the National Congress of Chile (Laws 19,668 and 20,983)") + '</a> · <a href="https://www.feriados.cl" target="_blank" rel="noopener">feriados.cl</a> ' + BIL("(feriados extraordinarios) · feriados de otros países: calendarios oficiales de cada gobierno.", "(extraordinary holidays) · other countries: each government's official calendar.") + '</p>', { html: true }); } };
+// 27-11-2026 (Germán, con captura de Efemérides: «Mucha precaución cuando en los textos de "Efemérides del día" aparezca la frase
+// "en la imagen" dado que no hay imágenes adjuntas, por lo tanto, debes omitir esa frase o sino agregar la imagen correspondiente»).
+// Las efemérides vienen de Wikipedia, que escribe «(en la imagen)» porque allá hay una foto al lado. Aquí no la hay: se quita la frase.
+// Se quita en el navegador y no en el servidor: el traductor de la edición reconoce cada frase completa, así que antes de pasar
+// a inglés se le devuelve el texto original y, ya traducido, se quita también «(pictured)» o «(in the image)».
+const SIN_IMAGEN_JS = "var RX=/\\s*\\((?:en la (?:imagen|foto|fotograf\\u00eda|ilustraci\\u00f3n)|a la (?:izquierda|derecha)|en el centro|imagen|foto|pictured|in the (?:image|picture|photo)|left|right|center)\\)/gi;"
+  + "var LI=[].filter.call(D.querySelectorAll('section#efemerides li, section#efemerides p'),function(li){RX.lastIndex=0;return RX.test(li.textContent)});"
+  + "function tx(li){var w=D.createTreeWalker(li,4),n,a=[];while(n=w.nextNode())a.push(n);return a}"
+  + "function sin(t){return t.replace(RX,'')}"
+  + "LI.forEach(function(li){li.__es={};tx(li).forEach(function(n,k){RX.lastIndex=0;if(RX.test(n.nodeValue)){li.__es[k]=n.nodeValue;n.nodeValue=sin(n.nodeValue)}})});"
+  + "function es(){if(R.lang==='en')return;LI.forEach(function(li){var a=tx(li);for(var k in li.__es)if(a[k])a[k].nodeValue=sin(li.__es[k])})}"
+  + "function en(){if(R.lang!=='en')return;LI.forEach(function(li){tx(li).forEach(function(n){RX.lastIndex=0;if(RX.test(n.nodeValue))n.nodeValue=sin(n.nodeValue)})})}"
+  + "if(LI.length){window.addEventListener('click',function(e){if(!(e.target&&e.target.closest&&e.target.closest('#btnIdioma')))return;"
+  + "if(R.lang!=='en')LI.forEach(function(li){var a=tx(li);for(var k in li.__es)if(a[k])a[k].nodeValue=li.__es[k]});else[60,400,1500].forEach(function(t){setTimeout(es,t)})},true);"
+  + "D.addEventListener('cofrade-idioma-listo',function(){setTimeout(function(){en();es()},0)})}"
+  + "function graf(){if(!window.echarts)return;[].forEach.call(D.querySelectorAll('section#efemerides div.chart'),function(el){var c=echarts.getInstanceByDom(el);if(!c)return;var o=JSON.stringify(c.getOption());RX.lastIndex=0;if(RX.test(o)){RX.lastIndex=0;c.setOption(JSON.parse(o.replace(RX,'')))}})}"
+  + "[800,3000].forEach(function(t){setTimeout(graf,t)});D.addEventListener('cofrade-idioma-listo',function(){setTimeout(graf,300)});";
+// 27-11-2026 (Germán, con captura de Mar y mareas: «muestra un mensaje de alerta de Marejadas, sin embargo, en el gráfico no se
+// aprecia ninguna marejada en los puertos!!»). El aviso vigente era de viento y marejadas locales en la Península Antártica, lejos
+// de los puertos del gráfico, y la franja roja decía «Embarcaciones en puerto: trincar...» sin decir dónde. Ahora: la franja roja queda
+// solo si el aviso toca la costa de los puertos de Chile; si es oceánico o antártico, pasa a ámbar y dice qué es, dónde y que los
+// puertos del gráfico no tienen aviso. En los dos idiomas.
+const MAREJADA_JS = "var sec=D.getElementById('mar');if(!sec)return;"
+  + "var F=[].map.call(sec.querySelectorAll('.tabla tbody tr'),function(tr){var t=tr.querySelectorAll('td');function x(i){return t[i]?t[i].textContent.replace(/\\s+/g,' ').trim():''}return{tipo:x(0),sector:x(1),emi:x(2),vig:x(3)}});"
+  + "var V=F.filter(function(f){return /vigente/i.test(f.vig)});"
+  + "var COSTA=/Arica|Iquique|Tocopilla|Mejillones|Antofagasta|Taltal|Chañaral|Caldera|Huasco|Coquimbo|Los Vilos|Valpara|Quintero|San Antonio|Constituci|Talcahuano|Concepci|Lebu|Arauco|Corral|Valdivia|Puerto Montt|Chilo|Castro|Quell|Ays|Chacabuco|Punta Arenas|Magallanes|Juan Fern|Golfo de Penas|Rapa Nui|Isla de Pascua|costa|litoral|caleta|bah[ií]a/i;"
+  + "if(!V.length||V.some(function(f){return COSTA.test(f.sector)}))return;"
+  + "var TIP={'Viento':'Wind','Marejadas':'Swell','Temporal':'Storm'};function tEn(t){return t.replace(/^Otro: /,'').replace(/Temporal en área oceánica/i,'Ocean-area storm').replace(/^(Viento|Marejadas|Temporal)$/,function(m){return TIP[m]})}"
+  + "var es=V.map(function(f){return f.tipo.replace(/^Otro: /,'')+' en '+f.sector+' (emitido el '+f.emi+')'}).join('; '),en=V.map(function(f){return tEn(f.tipo)+' in '+f.sector+' (issued '+f.emi.replace(' a las ',' at ')+')'}).join('; ');"
+  + "function esc(t){var d=D.createElement('div');d.textContent=t;return d.innerHTML}"
+  + "var H='<span class=\"cn-es\" lang=\"es\"><b>Aviso vigente lejos de los puertos del gráfico.</b> '+esc(es)+'. Valparaíso, San Antonio, Talcahuano, Puerto Montt y Punta Arenas no tienen aviso de marejadas vigente. Si navegas en esa zona, revisa el aviso oficial de la Armada.</span>'"
+  + "+'<span class=\"cn-en\" lang=\"en\"><b>Active notice far from the ports in the chart.</b> '+esc(en)+'. Valparaíso, San Antonio, Talcahuano, Puerto Montt and Punta Arenas have no active swell warning. If you sail in that area, check the Chilean Navy\\'s official notice.</span>';"
+  + "var EST='background:rgba(201,161,74,.16);color:inherit;border:1px solid rgba(201,161,74,.6)';"
+  + "[].forEach.call(D.querySelectorAll('section#mar p.alerta.roja, .alerta.roja[role=alert]'),function(b){if(!/marejad|swell/i.test(b.textContent))return;b.className=b.className.replace('roja','ambar');b.setAttribute('style',EST);b.setAttribute('data-no-tr','');b.setAttribute('translate','no');b.innerHTML=H})";
 const EXTRA_CSS = `<style>
 .cn-en{display:none}html[lang^="en"] .cn-en{display:inline}html[lang^="en"] .cn-es{display:none}
 .cn-gcw{display:flex;justify-content:flex-end;margin:8px 0 0}.cn-gc{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid rgba(201,161,74,.6);
@@ -7008,6 +7042,8 @@ max-width:min(560px,94vw);padding:12px 14px;border-radius:16px;background:#1A140
 .cn-gc-p{--tx:-50%}
 </style>`;
 const EXTRA_JS = `<script>(function(){var D=document,R=D.documentElement,en=function(){return R.lang==='en'};
+(function(){${SIN_IMAGEN_JS}})();
+(function(){${MAREJADA_JS}})();
 function ev(n){try{window.cnEv&&cnEv(n)}catch(e){}}
 /* --- Lo que mueve la aguja hoy: se cuenta cuando se ve --- */
 var ag=D.querySelector('section.tres');if(ag&&'IntersectionObserver' in window){var io0=new IntersectionObserver(function(es){if(es[0].isIntersecting){ev('aguja_vista');io0.disconnect()}},{threshold:.5});io0.observe(ag)}
@@ -7030,7 +7066,7 @@ D.body.appendChild(c);var p=c.querySelector('input');if(p)p.focus()}
 var b=null;function rotFav(){if(b)b.innerHTML='☰ '+(en()?'My sections':'Mis secciones')}
 if(secs.length>3&&ag){b=D.createElement('button');b.type='button';b.className='cn-favb';b.setAttribute('data-no-tr','');b.setAttribute('translate','no');rotFav();b.onclick=abrir;ag.appendChild(b)}
 aplicar();
-var SUP={'Laboratorio':'Laboratory','En animales':'In animals','Ensayo clínico':'Clinical trial','Aprobado':'Approved','En uso clínico':'In clinical use','Caddie Golf · noticias de golf':'Caddie Golf · golf news'};var MES_ES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],MES_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];function sup(){var e=en();[].forEach.call(D.querySelectorAll('svg text,p.caddie a'),function(t){var o=t.__cnO;if(o==null){o=t.textContent.trim();if(!SUP[o])return;t.__cnO=o}t.textContent=e?SUP[o]:o});if(!window.echarts||!echarts.getInstanceByDom)return;[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){var c=echarts.getInstanceByDom(el);if(!c)return;var op=c.getOption(),hay=false;(op.series||[]).forEach(function(s){var ma=s.markArea;if(!ma||!ma.data)return;ma.data.forEach(function(p){var x=Array.isArray(p)?p[0]:p;if(!x||typeof x.name!=='string')return;var i=MES_ES.indexOf(x.name),j=MES_EN.indexOf(x.name);if(e&&i>=0){x.name=MES_EN[i];hay=true}else if(!e&&j>=0){x.name=MES_ES[j];hay=true}})});if(hay)c.setOption({series:op.series.map(function(s){return{markArea:s.markArea}})})})}function rot(){rotFav();aplicar();rotGc();try{sup()}catch(x){}}D.addEventListener('cofrade-idioma',function(){setTimeout(rot,30)});D.addEventListener('cofrade-idioma-listo',function(){setTimeout(rot,0)});
+var SUP={'Laboratorio':'Laboratory','En animales':'In animals','Ensayo clínico':'Clinical trial','Aprobado':'Approved','En uso clínico':'In clinical use'};var MES_ES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],MES_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];function sup(){var e=en();[].forEach.call(D.querySelectorAll('svg text'),function(t){var o=t.__cnO;if(o==null){o=t.textContent.trim();if(!SUP[o])return;t.__cnO=o}t.textContent=e?SUP[o]:o});if(!window.echarts||!echarts.getInstanceByDom)return;[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){var c=echarts.getInstanceByDom(el);if(!c)return;var op=c.getOption(),hay=false;(op.series||[]).forEach(function(s){var ma=s.markArea;if(!ma||!ma.data)return;ma.data.forEach(function(p){var x=Array.isArray(p)?p[0]:p;if(!x||typeof x.name!=='string')return;var i=MES_ES.indexOf(x.name),j=MES_EN.indexOf(x.name);if(e&&i>=0){x.name=MES_EN[i];hay=true}else if(!e&&j>=0){x.name=MES_ES[j];hay=true}})});if(hay)c.setOption({series:op.series.map(function(s){return{markArea:s.markArea}})})})}function rot(){rotFav();aplicar();rotGc();try{sup()}catch(x){}}D.addEventListener('cofrade-idioma',function(){setTimeout(rot,30)});D.addEventListener('cofrade-idioma-listo',function(){setTimeout(rot,0)});
 /* --- Compartir gráfico --- */
 var ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
 function titulo(el){var c=el.closest('.card,.chart-wrap,figure,section');var h=c&&c.querySelector('h3,h2,figcaption');return ((h&&h.textContent)||el.getAttribute('aria-label')||'Gráfico de Cofrade News').replace(/\\s+/g,' ').trim().slice(0,90)}
@@ -7055,9 +7091,11 @@ if(navigator.canShare&&navigator.canShare({files:[f]}))return navigator.share({f
 function principal(el){if(/\d$/.test(el.id)||el.closest('table,li,.cg-panel,.monedas'))return false;var c=el.closest('.card,section');return !c||c.querySelector('div.chart[id]')===el}
 function rotUno(bt){bt.innerHTML=ICO+(en()?'Share chart':'Compartir gráfico');bt.setAttribute('aria-label',(en()?'Share chart: ':'Compartir gráfico: ')+titulo(bt.__el))}
 function rotGc(){[].forEach.call(D.querySelectorAll('.cn-gc'),function(bt){if(bt.__el)rotUno(bt)})}
+// 27-11-2026 (Germán, Sismos: «la tabla con la información detallada debe aparecer al costado derecho... al lado del Mapa»): el botón
+// no puede quedar como tercera pieza de una grilla de dos columnas (empujaba la tabla abajo); en ese caso va debajo de la grilla.
 function botones(){[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){if(el.getAttribute('data-gc')||!principal(el))return;var r=el.getBoundingClientRect();if(r.width<240||r.height<160)return;
 el.setAttribute('data-gc','1');var w=D.createElement('div');w.className='cn-gcw';var bt=D.createElement('button');bt.type='button';bt.className='cn-gc';
-bt.setAttribute('data-no-tr','');bt.setAttribute('translate','no');bt.__el=el;rotUno(bt);bt.onclick=function(){compartir(el,bt)};w.appendChild(bt);el.insertAdjacentElement('afterend',w)})}
+bt.setAttribute('data-no-tr','');bt.setAttribute('translate','no');bt.__el=el;rotUno(bt);bt.onclick=function(){compartir(el,bt)};w.appendChild(bt);var pa=el.parentElement,dp=pa?getComputedStyle(pa).display:'';(/grid|flex/.test(dp)&&pa.parentElement?pa:el).insertAdjacentElement('afterend',w)})}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){botones();}})},{rootMargin:'200px'});[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){io.observe(el)})}else botones();
 })()</script>`;
 

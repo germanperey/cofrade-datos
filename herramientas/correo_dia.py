@@ -51,6 +51,23 @@ def sin_enlaces(t):
     return t
 
 
+SIN_IMAGEN = re.compile(r"\s*\((?:en la (?:imagen|foto|fotografía|ilustración)|a la (?:izquierda|derecha)|en el centro|imagen|foto)\)", re.I)
+COSTA = re.compile(r"Arica|Iquique|Tocopilla|Mejillones|Antofagasta|Taltal|Chañaral|Caldera|Huasco|Coquimbo|Los Vilos|Valpara|Quintero|San Antonio|"
+                   r"Constituci|Talcahuano|Concepci|Lebu|Arauco|Corral|Valdivia|Puerto Montt|Chilo|Castro|Quell|Ays|Chacabuco|Punta Arenas|Magallanes|"
+                   r"Juan Fern|Golfo de Penas|Rapa Nui|Isla de Pascua|costa|litoral|caleta|bah[ií]a", re.I)
+
+
+def marejadas_claras(t):
+    """27-11-2026 (Germán: «muestra un mensaje de alerta de Marejadas, sin embargo, en el gráfico no se aprecia ninguna marejada en los
+    puertos!!»). Si el aviso vigente es oceánico o antártico, el correo dice dónde es y que los puertos de Chile no tienen aviso."""
+    m = re.search(r"^⚠ AVISO DE MAREJADAS VIGENTE\n((?:- .*\n)+)(Embarcaciones en puerto:[^\n]*\n)", t, re.M)
+    if not m or COSTA.search(m.group(1)):
+        return t
+    nuevo = ("⚠ Aviso vigente de la Armada lejos de los puertos\n" + m.group(1)
+             + "Valparaíso, San Antonio, Talcahuano, Puerto Montt y Punta Arenas no tienen aviso de marejadas vigente. Si navegas en esa zona, revisa el aviso oficial de la Armada.\n")
+    return t[:m.start()] + nuevo + t[m.end():]
+
+
 def separar(correo):
     """Devuelve (lector, interno). Interno: notas internas, copia de respaldo y el texto para redes."""
     interno = []
@@ -71,6 +88,7 @@ def separar(correo):
         else:
             lector.append(l)
     texto = re.sub(r"\n{3,}", "\n\n", "\n".join(lector)).strip() + "\n"
+    texto = marejadas_claras(SIN_IMAGEN.sub("", texto))
     return sin_enlaces(texto), sin_enlaces("\n\n".join(interno).strip() + "\n") if interno else ""
 
 
