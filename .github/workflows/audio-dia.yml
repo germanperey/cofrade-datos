@@ -26,7 +26,7 @@ concurrency:
 jobs:
   audio:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v5
       - name: Herramientas
@@ -36,8 +36,13 @@ jobs:
         run: |
           F="${{ github.event.inputs.fecha }}"; [ -n "$F" ] || F=$(TZ=America/Santiago date +%F)
           echo "fecha=$F" >> "$GITHUB_OUTPUT"
-          if [ ! -f "ediciones/Cofrade-News-$F.html" ]; then echo "Sin edición $F todavía"; echo "seguir=no" >> "$GITHUB_OUTPUT"; exit 0; fi
-          python3 herramientas/audio_dia.py guion --fecha "$F"
+          # La edición completa (con «Lo que mueve la aguja hoy») vive en la rama «ediciones» y llega unos minutos después que la de main.
+          for i in $(seq 1 20); do
+            git fetch -q --depth 1 origin ediciones 2>/dev/null && git show "origin/ediciones:Cofrade-News-$F.html" > /tmp/ed.html 2>/dev/null && grep -q 'class="tres"' /tmp/ed.html && break
+            rm -f /tmp/ed.html; echo "Esperando la edición completa de $F ($i)"; sleep 30
+          done
+          if [ ! -s /tmp/ed.html ]; then echo "Sin edición completa de $F"; echo "seguir=no" >> "$GITHUB_OUTPUT"; exit 0; fi
+          python3 herramientas/audio_dia.py guion --fecha "$F" --ed /tmp/ed.html
           H=$(python3 -c "import json;print(json.load(open('datos/audio-guion/$F.json'))['huella'])")
           echo "huella=$H" >> "$GITHUB_OUTPUT"
           if git fetch -q --depth 1 origin audio 2>/dev/null && git show "origin/audio:Cofrade-News-$F-resumen.txt" 2>/dev/null | grep -qx "$H"; then
