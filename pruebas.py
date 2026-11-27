@@ -2847,7 +2847,7 @@ def audio_y_correo_del_dia():
     assert m["audio"] == "https://www.cofrad.es/audio/2026-11-27.mp3" and "/audio/2026-11-27.mp3" in m["html"] and "resumen en audio" in m["html"]
     assert "?voz=1" in E.armar(dt.date(2026, 11, 27), ["a", "b", "c"])["html"]
     js = open(os.path.join(raiz, "sitio/modulos/audio_dia.js"), encoding="utf-8").read()
-    assert "r.n > 4" in js and "/datos/audio-guion/" in js and "[0-9a-f]{40}" in js   # freno de gasto y guion solo del repositorio propio
+    assert "r.n > 2" in js and "/datos/audio-guion/" in js and "[0-9a-f]{40}" in js and "aura-2-es" in js   # freno de gasto y guion solo del repositorio propio
     wf = open(os.path.join(raiz, ".github/workflows/audio-dia.yml"), encoding="utf-8").read()
     assert 'paths: ["ediciones/Cofrade-News-*.html"]' in wf and "head -n -6" in wf and "--force" in wf
 

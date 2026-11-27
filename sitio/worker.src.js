@@ -1508,8 +1508,8 @@ export default {
       if (p === "/buzon") return Response.redirect(`https://${u.host}/#buzon`, 302);   // enlace corto para compartir: abre el Buzón
       if (p === "/m" && req.method === "POST") return await recibirLectura(req, env, ctx);
       if (p === "/e" && req.method === "POST") return await recibirEventos(req, env);
-      const aud = p.match(/^\/audio\/generar\/(\d{4}-\d{2}-\d{2})$/);   // 27-11-2026: resumen en audio (modulos/audio_dia.js)
-      if (aud) return await audioGenerar(aud[1], u, env).catch((e) => new Response(JSON.stringify({ ok: false, error: String(e && e.message || e).slice(0, 200) }), { status: 500, headers: { "Content-Type": "application/json" } }));
+      const aud = p.match(/^\/audio\/generar\/(\d{4}-\d{2}-\d{2})\/(\d{1,2})$/);   // 27-11-2026: resumen en audio (modulos/audio_dia.js)
+      if (aud) return await audioGenerar(aud[1], Number(aud[2]), u, env).catch((e) => new Response(JSON.stringify({ ok: false, error: String(e && e.message || e).slice(0, 200) }), { status: 500, headers: { "Content-Type": "application/json" } }));
       const audf = p.match(/^\/audio\/(\d{4}-\d{2}-\d{2})\.mp3$/);
       if (audf) return await audioArchivo(audf[1]);
       if (p === "/senado-sala.json") {   // 26-11-2026: decisiones de Sala del Senado (oficial), para el vigía y la tarea de la edición

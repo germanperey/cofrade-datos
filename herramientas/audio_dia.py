@@ -6,13 +6,12 @@ un resumen de 2 a 3 minutos: las balas de «Lo que mueve la aguja hoy» y un tit
 Cómo corre (GitHub Actions, .github/workflows/audio-dia.yml), apenas la tarea de la edición sube ediciones/Cofrade-News-AAAA-MM-DD.html:
   1) guion: arma el texto desde la edición publicada (solo lo que la edición dice), lo deja listo para leer en voz alta (cifras en
      palabras, siglas explicadas) y lo parte en trozos cortos -> datos/audio-guion/AAAA-MM-DD.json
-  2) voz: pide a www.cofrad.es/audio/generar/AAAA-MM-DD?sha=<commit> la voz de cada trozo (Workers AI, MeloTTS en español),
+  2) voz: pide a www.cofrad.es/audio/generar/AAAA-MM-DD/N?sha=<commit> la voz de cada trozo (Workers AI, MeloTTS en español),
      une las partes con ffmpeg en un MP3 liviano (mono, 64 kbps) y lo guarda en /tmp
   3) el flujo lo sube a la rama «audio» (solo los últimos 7 días, sin historial) como Cofrade-News-AAAA-MM-DD-resumen.mp3
 La tarea de la edición lo baja de raw.githubusercontent.com y lo adjunta al correo (herramientas/correo_dia.py).
 """
 import argparse
-import base64
 import datetime as dt
 import hashlib
 import html as H
@@ -210,34 +209,36 @@ def huella(guion):
 
 
 # ---------- voz ----------
-def generar_voz(f, sha, salida, intentos=3):
-    url = f"{SITIO}/audio/generar/{f}?sha={sha}"
-    ultimo = ""
-    for i in range(intentos):
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "cofrade-datos-audio/1.0"})
-            with urllib.request.urlopen(req, timeout=420) as r:
-                j = json.load(r)
-            if j.get("ok") and j.get("partes"):
-                break
-            ultimo = j.get("error") or "respuesta vacía"
-        except Exception as ex:   # noqa: BLE001
-            ultimo = f"{type(ex).__name__}: {ex}"
-    else:
-        raise SystemExit(f"La voz no respondió tras {intentos} intentos: {ultimo}")
+def generar_voz(f, sha, salida, intentos=2):
+    """Pide al sitio la voz de cada trozo del guion (un MP3 por trozo) y los une en un solo MP3 liviano."""
+    guion = json.load(open(os.path.join(RAIZ, "datos", "audio-guion", f"{f}.json"), encoding="utf-8"))
     with tempfile.TemporaryDirectory() as tmp:
         lista = os.path.join(tmp, "lista.txt")
         with open(lista, "w") as L:
-            for k, b in enumerate(j["partes"]):
+            for k in range(len(guion["partes"])):
+                url, datos, ultimo = f"{SITIO}/audio/generar/{f}/{k}?sha={sha}", b"", ""
+                for _ in range(intentos):
+                    try:
+                        req = urllib.request.Request(url, headers={"User-Agent": "cofrade-datos-audio/1.0"})
+                        with urllib.request.urlopen(req, timeout=180) as r:
+                            datos = r.read() if r.headers.get("Content-Type", "").startswith("audio/") else b""
+                        if len(datos) > 2000:
+                            break
+                        ultimo = "respuesta sin audio"
+                    except Exception as ex:   # noqa: BLE001
+                        cuerpo = ex.read().decode("utf-8", "replace")[:200] if hasattr(ex, "read") else ""
+                        ultimo = f"{type(ex).__name__}: {ex} {cuerpo}"
+                else:
+                    raise SystemExit(f"La voz no respondió en el trozo {k + 1}: {ultimo}")
                 p = os.path.join(tmp, f"p{k:02d}.mp3")
-                open(p, "wb").write(base64.b64decode(b))
+                open(p, "wb").write(datos)
                 L.write(f"file '{p}'\n")
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", lista, "-ac", "1", "-ar", "24000", "-b:a", "64k",
                         "-metadata", f"title=Cofrade News · resumen del {fecha_larga(f)}", "-metadata", "artist=Cofrade News",
                         "-metadata", "album=Cofrade News", salida], check=True)
     seg = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", salida],
                                capture_output=True, text=True, check=True).stdout.strip() or 0)
-    print(f"AUDIO LISTO {salida} · {os.path.getsize(salida):,} bytes · {seg:.0f} segundos · {len(j['partes'])} partes")
+    print(f"AUDIO LISTO {salida} · {os.path.getsize(salida):,} bytes · {seg:.0f} segundos · {len(guion['partes'])} partes")
     return seg
 
 
