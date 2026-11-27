@@ -54,6 +54,15 @@ jobs:
           for i in 1 2 3; do git pull -q --rebase -X theirs origin main && git push -q && break; sleep 8; done
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "seguir=si" >> "$GITHUB_OUTPUT"
+      - name: Avisar a los buscadores (IndexNow)
+        if: steps.guion.outputs.seguir == 'si'
+        continue-on-error: true
+        run: |
+          # 27-11-2026 (Germán: «posicionar nuestro Newsletter... en los distintos Navegadores Web, en las IAs LLM, en Perplexity»):
+          # IndexNow avisa en el acto a Bing (que alimenta a ChatGPT y Copilot), Yandex, Seznam y Naver que hay edición nueva.
+          F="${{ steps.guion.outputs.fecha }}"; K=94065743115102556564b9a9eb002f7c
+          curl -s -m 30 -o /dev/null -w "IndexNow HTTP %{http_code}\n" -X POST https://api.indexnow.org/indexnow -H "Content-Type: application/json; charset=utf-8" \
+            -d "{\"host\":\"www.cofrad.es\",\"key\":\"$K\",\"keyLocation\":\"https://www.cofrad.es/$K.txt\",\"urlList\":[\"https://www.cofrad.es/\",\"https://www.cofrad.es/edicion/$F\",\"https://www.cofrad.es/mercados\"]}"
       - name: Voz
         if: steps.guion.outputs.seguir == 'si'
         run: python3 herramientas/audio_dia.py voz --fecha "${{ steps.guion.outputs.fecha }}" --sha "${{ steps.guion.outputs.sha }}" --salida /tmp/resumen.mp3

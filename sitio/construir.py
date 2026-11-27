@@ -65,7 +65,8 @@ for k, v in {
     "/*__METRICAS__*/": leer("modulos", "metricas.js"),   # 26-11-2026: eventos anónimos sin cookies
     "/*__EDICION_EXTRA__*/": leer("modulos", "edicion_extra.js"),   # 26-11-2026: aguja, secciones favoritas y compartir gráfico
     "/*__SENADO_SALA__*/": leer("modulos", "senado_sala.js"),
-    "/*__AUDIO_DIA__*/": leer("modulos", "audio_dia.js"),   # 27-11-2026: resumen en audio del día (voz de Workers AI)   # 26-11-2026: decisiones de Sala del Senado desde la fuente oficial
+    "/*__AUDIO_DIA__*/": leer("modulos", "audio_dia.js"),
+    "/*__POSICIONAMIENTO__*/": leer("modulos", "posicionamiento.js"),   # 27-11-2026: buscadores, IAs que citan (sin entrenar) e IndexNow   # 27-11-2026: resumen en audio del día (voz de Workers AI)   # 26-11-2026: decisiones de Sala del Senado desde la fuente oficial
     "__PODCAST_JS__": json.dumps("<script>" + podcast_js + "</script>", ensure_ascii=False),
 }.items():
     assert src.count(k) == 1, k

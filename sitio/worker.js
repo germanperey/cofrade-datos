@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "48056955a98c";
+const VERSION_SITIO = "f82edb7ad94e";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -7276,6 +7276,65 @@ async function audioArchivo(f) {
   return new Response(r.body, { status: 200, headers: { "Content-Type": "audio/mpeg", "Content-Disposition": `inline; filename="Cofrade-News-${f}-resumen.mp3"`, "Cache-Control": "public, max-age=3600", "Access-Control-Allow-Origin": "*" } });
 }
 
+// 27-11-2026 · Germán: «nos falta posicionar nuestro Newsletter www.cofrad.es en los distintos Navegadores Web (browsers), en las IAs
+// LLM, en Perplexity, en Redes Sociales, etc.... para generar mayor tráfico de lectores». Eligió: las IAs pueden leer y CITAR el sitio
+// (con enlace), pero no usarlo para ENTRENAR modelos; todo gratis.
+// · robots.txt: buscadores y buscadores de IA adentro (Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User,
+//   PerplexityBot, Perplexity-User, DuckAssistBot); robots de entrenamiento afuera (GPTBot, ClaudeBot, Google-Extended, Applebot-Extended,
+//   CCBot, meta-externalagent, Bytespider). Más la señal de contenido: search=yes, ai-input=yes, ai-train=no.
+// · /llms.txt: la ficha del sitio para modelos de lenguaje (qué es, qué cubre, dónde leer y cómo citar).
+// · /sitemap-news.xml: ediciones de los últimos 2 días con el formato de Google Noticias.
+// · IndexNow: la llave pública se sirve en /<llave>.txt; GitHub avisa a Bing (y con él a ChatGPT y Copilot), Yandex y otros al publicar.
+const INDEXNOW_LLAVE = "94065743115102556564b9a9eb002f7c";
+const BOTS_ENTRENAMIENTO = ["GPTBot", "ClaudeBot", "Google-Extended", "Applebot-Extended", "CCBot", "meta-externalagent", "Bytespider"];
+const PRIVADO = ["/socios", "/panel", "/buzon", "/concurso", "/ir/", "/audio/generar/"];
+
+function robotsTxt(dominio) {
+  const priv = PRIVADO.map((x) => `Disallow: ${x}`).join("\n");
+  return `# Cofrade News · ${dominio}
+# Buscadores y buscadores de IA: pueden leer y citar con enlace. Entrenar modelos con este contenido: no.
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
+${BOTS_ENTRENAMIENTO.map((b) => `User-agent: ${b}`).join("\n")}
+Disallow: /
+
+User-agent: *
+Allow: /
+${priv}
+
+Sitemap: https://${dominio}/sitemap.xml
+Sitemap: https://${dominio}/sitemap-news.xml
+`;
+}
+
+function llmsTxt(dominio, ediciones) {
+  const ult = ediciones.slice(0, 7).map((f) => `- [Edición del ${f}](https://${dominio}/edicion/${f})`).join("\n");
+  return `# Cofrade News
+
+> Boletín matinal gratuito de Chile (www.cofrad.es): cada mañana, antes de las 7:00 (hora de Santiago), reúne en 22 secciones lo que pasa en Chile y el mundo, con cada dato verificado y enlazado a su fuente oficial.
+
+Secciones: economía e indicadores (UF, dólar, euro, IPC, IMACEC, cobre, IPSA, mercados), política y Congreso (todas las votaciones de Sala de la Cámara y del Senado del mes, avance del gobierno a igual período), emprendimiento y fondos con postulación abierta, tecnología, conflictos bélicos vigentes, efemérides, historia naval de Chile, pronóstico del tiempo de 9 ciudades, mar y mareas, sismos, vuelos, feriados, vivienda y subsidios, industrias, panoramas, ciencia, astronomía, deportes y horóscopo. Versión en inglés con el botón EN.
+
+Cómo citar: «Cofrade News (www.cofrad.es), edición del AAAA-MM-DD», con enlace a la edición. Cada cifra trae su fuente original enlazada: cite también esa fuente.
+Uso permitido: leer, resumir y citar con enlace. No se autoriza usar este contenido para entrenar modelos (ver robots.txt y la señal ai-train=no).
+
+## Lo principal
+- [Portada con lo último](https://${dominio}/): «Lo que mueve la aguja hoy» y noticias en vivo
+- [Mercados](https://${dominio}/mercados)
+- [Republicar Cofrade News (RSS y condiciones)](https://${dominio}/republica)
+- [Canal RSS](https://${dominio}/rss.xml)
+
+## Ediciones recientes
+${ult}
+`;
+}
+
+function sitemapNoticias(dominio, ediciones, hoy) {
+  const lim = new Date(Date.parse(hoy + "T12:00:00Z") - 2 * 86400000).toISOString().slice(0, 10);
+  const x = ediciones.filter((f) => f >= lim).map((f) => `<url><loc>https://${dominio}/edicion/${f}</loc><news:news><news:publication><news:name>Cofrade News</news:name><news:language>es</news:language></news:publication><news:publication_date>${f}T06:45:00-03:00</news:publication_date><news:title>Cofrade News, edición del ${f}</news:title></news:news></url>`).join("");
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">${x}</urlset>`;
+}
+
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -7945,10 +8004,14 @@ export default {
       if (p === "/widget.js") return new Response(WIDGET_JS, { headers: { "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "public, max-age=3600", "Access-Control-Allow-Origin": "*", ...SEGURIDAD } });
       if (p === "/republica") { ctx.waitUntil(contarVisita(req, env, "/republica")); return paginaRepublica(); }
       if (p === `/${INDEXNOW_KEY}.txt`) return new Response(INDEXNOW_KEY, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } });
-      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nDisallow: /concurso\nDisallow: /ir/\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
+      if (p === "/robots.txt") return new Response(robotsTxt(DOMINIO), { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+      if (p === "/llms.txt") return new Response(llmsTxt(DOMINIO, await indice(ctx)), { headers: { "Content-Type": "text/markdown; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+      if (p === `/${INDEXNOW_LLAVE}.txt`) return new Response(INDEXNOW_LLAVE, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+      if (p === "/sitemap-news.xml") return new Response(sitemapNoticias(DOMINIO, await indice(ctx), fechaChile()), { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=900" } });
       if (p === "/sitemap.xml") {
         const l = await indice(ctx);
-        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, `https://${DOMINIO}/bases-concurso`, `https://${DOMINIO}/republica`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
+        const hoyS = fechaChile();   // 27-11-2026: con fecha de cambio, para que los buscadores vuelvan a leer lo nuevo
+        const x = [[`https://${DOMINIO}/`, hoyS], [`https://${DOMINIO}/mercados`, hoyS], [`https://${DOMINIO}/bases-concurso`, ""], [`https://${DOMINIO}/republica`, ""], ...l.map((f) => [`https://${DOMINIO}/edicion/${f}`, f])].map(([h, m]) => `<url><loc>${h}</loc>${m ? `<lastmod>${m}</lastmod>` : ""}</url>`).join("");
         return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${x}</urlset>`, { headers: { "Content-Type": "application/xml" } });
       }
       return html(marco({ titulo: "Página no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esta página no existe.</h1><p class="lede">Vuelve a la <a href="/">portada</a>.</p></section>` }), 404);

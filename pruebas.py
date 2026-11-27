@@ -2861,6 +2861,30 @@ def audio_y_correo_del_dia():
 
 PRUEBAS.append(audio_y_correo_del_dia)
 
+
+def posicionamiento_buscadores_e_ias():
+    """27-11-2026 (Germán: «nos falta posicionar nuestro Newsletter www.cofrad.es en los distintos Navegadores Web (browsers), en las IAs
+    LLM, en Perplexity, en Redes Sociales»). Eligió: las IAs pueden leer y citar, no entrenar; todo gratis."""
+    import json, subprocess
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    js = open(os.path.join(raiz, "sitio/modulos/posicionamiento.js"), encoding="utf-8").read()
+    o = json.loads(subprocess.run(["node", "-e", "const s=require('fs').readFileSync(0,'utf8');new Function(s)();"], input=js + ";console.log(JSON.stringify({r:robotsTxt('www.cofrad.es'),l:llmsTxt('www.cofrad.es',['2026-11-27','2026-11-26']),n:sitemapNoticias('www.cofrad.es',['2026-11-27','2026-11-26','2026-11-20'],'2026-11-27')}))",
+                                  capture_output=True, text=True, check=True).stdout)
+    r = o["r"]
+    bloque = r.split("User-agent: *")[0]
+    for b in ("GPTBot", "ClaudeBot", "Google-Extended", "CCBot"):
+        assert f"User-agent: {b}" in bloque, b                     # entrenamiento: fuera
+    for b in ("OAI-SearchBot", "Claude-SearchBot", "PerplexityBot", "Googlebot", "Bingbot"):
+        assert b not in bloque, b                                    # buscadores e IAs que citan: dentro (regla general)
+    assert "Content-Signal: search=yes, ai-input=yes, ai-train=no" in r and "Disallow: /panel" in r and "sitemap-news.xml" in r
+    assert "edicion/2026-11-27" in o["l"] and "Cómo citar" in o["l"]
+    assert o["n"].count("<url>") == 2 and "<news:name>Cofrade News</news:name>" in o["n"]   # solo los últimos 2 días
+    wf = open(os.path.join(raiz, ".github/workflows/audio-dia.yml"), encoding="utf-8").read()
+    assert "api.indexnow.org" in wf and "94065743115102556564b9a9eb002f7c" in js
+
+
+PRUEBAS.append(posicionamiento_buscadores_e_ias)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

@@ -954,6 +954,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__EDICION_EXTRA__*/
 /*__SENADO_SALA__*/
 /*__AUDIO_DIA__*/
+/*__POSICIONAMIENTO__*/
 
 // 13-11-2026 · carrusel de marcas auspiciadoras (pie de página). Se detiene con el mouse o el foco y queda quieto con «reducir movimiento».
 function bloqueMarcas() {
@@ -1623,10 +1624,14 @@ export default {
       if (p === "/widget.js") return new Response(WIDGET_JS, { headers: { "Content-Type": "text/javascript; charset=utf-8", "Cache-Control": "public, max-age=3600", "Access-Control-Allow-Origin": "*", ...SEGURIDAD } });
       if (p === "/republica") { ctx.waitUntil(contarVisita(req, env, "/republica")); return paginaRepublica(); }
       if (p === `/${INDEXNOW_KEY}.txt`) return new Response(INDEXNOW_KEY, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } });
-      if (p === "/robots.txt") return new Response(`User-agent: *\nAllow: /\nDisallow: /socios\nDisallow: /panel\nDisallow: /buzon\nDisallow: /concurso\nDisallow: /ir/\nSitemap: https://${DOMINIO}/sitemap.xml\n`, { headers: { "Content-Type": "text/plain" } });
+      if (p === "/robots.txt") return new Response(robotsTxt(DOMINIO), { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+      if (p === "/llms.txt") return new Response(llmsTxt(DOMINIO, await indice(ctx)), { headers: { "Content-Type": "text/markdown; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+      if (p === `/${INDEXNOW_LLAVE}.txt`) return new Response(INDEXNOW_LLAVE, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+      if (p === "/sitemap-news.xml") return new Response(sitemapNoticias(DOMINIO, await indice(ctx), fechaChile()), { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=900" } });
       if (p === "/sitemap.xml") {
         const l = await indice(ctx);
-        const x = [`https://${DOMINIO}/`, `https://${DOMINIO}/mercados`, `https://${DOMINIO}/bases-concurso`, `https://${DOMINIO}/republica`, ...l.map((f) => `https://${DOMINIO}/edicion/${f}`)].map((h) => `<url><loc>${h}</loc></url>`).join("");
+        const hoyS = fechaChile();   // 27-11-2026: con fecha de cambio, para que los buscadores vuelvan a leer lo nuevo
+        const x = [[`https://${DOMINIO}/`, hoyS], [`https://${DOMINIO}/mercados`, hoyS], [`https://${DOMINIO}/bases-concurso`, ""], [`https://${DOMINIO}/republica`, ""], ...l.map((f) => [`https://${DOMINIO}/edicion/${f}`, f])].map(([h, m]) => `<url><loc>${h}</loc>${m ? `<lastmod>${m}</lastmod>` : ""}</url>`).join("");
         return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${x}</urlset>`, { headers: { "Content-Type": "application/xml" } });
       }
       return html(marco({ titulo: "Página no encontrada · Cofrade News", descripcion: "", cuerpo: `<section style="border:0"><h1>Esta página no existe.</h1><p class="lede">Vuelve a la <a href="/">portada</a>.</p></section>` }), 404);
