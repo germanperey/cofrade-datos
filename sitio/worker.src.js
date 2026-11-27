@@ -951,6 +951,7 @@ function mas(){if(n)n.classList.toggle('mas',n.scrollLeft+n.clientWidth<n.scroll
 /*__CURADURIA__*/
 /*__LECTORES__*/
 /*__METRICAS__*/
+/*__GOBIERNO_ACTUAL__*/
 /*__EDICION_EXTRA__*/
 /*__SENADO_SALA__*/
 /*__AUDIO_DIA__*/
@@ -1625,6 +1626,7 @@ export default {
       if (p === "/republica") { ctx.waitUntil(contarVisita(req, env, "/republica")); return paginaRepublica(); }
       if (p === `/${INDEXNOW_KEY}.txt`) return new Response(INDEXNOW_KEY, { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=86400" } });
       if (p === "/robots.txt") return new Response(robotsTxt(DOMINIO), { headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+      if (p === "/gobierno-actual.json") return await gobiernoActualJson();
       if (p === "/llms.txt") return new Response(llmsTxt(DOMINIO, await indice(ctx)), { headers: { "Content-Type": "text/markdown; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
       if (p === `/${INDEXNOW_LLAVE}.txt`) return new Response(INDEXNOW_LLAVE, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
       if (p === "/sitemap-news.xml") return new Response(sitemapNoticias(DOMINIO, await indice(ctx), fechaChile()), { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=900" } });

@@ -68,6 +68,27 @@ def marejadas_claras(t):
     return t[:m.start()] + nuevo + t[m.end():]
 
 
+GOB = "https://raw.githubusercontent.com/germanperey/cofrade-datos/main/datos/gobierno-actual.json"
+
+
+def gobierno_al_dia(t, fecha):
+    """27-11-2026 («sí al agente de gobierno»): la línea de Kast en «Avances logrados» usa la última revisión del Agente de gobierno."""
+    try:
+        import json
+        r = subprocess.run(["curl", "-sf", "-m", "30", GOB], capture_output=True)
+        V = [v for v in json.loads(r.stdout or b"{}").get("versiones", []) if v["fecha"] <= fecha]
+        P = V[-1]["promesas"] if V else None
+    except Exception:   # noqa: BLE001
+        P = None
+    if not P:
+        return t
+    pt = lambda leyes: sum({"cumplida": 1, "parcial": .5}.get(p["estado"], 0) for p in P if not leyes or p.get("tipo") == "ley")
+    f = lambda v: f"{v:g}".replace(".", ",")
+    ig, le = pt(False), pt(True)
+    return re.sub(r"(Kast \(\d{4}-\): )[\d,]+ de 8 a igual período \(\d+%\) · solo leyes [\d,]+ · mandato completo [\d,]+",
+                  lambda m: f"{m.group(1)}{f(ig)} de 8 a igual período ({round(ig / 8 * 100)}%) · solo leyes {f(le)} · mandato completo {f(ig)}", t)
+
+
 def separar(correo):
     """Devuelve (lector, interno). Interno: notas internas, copia de respaldo y el texto para redes."""
     interno = []
@@ -142,6 +163,7 @@ def main():
     a = ap.parse_args()
     base = a.correo[: -len("-correo.txt")] if a.correo.endswith("-correo.txt") else os.path.splitext(a.correo)[0]
     lector, interno = separar(open(a.correo, encoding="utf-8").read())
+    lector = gobierno_al_dia(lector, a.fecha)
     open(base + "-lector.txt", "w", encoding="utf-8").write(lector)
     open(base + "-lector.html", "w", encoding="utf-8").write(a_html(lector, a.fecha))
     open(base + "-interno.txt", "w", encoding="utf-8").write(interno)

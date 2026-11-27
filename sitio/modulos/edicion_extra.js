@@ -77,6 +77,7 @@ max-width:min(560px,94vw);padding:12px 14px;border-radius:16px;background:#1A140
 const EXTRA_JS = `<script>(function(){var D=document,R=D.documentElement,en=function(){return R.lang==='en'};
 (function(){${SIN_IMAGEN_JS}})();
 (function(){${MAREJADA_JS}})();
+(function(){${GOBIERNO_JS}})();
 function ev(n){try{window.cnEv&&cnEv(n)}catch(e){}}
 /* --- Lo que mueve la aguja hoy: se cuenta cuando se ve --- */
 var ag=D.querySelector('section.tres');if(ag&&'IntersectionObserver' in window){var io0=new IntersectionObserver(function(es){if(es[0].isIntersecting){ev('aguja_vista');io0.disconnect()}},{threshold:.5});io0.observe(ag)}

@@ -2885,6 +2885,33 @@ def posicionamiento_buscadores_e_ias():
 
 PRUEBAS.append(posicionamiento_buscadores_e_ias)
 
+
+def agente_de_gobierno():
+    """27-11-2026 (Germán: «revisa también, que toda la sección "2. Política y Actualidad" se esté actualizando diariamente, los avances del
+    gobierno...»; luego «sí al agente de gobierno»). Las promesas del gobierno se revisan lunes y jueves y el sitio las pone sobre la edición."""
+    import json, shutil
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, os.path.join(raiz, "herramientas"))
+    import gobierno_actual as G
+    d = G.cargar(); ult = d["versiones"][-1]
+    assert len(ult["promesas"]) == 8 and all(p.get("texto_en") and p.get("nota_en") for p in ult["promesas"])
+    assert G.puntaje(ult["promesas"]) == 3 and G.puntaje(ult["promesas"], True) == 1.5   # lo mismo que muestra la edición del 27-11
+    nuevo = json.loads(json.dumps({"promesas": ult["promesas"], "impacto": dict(ult["impacto"], fuentes=[]), "cambios": []}))
+    assert G.validar(nuevo, ult, "2026-11-30") == []
+    malo = json.loads(json.dumps(nuevo)); malo["promesas"][7]["estado"] = "parcial"
+    assert any("no se verificó hoy" in e for e in G.validar(malo, ult, "2026-11-30"))
+    malo["promesas"][7]["verificado"] = "2026-11-30"; malo["promesas"][7]["fecha"] = "2026-11-28"
+    assert G.validar(malo, ult, "2026-11-30") == []
+    atras = json.loads(json.dumps(nuevo)); atras["promesas"][0]["estado"] = "no"; atras["promesas"][0]["verificado"] = "2026-11-30"
+    assert any("no vuelve atrás" in e for e in G.validar(atras, ult, "2026-11-30"))
+    web = json.loads(json.dumps(nuevo)); web["promesas"][1]["nota"] += " https://x.cl"
+    assert any("sin direcciones web" in e for e in G.validar(web, ult, "2026-11-30"))
+    js = open(os.path.join(raiz, "sitio/modulos/gobierno_actual.js"), encoding="utf-8").read()
+    assert "gob-prom" in js and "gGobAvance" in js and "cn-en" in js and "fecha<=ed" in js   # versión vigente a la fecha de cada edición, bilingüe
+
+
+PRUEBAS.append(agente_de_gobierno)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:
