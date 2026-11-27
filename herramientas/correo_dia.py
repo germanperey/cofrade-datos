@@ -65,7 +65,7 @@ def separar(correo):
             interno.insert(0, l.strip())
         elif l.startswith("Boletín completo:") and "respaldo" in l:
             interno.insert(0, l.strip())
-            lector.append("Boletín completo, con gráficos y todas las fuentes: www.cofrad.es")
+            lector.append("Boletín completo, con gráficos y todas las fuentes, en el sitio de Cofrade News.")
         elif l.startswith("Tecnología desarrollada por"):
             lector.append("Tecnología desarrollada por Germán Perey.")
         else:
