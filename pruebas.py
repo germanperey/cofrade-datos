@@ -2785,6 +2785,30 @@ def senado_sala_oficial_del_mes():
 PRUEBAS.append(senado_sala_oficial_del_mes)
 
 
+
+def textos_del_sitio_en_dos_idiomas():
+    """27-11-2026 (Germán, con captura de la edición en inglés: «Verifica que las traducciones a inglés se realicen correctamente!!»).
+    El traductor de la edición solo conoce el texto que trae la edición. Todo lo que el sitio agrega encima va en los dos idiomas."""
+    import json, subprocess
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    lee = lambda r: open(os.path.join(raiz, r), encoding="utf-8").read()
+    ex, ss, lc, fx = lee("sitio/modulos/edicion_extra.js"), lee("sitio/modulos/senado_sala.js"), lee("sitio/modulos/lectores.js"), lee("sitio/modulos/indicador_graf.js")
+    assert "What moves the needle today" in ex and "BIL(AGUJA_TITULO, AGUJA_EN)" in ex
+    assert "'Share chart'" in ex and "'My sections'" in ex and "cofrade-idioma-listo" in ex   # se re-rotulan al cambiar idioma
+    assert "See the source:" in ex and "Sources:" in ex and "e.after(" in ex   # no se toca el párrafo que el traductor reconoce
+    for es, en in [("Ensayo clínico", "Clinical trial"), ("En uso clínico", "In clinical use"), ("noviembre", "November")]:
+        assert es in ex and en in ex, es
+    assert "Get it free" in lc and "you@email.com" in lc and "Get what moves the needle" in lc
+    assert "effective " in fx and "Central Bank of Chile" in fx and "/d[oó]ll?ar/i" in fx and "/d[oó]lar/i" not in fx.split("const FX_JS")[1].split("<\\/script>")[0]
+    prueba = "console.log(JSON.stringify({b:ssBloque({filas:[{fecha:'2026-11-25',boletin:'18702-05',titulo:'Presupuestos',etapa:'Mixta',resultado:'Aprobado en general y particular a la vez. Plazo de indicaciones el 01/12/2026'}],estado:{hora:'2026-11-26T15:00:00Z'}},'2026-11')}))"
+    b = json.loads(subprocess.run(["node", "-e", "const s=require('fs').readFileSync(0,'utf8');new Function(s)();"],
+                                  input=ss + ";" + prueba, capture_output=True, text=True, check=True).stdout)["b"]
+    assert "Senate floor decisions in November: 1" in b and "Decisiones de la Sala del Senado en noviembre: 1" in b
+    assert "Approved in principle and in detail at once; amendments due Dec 1" in b and 'data-no-tr' in b and ">Result<" in b
+
+
+PRUEBAS.append(textos_del_sitio_en_dos_idiomas)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:

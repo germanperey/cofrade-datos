@@ -80,19 +80,38 @@ function ssMes(datos, mes) {
   const f = ((datos && datos.filas) || []).filter((x) => x.fecha.startsWith(mes) && ssDecision(x.resultado));
   return { filas: f, proyectos: new Set(f.map((x) => x.boletin)).size, aprobados: f.filter((x) => ssAprobado(x.resultado)).length, rechazados: f.filter((x) => ssRechazado(x.resultado)).length };
 }
+// 27-11-2026 (Germán: «Verifica que las traducciones a inglés se realicen correctamente!!»): el bloque va en los dos idiomas.
+const ssBil = (es, en) => `<span class="cn-es" lang="es">${es}</span><span class="cn-en" lang="en">${en}</span>`;
+const SS_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function ssResultadoEn(r) {
+  const t = String(r || "");
+  const base = /^Rechazadas las modificaciones/i.test(t) ? "Amendments rejected" : /^Aprobadas las modificaciones/i.test(t) ? "Amendments approved"
+    : /^Aprobado en general y particular a la vez/i.test(t) ? "Approved in principle and in detail at once"
+    : /^Aprobado en general y particular con modificaciones/i.test(t) ? "Approved in principle and in detail, with amendments"
+    : /^Aprobado en general y particular sin modificaciones/i.test(t) ? "Approved in principle and in detail, without amendments"
+    : /^Aprobado en general/i.test(t) ? "Approved in principle" : /^Aprobado con modificaciones/i.test(t) ? "Approved with amendments"
+    : /^Aprobado/i.test(t) ? "Approved" : /^Rechazad/i.test(t) ? "Rejected" : /^Despachad/i.test(t) ? "Passed" : "";
+  const plazo = (t.match(/indicaciones el (\d{2})\/(\d{2})\/(\d{4})/) || []);
+  return base ? base + (plazo[1] ? `; amendments due ${SS_MONTHS[+plazo[2] - 1].slice(0, 3)} ${+plazo[1]}` : "") : t;
+}
 const SS_MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 function ssBloque(datos, mes) {
   const m = ssMes(datos, mes);
   if (!m.filas.length) return "";
   const est = (datos && datos.estado) || {};
   const h = est.hora ? new Date(est.hora).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).replace(",", " a las") : "";
-  const filas = m.filas.map((x) => `<tr><td class="nw">${x.fecha.slice(8)}-${x.fecha.slice(5, 7)}</td><td class="nw"><a href="https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=${encodeURIComponent(x.boletin)}" target="_blank" rel="noopener">${ssEsc(x.boletin)}</a></td><td>${ssEsc(x.titulo)}</td><td>${ssEsc(x.etapa)}</td><td><span class="vres ${ssRechazado(x.resultado) ? "mal" : "ok"}">${ssEsc(x.resultado)}</span></td></tr>`).join("");
-  return `<div class="ss-of" data-ss="${m.filas.length}"><p class="sub"><b>Decisiones de la Sala del Senado en ${SS_MESES[+mes.slice(5) - 1]}: ${m.filas.length}</b> (${m.proyectos} proyectos · ${m.aprobados} aprobadas · ${m.rechazados} rechazadas). Fuente oficial: <a href="https://tramitacion.senado.cl/appsenado/index.php?ac=ultimos_vistos&amp;mo=tramitacion" target="_blank" rel="noopener">Senado de Chile, Tramitación de proyectos</a>${h ? `, revisada el ${h}` : ""}. El Senado dejó de publicar en formato abierto el voto de cada senador el 21-10-2026: por eso estas decisiones van sin el detalle por senador.</p>
-<div class="tabla-scroll"><table class="tabla"><thead><tr><th>Fecha</th><th>Boletín</th><th>Proyecto</th><th>Etapa</th><th>Resultado</th></tr></thead><tbody>${filas}</tbody></table></div></div>`;
+  const filas = m.filas.map((x) => `<tr><td class="nw">${x.fecha.slice(8)}-${x.fecha.slice(5, 7)}</td><td class="nw"><a href="https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=${encodeURIComponent(x.boletin)}" target="_blank" rel="noopener">${ssEsc(x.boletin)}</a></td><td>${ssEsc(x.titulo)}</td><td>${ssEsc(x.etapa)}</td><td><span class="vres ${ssRechazado(x.resultado) ? "mal" : "ok"}">${ssBil(ssEsc(x.resultado), ssEsc(ssResultadoEn(x.resultado)))}</span></td></tr>`).join("");
+  const mesEs = SS_MESES[+mes.slice(5) - 1], mesEn = SS_MONTHS[+mes.slice(5) - 1];
+  const hEn = est.hora ? new Date(est.hora).toLocaleString("en-US", { timeZone: "America/Santiago", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }) : "";
+  const enl = `<a href="https://tramitacion.senado.cl/appsenado/index.php?ac=ultimos_vistos&amp;mo=tramitacion" target="_blank" rel="noopener">`;
+  const es = `<b>Decisiones de la Sala del Senado en ${mesEs}: ${m.filas.length}</b> (${m.proyectos} proyectos · ${m.aprobados} aprobadas · ${m.rechazados} rechazadas). Fuente oficial: ${enl}Senado de Chile, Tramitación de proyectos</a>${h ? `, revisada el ${h}` : ""}. El Senado dejó de publicar en formato abierto el voto de cada senador el 21-10-2026: por eso estas decisiones van sin el detalle por senador.`;
+  const en = `<b>Senate floor decisions in ${mesEn}: ${m.filas.length}</b> (${m.proyectos} bills · ${m.aprobados} approved · ${m.rechazados} rejected). Official source: ${enl}Senate of Chile, Bill tracking</a>${hEn ? `, checked ${hEn}` : ""}. The Senate stopped publishing each senator's vote as open data on Oct 21, 2026, so these decisions come without the per-senator breakdown. Bill titles and stages are the Senate's official wording in Spanish.`;
+  return `<div class="ss-of" data-ss="${m.filas.length}" data-no-tr translate="no"><p class="sub">${ssBil(es, en)}</p>
+<div class="tabla-scroll"><table class="tabla"><thead><tr><th>${ssBil("Fecha", "Date")}</th><th>${ssBil("Boletín", "Bill no.")}</th><th>${ssBil("Proyecto", "Bill")}</th><th>${ssBil("Etapa", "Stage")}</th><th>${ssBil("Resultado", "Result")}</th></tr></thead><tbody>${filas}</tbody></table></div></div>`;
 }
 // Ajusta el total del mes (Cámara + Senado) en el navegador, porque el total va antes en la página que los números de cada cámara
 const SS_JS = `<script>(function(){[].forEach.call(document.querySelectorAll('.cg-mes[data-mes]'),function(g){var m=g.getAttribute('data-mes');var c=g.querySelector('button.vcam[data-cam="c"] span'),s=g.querySelector('button.vcam[data-cam="s"] span'),b=document.querySelector('button.cg-mesb[data-mes="'+m+'"] span');if(c&&s&&b){var t=(parseInt(c.textContent,10)||0)+(parseInt(s.textContent,10)||0);if(t>(parseInt(b.textContent,10)||0))b.textContent=t}})})()</script>`;
-const SS_CSS = `<style>.ss-of{margin:12px 0 18px}.ss-of .tabla td{vertical-align:top}.ss-of .vres.mal{color:#9b2c2c}</style>`;
+const SS_CSS = `<style>.cn-en{display:none}html[lang^="en"] .cn-en{display:inline}html[lang^="en"] .cn-es{display:none}.ss-of{margin:12px 0 18px}.ss-of .tabla td{vertical-align:top}.ss-of .vres.mal{color:#9b2c2c}</style>`;
 // Reescritor de la edición para el mes indicado: contadores (el mayor entre la edición y lo oficial) y el bloque oficial en el panel
 function conSenadoSala(rw, datos, mes) {
   const m = ssMes(datos, mes);

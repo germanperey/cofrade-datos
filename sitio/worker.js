@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "4156adba3201";
+const VERSION_SITIO = "085046cb4383";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -5738,17 +5738,23 @@ kpi.addEventListener('click',function(){abrir(kpi,k)});kpi.addEventListener('key
 // Solo en ediciones de hasta 5 días antes de esa fecha: las ediciones viejas quedan como se publicaron.
 const FX_JS = `<script>(function(){var m=location.pathname.match(/(\\d{4})-(\\d{2})-(\\d{2})/);if(!m)return;var ed=m[0];
 function iso(t,y){var r=String(t||'').match(/(\\d{2})-(\\d{2})(?:-(\\d{4}))?/);return r?(r[3]||y)+'-'+r[2]+'-'+r[1]:''}
-function n(v){return Number(v).toLocaleString('es-CL',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function dm(f){return f.slice(8,10)+'-'+f.slice(5,7)}
+function EN(){return /^en/.test(document.documentElement.lang)}
+function n(v){return Number(v).toLocaleString(EN()?'en-US':'es-CL',{minimumFractionDigits:2,maximumFractionDigits:2})}
+var MES=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function dm(f){return EN()?MES[+f.slice(5,7)-1]+' '+(+f.slice(8,10)):f.slice(8,10)+'-'+f.slice(5,7)}
+function nt(el){if(el){el.setAttribute('data-no-tr','');el.setAttribute('translate','no')}return el}
 fetch('/pulso.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(p){var I={};(p.indicadores||[]).forEach(function(x){I[x.clave]=x});
+function pintar(){
 var lim=new Date(ed+'T12:00:00Z');lim.setUTCDate(lim.getUTCDate()+5);lim=lim.toISOString().slice(0,10);
 function nuevo(k,fe){var x=I[k];return x&&x.fecha&&x.fecha>fe&&x.fecha<=lim&&typeof x.valor==='number'?x:null}
-function nota(x){return x.rige?'rige el '+dm(x.rige)+(x.publicado?' · publicado el '+dm(x.publicado):'')+' · Banco Central':'al '+dm(x.fecha)+' · Banco Central'}
-[].forEach.call(document.querySelectorAll('#indicadores .kpi'),function(c){var kn=(c.querySelector('.kn')||{}).textContent||'',k=/d[oó]lar/i.test(kn)?'dolar':/^euro/i.test(kn)?'euro':/yuan/i.test(kn)?'yuan':null;if(!k)return;
-var kf=c.querySelector('.kf'),x=nuevo(k,iso(kf&&kf.textContent,ed.slice(0,4)));if(!x)return;c.querySelector('.kv').textContent='$ '+n(x.valor);var kd=c.querySelector('.kd');if(kd)kd.textContent='';if(kf)kf.textContent=nota(x);c.classList.add('cn-fx')});
-[].forEach.call(document.querySelectorAll('.moneda[data-k]'),function(b){var k={dolar:'dolar',euro:'euro',cny:'yuan',yuan:'yuan'}[b.getAttribute('data-k')];if(!k)return;var mf=b.querySelector('.mf'),x=nuevo(k,iso(mf&&mf.textContent,ed.slice(0,4)));if(!x)return;
-b.querySelector('.mv').textContent='$ '+n(x.valor);var md=b.querySelector('.md');if(md)md.textContent='';if(mf)mf.textContent=nota(x)});
-[].forEach.call(document.querySelectorAll('.chip60'),function(a){var t=(a.querySelector('.t60')||{}).textContent||'';if(!/d[oó]lar/i.test(t))return;var x=nuevo('dolar',ed);if(!x)return;var v=a.querySelector('.v60');if(v)v.innerHTML='<b>$'+n(x.valor)+'</b> · rige '+dm(x.rige||x.fecha)});
+function nota(x){var e=EN();return x.rige?(e?'effective ':'rige el ')+dm(x.rige)+(x.publicado?(e?' · published ':' · publicado el ')+dm(x.publicado):'')+(e?' · Central Bank of Chile':' · Banco Central'):(e?'as of ':'al ')+dm(x.fecha)+(e?' · Central Bank of Chile':' · Banco Central')}
+[].forEach.call(document.querySelectorAll('#indicadores .kpi'),function(c){var kn=(c.querySelector('.kn')||{}).textContent||'',k=/d[oó]ll?ar/i.test(kn)?'dolar':/^euro/i.test(kn)?'euro':/yuan/i.test(kn)?'yuan':null;if(!k)return;
+var kf=c.querySelector('.kf'),f0=kf&&(kf.getAttribute('data-f0')||kf.textContent);if(kf&&!kf.hasAttribute('data-f0'))kf.setAttribute('data-f0',f0);var x=nuevo(k,iso(f0,ed.slice(0,4)));if(!x)return;nt(c.querySelector('.kv')).textContent='$ '+n(x.valor);var kd=c.querySelector('.kd');if(kd)kd.textContent='';if(kf)nt(kf).textContent=nota(x);c.classList.add('cn-fx')});
+[].forEach.call(document.querySelectorAll('.moneda[data-k]'),function(b){var k={dolar:'dolar',euro:'euro',cny:'yuan',yuan:'yuan'}[b.getAttribute('data-k')];if(!k)return;var mf=b.querySelector('.mf'),f0=mf&&(mf.getAttribute('data-f0')||mf.textContent);if(mf&&!mf.hasAttribute('data-f0'))mf.setAttribute('data-f0',f0);var x=nuevo(k,iso(f0,ed.slice(0,4)));if(!x)return;
+nt(b.querySelector('.mv')).textContent='$ '+n(x.valor);var md=b.querySelector('.md');if(md)md.textContent='';if(mf)nt(mf).textContent=nota(x)});
+[].forEach.call(document.querySelectorAll('.chip60'),function(a){var t=(a.querySelector('.t60')||{}).textContent||'';if(!/d[oó]ll?ar/i.test(t))return;var x=nuevo('dolar',ed);if(!x)return;var v=a.querySelector('.v60');if(v)nt(v).innerHTML='<b>$'+n(x.valor)+'</b> · '+(EN()?'effective ':'rige ')+dm(x.rige||x.fecha)});
+}
+pintar();document.addEventListener('cofrade-idioma',function(){setTimeout(pintar,0)});document.addEventListener('cofrade-idioma-listo',function(){setTimeout(pintar,0)});
 }).catch(function(){})})();<\/script>`;
 
 // 23-11-2026 14:39 · Germán: «Los mercados (o bolsas mundiales) no se actualizaron hoy, tienen datos del 20 de Noviembre (este error es
@@ -6788,22 +6794,25 @@ const LECT_ETIQUETA = "cofrade-news";
 const lectEsc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const lectEmailOk = (e) => /^[^\s@<>"']{1,64}@[A-Za-z0-9.-]{1,190}\.[A-Za-z]{2,24}$/.test(e) && e.length <= 254;
 
+// 27-11-2026 (Germán: «Verifica que las traducciones a inglés se realicen correctamente!!»): la caja va en los dos idiomas.
+const lectBil = (es, en) => `<span class="cn-es" lang="es">${es}</span><span class="cn-en" lang="en">${en}</span>`;
 function cajaLectores(env) {
   const tg = env && /^https:\/\/t\.me\/[A-Za-z0-9_+]{3,64}$/.test(String(env.TELEGRAM_URL || "")) ? String(env.TELEGRAM_URL) : "";
   return `<form class="cnl" id="cnLect" action="/suscribir" method="post" novalidate>
-<label class="cnl-t" for="cnLectEmail">Recibe lo que mueve la aguja, cada mañana a las 7:00</label>
+<label class="cnl-t" for="cnLectEmail" data-no-tr translate="no">${lectBil("Recibe lo que mueve la aguja, cada mañana a las 7:00", "Get what moves the needle, every morning at 7:00")}</label>
 <div class="cnl-f"><input id="cnLectEmail" name="cn_email" type="email" inputmode="email" autocomplete="email" required maxlength="254" placeholder="tu@correo.cl" aria-describedby="cnLectNota">
 <input type="text" name="cn_web" tabindex="-1" autocomplete="off" aria-hidden="true" class="cnl-h">
-<button type="submit" class="btn oro">Recíbelo gratis</button>${tg ? `<a class="btn claro cnl-tg" href="${lectEsc(tg)}" target="_blank" rel="noopener" data-cn-ev="telegram">Telegram</a>` : ""}</div>
-<p class="cnl-n" id="cnLectNota" role="status" aria-live="polite">5 titulares y el audio de la edición. Te pedimos confirmar por correo; te das de baja con un clic.</p></form>`;
+<button type="submit" class="btn oro" data-no-tr translate="no">${lectBil("Recíbelo gratis", "Get it free")}</button>${tg ? `<a class="btn claro cnl-tg" href="${lectEsc(tg)}" target="_blank" rel="noopener" data-cn-ev="telegram">Telegram</a>` : ""}</div>
+<p class="cnl-n" id="cnLectNota" role="status" aria-live="polite" data-no-tr translate="no">${lectBil("5 titulares y el audio de la edición. Te pedimos confirmar por correo; te das de baja con un clic.", "5 headlines and the edition’s audio. We ask you to confirm by email; unsubscribe with one click.")}</p></form>`;
 }
-const LECTORES_CSS = `.cnl{margin:22px 0 4px;max-width:560px}.cnl-t{display:block;font:600 15px/1.35 var(--sans);color:#F4EEDF;margin:0 0 10px}
+const LECTORES_CSS = `.cnl .cn-en{display:none}html[lang^="en"] .cnl .cn-en{display:inline}html[lang^="en"] .cnl .cn-es{display:none}.cnl{margin:22px 0 4px;max-width:560px}.cnl-t{display:block;font:600 15px/1.35 var(--sans);color:#F4EEDF;margin:0 0 10px}
 .cnl-f{display:flex;flex-wrap:wrap;gap:10px}.cnl-f input[type=email]{flex:1 1 220px;min-height:48px;padding:0 16px;border-radius:999px;border:1px solid rgba(201,161,74,.55);
 background:rgba(255,255,255,.96);color:#1A1406;font:16px var(--sans)}.cnl-f input[type=email]:focus-visible{outline:3px solid #C9A14A;outline-offset:2px}
 .cnl-f .btn{min-height:48px}.cnl-h{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
 .cnl-n{margin:8px 0 0;font-size:13px;line-height:1.45;color:#D8D2C4}.cnl-n.ok{color:#BFE3B4}.cnl-n.mal{color:#FFB4A8}
 @media (max-width:560px){.cnl-f .btn{flex:1 1 100%}}`;
 const LECTORES_JS = `<script>(function(){var f=document.getElementById('cnLect');if(!f)return;var n=document.getElementById('cnLectNota'),b=f.querySelector('button[type=submit]');
+function ph(){f.cn_email.placeholder=document.documentElement.lang.indexOf('en')===0?'you@email.com':'tu@correo.cl'}ph();try{new MutationObserver(ph).observe(document.documentElement,{attributes:true,attributeFilter:['lang']})}catch(_){}
 var en=function(){return document.documentElement.lang==='en'};
 f.addEventListener('submit',function(e){e.preventDefault();var em=f.cn_email.value.trim();
 if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(em)){n.className='cnl-n mal';n.textContent=en()?'Check your email address.':'Revisa tu correo: falta algo.';f.cn_email.focus();return}
@@ -6968,11 +6977,18 @@ function bloqueEventos(filas) {
 //    el menú de compartir con la imagen (WhatsApp, LinkedIn, etc.); en el computador la descarga y ofrece WhatsApp y LinkedIn con el
 //    enlace a ese gráfico.
 const AGUJA_TITULO = "Lo que mueve la aguja hoy";
-const AGUJA_REW = { element(e) { e.setInnerContent(AGUJA_TITULO); } };
+// 27-11-2026 (Germán: «Verifica que las traducciones a inglés se realicen correctamente!!», con captura: el título quedaba en español
+// en la edición en inglés). Lo que agrega el sitio no está en el diccionario de la edición, así que va en los dos idiomas (cn-es / cn-en,
+// fuera del traductor) y se muestra el que corresponde.
+const BIL = (es, en) => `<span class="cn-es" lang="es" data-no-tr translate="no">${es}</span><span class="cn-en" lang="en" data-no-tr translate="no">${en}</span>`;
+const AGUJA_EN = "What moves the needle today";
+const AGUJA_REW = { element(e) { e.setInnerContent(BIL(AGUJA_TITULO, AGUJA_EN), { html: true }); } };
 // 26-11-2026 (Germán: «todo esté respaldado con su fuente»): Indicadores y Feriados nombraban la fuente sin enlace; ahora la enlazan.
-const FUENTES_IND = { element(e) { e.append(' Ver en la fuente: <a href="https://si3.bcentral.cl/siete" target="_blank" rel="noopener">Banco Central de Chile (Base de Datos Estadísticos)</a> · <a href="https://www.coinbase.com/price/bitcoin" target="_blank" rel="noopener">Coinbase</a>.', { html: true }); } };
-const FUENTES_FER = { element(e) { e.append('<p class="fuente">Fuentes: <a href="https://www.bcn.cl/leychile" target="_blank" rel="noopener">Biblioteca del Congreso Nacional (Ley 19.668 y Ley 20.983)</a> · <a href="https://www.feriados.cl" target="_blank" rel="noopener">feriados.cl</a> (feriados extraordinarios) · feriados de otros países: calendarios oficiales de cada gobierno.</p>', { html: true }); } };
+// Los enlaces van en un párrafo aparte: si se agregaran dentro del párrafo de la edición, el traductor ya no lo reconoce y queda en español.
+const FUENTES_IND = { element(e) { e.after('<p class="fuente">' + BIL("Ver en la fuente:", "See the source:") + ' <a href="https://si3.bcentral.cl/siete" target="_blank" rel="noopener">' + BIL("Banco Central de Chile (Base de Datos Estadísticos)", "Central Bank of Chile (Statistics Database)") + '</a> · <a href="https://www.coinbase.com/price/bitcoin" target="_blank" rel="noopener">Coinbase</a></p>', { html: true }); } };
+const FUENTES_FER = { element(e) { e.append('<p class="fuente">' + BIL("Fuentes:", "Sources:") + ' <a href="https://www.bcn.cl/leychile" target="_blank" rel="noopener">' + BIL("Biblioteca del Congreso Nacional (Ley 19.668 y Ley 20.983)", "Library of the National Congress of Chile (Laws 19,668 and 20,983)") + '</a> · <a href="https://www.feriados.cl" target="_blank" rel="noopener">feriados.cl</a> ' + BIL("(feriados extraordinarios) · feriados de otros países: calendarios oficiales de cada gobierno.", "(extraordinary holidays) · other countries: each government's official calendar.") + '</p>', { html: true }); } };
 const EXTRA_CSS = `<style>
+.cn-en{display:none}html[lang^="en"] .cn-en{display:inline}html[lang^="en"] .cn-es{display:none}
 .cn-gcw{display:flex;justify-content:flex-end;margin:8px 0 0}.cn-gc{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid rgba(201,161,74,.6);
 background:rgba(251,248,242,.94);color:#1A1406;font:600 12.5px/1 var(--sans,system-ui);cursor:pointer;opacity:.9}
 .cn-gc:hover,.cn-gc:focus-visible{opacity:1;outline:2px solid #C9A14A;outline-offset:2px}[data-theme=dark] .cn-gc{background:rgba(20,18,14,.9);color:#F4EEDF}
@@ -7000,7 +7016,7 @@ var secs=[].slice.call(D.querySelectorAll('.hoja section.sec[id]')).filter(funct
 function nombre(s){return s.querySelector('h2').textContent.replace(/^\\s*\\d{1,2}\\.\\s*/,'').trim()}
 function leer(){try{var v=JSON.parse(localStorage.getItem('cn-favs')||'null');return Array.isArray(v)&&v.length?v:null}catch(e){return null}}
 var barra=null;function aplicar(){var f=leer(),n=0;secs.forEach(function(s){var o=!!f&&f.indexOf(s.id)<0;s.classList.toggle('cn-oculta',o);if(o)n++});
-if(barra){barra.remove();barra=null}if(n&&secs[0]){barra=D.createElement('div');barra.className='cn-ocultas';barra.setAttribute('role','status');
+if(barra){barra.remove();barra=null}if(n&&secs[0]){barra=D.createElement('div');barra.className='cn-ocultas';barra.setAttribute('data-no-tr','');barra.setAttribute('translate','no');barra.setAttribute('role','status');
 barra.innerHTML='<span>'+(en()?n+' sections hidden by your choice.':'Ocultas por tu elección: '+n+' secciones.')+'</span><button type="button">'+(en()?'Show all':'Mostrar todas')+'</button>';
 barra.querySelector('button').onclick=function(){try{localStorage.removeItem('cn-favs')}catch(e){}aplicar()};var t=ag||secs[0];t.parentNode.insertBefore(barra,t.nextSibling)}}
 function abrir(){var f=leer(),c=D.createElement('div');c.className='cn-fav';c.setAttribute('role','dialog');c.setAttribute('aria-modal','true');c.setAttribute('aria-label',en()?'My sections':'Mis secciones');
@@ -7011,8 +7027,10 @@ c.addEventListener('click',function(e){var a=e.target.getAttribute&&e.target.get
 if(a==='t'){[].forEach.call(L.querySelectorAll('input'),function(i){i.checked=true});return}
 var v=[].filter.call(L.querySelectorAll('input'),function(i){return i.checked}).map(function(i){return i.value});try{if(!v.length||v.length===secs.length)localStorage.removeItem('cn-favs');else{localStorage.setItem('cn-favs',JSON.stringify(v));ev('favoritas_guardadas')}}catch(_){}aplicar();cerrar()});
 D.body.appendChild(c);var p=c.querySelector('input');if(p)p.focus()}
-var b=null;if(secs.length>3&&ag){b=D.createElement('button');b.type='button';b.className='cn-favb';b.innerHTML='☰ '+(en()?'My sections':'Mis secciones');b.onclick=abrir;ag.appendChild(b)}
+var b=null;function rotFav(){if(b)b.innerHTML='☰ '+(en()?'My sections':'Mis secciones')}
+if(secs.length>3&&ag){b=D.createElement('button');b.type='button';b.className='cn-favb';b.setAttribute('data-no-tr','');b.setAttribute('translate','no');rotFav();b.onclick=abrir;ag.appendChild(b)}
 aplicar();
+var SUP={'Laboratorio':'Laboratory','En animales':'In animals','Ensayo clínico':'Clinical trial','Aprobado':'Approved','En uso clínico':'In clinical use','Caddie Golf · noticias de golf':'Caddie Golf · golf news'};var MES_ES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],MES_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];function sup(){var e=en();[].forEach.call(D.querySelectorAll('svg text,p.caddie a'),function(t){var o=t.__cnO;if(o==null){o=t.textContent.trim();if(!SUP[o])return;t.__cnO=o}t.textContent=e?SUP[o]:o});if(!window.echarts||!echarts.getInstanceByDom)return;[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){var c=echarts.getInstanceByDom(el);if(!c)return;var op=c.getOption(),hay=false;(op.series||[]).forEach(function(s){var ma=s.markArea;if(!ma||!ma.data)return;ma.data.forEach(function(p){var x=Array.isArray(p)?p[0]:p;if(!x||typeof x.name!=='string')return;var i=MES_ES.indexOf(x.name),j=MES_EN.indexOf(x.name);if(e&&i>=0){x.name=MES_EN[i];hay=true}else if(!e&&j>=0){x.name=MES_ES[j];hay=true}})});if(hay)c.setOption({series:op.series.map(function(s){return{markArea:s.markArea}})})})}function rot(){rotFav();aplicar();rotGc();try{sup()}catch(x){}}D.addEventListener('cofrade-idioma',function(){setTimeout(rot,30)});D.addEventListener('cofrade-idioma-listo',function(){setTimeout(rot,0)});
 /* --- Compartir gráfico --- */
 var ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
 function titulo(el){var c=el.closest('.card,.chart-wrap,figure,section');var h=c&&c.querySelector('h3,h2,figcaption');return ((h&&h.textContent)||el.getAttribute('aria-label')||'Gráfico de Cofrade News').replace(/\\s+/g,' ').trim().slice(0,90)}
@@ -7035,9 +7053,11 @@ armar(el).then(function(r){var f=new File([r.b],'cofrade-news-grafico.png',{type
 if(navigator.canShare&&navigator.canShare({files:[f]}))return navigator.share({files:[f],title:r.t,text:r.t+' · '+url}).catch(function(){});panel(url,r.t,r.b)})
 .catch(function(){panel(url,titulo(el),new Blob([]))}).finally(function(){bt.disabled=false})}
 function principal(el){if(/\d$/.test(el.id)||el.closest('table,li,.cg-panel,.monedas'))return false;var c=el.closest('.card,section');return !c||c.querySelector('div.chart[id]')===el}
+function rotUno(bt){bt.innerHTML=ICO+(en()?'Share chart':'Compartir gráfico');bt.setAttribute('aria-label',(en()?'Share chart: ':'Compartir gráfico: ')+titulo(bt.__el))}
+function rotGc(){[].forEach.call(D.querySelectorAll('.cn-gc'),function(bt){if(bt.__el)rotUno(bt)})}
 function botones(){[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){if(el.getAttribute('data-gc')||!principal(el))return;var r=el.getBoundingClientRect();if(r.width<240||r.height<160)return;
 el.setAttribute('data-gc','1');var w=D.createElement('div');w.className='cn-gcw';var bt=D.createElement('button');bt.type='button';bt.className='cn-gc';
-bt.innerHTML=ICO+(en()?'Share chart':'Compartir gráfico');bt.setAttribute('aria-label',(en()?'Share chart: ':'Compartir gráfico: ')+titulo(el));bt.onclick=function(){compartir(el,bt)};w.appendChild(bt);el.insertAdjacentElement('afterend',w)})}
+bt.setAttribute('data-no-tr','');bt.setAttribute('translate','no');bt.__el=el;rotUno(bt);bt.onclick=function(){compartir(el,bt)};w.appendChild(bt);el.insertAdjacentElement('afterend',w)})}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){botones();}})},{rootMargin:'200px'});[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){io.observe(el)})}else botones();
 })()</script>`;
 
@@ -7123,19 +7143,38 @@ function ssMes(datos, mes) {
   const f = ((datos && datos.filas) || []).filter((x) => x.fecha.startsWith(mes) && ssDecision(x.resultado));
   return { filas: f, proyectos: new Set(f.map((x) => x.boletin)).size, aprobados: f.filter((x) => ssAprobado(x.resultado)).length, rechazados: f.filter((x) => ssRechazado(x.resultado)).length };
 }
+// 27-11-2026 (Germán: «Verifica que las traducciones a inglés se realicen correctamente!!»): el bloque va en los dos idiomas.
+const ssBil = (es, en) => `<span class="cn-es" lang="es">${es}</span><span class="cn-en" lang="en">${en}</span>`;
+const SS_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function ssResultadoEn(r) {
+  const t = String(r || "");
+  const base = /^Rechazadas las modificaciones/i.test(t) ? "Amendments rejected" : /^Aprobadas las modificaciones/i.test(t) ? "Amendments approved"
+    : /^Aprobado en general y particular a la vez/i.test(t) ? "Approved in principle and in detail at once"
+    : /^Aprobado en general y particular con modificaciones/i.test(t) ? "Approved in principle and in detail, with amendments"
+    : /^Aprobado en general y particular sin modificaciones/i.test(t) ? "Approved in principle and in detail, without amendments"
+    : /^Aprobado en general/i.test(t) ? "Approved in principle" : /^Aprobado con modificaciones/i.test(t) ? "Approved with amendments"
+    : /^Aprobado/i.test(t) ? "Approved" : /^Rechazad/i.test(t) ? "Rejected" : /^Despachad/i.test(t) ? "Passed" : "";
+  const plazo = (t.match(/indicaciones el (\d{2})\/(\d{2})\/(\d{4})/) || []);
+  return base ? base + (plazo[1] ? `; amendments due ${SS_MONTHS[+plazo[2] - 1].slice(0, 3)} ${+plazo[1]}` : "") : t;
+}
 const SS_MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 function ssBloque(datos, mes) {
   const m = ssMes(datos, mes);
   if (!m.filas.length) return "";
   const est = (datos && datos.estado) || {};
   const h = est.hora ? new Date(est.hora).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).replace(",", " a las") : "";
-  const filas = m.filas.map((x) => `<tr><td class="nw">${x.fecha.slice(8)}-${x.fecha.slice(5, 7)}</td><td class="nw"><a href="https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=${encodeURIComponent(x.boletin)}" target="_blank" rel="noopener">${ssEsc(x.boletin)}</a></td><td>${ssEsc(x.titulo)}</td><td>${ssEsc(x.etapa)}</td><td><span class="vres ${ssRechazado(x.resultado) ? "mal" : "ok"}">${ssEsc(x.resultado)}</span></td></tr>`).join("");
-  return `<div class="ss-of" data-ss="${m.filas.length}"><p class="sub"><b>Decisiones de la Sala del Senado en ${SS_MESES[+mes.slice(5) - 1]}: ${m.filas.length}</b> (${m.proyectos} proyectos · ${m.aprobados} aprobadas · ${m.rechazados} rechazadas). Fuente oficial: <a href="https://tramitacion.senado.cl/appsenado/index.php?ac=ultimos_vistos&amp;mo=tramitacion" target="_blank" rel="noopener">Senado de Chile, Tramitación de proyectos</a>${h ? `, revisada el ${h}` : ""}. El Senado dejó de publicar en formato abierto el voto de cada senador el 21-10-2026: por eso estas decisiones van sin el detalle por senador.</p>
-<div class="tabla-scroll"><table class="tabla"><thead><tr><th>Fecha</th><th>Boletín</th><th>Proyecto</th><th>Etapa</th><th>Resultado</th></tr></thead><tbody>${filas}</tbody></table></div></div>`;
+  const filas = m.filas.map((x) => `<tr><td class="nw">${x.fecha.slice(8)}-${x.fecha.slice(5, 7)}</td><td class="nw"><a href="https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=${encodeURIComponent(x.boletin)}" target="_blank" rel="noopener">${ssEsc(x.boletin)}</a></td><td>${ssEsc(x.titulo)}</td><td>${ssEsc(x.etapa)}</td><td><span class="vres ${ssRechazado(x.resultado) ? "mal" : "ok"}">${ssBil(ssEsc(x.resultado), ssEsc(ssResultadoEn(x.resultado)))}</span></td></tr>`).join("");
+  const mesEs = SS_MESES[+mes.slice(5) - 1], mesEn = SS_MONTHS[+mes.slice(5) - 1];
+  const hEn = est.hora ? new Date(est.hora).toLocaleString("en-US", { timeZone: "America/Santiago", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }) : "";
+  const enl = `<a href="https://tramitacion.senado.cl/appsenado/index.php?ac=ultimos_vistos&amp;mo=tramitacion" target="_blank" rel="noopener">`;
+  const es = `<b>Decisiones de la Sala del Senado en ${mesEs}: ${m.filas.length}</b> (${m.proyectos} proyectos · ${m.aprobados} aprobadas · ${m.rechazados} rechazadas). Fuente oficial: ${enl}Senado de Chile, Tramitación de proyectos</a>${h ? `, revisada el ${h}` : ""}. El Senado dejó de publicar en formato abierto el voto de cada senador el 21-10-2026: por eso estas decisiones van sin el detalle por senador.`;
+  const en = `<b>Senate floor decisions in ${mesEn}: ${m.filas.length}</b> (${m.proyectos} bills · ${m.aprobados} approved · ${m.rechazados} rejected). Official source: ${enl}Senate of Chile, Bill tracking</a>${hEn ? `, checked ${hEn}` : ""}. The Senate stopped publishing each senator's vote as open data on Oct 21, 2026, so these decisions come without the per-senator breakdown. Bill titles and stages are the Senate's official wording in Spanish.`;
+  return `<div class="ss-of" data-ss="${m.filas.length}" data-no-tr translate="no"><p class="sub">${ssBil(es, en)}</p>
+<div class="tabla-scroll"><table class="tabla"><thead><tr><th>${ssBil("Fecha", "Date")}</th><th>${ssBil("Boletín", "Bill no.")}</th><th>${ssBil("Proyecto", "Bill")}</th><th>${ssBil("Etapa", "Stage")}</th><th>${ssBil("Resultado", "Result")}</th></tr></thead><tbody>${filas}</tbody></table></div></div>`;
 }
 // Ajusta el total del mes (Cámara + Senado) en el navegador, porque el total va antes en la página que los números de cada cámara
 const SS_JS = `<script>(function(){[].forEach.call(document.querySelectorAll('.cg-mes[data-mes]'),function(g){var m=g.getAttribute('data-mes');var c=g.querySelector('button.vcam[data-cam="c"] span'),s=g.querySelector('button.vcam[data-cam="s"] span'),b=document.querySelector('button.cg-mesb[data-mes="'+m+'"] span');if(c&&s&&b){var t=(parseInt(c.textContent,10)||0)+(parseInt(s.textContent,10)||0);if(t>(parseInt(b.textContent,10)||0))b.textContent=t}})})()</script>`;
-const SS_CSS = `<style>.ss-of{margin:12px 0 18px}.ss-of .tabla td{vertical-align:top}.ss-of .vres.mal{color:#9b2c2c}</style>`;
+const SS_CSS = `<style>.cn-en{display:none}html[lang^="en"] .cn-en{display:inline}html[lang^="en"] .cn-es{display:none}.ss-of{margin:12px 0 18px}.ss-of .tabla td{vertical-align:top}.ss-of .vres.mal{color:#9b2c2c}</style>`;
 // Reescritor de la edición para el mes indicado: contadores (el mayor entre la edición y lo oficial) y el bloque oficial en el panel
 function conSenadoSala(rw, datos, mes) {
   const m = ssMes(datos, mes);

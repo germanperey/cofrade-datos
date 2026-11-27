@@ -10,11 +10,18 @@
 //    el menú de compartir con la imagen (WhatsApp, LinkedIn, etc.); en el computador la descarga y ofrece WhatsApp y LinkedIn con el
 //    enlace a ese gráfico.
 const AGUJA_TITULO = "Lo que mueve la aguja hoy";
-const AGUJA_REW = { element(e) { e.setInnerContent(AGUJA_TITULO); } };
+// 27-11-2026 (Germán: «Verifica que las traducciones a inglés se realicen correctamente!!», con captura: el título quedaba en español
+// en la edición en inglés). Lo que agrega el sitio no está en el diccionario de la edición, así que va en los dos idiomas (cn-es / cn-en,
+// fuera del traductor) y se muestra el que corresponde.
+const BIL = (es, en) => `<span class="cn-es" lang="es" data-no-tr translate="no">${es}</span><span class="cn-en" lang="en" data-no-tr translate="no">${en}</span>`;
+const AGUJA_EN = "What moves the needle today";
+const AGUJA_REW = { element(e) { e.setInnerContent(BIL(AGUJA_TITULO, AGUJA_EN), { html: true }); } };
 // 26-11-2026 (Germán: «todo esté respaldado con su fuente»): Indicadores y Feriados nombraban la fuente sin enlace; ahora la enlazan.
-const FUENTES_IND = { element(e) { e.append(' Ver en la fuente: <a href="https://si3.bcentral.cl/siete" target="_blank" rel="noopener">Banco Central de Chile (Base de Datos Estadísticos)</a> · <a href="https://www.coinbase.com/price/bitcoin" target="_blank" rel="noopener">Coinbase</a>.', { html: true }); } };
-const FUENTES_FER = { element(e) { e.append('<p class="fuente">Fuentes: <a href="https://www.bcn.cl/leychile" target="_blank" rel="noopener">Biblioteca del Congreso Nacional (Ley 19.668 y Ley 20.983)</a> · <a href="https://www.feriados.cl" target="_blank" rel="noopener">feriados.cl</a> (feriados extraordinarios) · feriados de otros países: calendarios oficiales de cada gobierno.</p>', { html: true }); } };
+// Los enlaces van en un párrafo aparte: si se agregaran dentro del párrafo de la edición, el traductor ya no lo reconoce y queda en español.
+const FUENTES_IND = { element(e) { e.after('<p class="fuente">' + BIL("Ver en la fuente:", "See the source:") + ' <a href="https://si3.bcentral.cl/siete" target="_blank" rel="noopener">' + BIL("Banco Central de Chile (Base de Datos Estadísticos)", "Central Bank of Chile (Statistics Database)") + '</a> · <a href="https://www.coinbase.com/price/bitcoin" target="_blank" rel="noopener">Coinbase</a></p>', { html: true }); } };
+const FUENTES_FER = { element(e) { e.append('<p class="fuente">' + BIL("Fuentes:", "Sources:") + ' <a href="https://www.bcn.cl/leychile" target="_blank" rel="noopener">' + BIL("Biblioteca del Congreso Nacional (Ley 19.668 y Ley 20.983)", "Library of the National Congress of Chile (Laws 19,668 and 20,983)") + '</a> · <a href="https://www.feriados.cl" target="_blank" rel="noopener">feriados.cl</a> ' + BIL("(feriados extraordinarios) · feriados de otros países: calendarios oficiales de cada gobierno.", "(extraordinary holidays) · other countries: each government's official calendar.") + '</p>', { html: true }); } };
 const EXTRA_CSS = `<style>
+.cn-en{display:none}html[lang^="en"] .cn-en{display:inline}html[lang^="en"] .cn-es{display:none}
 .cn-gcw{display:flex;justify-content:flex-end;margin:8px 0 0}.cn-gc{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid rgba(201,161,74,.6);
 background:rgba(251,248,242,.94);color:#1A1406;font:600 12.5px/1 var(--sans,system-ui);cursor:pointer;opacity:.9}
 .cn-gc:hover,.cn-gc:focus-visible{opacity:1;outline:2px solid #C9A14A;outline-offset:2px}[data-theme=dark] .cn-gc{background:rgba(20,18,14,.9);color:#F4EEDF}
@@ -42,7 +49,7 @@ var secs=[].slice.call(D.querySelectorAll('.hoja section.sec[id]')).filter(funct
 function nombre(s){return s.querySelector('h2').textContent.replace(/^\\s*\\d{1,2}\\.\\s*/,'').trim()}
 function leer(){try{var v=JSON.parse(localStorage.getItem('cn-favs')||'null');return Array.isArray(v)&&v.length?v:null}catch(e){return null}}
 var barra=null;function aplicar(){var f=leer(),n=0;secs.forEach(function(s){var o=!!f&&f.indexOf(s.id)<0;s.classList.toggle('cn-oculta',o);if(o)n++});
-if(barra){barra.remove();barra=null}if(n&&secs[0]){barra=D.createElement('div');barra.className='cn-ocultas';barra.setAttribute('role','status');
+if(barra){barra.remove();barra=null}if(n&&secs[0]){barra=D.createElement('div');barra.className='cn-ocultas';barra.setAttribute('data-no-tr','');barra.setAttribute('translate','no');barra.setAttribute('role','status');
 barra.innerHTML='<span>'+(en()?n+' sections hidden by your choice.':'Ocultas por tu elección: '+n+' secciones.')+'</span><button type="button">'+(en()?'Show all':'Mostrar todas')+'</button>';
 barra.querySelector('button').onclick=function(){try{localStorage.removeItem('cn-favs')}catch(e){}aplicar()};var t=ag||secs[0];t.parentNode.insertBefore(barra,t.nextSibling)}}
 function abrir(){var f=leer(),c=D.createElement('div');c.className='cn-fav';c.setAttribute('role','dialog');c.setAttribute('aria-modal','true');c.setAttribute('aria-label',en()?'My sections':'Mis secciones');
@@ -53,8 +60,10 @@ c.addEventListener('click',function(e){var a=e.target.getAttribute&&e.target.get
 if(a==='t'){[].forEach.call(L.querySelectorAll('input'),function(i){i.checked=true});return}
 var v=[].filter.call(L.querySelectorAll('input'),function(i){return i.checked}).map(function(i){return i.value});try{if(!v.length||v.length===secs.length)localStorage.removeItem('cn-favs');else{localStorage.setItem('cn-favs',JSON.stringify(v));ev('favoritas_guardadas')}}catch(_){}aplicar();cerrar()});
 D.body.appendChild(c);var p=c.querySelector('input');if(p)p.focus()}
-var b=null;if(secs.length>3&&ag){b=D.createElement('button');b.type='button';b.className='cn-favb';b.innerHTML='☰ '+(en()?'My sections':'Mis secciones');b.onclick=abrir;ag.appendChild(b)}
+var b=null;function rotFav(){if(b)b.innerHTML='☰ '+(en()?'My sections':'Mis secciones')}
+if(secs.length>3&&ag){b=D.createElement('button');b.type='button';b.className='cn-favb';b.setAttribute('data-no-tr','');b.setAttribute('translate','no');rotFav();b.onclick=abrir;ag.appendChild(b)}
 aplicar();
+var SUP={'Laboratorio':'Laboratory','En animales':'In animals','Ensayo clínico':'Clinical trial','Aprobado':'Approved','En uso clínico':'In clinical use','Caddie Golf · noticias de golf':'Caddie Golf · golf news'};var MES_ES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],MES_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];function sup(){var e=en();[].forEach.call(D.querySelectorAll('svg text,p.caddie a'),function(t){var o=t.__cnO;if(o==null){o=t.textContent.trim();if(!SUP[o])return;t.__cnO=o}t.textContent=e?SUP[o]:o});if(!window.echarts||!echarts.getInstanceByDom)return;[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){var c=echarts.getInstanceByDom(el);if(!c)return;var op=c.getOption(),hay=false;(op.series||[]).forEach(function(s){var ma=s.markArea;if(!ma||!ma.data)return;ma.data.forEach(function(p){var x=Array.isArray(p)?p[0]:p;if(!x||typeof x.name!=='string')return;var i=MES_ES.indexOf(x.name),j=MES_EN.indexOf(x.name);if(e&&i>=0){x.name=MES_EN[i];hay=true}else if(!e&&j>=0){x.name=MES_ES[j];hay=true}})});if(hay)c.setOption({series:op.series.map(function(s){return{markArea:s.markArea}})})})}function rot(){rotFav();aplicar();rotGc();try{sup()}catch(x){}}D.addEventListener('cofrade-idioma',function(){setTimeout(rot,30)});D.addEventListener('cofrade-idioma-listo',function(){setTimeout(rot,0)});
 /* --- Compartir gráfico --- */
 var ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
 function titulo(el){var c=el.closest('.card,.chart-wrap,figure,section');var h=c&&c.querySelector('h3,h2,figcaption');return ((h&&h.textContent)||el.getAttribute('aria-label')||'Gráfico de Cofrade News').replace(/\\s+/g,' ').trim().slice(0,90)}
@@ -77,8 +86,10 @@ armar(el).then(function(r){var f=new File([r.b],'cofrade-news-grafico.png',{type
 if(navigator.canShare&&navigator.canShare({files:[f]}))return navigator.share({files:[f],title:r.t,text:r.t+' · '+url}).catch(function(){});panel(url,r.t,r.b)})
 .catch(function(){panel(url,titulo(el),new Blob([]))}).finally(function(){bt.disabled=false})}
 function principal(el){if(/\d$/.test(el.id)||el.closest('table,li,.cg-panel,.monedas'))return false;var c=el.closest('.card,section');return !c||c.querySelector('div.chart[id]')===el}
+function rotUno(bt){bt.innerHTML=ICO+(en()?'Share chart':'Compartir gráfico');bt.setAttribute('aria-label',(en()?'Share chart: ':'Compartir gráfico: ')+titulo(bt.__el))}
+function rotGc(){[].forEach.call(D.querySelectorAll('.cn-gc'),function(bt){if(bt.__el)rotUno(bt)})}
 function botones(){[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){if(el.getAttribute('data-gc')||!principal(el))return;var r=el.getBoundingClientRect();if(r.width<240||r.height<160)return;
 el.setAttribute('data-gc','1');var w=D.createElement('div');w.className='cn-gcw';var bt=D.createElement('button');bt.type='button';bt.className='cn-gc';
-bt.innerHTML=ICO+(en()?'Share chart':'Compartir gráfico');bt.setAttribute('aria-label',(en()?'Share chart: ':'Compartir gráfico: ')+titulo(el));bt.onclick=function(){compartir(el,bt)};w.appendChild(bt);el.insertAdjacentElement('afterend',w)})}
+bt.setAttribute('data-no-tr','');bt.setAttribute('translate','no');bt.__el=el;rotUno(bt);bt.onclick=function(){compartir(el,bt)};w.appendChild(bt);el.insertAdjacentElement('afterend',w)})}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){botones();}})},{rootMargin:'200px'});[].forEach.call(D.querySelectorAll('div.chart[id]'),function(el){io.observe(el)})}else botones();
 })()</script>`;

@@ -12,22 +12,25 @@ const LECT_ETIQUETA = "cofrade-news";
 const lectEsc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const lectEmailOk = (e) => /^[^\s@<>"']{1,64}@[A-Za-z0-9.-]{1,190}\.[A-Za-z]{2,24}$/.test(e) && e.length <= 254;
 
+// 27-11-2026 (Germán: «Verifica que las traducciones a inglés se realicen correctamente!!»): la caja va en los dos idiomas.
+const lectBil = (es, en) => `<span class="cn-es" lang="es">${es}</span><span class="cn-en" lang="en">${en}</span>`;
 function cajaLectores(env) {
   const tg = env && /^https:\/\/t\.me\/[A-Za-z0-9_+]{3,64}$/.test(String(env.TELEGRAM_URL || "")) ? String(env.TELEGRAM_URL) : "";
   return `<form class="cnl" id="cnLect" action="/suscribir" method="post" novalidate>
-<label class="cnl-t" for="cnLectEmail">Recibe lo que mueve la aguja, cada mañana a las 7:00</label>
+<label class="cnl-t" for="cnLectEmail" data-no-tr translate="no">${lectBil("Recibe lo que mueve la aguja, cada mañana a las 7:00", "Get what moves the needle, every morning at 7:00")}</label>
 <div class="cnl-f"><input id="cnLectEmail" name="cn_email" type="email" inputmode="email" autocomplete="email" required maxlength="254" placeholder="tu@correo.cl" aria-describedby="cnLectNota">
 <input type="text" name="cn_web" tabindex="-1" autocomplete="off" aria-hidden="true" class="cnl-h">
-<button type="submit" class="btn oro">Recíbelo gratis</button>${tg ? `<a class="btn claro cnl-tg" href="${lectEsc(tg)}" target="_blank" rel="noopener" data-cn-ev="telegram">Telegram</a>` : ""}</div>
-<p class="cnl-n" id="cnLectNota" role="status" aria-live="polite">5 titulares y el audio de la edición. Te pedimos confirmar por correo; te das de baja con un clic.</p></form>`;
+<button type="submit" class="btn oro" data-no-tr translate="no">${lectBil("Recíbelo gratis", "Get it free")}</button>${tg ? `<a class="btn claro cnl-tg" href="${lectEsc(tg)}" target="_blank" rel="noopener" data-cn-ev="telegram">Telegram</a>` : ""}</div>
+<p class="cnl-n" id="cnLectNota" role="status" aria-live="polite" data-no-tr translate="no">${lectBil("5 titulares y el audio de la edición. Te pedimos confirmar por correo; te das de baja con un clic.", "5 headlines and the edition’s audio. We ask you to confirm by email; unsubscribe with one click.")}</p></form>`;
 }
-const LECTORES_CSS = `.cnl{margin:22px 0 4px;max-width:560px}.cnl-t{display:block;font:600 15px/1.35 var(--sans);color:#F4EEDF;margin:0 0 10px}
+const LECTORES_CSS = `.cnl .cn-en{display:none}html[lang^="en"] .cnl .cn-en{display:inline}html[lang^="en"] .cnl .cn-es{display:none}.cnl{margin:22px 0 4px;max-width:560px}.cnl-t{display:block;font:600 15px/1.35 var(--sans);color:#F4EEDF;margin:0 0 10px}
 .cnl-f{display:flex;flex-wrap:wrap;gap:10px}.cnl-f input[type=email]{flex:1 1 220px;min-height:48px;padding:0 16px;border-radius:999px;border:1px solid rgba(201,161,74,.55);
 background:rgba(255,255,255,.96);color:#1A1406;font:16px var(--sans)}.cnl-f input[type=email]:focus-visible{outline:3px solid #C9A14A;outline-offset:2px}
 .cnl-f .btn{min-height:48px}.cnl-h{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
 .cnl-n{margin:8px 0 0;font-size:13px;line-height:1.45;color:#D8D2C4}.cnl-n.ok{color:#BFE3B4}.cnl-n.mal{color:#FFB4A8}
 @media (max-width:560px){.cnl-f .btn{flex:1 1 100%}}`;
 const LECTORES_JS = `<script>(function(){var f=document.getElementById('cnLect');if(!f)return;var n=document.getElementById('cnLectNota'),b=f.querySelector('button[type=submit]');
+function ph(){f.cn_email.placeholder=document.documentElement.lang.indexOf('en')===0?'you@email.com':'tu@correo.cl'}ph();try{new MutationObserver(ph).observe(document.documentElement,{attributes:true,attributeFilter:['lang']})}catch(_){}
 var en=function(){return document.documentElement.lang==='en'};
 f.addEventListener('submit',function(e){e.preventDefault();var em=f.cn_email.value.trim();
 if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(em)){n.className='cnl-n mal';n.textContent=en()?'Check your email address.':'Revisa tu correo: falta algo.';f.cn_email.focus();return}
