@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-27T06:12:08-03:00",
+ "generado": "2026-11-27T06:32:33-03:00",
  "secciones": {
   "perspectivas": {
    "consultadas": [
@@ -44,14 +44,14 @@
      "url": "https://www.mch.cl/feed/",
      "ok": false,
      "n": 0,
-     "error": "HTTP 403"
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "Revista Electricidad (RSS)",
      "url": "https://www.revistaei.cl/feed/",
      "ok": false,
      "n": 0,
-     "error": "HTTP 403"
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "Chile Desarrollo Sustentable · noticias (RSS)",
@@ -653,6 +653,13 @@
     },
     {
      "fuente": "La Tercera on MSN",
+     "titulo": "Manuel José Balbontín: “Chile está tomando medidas que en el conjunto son procrecimiento, proinversión”",
+     "fecha": "2026-11-21 23:00",
+     "url": "https://www.msn.com/es-cl/noticias/otras/manuel-jos%C3%A9-balbont%C3%ADn-chile-est%C3%A1-tomando-medidas-que-en-el-conjunto-son-procrecimiento-proinversi%C3%B3n/ar-AA2hXtgQ",
+     "resumen": "El socio y vicepresidente de Vinci Compass aprueba las reformas económicas del gobierno: “Tienen las ideas correctas, se está avanzando”, señala. Y cree que se debería ver pronto “la llegada de nuevos..."
+    },
+    {
+     "fuente": "La Tercera on MSN",
      "titulo": "El boom chileno del hidrógeno verde se aleja cada vez más",
      "fecha": "2026-11-21 23:00",
      "url": "https://www.msn.com/es-cl/noticias/otras/el-boom-chileno-del-hidr%C3%B3geno-verde-se-aleja-cada-vez-m%C3%A1s/ar-AA2hXX8W",
@@ -713,13 +720,6 @@
      "fecha": "2026-11-20 21:08",
      "url": "https://revistanos.cl/infografia-2-fanny-espinoza/?utm_source=rss&utm_medium=rss&utm_campaign=infografia-2-fanny-espinoza",
      "resumen": "Redes que construyen integración La integración de las personas migrantes también se construye a través de la colaboración y el apoyo comunitario. Desde su experiencia como migrante ecuatoriana, Fanny Espinoza ha impulsado redes de acompañamiento y orientación que facilitan la adaptación de otras personas y familias…"
-    },
-    {
-     "fuente": "Revista NOS · regiones e infraestructura (RSS)",
-     "titulo": "Patricia de Bernardi",
-     "fecha": "2026-11-20 20:53",
-     "url": "https://revistanos.cl/patricia-de-bernardi/?utm_source=rss&utm_medium=rss&utm_campaign=patricia-de-bernardi",
-     "resumen": "Emprender para crear oportunidades El emprendimiento femenino es una fuerza que contribuye al desarrollo económico del Biobío. La historia de Patricia de Bernardi, migrante argentina, refleja cómo la experiencia empresarial, la creación de redes y la colaboración pueden abrir nuevas oportunidades comerciales para…"
     }
    ]
   },
@@ -824,7 +824,7 @@
      "fuente": "Bing Noticias · Empresas Chile",
      "url": "https://www.bing.com/news/search?q=empresas%20Chile%20%28utilidades%20OR%20inversi%C3%B3n%20OR%20exportaciones%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · Hacienda y presupuesto",
@@ -836,13 +836,13 @@
      "fuente": "Bing Noticias · Banco Central / IPC / dólar",
      "url": "https://www.bing.com/news/search?q=%28%22Banco%20Central%22%20OR%20IPC%20OR%20d%C3%B3lar%20OR%20IMACEC%29%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 2
+     "n": 3
     },
     {
      "fuente": "Bing Noticias · Inversiones y proyectos en Chile",
      "url": "https://www.bing.com/news/search?q=inversi%C3%B3n%20proyecto%20Chile%20%22millones%20de%20d%C3%B3lares%22&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 10
     },
     {
      "fuente": "Bloomberg Linea (RSS)",
@@ -882,6 +882,27 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "Chócale (RSS)",
+     "titulo": "Aumento del sueldo mínimo y bonos para fertilización y vivienda: Los detalles de la negociación colectiva del Santander",
+     "fecha": "2026-11-27 06:30",
+     "url": "https://chocale.cl/2026/11/aumento-del-sueldo-minimo-y-bonos-para-fertilizacion-y-vivienda-los-detalles-de-la-negociacion-colectiva-del-santander/",
+     "resumen": "El acuerdo comenzará a regir el 1 de septiembre de 2027 y estará vigente hasta 2030."
+    },
+    {
+     "fuente": "Diario Financiero (RSS)",
+     "titulo": "Kast refuerza llamado al empresariado a dinamizar la economía y evitar despidos: “Es la hora de invertir y crear empleo”",
+     "fecha": "2026-11-27 06:29",
+     "url": "http://www.df.cl/economia-y-politica/laboral-personas/kast-refuerza-llamado-al-empresariado-a-dinamizar-la-economia-y-evitar",
+     "resumen": "Encuentro Anual de la Industria 2026, el mandatario invitó a los representantes del mundo de los negocios a que “vuelvan a confiar en nuestro país”. La presidenta de Sofofa, Rosario Navarro, le propuso un acuerdo tripartito en pro del empleo."
+    },
+    {
+     "fuente": "Bloomberg Linea (RSS)",
+     "titulo": "Efecto Flybondi: Argentina fue el único mercado donde se debilitó el negocio de aeropuertos de Eurnekian",
+     "fecha": "2026-11-27 06:15",
+     "url": "https://www.bloomberglinea.com/latinoamerica/argentina/efecto-flybondi-argentina-fue-el-unico-mercado-donde-se-debilito-el-negocio-de-aeropuertos-de-eurnekian/",
+     "resumen": "El tráfico de cabotaje cayó 5,9% interanual en los aeropuertos de la concesión de AA2000, de Corporación América Airports. El EBITDA ajustado de la operación argentina bajó 10,9%, también presionado por mayores costos y tarifas más bajas en dólares."
+    },
     {
      "fuente": "Infobae · Economía (RSS)",
      "titulo": "ANSES: quiénes cobran hoy, viernes 27 de noviembre de 2026",
@@ -1219,13 +1240,6 @@
      "resumen": "Este Black Friday, LATAM contará con promociones en pasajes, paquetes turísticos, alojamientos y otros servicios para viajar dentro o fuera de Chile."
     },
     {
-     "fuente": "Diario Financiero (RSS)",
-     "titulo": "Kast refuerza llamado al empresariado a dinamizar la economía y evitar despidos: “Es la hora de invertir y crear empleo”",
-     "fecha": "2026-11-26 22:53",
-     "url": "http://www.df.cl/economia-y-politica/laboral-personas/kast-refuerza-llamado-al-empresariado-a-dinamizar-la-economia-y-evitar",
-     "resumen": "En la cena de la industria, el mandatario invitó a los representantes del mundo de los negocios a que “vuelvan a confiar en nuestro país”. La líder la Sofofa le propuso un acuerdo tripartito en pro del empleo."
-    },
-    {
      "fuente": "Cooperativa (RSS)",
      "titulo": "Mujer fue secuestrada en su trabajo por supuesta deuda de 18 millones",
      "fecha": "2026-11-26 22:52",
@@ -1497,20 +1511,6 @@
      "fecha": "2026-11-26 20:28",
      "url": "https://www.infobae.com/cuba/2026/11/26/puente-flotante-en-la-habana-sobrevive-entre-los-escombros-y-el-abandono/",
      "resumen": "El puente flotante de la Alameda de Paula, inaugurado en 2015 como parte de la recuperación del frente marítimo de La Habana Vieja, atraviesa un deterioro sostenido. Las fallas iniciales en los materiales, la falta de mantenimiento y el robo de componentes dejaron sectores con huecos, barandas dañadas y una…"
-    },
-    {
-     "fuente": "La Tercera · Pulso (RSS)",
-     "titulo": "Consensus Forecasts: proyección de PIB para 2027 desciende y se sitúa bajo 3%",
-     "fecha": "2026-11-26 20:27",
-     "url": "https://www.latercera.com/pulso/noticia/consensus-forecasts-proyeccion-de-pib-para-2027-desciende-y-se-situa-bajo-3/",
-     "resumen": "De las 23 entidades económicas y financieras que respondieron esta encuesta, casi la mitad tiene una previsión bajo 3%. Los expertos ven que los principales riesgos para la economía chilena el próximo año son la minería, el mercado laboral y el sector externo."
-    },
-    {
-     "fuente": "La Tercera · Pulso (RSS)",
-     "titulo": "Isapres ganaron casi $29 mil millones en el primer semestre gracias al menor desembolso por licencias médicas",
-     "fecha": "2026-11-26 20:26",
-     "url": "https://www.latercera.com/pulso/noticia/isapres-ganaron-casi-29-mil-millones-en-el-primer-semestre-gracias-al-menor-desembolso-por-licencias-medicas/",
-     "resumen": "Esto se compara con las pérdidas por $7 mil millones que tuvieron las siete isapres abiertas, a junio de 2025. El buen resultado de este año ocurre en un contexto en que sus ingresos aumentaron más (5,5%) de lo que subieron los costos de ventas (3,5%). En todo caso, estas utilidades fueron acumuladas en el primer…"
     }
    ]
   },
@@ -1592,19 +1592,19 @@
      "fuente": "Bing Noticias · Economía Estados Unidos",
      "url": "https://www.bing.com/news/search?q=econom%C3%ADa%20%22Estados%20Unidos%22%20%28inflaci%C3%B3n%20OR%20empleo%20OR%20PIB%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 11
+     "n": 10
     },
     {
      "fuente": "Bing Noticias · FMI y Banco Mundial",
      "url": "https://www.bing.com/news/search?q=%28FMI%20OR%20%22Banco%20Mundial%22%20OR%20OCDE%29%20econom%C3%ADa&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 11
+     "n": 8
     },
     {
      "fuente": "Bing Noticias · Economía América Latina",
      "url": "https://www.bing.com/news/search?q=econom%C3%ADa%20%28Argentina%20OR%20Brasil%20OR%20M%C3%A9xico%20OR%20Per%C3%BA%20OR%20Colombia%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 6
+     "n": 2
     },
     {
      "fuente": "Bing Noticias · Bolsas y mercados mundiales",
@@ -1669,8 +1669,9 @@
     {
      "fuente": "MarketWatch Titulares (RSS, inglés)",
      "url": "https://feeds.marketwatch.com/marketwatch/topstories/",
-     "ok": true,
-     "n": 10
+     "ok": false,
+     "n": 0,
+     "error": "HTTP 400"
     },
     {
      "fuente": "OilPrice.com (RSS, inglés)",
@@ -1693,11 +1694,46 @@
    ],
    "notas": [
     {
+     "fuente": "BBC News · Business (RSS, inglés)",
+     "titulo": "My self-care ritual is a meal at a fancy restaurant - on my own",
+     "fecha": "2026-11-27 06:21",
+     "url": "https://www.bbc.co.uk/news/articles/cw8dv11dp2yeo?at_medium=RSS&at_campaign=rss",
+     "resumen": "Solo-dining is being embraced as a self-care trend and it's reshaping the restaurant industry."
+    },
+    {
+     "fuente": "Yahoo Finanzas (RSS)",
+     "titulo": "El regulador espaÃ±ol fija un plazo de aceptaciÃ³n para la oferta de adquisiciÃ³n de Azkoyen por parte de Ohmnia Electronics.",
+     "fecha": "2026-11-27 06:19",
+     "url": "https://es.finance.yahoo.com/noticias/regulador-espa%C3%B1ol-fija-plazo-aceptaci%C3%B3n-091929625.html",
+     "resumen": ""
+    },
+    {
+     "fuente": "Cinco Días portada (RSS)",
+     "titulo": "Nvidia y la tentación de moralizar el compliance",
+     "fecha": "2026-11-27 06:16",
+     "url": "https://cincodias.elpais.com/legal/2026-11-27/nvidia-y-la-tentacion-de-moralizar-el-compliance.html",
+     "resumen": "El caso de Jensen Huang muestra que el compliance debe centrarse en los conflictos de interés y los riesgos corporativos, no en juzgar la vida privada de los directivos"
+    },
+    {
      "fuente": "Cinco Días portada (RSS)",
      "titulo": "Tres aplazamientos, un mensaje: no cumplir sale gratis",
      "fecha": "2026-11-27 06:07",
      "url": "https://cincodias.elpais.com/legal/2026-11-27/tres-aplazamientos-un-mensaje-no-cumplir-sale-gratis.html",
      "resumen": "VeriFactu se pospone hasta 2028 mientras empresas y fabricantes afrontan el coste de una regulación cambiante"
+    },
+    {
+     "fuente": "Al Jazeera · Economía (RSS, inglés)",
+     "titulo": "South Korea sends rescued fishermen back to North",
+     "fecha": "2026-11-27 06:02",
+     "url": "https://www.aljazeera.com/news/2026/11/27/south-korea-sends-rescued-fishermen-back-to-north?traffic_source=rss",
+     "resumen": "Pyongyang has not commented on a seventh fisherman who chose to remain in the South."
+    },
+    {
+     "fuente": "Yahoo Finanzas (RSS)",
+     "titulo": "BP e Iberdrola, en colaboraciÃ³n conjunta, inician operaciones en una planta de hidrÃ³geno verde de 25 MW en EspaÃ±a.",
+     "fecha": "2026-11-27 06:02",
+     "url": "https://es.finance.yahoo.com/noticias/bp-iberdrola-colaboraci%C3%B3n-conjunta-inician-090247978.html",
+     "resumen": ""
     },
     {
      "fuente": "Banco Central Europeo Prensa (RSS, inglés)",
@@ -1729,7 +1765,7 @@
     },
     {
      "fuente": "DW en español (RSS)",
-     "titulo": "Cierre de campaña en España: Feijóo en Sevilla, Abascal en Valencia y Sánchez y Colau eligen Madrid",
+     "titulo": "Cierre de campaña en España: Feijóo en Sevilla, Abascal en Valencia, y Sánchez y Colau eligen Madrid",
      "fecha": "2026-11-27 05:47",
      "url": "https://www.dw.com/es/cierre-de-campaña-en-españa-feijóo-en-sevilla-abascal-en-valencia-y-sánchez-y-colau-eligen-madrid/a-80071186?maca=spa-rss-sp-all-1122-xml-mrss",
      "resumen": "La campaña para las elecciones generales en España se cierra este viernes tras dos semanas de actos, debates y entrevistas de los candidatos."
@@ -1830,7 +1866,7 @@
      "titulo": "Las pensiones subirán un 3,5% en 2027 tras crecer la inflación el 4,1% en noviembre",
      "fecha": "2026-11-27 05:00",
      "url": "https://elpais.com/economia/2026-11-27/las-pensiones-subiran-un-35-en-2027.html",
-     "resumen": "El Gobierno adelanta el anuncio de la revalorización de las mínimas y las no contributivas, que mejorarán entre el 8,8% y el 14,2%"
+     "resumen": "El Gobierno adelanta el anuncio de la revalorización de las mínimas y las no contributivas, que mejorarán entre el 8,8% y el 14,2%. El Ingreso Mínimo Vital aumentará un 14,1%"
     },
     {
      "fuente": "Cinco Días portada (RSS)",
@@ -1859,13 +1895,6 @@
      "fecha": "2026-11-27 04:53",
      "url": "https://www.aljazeera.com/news/2026/11/27/borrowing-to-make-ends-meet-the-rising-cost-of-living-in-europe?traffic_source=rss",
      "resumen": "Prices are climbing again across Europe as energy costs surge."
-    },
-    {
-     "fuente": "BBC News · Business (RSS, inglés)",
-     "titulo": "My self-care ritual is a meal at a fancy restaurant - on my own",
-     "fecha": "2026-11-27 04:46",
-     "url": "https://www.bbc.co.uk/news/articles/cw8dv11dp2yeo?at_medium=RSS&at_campaign=rss",
-     "resumen": "Solo-dining is being embraced as a self-care trend and it's reshaping the restaurant industry."
     },
     {
      "fuente": "Al Jazeera · Economía (RSS, inglés)",
@@ -2041,13 +2070,6 @@
      "fecha": "2026-11-27 02:03",
      "url": "https://elpais.com/economia/2026-11-27/hernandez-de-cos-el-valor-del-prestigio.html",
      "resumen": "En un momento de elevada polarización política, resulta especialmente saludable que la calidad institucional haya suscitado un respaldo transversal"
-    },
-    {
-     "fuente": "MarketWatch Titulares (RSS, inglés)",
-     "titulo": "Is the stock market open on Black Friday?",
-     "fecha": "2026-11-27 02:01",
-     "url": "https://www.marketwatch.com/story/is-the-stock-market-open-on-black-friday-0a735c45?mod=mw_rss_topstories",
-     "resumen": "Here’s how the day after Thanksgiving will affect trading on Wall Street"
     },
     {
      "fuente": "Yahoo Finanzas (RSS)",
@@ -2281,25 +2303,11 @@
      "resumen": "Iran's foreign minister Abbas Araghchi said \"The incident is suspicious and looks like a precooked recipe for war.\""
     },
     {
-     "fuente": "Al Jazeera · Economía (RSS, inglés)",
-     "titulo": "Spain and Morocco under-17 stars target World Cup 2030",
-     "fecha": "2026-11-26 23:58",
-     "url": "https://www.aljazeera.com/video/newsfeed/2026/11/27/spain-and-morocco-under-17-stars-target-world-cup-2030?traffic_source=rss",
-     "resumen": "Spain and Morocco are two of the co-hosts of the next 2030 World Cup, and they faced off at the under-17 World Cup."
-    },
-    {
      "fuente": "France 24 · Economía (RSS)",
      "titulo": "Estados Unidos rechaza el plan de la Unión Europea para gravar a las tecnológicas",
      "fecha": "2026-11-26 22:44",
      "url": "https://www.france24.com/es/programas/econom%C3%ADa/20261127-estados-unidos-rechaza-el-plan-de-la-uni%C3%B3n-europea-para-gravar-a-las-tecnol%C3%B3gicas",
      "resumen": "La propuesta de la Comisión Europea de imponer nuevos impuestos a las grandes compañías tecnológicas, en su mayoría estadounidenses, genera rechazo en Washington y divisiones entre los países del bloque, que buscan nuevas fuentes de financiación para su presupuesto de 2028 a 2034."
-    },
-    {
-     "fuente": "MarketWatch Titulares (RSS, inglés)",
-     "titulo": "I hate that Jensen Huang is back at Nvidia, but I love what it’s done for my 401(k). Am I a hypocrite?",
-     "fecha": "2026-11-26 22:15",
-     "url": "https://www.marketwatch.com/story/i-hate-that-jensen-huang-is-back-at-nvidia-but-i-love-what-its-done-for-my-401-k-am-i-a-hypocrite-f63c0303?mod=mw_rss_topstories",
-     "resumen": "Doing nothing and maintaining an even temperament is often the work of gods."
     },
     {
      "fuente": "Expansión España Mercados (RSS)",
@@ -2314,13 +2322,6 @@
      "fecha": "2026-11-26 22:01",
      "url": "https://www.expansion.com/mercados/2026/11/27/valores-firmes-ibex-plenas-turbulencias.html",
      "resumen": "La tensiÃ³n se ha recrudecido en los mercados. La inestabilidad se ha apoderado de los principales Ã­ndices bursÃ¡tiles, y el Ibex no ha sido una excepciÃ³n. De cara a posibles turbulencias futuras, los datos de volatilidad desvelan los valores del Ibex que menos sobresaltos han dado a sus accionistas. Leer"
-    },
-    {
-     "fuente": "Expansión España Mercados (RSS)",
-     "titulo": "AsÃ­ es T. Rowe Price, la gestora pionera en el estilo de inversiÃ³n en crecimiento",
-     "fecha": "2026-11-26 22:01",
-     "url": "https://www.expansion.com/mercados/fondos/2026/11/27/asi-t-rowe-price-gestora-pionera-estilo-inversion-crecimiento.html",
-     "resumen": "La oficina de Madrid, dirigida por Alfonso del Moral, aporta 3.600 millones de dÃ³lares a la firma. Junto a sus fondos y ETF activos, va a incorporar al mercado espaÃ±ol vehÃ­culos de gestiÃ³n alternativa de private equity y deuda privada. Leer"
     }
    ]
   },
@@ -2330,7 +2331,7 @@
      "fuente": "La Tercera · Nacional (RSS)",
      "url": "https://www.latercera.com/arc/outboundfeeds/rss/category/nacional/?outputType=xml",
      "ok": true,
-     "n": 69
+     "n": 70
     },
     {
      "fuente": "El Desconcierto (RSS)",
@@ -2394,7 +2395,7 @@
      "fuente": "Bing Noticias · Política Chile",
      "url": "https://www.bing.com/news/search?q=pol%C3%ADtica%20Chile%20Gobierno%20Congreso&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 11
     },
     {
      "fuente": "El Líbero (RSS)",
@@ -2425,9 +2426,8 @@
     {
      "fuente": "Atacama Noticias (RSS)",
      "url": "https://www.atacamanoticias.cl/feed/",
-     "ok": false,
-     "n": 0,
-     "error": "HTTP 403"
+     "ok": true,
+     "n": 10
     },
     {
      "fuente": "Diario Constitucional (RSS)",
@@ -2504,6 +2504,34 @@
    ],
    "notas": [
     {
+     "fuente": "El Rancaguino (RSS)",
+     "titulo": "¿Y no basta con ser feliz?",
+     "fecha": "2026-11-27 06:29",
+     "url": "https://www.elrancaguino.cl/2026/11/27/y-no-basta-con-ser-feliz/",
+     "resumen": "Por: Camila del Río, directora regional IdeaPaís O’Higgins “Lo único que importa es que seas feliz”, es probablemente una de las frases que más repetimos los papás cuando nuestros hijos comienzan a preguntarse qué quieren hacer con sus vidas. Queremos que persigan sus sueños, que estudien lo que los apasiona, pero…"
+    },
+    {
+     "fuente": "La Tercera · Nacional (RSS)",
+     "titulo": "Así funciona la red de Metro este viernes 27 de noviembre: todas las estaciones disponibles",
+     "fecha": "2026-11-27 06:26",
+     "url": "https://www.latercera.com/servicios/noticia/asi-funciona-la-red-de-metro-este-viernes-27-de-noviembre-todas-las-estaciones-disponibles/",
+     "resumen": "Revisa el estado de las líneas del servicio de transporte de la Región Metropolitana y las recomendaciones que hace."
+    },
+    {
+     "fuente": "Diario Constitucional (RSS)",
+     "titulo": "Estudio advierte creciente formalismo de la Corte Suprema al examinar la admisibilidad de los recursos de unificación de jurisprudencia laboral",
+     "fecha": "2026-11-27 06:15",
+     "url": "https://www.diarioconstitucional.cl/asuntos-de-interes-publico/estudio-advierte-creciente-formalismo-de-la-corte-suprema-al-examinar-la-admisibilidad-de-los",
+     "resumen": "La investigación, desarrollada por los académicos Jordi Delgado Castro y Diego Palomo Vélez, identifica una tendencia del máximo tribunal a anticipar el examen de fondo de las controversias bajo la apariencia de controles formales de admisibilidad. Los autores plantean la necesidad de revisar estos criterios para…"
+    },
+    {
+     "fuente": "El Rancaguino (RSS)",
+     "titulo": "El oficio del fuego y el sabor de la precordillera: Puente Negro se prepara para la 5ª Fiesta del Cordero 2026",
+     "fecha": "2026-11-27 06:15",
+     "url": "https://www.elrancaguino.cl/2026/11/27/el-oficio-del-fuego-y-el-sabor-de-la-precordillera-puente-negro-se-prepara-para-la-5a-fiesta-del-cordero-2026/",
+     "resumen": "En el campo de O’Higgins, el cordero es mucho más que el protagonista de la mesa festiva; es el reflejo de un oficio antiguo, del manejo paciente en el secano y la precordillera, y de una cocina que sabe respetar los tiempos de las brasas. Honrando esa tradición viva que reúne a las familias en […] El artículo El…"
+    },
+    {
      "fuente": "Interferencia (RSS)",
      "titulo": "AGUAnte la Vida cumple 15 años y reúne a comunidades de todo Chile frente a la regresión socioambiental",
      "fecha": "2026-11-27 06:00",
@@ -2551,6 +2579,13 @@
      "fecha": "2026-11-27 06:00",
      "url": "https://www.latercera.com/opinion/noticia/sala-cuna-de-la-promesa-a-la-politica-publica/",
      "resumen": "Este jueves, en La Moneda, se celebró algo que Chile esperó más de un siglo. El Congreso despachó a ley la sala cuna universal y, con ella, termina la regla que desde 1917 ató este derecho al número de mujeres que contrata una empresa. En septiembre, el financiamiento cayó en el Senado por un voto. Esta vez reunió…"
+    },
+    {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "Mamá de una niña (11), matrona y bailarina: Quién era Monserrat, víctima de femicidio en Villa Alemana",
+     "fecha": "2026-11-27 05:45",
+     "url": "https://www.atacamanoticias.cl/2026/11/27/mama-de-una-nina-11-matrona-y-bailarina-quien-era-monserrat-victima-de-femicidio-en-villa-alemana/",
+     "resumen": "“¡Justicia, justicia, justicia para Monse! ¡Justicia, justicia, justicia para Monse!”. Así se manifestaron ex colegas y amigas de Monserrat Vásquez durante el jueves a las afueras del Servicio Médico Legal (SML) de Valparaíso, durante la entrega del cuerpo de la víctima de femicidio íntimo a sus familiares. Pasadas…"
     },
     {
      "fuente": "Diario Constitucional (RSS)",
@@ -2602,11 +2637,25 @@
      "resumen": "SpaceX recibió autorización de Estados Unidos para desplegar hasta un millón de satélites destinados al procesamiento de datos de inteligencia artificial."
     },
     {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "Suspenden clases en Colegio Juan Luis Undurraga de Quilicura tras incendio que afectó a su gimnasio",
+     "fecha": "2026-11-27 02:31",
+     "url": "https://www.atacamanoticias.cl/2026/11/27/suspenden-clases-en-colegio-juan-luis-undurraga-de-quilicura-tras-incendio-que-afecto-a-su-gimnasio/",
+     "resumen": "La Fundación Belén Educa anunció la suspensión de clases para este viernes 27 de noviembre en el Colegio Bicentenario Juan Luis Undurraga Aninat, en la comuna de Quilicura, luego del incendio que afectó al gimnasio del recinto educacional. A través de un comunicado, la institución explicó que “durante esta jornada…"
+    },
+    {
      "fuente": "La Tercera · Política (RSS)",
      "titulo": "Zandra Parisi asegura que certificado médico fue entregado por clínica dental y evalúa acciones legales contra odontólogo que desconoció autoría",
      "fecha": "2026-11-27 02:08",
      "url": "https://www.latercera.com/politica/noticia/zandra-parisi-asegura-que-certificado-medico-fue-entregado-por-clinica-dental-y-evalua-acciones-legales-contra-odontologo/",
      "resumen": "La diputada del PDG entregó su versión sobre la polémica que surgió luego de que un profesional odontológico desconociera haber firmado un certificado médico presentado por la parlamentaria ante la Cámara de Diputados, con el que justificó un reposo de 14 días."
+    },
+    {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "Parisi contraataca y analiza acciones legales contra odontólogo: “Clínica me entregó el certificado”",
+     "fecha": "2026-11-27 01:59",
+     "url": "https://www.atacamanoticias.cl/2026/11/27/parisi-contraataca-y-analiza-acciones-legales-contra-odontologo-clinica-me-entrego-el-certificado/",
+     "resumen": "La diputada Zandra Parisi (PDG) salió al paso de la polémica por su certificado odontológico. Por medio de una declaración pública enviada la madrugada de este viernes, la parlamentaria expuso que la propia clínica a la que acudió le extendió el documento. Además, señaló que analiza acciones legales en contra del…"
     },
     {
      "fuente": "La Cuarta (RSS)",
@@ -2623,11 +2672,39 @@
      "resumen": "El líder del PNL cuestionó las circunstancias en que se presentó el documento odontológico ante la Cámara de Diputados y apuntó a una eventual investigación de la Fiscalía. Además, abordó las controversias por las firmas de los senadores Ximena Órdenes y Fidel Espinoza durante la tramitación de la Ley de Presupuestos."
     },
     {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "“Esto sí es delito”: Espinoza emplaza a Fiscalía a indagar certificado odontológico de Zandra Parisi",
+     "fecha": "2026-11-27 01:05",
+     "url": "https://www.atacamanoticias.cl/2026/11/27/esto-si-es-delito-espinoza-emplaza-a-fiscalia-a-indagar-certificado-odontologico-de-zandra-parisi/",
+     "resumen": "El senador del Partido Socialista Fidel Espinoza se refirió por medio de su cuenta de X al caso del certificado odontológico de la diputada Zandra Parisi. Espinoza escribió que “esto si es delito. ¿Fiscalía de Chile iniciará investigación de oficio? Es lo mínimo que deben hacer”. Esto si es delito. @FiscaliadeChile…"
+    },
+    {
      "fuente": "La Cuarta (RSS)",
      "titulo": "La honesta confesión del Pastor Rocha tras irrumpir en Vértigo y reemplazar a Kramer: reveló cuál es su principal desafío",
      "fecha": "2026-11-27 00:30",
      "url": "https://www.lacuarta.com/espectaculos/noticia/la-honesta-confesion-del-pastor-rocha-tras-irrumpir-en-vertigo-y-reemplazar-a-kramer-revelo-cual-es-su-principal-desafio/",
      "resumen": "Comediante generó diversas reacciones luego de su participación de este jueves en el estelar de Canal 13."
+    },
+    {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "Empresariado plantea recortar vacaciones y pagos extras para formalizar empleo a jóvenes en Perú",
+     "fecha": "2026-11-27 00:22",
+     "url": "https://www.atacamanoticias.cl/2026/11/27/empresariado-plantea-recortar-vacaciones-y-pagos-extras-para-formalizar-empleo-a-jovenes-en-peru/",
+     "resumen": "El presidente de la Cámara de Comercio de Lima (CCL), Raúl Barrios, planteó este jueves que se recorten una serie de beneficios laborales, como las vacaciones y los pagos extras por gratificaciones, para contribuir a formalizar a los jóvenes que ingresan a trabajar en Perú. “Tenemos 350.000 chicos que salen todos los…"
+    },
+    {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "Codelco suma nuevos nombres a su equipo ejecutivo y profundiza la reestructuración de este 2026",
+     "fecha": "2026-11-27 00:05",
+     "url": "https://www.atacamanoticias.cl/2026/11/27/codelco-suma-nuevos-nombres-a-su-equipo-ejecutivo-y-profundiza-la-reestructuracion-de-este-2026/",
+     "resumen": "Codelco anunció este jueves una serie de cambios en su equipo ejecutivo. La información se conoció a través de un Hecho Esencial reportado a la Comisión para el Mercado Financiero (CMF). La cuprífera informó nuevas incorporaciones y ajustes en las actuales vicepresidencias de Comercialización y de Proyectos. El…"
+    },
+    {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "Prisión preventiva para 15 de los 88 imputados por fraude de $7.400 millones en causa Ganaderos",
+     "fecha": "2026-11-26 23:58",
+     "url": "https://www.atacamanoticias.cl/2026/11/26/prision-preventiva-para-15-de-los-88-imputados-por-fraude-de-7-400-millones-en-causa-ganaderos/",
+     "resumen": "En una maratónica audiencia de formalización de la investigación en la causa derivada de la Operación Ganaderos, la Fiscalía comunicó a 88 personas que están siendo investigadas por delitos tributarios, económicos, informáticos, abigeatos, entre otros, que generaron un daño al patrimonio fiscal (fraude) de mas de…"
     },
     {
      "fuente": "ADN Radio Chile (RSS)",
@@ -2658,6 +2735,20 @@
      "resumen": "Casos como el desvío de millonarios finiquitos en KFC y los ataques a plataformas críticas evidencian la urgencia de blindar los accesos y frenar el uso malicioso de la inteligencia artificial."
     },
     {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "El acuerdo con Quiroz que allanó el camino al Presupuesto de Kast, pero dejó heridas en la oposición",
+     "fecha": "2026-11-26 23:10",
+     "url": "https://www.atacamanoticias.cl/2026/11/26/el-acuerdo-con-quiroz-que-allano-el-camino-al-presupuesto-de-kast-pero-dejo-heridas-en-la-oposicion/",
+     "resumen": "La tramitación legislativa del Presupuesto 2027 dejó heridas abiertas en la oposición, luego del acuerdo que alcanzaron algunos partidos con el ministro de Hacienda, Jorge Quiroz, para aprobar el aumento del techo de la deuda fiscal y reponer recursos en Educación. En el oficialismo, en tanto, valoraron el despacho…"
+    },
+    {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "Incendio afecta a gimnasio del Colegio Bicentenario Juan Luis Undurraga en Quilicura",
+     "fecha": "2026-11-26 23:10",
+     "url": "https://www.atacamanoticias.cl/2026/11/26/incendio-afecta-a-gimnasio-del-colegio-bicentenario-juan-luis-undurraga-en-quilicura/",
+     "resumen": "Un incendio que afectó las dependencias del Colegio Bicentenario Juan Luis Undurraga, que pertenece a la Fundación Belén Educa, en la comuna de Quilicura la noche de este jueves. El siniestro se registró específicamente en la intersección de calle Los Benedictinos y la parroquia Jesús Obrero. En ese punto, las llamas…"
+    },
+    {
      "fuente": "The Clinic (RSS)",
      "titulo": "Bochorno en Valparaíso: Hinchas de Santiago Wanderers invaden la cancha tras derrota frente a Deportes Recoleta y sentencia su permanencia en la Primera B",
      "fecha": "2026-11-26 23:09",
@@ -2684,6 +2775,13 @@
      "fecha": "2026-11-26 22:58",
      "url": "https://www.adnradio.cl/2026/11/26/historico-club-del-futbol-chileno-recibe-una-severa-sancion-podria-estar-dos-anos-sin-participar-en-torneos/",
      "resumen": "ANFA decidió suspender a Fernández Vidal de sus competencias tras un incidente con sus barristas en su último partido."
+    },
+    {
+     "fuente": "Atacama Noticias (RSS)",
+     "titulo": "Feijóo promete en pleno debate que dimitirá si no gobierna España y reta a Sánchez a hacer lo mismo",
+     "fecha": "2026-11-26 22:53",
+     "url": "https://www.atacamanoticias.cl/2026/11/26/feijoo-promete-en-pleno-debate-que-dimitira-si-no-gobierna-espana-y-reta-a-sanchez-a-hacer-lo-mismo/",
+     "resumen": "El candidato presidencial del conservador PP, Alberto Núñez Feijóo, se comprometió este jueves en el debate a cuatro a dimitir si no preside el Gobierno español tras las elecciones del próximo domingo y retó al jefe del Ejecutivo, Pedro Sánchez, a hacer lo mismo. “Si no preside el Gobierno, ¿asume usted la…"
     },
     {
      "fuente": "The Clinic (RSS)",
@@ -3034,104 +3132,6 @@
      "fecha": "2026-11-26 20:25",
      "url": "https://www.latercera.com/nacional/noticia/vacaciones-escolares-volveran-a-julio-mineduc-busca-hacer-coincidir-el-receso-con-el-de-educacion-superior/",
      "resumen": "El Ministerio de Educación retrasará el receso invernal en dos semanas respecto de los últimos tres años, logrando ajustarse a la pausa que hacen varias instituciones de estudios superiores."
-    },
-    {
-     "fuente": "El Ciudadano (RSS)",
-     "titulo": "Biokulturelle Erinnerungen, Kunst und kollektiver Widerstand im maritorio: Erfahrungen der Cooperativa Caleta Los Piures Punta de Lobos",
-     "fecha": "2026-11-26 20:23",
-     "url": "https://www.elciudadano.com/deustche/biokulturelle-erinnerungen-kunst-und-kollektiver-widerstand-im-maritorio-erfahrungen-der-cooperativa-caleta-los-piures-punta-de-lobos/11/26/",
-     "resumen": "El Ciudadano Originalbeitrag: Memorias bioculturales, arte y resistencia colectiva en el maritorio: Experiencias de la Cooperativa Caleta Los Piures Punta de Lobos Von Ignacia Borgeaud Núñez und Magdalena Ceballos Mendieta, Fundación Mujeres de Mar und La Grieta Wer hat das Recht, die Geschichte von Territorien zu…"
-    },
-    {
-     "fuente": "El Ciudadano (RSS)",
-     "titulo": "Memorias bioculturales, arte y resistencia colectiva en el maritorio: Experiencias de la Cooperativa Caleta Los Piures Punta de Lobos",
-     "fecha": "2026-11-26 20:23",
-     "url": "https://www.elciudadano.com/chile/memorias-bioculturales-arte-y-resistencia-colectiva-en-el-maritorio-experiencias-de-la-cooperativa-caleta-los-piures-punta-de-lobos/11/26/",
-     "resumen": "El Ciudadano Por Ignacia Borgeaud Núñez y Magdalena Ceballos Mendieta, Fundación Mujeres de Mar y La Grieta ¿Quiénes tienen derecho a narrar la historia de los territorios? ¿Desde dónde se construyen los relatos que ingresan a los museos? ¿Qué posibilidades se abren cuando las propias comunidades participan en la…"
-    },
-    {
-     "fuente": "El Ciudadano (RSS)",
-     "titulo": "生物文化记忆、艺术与集体抗争：洛斯皮乌雷斯合作社的经验",
-     "fecha": "2026-11-26 20:23",
-     "url": "https://www.elciudadano.com/%e4%b8%ad%e6%96%87%e7%89%88/%e7%94%9f%e7%89%a9%e6%96%87%e5%8c%96%e8%ae%b0%e5%bf%86%e3%80%81%e8%89%ba%e6%9c%af%e4%b8%8e%e9%9b%86%e4%bd%93%e6%8a%97%e4%ba%89%ef%bc%9a%e6%b4%9b%e6%96%af%e7%9a%ae%e4%b9%8c%e9%9b%b7%e6%96%af%e5%90%88/11/26/",
-     "resumen": "El Ciudadano 原文: Memorias bioculturales, arte y resistencia colectiva en el maritorio: Experiencias de la Cooperativa Caleta Los Piures Punta de Lobos 生物文化记忆、艺术与集体抗争：洛斯皮乌雷斯合作社的经验 撰稿：Ignacia Borgeaud Núñez 和 Magdalena Ceballos Mendieta，海洋女性基金会及裂缝研究中心 谁有权讲述土地的历史？博物馆里的叙述是如何构建的？当社区自身参与展览策展时，可能会带来怎样的机会？…"
-    },
-    {
-     "fuente": "El Ciudadano (RSS)",
-     "titulo": "Cultural Memories, Art, and Collective Resistance at the Coastal Exhibition: Experiences of the Caleta Los Piures Cooperative in Punta de Lobos",
-     "fecha": "2026-11-26 20:23",
-     "url": "https://www.elciudadano.com/en/cultural-memories-art-and-collective-resistance-at-the-coastal-exhibition-experiences-of-the-caleta-los-piures-cooperative-in-punta-de-lobos/11/26/",
-     "resumen": "El Ciudadano Original article: Memorias bioculturales, arte y resistencia colectiva en el maritorio: Experiencias de la Cooperativa Caleta Los Piures Punta de Lobos By Ignacia Borgeaud Núñez and Magdalena Ceballos Mendieta, Fundación Mujeres de Mar and La Grieta Who has the right to tell the stories of territories?…"
-    },
-    {
-     "fuente": "ADN Radio Chile (RSS)",
-     "titulo": "Filtran nueva eliminada de MasterChef Chile: la polémica concursante que abandona el programa de TVN",
-     "fecha": "2026-11-26 20:21",
-     "url": "https://www.adnradio.cl/2026/11/26/filtran-nueva-eliminada-de-masterchef-chile-la-polemica-concursante-que-abandona-el-programa-de-tvn/",
-     "resumen": "Tras una tensa prueba de caja misteriosa que dejó a tres mujeres con delantal negro, se reveló quién dejará las cocinas en el capítulo de hoy."
-    },
-    {
-     "fuente": "ADN Radio Chile (RSS)",
-     "titulo": "FNE acusa a Apple de abuso de posición dominante y pide multa de más de US$ 80 millones ante el TDLC",
-     "fecha": "2026-11-26 20:18",
-     "url": "https://www.adnradio.cl/2026/11/26/fne-acusa-a-apple-de-abuso-de-posicion-dominante-y-pide-multa-de-mas-de-us-80-millones-ante-el-tdlc/",
-     "resumen": "El organismo antimonopolios exige habilitar descargas externas y pagos alternativos en iPhone tras detectar un monopolio del 100% desde 2019."
-    },
-    {
-     "fuente": "Diario Constitucional (RSS)",
-     "titulo": "TC resolverá el fondo de requerimiento de CAPREDENA contra normas que limitan apelaciones en juicios de cobranza previsional",
-     "fecha": "2026-11-26 20:15",
-     "url": "https://www.diarioconstitucional.cl/tribunal-constitucional/tc-resolvera-el-fondo-de-requerimiento-de-capredena-contra-normas-que-limitan-apelaciones-en-juicios",
-     "resumen": "La institución cuestiona disposiciones legales que podrían impedir la revisión de una resolución judicial que rechazó su reclamo por una notificación incompleta de la demanda. La Segunda Sala declaró admisible la acción y otorgó 20 días a las partes para presentar observaciones."
-    },
-    {
-     "fuente": "The Clinic (RSS)",
-     "titulo": "“Nuestro temor es que estén haciendo negocios con ellas”: Museo de Historia Natural de San Antonio denuncia el robo de 65 tortugas en tres meses",
-     "fecha": "2026-11-26 20:12",
-     "url": "https://www.theclinic.cl/2026/11/26/nuestro-temor-es-esten-haciendo-negocios-con-ellas-museo-de-historia-natural-de-san-antonio-denuncia-el-robo-de-65-tortugas-en-tres-meses/",
-     "resumen": "En tres episodios delictivos registrados en agosto, octubre y noviembre sustrajeron la mitad de los 139 ejemplares que llego a tener el recinto. En el último, se llevaron 20, rompiendo el cerco perimetral para acceder a ellas. The post “Nuestro temor es que estén haciendo negocios con ellas”: Museo de Historia…"
-    },
-    {
-     "fuente": "ADN Radio Chile (RSS)",
-     "titulo": "“Fantasma” Figueroa reaparece con fulminante crítica a Cobreloa: “Trabajen con la cabeza, no con el corazón”",
-     "fecha": "2026-11-26 20:12",
-     "url": "https://www.adnradio.cl/2026/11/26/fantasma-figueroa-reaparece-con-fulminante-critica-a-cobreloa-trabajen-con-la-cabeza-no-con-el-corazon/",
-     "resumen": "El entrenador chileno, fiel a su estilo, lanzó un duro comentario contra dos figuras del plantel."
-    },
-    {
-     "fuente": "Ex-Ante (RSS)",
-     "titulo": "Ex embajadora y ex oficial de la CIA asumirá cargo ejecutivo clave en minera de tierras raras en Chile",
-     "fecha": "2026-11-26 20:08",
-     "url": "https://www.ex-ante.cl/negocios/tierras-raras-cia-aclara-minera/",
-     "resumen": "Lisa Kenna, que trabajó 9 años en la CIA y en su último cargo le reportaba directamente a Marco Rubio, liderará la estrategia geopolítica de…"
-    },
-    {
-     "fuente": "ADN Radio Chile (RSS)",
-     "titulo": "Desvío de $2.500 millones: así operaba la red del “Pirata Gate” que tiene a un exalcalde y al cantante de Viking 5 formalizados",
-     "fecha": "2026-11-26 20:06",
-     "url": "https://www.adnradio.cl/2026/11/26/desvio-de-2500-millones-asi-operaba-la-red-del-pirata-gate-que-tiene-a-un-exalcalde-y-al-cantante-de-viking-5-formalizados/",
-     "resumen": "Ocho imputados declararon ante el Ministerio Público y accedieron a cautelares menores. La audiencia continuará este viernes con nuevos antecedentes del caso."
-    },
-    {
-     "fuente": "Diario Constitucional (RSS)",
-     "titulo": "Proyecto de ley busca impedir rebajas de condena a condenados por delitos sexuales contra menores de edad",
-     "fecha": "2026-11-26 20:05",
-     "url": "https://www.diarioconstitucional.cl/legislativo/proyecto-de-ley-busca-impedir-rebajas-de-condena-a-condenados-por-delitos-sexuales-contra-menores-de",
-     "resumen": "La iniciativa pretende resolver las interpretaciones judiciales contradictorias sobre la aplicación de las exclusiones legales, estableciendo que los requisitos para acceder al beneficio deben verificarse conforme a la normativa vigente al momento de concederlo. Además, incorpora el riesgo de reincidencia como…"
-    },
-    {
-     "fuente": "ADN Radio Chile (RSS)",
-     "titulo": "“Estoy un poquito dolido”: vocalista de Los Viking’s 5 rompió el silencio tras formalización por caso Pirata Gate",
-     "fecha": "2026-11-26 20:04",
-     "url": "https://www.adnradio.cl/2026/11/26/estoy-un-poquito-dolido-vocalista-de-los-vikings-5-rompio-el-silencio-tras-formalizacion-por-caso-pirata-gate/",
-     "resumen": "Pedro Barraza defendió su inocencia y explicó cómo llegó a trabajar en la Municipalidad de Coquimbo durante la pandemia. Además, reveló cómo las medidas cautelares afectan sus presentaciones."
-    },
-    {
-     "fuente": "ADN Radio Chile (RSS)",
-     "titulo": "Presidente de Azul Azul anuncia rebajas en los precios de las entradas para ver a la U en 2027: confirmó apelación al castigo ante Conmebol",
-     "fecha": "2026-11-26 20:04",
-     "url": "https://www.adnradio.cl/2026/11/26/presidente-de-azul-azul-anuncia-rebajas-en-los-precios-de-las-entradas-para-ver-a-la-u-en-2027-confirmo-apelacion-al-castigo-ante-conmebol/",
-     "resumen": "Eduardo Álamos apuntó también a la necesidad de que el equipo pueda disponer al máximo posible del Estadio Nacional el próximo año."
     }
    ]
   },
@@ -3190,7 +3190,7 @@
      "fuente": "Bing Noticias · Internacional",
      "url": "https://www.bing.com/news/search?q=internacional%20noticias%20mundo&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 7
+     "n": 6
     },
     {
      "fuente": "Bing Noticias · Sudán",
@@ -3404,6 +3404,181 @@
    ],
    "notas": [
     {
+     "fuente": "SCMP Mundo (RSS, inglés)",
+     "titulo": "Hong Kong Science Park veteran named CEO of Hung Shui Kiu industrial park operator",
+     "fecha": "2026-11-27 06:24",
+     "url": "https://www.scmp.com/news/hong-kong/society/article/3376044/hong-kong-science-park-veteran-named-ceo-hung-shui-kiu-industrial-park-operator",
+     "resumen": "A former senior executive of the Hong Kong Science and Technology Park has been appointed CEO of the Hung Shui Kiu Industry Park Company to accelerate the development of the Northern Metropolis megaproject. The park company, the first government-owned entity established to drive the megaproject’s development, said on…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Camila Domínguez confiesa por qué expuso a Christian Domínguez en redes sociales",
+     "fecha": "2026-11-27 06:22",
+     "url": "https://www.infobae.com/peru/2026/11/27/camila-dominguez-confiesa-por-que-expuso-a-christian-dominguez-en-redes-sociales/",
+     "resumen": "La hija de Melanie Martínez se sinceró en ‘Magaly, el podcast’ sobre el episodio que marcó su relación con el líder de la Gran Orquesta Internacional. Reconoció que buscaba que su padre le prestara más atención y confesó cuánto le dolió lo ocurrido el año pasado"
+    },
+    {
+     "fuente": "SCMP Mundo (RSS, inglés)",
+     "titulo": "Zelensky says Trump calling Putin ‘my friend’ is like being buddies with Hitler in WWII",
+     "fecha": "2026-11-27 06:22",
+     "url": "https://www.scmp.com/news/world/europe/article/3376046/zelensky-says-trump-calling-putin-my-friend-being-buddies-hitler-wwii",
+     "resumen": "Ukraine’s Volodymyr Zelensky said US ⁠President Donald ⁠Trump calling Russia’s ⁠Vladimir Putin “my friend” was strange and akin to making the same comment about Adolf Hitler during World War II. In an interview ‌with the BBC, the Ukrainian president said it was up to Trump what he said or posted but he called it…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Las pensiones subirán un 3,5% en 2027: los jubilados cobrarán unos 775 euros más de media al año",
+     "fecha": "2026-11-27 06:19",
+     "url": "https://www.infobae.com/espana/2026/11/27/las-pensiones-subiran-un-35-en-2027-los-jubilados-cobraran-unos-775-euros-mas-de-media-al-ano/",
+     "resumen": "El Ministerio de Inclusión ha confirmado la cifra tras conocerse un IPC que se modera al 4,1% en noviembre. Las pensiones mínimas y no contributivas aumentarán un 14,2%, y el Ingreso Mínimo Vital, 14,1%."
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Sánchez confía en que el barco siniestrado se lleve a un puerto seguro en próximos días",
+     "fecha": "2026-11-27 06:19",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/27/sanchez-confia-en-que-el-barco-siniestrado-se-lleve-a-un-puerto-seguro-en-proximos-dias/",
+     "resumen": "Madrid, 27 nov (EFE).- El presidente del Gobierno, Pedro Sánchez, confía en que el barco cisterna que naufragó en la noche del miércoles entre Ibiza y Valencia con 7.000 toneladas de gasóleo en sus tanques pueda ser remolcado a un puerto seguro en \"las próximas horas o próximos días\" y resolver así esta crisis. En…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Seis detenidos por una red de tráfico de drogas presente en Bizkaia, Cantabria y Barcelona",
+     "fecha": "2026-11-27 06:18",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/27/seis-detenidos-por-una-red-de-trafico-de-drogas-presente-en-bizkaia-cantabria-y-barcelona/",
+     "resumen": "Madrid, 27 nov (EFE).- La Guardia Civil ha detenido a seis personas por un presunto delito de tráfico de drogas, blanqueo de capitales y pertenencia a organización criminal en Bizkaia, Cantabria y Barcelona el marco de la operación Cantabizk. La red, que se dedicaba a la distribución de droga, tenía sus principales…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Dos heridos en el naufragio de Ibiza ingresados en Valencia reciben el alta",
+     "fecha": "2026-11-27 06:18",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/27/dos-heridos-en-el-naufragio-de-ibiza-ingresados-en-valencia-reciben-el-alta/",
+     "resumen": "València, 27 nov (EFE).- Los dos tripulantes del buque que volcó este jueves entre Valencia e Ibiza y que ingresaron en el hospital de Manises (Valencia) ya han sido dados de alta, uno de ellos la noche de este jueves y otro este viernes, según ha informado el Centro de Información y Coordinación de Urgencias (CICU)…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "ONG alerta de situación del matrimonio infantil en Latinoamérica y exige medidas urgentes",
+     "fecha": "2026-11-27 06:18",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/ong-alerta-de-situacion-del-matrimonio-infantil-en-latinoamerica-y-exige-medidas-urgentes/",
+     "resumen": "Madrid, 27 nov (EFE).- La ONG Plan International se mostró preocupada este viernes por la situación del matrimonio infantil en América Latina y el Caribe, donde los esfuerzos para erradicarlo se han estancado, y exigió medidas urgentes para acabar con una práctica que afecta a 12 millones de niñas en el mundo. La…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El PIB de Francia cae un 0,2 % en el tercer trimestre, una décima más de lo anticipado",
+     "fecha": "2026-11-27 06:17",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/el-pib-de-francia-cae-un-02-en-el-tercer-trimestre-una-decima-mas-de-lo-anticipado/",
+     "resumen": "(Actualiza con más información sobre la caída del PIB) París, 27 nov (EFE).- El producto interior bruto (PIB) de Francia cayó un 0,2 % en el tercer trimestre, según anunció este viernes el Instituto Nacional de Estadística (Insee), lo que supone una décima más que la primera cifra provisional publicada, y eso después…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Doce detenidos en una nueva operación contra la televisión opositora Halk TV en Turquía",
+     "fecha": "2026-11-27 06:17",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/doce-detenidos-en-una-nueva-operacion-contra-la-television-opositora-halk-tv-en-turquia/",
+     "resumen": "Ankara, 27 nov (EFE).- La Fiscalía de Estambul ha emitido este viernes doce órdenes de arresto vinculadas con la investigación a Halk TV, la televisión opositora más vista del país hasta que fue intervenida el pasado octubre por supuestos delitos de corrupción y blanqueo de dinero cometidos en otra empresa del dueño…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Zelenski defiende ataque a buques rusos en Libia pese a las advertencias de Berlín y Roma",
+     "fecha": "2026-11-27 06:17",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/zelenski-defiende-ataque-a-buques-rusos-en-libia-pese-a-las-advertencias-de-berlin-y-roma/",
+     "resumen": "Kiev, 27 nov (EFE).- El presidente ucraniano, Volodímir Zelenski, ha defendido la legitimidad y la conveniencia de los ataques llevados a cabo por su servicio secreto el pasado domingo contra un buque de carga que Rusia utilizaba para transportar armas y contra la corbeta de última generación que lo protegía cuando…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Etihad cancela hasta finales de diciembre sus vuelos a Riad y Dammam por tensión regional",
+     "fecha": "2026-11-27 06:17",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/etihad-cancela-hasta-finales-de-diciembre-sus-vuelos-a-riad-y-dammam-por-tension-regional/",
+     "resumen": "Dubái, 27 nov (EFE).- La aerolínea emiratí Etihad Airways anunció este viernes la cancelación de todos sus vuelos de pasajeros y carga entre Abu Dabi y las ciudades saudíes de Riad y Dammam hasta el próximo 31 de diciembre, debido a la persistente inestabilidad en Oriente Medio. En un comunicado, la compañía informó…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Bucarest explora a El Greco como producto de la emigración cultural y espiritual",
+     "fecha": "2026-11-27 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/bucarest-explora-a-el-greco-como-producto-de-la-emigracion-cultural-y-espiritual/",
+     "resumen": "Alexandra Spanu Bucarest, 27 nov (EFE).- El Greco fue migrante buena parte de su vida y con cada cambio de país, desde su Creta natal hasta su muerte en España en 1614, pasando por Venecia y Roma, fue sumando matices y estilo a su pintura. Ese viaje y esa evolución centran la exposición abierta este viernes en el…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La historia olvidada de la \"prensa de la arena\" de los refugiados de la Guerra Civil",
+     "fecha": "2026-11-27 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/la-historia-olvidada-de-la-prensa-de-la-arena-de-los-refugiados-de-la-guerra-civil/",
+     "resumen": "Nerea González París, 27 nov (EFE).- Sobre las playas francesas, los refugiados de la Retirada -el exilio de medio millón de republicanos tras la caída de Barcelona en enero de 1939- tuvieron que usar la arena para refugiarse del frío. En condiciones absolutamente precarias, poco a poco construyeron una vida que…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Feijóo reitera que Frente Amplio ha estado \"calladito\" ante la corrupción y no echó de menos la defensa de Abascal",
+     "fecha": "2026-11-27 06:16",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/27/feijoo-reitera-que-frente-amplio-ha-estado-calladito-ante-la-corrupcion-y-no-echo-de-menos-la-defensa-de-abascal/",
+     "resumen": "El presidente del Partido Popular y candidato a la presidencia del Gobierno el 29 de noviembre, Alberto Núñez Feijóo, ha reiterado hoy que Sumar y Frente Amplio han estado \"calladitos\" ante la corrupción, las mentiras y las comisiones durante estos más de siete años de Legislatura. Ha añadido además, que no él no ha…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El Ministerio británico de Trabajo sufre un ciberataque y suspende servicios en línea",
+     "fecha": "2026-11-27 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/el-ministerio-britanico-de-trabajo-sufre-un-ciberataque-y-suspende-servicios-en-linea/",
+     "resumen": "Londres, 27 nov (EFE).- El Ministerio británico de Trabajo y Pensiones (DWP, en inglés) informó este viernes de que ha detectado un incidente \"cibernético\" y que, como medida de precaución, ha suspendido el funcionamiento de algunos servicios en línea. El ministerio ha resaltado que colabora con el Centro Nacional de…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Google exigirá a los desarrolladores a revelar su estatus de comerciante y datos de contacto en Europa",
+     "fecha": "2026-11-27 06:16",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/google-exigira-a-los-desarrolladores-a-revelar-su-estatus-de-comerciante-y-datos-de-contacto-en-europa/",
+     "resumen": "Google exigirá a los desarrolladores que declaren si son o no comerciantes, un requisito para cumplir con la legislación en la Unión Europea, como la Ley de Servicios Digitales, que también mostrará públicamente su teléfono y la dirección de contacto. A partir del 1 de febrero de 2027, los desarrolladores de…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El TSJCV rebaja la pena impuesta a Rafa de Mir por agresión sexual de 8,5 a 7 años",
+     "fecha": "2026-11-27 06:16",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/27/el-tsjcv-rebaja-la-pena-impuesta-a-rafa-de-mir-por-agresion-sexual-de-85-a-7-anos/",
+     "resumen": "Valencia, 27 nov (EFE).- El Tribunal Superior de Justicia de la Comunidad Valenciana (TSJCV) ha rebajado de ocho años y medio a siete años la pena de prisión impuesta al exfutbolista del Valencia CF Rafa Mir por agredir sexualmente a una joven, tras absolverle del delito de lesiones por el que también había sido…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Filipinas reivindica su autonomía para forjar alianzas de defensa y seguridad frente a crítica de China",
+     "fecha": "2026-11-27 06:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/filipinas-reivindica-su-autonomia-para-forjar-alianzas-de-defensa-y-seguridad-frente-a-critica-de-china/",
+     "resumen": "El Gobierno de Filipinas ha rechazado este viernes las críticas de China a sus relaciones de cooperación con otros países y ha defendido su derecho a establecer alianzas para proteger su soberanía y sus intereses nacionales, sin necesitar para ello con la autorización de Pekín. \"China no tiene ni el derecho ni la…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "10.000 litros en lubricantes garantizarán la durabilidad de los motores en Moto2 y Moto3",
+     "fecha": "2026-11-27 06:15",
+     "url": "https://www.infobae.com/espana/agencias/2026/11/27/10000-litros-en-lubricantes-garantizaran-la-durabilidad-de-los-motores-en-moto2-y-moto3/",
+     "resumen": "Juan Antonio Lladós Madrid, 27 nov (EFE).- La compañía energética Repsol ha sido durante años referente en la competición de MotoGP junto al equipo Honda Racing Corporation (HRC). Ahora suministrará cerca de 10.000 litros de lubricantes de su línea 'Extrem', la de mayor rendimiento, a los 14 equipos de Moto2 y 13 de…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "De Rosalía a Pablo Alborán. Las celebrities y los momentos más destacados de los Premios Ondas 2026",
+     "fecha": "2026-11-27 06:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/de-rosalia-a-pablo-alboran-las-celebrities-y-los-momentos-mas-destacados-de-los-premios-ondas-2026/",
+     "resumen": "El Teatre del Liceu de Barcelona ha sido el escenario de lujo que ha acogido un año más la gala de los Premios Ondas, los galardones más prestigiosos de la comunicación en nuestro país otorgados por el Grupo PRISA a los profesionales y proyectos más destacados del año en radio, televisión o música, y que este año han…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Palmeiras-Estudiantes: La gloria eterna será sólo para uno",
+     "fecha": "2026-11-27 06:15",
+     "url": "https://www.infobae.com/america/agencias/2026/11/27/palmeiras-estudiantes-la-gloria-eterna-sera-solo-para-uno/",
+     "resumen": "Montevideo, 27 nov (EFE).- En Montevideo, una ciudad que respira fútbol como pocas lo hacen en el mundo, el brasileño Palmeiras y el argentino Estudiantes buscarán la gloria eterna en una final de Copa Libertadores que pondrá cara a cara a dos históricos del torneo. El mítico estadio Centenario será testigo este…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La primera gran lista de mejores películas de 2026 ya está aquí: sin ‘La Bola Negra’ pero con varios títulos que ya pueden verse en plataformas",
+     "fecha": "2026-11-27 06:13",
+     "url": "https://www.infobae.com/espana/cultura/2026/11/27/la-primera-gran-lista-de-mejores-peliculas-de-2026-ya-esta-aqui-sin-la-bola-negra-pero-con-varios-titulos-que-ya-pueden-verse-en-plataformas/",
+     "resumen": "Desde hace décadas una de las revistas de referencia en el ámbito cinematográfico, esta publicación ha sido la primera en lanzarse"
+    },
+    {
+     "fuente": "Europa Press · Internacional (RSS)",
+     "titulo": "IrÃ¡n asegura haber realizado disparos de advertencias contra un F-16 de EEUU en el estrecho de Ormuz",
+     "fecha": "2026-11-27 06:13",
+     "url": "https://www.europapress.es/internacional/noticia-iran-asegura-haber-realizado-disparos-advertencias-contra-16-eeuu-estrecho-ormuz-20261127101323.html",
+     "resumen": "La Guardia Revolucionaria de IrÃ¡n ha asegurado este viernes que sus sistemas de defensa antiaÃ©rea realizaron disparos de advertencia contra un caza de Estados Unidos en el estrecho de Ormuz, forzÃ¡ndolo a \"alejarse del espacio aÃ©reo iranÃ­\", sin que las fuerzas estadounidenses se hayan pronunciado sobre el…"
+    },
+    {
+     "fuente": "The Guardian Mundo (RSS, inglés)",
+     "titulo": "Department for Work and Pensions takes services offline after ‘cyber incident’ – UK politics live",
+     "fecha": "2026-11-27 06:13",
+     "url": "https://www.theguardian.com/politics/live/2026/nov/27/department-work-pensions-offline-cyber-incident-rosebank-slapps-latest-news-updates",
+     "resumen": "The department is working with cyber security experts to restore services and limit disruption Good morning, and welcome to the UK politics live blog. The Department for Work and Pensions (DWP) has taken some services offline this morning after what it described as a “cyber incident”. There is currently little…"
+    },
+    {
      "fuente": "BBC News · World (RSS, inglés)",
      "titulo": "Zelensky criticises 'strange' Trump-Putin friendship in BBC interview",
      "fecha": "2026-11-27 06:07",
@@ -3416,6 +3591,13 @@
      "fecha": "2026-11-27 06:05",
      "url": "https://www.infobae.com/mexico/2026/11/27/tribunal-colegiado-confirma-amparo-a-vadhir-derbez-por-unanimidad-fiscalia-cdmx-no-acredito-elementos-para-detenerlo/",
      "resumen": "Los tres magistrados ratificaron por unanimidad la protección judicial otorgada al actor"
+    },
+    {
+     "fuente": "Europa Press · Internacional (RSS)",
+     "titulo": "Los servicios de emergencia \"sofocan\" un incendio en una refinerÃ­a en el noroeste de Venezuela",
+     "fecha": "2026-11-27 06:05",
+     "url": "https://www.europapress.es/internacional/noticia-servicios-emergencia-sofocan-incendio-refineria-noroeste-venezuela-20261127100558.html",
+     "resumen": "La refinerÃ­a de Amuay, situada en el estado venezolano de FalcÃ³n (noroeste), ha registrado un incendio en sus instalaciones, segÃºn ha confirmado PetrÃ³leos de Venezuela (PDVSA), que ha recalcado que las llamas han sido \"sofocadas\" y que la situaciÃ³n no afecta al suministro de combustible ni ha causado vÃ­ctimas."
     },
     {
      "fuente": "Infobae (RSS)",
@@ -3474,6 +3656,13 @@
      "resumen": "Kiev, 27 nov (EFE).- El uso del servicio de internet de Starlink y de su versión militar, Starshield, funciona sin limitaciones en territorio bajo control de Kiev, pero sigue restringido para el Ejército ucraniano sobre las zonas del país actualmente ocupadas por Rusia, según explicó el presidente ucraniano…"
     },
     {
+     "fuente": "Al Jazeera (RSS, inglés)",
+     "titulo": "South Korea sends rescued fishermen back to North",
+     "fecha": "2026-11-27 06:02",
+     "url": "https://www.aljazeera.com/news/2026/11/27/south-korea-sends-rescued-fishermen-back-to-north?traffic_source=rss",
+     "resumen": "Pyongyang has not commented on a seventh fisherman who chose to remain in the South."
+    },
+    {
      "fuente": "Infobae (RSS)",
      "titulo": "Nepal inicia el proceso para declarar muertas a 3.915 personas tras la riada de agosto",
      "fecha": "2026-11-27 06:01",
@@ -3528,6 +3717,167 @@
      "fecha": "2026-11-27 06:00",
      "url": "https://www.infobae.com/espana/agencias/2026/11/27/sinner-confia-en-el-doctor-lempainen-por-que-atrae-la-medicina-finlandesa/",
      "resumen": "Carlos Expósito Madrid, 27 nov (EFE).- Finlandia se ha convertido en el destino médico ideal para solventar lesiones musculares y de tendón. Jannik Sinner ha sido el último en operarse allí. Hasta la fecha, Finlandia era un país conocido por un atleta insigne, Paavo Nurmi; pilotos de rally como Juha Kankkunen, y de…"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cómo limpiar botas de gamuza sin arruinar su textura",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/tendencias/2026/11/27/como-limpiar-botas-de-gamuza-sin-arruinar-su-textura/",
+     "resumen": "La rutina incluye cepillado, absorción controlada y guardado transpirable para conservar la forma del calzado"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cuál es el hábito matutino que un cardiólogo recomienda no olvidar para cuidar al corazón",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/2026/11/27/cual-es-el-habito-matutino-que-un-cardiologo-recomienda-no-olvidar-para-cuidar-al-corazon/",
+     "resumen": "El especialista Nadim Geloo advirtió que esa omisión cotidiana puede acumularse con el paso del tiempo y traer consecuencias insospechadas. Qué señales suele identificar en sus pacientes y cómo decidió cambiar su propia rutina"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "De niños a adultos: cuáles son los riesgos y beneficios reales de la vitamina A",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/2026/11/27/de-ninos-a-adultos-cuales-son-los-riesgos-y-beneficios-reales-de-la-vitamina-a/",
+     "resumen": "La ciencia advierte que este nutriente esencial no actúa igual en todas las etapas de la vida, y que su consumo a través de suplementos puede traer consecuencias muy distintas según el perfil de quien lo recibe"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cuántas veces al día es normal orinar y qué factores influyen en esa frecuencia",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/2026/11/27/cuantas-veces-al-dia-es-normal-orinar-y-que-factores-influyen-en-esa-frecuencia/",
+     "resumen": "Los despertares nocturnos, la urgencia repentina y la dificultad para vaciar la vejiga son señales que, junto con la cantidad de líquido ingerido, ayudan a evaluar si una modificación del hábito amerita una consulta médica sin demoras"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Deficiencia de zinc: cuáles son las primeras señales que pueden aparecer en la cara y los ojos",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/ciencia/2026/11/27/deficiencia-de-zinc-cuales-son-las-primeras-senales-que-pueden-aparecer-en-la-cara-y-los-ojos/",
+     "resumen": "Un análisis publicado en Nutrition Reviews identificó que personas con afecciones cutáneas como dermatitis atópica o psoriasis presentan concentraciones reducidas de este mineral, con manifestaciones como queilitis angular, acné y ceguera nocturna"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Una condena, una fuga de una prisión federal y una carta al fiscal: qué se sabe del rol de Joey Ippolito en el caso de O. J. Simpson",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/historias/2026/11/27/una-condena-una-fuga-de-una-prision-federal-y-una-carta-al-fiscal-que-se-sabe-del-rol-de-joey-ippolito-en-el-caso-de-o-j-simpson/",
+     "resumen": "Documentos judiciales desclasificados y el testimonio del hermano de quien fuera señalado como posible encubridor de la estrella del fútbol americano, revisados por The New York Times, sugieren que el informante pudo haber ayudado a ocultar pruebas tras los asesinatos de Nicole Brown Simpson y Ronald Goldman"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "6 beneficios de las legumbres para una alimentación equilibrada",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/2026/11/27/6-beneficios-de-las-legumbres-para-una-alimentacion-equilibrada/",
+     "resumen": "Estos alimentos ofrecen una alternativa versátil para sopas, ensaladas, guisos y rellenos, además de aportar nutrientes relevantes dentro de un patrón nutricional variado"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "De una postal a un reloj de oro y un anillo de diamantes: reúnen más de 100 piezas del Titanic en una subasta récord",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/america/mundo/2026/11/27/de-una-postal-a-un-reloj-de-oro-y-un-anillo-de-diamantes-reunen-mas-de-100-piezas-del-titanic-en-una-subasta-record/",
+     "resumen": "El remate se realizó en Gran Bretaña y alcanzó el millón de libras esterlinas en ventas totales, cifra que confirmó el valor histórico que aún conservan las pertenencias de quienes viajaban a bordo"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Científicos del MIT desarrollan un modelo de IA que puede diseñar chips como un ingeniero y con una fracción de recursos",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/tecno/2026/11/27/cientificos-del-mit-desarrollan-un-modelo-de-ia-que-puede-disenar-chips-como-un-ingeniero-y-con-una-fraccion-de-recursos/",
+     "resumen": "La herramienta logró resultados cercanos a los del modelo GPT-6-Astra en pruebas de circuitos analógicos, pese a utilizar muchos menos parámetros y poder funcionar en una computadora portátil"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cuatro meses de ejercicios en cuadrupedia y visitas a un santuario de lobos: cómo fue la preparación de Aaron Taylor-Johnson para \"Werwulf\"",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/entretenimiento/2026/11/27/cuatro-meses-de-ejercicios-en-cuadrupedia-y-visitas-a-un-santuario-de-lobos-como-fue-la-preparacion-de-aaron-taylor-johnson-para-werwulf/",
+     "resumen": "El actor británico detalló el trabajo físico y de observación que realizó para interpretar al protagonista de la próxima película de Robert Eggers, ambientada en el siglo XIV"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "11 alimentos que es mejor no congelar en el freezer",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/tendencias/2026/11/27/11-alimentos-que-es-mejor-no-congelar-en-el-freezer/",
+     "resumen": "Conocer qué ocurre a bajas temperaturas ayuda a planificar compras, aprovechar sobrantes y reducir desperdicios en la cocina"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La alternativa natural que reduce la presión arterial en solo 20 días, según un estudio",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/ciencia/2026/11/27/la-alternativa-natural-que-reduce-la-presion-arterial-en-solo-20-dias-segun-un-estudio/",
+     "resumen": "Investigadores de la Universidad de Lancashire encontraron que una dosis diaria de 100 microlitros del aceite redujo la presión sistólica un promedio de 8,5 mmHg en adultos con hipertensión leve"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Creyeron que tenía psicosis, pero era una inflamación cerebral: la influencer que pasó dos meses internada por error en un psiquiátrico.",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/historias/2026/11/27/creyeron-que-tenia-psicosis-pero-era-una-inflamacion-cerebral-la-influencer-que-paso-dos-meses-internada-por-error-en-un-psiquiatrico/",
+     "resumen": "Sabrina Bahsoon, que se hizo viral bailando en el subterráneo de Londres, recibió antipsicóticos hasta que su familia exigió más estudios. Tenía encefalitis anti-NMDA, una enfermedad autoinmune desencadenada por tumores en los ovarios"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Fascinación y miedo: dos investigaciones explican cómo los niños construyen su relación con los animales",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/america/mundo/2026/11/27/fascinacion-y-miedo-dos-investigaciones-explican-como-los-ninos-construyen-su-relacion-con-los-animales/",
+     "resumen": "La ciencia desafía la idea de que todos los niños se relacionan igual con la naturaleza, esto sugiere que la educación y las experiencias directas son clave para moldear esa conexión"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "La Navidad de Charlie Brown: la historia detrás del especial que cambió las fiestas en televisión",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/entretenimiento/2026/11/27/la-navidad-de-charlie-brown-la-historia-detras-del-especial-que-cambio-las-fiestas-en-television/",
+     "resumen": "Creada a contrarreloj, la producción enfrentó reparos por su música de jazz, la ausencia de risas grabadas y el mensaje que transmitía. Con los años, se consolidó entre los títulos imprescindibles para las fiestas"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El cuerpo bajo presión constante: así el estrés crónico daña cada sistema del organismo, según expertos",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/2026/11/27/el-cuerpo-bajo-presion-constante-asi-el-estres-cronico-dana-cada-sistema-del-organismo-segun-expertos/",
+     "resumen": "Décadas de investigación científica documentan una cascada de alteraciones cardiovasculares, inmunológicas, digestivas y musculares provocadas por la tensión sostenida. Cómo identificarlo y qué hacer para revertirlo"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Ben Stiller recordó su experiencia junto a Robert De Niro en \"Los padres de ella\": “El sueño de todo actor es trabajar con artistas como él”",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/entretenimiento/2026/11/27/ben-stiller-recordo-su-experiencia-junto-a-robert-de-niro-en-los-padres-de-ella-el-sueno-de-todo-actor-es-trabajar-con-artistas-como-el/",
+     "resumen": "En diálogo con Empire, el elenco y los creadores revisitaron las claves del éxito de la comedia familiar, mientras la saga se prepara para estrenar una nueva entrega con Ariana Grande como protagonista"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Un estudio vincula el uso de pantallas con cambios en las zonas cerebrales de la memoria y la atención",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/ciencia/2026/11/27/un-estudio-vincula-el-uso-de-pantallas-con-cambios-en-las-zonas-cerebrales-de-la-memoria-y-la-atencion/",
+     "resumen": "La investigación de la Universidad de Finlandia Oriental, realizada en jóvenes de 16 a 19 años, detectó reducciones en el lóbulo temporal medial, clave para consolidar recuerdos, además de variaciones en regiones ligadas a la planificación y el procesamiento visual"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Se extinguió hace más de 50 años, pero un estudio de ADN sorprendió a los expertos: así es el ave oculta en Nueva Zelanda",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/america/medio-ambiente/2026/11/27/se-extinguio-hace-mas-de-50-anos-pero-un-estudio-de-adn-sorprendio-a-los-expertos-asi-es-el-ave-oculta-en-nueva-zelanda/",
+     "resumen": "Especímenes guardados desde el siglo XIX en museos neozelandeses, británicos y australianos permitieron identificar al reyezuelo de Tōtaranui, una variedad del mātuhituhi que había pasado inadvertida durante más de un siglo"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Zumbido en los oídos: cuáles son los síntomas que indican una consulta médica urgente, según expertos",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/salud/2026/11/27/zumbido-en-los-oidos-cuales-son-los-sintomas-que-indican-una-consulta-medica-urgente-segun-expertos/",
+     "resumen": "La condición suele confundirse con secuelas de ruidos fuertes, aunque también se vincula con la pérdida auditiva y otras afecciones de salud. Cuáles son las causas más comunes y qué enfermedades suelen asociarse a este síntoma"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "Cuáles son los tres factores que ayudan a mejorar el entrenamiento de fuerza, según un entrenador",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/tendencias/2026/11/27/cuales-son-los-tres-factores-que-ayudan-a-mejorar-el-entrenamiento-de-fuerza-segun-un-entrenador/",
+     "resumen": "Más allá de perseguir el ejercicio o la rutina perfecta, Joe Delaney se centra en los aspectos que permiten avanzar sin caer en rutinas innecesariamente complejas"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "5 ejercicios diarios para entrenar la memoria y reducir la fatiga mental, según un experto",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/tendencias/2026/11/27/5-ejercicios-diarios-para-entrenar-la-memoria-y-reducir-la-fatiga-mental-segun-un-experto/",
+     "resumen": "El neuropsicólogo italiano Giuseppe Alfredo Iannoccari propone pausas breves para reforzar la concentración, el vocabulario y el recuerdo ante las interrupciones digitales"
+    },
+    {
+     "fuente": "Infobae (RSS)",
+     "titulo": "El viaje inesperado de un hombre con Alzheimer: desapareció y lo encontraron tocando el piano cerca de la ciudad donde creció",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.infobae.com/estados-unidos/2026/11/27/el-viaje-inesperado-de-un-hombre-con-alzheimer-desaparecio-y-lo-encontraron-tocando-el-piano-cerca-de-la-ciudad-donde-crecio/",
+     "resumen": "Frank Grow había dejado de conducir desde que recibió el diagnóstico. Pero ecorrió más de 160 kilómetros y protagonizó una escena inesperada antes de reencontrarse con su familia"
     },
     {
      "fuente": "Infobae (RSS)",
@@ -3621,167 +3971,6 @@
      "resumen": "Cada 24 de diciembre, las familias islandesas intercambian ejemplares y comienzan a leerlos esa misma noche, acompañados de bebidas calientes y del jólabland, una gaseosa típica de las fiestas en el país"
     },
     {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El viaje inesperado de un hombre con Alzheimer: desapareció y lo encontraron tocando el piano cerca de la ciudad donde creció",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/estados-unidos/2026/11/27/el-viaje-inesperado-de-un-hombre-con-alzheimer-desaparecio-y-lo-encontraron-tocando-el-piano-cerca-de-la-ciudad-donde-crecio/",
-     "resumen": "Frank Grow había dejado de conducir desde que recibió el diagnóstico. Pero ecorrió más de 160 kilómetros y protagonizó una escena inesperada antes de reencontrarse con su familia"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Ben Stiller recordó su experiencia junto a Robert De Niro en \"Los padres de ella\": “El sueño de todo actor es trabajar con artistas como él”",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/entretenimiento/2026/11/27/ben-stiller-recordo-su-experiencia-junto-a-robert-de-niro-en-los-padres-de-ella-el-sueno-de-todo-actor-es-trabajar-con-artistas-como-el/",
-     "resumen": "En diálogo con Empire, el elenco y los creadores revisitaron las claves del éxito de la comedia familiar, mientras la saga se prepara para estrenar una nueva entrega con Ariana Grande como protagonista"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Un estudio vincula el uso de pantallas con cambios en las zonas cerebrales de la memoria y la atención",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/ciencia/2026/11/27/un-estudio-vincula-el-uso-de-pantallas-con-cambios-en-las-zonas-cerebrales-de-la-memoria-y-la-atencion/",
-     "resumen": "La investigación de la Universidad de Finlandia Oriental, realizada en jóvenes de 16 a 19 años, detectó reducciones en el lóbulo temporal medial, clave para consolidar recuerdos, además de variaciones en regiones ligadas a la planificación y el procesamiento visual"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Se extinguió hace más de 50 años, pero un estudio de ADN sorprendió a los expertos: así es el ave oculta en Nueva Zelanda",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/america/medio-ambiente/2026/11/27/se-extinguio-hace-mas-de-50-anos-pero-un-estudio-de-adn-sorprendio-a-los-expertos-asi-es-el-ave-oculta-en-nueva-zelanda/",
-     "resumen": "Especímenes guardados desde el siglo XIX en museos neozelandeses, británicos y australianos permitieron identificar al reyezuelo de Tōtaranui, una variedad del mātuhituhi que había pasado inadvertida durante más de un siglo"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Zumbido en los oídos: cuáles son los síntomas que indican una consulta médica urgente, según expertos",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/2026/11/27/zumbido-en-los-oidos-cuales-son-los-sintomas-que-indican-una-consulta-medica-urgente-segun-expertos/",
-     "resumen": "La condición suele confundirse con secuelas de ruidos fuertes, aunque también se vincula con la pérdida auditiva y otras afecciones de salud. Cuáles son las causas más comunes y qué enfermedades suelen asociarse a este síntoma"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "5 ejercicios diarios para entrenar la memoria y reducir la fatiga mental, según un experto",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/tendencias/2026/11/27/5-ejercicios-diarios-para-entrenar-la-memoria-y-reducir-la-fatiga-mental-segun-un-experto/",
-     "resumen": "El neuropsicólogo italiano Giuseppe Alfredo Iannoccari propone pausas breves para reforzar la concentración, el vocabulario y el recuerdo ante las interrupciones digitales"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Fascinación y miedo: dos investigaciones explican cómo los niños construyen su relación con los animales",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/america/mundo/2026/11/27/fascinacion-y-miedo-dos-investigaciones-explican-como-los-ninos-construyen-su-relacion-con-los-animales/",
-     "resumen": "La ciencia desafía la idea de que todos los niños se relacionan igual con la naturaleza, esto sugiere que la educación y las experiencias directas son clave para moldear esa conexión"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La Navidad de Charlie Brown: la historia detrás del especial que cambió las fiestas en televisión",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/entretenimiento/2026/11/27/la-navidad-de-charlie-brown-la-historia-detras-del-especial-que-cambio-las-fiestas-en-television/",
-     "resumen": "Creada a contrarreloj, la producción enfrentó reparos por su música de jazz, la ausencia de risas grabadas y el mensaje que transmitía. Con los años, se consolidó entre los títulos imprescindibles para las fiestas"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El cuerpo bajo presión constante: así el estrés crónico daña cada sistema del organismo, según expertos",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/2026/11/27/el-cuerpo-bajo-presion-constante-asi-el-estres-cronico-dana-cada-sistema-del-organismo-segun-expertos/",
-     "resumen": "Décadas de investigación científica documentan una cascada de alteraciones cardiovasculares, inmunológicas, digestivas y musculares provocadas por la tensión sostenida. Cómo identificarlo y qué hacer para revertirlo"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Cuáles son los tres factores que ayudan a mejorar el entrenamiento de fuerza, según un entrenador",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/tendencias/2026/11/27/cuales-son-los-tres-factores-que-ayudan-a-mejorar-el-entrenamiento-de-fuerza-segun-un-entrenador/",
-     "resumen": "Más allá de perseguir el ejercicio o la rutina perfecta, Joe Delaney se centra en los aspectos que permiten avanzar sin caer en rutinas innecesariamente complejas"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Creyeron que tenía psicosis, pero era una inflamación cerebral: la influencer que pasó dos meses internada por error en un psiquiátrico.",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/historias/2026/11/27/creyeron-que-tenia-psicosis-pero-era-una-inflamacion-cerebral-la-influencer-que-paso-dos-meses-internada-por-error-en-un-psiquiatrico/",
-     "resumen": "Sabrina Bahsoon, que se hizo viral bailando en el subterráneo de Londres, recibió antipsicóticos hasta que su familia exigió más estudios. Tenía encefalitis anti-NMDA, una enfermedad autoinmune desencadenada por tumores en los ovarios"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Una condena, una fuga de una prisión federal y una carta al fiscal: qué se sabe del rol de Joey Ippolito en el caso de O. J. Simpson",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/historias/2026/11/27/una-condena-una-fuga-de-una-prision-federal-y-una-carta-al-fiscal-que-se-sabe-del-rol-de-joey-ippolito-en-el-caso-de-o-j-simpson/",
-     "resumen": "Documentos judiciales desclasificados y el testimonio del hermano de quien fuera señalado como posible encubridor de la estrella del fútbol americano, revisados por The New York Times, sugieren que el informante pudo haber ayudado a ocultar pruebas tras los asesinatos de Nicole Brown Simpson y Ronald Goldman"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Cómo limpiar botas de gamuza sin arruinar su textura",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/tendencias/2026/11/27/como-limpiar-botas-de-gamuza-sin-arruinar-su-textura/",
-     "resumen": "La rutina incluye cepillado, absorción controlada y guardado transpirable para conservar la forma del calzado"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Cuál es el hábito matutino que un cardiólogo recomienda no olvidar para cuidar al corazón",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/2026/11/27/cual-es-el-habito-matutino-que-un-cardiologo-recomienda-no-olvidar-para-cuidar-al-corazon/",
-     "resumen": "El especialista Nadim Geloo advirtió que esa omisión cotidiana puede acumularse con el paso del tiempo y traer consecuencias insospechadas. Qué señales suele identificar en sus pacientes y cómo decidió cambiar su propia rutina"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "De niños a adultos: cuáles son los riesgos y beneficios reales de la vitamina A",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/2026/11/27/de-ninos-a-adultos-cuales-son-los-riesgos-y-beneficios-reales-de-la-vitamina-a/",
-     "resumen": "La ciencia advierte que este nutriente esencial no actúa igual en todas las etapas de la vida, y que su consumo a través de suplementos puede traer consecuencias muy distintas según el perfil de quien lo recibe"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Cuántas veces al día es normal orinar y qué factores influyen en esa frecuencia",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/2026/11/27/cuantas-veces-al-dia-es-normal-orinar-y-que-factores-influyen-en-esa-frecuencia/",
-     "resumen": "Los despertares nocturnos, la urgencia repentina y la dificultad para vaciar la vejiga son señales que, junto con la cantidad de líquido ingerido, ayudan a evaluar si una modificación del hábito amerita una consulta médica sin demoras"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La alternativa natural que reduce la presión arterial en solo 20 días, según un estudio",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/ciencia/2026/11/27/la-alternativa-natural-que-reduce-la-presion-arterial-en-solo-20-dias-segun-un-estudio/",
-     "resumen": "Investigadores de la Universidad de Lancashire encontraron que una dosis diaria de 100 microlitros del aceite redujo la presión sistólica un promedio de 8,5 mmHg en adultos con hipertensión leve"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "6 beneficios de las legumbres para una alimentación equilibrada",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/2026/11/27/6-beneficios-de-las-legumbres-para-una-alimentacion-equilibrada/",
-     "resumen": "Estos alimentos ofrecen una alternativa versátil para sopas, ensaladas, guisos y rellenos, además de aportar nutrientes relevantes dentro de un patrón nutricional variado"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Cuatro meses de ejercicios en cuadrupedia y visitas a un santuario de lobos: cómo fue la preparación de Aaron Taylor-Johnson para \"Werwulf\"",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/entretenimiento/2026/11/27/cuatro-meses-de-ejercicios-en-cuadrupedia-y-visitas-a-un-santuario-de-lobos-como-fue-la-preparacion-de-aaron-taylor-johnson-para-werwulf/",
-     "resumen": "El actor británico detalló el trabajo físico y de observación que realizó para interpretar al protagonista de la próxima película de Robert Eggers, ambientada en el siglo XIV"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Deficiencia de zinc: cuáles son las primeras señales que pueden aparecer en la cara y los ojos",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/salud/ciencia/2026/11/27/deficiencia-de-zinc-cuales-son-las-primeras-senales-que-pueden-aparecer-en-la-cara-y-los-ojos/",
-     "resumen": "Un análisis publicado en Nutrition Reviews identificó que personas con afecciones cutáneas como dermatitis atópica o psoriasis presentan concentraciones reducidas de este mineral, con manifestaciones como queilitis angular, acné y ceguera nocturna"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "De una postal a un reloj de oro y un anillo de diamantes: reúnen más de 100 piezas del Titanic en una subasta récord",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/america/mundo/2026/11/27/de-una-postal-a-un-reloj-de-oro-y-un-anillo-de-diamantes-reunen-mas-de-100-piezas-del-titanic-en-una-subasta-record/",
-     "resumen": "El remate se realizó en Gran Bretaña y alcanzó el millón de libras esterlinas en ventas totales, cifra que confirmó el valor histórico que aún conservan las pertenencias de quienes viajaban a bordo"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Científicos del MIT desarrollan un modelo de IA que puede diseñar chips como un ingeniero y con una fracción de recursos",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/tecno/2026/11/27/cientificos-del-mit-desarrollan-un-modelo-de-ia-que-puede-disenar-chips-como-un-ingeniero-y-con-una-fraccion-de-recursos/",
-     "resumen": "La herramienta logró resultados cercanos a los del modelo GPT-6-Astra en pruebas de circuitos analógicos, pese a utilizar muchos menos parámetros y poder funcionar en una computadora portátil"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "11 alimentos que es mejor no congelar en el freezer",
-     "fecha": "2026-11-27 06:00",
-     "url": "https://www.infobae.com/tendencias/2026/11/27/11-alimentos-que-es-mejor-no-congelar-en-el-freezer/",
-     "resumen": "Conocer qué ocurre a bajas temperaturas ayuda a planificar compras, aprovechar sobrantes y reducir desperdicios en la cocina"
-    },
-    {
      "fuente": "SCMP Mundo (RSS, inglés)",
      "titulo": "Netherlands ‘will not be dictated to’, trade chief says in fight against US Match Act",
      "fecha": "2026-11-27 06:00",
@@ -3829,195 +4018,6 @@
      "fecha": "2026-11-27 05:50",
      "url": "https://www.abc.net.au/news/2026-11-27/sony-s-dog-robot-aibo-gets-rehomed-to-hospitals/107436690",
      "resumen": "Packed with sensors and digital cameras, this digital puppy has been programmed to remember its name, the owner's face and its surroundings."
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Hexe, el nuevo mundo mágico con el que Disney anima a descubrirse a uno mismo en 'Hechizo'",
-     "fecha": "2026-11-27 05:48",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/hexe-el-nuevo-mundo-magico-con-el-que-disney-anima-a-descubrirse-a-uno-mismo-en-hechizo/",
-     "resumen": "Diego Grau González Madrid, 27 nov (EFE).- Una joven incomprendida y poco convencional con un oculto poder mágico es la nueva estrella de Disney en 'Hechizo: Bienvenidos a Hexe', que se estrena este viernes para descubrir cómo alcanzar el verdadero potencial de cada uno a través de la magia de la animación, ha…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La mujer asesinada en Bilbao fue calificada por la Ertzaintza de riesgo \"básico\"",
-     "fecha": "2026-11-27 05:48",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/la-mujer-asesinada-en-bilbao-fue-calificada-por-la-ertzaintza-de-riesgo-basico/",
-     "resumen": "Vitoria, 27 nov (EFE).- La mujer asesinada en Bilbao por parte de su expareja había sido calificada de \"riesgo básico\" por la Ertzaintza, según ha explicado la directora general del Instituto Vasco de la Mujer, Emakunde, Miren Elgarresta. Elgarresta ha condenado este asesinato en una entrevista en Radio Euskadi en la…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Feijóo pide escuchar qué quiso decir con el \"calladita\" a Colau que pronunció en el debate",
-     "fecha": "2026-11-27 05:47",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/feijoo-pide-escuchar-que-quiso-decir-con-el-calladita-a-colau-que-pronuncio-en-el-debate/",
-     "resumen": "Madrid, 27 nov (EFE).- El candidato del PP a la presidencia del Gobierno, Alberto Núñez Feijóo, ha respondido este viernes a las críticas por la polémica palabra \"calladita\" que dirigió ayer en el debate a la candidata de Frente Amplio, Ada Colau, llamando a escuchar lo que quiso decir. \"Yo creo que lo mejor es ver…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Llegan a Gran Canaria 49 ocupantes de una neumática y buscan un cayuco al sur de El Hierro",
-     "fecha": "2026-11-27 05:47",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/llegan-a-gran-canaria-49-ocupantes-de-una-neumatica-y-buscan-un-cayuco-al-sur-de-el-hierro/",
-     "resumen": "Las Palmas de Gran Canaria, 27 nov (EFE).- Salvamento Marítimo ha desembarcado en las últimas horas en Gran Canaria a 49 migrantes que iban en una neumática y se dirige a esta hora a auxiliar a un cayuco avistado esta madrugada por un yate a 72 kilómetros al sur-sureste de El Hierro. La neumática fue avistada este…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Las ventas del comercio minorista caen un 0,9 % en octubre y suman cuatro meses a la baja",
-     "fecha": "2026-11-27 05:47",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/las-ventas-del-comercio-minorista-caen-un-09-en-octubre-y-suman-cuatro-meses-a-la-baja/",
-     "resumen": "Madrid, 27 nov (EFE).- La ventas del comercio minorista cayeron un 0,9 % interanual en octubre, encadenando así cuatro meses consecutivos a la baja, según los datos que ha publicado este viernes el Instituto Nacional de Estadística (INE). A precios constantes, corregido de efectos estacionales y de calendario, el…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Los países afrontan en La Haya el dilema de salvar a la CPI sin renunciar a sus principios",
-     "fecha": "2026-11-27 05:46",
-     "url": "https://www.infobae.com/america/agencias/2026/11/27/los-paises-afrontan-en-la-haya-el-dilema-de-salvar-a-la-cpi-sin-renunciar-a-sus-principios/",
-     "resumen": "Imane Rachidi La Haya, 27 nov (EFE).- Los países que hace dos décadas crearon la Corte Penal Internacional (CPI) se reúnen desde el próximo lunes en un momento crítico para el tribunal, que busca mantener su actividad pese a las sanciones estadounidenses, frenar nuevas retiradas de países y salvar sus competencias…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La caída del PIB francés en el tercer trimestre fue peor que lo anticipado, del 0,2 %",
-     "fecha": "2026-11-27 05:46",
-     "url": "https://www.infobae.com/america/agencias/2026/11/27/la-caida-del-pib-frances-en-el-tercer-trimestre-fue-peor-que-lo-anticipado-del-02/",
-     "resumen": "París, 27 nov (EFE).- El producto interior bruto (PIB) de Francia cayó un 0,2 % en el tercer trimestre, anunció este viernes el Instituto Nacional de Estadística (Insee) lo que significa una décima más que la primera cifra provisional publicada, y eso después del estancamiento que había experimentado entre abril y…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La JEC ordena consignar como \"votos no escrutables\" los emitidos por afectados por la 'ley de nietos'",
-     "fecha": "2026-11-27 05:46",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/la-jec-ordena-consignar-como-votos-no-escrutables-los-emitidos-por-afectados-por-la-ley-de-nietos/",
-     "resumen": "La Junta Electoral Central (JEC) ha ordenado consignar como \"votos no escrutables\" los sobres de votación emitidos por los nacionalizados por la llamada 'ley de nietos' a los que el Tribunal Supremo mantiene suspendido su derecho de sufragio para las elecciones de este domingo. Así lo establece el organismo arbitral…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Cuánto cuesta un gramo de oro en España, hoy viernes 27 de noviembre",
-     "fecha": "2026-11-27 05:46",
-     "url": "https://www.infobae.com/espana/2026/11/27/cuanto-cuesta-un-gramo-de-oro-en-espana-hoy-viernes-27-de-noviembre/",
-     "resumen": "Conoce cuáles fueron los últimos movimientos que registró el metal precioso en el mercado"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "La población empleada con residencia en Alemania cae un 0,5 % interanual en octubre",
-     "fecha": "2026-11-27 05:46",
-     "url": "https://www.infobae.com/america/agencias/2026/11/27/la-poblacion-empleada-con-residencia-en-alemania-cae-un-05-interanual-en-octubre/",
-     "resumen": "Berlín, 27 nov (EFE).- El número de personas empleadas con residencia en Alemania cayó en octubre un 0,5 % interanual, o en 224.000, hasta alrededor de los 45,69 millones, según los datos preliminares publicados este viernes por la Oficina Federal de Estadística (Destatis). Así, se mantuvo la tendencia a la baja…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Buruaga pide votar \"con inteligencia\" porque \"solo el PP puede quitar el segundo diputado al PSOE en Cantabria\"",
-     "fecha": "2026-11-27 05:46",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/buruaga-pide-votar-con-inteligencia-porque-solo-el-pp-puede-quitar-el-segundo-diputado-al-psoe-en-cantabria/",
-     "resumen": "La presidenta del Partido Popular y de Cantabria, María José Sáenz de Buruaga, ha pedido a los cántabros votar el domingo \"con memoria, con esperanza y con inteligencia\" y concentrar el voto del cambio en el Partido Popular porque \"solo hay un partido en Cantabria que puede quitar el segundo diputado a Sánchez\"…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Una agencia creativa genera alta rentabilidad en el deporte con discapacidad",
-     "fecha": "2026-11-27 05:46",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/una-agencia-creativa-genera-alta-rentabilidad-en-el-deporte-con-discapacidad/",
-     "resumen": "David Ramiro Madrid, 27 nov (EFE).- 600.000 euros facturados este 2026, más de 23 millones de visualizaciones de la serie 'Cojo por el mundo' o las 850.000 impresiones realizadas con el torneo de tenis en silla de ruedas de Río de Janeiro son algunas de las cifras que resumen el volumen de negocio de VLP, la agencia…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Mueren trece soldados en un ataque en el oeste de Níger",
-     "fecha": "2026-11-27 05:45",
-     "url": "https://www.infobae.com/america/agencias/2026/11/27/mueren-trece-soldados-en-un-ataque-en-el-oeste-de-niger/",
-     "resumen": "Al menos trece soldados de Níger han muerto en un nuevo ataque perpetrado por personas armadas no identificadas contra un puesto de la Guardia Nacional en Sanam, situada en la región de Tillabéri (oeste) --ubicada en la frontera con Malí y Burkina Faso--, según han confirmado las autoridades del país africano. El…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Ropa deportiva femenina, las marcas acentúan su lucha en un mercado de 198.000 millones",
-     "fecha": "2026-11-27 05:45",
-     "url": "https://www.infobae.com/espana/agencias/2026/11/27/ropa-deportiva-femenina-las-marcas-acentuan-su-lucha-en-un-mercado-de-198000-millones/",
-     "resumen": "Inés Gutiérrez y Julia López Madrid, 27 nov (EFE).- La ropa deportiva femenina se ha convertido en uno de los grandes campos de batalla de la industria de la moda. Las marcas acentuarán en 2027 su lucha por una cuota de mercado en continuo crecimiento. Según Fortune Business Insights, las ventas alcanzaron…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Seis detenidos en una operación contra el tráfico de drogas en Vizcaya, Cantabria y Barcelona",
-     "fecha": "2026-11-27 05:45",
-     "url": "https://www.infobae.com/america/agencias/2026/11/27/seis-detenidos-en-una-operacion-contra-el-trafico-de-drogas-en-vizcaya-cantabria-y-barcelona/",
-     "resumen": "La Guardia Civil ha detenido a seis personas e investiga a una séptima por su presunta implicación en delitos contra la salud pública -tráfico de drogas-, blanqueo de capitales y pertenencia a organización criminal. La operación 'Cantabizk', desarrollada en las provincias de Vizcaya, Cantabria y Barcelona, ha…"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Montenegro descarta acudir al Constitucional y espera que Seguro promulgue el presupuesto",
-     "fecha": "2026-11-27 05:45",
-     "url": "https://www.infobae.com/america/agencias/2026/11/27/montenegro-descarta-acudir-al-constitucional-y-espera-que-seguro-promulgue-el-presupuesto/",
-     "resumen": "Lisboa, 27 nov (EFE).- El primer ministro de Portugal, Luís Montenegro, ha afirmado que su Gobierno no acudirá al Tribunal Constitucional por la disputa sobre los Presupuestos del Estado para 2027 y expresó su confianza en que el presidente, António José Seguro, promulgue las cuentas, pese a la negativa del Ejecutivo…"
-    },
-    {
-     "fuente": "Europa Press · Internacional (RSS)",
-     "titulo": "Jair Bolsonaro presenta una \"mejorÃ­a clÃ­nica\" pero sigue en la UCI en Brasil por oclusiÃ³n intestinal y bronconeumonÃ­a",
-     "fecha": "2026-11-27 05:44",
-     "url": "https://www.europapress.es/internacional/noticia-jair-bolsonaro-presenta-mejoria-clinica-sigue-uci-brasil-oclusion-intestinal-bronconeumonia-20261127094452.html",
-     "resumen": "El expresidente brasileÃ±o Jair Bolsonaro ha experimentado en los Ãºltimos dÃ­as una \"mejorÃ­a clÃ­nica\", si bien tiene que seguir ingresado en una unidad de cuidados intensivos, tras ser ingresado la semana pasada por complicaciones intestinales, segÃºn el Ãºltimo parte mÃ©dico publicado por el hospital DF Star de…"
-    },
-    {
-     "fuente": "SCMP Mundo (RSS, inglés)",
-     "titulo": "Third Trump-branded project takes shape in Hanoi amid US-Vietnam tariff talks",
-     "fecha": "2026-11-27 05:44",
-     "url": "https://www.scmp.com/news/asia/southeast-asia/article/3376035/third-trump-branded-project-takes-shape-hanoi-amid-us-vietnam-tariff-talks",
-     "resumen": "Vietnamese ⁠business partners of the ⁠Trump Organisation are planning ⁠a skyscraper in Hanoi, three people with knowledge of the new project said. It is one of three Trump-branded projects in the works in the Southeast Asian nation. A US$1.5 billion ‌Trump-branded golf complex is being developed near Hanoi by local…"
-    },
-    {
-     "fuente": "Times of India Mundo (RSS, inglés)",
-     "titulo": "‘Hafiz-e-Quran’: LeT, JeM figures back Asim Munir as Pak army pushes to mainstream terror outfits",
-     "fecha": "2026-11-27 05:42",
-     "url": "https://timesofindia.indiatimes.com/world/pakistan/hafiz-e-quran-let-jem-figures-back-asim-munir-as-pak-army-pushes-to-mainstream-terror-outfits/articleshow/136215131.cms",
-     "resumen": ""
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El secreto que esconden los ovarios: descubren que las células que nutren los óvulos tienen dos orígenes diferentes",
-     "fecha": "2026-11-27 05:41",
-     "url": "https://www.infobae.com/espana/2026/11/27/el-secreto-que-esconden-los-ovarios-descubren-que-las-celulas-que-nutren-los-ovulos-tienen-dos-origenes-diferentes/",
-     "resumen": "Un estudio aporta nueva información para entender cómo se construye el ovario antes incluso del nacimiento"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "El Gobierno aprobó el Presupuesto en Diputados pero la oposición le impuso un fuerte aumento para las universidades",
-     "fecha": "2026-11-27 05:41",
-     "url": "https://www.infobae.com/politica/2026/11/27/el-gobierno-logro-aprobar-el-presupuesto-en-diputados-pero-tuvo-que-aumentar-los-fondos-para-las-universidades/",
-     "resumen": "Incrementaron los fondos de $7.3 billones a $11 billones. Son las partidas que reclamaban los rectores del Consejo Interuniversitario Nacional. También reforzaron las asignaciones para el INTI, INTA, SENASA y CONICET. El oficialismo ahora buscará revertir los cambios en el Senado a mediados de diciembre"
-    },
-    {
-     "fuente": "Infobae (RSS)",
-     "titulo": "Uribe confía en acuerdo sobre Ley de Ajuste Fiscal y propone eliminar patrimonio y timbre",
-     "fecha": "2026-11-27 05:40",
-     "url": "https://www.infobae.com/colombia/2026/11/27/uribe-confia-en-acuerdo-sobre-ley-de-ajuste-fiscal-y-propone-eliminar-patrimonio-y-timbre/",
-     "resumen": "El expresidente confirmó que el Centro Democrático entregó al Gobierno un documento con propuestas para modificar el proyecto y defendió una reforma orientada al crecimiento económico"
-    },
-    {
-     "fuente": "Al Jazeera (RSS, inglés)",
-     "titulo": "Costa Rica denies entry to UN’s Albanese over ‘links to terrorist acts’",
-     "fecha": "2026-11-27 05:39",
-     "url": "https://www.aljazeera.com/news/2026/11/27/costa-rica-denies-entry-to-uns-albanese-over-links-to-terrorist?traffic_source=rss",
-     "resumen": "Authorities said the UN special rapporteur was blocked from entering the country due to 'national security' risks."
-    },
-    {
-     "fuente": "The Guardian Mundo (RSS, inglés)",
-     "titulo": "Labour’s split over Rosebank oilfield exposed by letter from nearly 100 MPs",
-     "fecha": "2026-11-27 05:39",
-     "url": "https://www.theguardian.com/politics/2026/nov/26/labour-split-over-rosebank-oilfield-exposed-by-letter-from-nearly-100-mps",
-     "resumen": "Exclusive: Frontbenchers join scores of party colleagues urging Burnham not to let ministers approve project Opinion: Why Labour MPs are opposing Rosebank Podcast: are resignations next? Labour’s internal divisions over the giant Rosebank oilfield have spilled into the open, with nearly 100 Labour MPs – including a…"
-    },
-    {
-     "fuente": "Al Jazeera (RSS, inglés)",
-     "titulo": "‘Will I get taller?’: Gaza’s children suffer stunting amid war, blockade",
-     "fecha": "2026-11-27 05:37",
-     "url": "https://www.aljazeera.com/features/2026/11/27/will-i-get-taller-gazas-children-suffer-stunting-amid-war-blockade?traffic_source=rss",
-     "resumen": "One in eight children is stunted. Many have bones that have not matured the way they should. Treatment is elusive."
-    },
-    {
-     "fuente": "Japan Times (RSS, inglés)",
-     "titulo": "Kobe city government proposes tax on vacant condo units",
-     "fecha": "2026-11-27 05:36",
-     "url": "https://www.japantimes.co.jp/news/2026/11/27/japan/kobe-vacant-condo-tax/",
-     "resumen": "If enacted, it would mark the first tax in Japan targeting vacant condominium units specifically."
-    },
-    {
-     "fuente": "The Guardian Europa (RSS, inglés)",
-     "titulo": "At critical juncture, Friedrich Merz finds Germans’ support for Ukraine wavering",
-     "fecha": "2026-11-27 05:33",
-     "url": "https://www.theguardian.com/world/2026/nov/27/at-critical-juncture-friedrich-merz-finds-germans-support-for-ukraine-wavering",
-     "resumen": "German chancellor is on difficult terrain, at home and abroad, as he fights to maintain European backing for Kyiv The German chancellor, Friedrich Merz, is navigating choppy waters both at home and abroad over his insistence that Europe must keep up support – both military and financial – for Ukraine. At a Brussels…"
     },
     {
      "fuente": "The Guardian Mundo (RSS, inglés)",
@@ -4111,7 +4111,7 @@
      "fuente": "Bing Noticias · Startups Chile",
      "url": "https://www.bing.com/news/search?q=startup%20Chile%20inversi%C3%B3n&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 11
+     "n": 10
     },
     {
      "fuente": "Bing Noticias · Pymes y Corfo",
@@ -4123,7 +4123,7 @@
      "fuente": "Bing Noticias · Emprendimiento Chile",
      "url": "https://www.bing.com/news/search?q=%28emprendimiento%20OR%20startup%20OR%20%22capital%20de%20riesgo%22%29%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 8
+     "n": 7
     },
     {
      "fuente": "Bing Noticias · Innovación pymes",
@@ -4159,7 +4159,7 @@
      "fuente": "Bing Noticias · Rondas de inversión Latinoamérica",
      "url": "https://www.bing.com/news/search?q=%28%22ronda%20de%20inversi%C3%B3n%22%20OR%20%22levant%C3%B3%22%20OR%20%22serie%20A%22%29%20startup%20Latinoam%C3%A9rica&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 7
     },
     {
      "fuente": "Bing Noticias · Emprendedores Chile",
@@ -4200,8 +4200,9 @@
     {
      "fuente": "Sercotec (RSS)",
      "url": "https://www.sercotec.cl/feed/",
-     "ok": true,
-     "n": 10
+     "ok": false,
+     "n": 0,
+     "error": "HTTP 502"
     },
     {
      "fuente": "Tour Innovación · emprendimiento (RSS)",
@@ -4212,25 +4213,18 @@
    ],
    "notas": [
     {
-     "fuente": "Ecosistema Startup (RSS)",
-     "titulo": "Business angels: 3,5 cierres por cada salida con éxito",
-     "fecha": "2026-11-27 03:21",
-     "url": "https://ecosistemastartup.com/business-angels-35-cierres-por-cada-salida-con-exito/",
-     "resumen": "Qué revela el informe de Bigban y Comillas sobre la inversión ángel Por cada desinversión con éxito, un business angel español acumula 3,5 cierres de startups. Ese es el dato central del informe que Bigban Investors Spain elaboró junto a la Universidad Pontificia Comillas y presentó este jueves en el Bigban Investors…"
+     "fuente": "Tour Innovación · emprendimiento (RSS)",
+     "titulo": "CÃ¡ncer de piel: el cuero cabelludo tambiÃ©n necesita protecciÃ³n frente al sol",
+     "fecha": "2026-11-27 06:20",
+     "url": "https://www.tourinnovacion.cl/salud-bienestar/cancer-de-piel-el-cuero-cabelludo-tambien-necesita-proteccion-frente-al-sol/",
+     "resumen": "La pÃ©rdida de cabello deja expuesta una zona que habitualmente cuenta con la protecciÃ³n natural de la fibra… La entrada CÃ¡ncer de piel: el cuero cabelludo tambiÃ©n necesita protecciÃ³n frente al sol se publicÃ³ primero en Tour InnovaciÃ³n."
     },
     {
-     "fuente": "Ecosistema Startup (RSS)",
-     "titulo": "SmartGeo, la startup de IA que busca clientes B2B",
-     "fecha": "2026-11-27 03:18",
-     "url": "https://ecosistemastartup.com/smartgeo-la-startup-de-ia-que-busca-clientes-b2b/",
-     "resumen": "¿Qué es SmartGeo y cómo encuentra clientes que sí necesitan tu producto? SmartGeo es una startup nacida en Mallorca que usa inteligencia artificial para atacar uno de los costes más silenciosos de cualquier equipo comercial: las llamadas a puertas que nunca iban a abrirse. En lugar de vender bases de datos con…"
-    },
-    {
-     "fuente": "Ecosistema Startup (RSS)",
-     "titulo": "Hernández de Cos, primer español al frente del BCE en 2027",
-     "fecha": "2026-11-27 03:06",
-     "url": "https://ecosistemastartup.com/hernandez-de-cos-primer-espanol-al-frente-del-bce-en-2027/",
-     "resumen": "Hernández de Cos presidirá el BCE: qué cambia para quien financia una startup en euros El español Pablo Hernández de Cos será el quinto presidente del Banco Central Europeo (BCE) y el primero de nacionalidad española en la historia de la institución. Los líderes de la eurozona respaldaron su candidatura el jueves 26…"
+     "fuente": "El Español on MSN",
+     "titulo": "OpenAI y Chile firman un acuerdo para impulsar el uso de la IA en la administración pública y apoyar a las startups",
+     "fecha": "2026-11-26 18:00",
+     "url": "https://www.msn.com/es-es/noticias/otras/openai-y-chile-firman-un-acuerdo-para-impulsar-el-uso-de-la-ia-en-la-administraci%C3%B3n-p%C3%BAblica-y-apoyar-a-las-startups/ar-AA2ikAq7",
+     "resumen": "La alianza explorará la adopción de tecnología en los procesos administrativos del Ministerio, incluido el posible apoyo de OpenAI para implementar nuevos modelos, así como asesoría y capacitación par..."
     },
     {
      "fuente": "FIA Innovacion Agraria (RSS)",
@@ -4238,13 +4232,6 @@
      "fecha": "2026-11-26 17:08",
      "url": "https://www.fia.cl/fia-desarrolla-encuentros-regionales-para-coordinar-la-innovacion-del-agro/",
      "resumen": "El ciclo reúne a actores del sector productivo, la academia y las instituciones públicas para construir hojas de ruta acordes a cada territorio. En la Región Metropolitana, la jornada puso el foco en acercar la investigación a las necesidades de productores y productoras."
-    },
-    {
-     "fuente": "El Español",
-     "titulo": "OpenAI y Chile firman un acuerdo para impulsar el uso de la IA en la Administración pública y apoyar a las startups",
-     "fecha": "2026-11-26 13:00",
-     "url": "https://www.elespanol.com/invertia/disruptores-americas/20261127/openai-chile-firman-acuerdo-impulsar-uso-ia-administracion-publica-apoyar-startups/1003744469675_0.html",
-     "resumen": "La alianza explorará la adopción de tecnología en los procesos administrativos del Ministerio, incluido el posible apoyo de OpenAI para implementar nuevos modelos, así como asesoría y capacitación par..."
     },
     {
      "fuente": "ecosistemastartup",
@@ -4266,13 +4253,6 @@
      "fecha": "2026-11-26 10:00",
      "url": "https://www.tourinnovacion.cl/convocatorias/se-abren-100-vacantes-para-mujeres-en-mineria/",
      "resumen": "J.E.J. IngenierÃ­a hace un llamado para cubrir vacantes tÃ©cnicas y profesionales en faenas y oficinas a lo largo… La entrada Se abren 100 vacantes para mujeres en minerÃ­a se publicÃ³ primero en Tour InnovaciÃ³n."
-    },
-    {
-     "fuente": "ecosistemastartup",
-     "titulo": "MIDDA, startup chilena de IoT, ya es proveedor de Nutrisco",
-     "fecha": "2026-11-26 08:51",
-     "url": "https://ecosistemastartup.com/midda-startup-chilena-de-iot-ya-es-proveedor-de-nutrisco/",
-     "resumen": "De ganar un piloto a ser proveedor permanente de Nutrisco MIDDA, la startup chilena de monitoreo industrial basado en internet de las cosas (IoT), ya es..."
     },
     {
      "fuente": "Radio Las Nieves",
@@ -4380,13 +4360,6 @@
      "resumen": "El dólar cerró en $1.040,5 y quedó a un paso de su récord de 2022 El tipo de cambio en Chile subió $7,1 y cerró en $1.040,5 el miércoles 25 de..."
     },
     {
-     "fuente": "Sercotec (RSS)",
-     "titulo": "Novedades para la postulación a fondos concursables de Sercotec",
-     "fecha": "2026-11-25 15:27",
-     "url": "https://www.sercotec.cl/novedades-para-la-postulacion-a-fondos-concursables-de-sercotec/",
-     "resumen": "● A contar del año 2027, diversas convocatorias requerirán que se complete una capacitación antes del periodo de postulaciones, fomentando así la preparación y el desarrollo de competencias entre los emprendedores."
-    },
-    {
      "fuente": "agendalogistica.cl",
      "titulo": "Startups: ProChile firma convenio con centro de emprendimiento vasco",
      "fecha": "2026-11-25 13:00",
@@ -4420,13 +4393,6 @@
      "fecha": "2026-11-25 08:07",
      "url": "https://www.radiosago.cl/abastible-impulsara-la-innovacion-agricola-y-el-desarrollo-de-las-pymes-del-sur-de-chile-en-sago-fisur-2026/",
      "resumen": "En el marco de la edición número 100 de la feria, la compañía desarrollará una serie de iniciativas orientadas a acercar nuevas tecnologías al sector agrícola, incluyendo una jornada de innovación par..."
-    },
-    {
-     "fuente": "Tour Innovación · emprendimiento (RSS)",
-     "titulo": "Con realidad virtual y experiencias interactivas, Educa Sostenible acercÃ³ la eficiencia energÃ©tica a estudiantes y comunidades de ValparaÃ­so",
-     "fecha": "2026-11-25 06:34",
-     "url": "https://www.tourinnovacion.cl/energia/con-realidad-virtual-y-experiencias-interactivas-educa-sostenible-acerco-la-eficiencia-energetica-a-estudiantes-y-comunidades-de-valparaiso/",
-     "resumen": "La iniciativa del Ministerio de EnergÃ­a realizÃ³ con Ã©xito una jornada educativa en el Museo de Historia Natural… La entrada Con realidad virtual y experiencias interactivas, Educa Sostenible acercÃ³ la eficiencia energÃ©tica a estudiantes y comunidades de ValparaÃ­so se publicÃ³ primero en Tour InnovaciÃ³n."
     },
     {
      "fuente": "tele13radio",
@@ -4497,13 +4463,6 @@
      "fecha": "2026-11-23 19:02",
      "url": "https://techcrunch.com/2026/11/23/supertake-raises-20m-to-let-ai-agents-turn-your-market-predictions-into-stock-portfolios/",
      "resumen": "Think you know where the market is headed? A startup called Supertake lets you put money behind your ideas without having to pick the stocks yourself."
-    },
-    {
-     "fuente": "Sercotec (RSS)",
-     "titulo": "Batalla de Prompts puso a prueba el manejo de la IA en los emprendedores chilenos",
-     "fecha": "2026-11-23 15:28",
-     "url": "https://www.sercotec.cl/batalla-de-prompts-puso-a-prueba-el-manejo-de-la-ia-en-los-emprendedores-chilenos/",
-     "resumen": "● Competencia organizada por Sercotec se robó las miradas en EtMday, evento donde la institución acercó el uso de la inteligencia artificial en beneficio de las pymes, con dinámicas lúdicas y una nueva herramienta de desarrollo empresarial."
     },
     {
      "fuente": "FIA Innovacion Agraria (RSS)",
@@ -4608,7 +4567,7 @@
      "fuente": "Bing Noticias · Inteligencia artificial",
      "url": "https://www.bing.com/news/search?q=%22inteligencia%20artificial%22%20%28OpenAI%20OR%20Anthropic%20OR%20Google%20OR%20Meta%20OR%20Nvidia%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · Ciberseguridad",
@@ -4751,6 +4710,13 @@
      "fecha": "2026-11-27 06:00",
      "url": "https://www.genbeta.com/actualidad/cocineros-nutricionistas-coinciden-salmon-sera-saludable-jugoso-cocinas-zumo-naranja-vez-aceite",
      "resumen": "Si tienes un par de lomos de salmón en la nevera y te apetece algo diferente de la plancha de siempre, puedes probar de una receta de salmón a la naranja y tirar de esta fruta para preparar una salsa en la que el pescado termina de cocinarse. Además, tanto los cocineros como los nutricionistas coinciden en que con…"
+    },
+    {
+     "fuente": "Hacker News portada (RSS oficial)",
+     "titulo": "Claude sabotaging SOTA ML research tasks",
+     "fecha": "2026-11-27 05:28",
+     "url": "https://twitter.com/RealAstropulse/status/2126119408997466389",
+     "resumen": "Comments"
     },
     {
      "fuente": "Hipertextual (RSS)",
@@ -4907,13 +4873,6 @@
      "resumen": "Comments"
     },
     {
-     "fuente": "Hacker News portada (RSS oficial)",
-     "titulo": "\"What's Claude's Fursona?\" and Other Questions",
-     "fecha": "2026-11-27 01:56",
-     "url": "https://herecomesthemoon.net/2026/11/whats-claudes-fursona/",
-     "resumen": "Comments"
-    },
-    {
      "fuente": "FayerWayer (RSS)",
      "titulo": "Volver a cabalgar por Hyrule sin bloqueos: Qué soluciona el primer parche del remake de Ocarina of Time",
      "fecha": "2026-11-27 00:39",
@@ -5003,6 +4962,13 @@
      "fecha": "2026-11-26 21:00",
      "url": "https://www.xataka.com.mx/automovil/volkswagen-lamando-gts-llega-a-mexico-china-217-hp-precio-casi-800-000-pesos",
      "resumen": "Volkswagen tiene un nuevo sedán en México, pero esta vez no viene de Alemania ni de alguna de sus plantas tradicionales en el continente americano. El Lamando GTS llega desde China con un motor turbo de 217 caballos de fuerza y un precio de casi 800,000 pesos. Es un modelo que combina diseño deportivo, mucho…"
+    },
+    {
+     "fuente": "20 minutos on MSN",
+     "titulo": "Suiza confirma cinco ciberataques con inteligencia artificial contra empresas e infraestructuras críticas",
+     "fecha": "2026-11-26 20:37",
+     "url": "https://www.msn.com/es-es/noticias/otras/suiza-confirma-cinco-ciberataques-con-inteligencia-artificial-contra-empresas-e-infraestructuras-cr%C3%ADticas/ar-AA2ikVH1",
+     "resumen": "Los ciberdelincuentes han ampliado sus capacidades y abierto nuevas posibilidades para automatizar ataques informáticos gracias a los avances en inteligencia artificial, ya que, por primera vez, el Ce..."
     },
     {
      "fuente": "Xataka México (RSS)",
@@ -5360,13 +5326,6 @@
      "fecha": "2026-11-26 14:00",
      "url": "https://www.xataka.com/seleccion/mediamarkt-quiere-que-cambiemos-tele-este-black-friday-descuentos-50-todo-tipo-modelos",
      "resumen": "Históricamente, el Black Friday siempre ha sido el mejor momento para actualizar nuestros dispositivos electrónicos. Los móviles, ordenadores y televisores siempre han sido protagonistas de estas ofertas. Precisamente, durante el Black Friday de MediaMarkt, todos estos están siendo protagonistas, aunque en su…"
-    },
-    {
-     "fuente": "TechCrunch (RSS)",
-     "titulo": "A month with the iPhone Duo has changed how I use my phone",
-     "fecha": "2026-11-26 14:00",
-     "url": "https://techcrunch.com/2026/11/26/a-month-with-the-iphone-duo-has-changed-how-i-use-my-phone/",
-     "resumen": "From reading more books to breaking mindless scrolling habits, Apple's foldable has changed my daily routines in ways I didn't anticipate."
     }
    ]
   },
@@ -5581,13 +5540,6 @@
      "resumen": "El Ministerio de Vivienda y Urbanismo, a través del Serviu Atacama, mantiene un despliegue permanente, en terreno, para resguardar el buen uso de los recursos públicos y asegurar que las viviendas ent..."
     },
     {
-     "fuente": "sabes",
-     "titulo": "Subsidio DS1 en el Biobío abre opción para comprar casas de hasta $165 millones: quedan horas para postular",
-     "fecha": "2026-11-25 23:38",
-     "url": "https://sabes.cl/2026/11/26/subsidio-ds1-en-el-biobio-abre-opcion-para-comprar-casas-de-hasta-165-millones-quedan-horas-para-postular/",
-     "resumen": "El nuevo Tramo 4 del beneficio habitacional permite acceder a viviendas de hasta 4.000 UF y entrega un aporte estatal de 400 UF. Las postulaciones al segundo llamado de 2026 cierran este viernes 27 de..."
-    },
-    {
      "fuente": "La Tercera · Pulso (RSS, inmobiliario)",
      "titulo": "El paso a paso para que adultos mayores se eximan del pago de contribuciones, beneficio que parte en enero",
      "fecha": "2026-11-25 12:15",
@@ -5607,6 +5559,20 @@
      "fecha": "2026-11-25 08:44",
      "url": "https://www.timeline.cl/antofagasta-es-la-region-mas-cara-para-arrendar-en-chile-y-tiene-mas-demanda-por-aviso-que-santiago/",
      "resumen": "En la Región de Antofagasta, el arriendo promedio de un departamento alcanza los $768.000 y el de una casa, $1.787.000: los valores más altos del país en ambas categorías, según un análisis de Yapo.cl..."
+    },
+    {
+     "fuente": "13.cl",
+     "titulo": "Hasta este viernes: cómo postular al nuevo Subsidio DS1 y recibir más de $22 millones",
+     "fecha": "2026-11-25 07:33",
+     "url": "https://www.13.cl/programas/noticias-13/servicios/hasta-este-viernes-como-postular-al-nuevo-subsidio-ds1-y-recibir",
+     "resumen": "El proceso contempla 2.500 cupos para nuevos beneficiarios y finaliza este viernes 27 de noviembre. Quedan pocos días para postular al nuevo Tramo 4.000 del Subsidio DS1, un beneficio habitacional..."
+    },
+    {
+     "fuente": "El Rancagüino",
+     "titulo": "Vivienda en regiones: tendencias y arriendo en Valdivia",
+     "fecha": "2026-11-25 07:18",
+     "url": "https://www.elrancaguino.cl/2026/11/25/vivienda-en-regiones-tendencias-y-arriendo-en-valdivia/",
+     "resumen": "El fenómeno de la descentralización habitacional en Chile continúa consolidándose con fuerza este año, impulsado por familias y profesionales de la zona..."
     },
     {
      "fuente": "Reporte Minero",
@@ -5663,6 +5629,13 @@
      "fecha": "2026-11-23 18:15",
      "url": "https://www.t13.cl/noticia/te-puede-servir/ultimos-dias-para-postular-al-nuevo-subsidio-ds1-cuanto-dinero-entrega-quienes-24-11-2026",
      "resumen": "El programa del MINVU contempla 2.500 cupos para nuevos beneficiarios, además de otros 2.500 destinados a quienes ya cuentan con un subsidio y desean cambiarse de tramo."
+    },
+    {
+     "fuente": "Chócale",
+     "titulo": "Finanzas personales: guía de arriendo en Las Condes 2026",
+     "fecha": "2026-11-23 13:00",
+     "url": "https://chocale.cl/2026/11/finanzas-personales-guia-de-arriendo-en-las-condes-2026/",
+     "resumen": "Arrendar en Las Condes exige evaluar ingresos, UF, gastos comunes y transporte, además de preparar antecedentes y negociar cuidadosamente el contrato."
     },
     {
      "fuente": "Radio Agricultura",
@@ -5816,7 +5789,7 @@
      "fuente": "Bing Noticias · Equitación",
      "url": "https://www.bing.com/news/search?q=equitaci%C3%B3n%20salto%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 4
+     "n": 5
     },
     {
      "fuente": "Jumper News (RSS, salto ecuestre latinoamericano)",
@@ -5852,7 +5825,7 @@
      "fuente": "Bing Noticias · Equitación internacional",
      "url": "https://www.bing.com/news/search?q=salto%20ecuestre%20FEI%20Longines%20Global%20Champions&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 7
+     "n": 8
     },
     {
      "fuente": "Bing Noticias · Hípica y polo Chile",
@@ -5877,7 +5850,7 @@
      "fuente": "Bing Noticias · NBA",
      "url": "https://www.bing.com/news/search?q=NBA%20resultados%20partido&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 8
+     "n": 7
     },
     {
      "fuente": "BBC Sport · Rugby (RSS, inglés)",
@@ -5895,19 +5868,19 @@
      "fuente": "Bing Noticias · Rugby internacional",
      "url": "https://www.bing.com/news/search?q=rugby%20test%20match%20Pumas%20All%20Blacks%20Springboks&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · Deportes Chile",
      "url": "https://www.bing.com/news/search?q=deportes%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 10
+     "n": 11
     },
     {
      "fuente": "Bing Noticias · Golf",
      "url": "https://www.bing.com/news/search?q=golf%20%28Niemann%20OR%20Pereira%20OR%20PGA%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 3
+     "n": 2
     },
     {
      "fuente": "Bing Noticias · Fútbol chileno",
@@ -5925,7 +5898,7 @@
      "fuente": "Bing Noticias · Tenis chileno",
      "url": "https://www.bing.com/news/search?q=tenis%20%28Tabilo%20OR%20Jarry%20OR%20Garin%20OR%20Barrios%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 2
+     "n": 4
     },
     {
      "fuente": "Bing Noticias · Fórmula 1",
@@ -5961,7 +5934,7 @@
      "fuente": "Bing Noticias · NBA resultados",
      "url": "https://www.bing.com/news/search?q=NBA%20%28resultados%20OR%20triunfo%20OR%20derrota%20OR%20puntos%29&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 9
+     "n": 10
     },
     {
      "fuente": "Bing Noticias · NBA figuras",
@@ -5973,14 +5946,13 @@
      "fuente": "Bing Noticias · Rally y automovilismo Chile",
      "url": "https://www.bing.com/news/search?q=%28rally%20OR%20RallyMobil%20OR%20WRC%20OR%20automovilismo%29%20Chile&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 3
+     "n": 5
     },
     {
      "fuente": "ANFP",
      "url": "https://www.anfp.cl/feed/",
-     "ok": false,
-     "n": 0,
-     "error": "HTTP 403"
+     "ok": true,
+     "n": 10
     },
     {
      "fuente": "AS Chile portada (RSS)",
@@ -6187,9 +6159,8 @@
     {
      "fuente": "RaceFans (RSS)",
      "url": "https://www.racefans.net/feed/",
-     "ok": false,
-     "n": 0,
-     "error": "HTTP 403"
+     "ok": true,
+     "n": 20
     },
     {
      "fuente": "RugbyPass (RSS)",
@@ -6272,6 +6243,69 @@
    ],
    "notas": [
     {
+     "fuente": "Tennis Majors (RSS)",
+     "titulo": "November 27, 2011: The day Roger Federer won a then-record sixth ATP Finals title",
+     "fecha": "2026-11-27 08:17",
+     "url": "https://www.tennismajors.com/atp/november-27-2011-the-day-roger-federer-won-a-record-sixth-atp-finals-title-310011.html",
+     "resumen": "Every day, Tennis Majors takes you back to one of the biggest moments in tennis history. On November 27, 2011, Roger Federer and Jo-Wilfried Tsonga clashed for the eighth time in the season"
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Mourinho: \"Vinicius y Diomande no son competencia\"",
+     "fecha": "2026-11-27 06:29",
+     "url": "https://www.mundodeportivo.com/futbol/real-madrid/20261127/1004256110/mourinho-vinicius-diomande-no-son-competencia.html",
+     "resumen": "En la previa del duelo ante el Alavés, el entrenador del Real Madrid, José Mourinho, habló sobre la actualidad blanca, centrada en los buenos resultados pero también en la calidad humana del vestuario tras su llegada. Y por supuesto, lo primero, el rival: el Alavés."
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "¿A quién tiene que adelantar el Getafe para entrar en la repesca?",
+     "fecha": "2026-11-27 06:20",
+     "url": "https://www.mundodeportivo.com/futbol/getafe/20261127/1004256137/adelantar-getafe-entrar-repesca.html",
+     "resumen": "El Getafe tiene a siete equipos a tiro si gana los dos partidos que le quedan en la Conference League. Aarhus, Jablonec, Estrella Roja, Nordsjælland, Egnatia, Gent y Kairat Almaty suman cinco puntos. Con siete, los de Bordalás adelantarían a cualquiera de ellos que sumase como máximo un punto e igualarían a los que…"
+    },
+    {
+     "fuente": "The Guardian Fútbol (RSS)",
+     "titulo": "Levski fans in hospital after Marseille violence; Premier League news – football live",
+     "fecha": "2026-11-27 06:20",
+     "url": "https://www.theguardian.com/football/live/2026/nov/27/premier-league-news-levski-fans-marseille-violence-football",
+     "resumen": "⚽ All the latest football news going into the weekend ⚽ Fixtures | Tables | Ten things to look out for | Mail David Bournemouth’s form figures look like bunting – WWWWWWWWWW – and another flag went up last night. The Cherries made it 10 wins in succession in all competitions with a come-from-behind win at Spanish…"
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Rueda de prensa de Mourinho, en directo",
+     "fecha": "2026-11-27 06:19",
+     "url": "https://www.mundodeportivo.com/futbol/real-madrid/20261127/1004255574/rueda-prensa-mourinho-directo-previa-real-madrid-alaves-vivo.html",
+     "resumen": ""
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Georgia detiene a 16 hinchas turcos por disturbios en el Hapoel-Besiktas",
+     "fecha": "2026-11-27 06:11",
+     "url": "https://www.mundodeportivo.com/futbol/20261127/1004256128/georgia-detiene-16-hinchas-turcos-disturbios-hapoel-besiktas.html",
+     "resumen": "Las autoridades georgianas detuvieron a 16 hinchas del club turco Besiktas por disturbios durante el partido entre ese equipo y el Hapoel Beer-Sheva de Israel disputado en la ciudad de Batumi, en Georgia, que se saldaron con tres policías heridos, según informó este viernes el Ministerio de Interior de Georgia."
+    },
+    {
+     "fuente": "AS Fútbol (RSS)",
+     "titulo": "Terror en Marsella: ultras franceses atacan a aficionados del Levski fuera de la grada visitante",
+     "fecha": "2026-11-27 06:07",
+     "url": "https://as.com/futbol/videos/terror-en-marsella-ultras-franceses-atacan-a-aficionados-del-levski-fuera-de-la-grada-visitante-f202611-v/",
+     "resumen": "Radicales marselleses tomaron la tribuna donde estaban alojados familias de jugadores y otros miembros del equipo búlgaro y los acorralaron contra la zona donde estaba el resto de afición visitante, entre ellos ultras. Previamente, los ultras del Levski Sofía habían realizado saludos nazis."
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Oportunidad para reenganchar a Jonathan David",
+     "fecha": "2026-11-27 06:06",
+     "url": "https://www.mundodeportivo.com/futbol/atletico-madrid/20261127/1004256129/oportunidad-reenganchar-jonathan-david.html",
+     "resumen": "El jueves se conoció que Alexander Sorloth está roto. El Atlético de Madrid informó de una lesión muscular del noruego en su pierna derecha, sufrida en el duelo de Champions League frente al Viking, en el que el delantero fue titular y marcó el primer gol de la noche. No celebraba un tanto el atacante desde el mes de…"
+    },
+    {
+     "fuente": "Mundo Deportivo Fútbol (RSS)",
+     "titulo": "Juan Iglesias: “No celebramos el empate, sino un gol en el último minuto”",
+     "fecha": "2026-11-27 06:03",
+     "url": "https://www.mundodeportivo.com/futbol/sevilla/20261127/1004256131/juan-iglesias-no-celebramos-empate-gol-ultimo-minuto.html",
+     "resumen": "El lateral sevillista Juan Iglesias ha aclarado que el equipo nervionense no celebró el empate en el derbi, como defendió el presidente del Betis, Ángel Haro, tratando de ridiculizar a su rival. El jugador vallisoletano aseguró que el empate ante el Betis supo a poco, destacando la buena dinámica del equipo y…"
+    },
+    {
      "fuente": "ESPN API Premier League",
      "titulo": "Would any USMNT players really make Man United better if they followed Poch?",
      "fecha": "2026-11-27 06:02",
@@ -6284,6 +6318,20 @@
      "fecha": "2026-11-27 06:00",
      "url": "https://www.ole.com.ar/agenda-deportiva/partidos-hoy-viernes-27-noviembre-2026-agenda-ole-horario-ver-futbol-vivo_0_RvKaJRof7e.html",
      "resumen": "La agenda del viernes tendrá tres encuentros de la Primera Nacional y un duelo clave para Lionel Messi: Inter Miami enfrenta a Columbus Crew por la segunda ronda de los playoffs de la MLS."
+    },
+    {
+     "fuente": "Sail-World (RSS)",
+     "titulo": "Rooster Big Weekend is on!",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.sail-world.com/news/301886/?source=rss",
+     "resumen": "It's here! Rooster Big Weekend is officially underway. From sailing kit to boat bits, bundles and more, there's plenty worth a look."
+    },
+    {
+     "fuente": "Sky Sports Fútbol (RSS)",
+     "titulo": "'Man Utd being relegated would be the biggest shock in history... but it won't happen'",
+     "fecha": "2026-11-27 06:00",
+     "url": "https://www.skysports.com/football/news/12040/13616882/man-utd-being-relegated-would-be-the-biggest-shock-in-history-but-it-wont-happen-says-paul-merson",
+     "resumen": "In his latest Sky Sports column, Paul Merson previews a big weekend for Manchester United, before Arsenal take on Manchester City in a huge game live this Sunday."
     },
     {
      "fuente": "ESPN API Premier League",
@@ -6371,7 +6419,7 @@
     },
     {
      "fuente": "Sky Sports Fútbol (RSS)",
-     "titulo": "Australia slip to 87-5 as England on top in third T20I LIVE!",
+     "titulo": "Overton takes five as England dominating Australia in T20I LIVE!",
      "fecha": "2026-11-27 05:22",
      "url": "https://www.skysports.com/cricket/live-blog/12040/13617030/australia-vs-england-third-t20-live-latest-cricket-score-and-updates-from-the-gabba-in-brisbane-as-harry-brooks-side-target-series-lead",
      "resumen": ""
@@ -6580,6 +6628,13 @@
      "resumen": "El argentino celebró un gol ante el Viking y, cuando salió, escuchó pitos y aplausos. Con el tanto al Depor y sus palabras de perdón avanzó el proceso de reconciliación; los fallos ante el Barça lo frenaron."
     },
     {
+     "fuente": "RaceFans (RSS)",
+     "titulo": "Russell says he’s learned some in media will be “cheeky” with his quotes | Formula 1",
+     "fecha": "2026-11-27 04:15",
+     "url": "https://www.racefans.net/2026/11/27/russell-says-hes-learned-some-in-media-will-be-cheeky-with-his-quotes/",
+     "resumen": "George Russell claimed two F1 television reporters had been \"a little bit cheeky\" in representing their discussions with him."
+    },
+    {
      "fuente": "Sky Sports Fútbol (RSS)",
      "titulo": "Smith in contention on DP World Tour return after LIV collapse",
      "fecha": "2026-11-27 04:15",
@@ -6658,7 +6713,7 @@
     },
     {
      "fuente": "BBC Sport · Fútbol (RSS, inglés)",
-     "titulo": "Man City owners should be forced to sell, say rival club chiefs",
+     "titulo": "Man City owners should be forced to sell, say club chiefs",
      "fecha": "2026-11-27 03:38",
      "url": "https://www.bbc.co.uk/sport/football/articles/cwp809d7yp4go?at_medium=RSS&at_campaign=rss",
      "resumen": "Manchester City's owners must be forced to sell the club as punishment for breaking financial rules, senior figures at some Premier League clubs tell BBC Sport."
@@ -6734,13 +6789,6 @@
      "resumen": "Nathan Lyon is set to be dropped by Australia for their first Test against New Zealand in Perth, it has been reported."
     },
     {
-     "fuente": "Sky Sports Fútbol (RSS)",
-     "titulo": "Australian Sandpapergate probe to include 2017/18 Ashes series",
-     "fecha": "2026-11-27 03:21",
-     "url": "https://www.skysports.com/cricket/news/12040/13617057/australian-sandpapergate-forum-to-include-2017-18-ashes-series-against-england",
-     "resumen": "The scope of Cricket Australia's forum into Sandpapergate has been extended to include the Ashes series from the 2017-2018 season."
-    },
-    {
      "fuente": "ESPN · NFL (noticias con fecha)",
      "titulo": "Kansas City Chiefs vs. Buffalo Bills: Game Highlight",
      "fecha": "2026-11-27 03:19",
@@ -6767,83 +6815,6 @@
      "fecha": "2026-11-27 03:06",
      "url": "https://www.skysports.com/nfl/news/12040/13617052/buffalo-bills-13-10-kansas-city-chiefs-tyler-bass-hits-57-yard-field-goal-in-final-seconds-to-snatch-victory-over-nfl-rivals",
      "resumen": "Tyler Bass hit a 57-yard field goal on the hooter as Buffalo Bills improved their AFC-leading record to 10-1 with a 13-10 victory over rivals Kansas City Chiefs."
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Los ‘triángulos’ del Brighton",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/premier-league/20261127/1004256075/triangulos-brighton.html",
-     "resumen": "'Dreamland for Brighton’ se lee escrito en las paredes de The Lanes, el laberinto de calles céntricas y angostas de la ciudad de la costa sur inglesa. El impacto que están teniendo los inesperados triunfos de los ‘seagulls’ frente a los grandes clubs de la Premier League y sus partidos en la Conference League de los…"
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Ocasiones claras y goles",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/athletic-bilbao/20261127/1004255965/ocasiones-claras-goles.html",
-     "resumen": "Las dos caras de una misma moneda. El Athletic está en la parte media-baja de la tabla en cuanto a goles marcados (15) pero a cambio es el tercero que menos ha encajado (12), por detrás de Atlético (10) y Real Madrid (11). Todo ello contando que tiene un partido menos que sus rivales, el que tiene que jugar el 9 de…"
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "El Barça, a un partido de pasar del 'shit november' al 'perfect november'",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261127/1004255956/barca-partido-pasar-shit-november-perfect-november.html",
-     "resumen": "El FC Barcelona tiene este domingo el último partido de noviembre. El duelo contra el Deportivo cerrará el penúltimo mes del año tras unos encuentros en los que al Barça le ha ido todo de cara, pudiendo cerrar la treintena de días con broche de oro. Tras perder ante PSG (4-2) y Real Madrid (1-2) el pasado octubre, el…"
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Se busca acompañante para Iñaki Williams",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/athletic-bilbao/20261127/1004255942/busca-acompanante-inaki-williams.html",
-     "resumen": "Son varias las incógnitas que rondan en el Athletic de cara al once que presente mañana en Málaga, sobre todo en su columna vertebral. El acompañante de Laporte en defensa, sobre todo por una cuestión física. El tándem en una medular en la que Terzic viene rotando bastante. Y especialmente quién será el socio de…"
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "El Hércules quiere acceder a la cuarta plaza",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/futbol-catala/20261127/1004255937/hercules-quiere-acceder-cuarta-plaza.html",
-     "resumen": "Después de superar al Teruel a domicilio (0-1), el Hércules se ha colocado a un punto de la zona de privilegio y, caso de superar a la escuadra costasoleña, dormiría en la cuarta posición. En su última aparición en el Rico Pérez, el equipo, que venís de empatar en el Alfredo Di Stéfano con el Real Madrid Castilla…"
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "El fútbol territorial, al día",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/futbol-catala/20261127/1004255934/futbol-territorial-dia.html",
-     "resumen": "Con 2: Ignasi Senabre (entrenador Cornellà)."
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "La tercera parte del tridente",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261127/1004255932/tercera-parte-tridente.html",
-     "resumen": "No hay mucho secreto en la delantera ideal del Barça. Si no hay accidentes, Lamine Yamal y Raphinha son indiscutibles por su capacidad para marcar diferencias. Gabriel Jesus también tiene claro su rol como delantero centro suplente, ya sea para emergencias o para dar descanso a su compatriota. En cambio, hay una…"
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "Lucía Corrales: \"El Mundial es el sueño de cada jugadora\"",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/20261127/1004255931/lucia-corrales-mundial-sueno-jugadora.html",
-     "resumen": "Lucía Corrales (Inca, 24 de noviembre de 2005) es una de las fijas para Sonia Bermúdez en la selección, que va a jugar los dos últimos amistosos de este año y que tiene el Mundial del año que viene en el horizonte"
-    },
-    {
-     "fuente": "Mundo Deportivo Fútbol (RSS)",
-     "titulo": "La vida soñada con 'Auba' en Barcelona: mentor, buen compañero de piso y \"un animal competitivo\"",
-     "fecha": "2026-11-27 03:00",
-     "url": "https://www.mundodeportivo.com/futbol/fc-barcelona/20261127/1004255930/meshak-aubameyang-barcelona.html",
-     "resumen": "Pierre-Emerick Aubameyang (37 años) vistió durante medio año la camiseta azulgrana, pero fue suficiente para que su recuerdo quedara instalado en la memoria del barcelonismo. Disputó 24 partidos y marcó 11 goles. Entre ellos, un doblete en el Santiago Bernabéu. Durante su estancia en Barcelona, tuvo un compañero de…"
-    },
-    {
-     "fuente": "ESPN · NFL (noticias con fecha)",
-     "titulo": "Bills edge Chiefs with last-second FG in low-scoring battle",
-     "fecha": "2026-11-27 02:59",
-     "url": "https://www.espn.com/nfl/story/_/id/50582828/2026-nfl-buffalo-bills-kansas-city-chiefs-thanksgiving",
-     "resumen": "The Bills won their seventh straight, snapping the Chiefs' win streak at three in a sloppy, low-scoring thriller."
-    },
-    {
-     "fuente": "MLB.com en español (RSS)",
-     "titulo": "Tiburones logran su tercera victoria al hilo en Venezuela",
-     "fecha": "2026-11-27 02:53",
-     "url": "https://www.mlb.com/es/news/tiburones-logran-su-tercera-victoria-al-hilo-en-venezuela",
-     "resumen": ""
     },
     {
      "fuente": "Horse & Hound (RSS)",
@@ -6960,7 +6931,7 @@
      "fuente": "Bing Noticias · Avances médicos",
      "url": "https://www.bing.com/news/search?q=avance%20cient%C3%ADfico%20medicina%20estudio&format=rss&cc=CL&setlang=es",
      "ok": true,
-     "n": 11
+     "n": 12
     },
     {
      "fuente": "Live Science (RSS, inglés)",
@@ -7072,6 +7043,20 @@
     }
    ],
    "notas": [
+    {
+     "fuente": "Muy Interesante (RSS)",
+     "titulo": "Unas vasijas de hace 5.000 años halladas en Dinamarca conservan las huellas de un ritual funerario que los arqueólogos no habían contemplado",
+     "fecha": "2026-11-27 06:02",
+     "url": "https://muyinteresante.okdiario.com/historia/vasijas-neolitico-dinamarca-leche-fermentada-rituales-funerarios.html",
+     "resumen": "El análisis de 330 vasijas neolíticas de Dinamarca apunta a que los productos lácteos fermentados pudieron desempeñar un papel especial en los rituales funerarios de hace 5.000 años."
+    },
+    {
+     "fuente": "Muy Interesante (RSS)",
+     "titulo": "Un transmisor solar de 0,06 gramos permite seguir a un colibrí que recorrió 6.526 kilómetros de Alabama a Alaska en 38 días",
+     "fecha": "2026-11-27 06:01",
+     "url": "https://muyinteresante.okdiario.com/naturaleza/vuelo-colibri-distancia.html",
+     "resumen": "Un estudio documenta el hallazgo gracias a un transmisor solar diseñado para aves de apenas unos gramos."
+    },
     {
      "fuente": "Muy Interesante (RSS)",
      "titulo": "Hallan los huesos que sostenían las branquias de un animal de hace 345 millones de años al que se tomó por uno de los primeros reptiles",
@@ -7687,20 +7672,6 @@
      "fecha": "2026-11-26 06:59",
      "url": "https://www.technologyreview.com/2026/11/26/1149923/the-next-generation-of-bionic-hands-is-here-and-they-can-feel/",
      "resumen": "Avi Davidson lost his left hand as a teenager. Since then, he’s cycled through a few prosthetics. But his latest is different—it’s wired up to nerves in the upper part of his forearm and allows him to feel pressure. For the first time in years, he can use his left limb to handle delicate objects…"
-    },
-    {
-     "fuente": "Phys.org Tecnología (RSS, inglés)",
-     "titulo": "Robots roam Singapore's urban AI testing ground",
-     "fecha": "2026-11-26 06:41",
-     "url": "https://techxplore.com/news/2026-11-robots-roam-singapore-urban-ai.html",
-     "resumen": "When coffee is spilled at an office block in a futuristic enclave of Singapore, AI-powered cameras and sensors detect it and send a cleaning robot right away."
-    },
-    {
-     "fuente": "Phys.org Tecnología (RSS, inglés)",
-     "titulo": "Amusing or addictive? The algorithms powering our social feeds",
-     "fecha": "2026-11-26 06:40",
-     "url": "https://techxplore.com/news/2026-11-addictive-algorithms-powering-social.html",
-     "resumen": "Social media algorithms are a powerful feature of online life, serving up content to users based on their browsing habits or personal data."
     }
    ]
   },
@@ -8228,17 +8199,17 @@
     },
     {
      "fuente": "Space.com (RSS)",
-     "titulo": "I think this might be the best smart telescope for nebula photography — I'm amazed it's $500 off",
-     "fecha": "2026-11-25 15:00",
-     "url": "https://www.space.com/stargazing/skywatching-kit/best-smart-telescope-for-nebula-photography-now-500-off",
-     "resumen": "I just tested the new Vaonis Vespera Pro 2 and captured some amazing wide-field color astrophotography and now it's $500 cheaper in this black friday telescope deal."
-    },
-    {
-     "fuente": "Space.com (RSS)",
      "titulo": "‘Blade Runner 2099’ cast praise the incredible set designs that brought the sci-fi universe to life: ‘it was all so well-realized’ (interview)",
      "fecha": "2026-11-25 15:00",
      "url": "https://www.space.com/entertainment/space-movies-shows/blade-runner-2099-cast-praise-the-incredible-set-designs-that-brought-the-sci-fi-universe-to-life-it-was-all-so-well-realized-interview",
      "resumen": "'Throwing myself into that, especially after how well Silka crafted the story and script, was something I was totally ready for.'"
+    },
+    {
+     "fuente": "Space.com (RSS)",
+     "titulo": "I think this might be the best smart telescope for nebula photography — I'm amazed it's $500 off",
+     "fecha": "2026-11-25 15:00",
+     "url": "https://www.space.com/stargazing/skywatching-kit/best-smart-telescope-for-nebula-photography-now-500-off",
+     "resumen": "I just tested the new Vaonis Vespera Pro 2 and captured some amazing wide-field color astrophotography and now it's $500 cheaper in this black friday telescope deal."
     },
     {
      "fuente": "NASA · Noticias (RSS)",
@@ -8487,7 +8458,7 @@
      "url": "https://www.aqua.cl/feed/",
      "ok": false,
      "n": 0,
-     "error": "HTTP 403"
+     "error": "robots.txt no respondió"
     },
     {
      "fuente": "Cadem (RSS)",
@@ -8583,9 +8554,8 @@
     {
      "fuente": "Splash247 (RSS)",
      "url": "https://splash247.com/feed/",
-     "ok": false,
-     "n": 0,
-     "error": "HTTP 403"
+     "ok": true,
+     "n": 10
     },
     {
      "fuente": "The Loadstar (RSS)",
@@ -8596,11 +8566,46 @@
    ],
    "notas": [
     {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "Japan turns to South Korea to revive LNG carrier construction",
+     "fecha": "2026-11-27 06:24",
+     "url": "https://splash247.com/japan-turns-to-south-korea-to-revive-lng-carrier-construction/",
+     "resumen": "Japan is seeking technological assistance from South Korea as it looks to re-establish itself in the lucrative LNG carrier construction market, marking a significant shift in relations between two longstanding shipbuilding rivals. Motoharu Adachi, director-general of the maritime bureau at Japan’s Ministry of Land…"
+    },
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "Pakistan’s coal imports surge 51% as LNG supplies collapse",
+     "fecha": "2026-11-27 06:17",
+     "url": "https://splash247.com/pakistans-coal-imports-surge-51-as-lng-supplies-collapse/",
+     "resumen": "The fallout from the Middle East conflict is generating significant new employment opportunities for mid-sized bulkers, with Pakistan’s dramatic switch from gas to coal providing one of the clearest examples yet of how disruption to one shipping sector is driving demand in another."
+    },
+    {
      "fuente": "PortalPortuario (RSS)",
      "titulo": "Puerto de Krishnapatnam incorpora 288 vehículos eléctricos a su flota operativa en India",
      "fecha": "2026-11-27 06:00",
      "url": "https://portalportuario.cl/puerto-de-krishnapatnam-incorpora-288-vehiculos-electricos-a-su-flota-operativa-en-india/",
      "resumen": "Por Redacción PortalPortuario @PortalPortuario Adani Krishnapatnam Port Limited (AKPL), filial de Adani Ports and Special Economic Zone Limited (Apsez) ubicada La entrada Puerto de Krishnapatnam incorpora 288 vehículos eléctricos a su flota operativa en India se publicó primero en PortalPortuario."
+    },
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "China faces daunting shipbuilding arithmetic",
+     "fecha": "2026-11-27 05:45",
+     "url": "https://splash247.com/china-faces-daunting-shipbuilding-arithmetic/",
+     "resumen": "Chinese shipbuilders are scheduled to deliver more than three times as much bulk carrier and tanker tonnage in 2028 as they did last year, according to fresh research from Banchero Costa that raises further questions over the industry’s ability to make good on its record orderbook. Chinese yards are contracted to…"
+    },
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "Splash Wrap: Under fire, under scrutiny",
+     "fecha": "2026-11-27 05:26",
+     "url": "https://splash247.com/splash-wrap-under-fire-under-scrutiny/",
+     "resumen": "The Strait of Hormuz and the war in Ukraine dominated Splash’s coverage yet again this week, with the maritime security situation deteriorating on both fronts. The number of tankers struck in Hormuz this month has climbed to 17, while the maritime dimension of the Russia-Ukraine war continues to spread well beyond…"
+    },
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "Shipping industry draws red line on strait transit fees",
+     "fecha": "2026-11-27 05:22",
+     "url": "https://splash247.com/shipping-industry-draws-red-line-on-strait-transit-fees/",
+     "resumen": "Eight international shipping associations have called on governments to resist attempts to impose compulsory charges on vessels passing through international straits, warning that tolls in the Strait of Hormuz would set a dangerous precedent for global trade. In an open letter to EU foreign policy chief Kaja Kallas…"
     },
     {
      "fuente": "PortalPortuario (RSS)",
@@ -8610,11 +8615,39 @@
      "resumen": "Por Redacción PortalPortuario @PortalPortuario Modec finalizó antes de lo previsto el ensamblaje del casco del FPSO Gato do Mato, la La entrada Modec finaliza antes del plazo establecido el ensamblaje del casco del FPSO Gato do Mato se publicó primero en PortalPortuario."
     },
     {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "Hormuz tanker strike tally hits 17 this month",
+     "fecha": "2026-11-27 04:20",
+     "url": "https://splash247.com/hormuz-tanker-strike-tally-hits-17-this-month/",
+     "resumen": "Seventeen tankers have been struck in the Strait of Hormuz since the start of November, according to the latest figures from the Joint Maritime Information Center (JMIC), with Iran now widening its campaign against merchant shipping to encompass tugboats. Iran’s Islamic Revolutionary Guard Corps (IRGC) claimed…"
+    },
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "Longer voyages mask stagnating seaborne trade: UNCTAD",
+     "fecha": "2026-11-27 04:03",
+     "url": "https://splash247.com/longer-voyages-mask-stagnating-seaborne-trade-unctad/",
+     "resumen": "Global seaborne trade is set to register zero growth this year, according to the United Nations’ latest annual shipping health check, published yesterday, with simultaneous disruptions at four of the world’s most important maritime chokepoints reshaping trading patterns. UN Trade and Development (UNCTAD), in its…"
+    },
+    {
      "fuente": "PortalPortuario (RSS)",
      "titulo": "Posh se adjudica contrato de instalación submarina para PRP-X frente a costas de India",
      "fecha": "2026-11-27 04:00",
      "url": "https://portalportuario.cl/posh-se-adjudica-contrato-de-instalacion-submarina-para-prp-x-frente-a-costas-de-india/",
      "resumen": "Por Redacción PortalPortuario @PortalPortuario PACC Offshore Services Holdings (Posh) inició oficialmente los trabajos de instalación submarina en el último proyecto La entrada Posh se adjudica contrato de instalación submarina para PRP-X frente a costas de India se publicó primero en PortalPortuario."
+    },
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "ADM exits shipowning with $88m fleet sale to Hayfin Capital",
+     "fecha": "2026-11-27 03:59",
+     "url": "https://splash247.com/adm-exits-shipowning-with-88m-fleet-sale-to-hayfin-capital/",
+     "resumen": "Grains giant Archer Daniels Midland (ADM) is exiting shipowning through a fleet sale to Hayfin Capital. The American post-panamax specialist has offloaded its three vessels, Harvest Frost, Harvest Rain, renamed GH Autan, and Harvest Time, renamed GH Vendavel, for close to $30m each to London-based investment platform…"
+    },
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "One dead, three missing as boxship sinks off Cuba",
+     "fecha": "2026-11-27 03:52",
+     "url": "https://splash247.com/one-dead-three-missing-as-boxship-sinks-off-cuba/",
+     "resumen": "One seafarer has died and three remain missing after a containership sank off Cuba’s northwestern coast yesterday. The Panama-flagged, 1997-built Halima went down some three nautical miles north of Cabañas Bay in Artemisa province, west of Havana, with 208 containers and 16 crewmembers onboard."
     },
     {
      "fuente": "PortalPortuario (RSS)",
@@ -8643,6 +8676,13 @@
      "fecha": "2026-11-27 00:00",
      "url": "https://portalportuario.cl/portcastello-participa-en-proyecto-europeo-para-monitorizacion-de-emisiones-maritimas-y-portuarias/",
      "resumen": "Por Redacción PortalPortuario @PortalPortuario La Autoridad Portuaria de Castellón participa en Empower (Emission Monitoring for Ports, Ocean, Waterborne Transport, and La entrada PortCastelló participa en proyecto europeo para monitorización de emisiones marítimas y portuarias se publicó primero en PortalPortuario."
+    },
+    {
+     "fuente": "Splash247 (RSS)",
+     "titulo": "The absurdity of ‘competitive’ salaries",
+     "fecha": "2026-11-27 00:00",
+     "url": "https://splash247.com/the-absurdity-of-competitive-salaries/",
+     "resumen": "Maritime recruitment could benefit from the same commercial transparency that shipping demands of almost every other aspect of its business. Mike Darby from Merchant Recruitment explains. Imagine if the shipping industry operated the same way as its job adverts. “How much for VLSFO in Rotterdam?” “Competitive.”…"
     },
     {
      "fuente": "PortalPortuario (RSS)",
@@ -9154,76 +9194,6 @@
      "fecha": "2026-11-25 07:32",
      "url": "https://www.corma.cl/blog/la-tecnologia-que-busca-transformar-la-industria-forestal-con-drones-satelites-e-ia/",
      "resumen": "Empresas nacionales e internacionales presentaron en ExpoCorma 2026 un amplio abanico de innovaciones desarrolladas especialmente en la construcción en madera y prevención de incendios."
-    },
-    {
-     "fuente": "Odepa (RSS)",
-     "titulo": "Boletín sector lácteo: estadísticas de comercio exterior",
-     "fecha": "2026-11-25 07:22",
-     "url": "https://www.odepa.gob.cl/publicaciones/boletines/boletin-sector-lacteo-estadisticas-de-comercio-exterior-2",
-     "resumen": "Este boletín contiene información estadística de comercio exterior de productos del sector lácteo de Chile, presentado en formato Power Bi y actualizado mensualmente. La información se presenta de manera interactiva, por lo que usted podrá seleccionar aquella que sea de su interés. Visitar el boletín interactivo…"
-    },
-    {
-     "fuente": "Mining Technology (RSS)",
-     "titulo": "Colibri signs LoI to acquire Sonora copper-molybdenum projects",
-     "fecha": "2026-11-25 07:21",
-     "url": "https://www.mining-technology.com/news/colibri-acquire-sonora-copper-molybdenum-projects/",
-     "resumen": "Colibri Resource has signed a non-binding letter of intent (LoI) to buy Mining Americas’ Mexican subsidiary Cobre 4H, the company responsible for advancing the Los Verdes and Potreritos copper-molybdenum interests in Sonora, Mexico. The post Colibri signs LoI to acquire Sonora copper-molybdenum projects appeared…"
-    },
-    {
-     "fuente": "CORMA (RSS)",
-     "titulo": "Premios Corma 2026 distinguió a trabajadores, brigadistas y líderes que contribuyen al desarrollo de la industria forestal",
-     "fecha": "2026-11-25 07:09",
-     "url": "https://www.corma.cl/blog/premios-corma-2026-distinguio-a-trabajadores-brigadistas-y-lideres-que-contribuyen-al-desarrollo-de-la-industria-forestal/",
-     "resumen": "La ceremonia realizada en el marco de ExpoCorma 2026, destacó a los protagonistas de la industria forestal por su experiencia, compromiso y valiosos esfuerzos como la prevención de incendios."
-    },
-    {
-     "fuente": "CORMA (RSS)",
-     "titulo": "Más de 300 estudiantes visitaron ExpoCorma 2026 para conocer el futuro de la industria forestal",
-     "fecha": "2026-11-25 06:46",
-     "url": "https://www.corma.cl/blog/mas-de-300-estudiantes-visitaron-expocorma-2026-para-conocer-el-futuro-de-la-industria-forestal/",
-     "resumen": "La visita permitió que jóvenes de liceos vinculados al programa Más Talento de Corma de Los Lagos al Biobío, conocieran nuevas tecnologías, maquinarias, y alternativas de desarrollo laboral en el sector."
-    },
-    {
-     "fuente": "Mining Technology (RSS)",
-     "titulo": "New Found Gold reports high-grade drill results in Canada",
-     "fecha": "2026-11-25 04:56",
-     "url": "https://www.mining-technology.com/news/new-found-gold-drill-results-canada/",
-     "resumen": "New Found Gold has reported the latest results from drill programmes at its wholly owned Queensway Gold Project in Newfoundland and Labrador, Canada. The post New Found Gold reports high-grade drill results in Canada appeared first on Mining Technology."
-    },
-    {
-     "fuente": "CORMA (RSS)",
-     "titulo": "Analizan experiencias de Guatemala y Finlandia y potencial de nanotecnología para transformar la industria forestal chilena",
-     "fecha": "2026-11-24 18:53",
-     "url": "https://www.corma.cl/blog/analizan-experiencias-de-guatemala-y-finlandia-y-potencial-de-nanotecnologia-para-transformar-la-industria-forestal-chilena/",
-     "resumen": "El seminario “Formas de crear valor” de ExpoCorma, reunió a un grupo de especialistas para revisar la capacidad de la madera, la innovación tecnológica y la colaboración entre empresas como oportunidades para desarrollar nuevos productos, mercados y soluciones sostenibles."
-    },
-    {
-     "fuente": "Global Seafood Alliance (RSS)",
-     "titulo": "Giving Back Through Seafood: Supporting SeaShare",
-     "fecha": "2026-11-24 16:47",
-     "url": "https://www.globalseafood.org/blog/supporting-seashare/",
-     "resumen": "Gift giving is an integral part of the holiday season, and among some of the top organizations worth considering giving to is SeaShare. Founded in 1994, SeaShare has dedicated their non-profit organization to fighting food insecurity through seafood donations. Wholesome healthy proteins can be a rare commodity at…"
-    },
-    {
-     "fuente": "CONAF (RSS)",
-     "titulo": "Comunidad de Cancosa y CONAF Tarapacá firman convenio de colaboración y plantan 30 queñoas en el poblado",
-     "fecha": "2026-11-24 14:13",
-     "url": "https://www.conaf.cl/comunidad-de-cancosa-y-conaf-tarapaca-firman-convenio-de-colaboracion-y-plantan-30-quenoas-en-el-poblado/?utm_source=rss&utm_medium=rss&utm_campaign=comunidad-de-cancosa-y-conaf-tarapaca-firman-convenio-de-colaboracion-y-plantan-30-quenoas-en-el-poblado",
-     "resumen": "El acuerdo establece una agenda de trabajo conjunto en conservación de la biodiversidad, educación ambiental, restauración de bosques nativos y turismo de naturaleza, entre otras materias. La entrada Comunidad de Cancosa y CONAF Tarapacá firman convenio de colaboración y plantan 30 queñoas en el poblado se publicó…"
-    },
-    {
-     "fuente": "Sociedad Nacional de Agricultura (RSS)",
-     "titulo": "Boletín Cereales – Noviembre 2026",
-     "fecha": "2026-11-24 12:48",
-     "url": "https://www.sna.cl/2026/11/24/boletin-cereales-noviembre-2026/",
-     "resumen": "¿Qué está pasando con los mercados de cereales y cuáles son las perspectivas para la próxima temporada? El nuevo Boletín […]"
-    },
-    {
-     "fuente": "CONAF (RSS)",
-     "titulo": "Parque Nacional Alerce Andino celebró su aniversario: 44 años de protección y conservación de los recursos naturales",
-     "fecha": "2026-11-24 12:18",
-     "url": "https://www.conaf.cl/parque-nacional-alerce-andino-celebro-su-aniversario-44-anos-de-proteccion-y-conservacion-de-los-recursos-naturales/?utm_source=rss&utm_medium=rss&utm_campaign=parque-nacional-alerce-andino-celebro-su-aniversario-44-anos-de-proteccion-y-conservacion-de-los-recursos-naturales",
-     "resumen": "En la ocasión, CONAF reconoció la trayectoria del guardaparques Julio Velásquez y de la profesional del Departamento de Áreas Protegidas, Claudia Rosas. La entrada Parque Nacional Alerce Andino celebró su aniversario: 44 años de protección y conservación de los recursos naturales se publicó primero en CONAF."
     }
    ]
   },
@@ -9287,7 +9257,7 @@
      "fuente": "The New Arab (RSS, inglés)",
      "url": "https://www.newarab.com/rss",
      "ok": true,
-     "n": 109
+     "n": 108
     },
     {
      "fuente": "Ukrainska Pravda English (RSS)",
@@ -9310,11 +9280,39 @@
    ],
    "notas": [
     {
+     "fuente": "Kyiv Independent (RSS, inglés)",
+     "titulo": "The controversial Ukrainian website deciding who counts as an enemy of state",
+     "fecha": "2026-11-27 06:20",
+     "url": "https://kyivindependent.com/the-controversial-ukrainian-website-deciding-who-counts-as-an-enemy-of-state/",
+     "resumen": "Over the past month, a Ukrainian website's decision to expose Italian lawmakers for their pro-Russian statements has sparked an international scandal. But the controversy has also highlighted a deeper problem with the website itself. Founded in 2014 to identify people supporting Russia’s aggression against Ukraine, the"
+    },
+    {
+     "fuente": "Ukrinform Inglés (RSS)",
+     "titulo": "War update: 136 clashes on front line over past day, two sectors see fiercest fighting",
+     "fecha": "2026-11-27 06:20",
+     "url": "https://www.ukrinform.net/rubric-ato/4189177-war-update-136-clashes-on-front-line-over-past-day-two-sectors-see-fiercest-fighting.html",
+     "resumen": "A total of 136 combat engagements took place between the Ukrainian Defense Forces and Russian troops over the past day, with the heaviest Russian pressure concentrated on the Pokrovsk and Kostiantynivka sectors."
+    },
+    {
+     "fuente": "Ukrinform Inglés (RSS)",
+     "titulo": "Russian attacks cause power outages in six regions, with Dnipropetrovsk and Kherson most affected",
+     "fecha": "2026-11-27 06:06",
+     "url": "https://www.ukrinform.net/rubric-economy/4189163-russian-attacks-cause-power-outages-in-six-regions-with-dnipropetrovsk-and-kherson-most-affected.html",
+     "resumen": "Consumers in six Ukrainian regions remained without electricity as of the morning of November 27 following Russian attacks, with significant outages reported in the Dnipropetrovsk and Kherson regions."
+    },
+    {
      "fuente": "The New Arab (RSS, inglés)",
      "titulo": "Erdogan completes Turkey's ratification of Mecca pact",
      "fecha": "2026-11-27 05:58",
      "url": "https://www.newarab.com/news/erdogan-completes-turkeys-ratification-mecca-pact",
      "resumen": "The three countries signed a joint defence agreement in Mecca in August amid escalating concerns about the increasingly aggressive US-Israeli war against Iran."
+    },
+    {
+     "fuente": "Ukrinform Inglés (RSS)",
+     "titulo": "Russian forces launch nearly 60 strikes on Sumy region in 24 hours, injuring one",
+     "fecha": "2026-11-27 05:58",
+     "url": "https://www.ukrinform.net/rubric-ato/4189129-russian-forces-launch-nearly-60-strikes-on-sumy-region-in-24-hours-injuring-one.html",
+     "resumen": "Over the course of 24 hours, from the morning of 26 November to the morning of 27 November, Russian invaders carried out nearly 60 strikes on 22 settlements in the Sumy region; one person was injured."
     },
     {
      "fuente": "The New Arab (RSS, inglés)",
@@ -9910,34 +9908,6 @@
      "fecha": "2026-11-26 15:58",
      "url": "https://www.ukrinform.net/rubric-economy/4189022-ukraine-invites-canada-to-join-war-risk-insurance-fund.html",
      "resumen": "Prime Minister Serhii Koretskyi has invited Canada to contribute to the War Risk Insurance Fund, which is due to be launched in January. Ukraine is also counting on an expansion of Canada’s preferential lending schemes and the attraction of investment into the private sector."
-    },
-    {
-     "fuente": "The New Arab (RSS, inglés)",
-     "titulo": "The Israelification of Modi’s India: Surveillance & state power",
-     "fecha": "2026-11-26 15:44",
-     "url": "https://www.newarab.com/opinion/israelification-modis-india-surveillance-state-power",
-     "resumen": "India's deepening partnership with Israel is reshaping surveillance, policing and democracy at home, write Shrishti Khanna and Prashant Pundi."
-    },
-    {
-     "fuente": "Ukrinform Inglés (RSS)",
-     "titulo": "Dnipropetrovsk region comes under more than 50 attacks in one day, causing damage",
-     "fecha": "2026-11-26 15:27",
-     "url": "https://www.ukrinform.net/rubric-ato/4189012-dnipropetrovsk-region-comes-under-more-than-50-attacks-in-one-day-causing-damage.html",
-     "resumen": "Russian invaders launched more than fifty drone attacks on the Kryvyi Rih and Nikopol districts of the Dnipropetrovsk region throughout the day."
-    },
-    {
-     "fuente": "Kyiv Independent (RSS, inglés)",
-     "titulo": "Zelensky appoints new commander of Ukraine's Support Forces",
-     "fecha": "2026-11-26 15:16",
-     "url": "https://kyivindependent.com/zelensky-appoints-new-commander-of-ukraines-support-forces/",
-     "resumen": "The post was previously held by Major General Dmytro Hereha, who served for nearly five years."
-    },
-    {
-     "fuente": "The New Arab (RSS, inglés)",
-     "titulo": "Pezeshkian says he wished for death during 2025 Iran-Israel war",
-     "fecha": "2026-11-26 15:01",
-     "url": "https://www.newarab.com/news/pezeshkian-says-he-wished-death-during-2025-iran-israel-war",
-     "resumen": "Pezeshkian has recounted what he told Iran's then-supreme leader Ali Khamenei after surviving an Israeli attack during last year's 12-day war."
     }
    ]
   },
@@ -10061,11 +10031,32 @@
    ],
    "notas": [
     {
+     "fuente": "Variety (RSS)",
+     "titulo": "RECLab 2026: New Films From ‘Alcarràs,’ ‘Romería’ Producers Bound for a Key New Spanish Talent Forum",
+     "fecha": "2026-11-27 06:20",
+     "url": "https://variety.com/2026/film/global/reclab-2026-new-films-from-alcarras-romeria-producers-1236959234/",
+     "resumen": "Lluis Segura’s AI title “Electrónica,” as well as “Mother of Sugar” and “La Unión,” from the producers of “Alcarràs” and “Romería” respectively, bid fair to be potential standouts at the 12th edition of Primer Test, the industry centerpiece of RECLab, one of Spain’s most important new directorial talent labs. Part of…"
+    },
+    {
+     "fuente": "Variety (RSS)",
+     "titulo": "‘High Fidelity’ Director Stephen Frears Still Teases Jack Black: ‘I Told Him, You Owe All This to Me!’",
+     "fecha": "2026-11-27 06:20",
+     "url": "https://variety.com/2026/film/festivals/high-fidelity-stephen-frears-jack-black-brexit-cannes-1236959203/",
+     "resumen": "Honored with a lifetime achievement award, director Stephen Frears arrived at the Torino Film Festival in a reflective mood. Over a storied career, the British filmmaker embodied the anti-Thatcher counterculture with features like “My Beautiful Laundrette” and “Sammy and Rosie Get Laid,” before earning Oscar glory…"
+    },
+    {
      "fuente": "Deadline (RSS)",
      "titulo": "Mike Leigh Reminds The World Why He Doesn’t Work With Hollywood Stars",
      "fecha": "2026-11-27 06:10",
      "url": "https://deadline.com/2026/11/mike-leigh-retirement-tender-loving-care-hollywood-1237234216/",
      "resumen": "Mike Leigh has a few regrets, but declining to work with Hollywood actors isn’t one of them. In an interview with The Guardian, the decorated British director reminded the world why his unusual methods mean he’s happy sticking with British character actors. He “snorted” at the idea of casting big Hollywood movie…"
+    },
+    {
+     "fuente": "Sensacine noticias (RSS)",
+     "titulo": "Las hijas de Michael J. Fox ya son mayores: la estrella de 'Regreso al Futuro' posa con sus gemelas y su hija menor en un evento",
+     "fecha": "2026-11-27 06:07",
+     "url": "https://www.sensacine.com/noticias/cine/noticia-1000234444/",
+     "resumen": "El actor lleva 38 años casado con Tracy Pollan, a quien conoció mientras trabajaban juntos en 'Family Ties'"
     },
     {
      "fuente": "Espinof (RSS)",
@@ -10150,6 +10141,13 @@
      "fecha": "2026-11-27 03:47",
      "url": "https://www.billboard.com/music/chart-beat/grand-theft-auto-vi-soundtrack-no-1-aria-chart-1236390235/",
      "resumen": "\"GTA\" focus track “Flower In A Hurricane” by Justice, Tame Impala, SZA and King Gizzard And The Lizard Wizard roars 17-5 on the national singles chart."
+    },
+    {
+     "fuente": "Sensacine noticias (RSS)",
+     "titulo": "En 1993 fue uno de los hijos de Robin Williams en 'La señora Doubtfire'; hoy, a sus 46 años, rescata animales exóticos en California",
+     "fecha": "2026-11-27 03:00",
+     "url": "https://www.sensacine.com/noticias/cine/noticia-1000234335/",
+     "resumen": "Hace 33 años, Matthew Lawrence era una estrella infantil en ascenso. Sin embargo, más tarde se fue retirando progresivamente de la vida pública para dedicarse a su verdadera pasión"
     },
     {
      "fuente": "Billboard (RSS)",
@@ -10474,13 +10472,6 @@
      "resumen": "A solo dos horas de Santiago, en el corazón del Valle de Colchagua, Viña MontGras invita a regalar algo diferente esta Navidad: experiencias que reúnen a las personas, despiertan los sentidos y se convierten en recuerdos. Desde crear un vino propio hasta compartir una mesa entre viñedos, una invitación a disfrutar el…"
     },
     {
-     "fuente": "Variety (RSS)",
-     "titulo": "What’s New on Netflix for December 2026",
-     "fecha": "2026-11-26 17:35",
-     "url": "https://variety.com/feature/whats-on-netflix-movies-shows-1203517873/",
-     "resumen": "Winter is here, and December is the perfect time to get cozy and hunker down for the holidays. What better way to do so than surfing the streaming platforms for a new show to binge or movie to obsess over? “La Bola Negra,” which has garnered significant attention in its festival run, is one of […]"
-    },
-    {
      "fuente": "Espinof (RSS)",
      "titulo": "Chris Evans nos convenció de que su Capitán América estaba retirado. Se pasó años mintiendo descaradamente mientras se reunía en secreto con Marvel",
      "fecha": "2026-11-26 17:30",
@@ -10500,13 +10491,6 @@
      "fecha": "2026-11-26 17:21",
      "url": "https://www.rollingstone.com/music/music-news/wu-tang-clan-nfl-thanksgiving-game-halftime-show-1235664856/",
      "resumen": "The New York hip-hop group were joined by Red Hot Chili Peppers' Chad Smith on drums"
-    },
-    {
-     "fuente": "Variety (RSS)",
-     "titulo": "What’s New on Disney+ in December 2026",
-     "fecha": "2026-11-26 17:20",
-     "url": "https://variety.com/feature/whats-on-disney-plus-new-shows-movies-1203517920/",
-     "resumen": "Disney+ is back to bring festive cheer home with holly jolly favorites and new seasonal premieres to watch with the whole family. Fans can stream classics like “Home Alone 2: Lost in New York” and “Die Hard,” or make the season merry with new releases including “Mickey’s Home Alone” and “Diary of a Wimpy Kid […]"
     },
     {
      "fuente": "Pitchfork (RSS)",
@@ -10675,20 +10659,6 @@
      "fecha": "2026-11-26 15:00",
      "url": "https://www.rollingstone.com/tv-movies/tv-movie-lists/ariana-grande-focker-in-law-best-acting-roles-1235663043/",
      "resumen": "With Focker-In-Law out this week, we look back at some of the singer's most memorable characters and cameos"
-    },
-    {
-     "fuente": "Sensacine noticias (RSS)",
-     "titulo": "En 2 semanas Netflix estrena un thriller criminal a la altura de los mejores: una historia basada en hechos reales que nunca ha llegado a resolverse y nos volará la cabeza",
-     "fecha": "2026-11-26 15:00",
-     "url": "https://www.sensacine.com/noticias/series/noticia-1000234225/",
-     "resumen": "Melissa McCarthy y Clive Owen protagonizan la miniserie basada en uno de los crimenes más mediáticos de los años 90. Se estrena el 10 de diciembre en la plataforma"
-    },
-    {
-     "fuente": "Pitchfork (RSS)",
-     "titulo": "PUP Compose New Music for Sample Pack Benefitting Kids in Toronto",
-     "fecha": "2026-11-26 14:57",
-     "url": "https://pitchfork.com/story/pup-compose-new-music-for-sample-pack-benefitting-kids-in-toronto/",
-     "resumen": "Proceeds from the eight new songs will go to Community Music Schools of Toronto"
     }
    ]
   },
