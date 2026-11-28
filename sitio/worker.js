@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "76591d81937d";
+const VERSION_SITIO = "a036b14f7097";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6850,8 +6850,8 @@ async function suscribirLector(req, env, ctx) {
   if (!hayCorreo(env)) return R(false, "No pudimos enviar el correo de confirmación. Intenta más tarde.", "We couldn't send the confirmation email. Try later.", 503);
   const enlace = `https://${DOMINIO}/suscribir/confirmar?t=${token}`;
   const ok = await enviarCorreo(env, { to: email, subject: "Confirma tu suscripción a Cofrade News",
-    text: `Hola:\n\nPara recibir Cofrade News cada mañana a las 7:00 (lo que mueve la aguja y el audio de la edición), confirma aquí:\n${enlace}\n\nSi no fuiste tú, ignora este correo y no recibirás nada.\n\nCofrade News · www.cofrad.es`,
-    html: `<div style="font-family:Arial,sans-serif;max-width:520px;color:#1A1406"><h2 style="margin:0 0 12px">Confirma tu suscripción</h2><p>Para recibir <b>Cofrade News</b> cada mañana a las 7:00, con lo que mueve la aguja y el audio de la edición, toca el botón:</p><p><a href="${enlace}" style="display:inline-block;background:#C9A14A;color:#1A1406;padding:12px 18px;border-radius:999px;text-decoration:none;font-weight:600">Sí, quiero recibirlo</a></p><p style="color:#666;font-size:13px">Si no fuiste tú, ignora este correo y no recibirás nada.</p></div>` }).catch(() => false);
+    text: `Hola:\n\nPara recibir Cofrade News cada mañana a las 7:00 (lo que mueve la aguja y el audio de la edición), abre este enlace y toca «Validar mi correo»:\n${enlace}\n\nSi no fuiste tú, ignora este correo y no recibirás nada.\n\nCofrade News · www.cofrad.es`,
+    html: `<div style="font-family:Arial,sans-serif;max-width:520px;color:#1A1406"><h2 style="margin:0 0 12px">Confirma tu suscripción</h2><p>Para recibir <b>Cofrade News</b> cada mañana a las 7:00, con lo que mueve la aguja y el audio de la edición, toca el botón y luego «Validar mi correo»:</p><p><a href="${enlace}" style="display:inline-block;background:#C9A14A;color:#1A1406;padding:12px 18px;border-radius:999px;text-decoration:none;font-weight:600">Validar mi correo</a></p><p style="color:#666;font-size:13px">Si no fuiste tú, ignora este correo y no recibirás nada.</p></div>` }).catch(() => false);
   if (!ok) return R(false, "No pudimos enviar el correo de confirmación. Intenta más tarde.", "We couldn't send the confirmation email. Try later.", 503);
   await env.DB.prepare("UPDATE lectores SET enviado=? WHERE email=?").bind(ahora, email).run();
   if (env.KIT_API_KEY && ctx && ctx.waitUntil) ctx.waitUntil(kitSincronizar(env).catch(() => 0));   // sube a Kit a los confirmados que quedaron pendientes
@@ -6890,19 +6890,26 @@ async function kitSincronizar(env, primero) {
   return n;
 }
 
+// 27-11-2026 (Germán: «Verificado» = el lector abrió el correo y tocó «Validar»). Los antivirus de correo (Outlook, Gmail
+// corporativo, Mimecast) abren solos los enlaces para revisarlos; si el GET confirmara, esos robots marcarían como verificado un
+// correo que nadie abrió. Por eso el enlace solo muestra el botón, y lo que verifica es el POST que manda una persona al tocarlo.
 async function confirmarLector(req, env, ctx) {
-  const t = new URL(req.url).searchParams.get("t") || "";
-  const pag = (titulo, texto) => html(marco({ titulo: titulo + " · Cofrade News", descripcion: titulo, canonica: "/suscribir/confirmar",
-    cuerpo: `<section style="border:0"><span class="kicker">Suscripción</span><h1>${lectEsc(titulo)}</h1><p class="lede">${texto}</p><div class="acciones"><a class="btn oro" href="/edicion">Leer la edición de hoy</a></div></section>` }), 200,
-    { "Cache-Control": "private, no-store", "X-Robots-Tag": "noindex" });
+  const post = req.method === "POST";
+  let t = new URL(req.url).searchParams.get("t") || "";
+  if (post) { try { t = String((await req.formData()).get("t") || ""); } catch { t = ""; } }
+  const pag = (titulo, texto, extra) => html(marco({ titulo: titulo + " · Cofrade News", descripcion: titulo, canonica: "/suscribir/confirmar",
+    cuerpo: `<section style="border:0"><span class="kicker">Suscripción</span><h1>${lectEsc(titulo)}</h1><p class="lede">${texto}</p><div class="acciones">${extra || '<a class="btn oro" href="/edicion">Leer la edición de hoy</a>'}</div></section>` }), 200,
+    { "Cache-Control": "private, no-store", "X-Robots-Tag": "noindex", "Referrer-Policy": "no-referrer" });
   if (!/^[0-9a-f]{48}$/.test(t) || !env.DB) return pag("El enlace no es válido", "Vuelve a la portada y deja tu correo otra vez.");
   await lectTabla(env);
   const f = await env.DB.prepare("SELECT email, confirmado FROM lectores WHERE token=?").bind(t).first();
   if (!f) return pag("El enlace no es válido", "Vuelve a la portada y deja tu correo otra vez.");
-  if (!f.confirmado) await env.DB.prepare("UPDATE lectores SET confirmado=?, kit=COALESCE(kit,'pendiente') WHERE email=?").bind(new Date().toISOString(), f.email).run();
+  if (!post && !f.confirmado) return pag("Valida tu correo", "Un último paso: toca el botón para confirmar que este correo es tuyo y empezar a recibir Cofrade News cada mañana a las 7:00.",
+    `<form method="post" action="/suscribir/confirmar" style="margin:0"><input type="hidden" name="t" value="${t}"><button class="btn oro" type="submit">Validar mi correo</button></form>`);
+  if (!f.confirmado) await env.DB.prepare("UPDATE lectores SET confirmado=?, kit=COALESCE(kit,'pendiente') WHERE email=? AND confirmado IS NULL").bind(new Date().toISOString(), f.email).run();
   const tarea = kitSincronizar(env, f.email).catch(() => 0);
   if (ctx && ctx.waitUntil) ctx.waitUntil(tarea); else await tarea;
-  return pag("¡Suscripción confirmada!", "Desde mañana te llega Cofrade News a las 7:00: lo que mueve la aguja y el audio de la edición. Cada correo trae su enlace para darte de baja.");
+  return pag(f.confirmado ? "Tu correo ya está verificado" : "¡Correo verificado!", "Desde mañana te llega Cofrade News a las 7:00: lo que mueve la aguja y el audio de la edición. Cada correo trae su enlace para darte de baja.");
 }
 // Para /panel: cuántos lectores hay y cuántos faltan por subir a Kit (sin mostrar correos)
 async function resumenLectores(env) {
@@ -6921,11 +6928,12 @@ function bloqueLectores(filas, hoy) {
   const F = filas || [], conf = F.filter((r) => r.confirmado), pend = F.length - conf.length, kit = conf.filter((r) => r.kit === "ok").length;
   const lim = new Date(Date.parse(hoy + "T12:00:00Z") - 7 * 86400000).toISOString().slice(0, 10), nuevos = conf.filter((r) => String(r.confirmado).slice(0, 10) >= lim).length;
   const k = (t, v, sub) => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${sub ? `<br><small>${esc(sub)}</small>` : ""}</div>`;
-  const fila = (r) => `<tr><td>${esc(r.email)}</td><td>${esc(LECT_HORA(r.creado))}</td><td>${r.confirmado ? esc(LECT_HORA(r.confirmado)) : '<span style="color:#9a7b2e">pendiente</span>'}</td><td>${esc(r.origen || "portada")}</td><td>${r.kit === "ok" ? "sí" : r.confirmado ? "pendiente" : ""}</td></tr>`;
+  const estado = (r) => r.confirmado ? '<span style="display:inline-block;padding:2px 10px;border-radius:999px;background:#1f7a4a1f;color:#1f7a4a;font-weight:700;white-space:nowrap">✓ Verificado</span>' : '<span style="display:inline-block;padding:2px 10px;border-radius:999px;background:#9a7b2e1f;color:#9a7b2e;font-weight:700;white-space:nowrap">Sin verificar</span>';
+  const fila = (r) => `<tr><td>${esc(r.email)}</td><td>${estado(r)}</td><td>${esc(LECT_HORA(r.creado))}</td><td>${r.confirmado ? esc(LECT_HORA(r.confirmado)) : ""}</td><td>${esc(r.origen || "portada")}</td><td>${r.kit === "ok" ? "sí" : r.confirmado ? "pendiente" : ""}</td></tr>`;
   return `<section id="lectores"><h3 class="tit-g">Lectores del resumen diario por correo (5 titulares y audio de 2 a 3 minutos)</h3>
-<p class="sub">Personas que se inscribieron en la casilla de la portada. Solo reciben el correo de las 7:00 las que confirmaron su correo; las bajas se registran en Kit (cada correo trae su enlace para darse de baja). Datos personales: no compartir fuera del panel (Ley 21.719).</p>
-<div class="cifras">${k("Inscritos confirmados", conf.length, "reciben el resumen")}${k("Pendientes de confirmar", pend, "no abrieron el enlace del correo")}${k("Nuevos en 7 días", nuevos, "confirmados desde el " + lim.split("-").reverse().join("-"))}${k("Sincronizados con Kit", kit + " de " + conf.length, "")}</div>
-${F.length ? `<div class="tarjeta ancha"><div class="tabla-scroll" style="max-height:420px;overflow:auto"><table class="tabla"><thead><tr><th>Correo</th><th>Inscrito</th><th>Confirmado</th><th>Origen</th><th>En Kit</th></tr></thead><tbody>${F.map(fila).join("")}</tbody></table></div></div>
+<p class="sub">Personas que se inscribieron en la casilla de la portada. «Verificado» significa que la persona abrió el correo que le enviamos y tocó el botón «Validar mi correo»: solo esos correos son reales y solo ellos reciben el resumen de las 7:00; las bajas se registran en Kit (cada correo trae su enlace para darse de baja). Datos personales: no compartir fuera del panel (Ley 21.719).</p>
+<div class="cifras">${k("Verificados", conf.length, "tocaron «Validar»: correos reales que reciben el resumen")}${k("Sin verificar", pend, "no han tocado «Validar» (no reciben nada)")}${k("Nuevos en 7 días", nuevos, "verificados desde el " + lim.split("-").reverse().join("-"))}${k("Sincronizados con Kit", kit + " de " + conf.length, "")}</div>
+${F.length ? `<div class="tarjeta ancha"><div class="tabla-scroll" style="max-height:420px;overflow:auto"><table class="tabla"><thead><tr><th>Correo</th><th>Estado</th><th>Inscrito</th><th>Verificado el</th><th>Origen</th><th>En Kit</th></tr></thead><tbody>${F.map(fila).join("")}</tbody></table></div></div>
 <p style="margin:12px 0 0"><a class="btn linea" href="/panel/lectores.csv">Descargar la lista (Excel / CSV)</a></p>` : `<p class="sub">Todavía no hay inscritos.</p>`}</section>`;
 }
 async function lectoresCsv(req, env) {
@@ -6933,7 +6941,7 @@ async function lectoresCsv(req, env) {
   await lectTabla(env);
   const filas = (await env.DB.prepare("SELECT email, creado, confirmado, origen, kit FROM lectores ORDER BY creado DESC").all()).results || [];
   const c = (x) => { let s = String(x === null || x === undefined ? "" : x); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
-  const csv = "\ufeffcorreo;inscrito;confirmado;origen;en_kit\n" + filas.map((r) => [r.email, LECT_HORA(r.creado), r.confirmado ? LECT_HORA(r.confirmado) : "pendiente", r.origen || "portada", r.kit === "ok" ? "sí" : ""].map(c).join(";")).join("\n");
+  const csv = "\ufeffcorreo;estado;inscrito;verificado_el;origen;en_kit\n" + filas.map((r) => [r.email, r.confirmado ? "Verificado" : "Sin verificar", LECT_HORA(r.creado), r.confirmado ? LECT_HORA(r.confirmado) : "", r.origen || "portada", r.kit === "ok" ? "sí" : ""].map(c).join(";")).join("\n");
   return new Response(csv, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="lectores-cofrade-news-${fechaChile()}.csv"`, "Cache-Control": "no-store", "X-Robots-Tag": "noindex", ...SEGURIDAD } });
 }
 
