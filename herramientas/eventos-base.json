@@ -1,6 +1,6 @@
 {
  "nota": "Ferias, eventos y concursos de emprendimiento verificados a mano (23/24-11-2026). El robot (herramientas/eventos_emprendimiento.py) quita solo los que ya pasaron y suma las noticias del día. Cada ficha lleva su fuente.",
- "verificado": "2026-11-26",
+ "verificado": "2026-11-28",
  "eventos": [
   {
    "id": "fiiem-2026",
@@ -192,7 +192,8 @@
    "valor_en": "No price published; registration open on the UN site",
    "fecha_fuente": "2026-11-25",
    "oficial": true,
-   "verificado": "2026-11-25"
+   "verificado": "2026-11-28",
+   "nota": "28-11-2026: revisado en indico.un.org (Naciones Unidas): sigue 30-11 al 1-12-2026, sin cambios."
   },
   {
    "id": "ferias-navidenas-maipu-2026",
@@ -210,7 +211,8 @@
    "inscripcion": "https://www.municipalidadmaipu.cl/noticias/publicacion/1177/maip-abre-postulaciones-para-ferias-navide-as-barriales-2026",
    "fecha_fuente": "2026-10-30",
    "oficial": true,
-   "verificado": "2026-11-25"
+   "verificado": "2026-11-28",
+   "nota": "28-11-2026: revisado con La Voz de Maipú (2-11-2026) y la página municipal: sigue del 9 al 23 de diciembre, de 18:00 a 23:00, en 11 sectores; sin cambios."
   },
   {
    "id": "feria-navidena-curacavi-2026",
@@ -310,6 +312,67 @@
    "verificado": "2026-11-26",
    "inscripcion": "https://chileestuyo.cl/eventos/descubre-paine-experiencia-en-el-maipo-andes-2026/",
    "agregado": "2026-11-26"
+  },
+  {
+   "id": "expo-mundo-rural-2026",
+   "tipo": "feria",
+   "nombre": "Expo Mundo Rural 2026",
+   "inicio": "2026-12-05",
+   "fin": "2026-12-06",
+   "lugar": "Jardín Botánico Nacional, Camino El Olivar 305, sector El Salto, Viña del Mar",
+   "costo": "",
+   "valor": "Entrada rebajada al Jardín Botánico de $2.000 ambos días; talleres gratuitos",
+   "valor_en": "Reduced Botanical Garden entry of CLP 2,000 both days; free workshops",
+   "requisitos": "",
+   "requisitos_en": "",
+   "desc": "Feria campesina de INDAP con más de 60 productores de la Región de Valparaíso, incluidos Rapa Nui y Juan Fernández. Abre de 10:00 a 19:00.",
+   "desc_en": "INDAP farmers' fair with more than 60 producers from the Valparaíso Region, including Rapa Nui and Juan Fernández. Open 10:00 to 19:00.",
+   "url": "https://www.indap.gob.cl/noticias/expo-mundo-rural-2026-reunira-en-vina-del-mar-lo-mejor-de-la-produccion-campesina-de-la",
+   "fuente": "INDAP",
+   "fecha_fuente": "2026-11-23",
+   "verificado": "2026-11-28",
+   "inscripcion": "https://www.indap.gob.cl/noticias/expo-mundo-rural-2026-reunira-en-vina-del-mar-lo-mejor-de-la-produccion-campesina-de-la",
+   "agregado": "2026-11-28"
+  },
+  {
+   "id": "anid-idea-id-2027",
+   "tipo": "concurso",
+   "nombre": "Concurso IDeA I+D 2027 (ANID)",
+   "inicio": "2026-11-12",
+   "fin": "2027-01-12",
+   "lugar": "Todo Chile (postulación en línea en ANID)",
+   "costo": "gratis",
+   "requisitos": "Solo personas jurídicas chilenas sin fines de lucro (universidades, IP, CFT, centros tecnológicos), con resultados previos de I+D (TRL 2 o 3) y de 1 a 3 entidades asociadas.",
+   "requisitos_en": "Only Chilean non-profit legal entities (universities, institutes, technical centres) with prior R&D results (TRL 2 or 3) and 1 to 3 associated entities.",
+   "desc": "Fondo de ANID para llevar resultados de investigación a la aplicación: hasta $230 millones por proyecto de hasta 24 meses, con cofinanciamiento. Cierra el 12 de enero de 2027 a las 17:00.",
+   "desc_en": "ANID fund to turn research results into applications: up to CLP 230 million per project of up to 24 months, with co-funding. Closes 12 January 2027 at 17:00.",
+   "url": "https://elreporterodeiquique.com/anid-abre-convocatoria-del-concurso-idea-id-2027-para-impulsar-investigacion-aplicada-e-innovacion-con-impacto-en-chile/",
+   "fuente": "El Reportero de Iquique",
+   "fecha_fuente": "2026-11-28",
+   "verificado": "2026-11-28",
+   "inscripcion": "https://anid.cl/concursos/concurso-idea-id-2027/",
+   "agregado": "2026-11-28"
+  },
+  {
+   "id": "expo-loncoche-2027",
+   "tipo": "feria",
+   "nombre": "Expo Loncoche 2027",
+   "inicio": "2027-02-04",
+   "fin": "2027-02-07",
+   "lugar": "Loncoche, Región de La Araucanía",
+   "costo": "",
+   "valor": "Sin valor publicado para visitantes (revisado en muniloncoche.cl el 28-11-2026)",
+   "valor_en": "No visitor price published (checked on muniloncoche.cl on 28-11-2026)",
+   "requisitos": "Postulación de expositores ya cerrada (23-10-2026). Era para emprendedores, artesanos y productores en nueve rubros, según bases y ordenanza municipal.",
+   "requisitos_en": "Exhibitor applications closed on 23-10-2026. Open to entrepreneurs, artisans and producers in nine categories, per municipal rules.",
+   "desc": "Feria de verano de la comuna con emprendimiento, artesanía, gastronomía, cerveceros y juegos, organizada por la Municipalidad de Loncoche.",
+   "desc_en": "The town's summer fair with local businesses, crafts, food, brewers and games, organised by the Loncoche municipality.",
+   "url": "https://muniloncoche.cl/se-viene-la-expo-loncoche-2027-ya-estan-disponibles-las-bases-de-postulacion/",
+   "fuente": "Municipalidad de Loncoche",
+   "fecha_fuente": "2026-10-23",
+   "verificado": "2026-11-28",
+   "inscripcion": "https://muniloncoche.cl/se-viene-la-expo-loncoche-2027-ya-estan-disponibles-las-bases-de-postulacion/",
+   "agregado": "2026-11-28"
   }
  ]
 }
