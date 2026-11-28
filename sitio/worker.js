@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "a4cf267d23ed";
+const VERSION_SITIO = "76591d81937d";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6916,7 +6916,7 @@ async function resumenLectores(env) {
 // 27-11-2026 · Germán: «Al Dashboard del Panel de Control de Administración agrega el listado de emails que se han inscrito para recibir
 // diariamente un resumen de las Noticias del día, más el audio de 2 a 3 minutos... De manera de saber quiénes y cuántas personas utilizan
 // esta funcionalidad». Solo en /panel (con clave de administrador); los correos no salen de ahí salvo en la descarga CSV del mismo panel.
-const LECT_HORA = (iso) => { if (!iso) return ""; try { return new Date(iso).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }); } catch { return String(iso).slice(0, 16); } };
+const LECT_HORA = (iso) => { if (!iso) return ""; try { return new Date(iso).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }); } catch { return String(iso).slice(0, 16); } };
 function bloqueLectores(filas, hoy) {
   const F = filas || [], conf = F.filter((r) => r.confirmado), pend = F.length - conf.length, kit = conf.filter((r) => r.kit === "ok").length;
   const lim = new Date(Date.parse(hoy + "T12:00:00Z") - 7 * 86400000).toISOString().slice(0, 10), nuevos = conf.filter((r) => String(r.confirmado).slice(0, 10) >= lim).length;
