@@ -1522,6 +1522,7 @@ export default {
       if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
       if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);
+      if (p === "/panel/lectores.csv") return await lectoresCsv(req, env);   // 27-11-2026: lectores del resumen diario
       if (p === "/panel/visitas.csv") return await panelVisitasCsv(req, env);   // 15-11-2026: contador de visitas completo
       if (p === "/panel") return await panel(req, env);
       // 16-11-2026 · publicidad pagada: registro del Panel, clics, logos y avisos vigentes para el diario (modulos/tablero.js)

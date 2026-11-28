@@ -431,7 +431,9 @@ async function datosTablero(env, P) {
     socios: env.DB.prepare("SELECT estado, COUNT(*) AS n FROM usuarios GROUP BY estado"),
     pulso: env.DB.prepare("SELECT valor FROM config WHERE clave = 'pulso_resultado'"),
     eventos: s("SELECT nombre, SUM(n) AS n FROM eventos WHERE fecha BETWEEN ? AND ? GROUP BY nombre", d, h),   // 26-11-2026: modulos/metricas.js
+    lectores: env.DB.prepare("SELECT email, creado, confirmado, origen, kit FROM lectores ORDER BY creado DESC LIMIT 2000"),   // 27-11-2026: modulos/lectores.js
   };
+  try { await lectTabla(env); } catch { /* la lista de lectores queda vacía */ }
   const claves = Object.keys(lista), R = {};
   try {   // una sola consulta a la base (D1 cuenta un «batch» como una): el panel queda lejos del tope de consultas por visita
     const res = await env.DB.batch(claves.map((k) => lista[k]));
@@ -680,7 +682,7 @@ ${filtros}<p class="tab-periodo">Mostrando: <b>${esc(P.etiqueta)}</b> (del ${ddm
 <h2 class="grupo-k">Audiencia</h2><div class="cifras k5">${kAud}</div>
 <h2 class="grupo-k">Comunidad</h2><div class="cifras k5">${kCom}</div></section>
 <section id="graficos"><h3>Gráficos del período</h3>${graficos}</section>
-${lectura}${bloqueEventos(R.eventos)}${publicidad}${fundadores}${seccionVisitas(cont)}${buzon}${difusion}${concurso}${republica}${podcast}
+${lectura}${bloqueLectores(R.lectores, P.hoy)}${bloqueEventos(R.eventos)}${publicidad}${fundadores}${seccionVisitas(cont)}${buzon}${difusion}${concurso}${republica}${podcast}
 <script type="application/json" id="tablero-datos">${datosJson}</script><script src="/a/${ECHARTS_ARCHIVO}" defer></script><script>${TABLERO_JS}</script>`;
   return html(marco({ titulo: "Panel de Control · Cofrade News", descripcion: "", cuerpo }), 200, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
 }

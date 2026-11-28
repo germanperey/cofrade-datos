@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "37b921744f1b";
+const VERSION_SITIO = "a4cf267d23ed";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -2376,7 +2376,9 @@ async function datosTablero(env, P) {
     socios: env.DB.prepare("SELECT estado, COUNT(*) AS n FROM usuarios GROUP BY estado"),
     pulso: env.DB.prepare("SELECT valor FROM config WHERE clave = 'pulso_resultado'"),
     eventos: s("SELECT nombre, SUM(n) AS n FROM eventos WHERE fecha BETWEEN ? AND ? GROUP BY nombre", d, h),   // 26-11-2026: modulos/metricas.js
+    lectores: env.DB.prepare("SELECT email, creado, confirmado, origen, kit FROM lectores ORDER BY creado DESC LIMIT 2000"),   // 27-11-2026: modulos/lectores.js
   };
+  try { await lectTabla(env); } catch { /* la lista de lectores queda vacía */ }
   const claves = Object.keys(lista), R = {};
   try {   // una sola consulta a la base (D1 cuenta un «batch» como una): el panel queda lejos del tope de consultas por visita
     const res = await env.DB.batch(claves.map((k) => lista[k]));
@@ -2625,7 +2627,7 @@ ${filtros}<p class="tab-periodo">Mostrando: <b>${esc(P.etiqueta)}</b> (del ${ddm
 <h2 class="grupo-k">Audiencia</h2><div class="cifras k5">${kAud}</div>
 <h2 class="grupo-k">Comunidad</h2><div class="cifras k5">${kCom}</div></section>
 <section id="graficos"><h3>Gráficos del período</h3>${graficos}</section>
-${lectura}${bloqueEventos(R.eventos)}${publicidad}${fundadores}${seccionVisitas(cont)}${buzon}${difusion}${concurso}${republica}${podcast}
+${lectura}${bloqueLectores(R.lectores, P.hoy)}${bloqueEventos(R.eventos)}${publicidad}${fundadores}${seccionVisitas(cont)}${buzon}${difusion}${concurso}${republica}${podcast}
 <script type="application/json" id="tablero-datos">${datosJson}</script><script src="/a/${ECHARTS_ARCHIVO}" defer></script><script>${TABLERO_JS}</script>`;
   return html(marco({ titulo: "Panel de Control · Cofrade News", descripcion: "", cuerpo }), 200, { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" });
 }
@@ -6911,6 +6913,30 @@ async function resumenLectores(env) {
   } catch { return null; }
 }
 
+// 27-11-2026 · Germán: «Al Dashboard del Panel de Control de Administración agrega el listado de emails que se han inscrito para recibir
+// diariamente un resumen de las Noticias del día, más el audio de 2 a 3 minutos... De manera de saber quiénes y cuántas personas utilizan
+// esta funcionalidad». Solo en /panel (con clave de administrador); los correos no salen de ahí salvo en la descarga CSV del mismo panel.
+const LECT_HORA = (iso) => { if (!iso) return ""; try { return new Date(iso).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }); } catch { return String(iso).slice(0, 16); } };
+function bloqueLectores(filas, hoy) {
+  const F = filas || [], conf = F.filter((r) => r.confirmado), pend = F.length - conf.length, kit = conf.filter((r) => r.kit === "ok").length;
+  const lim = new Date(Date.parse(hoy + "T12:00:00Z") - 7 * 86400000).toISOString().slice(0, 10), nuevos = conf.filter((r) => String(r.confirmado).slice(0, 10) >= lim).length;
+  const k = (t, v, sub) => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${sub ? `<br><small>${esc(sub)}</small>` : ""}</div>`;
+  const fila = (r) => `<tr><td>${esc(r.email)}</td><td>${esc(LECT_HORA(r.creado))}</td><td>${r.confirmado ? esc(LECT_HORA(r.confirmado)) : '<span style="color:#9a7b2e">pendiente</span>'}</td><td>${esc(r.origen || "portada")}</td><td>${r.kit === "ok" ? "sí" : r.confirmado ? "pendiente" : ""}</td></tr>`;
+  return `<section id="lectores"><h3 class="tit-g">Lectores del resumen diario por correo (5 titulares y audio de 2 a 3 minutos)</h3>
+<p class="sub">Personas que se inscribieron en la casilla de la portada. Solo reciben el correo de las 7:00 las que confirmaron su correo; las bajas se registran en Kit (cada correo trae su enlace para darse de baja). Datos personales: no compartir fuera del panel (Ley 21.719).</p>
+<div class="cifras">${k("Inscritos confirmados", conf.length, "reciben el resumen")}${k("Pendientes de confirmar", pend, "no abrieron el enlace del correo")}${k("Nuevos en 7 días", nuevos, "confirmados desde el " + lim.split("-").reverse().join("-"))}${k("Sincronizados con Kit", kit + " de " + conf.length, "")}</div>
+${F.length ? `<div class="tarjeta ancha"><div class="tabla-scroll" style="max-height:420px;overflow:auto"><table class="tabla"><thead><tr><th>Correo</th><th>Inscrito</th><th>Confirmado</th><th>Origen</th><th>En Kit</th></tr></thead><tbody>${F.map(fila).join("")}</tbody></table></div></div>
+<p style="margin:12px 0 0"><a class="btn linea" href="/panel/lectores.csv">Descargar la lista (Excel / CSV)</a></p>` : `<p class="sub">Todavía no hay inscritos.</p>`}</section>`;
+}
+async function lectoresCsv(req, env) {
+  if (!(await esAdmin(req, env)) || !env.DB) return new Response("no autorizado", { status: 401 });
+  await lectTabla(env);
+  const filas = (await env.DB.prepare("SELECT email, creado, confirmado, origen, kit FROM lectores ORDER BY creado DESC").all()).results || [];
+  const c = (x) => { let s = String(x === null || x === undefined ? "" : x); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
+  const csv = "\ufeffcorreo;inscrito;confirmado;origen;en_kit\n" + filas.map((r) => [r.email, LECT_HORA(r.creado), r.confirmado ? LECT_HORA(r.confirmado) : "pendiente", r.origen || "portada", r.kit === "ok" ? "sí" : ""].map(c).join(";")).join("\n");
+  return new Response(csv, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="lectores-cofrade-news-${fechaChile()}.csv"`, "Cache-Control": "no-store", "X-Robots-Tag": "noindex", ...SEGURIDAD } });
+}
+
 // 26-11-2026 · Eventos anónimos, sin cookies ni datos personales. Germán, con una revisión externa: «si no sabes qué sección concentra
 // el tiempo de lectura, en qué minuto abandonan el audio o qué módulo empuja clics a Socios, estás navegando a ciegas. Incorpora eventos
 // anónimos (sin cookies) para ver retención real». El tiempo por sección ya se medía (tabla lectura, «Mapa de calor» del Panel). Esto
@@ -7940,6 +7966,7 @@ export default {
       if (p === "/panel/entrar" && req.method === "POST") return await entrarPanel(req, env);
       if (p === "/panel/salir") return new Response(null, { status: 303, headers: { Location: "/panel", "Set-Cookie": "cn_adm=; Max-Age=0; Path=/panel; Secure; HttpOnly; SameSite=Strict" } });
       if (p === "/panel/buzon.csv") return await panelCsv(req, env);
+      if (p === "/panel/lectores.csv") return await lectoresCsv(req, env);   // 27-11-2026: lectores del resumen diario
       if (p === "/panel/visitas.csv") return await panelVisitasCsv(req, env);   // 15-11-2026: contador de visitas completo
       if (p === "/panel") return await panel(req, env);
       // 16-11-2026 · publicidad pagada: registro del Panel, clics, logos y avisos vigentes para el diario (modulos/tablero.js)

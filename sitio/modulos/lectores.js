@@ -128,3 +128,27 @@ async function resumenLectores(env) {
     return { total: r.total || 0, confirmados: r.confirmados || 0, en_kit: r.en_kit || 0, kit_llave: !!env.KIT_API_KEY };
   } catch { return null; }
 }
+
+// 27-11-2026 · Germán: «Al Dashboard del Panel de Control de Administración agrega el listado de emails que se han inscrito para recibir
+// diariamente un resumen de las Noticias del día, más el audio de 2 a 3 minutos... De manera de saber quiénes y cuántas personas utilizan
+// esta funcionalidad». Solo en /panel (con clave de administrador); los correos no salen de ahí salvo en la descarga CSV del mismo panel.
+const LECT_HORA = (iso) => { if (!iso) return ""; try { return new Date(iso).toLocaleString("es-CL", { timeZone: "America/Santiago", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }); } catch { return String(iso).slice(0, 16); } };
+function bloqueLectores(filas, hoy) {
+  const F = filas || [], conf = F.filter((r) => r.confirmado), pend = F.length - conf.length, kit = conf.filter((r) => r.kit === "ok").length;
+  const lim = new Date(Date.parse(hoy + "T12:00:00Z") - 7 * 86400000).toISOString().slice(0, 10), nuevos = conf.filter((r) => String(r.confirmado).slice(0, 10) >= lim).length;
+  const k = (t, v, sub) => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${sub ? `<br><small>${esc(sub)}</small>` : ""}</div>`;
+  const fila = (r) => `<tr><td>${esc(r.email)}</td><td>${esc(LECT_HORA(r.creado))}</td><td>${r.confirmado ? esc(LECT_HORA(r.confirmado)) : '<span style="color:#9a7b2e">pendiente</span>'}</td><td>${esc(r.origen || "portada")}</td><td>${r.kit === "ok" ? "sí" : r.confirmado ? "pendiente" : ""}</td></tr>`;
+  return `<section id="lectores"><h3 class="tit-g">Lectores del resumen diario por correo (5 titulares y audio de 2 a 3 minutos)</h3>
+<p class="sub">Personas que se inscribieron en la casilla de la portada. Solo reciben el correo de las 7:00 las que confirmaron su correo; las bajas se registran en Kit (cada correo trae su enlace para darse de baja). Datos personales: no compartir fuera del panel (Ley 21.719).</p>
+<div class="cifras">${k("Inscritos confirmados", conf.length, "reciben el resumen")}${k("Pendientes de confirmar", pend, "no abrieron el enlace del correo")}${k("Nuevos en 7 días", nuevos, "confirmados desde el " + lim.split("-").reverse().join("-"))}${k("Sincronizados con Kit", kit + " de " + conf.length, "")}</div>
+${F.length ? `<div class="tarjeta ancha"><div class="tabla-scroll" style="max-height:420px;overflow:auto"><table class="tabla"><thead><tr><th>Correo</th><th>Inscrito</th><th>Confirmado</th><th>Origen</th><th>En Kit</th></tr></thead><tbody>${F.map(fila).join("")}</tbody></table></div></div>
+<p style="margin:12px 0 0"><a class="btn linea" href="/panel/lectores.csv">Descargar la lista (Excel / CSV)</a></p>` : `<p class="sub">Todavía no hay inscritos.</p>`}</section>`;
+}
+async function lectoresCsv(req, env) {
+  if (!(await esAdmin(req, env)) || !env.DB) return new Response("no autorizado", { status: 401 });
+  await lectTabla(env);
+  const filas = (await env.DB.prepare("SELECT email, creado, confirmado, origen, kit FROM lectores ORDER BY creado DESC").all()).results || [];
+  const c = (x) => { let s = String(x === null || x === undefined ? "" : x); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return `"${s.replace(/"/g, '""')}"`; };
+  const csv = "\ufeffcorreo;inscrito;confirmado;origen;en_kit\n" + filas.map((r) => [r.email, LECT_HORA(r.creado), r.confirmado ? LECT_HORA(r.confirmado) : "pendiente", r.origen || "portada", r.kit === "ok" ? "sí" : ""].map(c).join(";")).join("\n");
+  return new Response(csv, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="lectores-cofrade-news-${fechaChile()}.csv"`, "Cache-Control": "no-store", "X-Robots-Tag": "noindex", ...SEGURIDAD } });
+}

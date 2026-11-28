@@ -2912,6 +2912,29 @@ def agente_de_gobierno():
 
 PRUEBAS.append(agente_de_gobierno)
 
+
+def panel_lectores_del_resumen():
+    """27-11-2026 (Germán: «Al Dashboard del Panel de Control de Administración agrega el listado de emails que se han inscrito para recibir
+    diariamente un resumen de las Noticias del día, más el audio de 2 a 3 minutos... De manera de saber quiénes y cuántas personas»)."""
+    import json, subprocess
+    raiz = os.path.dirname(os.path.abspath(__file__))
+    js = open(os.path.join(raiz, "sitio/modulos/lectores.js"), encoding="utf-8").read()
+    pre = "const esc=(s)=>String(s??'').replace(/[&<>\"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]));"
+    filas = [{"email": "ana@correo.cl", "creado": "2026-11-26T12:00:00Z", "confirmado": "2026-11-26T12:05:00Z", "origen": "portada", "kit": "ok"},
+             {"email": "<b>x@y.cl</b>", "creado": "2026-11-27T10:00:00Z", "confirmado": None, "origen": None, "kit": None},
+             {"email": "luis@correo.cl", "creado": "2026-11-01T10:00:00Z", "confirmado": "2026-11-01T10:30:00Z", "origen": "portada", "kit": None}]
+    h = subprocess.run(["node", "-e", "const s=require('fs').readFileSync(0,'utf8');new Function(s)();"],
+                       input=pre + js + ";console.log(bloqueLectores(" + json.dumps(filas) + ",'2026-11-27'))", capture_output=True, text=True, check=True).stdout
+    assert "ana@correo.cl" in h and "luis@correo.cl" in h and "&lt;b&gt;x@y.cl&lt;/b&gt;" in h and "<b>x@y.cl</b>" not in h   # escapado
+    assert "<b>2</b>" in h and "Pendientes de confirmar</small><b>1</b>" in h and "1 de 2" in h and "Nuevos en 7 días</small><b>1</b>" in h
+    assert "/panel/lectores.csv" in h and "esAdmin(req, env)" in js
+    t = open(os.path.join(raiz, "sitio/modulos/tablero.js"), encoding="utf-8").read()
+    w = open(os.path.join(raiz, "sitio/worker.src.js"), encoding="utf-8").read()
+    assert "bloqueLectores(R.lectores, P.hoy)" in t and '"/panel/lectores.csv"' in w
+
+
+PRUEBAS.append(panel_lectores_del_resumen)
+
 if __name__ == "__main__":
     malas = 0
     for f in PRUEBAS:
