@@ -13,7 +13,7 @@ const rutaPermanente = (f) => `https://github.com/germanperey/cofrade-datos/rele
 const DOMINIO = "www.cofrad.es";
 // 18-11-2026 (Germán, 03:53: «No logro visualizar los cambios»): huella de esta versión del sitio, la calcula construir.py. Entra en la
 // etiqueta (ETag) de cada edición: si cambia el sitio o la edición, el navegador baja la nueva al tiro; si no, le basta un «sin cambios».
-const VERSION_SITIO = "a036b14f7097";
+const VERSION_SITIO = "4aba181a242f";
 const etiquetaIgual = (h, e) => !!h && h.split(",").some((x) => { x = x.trim(); return x === "*" || x.replace(/^W\//, "") === e.replace(/^W\//, ""); });
 const FORMULARIO = "https://script.google.com/macros/s/AKfycbzruAvDDO14ZEP6wlA7UwFwFprOvT3516COFx7ZSaYys3qkLrnluO25ZnFnaAlTrlo/exec";
 const LOGO_CLARO = "/logo-claro.webp";
@@ -6929,7 +6929,7 @@ function bloqueLectores(filas, hoy) {
   const lim = new Date(Date.parse(hoy + "T12:00:00Z") - 7 * 86400000).toISOString().slice(0, 10), nuevos = conf.filter((r) => String(r.confirmado).slice(0, 10) >= lim).length;
   const k = (t, v, sub) => `<div class="cifra"><small>${esc(t)}</small><b>${v}</b>${sub ? `<br><small>${esc(sub)}</small>` : ""}</div>`;
   const estado = (r) => r.confirmado ? '<span style="display:inline-block;padding:2px 10px;border-radius:999px;background:#1f7a4a1f;color:#1f7a4a;font-weight:700;white-space:nowrap">✓ Verificado</span>' : '<span style="display:inline-block;padding:2px 10px;border-radius:999px;background:#9a7b2e1f;color:#9a7b2e;font-weight:700;white-space:nowrap">Sin verificar</span>';
-  const fila = (r) => `<tr><td>${esc(r.email)}</td><td>${estado(r)}</td><td>${esc(LECT_HORA(r.creado))}</td><td>${r.confirmado ? esc(LECT_HORA(r.confirmado)) : ""}</td><td>${esc(r.origen || "portada")}</td><td>${r.kit === "ok" ? "sí" : r.confirmado ? "pendiente" : ""}</td></tr>`;
+  const fila = (r) => `<tr><td>${esc(r.email)}</td><td>${estado(r)}</td><td style="white-space:nowrap">${esc(LECT_HORA(r.creado))}</td><td style="white-space:nowrap">${r.confirmado ? esc(LECT_HORA(r.confirmado)) : ""}</td><td>${esc(r.origen || "portada")}</td><td>${r.kit === "ok" ? "sí" : r.confirmado ? "pendiente" : ""}</td></tr>`;
   return `<section id="lectores"><h3 class="tit-g">Lectores del resumen diario por correo (5 titulares y audio de 2 a 3 minutos)</h3>
 <p class="sub">Personas que se inscribieron en la casilla de la portada. «Verificado» significa que la persona abrió el correo que le enviamos y tocó el botón «Validar mi correo»: solo esos correos son reales y solo ellos reciben el resumen de las 7:00; las bajas se registran en Kit (cada correo trae su enlace para darse de baja). Datos personales: no compartir fuera del panel (Ley 21.719).</p>
 <div class="cifras">${k("Verificados", conf.length, "tocaron «Validar»: correos reales que reciben el resumen")}${k("Sin verificar", pend, "no han tocado «Validar» (no reciben nada)")}${k("Nuevos en 7 días", nuevos, "verificados desde el " + lim.split("-").reverse().join("-"))}${k("Sincronizados con Kit", kit + " de " + conf.length, "")}</div>
